@@ -5,37 +5,12 @@ Select2 is a jQuery based replacement for select boxes. It supports searching, r
 
 To get started -- checkout http://ivaynberg.github.com/select2!
 
-
-Versioning
-----------
-
-For transparency and insight into our release cycle, and for striving to maintain backward compatibility, Bootstrap will be maintained under the Semantic Versioning guidelines as much as possible.
-
-Releases will be numbered with the follow format:
-
-`<major>.<minor>.<patch>`
-
-And constructed with the following guidelines:
-
-* Breaking backward compatibility bumps the major
-* New additions without breaking backward compatibility bumps the minor
-* Bug fixes and misc changes bump the patch
-
-For more information on SemVer, please visit http://semver.org/.
-
-
 Bug tracker
 -----------
 
 Have a bug? Please create an issue here on GitHub!
 
-https://github.com/twitter/bootstrap/issues
-
-
-Twitter account
----------------
-
-Keep up to date on announcements and more by following Bootstrap on Twitter, <a href="http://twitter.com/TwBootstrap">@TwBootstrap</a>.
+https://github.com/ivaynberg/select2/issues
 
 
 Mailing list
@@ -43,49 +18,13 @@ Mailing list
 
 Have a question? Ask on our mailing list!
 
-twitter-bootstrap@googlegroups.com
+select2@googlegroups.com
 
-http://groups.google.com/group/twitter-bootstrap
-
-
-IRC
----
-
-Server: irc.freenode.net
-
-Channel: ##twitter-bootstrap (the double ## is not a typo)
+https://groups.google.com/d/forum/select2
 
 
-Developers
-----------
-
-We have included a makefile with convenience methods for working with the Bootstrap library.
-
-+ **build** - `make`
-Runs the LESS compiler to rebuild the `/less` files and compiles the docs pages. Requires lessc and uglify-js. <a href="http://twitter.github.com/bootstrap/less.html#compiling">Read more in our docs &raquo;</a>
-
-+ **watch** - `make watch`
-This is a convenience method for watching just Less files and automatically building them whenever you save. Requires the Watchr gem.
-
-
-Authors
--------
-
-**Mark Otto**
-
-+ http://twitter.com/mdo
-+ http://github.com/markdotto
-
-**Jacob Thornton**
-
-+ http://twitter.com/fat
-+ http://github.com/fat
-
-
-Copyright and license
+License
 ---------------------
-
-Copyright 2012 Twitter, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this work except in compliance with the License.
