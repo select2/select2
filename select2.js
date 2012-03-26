@@ -897,6 +897,7 @@
         if (this.opened()) return;
         this.parent.open.apply(this, arguments);
         this.resizeSearch();
+        this.ensureHighlightVisible();
         this.focusSearch();
     };
 
@@ -942,7 +943,7 @@
 
         choice = $(parts.join(""));
         choice.find("a")
-            .on("click", this.bind(function (e) {
+            .on("click dblclick", this.bind(function (e) {
             this.unselect($(e.target));
             this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
             killEvent(e);
@@ -950,8 +951,6 @@
             this.focusSearch();
         })).on("focus", this.bind(function () {
             this.container.addClass("select2-container-active");
-        })).on("blur", this.bind(function () {
-            this.blur();
         }));
 
         choice.data("select2-data", data);
