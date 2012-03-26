@@ -273,7 +273,7 @@
                 query.callback(data);
             });
         } else {
-            if (!opts.query && opts.ajax) {
+            if (!("query" in opts) && opts.ajax) {
                 opts.query = (function () {
                     var timeout, // current scheduled but not yet executed request
                         requestSequence = 0, // sequence used to drop out-of-order responses
@@ -438,7 +438,8 @@
         var results = this.results,
             more = results.find("li.select2-more-results"),
             below, // pixels the element is below the scroll fold, below==0 is when the element is starting to be visible
-            offset = -1; // index of first element without data
+            offset = -1, // index of first element without data
+            page = this.resultsPage+1;
 
         if (more.length === 0) return;
 
@@ -446,7 +447,7 @@
 
         if (below <= 0) {
             more.addClass("select2-active");
-            this.opts.query({term: this.search.val(), page: (this.resultsPage + 1), callback: this.bind(function (data) {
+            this.opts.query({term: this.search.val(), page: page, callback: this.bind(function (data) {
                 var parts = [], self = this;
                 $(data.results).each(function () {
                     parts.push("<li class='select2-result'>");
@@ -467,7 +468,7 @@
                 } else {
                     more.remove();
                 }
-                this.resultsPage = data.page;
+                this.resultsPage = page;
             })});
         }
     };
@@ -488,7 +489,7 @@
             return;
         }
 
-        this.resultsPage = 0;
+        this.resultsPage = 1;
         opts.query({term: search.val(), page: this.resultsPage, callback: this.bind(function (data) {
             var parts = []; // html parts
 
