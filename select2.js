@@ -20,9 +20,7 @@
     "use strict";
     /*global document, window, jQuery, console */
 
-    var uid = 0, KEY;
-
-    KEY = {
+    var KEY = {
         TAB: 9,
         ENTER: 13,
         ESC: 27,
@@ -145,6 +143,18 @@
     }
 
     /**
+     * blurs any Select2 container that has focus when an element outside them was clicked or received focus
+     */
+    $(document).ready(function () {
+        $(document).on("mousedown focusin", function (e) {
+            var target = $(e.target).closest("div.select2-container").get(0);
+            $(document).find("div.select2-container-active").each(function () {
+                if (this !== target) $(this).data("select2").blur();
+            });
+        });
+    });
+
+    /**
      *
      * @param opts
      */
@@ -160,9 +170,6 @@
 
     AbstractSelect2.prototype.init = function (opts) {
         var results, search;
-
-        this.uid = uid;
-        uid = uid + 1;
 
         // prepare options
         this.opts = this.prepareOpts(opts);
@@ -333,13 +340,6 @@
 
         this.alignDropdown();
         this.dropdown.show();
-
-        // register click-outside-closes-dropdown listener
-        $(document).on("click.id" + this.uid, this.bind(function (e) {
-            if ($(e.target).closest(this.container).length === 0) {
-                this.blur();
-            }
-        }));
     };
 
     AbstractSelect2.prototype.close = function () {
@@ -347,7 +347,6 @@
 
         this.dropdown.hide();
         this.container.removeClass("select2-dropdown-open");
-        $(document).off("click.id" + this.uid);
 
         if (this.select) {
             // TODO see if we can always clear here and reset on open
@@ -439,7 +438,7 @@
             more = results.find("li.select2-more-results"),
             below, // pixels the element is below the scroll fold, below==0 is when the element is starting to be visible
             offset = -1, // index of first element without data
-            page = this.resultsPage+1;
+            page = this.resultsPage + 1;
 
         if (more.length === 0) return;
 
@@ -835,11 +834,6 @@
                 }
             }
 
-            if (e.which === KEY.TAB) {
-                this.blur();
-                return;
-            }
-
             if (e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e) || e.which === KEY.BACKSPACE || e.which === KEY.ESC) {
                 return;
             }
@@ -903,6 +897,7 @@
         if (this.opened()) return;
         this.parent.open.apply(this, arguments);
         this.resizeSearch();
+        this.ensureHighlightVisible();
         this.focusSearch();
     };
 
@@ -948,7 +943,7 @@
 
         choice = $(parts.join(""));
         choice.find("a")
-            .on("click", this.bind(function (e) {
+            .on("click dblclick", this.bind(function (e) {
             this.unselect($(e.target));
             this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
             killEvent(e);
@@ -956,8 +951,6 @@
             this.focusSearch();
         })).on("focus", this.bind(function () {
             this.container.addClass("select2-container-active");
-        })).on("blur", this.bind(function () {
-            this.blur();
         }));
 
         choice.data("select2-data", data);
