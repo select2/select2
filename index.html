@@ -285,7 +285,8 @@ $("#e9").select2();
       <header class="jumbotron subhead">
         <div class="subnav">
           <ul class="nav nav-pills">
-            <li class="dropdown">
+              <li><a href="#changelog">Changelog</a></li>
+              <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">Examples <b class="caret"></b></a>
               <ul class="dropdown-menu">
                   <li><a href="#basics">Basics</a></li>
@@ -305,7 +306,16 @@ $("#e9").select2();
         </div>
       </header>
 
-
+        <section id="changelog">
+            <h2>Changelog</h2>
+            <div class="row"><div class="span12">
+                <ul>
+                    <li>Support for selection of multiple values. See <code>multiple</code> option in the docs.</li>
+                    <li>Ability to reset back to placeholder once a selection has been made. See <code>allowClear</code> option in the docs.</li>
+                    <li>Simplified paging of remote datasets by tracking the page number automatically.</li>
+                </ul>
+            </div></div>
+        </section>
 
       <section>
       <div class="row">
