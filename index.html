@@ -9,11 +9,10 @@
 
     <link href="bootstrap/css/bootstrap.css" rel="stylesheet"/>
     <link href="prettify/prettify.css" rel="stylesheet"/>
-    <link href="select2-1.0/select2.css" rel="stylesheet"/>
+    <link href="select2-master/select2.css" rel="stylesheet"/>
     <style type="text/css">
         body {
         padding-top: 60px;
-        padding-bottom: 40px;
         }
 
         .zebra { background-color: #efefef; }
@@ -37,9 +36,10 @@
     <![endif]-->
 
       <script src="js/jquery-1.7.1.min.js"></script>
+      <script src="js/jquery.mousewheel.js"></script>
       <script src="prettify/prettify.min.js"></script>
       <script src="bootstrap/js/bootstrap.min.js"></script>
-      <script src="select2-1.0/select2-1.0.js"></script>
+      <script src="select2-master/select2.js"></script>
 
 <script id="script_e1">
 $(document).ready(function() {
@@ -51,7 +51,8 @@ $("#e1").select2();
 <script id="script_e2">
 $(document).ready(function() {
 $("#e2").select2({
-    placeholder: {id: "", text: "Select a State"}
+    placeholder: "Select a State",
+    allowClear: true
 });
 });
 </script>
@@ -94,27 +95,9 @@ $("#e5").select2({
 });
 </script>
 
-<script id="script_e6">
-$(document).ready(function() {
-$("#e6").select2({
-    placeholder: {title: "Search for a movie", id: ""},
-    minimumInputLength: 1,
-    query: "ajax",
-    ajax: {
-        url: "http://api.rottentomatoes.com/api/public/v1.0/movies.json",
-        dataType: 'jsonp',
-        data: function (term, vars) {
-            return params = {
-                q: term,
-                page_limit: 10,
-                apikey: "ju6z9mjyajq2djue3gbvv26t" // please use your own so this example keeps working
-            };
-        },
-        results: function (data, vars) {
-            return {results: data.movies};
-        }
-    },
-    formatResult: function (movie) {
+<script>
+
+    function movieFormatResult(movie) {
         var markup = "<table class='movie-result'><tr>";
         if (movie.posters !== undefined && movie.posters.thumbnail !== undefined) {
             markup += "<td class='movie-image'><img src='" + movie.posters.thumbnail + "'/></td>";
@@ -128,10 +111,36 @@ $("#e6").select2({
         }
         markup += "</td></tr></table>"
         return markup;
-    },
-    formatSelection: function (movie) {
+    }
+
+    function movieFormatSelection(movie) {
         return movie.title;
     }
+
+</script>
+
+<script id="script_e6">
+$(document).ready(function() {
+$("#e6").select2({
+    placeholder: {title: "Search for a movie", id: ""},
+    minimumInputLength: 3,
+    ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+        url: "http://api.rottentomatoes.com/api/public/v1.0/movies.json",
+        dataType: 'jsonp',
+        data: function (term, page) {
+            return {
+                q: term,
+                page_limit: 10,
+                apikey: "ju6z9mjyajq2djue3gbvv26t" // please do not use so this example keeps working
+            };
+        },
+        results: function (data, vars) { // parse the results into the format expected by Select2.
+            // since we are using custom formatting functions we do not need to alter remote JSON data
+            return {results: data.movies};
+        }
+    },
+    formatResult: movieFormatResult, // omitted for brevity, see the source of this page
+    formatSelection: movieFormatSelection  // omitted for brevity, see the source of this page
 });
 });
 </script>
@@ -140,45 +149,28 @@ $("#e6").select2({
 $(document).ready(function() {
 $("#e7").select2({
     placeholder: {title: "Search for a movie", id: ""},
-    minimumInputLength: 1,
-    query: "ajax",
+    minimumInputLength: 3,
     ajax: {
         url: "http://api.rottentomatoes.com/api/public/v1.0/movies.json",
         dataType: 'jsonp',
         quietMillis: 100,
-        data: function (term, vars) { // vars is an object that select2 holds onto for us as long as the search term stays the same
-            var page = vars.page || 1; // figure out what page to query
-            return params = {
+        data: function (term, page) { // page is the one-based page number tracked by Select2
+            return {
                 q: term,
-                page_limit: 10,
-                page: page,
-                apikey: "ju6z9mjyajq2djue3gbvv26t" // please use your own so this example keeps working
+                page_limit: 10, // page size
+                page: page, // page number
+                apikey: "ju6z9mjyajq2djue3gbvv26t" // please do not use so this example keeps working
             };
         },
-        results: function (data, vars) {
-            vars.page = vars.page ? vars.page + 1 : 2; // figure out what page to query next and save it
-            var more = (vars.page - 1) * 50 < data.total; // whether or not there are more results available
-            return {results: data.movies, more: more, vars: vars};
+        results: function (data, page) {
+            var more = (page * 10) < data.total; // whether or not there are more results available
+
+            // notice we return the value of more so Select2 knows if more results can be loaded
+            return {results: data.movies, more: more};
         }
     },
-    formatResult: function (movie) {
-        var markup = "<table class='movie-result'><tr>";
-        if (movie.posters !== undefined && movie.posters.thumbnail !== undefined) {
-            markup += "<td class='movie-image'><img src='" + movie.posters.thumbnail + "'/></td>";
-        }
-        markup += "<td class='movie-info'><div class='movie-title'>" + movie.title + "</div>";
-        if (movie.critics_consensus !== undefined) {
-            markup += "<div class='movie-synopsis'>" + movie.critics_consensus + "</div>";
-        }
-        else if (movie.synopsis !== undefined) {
-            markup += "<div class='movie-synopsis'>" + movie.synopsis + "</div>";
-        }
-        markup += "</td></tr></table>"
-        return markup;
-    },
-    formatSelection: function (movie) {
-        return movie.title;
-    }
+    formatResult: movieFormatResult, // omitted for brevity, see the source of this page
+    formatSelection: movieFormatSelection // omitted for brevity, see the source of this page
 });
 });
 </script>
@@ -186,16 +178,17 @@ $("#e7").select2({
 <script id="script_e8">
 $(document).ready(function() {
 $("#e8").select2();
-$("#e8_get").click(
-    function () {
-        alert("Selected value is: "+$("#e8").select2("val"));
-    }
-);
-$("#e8_set").click(
-    function () {
-        $("#e8").select2("val", "CA");
-    }
-);
+$("#e8_get").click(function () { alert("Selected value is: "+$("#e8").select2("val"));});
+$("#e8_set").click(function () { $("#e8").select2("val", "CA"); });
+$("#e8_2").select2();
+$("#e8_2_get").click(function () { alert("Selected value is: "+$("#e8_2").select2("val"));});
+$("#e8_2_set").click(function () { $("#e8_2").select2("val", ["CA","MA"]); });
+
+});
+</script>
+<script id="script_e9">
+$(document).ready(function() {
+$("#e9").select2();
 });
 </script>
 
@@ -220,6 +213,7 @@ $("#e8_set").click(
           setupExampleCode("e6");
           setupExampleCode("e7");
           setupExampleCode("e8");
+          setupExampleCode("e9");
           prettyPrint();});
   </script>
 
@@ -251,7 +245,8 @@ $("#e8_set").click(
           </a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="active"><a href="index.html">Select2</a></li>
+              <li class="active"><a href="index.html">Select2 Latest</a></li>
+              <li><a href="select2-1.0.html">Select2 1.0</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -274,21 +269,59 @@ $("#e8_set").click(
 
       <div class="row">
           <div class="span12">
+              <div class="alert alert-block alert-error">
+                  <h4 class="alert-heading">Warning!</h4>
+                  This page refers to an unreleased version of Select2 which may be unstable. For the latest stable
+                  and previous versions please see links at the top. The code for this version is only available in the <a
+                      href="https://github.com/ivaynberg/select2">master branch.</a>
+              </div>
+          </div>
+      </div>
+
+      <header class="jumbotron subhead">
+        <div class="subnav">
+          <ul class="nav nav-pills">
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Examples <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                  <li><a href="#basics">Basics</a></li>
+                  <li><a href="#multi">Multi-Value</a></li>
+                  <li><a href="#placeholders">Placeholders</a></li>
+                  <li><a href="#minimum">Minimum Input Length</a></li>
+                  <li><a href="#templating">Templating</a></li>
+                  <li><a href="#data">Custom Data</a></li>
+                  <li><a href="#ajax">Remote/AJAX Data</a></li>
+                  <li><a href="#infinite">Infinite Scrolling of Remote/AJAX data</a></li>
+                  <li><a href="#pragmatic">Pragmatic control</a></li>
+              </ul>
+            </li>
+            <li><a href="#documentation">Documentation</a></li>
+            <li><a href="#about">About</a></li>
+          </ul>
+        </div>
+      </header>
+
+
+
+      <section>
+      <div class="row">
+          <div class="span12">
               <h2>Examples</h2>
               <hr/>
           </div>
       </div>
 
-
-      <div class="row">
+      
+      <article class="row" id="basics">
         <div class="span4">
           <h3>The Basics</h3>
-           <p>Select2 takes a select box like this:</p>
-           <p><select style="width:300px"><option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option><option value="AR">Arkansas</option><option value="CA">California</option><option value="CO">Colorado</option><option value="CT">Connecticut</option><option value="DE">Delaware</option><option value="FL">Florida</option><option value="GA">Georgia</option><option value="HI">Hawaii</option><option value="ID">Idaho</option><option value="IL">Illinois</option><option value="IN">Indiana</option><option value="IA">Iowa</option><option value="KS">Kansas</option><option value="KY">Kentucky[6]</option><option value="LA">Louisiana</option><option value="ME">Maine</option><option value="MD">Maryland</option><option value="MA">Massachusetts[6]</option><option value="MI">Michigan</option><option value="MN">Minnesota</option><option value="MS">Mississippi</option><option value="MO">Missouri</option><option value="MT">Montana</option><option value="NE">Nebraska</option><option value="NV">Nevada</option><option value="NH">New Hampshire</option><option value="NJ">New Jersey</option><option value="NM">New Mexico</option><option value="NY">New York</option><option value="NC">North Carolina</option><option value="ND">North Dakota</option><option value="OH">Ohio</option><option value="OK">Oklahoma</option><option value="OR">Oregon</option><option value="PA">Pennsylvania[6]</option><option value="RI">Rhode Island[13]</option><option value="SC">South Carolina</option><option value="SD">South Dakota</option><option value="TN">Tennessee</option><option value="TX">Texas</option><option value="UT">Utah</option><option value="VT">Vermont</option><option value="VA">Virginia</option><option value="WA">Washington</option><option value="WV">West Virginia</option><option value="WI">Wisconsin</option><option value="WY">Wyoming</option></select></p>
+           <p>Select2 can take a regular select box like this:</p>
+           <p><select style="width:300px"><option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option><option value="AR">Arkansas</option><option value="CA">California</option><option value="CO">Colorado</option><option value="CT">Connecticut</option><option value="DE">Delaware</option><option value="FL">Florida</option><option value="GA">Georgia</option><option value="HI">Hawaii</option><option value="ID">Idaho</option><option value="IL">Illinois</option><option value="IN">Indiana</option><option value="IA">Iowa</option><option value="KS">Kansas</option><option value="KY">Kentucky</option><option value="LA">Louisiana</option><option value="ME">Maine</option><option value="MD">Maryland</option><option value="MA">Massachusetts</option><option value="MI">Michigan</option><option value="MN">Minnesota</option><option value="MS">Mississippi</option><option value="MO">Missouri</option><option value="MT">Montana</option><option value="NE">Nebraska</option><option value="NV">Nevada</option><option value="NH">New Hampshire</option><option value="NJ">New Jersey</option><option value="NM">New Mexico</option><option value="NY">New York</option><option value="NC">North Carolina</option><option value="ND">North Dakota</option><option value="OH">Ohio</option><option value="OK">Oklahoma</option><option value="OR">Oregon</option><option value="PA">Pennsylvania</option><option value="RI">Rhode Island</option><option value="SC">South Carolina</option><option value="SD">South Dakota</option><option value="TN">Tennessee</option><option value="TX">Texas</option><option value="UT">Utah</option><option value="VT">Vermont</option><option value="VA">Virginia</option><option value="WA">Washington</option><option value="WV">West Virginia</option><option value="WI">Wisconsin</option><option value="WY">Wyoming</option></select></p>
            <p>and turns it into:</p>
            <p>
-               <select id="e1" style="width:300px"><option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option><option value="AR">Arkansas</option><option value="CA">California</option><option value="CO">Colorado</option><option value="CT">Connecticut</option><option value="DE">Delaware</option><option value="FL">Florida</option><option value="GA">Georgia</option><option value="HI">Hawaii</option><option value="ID">Idaho</option><option value="IL">Illinois</option><option value="IN">Indiana</option><option value="IA">Iowa</option><option value="KS">Kansas</option><option value="KY">Kentucky[6]</option><option value="LA">Louisiana</option><option value="ME">Maine</option><option value="MD">Maryland</option><option value="MA">Massachusetts[6]</option><option value="MI">Michigan</option><option value="MN">Minnesota</option><option value="MS">Mississippi</option><option value="MO">Missouri</option><option value="MT">Montana</option><option value="NE">Nebraska</option><option value="NV">Nevada</option><option value="NH">New Hampshire</option><option value="NJ">New Jersey</option><option value="NM">New Mexico</option><option value="NY">New York</option><option value="NC">North Carolina</option><option value="ND">North Dakota</option><option value="OH">Ohio</option><option value="OK">Oklahoma</option><option value="OR">Oregon</option><option value="PA">Pennsylvania[6]</option><option value="RI">Rhode Island[13]</option><option value="SC">South Carolina</option><option value="SD">South Dakota</option><option value="TN">Tennessee</option><option value="TX">Texas</option><option value="UT">Utah</option><option value="VT">Vermont</option><option value="VA">Virginia</option><option value="WA">Washington</option><option value="WV">West Virginia</option><option value="WI">Wisconsin</option><option value="WY">Wyoming</option></select><br/>
+               <select id="e1" style="width:300px"><option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option><option value="AR">Arkansas</option><option value="CA">California</option><option value="CO">Colorado</option><option value="CT">Connecticut</option><option value="DE">Delaware</option><option value="FL">Florida</option><option value="GA">Georgia</option><option value="HI">Hawaii</option><option value="ID">Idaho</option><option value="IL">Illinois</option><option value="IN">Indiana</option><option value="IA">Iowa</option><option value="KS">Kansas</option><option value="KY">Kentucky</option><option value="LA">Louisiana</option><option value="ME">Maine</option><option value="MD">Maryland</option><option value="MA">Massachusetts</option><option value="MI">Michigan</option><option value="MN">Minnesota</option><option value="MS">Mississippi</option><option value="MO">Missouri</option><option value="MT">Montana</option><option value="NE">Nebraska</option><option value="NV">Nevada</option><option value="NH">New Hampshire</option><option value="NJ">New Jersey</option><option value="NM">New Mexico</option><option value="NY">New York</option><option value="NC">North Carolina</option><option value="ND">North Dakota</option><option value="OH">Ohio</option><option value="OK">Oklahoma</option><option value="OR">Oregon</option><option value="PA">Pennsylvania</option><option value="RI">Rhode Island</option><option value="SC">South Carolina</option><option value="SD">South Dakota</option><option value="TN">Tennessee</option><option value="TX">Texas</option><option value="UT">Utah</option><option value="VT">Vermont</option><option value="VA">Virginia</option><option value="WA">Washington</option><option value="WV">West Virginia</option><option value="WI">Wisconsin</option><option value="WY">Wyoming</option></select><br/>
            </p>
+           <p>with support for quick option filtering via a search box</p>
         </div>
         <div class="span8">
           <h3>Example Code</h3>
@@ -309,67 +342,87 @@ $("#e8_set").click(
 &lt;/body&gt;
 </pre>
        </div>
-      </div>
+      </article>
 
-        <div class="zebra row">
+      <article class="zebra row" id="multi">
+        <div class="span4">
+          <h3>Multi-Value Select Boxes</h3>
+           <p>Select2 also supports multi-value select boxes. The <code>select</code> below is declared with the <code>multiple</code> attribute. Select2 automatially picks up on this:</p>
+           <p>
+               <select multiple name="e9" id="e9" style="width:300px"><option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option><option value="AR">Arkansas</option><option value="CA">California</option><option value="CO">Colorado</option><option value="CT">Connecticut</option><option value="DE">Delaware</option><option value="FL">Florida</option><option value="GA">Georgia</option><option value="HI">Hawaii</option><option value="ID">Idaho</option><option value="IL">Illinois</option><option value="IN">Indiana</option><option value="IA">Iowa</option><option value="KS">Kansas</option><option value="KY">Kentucky</option><option value="LA">Louisiana</option><option value="ME">Maine</option><option value="MD">Maryland</option><option value="MA">Massachusetts</option><option value="MI">Michigan</option><option value="MN">Minnesota</option><option value="MS">Mississippi</option><option value="MO">Missouri</option><option value="MT">Montana</option><option value="NE">Nebraska</option><option value="NV">Nevada</option><option value="NH">New Hampshire</option><option value="NJ">New Jersey</option><option value="NM">New Mexico</option><option value="NY">New York</option><option value="NC">North Carolina</option><option value="ND">North Dakota</option><option value="OH">Ohio</option><option value="OK">Oklahoma</option><option value="OR">Oregon</option><option value="PA">Pennsylvania</option><option value="RI">Rhode Island</option><option value="SC">South Carolina</option><option value="SD">South Dakota</option><option value="TN">Tennessee</option><option value="TX">Texas</option><option value="UT">Utah</option><option value="VT">Vermont</option><option value="VA">Virginia</option><option value="WA">Washington</option><option value="WV">West Virginia</option><option value="WI">Wisconsin</option><option value="WY">Wyoming</option></select><br/>
+           </p>
+        </div>
+        <div class="span8">
+          <h3>Example Code</h3>
+          <pre class="prettyprint linenums" id="code_e9">
+          </pre>
+       </div>
+      </article>
+
+
+        <article class="row" id="placeholders">
           <div class="span4">
             <h3>Placeholders</h3>
-             <p>A placeholder text can be defined that will be displayed until a selection is made:</p>
+             <p>A placeholder value can be defined and will be displayed until a selection is made:</p>
              <p>
-                 <select id="e2" style="width:300px"><option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option><option value="AR">Arkansas</option><option value="CA">California</option><option value="CO">Colorado</option><option value="CT">Connecticut</option><option value="DE">Delaware</option><option value="FL">Florida</option><option value="GA">Georgia</option><option value="HI">Hawaii</option><option value="ID">Idaho</option><option value="IL">Illinois</option><option value="IN">Indiana</option><option value="IA">Iowa</option><option value="KS">Kansas</option><option value="KY">Kentucky[6]</option><option value="LA">Louisiana</option><option value="ME">Maine</option><option value="MD">Maryland</option><option value="MA">Massachusetts[6]</option><option value="MI">Michigan</option><option value="MN">Minnesota</option><option value="MS">Mississippi</option><option value="MO">Missouri</option><option value="MT">Montana</option><option value="NE">Nebraska</option><option value="NV">Nevada</option><option value="NH">New Hampshire</option><option value="NJ">New Jersey</option><option value="NM">New Mexico</option><option value="NY">New York</option><option value="NC">North Carolina</option><option value="ND">North Dakota</option><option value="OH">Ohio</option><option value="OK">Oklahoma</option><option value="OR">Oregon</option><option value="PA">Pennsylvania[6]</option><option value="RI">Rhode Island[13]</option><option value="SC">South Carolina</option><option value="SD">South Dakota</option><option value="TN">Tennessee</option><option value="TX">Texas</option><option value="UT">Utah</option><option value="VT">Vermont</option><option value="VA">Virginia</option><option value="WA">Washington</option><option value="WV">West Virginia</option><option value="WI">Wisconsin</option><option value="WY">Wyoming</option></select><br/>
+                 <select id="e2" style="width:300px"><option></option><option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option><option value="AR">Arkansas</option><option value="CA">California</option><option value="CO">Colorado</option><option value="CT">Connecticut</option><option value="DE">Delaware</option><option value="FL">Florida</option><option value="GA">Georgia</option><option value="HI">Hawaii</option><option value="ID">Idaho</option><option value="IL">Illinois</option><option value="IN">Indiana</option><option value="IA">Iowa</option><option value="KS">Kansas</option><option value="KY">Kentucky</option><option value="LA">Louisiana</option><option value="ME">Maine</option><option value="MD">Maryland</option><option value="MA">Massachusetts</option><option value="MI">Michigan</option><option value="MN">Minnesota</option><option value="MS">Mississippi</option><option value="MO">Missouri</option><option value="MT">Montana</option><option value="NE">Nebraska</option><option value="NV">Nevada</option><option value="NH">New Hampshire</option><option value="NJ">New Jersey</option><option value="NM">New Mexico</option><option value="NY">New York</option><option value="NC">North Carolina</option><option value="ND">North Dakota</option><option value="OH">Ohio</option><option value="OK">Oklahoma</option><option value="OR">Oregon</option><option value="PA">Pennsylvania</option><option value="RI">Rhode Island</option><option value="SC">South Carolina</option><option value="SD">South Dakota</option><option value="TN">Tennessee</option><option value="TX">Texas</option><option value="UT">Utah</option><option value="VT">Vermont</option><option value="VA">Virginia</option><option value="WA">Washington</option><option value="WV">West Virginia</option><option value="WI">Wisconsin</option><option value="WY">Wyoming</option></select><br/>
              </p>
+             <p>The placeholder can be declared via a <code>data-placeholder</code> attribute attached to the <code>select</code>, or via the <code>placeholder</code> configuration element as seen in the example code</p>
+              <p>Optionally, a clear button (visible once a selection is made) is available to reset the select box back to the placeholder value.</p>
+             
           </div>
           <div class="span8">
             <h3>Example Code</h3>
             <pre class="prettyprint linenums" id="code_e2">
             </pre>
          </div>
-        </div>
+        </article>
 
-        <div class="row">
+        <article class="zebra row" id="minimum">
           <div class="span4">
             <h3>Minimum Input</h3>
              <p>Select2 supports a minimum input setting which is useful for large remote datasets where short search terms are not very useful:</p>
              <p>
-                 <select id="e3" style="width:300px"><option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option><option value="AR">Arkansas</option><option value="CA">California</option><option value="CO">Colorado</option><option value="CT">Connecticut</option><option value="DE">Delaware</option><option value="FL">Florida</option><option value="GA">Georgia</option><option value="HI">Hawaii</option><option value="ID">Idaho</option><option value="IL">Illinois</option><option value="IN">Indiana</option><option value="IA">Iowa</option><option value="KS">Kansas</option><option value="KY">Kentucky[6]</option><option value="LA">Louisiana</option><option value="ME">Maine</option><option value="MD">Maryland</option><option value="MA">Massachusetts[6]</option><option value="MI">Michigan</option><option value="MN">Minnesota</option><option value="MS">Mississippi</option><option value="MO">Missouri</option><option value="MT">Montana</option><option value="NE">Nebraska</option><option value="NV">Nevada</option><option value="NH">New Hampshire</option><option value="NJ">New Jersey</option><option value="NM">New Mexico</option><option value="NY">New York</option><option value="NC">North Carolina</option><option value="ND">North Dakota</option><option value="OH">Ohio</option><option value="OK">Oklahoma</option><option value="OR">Oregon</option><option value="PA">Pennsylvania[6]</option><option value="RI">Rhode Island[13]</option><option value="SC">South Carolina</option><option value="SD">South Dakota</option><option value="TN">Tennessee</option><option value="TX">Texas</option><option value="UT">Utah</option><option value="VT">Vermont</option><option value="VA">Virginia</option><option value="WA">Washington</option><option value="WV">West Virginia</option><option value="WI">Wisconsin</option><option value="WY">Wyoming</option></select><br/>
+                 <select id="e3" style="width:300px"><option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option><option value="AR">Arkansas</option><option value="CA">California</option><option value="CO">Colorado</option><option value="CT">Connecticut</option><option value="DE">Delaware</option><option value="FL">Florida</option><option value="GA">Georgia</option><option value="HI">Hawaii</option><option value="ID">Idaho</option><option value="IL">Illinois</option><option value="IN">Indiana</option><option value="IA">Iowa</option><option value="KS">Kansas</option><option value="KY">Kentucky</option><option value="LA">Louisiana</option><option value="ME">Maine</option><option value="MD">Maryland</option><option value="MA">Massachusetts</option><option value="MI">Michigan</option><option value="MN">Minnesota</option><option value="MS">Mississippi</option><option value="MO">Missouri</option><option value="MT">Montana</option><option value="NE">Nebraska</option><option value="NV">Nevada</option><option value="NH">New Hampshire</option><option value="NJ">New Jersey</option><option value="NM">New Mexico</option><option value="NY">New York</option><option value="NC">North Carolina</option><option value="ND">North Dakota</option><option value="OH">Ohio</option><option value="OK">Oklahoma</option><option value="OR">Oregon</option><option value="PA">Pennsylvania</option><option value="RI">Rhode Island</option><option value="SC">South Carolina</option><option value="SD">South Dakota</option><option value="TN">Tennessee</option><option value="TX">Texas</option><option value="UT">Utah</option><option value="VT">Vermont</option><option value="VA">Virginia</option><option value="WA">Washington</option><option value="WV">West Virginia</option><option value="WI">Wisconsin</option><option value="WY">Wyoming</option></select><br/>
              </p>
           </div>
           <div class="span8">
             <h3>Example Code</h3>
             <pre class="prettyprint linenums" id="code_e3"></pre>
          </div>
-        </div>
+        </article>
 
-        <div class="zebra row">
+        <article class="row" id="templating">
           <div class="span4">
             <h3>Templating</h3>
              <p>Various display options of the Select2 component can be changed:</p>
              <p>
-                 <select id="e4" style="width:300px"><option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option><option value="AR">Arkansas</option><option value="CA">California</option><option value="CO">Colorado</option><option value="CT">Connecticut</option><option value="DE">Delaware</option><option value="FL">Florida</option><option value="GA">Georgia</option><option value="HI">Hawaii</option><option value="ID">Idaho</option><option value="IL">Illinois</option><option value="IN">Indiana</option><option value="IA">Iowa</option><option value="KS">Kansas</option><option value="KY">Kentucky[6]</option><option value="LA">Louisiana</option><option value="ME">Maine</option><option value="MD">Maryland</option><option value="MA">Massachusetts[6]</option><option value="MI">Michigan</option><option value="MN">Minnesota</option><option value="MS">Mississippi</option><option value="MO">Missouri</option><option value="MT">Montana</option><option value="NE">Nebraska</option><option value="NV">Nevada</option><option value="NH">New Hampshire</option><option value="NJ">New Jersey</option><option value="NM">New Mexico</option><option value="NY">New York</option><option value="NC">North Carolina</option><option value="ND">North Dakota</option><option value="OH">Ohio</option><option value="OK">Oklahoma</option><option value="OR">Oregon</option><option value="PA">Pennsylvania[6]</option><option value="RI">Rhode Island[13]</option><option value="SC">South Carolina</option><option value="SD">South Dakota</option><option value="TN">Tennessee</option><option value="TX">Texas</option><option value="UT">Utah</option><option value="VT">Vermont</option><option value="VA">Virginia</option><option value="WA">Washington</option><option value="WV">West Virginia</option><option value="WI">Wisconsin</option><option value="WY">Wyoming</option></select><br/>
+                 <select id="e4" style="width:300px"><option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option><option value="AR">Arkansas</option><option value="CA">California</option><option value="CO">Colorado</option><option value="CT">Connecticut</option><option value="DE">Delaware</option><option value="FL">Florida</option><option value="GA">Georgia</option><option value="HI">Hawaii</option><option value="ID">Idaho</option><option value="IL">Illinois</option><option value="IN">Indiana</option><option value="IA">Iowa</option><option value="KS">Kansas</option><option value="KY">Kentucky</option><option value="LA">Louisiana</option><option value="ME">Maine</option><option value="MD">Maryland</option><option value="MA">Massachusetts</option><option value="MI">Michigan</option><option value="MN">Minnesota</option><option value="MS">Mississippi</option><option value="MO">Missouri</option><option value="MT">Montana</option><option value="NE">Nebraska</option><option value="NV">Nevada</option><option value="NH">New Hampshire</option><option value="NJ">New Jersey</option><option value="NM">New Mexico</option><option value="NY">New York</option><option value="NC">North Carolina</option><option value="ND">North Dakota</option><option value="OH">Ohio</option><option value="OK">Oklahoma</option><option value="OR">Oregon</option><option value="PA">Pennsylvania</option><option value="RI">Rhode Island</option><option value="SC">South Carolina</option><option value="SD">South Dakota</option><option value="TN">Tennessee</option><option value="TX">Texas</option><option value="UT">Utah</option><option value="VT">Vermont</option><option value="VA">Virginia</option><option value="WA">Washington</option><option value="WV">West Virginia</option><option value="WI">Wisconsin</option><option value="WY">Wyoming</option></select><br/>
              </p>
           </div>
           <div class="span8">
             <h3>Example Code</h3>
             <pre class="prettyprint linenums" id="code_e4"></pre>
          </div>
-        </div>
+        </article>
 
-       <div class="row">
+       <article class="zebra row" id="data">
           <div class="span4">
             <h3>Loading Data</h3>
-             <p>Select2 uses a function to load result data. Here is a trivial example that creates choices that consist of user's input echoed a number of times:</p>
+             <p>Select2 uses a function to load result data. Here is a trivial example that creates choices that consist of user's input repeated a number of times:</p>
              <p>
                  <input type="hidden" id="e5" style="width:300px"/>
              </p>
+             <p>In order to take advantage of custom data loading Select2 should be attached to an <code>input type='hidden'</code> tag, otherwise data is parsed from <code>select</code>'s <code>option</code> tags.</code></p>
           </div>
           <div class="span8">
             <h3>Example Code</h3>
             <pre class="prettyprint linenums" id="code_e5">
             </pre>
          </div>
-        </div>
+        </article>
 
-        <div class="zebra row">
+        <article class="row" id="ajax">
            <div class="span12">
              <h3>Loading Remote Data</h3>
               <p>Select2 comes with AJAX/JSONP support built in. In this example we will search for a movie using Rotten Tomatoes API:</p>
@@ -378,9 +431,10 @@ $("#e8_set").click(
               </p>
               <h3>Example Code</h3>
               <pre class="prettyprint linenums" id="code_e6"></pre>
+              <p>Select2 uses jQuery's <code>$.ajax</code> function to execute the remote call. If you would like to use another transport you can specify your own <code>query</code> function instead of using the <code>ajax</code> helper.</p>
            </div>
-        </div>
-        <div class="row">
+        </article>
+        <article class="zebra row" id="infinite">
             <div class="span12">
               <h3>Infinite Scroll with Remote Data</h3>
                <p>Select2 supports lazy-appending of results when the result list is scrolled to the end.
@@ -394,26 +448,36 @@ $("#e8_set").click(
               <h3>Example Code</h3>
               <pre class="prettyprint linenums" id="code_e7"></pre>
             </div>
-         </div>
+         </article>
 
-        <div class="zebra row">
+        <article class="row" id="pragmatic">
           <div class="span4">
             <h3>Pragmatic Access</h3>
              <p>Select2 supports methods that allow pragmatic control of the componentL</p>
              <p>
-                 <select id="e8" style="width:300px"><option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option><option value="AR">Arkansas</option><option value="CA">California</option><option value="CO">Colorado</option><option value="CT">Connecticut</option><option value="DE">Delaware</option><option value="FL">Florida</option><option value="GA">Georgia</option><option value="HI">Hawaii</option><option value="ID">Idaho</option><option value="IL">Illinois</option><option value="IN">Indiana</option><option value="IA">Iowa</option><option value="KS">Kansas</option><option value="KY">Kentucky[6]</option><option value="LA">Louisiana</option><option value="ME">Maine</option><option value="MD">Maryland</option><option value="MA">Massachusetts[6]</option><option value="MI">Michigan</option><option value="MN">Minnesota</option><option value="MS">Mississippi</option><option value="MO">Missouri</option><option value="MT">Montana</option><option value="NE">Nebraska</option><option value="NV">Nevada</option><option value="NH">New Hampshire</option><option value="NJ">New Jersey</option><option value="NM">New Mexico</option><option value="NY">New York</option><option value="NC">North Carolina</option><option value="ND">North Dakota</option><option value="OH">Ohio</option><option value="OK">Oklahoma</option><option value="OR">Oregon</option><option value="PA">Pennsylvania[6]</option><option value="RI">Rhode Island[13]</option><option value="SC">South Carolina</option><option value="SD">South Dakota</option><option value="TN">Tennessee</option><option value="TX">Texas</option><option value="UT">Utah</option><option value="VT">Vermont</option><option value="VA">Virginia</option><option value="WA">Washington</option><option value="WV">West Virginia</option><option value="WI">Wisconsin</option><option value="WY">Wyoming</option></select><br/>
+                 <select id="e8" style="width:300px"><option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option><option value="AR">Arkansas</option><option value="CA">California</option><option value="CO">Colorado</option><option value="CT">Connecticut</option><option value="DE">Delaware</option><option value="FL">Florida</option><option value="GA">Georgia</option><option value="HI">Hawaii</option><option value="ID">Idaho</option><option value="IL">Illinois</option><option value="IN">Indiana</option><option value="IA">Iowa</option><option value="KS">Kansas</option><option value="KY">Kentucky</option><option value="LA">Louisiana</option><option value="ME">Maine</option><option value="MD">Maryland</option><option value="MA">Massachusetts</option><option value="MI">Michigan</option><option value="MN">Minnesota</option><option value="MS">Mississippi</option><option value="MO">Missouri</option><option value="MT">Montana</option><option value="NE">Nebraska</option><option value="NV">Nevada</option><option value="NH">New Hampshire</option><option value="NJ">New Jersey</option><option value="NM">New Mexico</option><option value="NY">New York</option><option value="NC">North Carolina</option><option value="ND">North Dakota</option><option value="OH">Ohio</option><option value="OK">Oklahoma</option><option value="OR">Oregon</option><option value="PA">Pennsylvania</option><option value="RI">Rhode Island</option><option value="SC">South Carolina</option><option value="SD">South Dakota</option><option value="TN">Tennessee</option><option value="TX">Texas</option><option value="UT">Utah</option><option value="VT">Vermont</option><option value="VA">Virginia</option><option value="WA">Washington</option><option value="WV">West Virginia</option><option value="WI">Wisconsin</option><option value="WY">Wyoming</option></select><br/>
              </p>
               <p>
                 <input type="button" class="btn-primary" id="e8_get" value="Alert selected value"/>
-                <input type="button" class="btn-info" id="e8_set" value="Set selected value to California"/>
+                <input type="button" class="btn-info" id="e8_set" value="Set to California"/>
               </p>
+              <p>
+                  <select id="e8_2" multiple style="width:300px"><option value="AL" selected>Alabama</option><option value="AK">Alaska</option><option value="AZ" selected>Arizona</option><option value="AR">Arkansas</option><option value="CA">California</option><option value="CO">Colorado</option><option value="CT">Connecticut</option><option value="DE">Delaware</option><option value="FL">Florida</option><option value="GA">Georgia</option><option value="HI">Hawaii</option><option value="ID">Idaho</option><option value="IL">Illinois</option><option value="IN">Indiana</option><option value="IA">Iowa</option><option value="KS">Kansas</option><option value="KY">Kentucky</option><option value="LA">Louisiana</option><option value="ME">Maine</option><option value="MD">Maryland</option><option value="MA">Massachusetts</option><option value="MI">Michigan</option><option value="MN">Minnesota</option><option value="MS">Mississippi</option><option value="MO">Missouri</option><option value="MT">Montana</option><option value="NE">Nebraska</option><option value="NV">Nevada</option><option value="NH">New Hampshire</option><option value="NJ">New Jersey</option><option value="NM">New Mexico</option><option value="NY">New York</option><option value="NC">North Carolina</option><option value="ND">North Dakota</option><option value="OH">Ohio</option><option value="OK">Oklahoma</option><option value="OR">Oregon</option><option value="PA">Pennsylvania</option><option value="RI">Rhode Island</option><option value="SC">South Carolina</option><option value="SD">South Dakota</option><option value="TN">Tennessee</option><option value="TX">Texas</option><option value="UT">Utah</option><option value="VT">Vermont</option><option value="VA">Virginia</option><option value="WA">Washington</option><option value="WV">West Virginia</option><option value="WI">Wisconsin</option><option value="WY">Wyoming</option></select><br/>
+              </p>
+               <p>
+                 <input type="button" class="btn-primary" id="e8_2_get" value="Alert selected value"/>
+                 <input type="button" class="btn-info" id="e8_2_set" value="Set to California and Massachusetts"/>
+               </p>
           </div>
           <div class="span8">
             <h3>Example Code</h3>
             <pre class="prettyprint linenums" id="code_e8"></pre>
          </div>
-        </div>
+        </article>
 
+      </section>
+      <section id="documentation">
+      
         <div class="row" style="padding-top: 20px;">
             <div class="span12"><h2>Documentation</h2><hr/></div>
         </div>
@@ -426,9 +490,58 @@ $("#e8_set").click(
                 <th>Parameter</th><th>Type</th><th>Description</th>
             </tr>
             <tr><td>minimumInputLength</td><td>int</td><td>Number of characters necessary to start a search</td></tr>
-            <tr><td>placeholder</td><td>object</td><td>Initial value that is selected if no other selection is made</td></tr>
+            <tr><td>placeholder</td><td>object/string</td><td>
+                <p>Initial value that is selected if no other selection is made.</p>
+                <p>
+                    The value can be specified either as an <code>object</code> or as a <code>string</code>. If
+                    specified as a <code>string</code> any custom <code>formatSelection</code> function will be
+                    bypassed and the string value will be rendered directly.
+                </p>
+                <p>The placeholder can also be specified as a <code>data-placeholder</code> attribute on the <code>select</code>
+                    or <code>input</code> element that Select2 is attached to. In this case only <code>string</code>
+                    values are supported
+                </p>
+
+                <p class="alert alert-warning">Note that because browsers assume the first <code>option</code> element
+                    is selected in
+                    non-multi-value select boxes an empty first <code>option</code> element must be provided (<code>&lt;option&gt;&lt;/option&gt;</code>)
+                    for the placeholder to work.
+                </p>
+            </td></tr>
+            <tr>
+                <td>allowClear</td>
+                <td>boolean</td>
+                <td>
+                    <p>
+                        Whether or not a clear button is displayed when the select box has a selection. The
+                        button,
+                        when clicked, resets the value of the select box back to the placeholder, thus this option is
+                        only
+                        available when the placeholder is specified.
+                    </p>
+
+                    <p>
+                        Also, note that this option only works with
+                        non-multi-value based selects because multi-value selects always provide such a button for every
+                        selected option.
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>multiple</td>
+                <td>boolean</td>
+                <td>
+                    <p>
+                        Whether or not Select2 allows selection of multiple values.
+                    </p>
+                    <p>When Select2 is attached to a <code>select</code> element this value will be ignored and <code>select</code>'s
+                        <code>multiple</code> attribute will be used instead.
+                    </p>
+                </td>
+            </tr>
+
             <tr><td>formatSelection</td><td>function</td><td>
-                Function used render the current selection.
+                Function used to render the current selection.
                 <pre>formatSelection(object)</pre>
                 <table class="table table-bordered table-striped">
                     <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
@@ -468,30 +581,27 @@ $("#e8_set").click(
             </td></tr>
             <tr>
                 <td>query</td>
-                <td>function/string</td>
+                <td>function</td>
                 <td>
                     Function used to query results for the search term.
                     <pre>query(options)</pre>
                     <table class="table table-bordered table-striped">
                         <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
                         <tr><td>options.term</td><td>string</td><td>Search string entered by user</td></tr>
-                        <tr><td>options.vars</td><td>object</td><td>Object from the previous result, see <code>options.callback</code></td></tr>
+                        <tr><td>options.page</td><td>int</td><td>1-based page number tracked by Select2 for use with infinite scrolling of results</td></tr>
                         <tr><td>options.callback</td><td>function</td>
-                            <td>Callback function that should be called with the <code>result</code> object. The results object:
+                            <td>Callback function that should be called with the <code>result</code> object. The result object:
                                 <table class="table table-bordered table-striped">
                                     <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
                                     <tr><td>result.results</td><td>[object]</td><td>Array of result objects. The default renderers expect objects with <code>id</code> and <code>text</code> keys</code>. The <code>id</code> attribute is required</code>, even if custom renderers are used.</td></tr>
-                                    <tr><td>result.vars</td><td>object</td><td>A user-defined object that will be passed into the next invocation of <code>query</code> if more results need to be loaded</td></tr>
                                     <tr><td>result.more</td><td>boolean</td><td><code>true</code>if more results are available for the current search term</td></tr>
                                 </table>
                             </td></tr>
                     </table>
-                    <hr/>
-                    <code>"ajax"</code> - use the built in ajax query function. This function will handle throttling and dropping out-of-order responses.
                 </td>
             </tr>
             <tr><td>ajax</td><td>object</td><td>
-                Options for the built in ajax query function.
+                Options for the built in ajax query function. This object acts as a shortcut for having to manually write a function that performs ajax requests. The built-in function supports more advanced features such as throttling and dropping out-of-order responses.
 
                 <table class="table table-bordered table-striped">
                     <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
@@ -500,21 +610,21 @@ $("#e8_set").click(
                     <tr><td>quietMillis</td><td>int</td><td>Number of milliseconds to wait for the user to stop typing before issuing the ajax request</td></tr>
                     <tr><td>data</td><td>function</td><td>
                         Function to generate query parameters for the ajax request.
-                        <pre>data(term, vars)</pre>
+                        <pre>data(term, page)</pre>
                         <table class="table table-bordered table-striped">
                             <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
                             <tr><td>term</td><td>string</td><td>Search term</td></tr>
-                            <tr><td>vars</td><td>object</td><td>The vars object from the previous search's result</td></tr>
+                            <tr><td>page</td><td>int</td><td>1-based page number tracked by Select2 for use with infinite scrolling of results</td></tr>
                             <tr><td>&lt;returns&gt;</td><td>object</td><td>Object containing url paramters</td></tr>
                         </table>
                     </td></tr>
                     <tr><td>results</td><td>function</td><td>
                         Function used to build the query results object from the ajax response
-                        <pre>results(term, vars)</pre>
+                        <pre>results(term, page)</pre>
                         <table class="table table-bordered table-striped">
                             <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
                             <tr><td>term</td><td>string</td><td>Search term</td></tr>
-                            <tr><td>vars</td><td>object</td><td>The vars object from the previous search's result</td></tr>
+                            <tr><td>page</td><td>int</td><td>Page number that was passed into the <code>data</code> function above</td></tr>
                             <tr><td>&lt;returns&gt;</td><td>object</td><td>Results object. See &quot;options.callback&quot; in the &quot;query&quot; function for format.</td></tr>
                         </table>
                     </td></tr>
@@ -530,10 +640,31 @@ $("#e8_set").click(
           <tr>
               <th>Parameter</th><th>Type</th><th>Description</th>
           </tr>
-          <tr><td>value (optional)</td><td>object</td><td>Result object for the new selection, or the <code>id</code> attribute of a loaded result object</td></tr>
+          <tr><td>value (optional)</td><td>object</td><td>
+
+              <table>
+                    <tr>
+                        <th></th><th>Single-Valued</th><th>Multi-Valued</th>
+                    </tr>
+                    <tr>
+                        <th>Attached to <code>select</code></th>
+                        <td>Value of the <code>value</code> attribute of the <code>option</code> that should be selected</td>
+                        <td>Array of values specified to the left. <code>null</code> for empty.</td>
+                    </tr>
+                  <tr>
+                      <th>Attached to <code>input[type=hidden]</code></th>
+                      <td>An object representing the selection. Should at least contain an <code>id</code> key. The rest of the keys should be determined by the custom rendering function, the default rendering function only needs an additional <code>text</code> key</td>
+                      <td>Array of objects specified to the left. <code>null</code> for empty.</td>
+                  </tr>
+
+              </table>
+
+
+          </td></tr>
       </table>
       Example: <pre class="prettyprint">alert("Selected value is: "+$("#e8").select2("val")); $("#e8").select2("val", {id:"CA", text:"Califoria"});</pre>
 
+      <!--
       <div class="row">
           <div class="span12"><h2>Events</h2></div>
       </div>
@@ -554,10 +685,12 @@ $("#e8_set").click(
           <div class="span12"><h3>selected</h3></div>
       </div>
       <p>Signals a selection has been made</p>
-
-
+    -->
+        
+      </section>
+        <section id="about">
       <div class="row">
-           <div class="span12"><h2>Community</h2></div>
+           <div class="span12"><h2>About</h2></div>
       </div>
       <div class="row">
           <div class="span12">
@@ -570,10 +703,11 @@ $("#e8_set").click(
           </div>
       </div>
 
+        </section>
 
         <hr/>
         <footer>
-        <p>Select2 is licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache Software Foundation License Version 2.0</a></p>
+        <p>Select2 is licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache Software Foundation License Version 2.0</a>. Coded by Igor Vaynberg.</p>
       </footer>
 
 
