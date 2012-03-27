@@ -335,16 +335,23 @@
 .select2-container-multi .select2-choices .select2-search-choice-focus {
   background: #d4d4d4;
 }
+
 .select2-search-choice-close {
   display: block;
   position: absolute;
-  left: 3px;
+  right: 3px;
   top: 4px;
   width: 12px;
   height: 13px;
   font-size: 1px;
   background: url(select2.png) right top no-repeat;
 }
+
+.select2-container-multi .select2-search-choice-close {
+  left: 3px;
+}
+
+
 .select2-container-multi .select2-choices .select2-search-choice .select2-search-choice-close:hover {
   background-position: right -11px;
 }
