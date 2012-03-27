@@ -301,36 +301,36 @@
         } else {
             if (!("query" in opts)) {
                 if ("ajax" in opts) {
-                    opts.query = (function () {
-                        var timeout, // current scheduled but not yet executed request
-                            requestSequence = 0, // sequence used to drop out-of-order responses
-                            quietMillis = opts.ajax.quietMillis || 100;
+                opts.query = (function () {
+                    var timeout, // current scheduled but not yet executed request
+                        requestSequence = 0, // sequence used to drop out-of-order responses
+                        quietMillis = opts.ajax.quietMillis || 100;
 
-                        return function (query) {
-                            window.clearTimeout(timeout);
-                            timeout = window.setTimeout(function () {
-                                requestSequence += 1; // increment the sequence
-                                var requestNumber = requestSequence, // this request's sequence number
-                                    options = opts.ajax, // ajax parameters
-                                    data = options.data; // ajax data function
+                    return function (query) {
+                        window.clearTimeout(timeout);
+                        timeout = window.setTimeout(function () {
+                            requestSequence += 1; // increment the sequence
+                            var requestNumber = requestSequence, // this request's sequence number
+                                options = opts.ajax, // ajax parameters
+                                data = options.data; // ajax data function
 
-                                data = data.call(this, query.term, query.page);
+                            data = data.call(this, query.term, query.page);
 
-                                $.ajax({
-                                    url: options.url,
-                                    dataType: options.dataType,
-                                    data: data
-                                }).success(
-                                    function (data) {
-                                        if (requestNumber < requestSequence) {
-                                            return;
-                                        }
-                                        query.callback(options.results(data, query.page));
+                            $.ajax({
+                                url: options.url,
+                                dataType: options.dataType,
+                                data: data
+                            }).success(
+                                function (data) {
+                                    if (requestNumber < requestSequence) {
+                                        return;
                                     }
-                                );
-                            }, quietMillis);
-                        };
-                    }());
+                                    query.callback(options.results(data, query.page));
+                                }
+                            );
+                        }, quietMillis);
+                    };
+                }());
                 } else if ("data" in opts) {
                     opts.query = (function () {
                         var data = opts.data, // data elements
@@ -355,8 +355,8 @@
                             query.callback(filtered);
                         };
                     }());
-                }
             }
+        }
         }
         if (typeof(opts.query) !== "function") {
             throw "query function not defined for Select2 " + opts.element.attr("id");
@@ -371,14 +371,11 @@
 
     AbstractSelect2.prototype.alignDropdown = function () {
         this.dropdown.css({
-            top: this.container.height(),
-            width: this.container.outerWidth() - getSideBorderPadding(this.dropdown)
+            top: this.container.height()
         });
     };
 
     AbstractSelect2.prototype.open = function () {
-        var width;
-
         if (this.opened()) return;
 
         this.container.addClass("select2-dropdown-open").addClass("select2-container-active");
@@ -394,7 +391,7 @@
 
         this.dropdown.hide();
         this.container.removeClass("select2-dropdown-open");
-        this.results.empty();
+            this.results.empty();
         this.clearSearch();
     };
 
@@ -595,6 +592,32 @@
         return this.opts.placeholder;
     };
 
+    /**
+     * Get the desired width for the container element.  This is
+     * derived first from option `width` passed to select2, then
+     * the inline 'style' on the original element, and finally
+     * falls back to the jQuery calculated element width.
+     *
+     * @returns The width string (with units) for the container.
+     */
+    AbstractSelect2.prototype.getContainerWidth = function() {
+        if (this.opts.width !== undefined)
+            return this.opts.width;
+        
+        var style = this.opts.element.attr('style');
+        var attrs = style.split(';');
+        for (var i = 0; i < attrs.length; i++) {
+            var attr = attrs[i].trim();
+            var matches = attr.match(/width:(([0-9]+)(px|em|ex|%|in|cm|mm|pt|pc))/);
+            if(matches == null || matches.length < 1)
+                continue;
+            return matches[1];
+        }
+
+        return this.opts.element.width();
+    }
+    
+
     function SingleSelect2() {
     }
 
@@ -605,7 +628,7 @@
     SingleSelect2.prototype.createContainer = function () {
         return $("<div></div>", {
             "class": "select2-container",
-            "style": "width: " + this.opts.element.outerWidth() + "px"
+            "style": "width: " + this.getContainerWidth()
         }).html([
             "    <a href='javascript:void(0)' class='select2-choice'>",
             "   <span></span><abbr class='select2-search-choice-close' style='display:none;'></abbr>",
@@ -622,18 +645,10 @@
 
     SingleSelect2.prototype.open = function () {
 
-        var width;
-
         if (this.opened()) return;
 
         this.parent.open.apply(this, arguments);
 
-        // size the search field
-
-        width = this.dropdown.width();
-        width -= getSideBorderPadding(this.container.find(".select2-search"));
-        width -= getSideBorderPadding(this.search);
-        this.search.css({width: width});
     };
 
     SingleSelect2.prototype.close = function () {
@@ -795,9 +810,9 @@
             this.select
                 .val(val)
                 .find(":selected").each(function () {
-                    data = {id: $(this).attr("value"), text: $(this).text()};
-                    return false;
-                });
+                data = {id: $(this).attr("value"), text: $(this).text()};
+                return false;
+            });
             this.updateSelection(data);
         } else {
             // val is an object
@@ -823,7 +838,7 @@
     MultiSelect2.prototype.createContainer = function () {
         return $("<div></div>", {
             "class": "select2-container select2-container-multi",
-            "style": "width: " + this.opts.element.outerWidth() + "px"
+            "style": "width: " + this.getContainerWidth()
         }).html([
             "    <ul class='select2-choices'>",
             //"<li class='select2-search-choice'><span>California</span><a href="javascript:void(0)" class="select2-search-choice-close"></a></li>" ,
