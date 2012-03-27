@@ -65,6 +65,24 @@
         }
     };
 
+    function indexOf(value, array) {
+        var i = 0, l = array.length, v;
+
+        if (value.constructor === String) {
+            for (; i < l; i++) if (value.localeCompare(array[i]) === 0) return i;
+        } else {
+            for (; i < l; i++) {
+                v = array[i];
+                if (v.constructor === String) {
+                    if (v.localeCompare(value) === 0) return i;
+                } else {
+                    if (v === value) return i;
+                }
+            }
+        }
+        return -1;
+    }
+
     function getSideBorderPadding(element) {
         return element.outerWidth() - element.width();
     }
@@ -970,7 +988,7 @@
             throw "Invalid argument: " + selected + ". Must be .select2-search-choice";
         }
 
-        index = val.indexOf(selected.data("select2-data").id);
+        index = indexOf(selected.data("select2-data").id, val);
 
         if (index >= 0) {
             val.splice(index, 1);
