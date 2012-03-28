@@ -356,8 +356,11 @@
 
         this.container.addClass("select2-dropdown-open").addClass("select2-container-active");
 
+        this.updateResults();
+        this.ensureHighlightVisible();
         this.alignDropdown();
         this.dropdown.show();
+        this.focusSearch();
     };
 
     AbstractSelect2.prototype.close = function () {
@@ -365,15 +368,7 @@
 
         this.dropdown.hide();
         this.container.removeClass("select2-dropdown-open");
-
-        if (this.select) {
-            // TODO see if we can always clear here and reset on open
-            this.search.val(""); // not using clearSearch() because it may set a placeholder
-            this.updateResults(); // needed since we just set the search text to ""
-        } else {
-            this.results.empty();
-        }
-
+        this.results.empty();
         this.clearSearch();
     };
 
@@ -610,12 +605,6 @@
         width -= getSideBorderPadding(this.container.find(".select2-search"));
         width -= getSideBorderPadding(this.search);
         this.search.css({width: width});
-
-        if (!this.select) this.updateResults();
-
-        this.ensureHighlightVisible();
-
-        this.focusSearch();
     };
 
     SingleSelect2.prototype.close = function () {
@@ -915,7 +904,6 @@
         if (this.opened()) return;
         this.parent.open.apply(this, arguments);
         this.resizeSearch();
-        this.ensureHighlightVisible();
         this.focusSearch();
     };
 
