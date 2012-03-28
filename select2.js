@@ -341,14 +341,14 @@
                             // if text is not a function we assume it to be a key name
                             if (!$.isFunction(text)) text = function (item) { return item[data.text]; };
                             data = data.results;
-                        }
+            }
 
                         return function (query) {
                             var t = query.term.toUpperCase(), filtered = {};
                             if (t === "") {
                                 query.callback({results: data});
                                 return;
-                            }
+        }
                             filtered.result = $(data)
                                 .filter(function () {return text(this).toUpperCase().indexOf(t) >= 0;})
                                 .get();
@@ -609,13 +609,11 @@
         for (var i = 0; i < attrs.length; i++) {
             var matches = attrs[i].replace(/\s/g,'')
                 .match(/width:(([-+]?([0-9]*\.)?[0-9]+)(px|em|ex|%|in|cm|mm|pt|pc))/);
-            if(matches == null || matches.length < 1)
-                continue;
+            if(matches != null && matches.length >= 1)
             return matches[1];
         }
-
         return this.opts.element.width();
-    }
+    };
     
 
     function SingleSelect2() {
