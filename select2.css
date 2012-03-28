@@ -131,12 +131,14 @@
 }
 
 .select2-container .select2-search {
-    margin: 0;
+  display: inline-block;
     white-space: nowrap;
     z-index: 1010;
-    position: absolute;
-    left:4px;
-    right:4px;    
+  min-height: 26px;
+  width: 100%;
+  margin: 0;
+  padding-left: 4px;
+  padding-right: 4px;
 }
 
 .select2-container .select2-search input {
@@ -215,7 +217,7 @@
 
 /* results */
 .select2-container .select2-results {
-  margin: 30px 4px 4px 0;
+  margin: 4px 4px 4px 0;
   padding: 0 0 0 4px;
   position: relative;
   overflow-x: hidden;
