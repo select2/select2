@@ -607,8 +607,8 @@
         var style = this.opts.element.attr('style');
         var attrs = style.split(';');
         for (var i = 0; i < attrs.length; i++) {
-            var attr = attrs[i].trim();
-            var matches = attr.match(/width:(([0-9]+)(px|em|ex|%|in|cm|mm|pt|pc))/);
+            var matches = attrs[i].replace(/\s/g,'')
+                .match(/width:(([-+]?([0-9]*\.)?[0-9]+)(px|em|ex|%|in|cm|mm|pt|pc))/);
             if(matches == null || matches.length < 1)
                 continue;
             return matches[1];
@@ -826,6 +826,14 @@
     SingleSelect2.prototype.clearSearch = function () {
         this.search.val("");
     };
+
+    SingleSelect2.prototype.alignDropdown = function () {
+        this.parent.alignDropdown.apply(this,arguments);
+        this.results.css({
+            'margin-top': this.search.height()
+        });
+    };
+
 
     function MultiSelect2(opts) {
 
