@@ -94,9 +94,9 @@
     width:100%;
     margin-top:-1px;
 
-    -webkit-border-radius: 0 0 4px 4px;
-    -moz-border-radius: 0 0 4px 4px;
-    border-radius: 0 0 4px 4px;
+  -webkit-border-radius: 0 0 4px 4px;
+  -moz-border-radius: 0 0 4px 4px;
+  border-radius: 0 0 4px 4px;
 }
 
 .select2-container .select2-choice div {
@@ -374,6 +374,7 @@
   height: 13px;
   font-size: 1px;
   background: url(select2.png) right top no-repeat;
+  outline: none;
 }
 
 .select2-container-multi .select2-search-choice-close {
