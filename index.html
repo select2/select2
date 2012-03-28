@@ -186,12 +186,37 @@ $("#e8_2_set").click(function () { $("#e8_2").select2("val", ["CA","MA"]); });
 
 });
 </script>
+
 <script id="script_e9">
 $(document).ready(function() {
 $("#e9").select2();
 });
 </script>
 
+<script id="script_e10">
+$(document).ready(function() {
+
+$("#e10").select2({
+    data:[{id:0,text:'enhancement'},{id:1,text:'bug'},{id:2,text:'duplicate'},{id:3,text:'invalid'},{id:4,text:'wontfix'}]
+});
+
+var data=[{id:0,tag:'enhancement'},{id:1,tag:'bug'},{id:2,tag:'duplicate'},{id:3,tag:'invalid'},{id:4,tag:'wontfix'}];
+function format(item) { return item.tag; };
+
+$("#e10_2").select2({
+    data:{ results: data, text: 'tag' },
+    formatSelection: format,
+    formatResult: format
+});
+
+$("#e10_3").select2({
+    data:{ results: data, text: function(item) { console.log('called with', item); return item.tag; } },
+    formatSelection: format,
+    formatResult: format
+});
+
+});
+</script>
 
   <script>
       $(document).ready(function() {
@@ -206,15 +231,15 @@ $("#e9").select2();
               $("#code_"+id).html(s);
           }
 
-          setupExampleCode("e2");
-          setupExampleCode("e3");
-          setupExampleCode("e4");
-          setupExampleCode("e5");
-          setupExampleCode("e6");
-          setupExampleCode("e7");
-          setupExampleCode("e8");
-          setupExampleCode("e9");
-          prettyPrint();});
+          var i, e;
+          for (i = 2; ; i++) {
+              e = $("#script_e" + i);
+              if (e.length == 0) break;
+              setupExampleCode("e" + i);
+          }
+
+          prettyPrint();
+      });
   </script>
 
 <script type="text/javascript">
@@ -294,7 +319,8 @@ $("#e9").select2();
                   <li><a href="#placeholders">Placeholders</a></li>
                   <li><a href="#minimum">Minimum Input Length</a></li>
                   <li><a href="#templating">Templating</a></li>
-                  <li><a href="#data">Custom Data</a></li>
+                  <li><a href="#data">Loading Data</a></li>
+                  <li><a href="#data_array">Array Data</a></li>
                   <li><a href="#ajax">Remote/AJAX Data</a></li>
                   <li><a href="#infinite">Infinite Scrolling of Remote/AJAX data</a></li>
                   <li><a href="#pragmatic">Pragmatic control</a></li>
@@ -325,7 +351,7 @@ $("#e9").select2();
           </div>
       </div>
 
-      
+
       <article class="row" id="basics">
         <div class="span4">
           <h3>The Basics</h3>
@@ -383,7 +409,7 @@ $("#e9").select2();
              </p>
              <p>The placeholder can be declared via a <code>data-placeholder</code> attribute attached to the <code>select</code>, or via the <code>placeholder</code> configuration element as seen in the example code</p>
               <p>Optionally, a clear button (visible once a selection is made) is available to reset the select box back to the placeholder value.</p>
-             
+
           </div>
           <div class="span8">
             <h3>Example Code</h3>
@@ -436,7 +462,31 @@ $("#e9").select2();
          </div>
         </article>
 
-        <article class="row" id="ajax">
+      <article class="row" id="data_array">
+         <div class="span4">
+           <h3>Loading Array Data</h3>
+            <p>Select2 provides some shortcuts that make it easy to access local data stored in an array instead of having to write a <code>query</code> function mentioned in the example above.</p>
+            <p>Example below inlines the data by specifying an array in the <code>data</code> element. Items in such an array must have <code>id</code> and <code>text</code> keys.</p>
+            <p>
+                <input type="hidden" id="e10" style="width:300px"/>
+            </p>
+            <p>If your data does not have a <code>text</code> key, an alternative key can be specified as a string:</p>
+             <p>
+                 <input type="hidden" id="e10_2" style="width:300px"/>
+             </p>
+             <p>or as a function:</p>
+             <p>
+                 <input type="hidden" id="e10_3" style="width:300px"/>
+             </p>
+         </div>
+         <div class="span8">
+           <h3>Example Code</h3>
+           <pre class="prettyprint linenums" id="code_e10">
+           </pre>
+        </div>
+       </article>
+          
+        <article class="zebra row" id="ajax">
            <div class="span12">
              <h3>Loading Remote Data</h3>
               <p>Select2 comes with AJAX/JSONP support built in. In this example we will search for a movie using Rotten Tomatoes API:</p>
@@ -448,7 +498,7 @@ $("#e9").select2();
               <p>Select2 uses jQuery's <code>$.ajax</code> function to execute the remote call. If you would like to use another transport you can specify your own <code>query</code> function instead of using the <code>ajax</code> helper.</p>
            </div>
         </article>
-        <article class="zebra row" id="infinite">
+        <article class="row" id="infinite">
             <div class="span12">
               <h3>Infinite Scroll with Remote Data</h3>
                <p>Select2 supports lazy-appending of results when the result list is scrolled to the end.
@@ -464,7 +514,7 @@ $("#e9").select2();
             </div>
          </article>
 
-        <article class="row" id="pragmatic">
+        <article class="zebra row" id="pragmatic">
           <div class="span4">
             <h3>Pragmatic Access</h3>
              <p>Select2 supports methods that allow pragmatic control of the componentL</p>
@@ -491,7 +541,7 @@ $("#e9").select2();
 
       </section>
       <section id="documentation">
-      
+
         <div class="row" style="padding-top: 20px;">
             <div class="span12"><h2>Documentation</h2><hr/></div>
         </div>
@@ -646,8 +696,13 @@ $("#e9").select2();
                 </table>
                 <p class="alert alert-warning">In order for this function to work Select2 should be attached to a <code>input type='hidden'</code> tag instead of a <code>select</code>.</p>
             </td></tr>
+            <tr><td>data</td><td>array/object</td><td>
+                Options for the built in query function that works with arrays.
+                <p>If this element contains an array, each element in the array must contain <code>id</code> and <code>text</code> keys</p>
+                <p>Alternatively, this element can be specified as an object in which <code>results</code> key must contain the data as an array and a <code>text</code> key can either be the name of the key in data items that contains text or a function that retrieves the text given a data element from the array</p>
+            </td></tr>
         </table>
-      
+
       <div class="row">
           <div class="span12"><h3>val</h3></div>
       </div>
@@ -702,7 +757,7 @@ $("#e9").select2();
       </div>
       <p>Signals a selection has been made</p>
     -->
-        
+
       </section>
         <section id="about">
       <div class="row">
