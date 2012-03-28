@@ -713,9 +713,6 @@
         if (this.select) {
             selected = this.select.find(":selected");
             this.updateSelection({id: selected.attr("value"), text: selected.text()});
-
-            // preload all results
-            this.updateResults();
         }
 
         this.setPlaceholder();
