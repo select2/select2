@@ -1,0 +1,3 @@
+[submodule "select2-master"]
+	path = select2-master
+	url = git://github.com/ivaynberg/select2.git
