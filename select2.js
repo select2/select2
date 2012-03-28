@@ -255,7 +255,9 @@
             formatResult: function (data) { return data.text; },
             formatSelection: function (data) { return data.text; },
             formatNoMatches: function () { return "No matches found"; },
-            formatInputTooShort: function (input, min) { return "Please enter " + (min - input.length) + " more characters"; }
+            formatInputTooShort: function (input, min) { return "Please enter " + (min - input.length) + " more characters"; },
+            multiple:false,
+            minimumSearch:0
         }, opts);
 
         element = opts.element;
@@ -535,6 +537,11 @@
                 render("<li class='select2-no-results'>" + opts.formatNoMatches(search.val()) + "</li>");
                 return;
             }
+            
+            // If it's a single select, optionally hide the search input for
+            // lists of less than `opts.minimumSearch` length.
+            if(!opts.multiple)
+                search.toggle(data.results.length >= opts.minimumSearch);
 
             $(data.results).each(function () {
                 parts.push("<li class='select2-result'>");
@@ -1115,12 +1122,12 @@
                 opts.element = $(this);
 
                 if (opts.element.get(0).tagName.toLowerCase() === "select") {
-                    multiple = opts.element.prop("multiple");
+                    opts.multiple = opts.element.prop("multiple");
                 } else {
-                    multiple = opts.multiple || false;
+                    opts.multiple = opts.multiple || false;
                 }
 
-                select2 = multiple ? new MultiSelect2() : new SingleSelect2();
+                select2 = opts.multiple ? new MultiSelect2() : new SingleSelect2();
                 select2.init(opts);
             } else if (typeof(args[0]) === "string") {
 
