@@ -255,7 +255,8 @@
             formatResult: function (data) { return data.text; },
             formatSelection: function (data) { return data.text; },
             formatNoMatches: function () { return "No matches found"; },
-            formatInputTooShort: function (input, min) { return "Please enter " + (min - input.length) + " more characters"; }
+            formatInputTooShort: function (input, min) { return "Please enter " + (min - input.length) + " more characters"; },
+            minimumResultsForSearch: 0
         }, opts);
 
         element = opts.element;
@@ -382,8 +383,7 @@
 
         this.container.addClass("select2-dropdown-open").addClass("select2-container-active");
 
-        this.updateResults();
-        this.ensureHighlightVisible();
+        this.updateResults(true);
         this.alignDropdown();
         this.dropdown.show();
         this.focusSearch();
@@ -511,7 +511,10 @@
         }
     };
 
-    AbstractSelect2.prototype.updateResults = function () {
+    /**
+     * @param initial whether or not this is the call to this method right after the dropdown has been opened
+     */
+    AbstractSelect2.prototype.updateResults = function (initial) {
         var search = this.search, results = this.results, opts = this.opts;
 
         search.addClass("select2-active");
@@ -551,7 +554,7 @@
                 var d = data.results[i];
                 $(this).data("select2-data", d);
             });
-            this.postprocessResults();
+            this.postprocessResults(data, initial);
         })});
     };
 
@@ -737,15 +740,28 @@
         }
     };
 
-    SingleSelect2.prototype.postprocessResults = function () {
+    SingleSelect2.prototype.postprocessResults = function (data, initial) {
         var selected = 0, self = this;
+
+        // find the selected element in the result list
+
         this.results.find(".select2-result").each(function (i) {
             if ($(this).data("select2-data").id === self.opts.element.val()) {
                 selected = i;
                 return false;
             }
         });
+
+        // and highlight it
+
         this.highlight(selected);
+
+        // hide the search box if this is the first we got the results and there are a few of them
+
+        if (initial===true) {
+            this.search.toggle(data.results.length>=this.opts.minimumResultsForSearch);
+        }
+
     };
 
     SingleSelect2.prototype.onSelect = function (data) {
@@ -898,8 +914,6 @@
             });
 
             this.updateSelection(data);
-            // preload all results
-            this.updateResults();
         }
 
         // set the placeholder if necessary
