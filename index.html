@@ -554,6 +554,16 @@ $("#e10_3").select2({
                 <th>Parameter</th><th>Type</th><th>Description</th>
             </tr>
             <tr><td>minimumInputLength</td><td>int</td><td>Number of characters necessary to start a search</td></tr>
+            <tr><td>minimumResultsForSearch</td><td>int</td><td>
+                <p>
+                    The minimum number of results that must be initially (after opening the dropdown for the first time)
+                    populated in order to keep the search field. This
+                    is useful for cases where local data is used with just a few results, in which case the search box
+                    is not very useful and wastes screen space.
+                </p>
+                <p class="alert alert-info">Only applies to single-value select boxes</p>
+            </td>
+            </tr>
             <tr><td>placeholder</td><td>object/string</td><td>
                 <p>Initial value that is selected if no other selection is made.</p>
                 <p>
