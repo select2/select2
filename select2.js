@@ -610,7 +610,7 @@
             var matches = attrs[i].replace(/\s/g,'')
                 .match(/width:(([-+]?([0-9]*\.)?[0-9]+)(px|em|ex|%|in|cm|mm|pt|pc))/);
             if(matches != null && matches.length >= 1)
-            return matches[1];
+                return matches[1];
         }
         return this.opts.element.width();
     };
@@ -824,14 +824,6 @@
     SingleSelect2.prototype.clearSearch = function () {
         this.search.val("");
     };
-
-    SingleSelect2.prototype.alignDropdown = function () {
-        this.parent.alignDropdown.apply(this,arguments);
-        this.results.css({
-            'margin-top': this.search.height()
-        });
-    };
-
 
     function MultiSelect2(opts) {
 
