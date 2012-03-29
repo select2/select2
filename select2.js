@@ -129,7 +129,7 @@
     function installDebouncedScroll(threshold, element) {
         var notify = debounce(threshold, function (e) { element.trigger("scroll-debounced", e);});
         element.on("scroll", function (e) {
-            if (element.get().indexOf(e.target) >= 0) notify(e);
+            if (indexOf(e.target, element.get()) >= 0) notify(e);
         });
     }
 
@@ -451,7 +451,7 @@
         var choices = this.results.children(".select2-result");
 
         if (arguments.length === 0) {
-            return choices.get().indexOf(choices.filter(".select2-highlighted")[0]);
+            return indexOf(choices.filter(".select2-highlighted")[0], choices.get());
         }
 
         choices.removeClass("select2-highlighted");
@@ -758,8 +758,8 @@
 
         // hide the search box if this is the first we got the results and there are a few of them
 
-        if (initial===true) {
-            this.search.toggle(data.results.length>=this.opts.minimumResultsForSearch);
+        if (initial === true) {
+            this.search.toggle(data.results.length >= this.opts.minimumResultsForSearch);
         }
 
     };
@@ -1138,7 +1138,7 @@
                 select2.init(opts);
             } else if (typeof(args[0]) === "string") {
 
-                if (allowedMethods.indexOf(args[0]) < 0) {
+                if (indexOf(args[0], allowedMethods) < 0) {
                     throw "Unknown method: " + args[0];
                 }
 
