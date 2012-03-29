@@ -301,36 +301,36 @@
         } else {
             if (!("query" in opts)) {
                 if ("ajax" in opts) {
-                opts.query = (function () {
-                    var timeout, // current scheduled but not yet executed request
-                        requestSequence = 0, // sequence used to drop out-of-order responses
-                        quietMillis = opts.ajax.quietMillis || 100;
+                    opts.query = (function () {
+                        var timeout, // current scheduled but not yet executed request
+                            requestSequence = 0, // sequence used to drop out-of-order responses
+                            quietMillis = opts.ajax.quietMillis || 100;
 
-                    return function (query) {
-                        window.clearTimeout(timeout);
-                        timeout = window.setTimeout(function () {
-                            requestSequence += 1; // increment the sequence
-                            var requestNumber = requestSequence, // this request's sequence number
-                                options = opts.ajax, // ajax parameters
-                                data = options.data; // ajax data function
+                        return function (query) {
+                            window.clearTimeout(timeout);
+                            timeout = window.setTimeout(function () {
+                                requestSequence += 1; // increment the sequence
+                                var requestNumber = requestSequence, // this request's sequence number
+                                    options = opts.ajax, // ajax parameters
+                                    data = options.data; // ajax data function
 
-                            data = data.call(this, query.term, query.page);
+                                data = data.call(this, query.term, query.page);
 
-                            $.ajax({
-                                url: options.url,
-                                dataType: options.dataType,
-                                data: data
-                            }).success(
-                                function (data) {
-                                    if (requestNumber < requestSequence) {
-                                        return;
+                                $.ajax({
+                                    url: options.url,
+                                    dataType: options.dataType,
+                                    data: data
+                                }).success(
+                                    function (data) {
+                                        if (requestNumber < requestSequence) {
+                                            return;
+                                        }
+                                        query.callback(options.results(data, query.page));
                                     }
-                                    query.callback(options.results(data, query.page));
-                                }
-                            );
-                        }, quietMillis);
-                    };
-                }());
+                                );
+                            }, quietMillis);
+                        };
+                    }());
                 } else if ("data" in opts) {
                     opts.query = (function () {
                         var data = opts.data, // data elements
@@ -341,22 +341,22 @@
                             // if text is not a function we assume it to be a key name
                             if (!$.isFunction(text)) text = function (item) { return item[data.text]; };
                             data = data.results;
-            }
+                        }
 
                         return function (query) {
                             var t = query.term.toUpperCase(), filtered = {};
                             if (t === "") {
                                 query.callback({results: data});
                                 return;
-        }
+                            }
                             filtered.result = $(data)
                                 .filter(function () {return text(this).toUpperCase().indexOf(t) >= 0;})
                                 .get();
                             query.callback(filtered);
                         };
                     }());
+                }
             }
-        }
         }
         if (typeof(opts.query) !== "function") {
             throw "query function not defined for Select2 " + opts.element.attr("id");
@@ -391,7 +391,7 @@
 
         this.dropdown.hide();
         this.container.removeClass("select2-dropdown-open");
-            this.results.empty();
+        this.results.empty();
         this.clearSearch();
     };
 
@@ -808,9 +808,9 @@
             this.select
                 .val(val)
                 .find(":selected").each(function () {
-                data = {id: $(this).attr("value"), text: $(this).text()};
-                return false;
-            });
+                    data = {id: $(this).attr("value"), text: $(this).text()};
+                    return false;
+                });
             this.updateSelection(data);
         } else {
             // val is an object
