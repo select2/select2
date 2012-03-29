@@ -772,8 +772,10 @@
     };
 
     SingleSelect2.prototype.updateSelection = function (data) {
-        this.selection.find("span").html(this.opts.formatSelection(data));
-        this.selection.removeClass("select2-default");
+        this.selection
+            .find("span")
+            .html(this.opts.formatSelection(data))
+            .removeClass("select2-default");
         if (this.opts.allowClear && this.getPlaceholder() !== undefined) {
             this.selection.find("abbr").show();
         }
@@ -790,11 +792,12 @@
 
         if (this.select) {
             // val is an id
-            this.select.val(val);
-            this.select.find(":selected").each(function () {
-                data = {id: $(this).attr("value"), text: $(this).text()};
-                return false;
-            });
+            this.select
+                .val(val)
+                .find(":selected").each(function () {
+                    data = {id: $(this).attr("value"), text: $(this).text()};
+                    return false;
+                });
             this.updateSelection(data);
         } else {
             // val is an object
