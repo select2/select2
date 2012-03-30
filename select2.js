@@ -83,6 +83,20 @@
         return -1;
     }
 
+    /**
+     * Compares equality of a and b taking into account that a and b may be strings, in which case localCompare is used
+     * @param a
+     * @param b
+     */
+    function equal(a, b) {
+        if (a === b) return true;
+        if (a === undefined || b === undefined) return false;
+        if (a === null || b === null) return false;
+        if (a.constructor === String) return a.localeCompare(b) === 0;
+        if (b.constructor === String) return b.localeCompare(a) === 0;
+        return false;
+    }
+
     function getSideBorderPadding(element) {
         return element.outerWidth() - element.width();
     }
@@ -347,7 +361,7 @@
                                 query.callback({results: data});
                                 return;
                             }
-                            filtered.result = $(data)
+                            filtered.results = $(data)
                                 .filter(function () {return text(this).toUpperCase().indexOf(t) >= 0;})
                                 .get();
                             query.callback(filtered);
@@ -361,6 +375,13 @@
         }
 
         return opts;
+    };
+
+    /**
+     * Triggers the change event on the source element
+     */
+    AbstractSelect2.prototype.triggerChange = function () {
+        this.opts.element.trigger("change");
     };
 
     AbstractSelect2.prototype.opened = function () {
@@ -707,6 +728,7 @@
             this.val("");
             killEvent(e);
             this.close();
+            this.triggerChange();
         }));
 
         if (this.select) {
@@ -761,10 +783,14 @@
     };
 
     SingleSelect2.prototype.onSelect = function (data) {
+        var old = this.opts.element.val();
+
         this.opts.element.val(data.id);
         this.updateSelection(data);
         this.close();
         this.selection.focus();
+
+        if (!equal(old, data.id)) { this.triggerChange(); }
     };
 
     SingleSelect2.prototype.updateSelection = function (data) {
@@ -896,9 +922,7 @@
         this.search.bind("keyup", this.bind(this.resizeSearch));
 
         this.container.delegate(selector, "click", this.bind(function (e) {
-            if (this.select) {
-                this.open();
-            }
+            this.open();
             this.focusSearch();
             e.preventDefault();
         }));
@@ -965,6 +989,11 @@
         if (this.select) { this.postprocessResults(); }
         this.close();
         this.search.width(10);
+
+        // since its not possible to select an element that has already been
+        // added we do not need to check if this is a new element before firing change
+        this.triggerChange();
+
         this.focusSearch();
     };
 
@@ -1022,6 +1051,7 @@
             if (this.select) this.postprocessResults();
         }
         selected.remove();
+        this.triggerChange();
         window.setTimeout(this.bind(this.alignDropdown), 20);
     };
 
