@@ -104,7 +104,7 @@
      * filters out mouse events that occur when mouse is stationary but
      * the elements under the pointer are scrolled.
      */
-    $(document).delegate("*","mousemove", function (e) {
+    $(document).delegate("*", "mousemove", function (e) {
         $(this).data("select2-lastpos", {x: e.pageX, y: e.pageY});
     });
     function installFilteredMouseMove(element) {
@@ -164,7 +164,7 @@
      * blurs any Select2 container that has focus when an element outside them was clicked or received focus
      */
     $(document).ready(function () {
-        $(document).delegate("*","mousedown focusin", function (e) {
+        $(document).delegate("*", "mousedown focusin", function (e) {
             var target = $(e.target).closest("div.select2-container").get(0);
             $(document).find("div.select2-container-active").each(function () {
                 if (this !== target) $(this).data("select2").blur();
@@ -187,7 +187,7 @@
     };
 
     AbstractSelect2.prototype.init = function (opts) {
-        var results, search, results_selector = ".select2-results";
+        var results, search, resultsSelector = ".select2-results";
 
         // prepare options
         this.opts = this.prepareOpts(opts);
@@ -205,7 +205,7 @@
         this.container.data("select2", this);
 
         this.dropdown = this.container.find(".select2-drop");
-        this.results = results = this.container.find(results_selector);
+        this.results = results = this.container.find(resultsSelector);
         this.search = search = this.container.find("input[type=text]");
 
         this.resultsPage = 0;
@@ -214,10 +214,10 @@
         this.initContainer();
 
         installFilteredMouseMove(this.results);
-        this.container.delegate(results_selector,"mousemove-filtered", this.bind(this.highlightUnderEvent));
+        this.container.delegate(resultsSelector, "mousemove-filtered", this.bind(this.highlightUnderEvent));
 
         installDebouncedScroll(80, this.results);
-        this.container.delegate(results_selector,"scroll-debounced", this.bind(this.loadMoreIfNeeded));
+        this.container.delegate(resultsSelector, "scroll-debounced", this.bind(this.loadMoreIfNeeded));
 
         // if jquery.mousewheel plugin is installed we can prevent out-of-bounds scrolling of results via mousewheel
         if ($.fn.mousewheel) {
@@ -236,7 +236,7 @@
         installKeyUpChangeEvent(search);
         search.bind("keyup-change", this.bind(this.updateResults));
 
-        this.container.delegate(results_selector,"click", this.bind(function (e) {
+        this.container.delegate(resultsSelector, "click", this.bind(function (e) {
             if ($(e.target).closest(".select2-result:not(.select2-disabled)").length > 0) {
                 this.highlightUnderEvent(e);
                 this.selectHighlighted(e);
@@ -670,7 +670,7 @@
             }
         }));
 
-        container.delegate(selector,"click", this.bind(function (e) {
+        container.delegate(selector, "click", this.bind(function (e) {
             clickingInside = true;
 
             if (this.opened()) {
@@ -683,7 +683,7 @@
 
             clickingInside = false;
         }));
-        container.delegate(selector,"keydown", this.bind(function (e) {
+        container.delegate(selector, "keydown", this.bind(function (e) {
             if (e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e) || e.which === KEY.ESC) {
                 return;
             }
@@ -697,13 +697,13 @@
                 killEvent(e);
             }
         }));
-        container.delegate(selector,"focus", function () { container.addClass("select2-container-active"); });
-        container.delegate(selector,"blur", this.bind(function () {
+        container.delegate(selector, "focus", function () { container.addClass("select2-container-active"); });
+        container.delegate(selector, "blur", this.bind(function () {
             if (clickingInside) return;
             if (!this.opened()) this.blur();
         }));
 
-        selection.delegate("abbr","click", this.bind(function (e) {
+        selection.delegate("abbr", "click", this.bind(function (e) {
             this.val("");
             killEvent(e);
             this.close();
@@ -893,7 +893,7 @@
 
         this.search.bind("keyup", this.bind(this.resizeSearch));
 
-        this.container.delegate(selector,"click", this.bind(function (e) {
+        this.container.delegate(selector, "click", this.bind(function (e) {
             if (this.select) {
                 this.open();
             }
@@ -901,7 +901,7 @@
             e.preventDefault();
         }));
 
-        this.container.delegate(selector,"focus", this.bind(function () {
+        this.container.delegate(selector, "focus", this.bind(function () {
             this.container.addClass("select2-container-active");
             this.clearPlaceholder();
         }));
