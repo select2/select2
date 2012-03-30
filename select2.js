@@ -770,8 +770,10 @@
     SingleSelect2.prototype.updateSelection = function (data) {
         this.selection
             .find("span")
-            .html(this.opts.formatSelection(data))
-            .removeClass("select2-default");
+            .html(this.opts.formatSelection(data));
+
+        this.selection.removeClass("select2-default");
+
         if (this.opts.allowClear && this.getPlaceholder() !== undefined) {
             this.selection.find("abbr").show();
         }
