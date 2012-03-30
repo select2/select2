@@ -324,6 +324,7 @@ $("#e10_3").select2({
                   <li><a href="#ajax">Remote/AJAX Data</a></li>
                   <li><a href="#infinite">Infinite Scrolling of Remote/AJAX data</a></li>
                   <li><a href="#pragmatic">Pragmatic control</a></li>
+                  <li><a href="#event_change">Events: Change</a></li>
               </ul>
             </li>
             <li><a href="#documentation">Documentation</a></li>
@@ -540,7 +541,54 @@ $("#e10_3").select2({
          </div>
         </article>
 
+      <article class="row" id="event_change">
+<script id="script_e11">
+$(document).ready(function () {
+$("#e11").select2({
+  placeholder: "Select report type",
+  allowClear: true,
+  data: [{id: 0, text: 'story'},{id: 1, text: 'bug'},{id: 2, text: 'task'}]
+});
+$("#e11_2").select2({
+    multiple: true,
+    data: [{id: 0, text: 'story'},{id: 1, text: 'bug'},{id: 2, text: 'task'}]
+});
+function show() {
+    var e=$("<div style='background-color:yellow;'>change fired</div>");
+    $("#events_11").append(e);
+    e.animate({opacity:0}, 1000, 'linear', function() { e.remove(); });
+};
+$("#e11").bind("change", show);
+$("#e11_2").bind("change", show);
+});
+</script>
+          <div class="span4">
+              <h3>Change Event</h3>
+
+              <p>Select2 triggers the <code>change</code> event on the original element whenever its value is changed by
+                  the user</p>
+
+              <p><input type="hidden" id="e11" style="width:300px"/></p>
+
+              <p><input type="hidden" id="e11_2" style="width:300px"/></p>
+
+              <p id="events_11"></p>
+          </div>
+          <div class="span8">
+              <h3>Example Code</h3>
+           <pre class="prettyprint linenums" id="code_e11">
+           </pre>
+          </div>
+      </article>
+
       </section>
+      
+      
+      <!--               -->
+      <!-- DOCUMENTATION -->
+      <!--               -->
+      
+      
       <section id="documentation">
 
         <div class="row" style="padding-top: 20px;">
@@ -746,28 +794,18 @@ $("#e10_3").select2({
       </table>
       Example: <pre class="prettyprint">alert("Selected value is: "+$("#e8").select2("val")); $("#e8").select2("val", {id:"CA", text:"Califoria"});</pre>
 
-      <!--
       <div class="row">
           <div class="span12"><h2>Events</h2></div>
       </div>
 
       <div class="row">
-          <div class="span12"><h3>opened</h3></div>
+          <div class="span12">
+              <h3>change</h3>
+              <p>Fired when selection is changed.</p>
+              <p class="alert alert-info">This event is not fired when the selection is changed using Select2's <code>val()</code> method.</p>
+          </div>
       </div>
-      <p>Signalled when the search dropdown has been opened</p>
-      <div class="row">
-          <div class="span12"><h3>closed</h3></div>
-      </div>
-      <p>Signalled when the search dropdown has been closed</p>
-      <div class="row">
-          <div class="span12"><h3>cancelled</h3></div>
-      </div>
-      <p>Signalled when the user cancells the selection of a result. For example, when ESC is pressed after the dropdown has been opened</p>
-      <div class="row">
-          <div class="span12"><h3>selected</h3></div>
-      </div>
-      <p>Signals a selection has been made</p>
-    -->
+      
 
       </section>
         <section id="about">
