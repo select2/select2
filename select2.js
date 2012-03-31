@@ -1,4 +1,4 @@
-/*
+﻿/*
  Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements.  See the NOTICE file
  distributed with this work for additional information
@@ -390,14 +390,11 @@
 
     AbstractSelect2.prototype.alignDropdown = function () {
         this.dropdown.css({
-            top: this.container.height(),
-            width: this.container.outerWidth() - getSideBorderPadding(this.dropdown)
+            top: this.container.height()
         });
     };
 
     AbstractSelect2.prototype.open = function () {
-        var width;
-
         if (this.opened()) return;
 
         this.container.addClass("select2-dropdown-open").addClass("select2-container-active");
@@ -614,6 +611,32 @@
         return this.opts.placeholder;
     };
 
+    /**
+     * Get the desired width for the container element.  This is
+     * derived first from option `width` passed to select2, then
+     * the inline 'style' on the original element, and finally
+     * falls back to the jQuery calculated element width.
+     *
+     * @returns The width string (with units) for the container.
+     */
+    AbstractSelect2.prototype.getContainerWidth = function() {
+        if (this.opts.width !== undefined)
+            return this.opts.width;
+
+        var style = this.opts.element.attr('style');
+        if(style !== undefined){
+            var attrs = style.split(';');
+            for (var i = 0; i < attrs.length; i++) {
+                var matches = attrs[i].replace(/\s/g,'')
+                .match(/width:(([-+]?([0-9]*\.)?[0-9]+)(px|em|ex|%|in|cm|mm|pt|pc))/);
+                if(matches != null && matches.length >= 1)
+                    return matches[1];
+            }
+        }
+        return this.opts.element.width() + 'px';
+    };
+    
+
     function SingleSelect2() {
     }
 
@@ -624,7 +647,7 @@
     SingleSelect2.prototype.createContainer = function () {
         return $("<div></div>", {
             "class": "select2-container",
-            "style": "width: " + this.opts.element.outerWidth() + "px"
+            "style": "width: " + this.getContainerWidth()
         }).html([
             "    <a href='javascript:void(0)' class='select2-choice'>",
             "   <span></span><abbr class='select2-search-choice-close' style='display:none;'></abbr>",
@@ -641,18 +664,10 @@
 
     SingleSelect2.prototype.open = function () {
 
-        var width;
-
         if (this.opened()) return;
 
         this.parent.open.apply(this, arguments);
 
-        // size the search field
-
-        width = this.dropdown.width();
-        width -= getSideBorderPadding(this.container.find(".select2-search"));
-        width -= getSideBorderPadding(this.search);
-        this.search.css({width: width});
     };
 
     SingleSelect2.prototype.close = function () {
@@ -777,7 +792,7 @@
         // hide the search box if this is the first we got the results and there are a few of them
 
         if (initial === true) {
-            this.search.toggle(data.results.length >= this.opts.minimumResultsForSearch);
+            this.search.parent().toggle(data.results.length >= this.opts.minimumResultsForSearch);
         }
 
     };
@@ -847,7 +862,7 @@
     MultiSelect2.prototype.createContainer = function () {
         return $("<div></div>", {
             "class": "select2-container select2-container-multi",
-            "style": "width: " + this.opts.element.outerWidth() + "px"
+            "style": "width: " + this.getContainerWidth()
         }).html([
             "    <ul class='select2-choices'>",
             //"<li class='select2-search-choice'><span>California</span><a href="javascript:void(0)" class="select2-search-choice-close"></a></li>" ,
