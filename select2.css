@@ -154,7 +154,16 @@
     border: 1px solid #aaa;
     font-family: sans-serif;
     font-size: 1em;
-    width:100%;    
+    width:100%;
+    margin:0;
+    height:auto !important;
+    width:100%;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    border-radius: 0;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;  
 }
 
 .select2-container .select2-search input.select2-active {
@@ -165,12 +174,6 @@
     background: url('spinner.gif') no-repeat 100%, -o-linear-gradient(bottom, white 85%, #eeeeee 99%);
     background: url('spinner.gif') no-repeat 100%, -ms-linear-gradient(top, #ffffff 85%, #eeeeee 99%);
     background: url('spinner.gif') no-repeat 100%, linear-gradient(top, #ffffff 85%, #eeeeee 99%);
-    margin: 1px 0;
-    padding: 4px 20px 4px 5px;
-    outline: 0;
-    border: 1px solid #aaa;
-    font-family: sans-serif;
-    font-size: 1em;
 }
 
 
