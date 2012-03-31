@@ -1,4 +1,4 @@
-/*
+﻿/*
  Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements.  See the NOTICE file
  distributed with this work for additional information
@@ -603,16 +603,18 @@
     AbstractSelect2.prototype.getContainerWidth = function() {
         if (this.opts.width !== undefined)
             return this.opts.width;
-        
+
         var style = this.opts.element.attr('style');
-        var attrs = style.split(';');
-        for (var i = 0; i < attrs.length; i++) {
-            var matches = attrs[i].replace(/\s/g,'')
+        if(style !== undefined){
+            var attrs = style.split(';');
+            for (var i = 0; i < attrs.length; i++) {
+                var matches = attrs[i].replace(/\s/g,'')
                 .match(/width:(([-+]?([0-9]*\.)?[0-9]+)(px|em|ex|%|in|cm|mm|pt|pc))/);
-            if(matches != null && matches.length >= 1)
-                return matches[1];
+                if(matches != null && matches.length >= 1)
+                    return matches[1];
+            }
         }
-        return this.opts.element.width();
+        return this.opts.element.width() + 'px';
     };
     
 
