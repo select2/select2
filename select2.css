@@ -157,7 +157,7 @@
     width:100%;
     margin:0;
     height:auto !important;
-    width:100%;
+    min-height: 26px;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
