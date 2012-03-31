@@ -764,7 +764,7 @@
         // find the selected element in the result list
 
         this.results.find(".select2-result").each(function (i) {
-            if ($(this).data("select2-data").id === self.opts.element.val()) {
+            if (equal($(this).data("select2-data").id, self.opts.element.val())) {
                 selected = i;
                 return false;
             }
@@ -1062,7 +1062,7 @@
 
         choices.each(function () {
             var choice = $(this), id = choice.data("select2-data").id;
-            if (val.indexOf(id) >= 0) {
+            if (indexOf(id, val) >= 0) {
                 choice.addClass("select2-disabled");
             } else {
                 choice.removeClass("select2-disabled");
