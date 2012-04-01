@@ -271,7 +271,7 @@
     window.Select2 = {query: {}, util: {}};
     window.Select2.util.debounce = debounce;
     window.Select2.query.ajax = ajax;
-    window.Select2.local = local;
+    window.Select2.query.local = local;
 
     /**
      * blurs any Select2 container that has focus when an element outside them was clicked or received focus
