@@ -20,6 +20,10 @@
     "use strict";
     /*global document, window, jQuery, console */
 
+    if (window.Select2 !== undefined) {
+        return;
+    }
+
     var KEY = {
         TAB: 9,
         ENTER: 13,
@@ -132,11 +136,19 @@
         });
     }
 
-    function debounce(threshold, fn) {
+    /**
+     * Debounces a function. Returns a function that calls the original fn function only if no invocations have been made
+     * within the last quietMillis milliseconds.
+     *
+     * @param quietMillis number of milliseconds to wait before invoking fn
+     * @param fn function to be debounced
+     * @return debounced version of fn
+     */
+    function debounce(quietMillis, fn) {
         var timeout;
         return function () {
             window.clearTimeout(timeout);
-            timeout = window.setTimeout(fn, threshold);
+            timeout = window.setTimeout(fn, quietMillis);
         };
     }
 
@@ -173,6 +185,93 @@
         sizer.remove();
         return width;
     }
+
+    /**
+     * Produces an ajax-based query function
+     *
+     * @param options object containing configuration paramters
+     * @param options.ajax url for the data
+     * @param options.data a function(searchTerm, pageNumber) that should return an object containing query string parameters for the above url.
+     * @param options.dataType request data type: ajax, jsonp, other datatatypes supported by jQuery's $.ajax function
+     * @param options.quietMillis (optional) milliseconds to wait before making the ajaxRequest, helps debounce the ajax function if invoked too often
+     * @param options.results a function(remoteData, pageNumber) that converts data returned form the remote request to the format expected by Select2.
+     *      The expected format is an object containing the following keys:
+     *      results array of objects that will be used as choices
+     *      more (optional) boolean indicating whether there are more results available
+     *      Example: {results:[{id:1, text:'Red'},{id:2, text:'Blue'}], more:true}
+     */
+    function ajax(options) {
+        var timeout, // current scheduled but not yet executed request
+            requestSequence = 0, // sequence used to drop out-of-order responses
+            quietMillis = options.quietMillis || 100;
+
+        return function (query) {
+            window.clearTimeout(timeout);
+            timeout = window.setTimeout(function () {
+                requestSequence += 1; // increment the sequence
+                var requestNumber = requestSequence, // this request's sequence number
+                    data = options.data; // ajax data function
+
+                data = data.call(this, query.term, query.page);
+
+                $.ajax({
+                    url: options.url,
+                    dataType: options.dataType,
+                    data: data,
+                    success: function (data) {
+                        if (requestNumber < requestSequence) {
+                            return;
+                        }
+                        query.callback(options.results(data, query.page));
+                    }
+                });
+            }, quietMillis);
+        };
+    }
+
+    /**
+     * Produces a query function that works with a local array
+     *
+     * @param options object containing configuration parameters. The options parameter can either be an array or an
+     * object.
+     *
+     * If the array form is used it is assumed that it contains objects with 'id' and 'text' keys.
+     *
+     * If the object form is used ti is assumed that it contains 'data' and 'text' keys. The 'data' key should contain
+     * an array of objects that will be used as choices. These objects must contain at least an 'id' key. The 'text'
+     * key can either be a String in which case it is expected that each element in the 'data' array has a key with the
+     * value of 'text' which will be used to match choices. Alternatively, text can be a function(item) that can extract
+     * the text.
+     */
+    function local(options) {
+        var data = options, // data elements
+            text = function (item) { return item.text; }; // function used to retrieve the text portion of a data item that is matched against the search
+
+        if (!$.isArray(data)) {
+            text = data.text;
+            // if text is not a function we assume it to be a key name
+            if (!$.isFunction(text)) text = function (item) { return item[data.text]; };
+            data = data.results;
+        }
+
+        return function (query) {
+            var t = query.term.toUpperCase(), filtered = {};
+            if (t === "") {
+                query.callback({results: data});
+                return;
+            }
+            filtered.results = $(data)
+                .filter(function () {return text(this).toUpperCase().indexOf(t) >= 0;})
+                .get();
+            query.callback(filtered);
+        };
+    }
+
+    // exports
+    window.Select2 = {query: {}, util: {}};
+    window.Select2.util.debounce = debounce;
+    window.Select2.query.ajax = ajax;
+    window.Select2.local = local;
 
     /**
      * blurs any Select2 container that has focus when an element outside them was clicked or received focus
@@ -314,59 +413,9 @@
         } else {
             if (!("query" in opts)) {
                 if ("ajax" in opts) {
-                    opts.query = (function () {
-                        var timeout, // current scheduled but not yet executed request
-                            requestSequence = 0, // sequence used to drop out-of-order responses
-                            quietMillis = opts.ajax.quietMillis || 100;
-
-                        return function (query) {
-                            window.clearTimeout(timeout);
-                            timeout = window.setTimeout(function () {
-                                requestSequence += 1; // increment the sequence
-                                var requestNumber = requestSequence, // this request's sequence number
-                                    options = opts.ajax, // ajax parameters
-                                    data = options.data; // ajax data function
-
-                                data = data.call(this, query.term, query.page);
-
-                                $.ajax({
-                                    url: options.url,
-                                    dataType: options.dataType,
-                                    data: data,
-                                    success: function (data) {
-                                        if (requestNumber < requestSequence) {
-                                            return;
-                                        }
-                                        query.callback(options.results(data, query.page));
-                                    }
-                                });
-                            }, quietMillis);
-                        };
-                    }());
+                    opts.query = ajax(opts.ajax);
                 } else if ("data" in opts) {
-                    opts.query = (function () {
-                        var data = opts.data, // data elements
-                            text = function (item) { return item.text; }; // function used to retrieve the text portion of a data item that is matched against the search
-
-                        if (!$.isArray(data)) {
-                            text = data.text;
-                            // if text is not a function we assume it to be a key name
-                            if (!$.isFunction(text)) text = function (item) { return item[data.text]; };
-                            data = data.results;
-                        }
-
-                        return function (query) {
-                            var t = query.term.toUpperCase(), filtered = {};
-                            if (t === "") {
-                                query.callback({results: data});
-                                return;
-                            }
-                            filtered.results = $(data)
-                                .filter(function () {return text(this).toUpperCase().indexOf(t) >= 0;})
-                                .get();
-                            query.callback(filtered);
-                        };
-                    }());
+                    opts.query = local(opts.data);
                 }
             }
         }
@@ -619,23 +668,22 @@
      *
      * @returns The width string (with units) for the container.
      */
-    AbstractSelect2.prototype.getContainerWidth = function() {
+    AbstractSelect2.prototype.getContainerWidth = function () {
         if (this.opts.width !== undefined)
             return this.opts.width;
 
         var style = this.opts.element.attr('style');
-        if(style !== undefined){
+        if (style !== undefined) {
             var attrs = style.split(';');
             for (var i = 0; i < attrs.length; i++) {
-                var matches = attrs[i].replace(/\s/g,'')
-                .match(/width:(([-+]?([0-9]*\.)?[0-9]+)(px|em|ex|%|in|cm|mm|pt|pc))/);
-                if(matches != null && matches.length >= 1)
+                var matches = attrs[i].replace(/\s/g, '')
+                    .match(/width:(([-+]?([0-9]*\.)?[0-9]+)(px|em|ex|%|in|cm|mm|pt|pc))/);
+                if (matches != null && matches.length >= 1)
                     return matches[1];
             }
         }
         return this.opts.element.width() + 'px';
     };
-    
 
     function SingleSelect2() {
     }
