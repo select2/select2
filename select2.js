@@ -267,12 +267,6 @@
         };
     }
 
-    // exports
-    window.Select2 = {query: {}, util: {}};
-    window.Select2.util.debounce = debounce;
-    window.Select2.query.ajax = ajax;
-    window.Select2.query.local = local;
-
     /**
      * blurs any Select2 container that has focus when an element outside them was clicked or received focus
      */
@@ -1245,6 +1239,20 @@
             }
         });
         return (value === undefined) ? this : value;
+    };
+
+    // exports
+    window.Select2 = {
+        query: {
+            ajax: ajax,
+            local: local
+        }, util: {
+            debounce: debounce
+        }, "class": {
+            abstract: AbstractSelect2,
+            single: SingleSelect2,
+            multi: MultiSelect2
+        }
     };
 
 }(jQuery));
