@@ -267,6 +267,31 @@
         };
     }
 
+    // TODO javadoc
+    function tags(data) {
+        if ($.isFunction(data)) {
+            return data;
+        }
+
+        // if not a function we assume it to be an array
+
+        return function (query) {
+            var t = query.term.toUpperCase(), filtered = {results: []};
+            $(data).each(function () {
+                if (t === "" || this.toUpperCase().indexOf(t) >= 0) { filtered.results.push({id: this, text: this}); }
+            });
+            console.log(filtered);
+            query.callback(filtered);
+        }
+    }
+
+    // exports
+    window.Select2 = {query: {}, util: {}};
+    window.Select2.util.debounce = debounce;
+    window.Select2.query.ajax = ajax;
+    window.Select2.query.local = local;
+    window.Select2.query.tags = tags;
+
     /**
      * blurs any Select2 container that has focus when an element outside them was clicked or received focus
      */
@@ -410,6 +435,9 @@
                     opts.query = ajax(opts.ajax);
                 } else if ("data" in opts) {
                     opts.query = local(opts.data);
+                } else if ("tags" in opts) {
+                    opts.query = tags(opts.tags);
+                    opts.createSearchChoice = function (term) { return {id: term, text: term};}
                 }
             }
         }
@@ -591,7 +619,21 @@
 
         this.resultsPage = 1;
         opts.query({term: search.val(), page: this.resultsPage, callback: this.bind(function (data) {
-            var parts = []; // html parts
+            var parts = [], // html parts
+                def; // default choice
+
+            // create a default choice and prepend it to the list
+            if (this.opts.createSearchChoice && search.val() !== "") {
+                def = this.opts.createSearchChoice.call(null, search.val(), data.results);
+                if (def !== undefined && def !== null && def.id !== undefined && def.id != null) {
+                    if ($(data.results).filter(
+                        function () {
+                            return equal(this.id, def.id);
+                        }).length === 0) {
+                        data.results.unshift(def);
+                    }
+                }
+            }
 
             if (data.results.length === 0) {
                 render("<li class='select2-no-results'>" + opts.formatNoMatches(search.val()) + "</li>");
@@ -1253,6 +1295,7 @@
                     multiple = opts.element.attr("multiple");
                 } else {
                     multiple = opts.multiple || false;
+                    if ("tags" in opts) {opts.multiple = multiple = true;}
                 }
 
                 select2 = multiple ? new MultiSelect2() : new SingleSelect2();
