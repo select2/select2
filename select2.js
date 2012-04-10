@@ -856,7 +856,6 @@
         return opts;
     };
 
-
     SingleSelect2.prototype.setPlaceholder = function () {
         var placeholder = this.getPlaceholder();
 
@@ -1320,7 +1319,7 @@
         return (value === undefined) ? this : value;
     };
 
-// exports
+    // exports
     window.Select2 = {
         query: {
             ajax: ajax,
@@ -1335,7 +1334,4 @@
         }
     };
 
-}
-    (jQuery)
-    )
-;
+}(jQuery));
