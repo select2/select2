@@ -1324,7 +1324,8 @@
     window.Select2 = {
         query: {
             ajax: ajax,
-            local: local
+            local: local,
+            tags: tags
         }, util: {
             debounce: debounce
         }, "class": {
