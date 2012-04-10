@@ -369,6 +369,8 @@
                 this.focusSearch();
             }
         }));
+
+        this.monitorSource();
     };
 
     AbstractSelect2.prototype.prepareOpts = function (opts) {
@@ -448,9 +450,29 @@
     };
 
     /**
+     * Monitor the original element for changes and update select2 accordingly
+     * @note: must avoid recursive loop caused by onChange callbacks
+     */
+    AbstractSelect2.prototype.monitorSource = function () {
+        var self = this;
+        self.opts.element.bind("change", function(e){
+            if (this.opts.element.data("select2-triggered")) {
+                this.opts.element.data("select2-triggered", false);
+            } else {
+                self.updateSelection({
+                    id: self.opts.element.val(),
+                    text: self.opts.element.find('option:selected').text()
+                });
+            }
+        });
+    };
+
+    /**
      * Triggers the change event on the source element
      */
     AbstractSelect2.prototype.triggerChange = function () {
+        // Prevents recursive triggering
+        this.opts.element.data("select2-triggered", true);
         this.opts.element.trigger("change");
     };
 
