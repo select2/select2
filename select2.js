@@ -437,6 +437,14 @@
                 } else if ("tags" in opts) {
                     opts.query = tags(opts.tags);
                     opts.createSearchChoice = function (term) { return {id: term, text: term};}
+                    opts.initSelection = function (element) {
+                        var data = [];
+                        $(element.val().split(",")).each(function () {
+                            data.push({id: this, text: this});
+                        });
+                        return data;
+                    }
+
                 }
             }
         }
