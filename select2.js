@@ -280,7 +280,6 @@
             $(data).each(function () {
                 if (t === "" || this.toUpperCase().indexOf(t) >= 0) { filtered.results.push({id: this, text: this}); }
             });
-            console.log(filtered);
             query.callback(filtered);
         }
     }
