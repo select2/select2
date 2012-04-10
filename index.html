@@ -550,6 +550,7 @@ $("#e11").select2({
   data: [{id: 0, text: 'story'},{id: 1, text: 'bug'},{id: 2, text: 'task'}]
 });
 $("#e11_2").select2({
+    createSearchChoice:function(term, data) { if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {return {id:term, text:term};} },
     multiple: true,
     data: [{id: 0, text: 'story'},{id: 1, text: 'bug'},{id: 2, text: 'task'}]
 });
@@ -577,6 +578,27 @@ $("#e11_2").bind("change", show);
           <div class="span8">
               <h3>Example Code</h3>
            <pre class="prettyprint linenums" id="code_e11">
+           </pre>
+          </div>
+      </article>
+      <article class="row zabra" id="event_change">
+<script id="script_e12">
+$(document).ready(function () {
+$("#e12").select2({tags:["red", "green", "blue"]});
+});
+</script>
+          <div class="span4">
+              <h3>Tagging Support</h3>
+
+              <p>Select2 can be used to quickly set up fields used for tagging</p>
+
+              <p><input type="hidden" id="e12" style="width:300px"/></p>
+              <p>Note that when tagging is enabled the user can select from pre-existing tags or create a new tag by
+                  picking the first choice which is what the user has typed into the search box so far.</p>
+          </div>
+          <div class="span8">
+              <h3>Example Code</h3>
+           <pre class="prettyprint linenums" id="code_e12">
            </pre>
           </div>
       </article>
@@ -702,6 +724,24 @@ $("#e11_2").bind("change", show);
                     <tr><td>&lt;returns&gt;</td><td>string</td><td>Message html</td></tr>
                 </table>
             </td></tr>
+            <tr><td>createSearchChoice</td><td>function</td><td>
+                Creates a new selectable choice from user's search term. Allows creation of choices not available via the query
+                function. Useful when the user can create choices on the fly, eg for the 'tagging' usecase.
+                <pre>createSearchChoice(term)</pre>
+                <table class="table table-bordered table-striped">
+                    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                    <tr><td>term</td><td>string</td><td>Search string entered by user</td></tr>
+                    <tr><td>&lt;returns&gt;</td><td>object (optional)</td><td>Object representing the new choice.
+                        Must at least contain an <code>id</code> attribute.</td></tr>
+                </table>
+                If the function returns <code>undefined</code> or <code>null</code> no choice will be created. If a new
+                choice is created it is displayed first in the selection list so that user may select it by simply pressing
+                <code>enter</code>.
+                
+                <p class="alert alert-warning">When used in combination with <code>input[type=hidden]</code> tag care
+                must be taken to sanitize the <code>id</code> attribute of the choice object, especially stripping
+                <code>,</code> as it is used as a value separator</p>
+            </td></tr>
             <tr>
                 <td>query</td>
                 <td>function</td>
@@ -759,6 +799,13 @@ $("#e11_2").bind("change", show);
                 Options for the built in query function that works with arrays.
                 <p>If this element contains an array, each element in the array must contain <code>id</code> and <code>text</code> keys</p>
                 <p>Alternatively, this element can be specified as an object in which <code>results</code> key must contain the data as an array and a <code>text</code> key can either be the name of the key in data items that contains text or a function that retrieves the text given a data element from the array</p>
+            </td></tr>
+            <tr><td>tags</td><td>array/function</td><td>
+                Puts Select2 into 'tagging'mode where the user can add new choices and pre-existing tags are provided via
+                this options attribute which is either an <code>array</code> or a <code>function</code> that returns an
+                array of <code>objects</code> or <code>strings</code>. If <code>strings</code> are used instead of <code>objects</code>
+                they will be converted into an object that has an <code>id</code> and <code>text</code> attribute equal
+                to the value of the <code>string</code>.
             </td></tr>
         </table>
 
