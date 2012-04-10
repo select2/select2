@@ -581,7 +581,7 @@ $("#e11_2").bind("change", show);
            </pre>
           </div>
       </article>
-      <article class="row zabra" id="event_change">
+      <article class="row zebra" id="tags">
 <script id="script_e12">
 $(document).ready(function () {
 $("#e12").select2({tags:["red", "green", "blue"]});
@@ -592,7 +592,7 @@ $("#e12").select2({tags:["red", "green", "blue"]});
 
               <p>Select2 can be used to quickly set up fields used for tagging</p>
 
-              <p><input type="hidden" id="e12" style="width:300px"/></p>
+              <p><input type="hidden" id="e12" style="width:300px" value="brown,red"/></p>
               <p>Note that when tagging is enabled the user can select from pre-existing tags or create a new tag by
                   picking the first choice which is what the user has typed into the search box so far.</p>
           </div>
@@ -741,6 +741,34 @@ $("#e12").select2({tags:["red", "green", "blue"]});
                 <p class="alert alert-warning">When used in combination with <code>input[type=hidden]</code> tag care
                 must be taken to sanitize the <code>id</code> attribute of the choice object, especially stripping
                 <code>,</code> as it is used as a value separator</p>
+            </td></tr>
+            <tr><td>initSelection</td><td>function</td><td>
+                Called when Select2 is created to allow the user to initialize the selection based on the value of the
+                element select2 is attached to.
+                <p>
+                Essentially this is an <code>id->object</code> mapping function.
+                </p>
+                <pre>initSelection(element)</pre>
+                <table class="table table-bordered table-striped">
+                    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                    <tr><td>element</td><td>jQuery array</td><td>element Select2 is attached to</td></tr>
+                    <tr><td>&lt;returns&gt;</td><td>object or array of objects</td><td><code>Object</code> representing the choice
+                        to be selected, or an <code>array</code> of such objects in case Select2 is in multi mode.</td></tr>
+                </table>
+                <p class="alert alert-info">This function will only be called when there is initial input to be processed.</p>
+                Here is an example implementation used for tags. Tags are the simplest form of data where the id is also
+                the text:
+<pre class="prettyprint">
+$("#tags").select2({
+    initSelection : function (element) {
+        var data = [];
+        $(element.val().split(",")).each(function () {
+            data.push({id: this, text: this});
+        });
+        return data;
+    }
+});
+</pre>
             </td></tr>
             <tr>
                 <td>query</td>
