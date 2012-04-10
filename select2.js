@@ -788,13 +788,31 @@
             this.triggerChange();
         }));
 
-        if (this.select) {
-            selected = this.select.find(":selected");
-            this.updateSelection({id: selected.attr("value"), text: selected.text()});
+        if ($.isFunction(this.opts.initSelection)) {
+            selected = this.opts.initSelection.call(null, this.opts.element);
+            if (selected !== undefined && selected != null) {
+                this.updateSelection(selected);
+            }
         }
 
         this.setPlaceholder();
     };
+
+    SingleSelect2.prototype.prepareOpts = function () {
+        var opts = this.parent.prepareOpts.apply(this, arguments);
+
+        if (opts.element.get(0).tagName.toLowerCase() === "select") {
+            // install sthe selection initializer
+            this.opts.initSelection = function (element) {
+                var selected = element.find(":selected");
+                // a single select box always has a value, no need to null check 'selected'
+                return {id: selected.attr("value"), text: selected.text()};
+            };
+        }
+
+        return opts;
+    };
+
 
     SingleSelect2.prototype.setPlaceholder = function () {
         var placeholder = this.getPlaceholder();
@@ -918,6 +936,23 @@
             "</div>"].join(""));
     };
 
+    MultiSelect2.prototype.prepareOpts = function () {
+        var opts = this.parent.prepareOpts.apply(this, arguments);
+
+        if (opts.element.get(0).tagName.toLowerCase() === "select") {
+            // install sthe selection initializer
+            this.opts.initSelection = function (element) {
+                var data = [];
+                element.find(":selected").each(function () {
+                    data.push({id: $(this).attr("value"), text: $(this).text()});
+                });
+                return data;
+            };
+        }
+
+        return opts;
+    };
+
     MultiSelect2.prototype.initContainer = function () {
 
         var selector = ".select2-choices", selection, data;
@@ -989,13 +1024,11 @@
             this.clearPlaceholder();
         }));
 
-        if (this.select) {
-            data = [];
-            this.select.find(":selected").each(function () {
-                data.push({id: $(this).attr("value"), text: $(this).text()});
-            });
-
-            this.updateSelection(data);
+        if ($.isFunction(this.opts.initSelection)) {
+            data = this.opts.initSelection.call(null, this.opts.element);
+            if (data !== undefined && data != null) {
+                this.updateSelection(data);
+            }
         }
 
         // set the placeholder if necessary
