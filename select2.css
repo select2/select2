@@ -252,6 +252,8 @@
   display: list-item;
 }
 
+/*
+disabled look for already selected choices in the results dropdown
 .select2-container .select2-results .select2-disabled.select2-highlighted {
     color: #666;
     background: #f4f4f4;
@@ -263,7 +265,10 @@
   display: list-item;
   cursor: default;
 }
-
+*/
+.select2-container .select2-results .select2-disabled {
+    display: none;
+}
 
 .select2-more-results.select2-active {
     background: #f4f4f4 url('spinner.gif') no-repeat 100%;
