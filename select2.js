@@ -444,7 +444,6 @@
                         });
                         return data;
                     }
-
                 }
             }
         }
@@ -838,9 +837,11 @@
         }));
 
         if ($.isFunction(this.opts.initSelection)) {
-            selected = this.opts.initSelection.call(null, this.opts.element);
-            if (selected !== undefined && selected != null) {
-                this.updateSelection(selected);
+            if (this.select || this.opts.element.val() !== "") {
+                selected = this.opts.initSelection.call(null, this.opts.element);
+                if (selected !== undefined && selected != null) {
+                    this.updateSelection(selected);
+                }
             }
         }
 
@@ -1074,9 +1075,11 @@
         }));
 
         if ($.isFunction(this.opts.initSelection)) {
-            data = this.opts.initSelection.call(null, this.opts.element);
-            if (data !== undefined && data != null) {
-                this.updateSelection(data);
+            if (this.select || this.opts.element.val() !== "") {
+                data = this.opts.initSelection.call(null, this.opts.element);
+                if (data !== undefined && data != null) {
+                    this.updateSelection(data);
+                }
             }
         }
 
@@ -1324,7 +1327,7 @@
         return (value === undefined) ? this : value;
     };
 
-    // exports
+// exports
     window.Select2 = {
         query: {
             ajax: ajax,
@@ -1338,4 +1341,7 @@
         }
     };
 
-}(jQuery));
+}
+    (jQuery)
+    )
+;
