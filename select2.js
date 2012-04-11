@@ -369,6 +369,15 @@
                 this.focusSearch();
             }
         }));
+
+        if ($.isFunction(this.opts.initSelection)) {
+            // initialize selection based on the current value of the source element
+            this.initSelection();
+
+            // if the user has provided a function that can set selection based on the value of the source element
+            // we monitor the change event on the element and trigger it, allowing for two way synchronization
+            this.monitorSource();
+        }
     };
 
     AbstractSelect2.prototype.prepareOpts = function (opts) {
@@ -448,10 +457,24 @@
     };
 
     /**
+     * Monitor the original element for changes and update select2 accordingly
+     */
+    AbstractSelect2.prototype.monitorSource = function () {
+        this.opts.element.bind("change", this.bind(function (e) {
+            if (this.opts.element.data("select2-change-triggered") !== true) {
+                this.initSelection();
+            }
+        }));
+    };
+
+    /**
      * Triggers the change event on the source element
      */
     AbstractSelect2.prototype.triggerChange = function () {
+        // Prevents recursive triggering
+        this.opts.element.data("select2-change-triggered", true);
         this.opts.element.trigger("change");
+        this.opts.element.data("select2-change-triggered", false);
     };
 
     AbstractSelect2.prototype.opened = function () {
@@ -829,15 +852,24 @@
             this.triggerChange();
         }));
 
-        if ($.isFunction(this.opts.initSelection)) {
-            if (this.select || this.opts.element.val() !== "") {
-                selected = this.opts.initSelection.call(null, this.opts.element);
-                if (selected !== undefined && selected != null) {
-                    this.updateSelection(selected);
-                }
+        this.setPlaceholder();
+    };
+
+    /**
+     * Sets selection based on source element's value
+     */
+    SingleSelect2.prototype.initSelection = function () {
+        var selected;
+        if (this.opts.element.val() === "") {
+            this.updateSelection({id: "", text: ""});
+        } else {
+            selected = this.opts.initSelection.call(null, this.opts.element);
+            if (selected !== undefined && selected !== null) {
+                this.updateSelection(selected);
             }
         }
 
+        this.close();
         this.setPlaceholder();
     };
 
@@ -1066,14 +1098,23 @@
             this.clearPlaceholder();
         }));
 
-        if ($.isFunction(this.opts.initSelection)) {
-            if (this.select || this.opts.element.val() !== "") {
-                data = this.opts.initSelection.call(null, this.opts.element);
-                if (data !== undefined && data != null) {
-                    this.updateSelection(data);
-                }
+        // set the placeholder if necessary
+        this.clearSearch();
+    };
+
+    MultiSelect2.prototype.initSelection = function () {
+        var data;
+        if (this.opts.element.val() === "") {
+            this.updateSelection([]);
+        }
+        if (this.select || this.opts.element.val() !== "") {
+            data = this.opts.initSelection.call(null, this.opts.element);
+            if (data !== undefined && data != null) {
+                this.updateSelection(data);
             }
         }
+
+        this.close();
 
         // set the placeholder if necessary
         this.clearSearch();
@@ -1109,7 +1150,16 @@
     };
 
     MultiSelect2.prototype.updateSelection = function (data) {
-        var self = this;
+        var ids = [], filtered = [], self = this;
+
+        // filter out duplicates
+        $(data).each(function () {
+            if (indexOf(this.id, ids) < 0) {
+                ids.push(this.id); filtered.push(this);
+            }
+        });
+        data = filtered;
+
         this.selection.find(".select2-search-choice").remove();
         $(data).each(function () {
             self.addSelectedChoice(this);
@@ -1247,10 +1297,16 @@
     };
 
     MultiSelect2.prototype.setVal = function (val) {
+        var unique = [];
         if (this.select) {
             this.select.val(val);
         } else {
-            this.opts.element.val(val.length === 0 ? "" : val.join(","));
+            // filter out duplicates
+            $(val).each(function () {
+                if (indexOf(this, unique) < 0) unique.push(this);
+            });
+
+            this.opts.element.val(unique.length === 0 ? "" : unique.join(","));
         }
     };
 
