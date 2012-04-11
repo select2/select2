@@ -323,8 +323,10 @@ $("#e10_3").select2({
                   <li><a href="#data_array">Array Data</a></li>
                   <li><a href="#ajax">Remote/AJAX Data</a></li>
                   <li><a href="#infinite">Infinite Scrolling of Remote/AJAX data</a></li>
+                  <li><a href="#tags">Tagging Support</a></li>
                   <li><a href="#pragmatic">Pragmatic control</a></li>
                   <li><a href="#event_change">Events: Change</a></li>
+                  <li><a href="#event_ext_change">Events: Reacting to External Changes</a></li>
               </ul>
             </li>
             <li><a href="#documentation">Documentation</a></li>
@@ -603,6 +605,35 @@ $("#e12").select2({tags:["red", "green", "blue"]});
           </div>
       </article>
 
+      <article class="row" id="event_ext_change">
+<script id="script_e13">
+$(document).ready(function () {
+$("#e13").select2();
+$("#e13_ca").click(function() { $("#e13").val("CA").trigger("change"); });
+$("#e13_ak_co").click(function() { $("#e13").val(["AK","CO"]).trigger("change"); });
+});
+</script>
+          <div class="span4">
+              <h3>Reacting to external value changes</h3>
+
+              <p>Select2 can react to external value changes and keep its selection in-sync. This feature allows
+                  Select2 to work seamlessly with front-end frameworks that use data binding between ui components
+                  and model values.</p>
+              <p><select id="e13" multiple style="width:300px"><option value="AL" selected>Alabama</option><option value="AK">Alaska</option><option value="AZ" selected>Arizona</option><option value="AR">Arkansas</option><option value="CA">California</option><option value="CO">Colorado</option><option value="CT">Connecticut</option><option value="DE">Delaware</option><option value="FL">Florida</option><option value="GA">Georgia</option><option value="HI">Hawaii</option><option value="ID">Idaho</option><option value="IL">Illinois</option><option value="IN">Indiana</option><option value="IA">Iowa</option><option value="KS">Kansas</option><option value="KY">Kentucky</option><option value="LA">Louisiana</option><option value="ME">Maine</option><option value="MD">Maryland</option><option value="MA">Massachusetts</option><option value="MI">Michigan</option><option value="MN">Minnesota</option><option value="MS">Mississippi</option><option value="MO">Missouri</option><option value="MT">Montana</option><option value="NE">Nebraska</option><option value="NV">Nevada</option><option value="NH">New Hampshire</option><option value="NJ">New Jersey</option><option value="NM">New Mexico</option><option value="NY">New York</option><option value="NC">North Carolina</option><option value="ND">North Dakota</option><option value="OH">Ohio</option><option value="OK">Oklahoma</option><option value="OR">Oregon</option><option value="PA">Pennsylvania</option><option value="RI">Rhode Island</option><option value="SC">South Carolina</option><option value="SD">South Dakota</option><option value="TN">Tennessee</option><option value="TX">Texas</option><option value="UT">Utah</option><option value="VT">Vermont</option><option value="VA">Virginia</option><option value="WA">Washington</option><option value="WV">West Virginia</option><option value="WI">Wisconsin</option><option value="WY">Wyoming</option></select><br/></p>
+              <p><input type="button" id="e13_ca" class="btn btn-primary" value="Select California"/> <input type="button" id="e13_ak_co"  class="btn btn-primary"value="Select Alaska and Colorado"/></p>
+              <p class="alert alert-alert">This feature is only available when initSelection() function is provided in
+                  the options. This function is needed to map the choice ids set on the element to objects used by
+                  Select2. This function is set by default when Select2 is attached to a <code>select</code> or when
+                  the <code>tags</code> helper function is used.</p>
+          </div>
+          <div class="span8">
+              <h3>Example Code</h3>
+           <pre class="prettyprint linenums" id="code_e13">
+           </pre>
+          </div>
+      </article>
+
+      
       </section>
       
       
