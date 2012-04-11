@@ -190,9 +190,10 @@
      * Produces an ajax-based query function
      *
      * @param options object containing configuration paramters
-     * @param options.ajax url for the data
+     * @param options.transport function that will be used to execute the ajax request. must be compatible with parameters supported by $.ajax
+     * @param options.url url for the data
      * @param options.data a function(searchTerm, pageNumber) that should return an object containing query string parameters for the above url.
-     * @param options.dataType request data type: ajax, jsonp, other datatatypes supported by jQuery's $.ajax function
+     * @param options.dataType request data type: ajax, jsonp, other datatatypes supported by jQuery's $.ajax function or the transport function if specified
      * @param options.quietMillis (optional) milliseconds to wait before making the ajaxRequest, helps debounce the ajax function if invoked too often
      * @param options.results a function(remoteData, pageNumber) that converts data returned form the remote request to the format expected by Select2.
      *      The expected format is an object containing the following keys:
@@ -210,11 +211,12 @@
             timeout = window.setTimeout(function () {
                 requestSequence += 1; // increment the sequence
                 var requestNumber = requestSequence, // this request's sequence number
-                    data = options.data; // ajax data function
+                    data = options.data, // ajax data function
+                    transport=options.transport||$.ajax;
 
                 data = data.call(this, query.term, query.page);
 
-                $.ajax({
+                transport.call(null, {
                     url: options.url,
                     dataType: options.dataType,
                     data: data,
