@@ -16,7 +16,7 @@
  specific language governing permissions and limitations
  under the License.
  */
-(function ($) {
+(function ($, undefined) {
     "use strict";
     /*global document, window, jQuery, console */
 
