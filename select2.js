@@ -212,7 +212,7 @@
                 requestSequence += 1; // increment the sequence
                 var requestNumber = requestSequence, // this request's sequence number
                     data = options.data, // ajax data function
-                    transport=options.transport||$.ajax;
+                    transport = options.transport || $.ajax;
 
                 data = data.call(this, query.term, query.page);
 
@@ -318,6 +318,11 @@
         // prepare options
         this.opts = this.prepareOpts(opts);
 
+        // destroy if called on an existing component
+        if (opts.element.data("select2") !== undefined) {
+            this.destroy();
+        }
+
         this.container = this.createContainer();
 
         if (opts.element.attr("class") !== undefined) {
@@ -325,7 +330,8 @@
         }
 
         // swap container for the element
-        this.opts.element.data("select2", this)
+        this.opts.element
+            .data("select2", this)
             .hide()
             .after(this.container);
         this.container.data("select2", this);
@@ -379,6 +385,16 @@
             // if the user has provided a function that can set selection based on the value of the source element
             // we monitor the change event on the element and trigger it, allowing for two way synchronization
             this.monitorSource();
+        }
+    };
+
+    AbstractSelect2.prototype.destroy = function () {
+        var select2 = this.opts.element.data("select2");
+        if (select2 !== undefined) {
+            select2.container.remove();
+            select2.opts.element
+                .removeData("select2")
+                .show();
         }
     };
 
@@ -1157,7 +1173,8 @@
         // filter out duplicates
         $(data).each(function () {
             if (indexOf(this.id, ids) < 0) {
-                ids.push(this.id); filtered.push(this);
+                ids.push(this.id);
+                filtered.push(this);
             }
         });
         data = filtered;
@@ -1344,7 +1361,7 @@
         var args = Array.prototype.slice.call(arguments, 0),
             opts,
             select2,
-            value, multiple, allowedMethods = ["val"];
+            value, multiple, allowedMethods = ["val", "destroy"];
 
         this.each(function () {
             if (args.length === 0 || typeof(args[0]) === "object") {
@@ -1368,6 +1385,7 @@
 
                 value = undefined;
                 select2 = $(this).data("select2");
+                if (select2 === undefined) return;
                 value = select2[args[0]].apply(select2, args.slice(1));
                 if (value !== undefined) {return false;}
             } else {
