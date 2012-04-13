@@ -103,6 +103,20 @@
         return false;
     }
 
+    /**
+     * Splits the string into an array of values, trimming each value. An empty array is returned for nulls or empty
+     * strings
+     * @param string
+     * @param separator
+     */
+    function splitVal(string, separator) {
+        var val, i, l;
+        if (string === null || string.length < 1) return [];
+        val = string.split(separator);
+        for (i = 0, l = val.length; i < l; i = i + 1) val[i] = $.trim(val[i]);
+        return val;
+    }
+
     function getSideBorderPadding(element) {
         return element.outerWidth() - element.width();
     }
@@ -300,7 +314,6 @@
         });
     });
 
-
     /**
      * Creates a new class
      *
@@ -472,11 +485,11 @@
                         opts.createSearchChoice = function (term) { return {id: term, text: term};}
                         opts.initSelection = function (element) {
                             var data = [];
-                            $(element.val().split(",")).each(function () {
+                            $(splitVal(element.val(), ",")).each(function () {
                                 data.push({id: this, text: this});
                             });
                             return data;
-                        }
+                        };
                     }
                 }
             }
@@ -1309,13 +1322,13 @@
         },
 
         getVal: function () {
-            var val;
+            var val, i, l;
             if (this.select) {
                 val = this.select.val();
                 return val === null ? [] : val;
             } else {
                 val = this.opts.element.val();
-                return (val === null || val === "") ? [] : val.split(",");
+                return splitVal(val, ",");
             }
         },
 
