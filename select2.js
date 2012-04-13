@@ -1,4 +1,4 @@
-/*
+﻿/*
  Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements.  See the NOTICE file
  distributed with this work for additional information
@@ -238,6 +238,7 @@
                         if (requestNumber < requestSequence) {
                             return;
                         }
+                        // TODO 3.0 - replace query.page with query so users have access to term, page, etc.
                         query.callback(options.results(data, query.page));
                     }
                 });
