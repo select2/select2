@@ -75,9 +75,9 @@
         var i = 0, l = array.length, v;
 
         if (value.constructor === String) {
-            for (; i < l; i++) if (value.localeCompare(array[i]) === 0) return i;
+            for (; i < l; i = i + 1) if (value.localeCompare(array[i]) === 0) return i;
         } else {
-            for (; i < l; i++) {
+            for (; i < l; i = i + 1) {
                 v = array[i];
                 if (v.constructor === String) {
                     if (v.localeCompare(value) === 0) return i;
@@ -139,13 +139,11 @@
      * the elements under the pointer are scrolled.
      */
     $(document).delegate("*", "mousemove", function (e) {
-        $(this).data("select2-lastpos", {x: e.pageX, y: e.pageY});
+        $(document).data("select2-lastpos", {x: e.pageX, y: e.pageY});
     });
     function installFilteredMouseMove(element) {
-        var doc = $(document);
         element.bind("mousemove", function (e) {
-            var lastpos = doc.data("select2-lastpos");
-
+            var lastpos = $(document).data("select2-lastpos");
             if (lastpos === undefined || lastpos.x !== e.pageX || lastpos.y !== e.pageY) {
                 $(e.target).trigger("mousemove-filtered", e);
             }
@@ -299,7 +297,7 @@
                 if (t === "" || this.toUpperCase().indexOf(t) >= 0) { filtered.results.push({id: this, text: this}); }
             });
             query.callback(filtered);
-        }
+        };
     }
 
     /**
@@ -320,13 +318,13 @@
      * @param superClass
      * @param methods
      */
-    function clazz(superClass, methods) {
-        var clazz = function () {};
-        clazz.prototype = new superClass;
-        clazz.prototype.constructor = clazz;
-        clazz.prototype.parent = superClass.prototype;
-        clazz.prototype = $.extend(clazz.prototype, methods);
-        return clazz;
+    function clazz(SuperClass, methods) {
+        var constructor = function () {};
+        constructor.prototype = new SuperClass;
+        constructor.prototype.constructor = constructor;
+        constructor.prototype.parent = SuperClass.prototype;
+        constructor.prototype = $.extend(constructor.prototype, methods);
+        return constructor;
     }
 
     AbstractSelect2 = clazz(Object, {
@@ -482,7 +480,7 @@
                         opts.query = local(opts.data);
                     } else if ("tags" in opts) {
                         opts.query = tags(opts.tags);
-                        opts.createSearchChoice = function (term) { return {id: term, text: term};}
+                        opts.createSearchChoice = function (term) { return {id: term, text: term}; };
                         opts.initSelection = function (element) {
                             var data = [];
                             $(splitVal(element.val(), ",")).each(function () {
@@ -691,7 +689,7 @@
                 // create a default choice and prepend it to the list
                 if (this.opts.createSearchChoice && search.val() !== "") {
                     def = this.opts.createSearchChoice.call(null, search.val(), data.results);
-                    if (def !== undefined && def !== null && def.id !== undefined && def.id != null) {
+                    if (def !== undefined && def !== null && def.id !== undefined && def.id !== null) {
                         if ($(data.results).filter(
                             function () {
                                 return equal(this.id, def.id);
@@ -771,16 +769,17 @@
          * @returns The width string (with units) for the container.
          */
         getContainerWidth: function () {
+            var style, attrs, matches, i, l;
             if (this.opts.width !== undefined)
                 return this.opts.width;
 
-            var style = this.opts.element.attr('style');
+            style = this.opts.element.attr('style');
             if (style !== undefined) {
-                var attrs = style.split(';');
-                for (var i = 0; i < attrs.length; i++) {
-                    var matches = attrs[i].replace(/\s/g, '')
+                attrs = style.split(';');
+                for (i = 0, l = attrs.length; i < l; i = i + 1) {
+                    matches = attrs[i].replace(/\s/g, '')
                         .match(/width:(([-+]?([0-9]*\.)?[0-9]+)(px|em|ex|%|in|cm|mm|pt|pc))/);
-                    if (matches != null && matches.length >= 1)
+                    if (matches !== null && matches.length >= 1)
                         return matches[1];
                 }
             }
@@ -829,7 +828,7 @@
         initContainer: function () {
 
             var selection, container = this.container, clickingInside = false,
-                selector = ".select2-choice", selected;
+                selector = ".select2-choice";
 
             this.selection = selection = container.find(selector);
 
@@ -1064,7 +1063,7 @@
 
         initContainer: function () {
 
-            var selector = ".select2-choices", selection, data;
+            var selector = ".select2-choices", selection;
 
             this.searchContainer = this.container.find(".select2-search-field");
             this.selection = selection = this.container.find(selector);
@@ -1074,7 +1073,7 @@
                     this.close();
 
                     var choices,
-                        selected = this.selection.find(".select2-search-choice-focus");
+                        selected = selection.find(".select2-search-choice-focus");
                     if (selected.length > 0) {
                         this.unselect(selected.first());
                         this.search.width(10);
@@ -1082,12 +1081,12 @@
                         return;
                     }
 
-                    choices = this.selection.find(".select2-search-choice");
+                    choices = selection.find(".select2-search-choice");
                     if (choices.length > 0) {
                         choices.last().addClass("select2-search-choice-focus");
                     }
                 } else {
-                    this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
+                    selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
                 }
 
                 if (this.opened()) {
@@ -1144,7 +1143,7 @@
             }
             if (this.select || this.opts.element.val() !== "") {
                 data = this.opts.initSelection.call(null, this.opts.element);
-                if (data !== undefined && data != null) {
+                if (data !== undefined && data !== null) {
                     this.updateSelection(data);
                 }
             }
@@ -1322,7 +1321,7 @@
         },
 
         getVal: function () {
-            var val, i, l;
+            var val;
             if (this.select) {
                 val = this.select.val();
                 return val === null ? [] : val;
@@ -1422,9 +1421,9 @@
         }, util: {
             debounce: debounce
         }, "class": {
-            abstract: AbstractSelect2,
-            single: SingleSelect2,
-            multi: MultiSelect2
+            "abstract": AbstractSelect2,
+            "single": SingleSelect2,
+            "multi": MultiSelect2
         }
     };
 
