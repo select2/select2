@@ -129,12 +129,12 @@ $("#e6").select2({
         dataType: 'jsonp',
         data: function (term, page) {
             return {
-                q: term,
+                q: term, // search term
                 page_limit: 10,
                 apikey: "ju6z9mjyajq2djue3gbvv26t" // please do not use so this example keeps working
             };
         },
-        results: function (data, vars) { // parse the results into the format expected by Select2.
+        results: function (data, page) { // parse the results into the format expected by Select2.
             // since we are using custom formatting functions we do not need to alter remote JSON data
             return {results: data.movies};
         }
@@ -156,7 +156,7 @@ $("#e7").select2({
         quietMillis: 100,
         data: function (term, page) { // page is the one-based page number tracked by Select2
             return {
-                q: term,
+                q: term, //search term
                 page_limit: 10, // page size
                 page: page, // page number
                 apikey: "ju6z9mjyajq2djue3gbvv26t" // please do not use so this example keeps working
@@ -876,10 +876,10 @@ $("#tags").select2({
                     </td></tr>
                     <tr><td>results</td><td>function</td><td>
                         Function used to build the query results object from the ajax response
-                        <pre>results(term, page)</pre>
+                        <pre>results(data, page)</pre>
                         <table class="table table-bordered table-striped">
                             <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-                            <tr><td>term</td><td>string</td><td>Search term</td></tr>
+                            <tr><td>data</td><td>object</td><td>Retrieved data</td></tr>
                             <tr><td>page</td><td>int</td><td>Page number that was passed into the <code>data</code> function above</td></tr>
                             <tr><td>&lt;returns&gt;</td><td>object</td><td>Results object. See &quot;options.callback&quot; in the &quot;query&quot; function for format.</td></tr>
                         </table>
