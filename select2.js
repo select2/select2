@@ -1379,7 +1379,7 @@
         var args = Array.prototype.slice.call(arguments, 0),
             opts,
             select2,
-            value, multiple, allowedMethods = ["val", "destroy"];
+            value, multiple, allowedMethods = ["val", "destroy", "open", "close"];
 
         this.each(function () {
             if (args.length === 0 || typeof(args[0]) === "object") {
