@@ -948,7 +948,7 @@
         },
 
         postprocessResults: function (data, initial) {
-            var selected = 0, self = this, toggleSearchInput = true;;
+            var selected = 0, self = this, showSearchInput = true;
 
             // find the selected element in the result list
 
@@ -966,11 +966,11 @@
             // hide the search box if this is the first we got the results and there are a few of them
 
             if (initial === true) {
-               toggleSearchInput = data.results.length >= this.opts.minimumResultsForSearch;
-               this.search.parent().toggle(toggleSearchInput);
+               showSearchInput = data.results.length >= this.opts.minimumResultsForSearch;
+               this.search.parent().toggle(showSearchInput);
 
-               //add "select2-with-searchbox" to the dropdown container if search box is shown
-               this.container[toggleSearchInput ? "addClass" : "removeClass"]("select2-with-searchbox");
+               //add "select2-with-searchbox" to the container if search box is shown
+               this.container[showSearchInput ? "addClass" : "removeClass"]("select2-with-searchbox");
             }
 
         },
