@@ -419,6 +419,7 @@
                 select2.container.remove();
                 select2.opts.element
                     .removeData("select2")
+                    .unbind(".select2")
                     .show();
             }
         },
@@ -503,7 +504,7 @@
          * Monitor the original element for changes and update select2 accordingly
          */
         monitorSource: function () {
-            this.opts.element.bind("change", this.bind(function (e) {
+            this.opts.element.bind("change.select2", this.bind(function (e) {
                 if (this.opts.element.data("select2-change-triggered") !== true) {
                     this.initSelection();
                 }
