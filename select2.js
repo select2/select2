@@ -1052,6 +1052,9 @@
         prepareOpts: function () {
             var opts = this.parent.prepareOpts.apply(this, arguments);
 
+
+            // TODO validate placeholder is a string if specified
+
             if (opts.element.get(0).tagName.toLowerCase() === "select") {
                 // install sthe selection initializer
                 this.opts.initSelection = function (element) {
