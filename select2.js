@@ -1017,8 +1017,8 @@
                     });
                 this.updateSelection(data);
             } else {
-                // val is an object
-                this.opts.element.val((val === null || val === "") ? "" : val.id);
+                // val is an object. !val is true for [undefined,null,'']
+                this.opts.element.val(!val ? "" : val.id);
                 this.updateSelection(val);
             }
             this.setPlaceholder();
