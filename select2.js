@@ -419,7 +419,8 @@
                 select2.container.remove();
                 select2.opts.element
                     .removeData("select2")
-                    .show();
+                    .show()
+                    .off();
             }
         },
 
