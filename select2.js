@@ -1018,7 +1018,7 @@
                 this.updateSelection(data);
             } else {
                 // val is an object
-                this.opts.element.val((val === null) ? "" : val.id);
+                this.opts.element.val((val === null || val === "") ? "" : val.id);
                 this.updateSelection(val);
             }
             this.setPlaceholder();
