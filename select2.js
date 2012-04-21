@@ -419,6 +419,7 @@
                 select2.container.remove();
                 select2.opts.element
                     .removeData("select2")
+                    .unbind(".select2")
                     .show();
             }
         },
@@ -503,7 +504,7 @@
          * Monitor the original element for changes and update select2 accordingly
          */
         monitorSource: function () {
-            this.opts.element.bind("change", this.bind(function (e) {
+            this.opts.element.bind("change.select2", this.bind(function (e) {
                 if (this.opts.element.data("select2-change-triggered") !== true) {
                     this.initSelection();
                 }
@@ -1026,8 +1027,8 @@
                     });
                 this.updateSelection(data);
             } else {
-                // val is an object
-                this.opts.element.val((val === null || val === "") ? "" : val.id);
+                // val is an object. !val is true for [undefined,null,'']
+                this.opts.element.val(!val ? "" : val.id);
                 this.updateSelection(val);
             }
             this.setPlaceholder();
@@ -1060,6 +1061,9 @@
 
         prepareOpts: function () {
             var opts = this.parent.prepareOpts.apply(this, arguments);
+
+
+            // TODO validate placeholder is a string if specified
 
             if (opts.element.get(0).tagName.toLowerCase() === "select") {
                 // install sthe selection initializer
