@@ -821,6 +821,15 @@
             this.parent.close.apply(this, arguments);
         },
 
+        focus: function () {
+            this.close();
+            this.selection.focus();
+        },
+
+        isFocused: function () {
+            return this.selection.is(":focus");
+        },
+
         cancel: function () {
             this.parent.cancel.apply(this, arguments);
             this.selection.focus();
@@ -966,11 +975,11 @@
             // hide the search box if this is the first we got the results and there are a few of them
 
             if (initial === true) {
-               showSearchInput = data.results.length >= this.opts.minimumResultsForSearch;
-               this.search.parent().toggle(showSearchInput);
+                showSearchInput = data.results.length >= this.opts.minimumResultsForSearch;
+                this.search.parent().toggle(showSearchInput);
 
-               //add "select2-with-searchbox" to the container if search box is shown
-               this.container[showSearchInput ? "addClass" : "removeClass"]("select2-with-searchbox");
+                //add "select2-with-searchbox" to the container if search box is shown
+                this.container[showSearchInput ? "addClass" : "removeClass"]("select2-with-searchbox");
             }
 
         },
@@ -1188,6 +1197,15 @@
             this.parent.close.apply(this, arguments);
         },
 
+        focus: function () {
+            this.close();
+            this.search.focus();
+        },
+
+        isFocused: function () {
+            return this.search.is(":focus");
+        },
+
         updateSelection: function (data) {
             var ids = [], filtered = [], self = this;
 
@@ -1383,7 +1401,7 @@
         var args = Array.prototype.slice.call(arguments, 0),
             opts,
             select2,
-            value, multiple, allowedMethods = ["val", "destroy", "open", "close"];
+            value, multiple, allowedMethods = ["val", "destroy", "open", "close", "focus", "isFocused"];
 
         this.each(function () {
             if (args.length === 0 || typeof(args[0]) === "object") {
