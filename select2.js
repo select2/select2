@@ -1062,6 +1062,9 @@
         prepareOpts: function () {
             var opts = this.parent.prepareOpts.apply(this, arguments);
 
+            opts = $.extend({}, {
+                closeOnSelect: true
+            }, opts);
 
             // TODO validate placeholder is a string if specified
 
@@ -1233,8 +1236,16 @@
         onSelect: function (data) {
             this.addSelectedChoice(data);
             if (this.select) { this.postprocessResults(); }
-            this.close();
-            this.search.width(10);
+
+
+            if (this.opts.closeOnSelect) {
+                this.close();
+                this.search.width(10);
+            } else {
+                this.search.width(10);
+                this.resizeSearch();
+                this.alignDropdown();
+            }
 
             // since its not possible to select an element that has already been
             // added we do not need to check if this is a new element before firing change
