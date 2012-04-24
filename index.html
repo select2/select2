@@ -123,7 +123,7 @@ $("#e5").select2({
 $(document).ready(function() {
 $("#e6").select2({
     placeholder: {title: "Search for a movie", id: ""},
-    minimumInputLength: 3,
+    minimumInputLength: 1,
     ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
         url: "http://api.rottentomatoes.com/api/public/v1.0/movies.json",
         dataType: 'jsonp',
@@ -744,6 +744,19 @@ $("#e14_destroy").click(function() { $("#e14").select2("destroy"); });
                     </p>
                     <p>When Select2 is attached to a <code>select</code> element this value will be ignored and <code>select</code>'s
                         <code>multiple</code> attribute will be used instead.
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>closeOnSelect</td>
+                <td>boolean</td>
+                <td>
+                    <p>
+                       If set to true the dropdown is not closed after a selection is made, allowing for rapid selection of multiple items. By default this option is disabled.
+                    </p>
+
+                    <p class="alert alert-info">
+                        Only applies when configured in multi-select mode.
                     </p>
                 </td>
             </tr>
