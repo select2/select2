@@ -286,6 +286,8 @@
 
     // TODO javadoc
     function tags(data) {
+        // TODO even for a function we should probably return a wrapper that does the same object/string check as
+        // the function for arrays. otherwise only functions that return objects are supported.
         if ($.isFunction(data)) {
             return data;
         }
@@ -295,7 +297,12 @@
         return function (query) {
             var t = query.term.toUpperCase(), filtered = {results: []};
             $(data).each(function () {
-                if (t === "" || this.toUpperCase().indexOf(t) >= 0) { filtered.results.push({id: this, text: this}); }
+                console.log(this);
+                var isObject = "text" in this,
+                    text = isObject ? this.text : this;
+                if (t === "" || text.toUpperCase().indexOf(t) >= 0) {
+                    filtered.results.push(isObject ? this : {id: this, text: this});
+                }
             });
             query.callback(filtered);
         };
@@ -1061,7 +1068,6 @@
 
             // TODO validate placeholder is a string if specified
 
-
             if (opts.element.get(0).tagName.toLowerCase() === "select") {
                 // install sthe selection initializer
                 opts.initSelection = function (element) {
@@ -1229,7 +1235,6 @@
         onSelect: function (data) {
             this.addSelectedChoice(data);
             if (this.select) { this.postprocessResults(); }
-
 
             if (this.opts.closeOnSelect) {
                 this.close();
