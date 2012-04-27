@@ -85,7 +85,7 @@
     border: 1px solid #aaa;
     border-top: 0;
     position: absolute;
-    top: 29px;
+    top: 100%;
     -webkit-box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
     -moz-box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
     -o-box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
