@@ -1399,6 +1399,8 @@
                 this.setVal(data);
                 this.updateSelection(val);
             }
+
+            this.clearSearch();
         }
     });
 
