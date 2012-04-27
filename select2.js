@@ -921,7 +921,7 @@
 
             if (opts.element.get(0).tagName.toLowerCase() === "select") {
                 // install sthe selection initializer
-                this.opts.initSelection = function (element) {
+                opts.initSelection = function (element) {
                     var selected = element.find(":selected");
                     // a single select box always has a value, no need to null check 'selected'
                     return {id: selected.attr("value"), text: selected.text()};
@@ -1061,9 +1061,10 @@
 
             // TODO validate placeholder is a string if specified
 
+
             if (opts.element.get(0).tagName.toLowerCase() === "select") {
                 // install sthe selection initializer
-                this.opts.initSelection = function (element) {
+                opts.initSelection = function (element) {
                     var data = [];
                     element.find(":selected").each(function () {
                         data.push({id: $(this).attr("value"), text: $(this).text()});
