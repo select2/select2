@@ -1372,6 +1372,8 @@
 
                 this.opts.element.val(unique.length === 0 ? "" : unique.join(","));
             }
+            // set the placeholder if necessary
+            this.clearSearch();
         },
 
         val: function () {
