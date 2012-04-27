@@ -1237,6 +1237,7 @@
             this.addSelectedChoice(data);
             if (this.select) { this.postprocessResults(); }
 
+
             if (this.opts.closeOnSelect) {
                 this.close();
                 this.search.width(10);
@@ -1355,9 +1356,6 @@
                 searchWidth = maxWidth - getSideBorderPadding(this.search);
             }
             this.search.width(searchWidth);
-
-            // in case the search box was pushed to the next line realign the dropdown
-            if (this.opened()) { this.alignDropdown(); }
         },
 
         getVal: function () {
