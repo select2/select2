@@ -525,19 +525,12 @@
             return this.container.hasClass("select2-dropdown-open");
         },
 
-        alignDropdown: function () {
-            this.dropdown.css({
-                top: this.container.height()
-            });
-        },
-
         open: function () {
             if (this.opened()) return;
 
             this.container.addClass("select2-dropdown-open").addClass("select2-container-active");
 
             this.updateResults(true);
-            this.alignDropdown();
             this.dropdown.show();
             this.focusSearch();
         },
@@ -1230,7 +1223,6 @@
                 self.addSelectedChoice(this);
             });
             self.postprocessResults();
-            this.alignDropdown();
         },
 
         onSelect: function (data) {
@@ -1244,7 +1236,6 @@
             } else {
                 this.search.width(10);
                 this.resizeSearch();
-                this.alignDropdown();
             }
 
             // since its not possible to select an element that has already been
@@ -1309,7 +1300,6 @@
             }
             selected.remove();
             this.triggerChange();
-            window.setTimeout(this.bind(this.alignDropdown), 20);
         },
 
         postprocessResults: function () {
