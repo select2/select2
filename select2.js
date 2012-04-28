@@ -1417,7 +1417,7 @@
 
         this.each(function () {
             if (args.length === 0 || typeof(args[0]) === "object") {
-                opts = args.length === 0 ? {} : args[0];
+                opts = args.length === 0 ? {} : $.extend({}, args[0]);
                 opts.element = $(this);
 
                 if (opts.element.get(0).tagName.toLowerCase() === "select") {
