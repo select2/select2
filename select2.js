@@ -1177,11 +1177,12 @@
         clearSearch: function () {
             var placeholder = this.getPlaceholder();
 
-            this.search.val("").width(10);
-
             if (placeholder !== undefined && this.getVal().length === 0) {
                 this.search.val(placeholder).addClass("select2-default");
-                this.resizeSearch();
+                // stretch the search box to full width of the container so as much of the placeholder is visible as possible
+                this.search.width(this.getContainerWidth());
+            } else {
+                this.search.val("").width(10);
             }
         },
 
