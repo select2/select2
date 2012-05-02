@@ -297,7 +297,7 @@
         return function (query) {
             var t = query.term.toUpperCase(), filtered = {results: []};
             $(data).each(function () {
-                var isObject = "text" in this,
+                var isObject = this.text!==undefined,
                     text = isObject ? this.text : this;
                 if (t === "" || text.toUpperCase().indexOf(t) >= 0) {
                     filtered.results.push(isObject ? this : {id: this, text: this});
