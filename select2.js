@@ -1,15 +1,15 @@
-﻿/*
-Copyright 2012 Igor Vaynberg
+/*
+ Copyright 2012 Igor Vaynberg
 
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in
-compliance with the License. You may obtain a copy of the License in the LICENSE file, or at:
+ Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in
+ compliance with the License. You may obtain a copy of the License in the LICENSE file, or at:
 
-http://www.apache.org/licenses/LICENSE-2.0
+ http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software distributed under the License is
-distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and limitations under the License.
-*/
+ Unless required by applicable law or agreed to in writing, software distributed under the License is
+ distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and limitations under the License.
+ */
 (function ($, undefined) {
     "use strict";
     /*global document, window, jQuery, console */
@@ -291,7 +291,7 @@ See the License for the specific language governing permissions and limitations 
         return function (query) {
             var t = query.term.toUpperCase(), filtered = {results: []};
             $(data).each(function () {
-                var isObject = this.text!==undefined,
+                var isObject = this.text !== undefined,
                     text = isObject ? this.text : this;
                 if (t === "" || text.toUpperCase().indexOf(t) >= 0) {
                     filtered.results.push(isObject ? this : {id: this, text: this});
@@ -341,7 +341,9 @@ See the License for the specific language governing permissions and limitations 
             var results, search, resultsSelector = ".select2-results";
 
             // prepare options
-            this.opts = this.prepareOpts(opts);
+            this.opts = opts = this.prepareOpts(opts);
+
+            this.id=opts.id;
 
             // destroy if called on an existing component
             if (opts.element.data("select2") !== undefined) {
@@ -392,8 +394,8 @@ See the License for the specific language governing permissions and limitations 
 
             installKeyUpChangeEvent(search);
             search.bind("keyup-change", this.bind(this.updateResults));
-            search.bind("focus", function() { search.addClass("select2-focused");});
-            search.bind("blur", function() { search.removeClass("select2-focused");});
+            search.bind("focus", function () { search.addClass("select2-focused");});
+            search.bind("blur", function () { search.removeClass("select2-focused");});
 
             this.container.delegate(resultsSelector, "click", this.bind(function (e) {
                 if ($(e.target).closest(".select2-result:not(.select2-disabled)").length > 0) {
@@ -427,15 +429,21 @@ See the License for the specific language governing permissions and limitations 
         },
 
         prepareOpts: function (opts) {
-            var element, select;
+            var element, select, idKey;
 
             opts = $.extend({}, {
                 formatResult: function (data) { return data.text; },
                 formatSelection: function (data) { return data.text; },
                 formatNoMatches: function () { return "No matches found"; },
                 formatInputTooShort: function (input, min) { return "Please enter " + (min - input.length) + " more characters"; },
-                minimumResultsForSearch: 0
+                minimumResultsForSearch: 0,
+                id: function (e) { return e.id; }
             }, opts);
+
+            if (typeof(opts.id) !== "function") {
+                idKey = opts.id;
+                opts.id = function (e) { return e[idKey]; }
+            }
 
             element = opts.element;
 
@@ -476,6 +484,7 @@ See the License for the specific language governing permissions and limitations 
                     });
                     query.callback(data);
                 });
+                opts.id=function(e) { return e.id; };
             } else {
                 if (!("query" in opts)) {
                     if ("ajax" in opts) {
@@ -663,7 +672,7 @@ See the License for the specific language governing permissions and limitations 
          * @param initial whether or not this is the call to this method right after the dropdown has been opened
          */
         updateResults: function (initial) {
-            var search = this.search, results = this.results, opts = this.opts;
+            var search = this.search, results = this.results, opts = this.opts, self=this;
 
             search.addClass("select2-active");
 
@@ -686,10 +695,10 @@ See the License for the specific language governing permissions and limitations 
                 // create a default choice and prepend it to the list
                 if (this.opts.createSearchChoice && search.val() !== "") {
                     def = this.opts.createSearchChoice.call(null, search.val(), data.results);
-                    if (def !== undefined && def !== null && def.id !== undefined && def.id !== null) {
+                    if (def !== undefined && def !== null && self.id(def) !== undefined && self.id(def) !== null) {
                         if ($(data.results).filter(
                             function () {
-                                return equal(this.id, def.id);
+                                return equal(self.id(this), self.id(def));
                             }).length === 0) {
                             data.results.unshift(def);
                         }
@@ -956,7 +965,7 @@ See the License for the specific language governing permissions and limitations 
             // find the selected element in the result list
 
             this.results.find(".select2-result").each(function (i) {
-                if (equal($(this).data("select2-data").id, self.opts.element.val())) {
+                if (equal(self.id($(this).data("select2-data")), self.opts.element.val())) {
                     selected = i;
                     return false;
                 }
@@ -981,12 +990,12 @@ See the License for the specific language governing permissions and limitations 
         onSelect: function (data) {
             var old = this.opts.element.val();
 
-            this.opts.element.val(data.id);
+            this.opts.element.val(this.id(data));
             this.updateSelection(data);
             this.close();
             this.selection.focus();
 
-            if (!equal(old, data.id)) { this.triggerChange(); }
+            if (!equal(old, this.id(data))) { this.triggerChange(); }
         },
 
         updateSelection: function (data) {
@@ -1021,7 +1030,7 @@ See the License for the specific language governing permissions and limitations 
                 this.updateSelection(data);
             } else {
                 // val is an object. !val is true for [undefined,null,'']
-                this.opts.element.val(!val ? "" : val.id);
+                this.opts.element.val(!val ? "" : this.id(val));
                 this.updateSelection(val);
             }
             this.setPlaceholder();
@@ -1172,8 +1181,8 @@ See the License for the specific language governing permissions and limitations 
             var placeholder = this.getPlaceholder();
 
             if (placeholder !== undefined
-                    && this.getVal().length === 0
-                    && this.search.hasClass("select2-focused")===false) {
+                && this.getVal().length === 0
+                && this.search.hasClass("select2-focused") === false) {
 
                 this.search.val(placeholder).addClass("select2-default");
                 // stretch the search box to full width of the container so as much of the placeholder is visible as possible
@@ -1215,8 +1224,8 @@ See the License for the specific language governing permissions and limitations 
 
             // filter out duplicates
             $(data).each(function () {
-                if (indexOf(this.id, ids) < 0) {
-                    ids.push(this.id);
+                if (indexOf(self.id(this), ids) < 0) {
+                    ids.push(self.id(this));
                     filtered.push(this);
                 }
             });
@@ -1255,7 +1264,7 @@ See the License for the specific language governing permissions and limitations 
 
         addSelectedChoice: function (data) {
             var choice,
-                id = data.id,
+                id = this.id(data),
                 parts,
                 val = this.getVal();
 
@@ -1311,7 +1320,7 @@ See the License for the specific language governing permissions and limitations 
                 self = this;
 
             choices.each(function () {
-                var choice = $(this), id = choice.data("select2-data").id;
+                var choice = $(this), id = self.id(choice.data("select2-data"));
                 if (indexOf(id, val) >= 0) {
                     choice.addClass("select2-disabled");
                 } else {
@@ -1377,7 +1386,7 @@ See the License for the specific language governing permissions and limitations 
         },
 
         val: function () {
-            var val, data = [];
+            var val, data = [], self=this;
 
             if (arguments.length === 0) {
                 return this.getVal();
@@ -1397,7 +1406,7 @@ See the License for the specific language governing permissions and limitations 
                 this.setVal(val);
                 // val is a list of objects
 
-                $(val).each(function () { data.push(this.id); });
+                $(val).each(function () { data.push(self.id(this)); });
                 this.setVal(data);
                 this.updateSelection(val);
             }
