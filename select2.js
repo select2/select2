@@ -758,9 +758,7 @@
         },
 
         getPlaceholder: function () {
-            var placeholder = this.opts.element.data("placeholder");
-            if (placeholder !== undefined) return placeholder;
-            return this.opts.placeholder;
+            return this.opts.element.attr("placeholder") || this.opts.element.data("placeholder") || this.opts.placeholder;
         },
 
         /**
