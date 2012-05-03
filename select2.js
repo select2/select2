@@ -1,4 +1,4 @@
-/*
+﻿/*
  Copyright 2012 Igor Vaynberg
 
  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in
@@ -484,6 +484,7 @@
                     });
                     query.callback(data);
                 });
+                // this is needed because inside val() we construct choices from options and there id is hardcoded
                 opts.id=function(e) { return e.id; };
             } else {
                 if (!("query" in opts)) {
@@ -1303,7 +1304,7 @@
                 throw "Invalid argument: " + selected + ". Must be .select2-search-choice";
             }
 
-            index = indexOf(selected.data("select2-data").id, val);
+            index = indexOf(this.id(selected.data("select2-data")), val);
 
             if (index >= 0) {
                 val.splice(index, 1);
