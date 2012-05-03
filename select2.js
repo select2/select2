@@ -1215,7 +1215,7 @@
         },
 
         isFocused: function () {
-            return this.search.is(":focus");
+            return this.search.hasClass("select2-focused");
         },
 
         updateSelection: function (data) {
