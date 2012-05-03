@@ -398,6 +398,8 @@
 
             installKeyUpChangeEvent(search);
             search.bind("keyup-change", this.bind(this.updateResults));
+            search.bind("focus", function() { search.addClass("select2-focused");});
+            search.bind("blur", function() { search.removeClass("select2-focused");});
 
             this.container.delegate(resultsSelector, "click", this.bind(function (e) {
                 if ($(e.target).closest(".select2-result:not(.select2-disabled)").length > 0) {
@@ -1177,7 +1179,10 @@
         clearSearch: function () {
             var placeholder = this.getPlaceholder();
 
-            if (placeholder !== undefined && this.getVal().length === 0) {
+            if (placeholder !== undefined
+                    && this.getVal().length === 0
+                    && this.search.hasClass("select2-focused")===false) {
+
                 this.search.val(placeholder).addClass("select2-default");
                 // stretch the search box to full width of the container so as much of the placeholder is visible as possible
                 this.search.width(this.getContainerWidth());
