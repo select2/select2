@@ -764,7 +764,16 @@ $("#e14_destroy").click(function() { $("#e14").select2("destroy"); });
                     </p>
                 </td>
             </tr>
-
+            <tr><td>id</td><td>function</td><td>
+                   Function used to get the id from the choice object or a string representing the key under which the id is stored.
+                   <pre>id(object)</pre>
+                   <table class="table table-bordered table-striped">
+                       <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                       <tr><td>object</td><td>object</td><td>A choice object</td></tr>
+                       <tr><td>&lt;returns&gt;</td><td>string</td><td>the id of the object</td></tr>
+                   </table>
+                   The default implementation expects the object to have a <code>id</code> property that is returned.
+            </td></tr>
             <tr><td>formatSelection</td><td>function</td><td>
                 Function used to render the current selection.
                 <pre>formatSelection(object)</pre>
