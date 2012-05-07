@@ -435,40 +435,34 @@
         prepareOpts: function (opts) {
             var element, select, idKey;
 
-            opts = $.extend({}, {
-                formatResult: function (data) { return data.text; },
-                formatSelection: function (data) { return data.text; },
-                formatNoMatches: function () { return "No matches found"; },
-                formatInputTooShort: function (input, min) { return "Please enter " + (min - input.length) + " more characters"; },
-                minimumResultsForSearch: 0,
-                id: function (e) { return e.id; }
-            }, opts);
-
-            if (typeof(opts.id) !== "function") {
-                idKey = opts.id;
-                opts.id = function (e) { return e[idKey]; }
-            }
-
             element = opts.element;
 
             if (element.get(0).tagName.toLowerCase() === "select") {
                 this.select = select = opts.element;
             }
 
-            // TODO add missing validation logic
             if (select) {
-                /*$.each(["multiple", "ajax", "query", "minimumInputLength"], function () {
-                 if (this in opts) {
-                 throw "Option '" + this + "' is not allowed for Select2 when attached to a select element";
-                 }
-                 });*/
-                this.opts = opts = $.extend({}, {
-                    miniumInputLength: 0
-                }, opts);
-            } else {
-                this.opts = opts = $.extend({}, {
-                    miniumInputLength: 0
-                }, opts);
+                // these options are not allowed when attached to a select because they are picked up off the element itself
+                $.each(["id", "multiple", "ajax", "query", "createSearchChoice", "initSelection", "data", "tags"], function () {
+                    if (this in opts) {
+                        throw new Error("Option '" + this + "' is not allowed for Select2 when attached to a <select> element.");
+                    }
+                });
+            }
+
+            opts = $.extend({}, {
+                formatResult: function (data) { return data.text; },
+                formatSelection: function (data) { return data.text; },
+                formatNoMatches: function () { return "No matches found"; },
+                formatInputTooShort: function (input, min) { return "Please enter " + (min - input.length) + " more characters"; },
+                minimumResultsForSearch: 0,
+                minimumInputLength: 0,
+                id: function (e) { return e.id; }
+            }, opts);
+
+            if (typeof(opts.id) !== "function") {
+                idKey = opts.id;
+                opts.id = function (e) { return e[idKey]; };
             }
 
             if (select) {
