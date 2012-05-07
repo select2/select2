@@ -212,6 +212,7 @@ See the License for the specific language governing permissions and limitations 
     function ajax(options) {
         var timeout, // current scheduled but not yet executed request
             requestSequence = 0, // sequence used to drop out-of-order responses
+            handler = null,
             quietMillis = options.quietMillis || 100;
 
         return function (query) {
@@ -224,7 +225,10 @@ See the License for the specific language governing permissions and limitations 
 
                 data = data.call(this, query.term, query.page);
 
-                transport.call(null, {
+                if( null !== handler){
+                    handler.abort();
+                }
+                handler = transport.call(null, {
                     url: options.url,
                     dataType: options.dataType,
                     data: data,
