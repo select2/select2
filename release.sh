@@ -73,4 +73,4 @@ echo "Cleaning Up..."
 git checkout "$curbranch"
 git branch -D "$branch"
 
-echo "Done"
+echo "Done. Release archive created: $release.zip"
