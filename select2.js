@@ -544,6 +544,7 @@
 
             this.updateResults(true);
             this.dropdown.show();
+            this.ensureHighlightVisible();
             this.focusSearch();
         },
 
