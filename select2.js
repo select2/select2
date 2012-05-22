@@ -1122,6 +1122,7 @@
                         killEvent(e);
                         return;
                     case KEY.ENTER:
+                    case KEY.TAB:
                         this.selectHighlighted();
                         killEvent(e);
                         return;
