@@ -352,7 +352,8 @@
             this.id=opts.id;
 
             // destroy if called on an existing component
-            if (opts.element.data("select2") !== undefined) {
+            if (opts.element.data("select2") !== undefined &&
+                opts.element.data("select2") !== null) {
                 this.destroy();
             }
 
