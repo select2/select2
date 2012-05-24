@@ -1,0 +1,8 @@
+{
+        results: [
+            {id:1, text:'Result 1'},
+            {id:2, text:'Result 2'},
+            {id:3, text:'Result 3'}
+        ],
+        more: false
+}
