@@ -1,2 +1,1 @@
-exclude : ["README.md"]
-BASE_PATH : http://ivaynberg.github.com/select2/
+exclude : ["README.md", "jekyll.sh"]
