@@ -1,52 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Select2</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <link href="bootstrap/css/bootstrap.css" rel="stylesheet"/>
-    <link href="prettify/prettify.css" rel="stylesheet"/>
-    <link href="select2-1.0/select2.css" rel="stylesheet"/>
-    <style type="text/css">
-        body {
-        padding-top: 60px;
-        padding-bottom: 40px;
-        }
-
-        .zebra { background-color: #efefef; }
-
-        .select2-container img.flag { height: 10px; width: 15px; padding-right: 10px; }
-
-        .movie-result td {vertical-align: top }
-        .movie-image { width: 60px; }
-        .movie-image img { height: 80px; width: 60px;  }
-        .movie-info { padding-left: 10px; vertical-align: top; }
-        .movie-title { font-size: 1.2em; padding-bottom: 15px; }
-        .movie-synopsis { font-size: .8em; color: #888; }
-        .select2-highlighted .movie-synopsis { font-size: .8em; color: #eee; }
-        .bigdrop .select2-results {max-height: 300px;}
-
-    </style>
-    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet"/>
-
-    <!--[if lt IE 9]>
-      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
-      <script src="js/jquery-1.7.1.min.js"></script>
-      <script src="prettify/prettify.min.js"></script>
-      <script src="bootstrap/js/bootstrap.min.js"></script>
-      <script src="select2-1.0/select2-1.0.js"></script>
+---
+layout: main
+title: Select2 1.0
+group: navigation
+---
+<link href="select2-1.0/select2.css" rel="stylesheet"/>
+<script src="select2-1.0/select2-1.0.js"></script>
 
 <script id="script_e1">
 $(document).ready(function() {
 $("#e1").select2();
 });
 </script>
-
 
 <script id="script_e2">
 $(document).ready(function() {
@@ -200,28 +164,7 @@ $("#e8_set").click(
 </script>
 
 
-  <script>
-      $(document).ready(function() {
 
-          function setupExampleCode(id) {
-              var s = $("#script_"+id).html();
-              s = s.replace(/</g, "&lt;");
-              s = s.substr(s.indexOf("\n") + 1);
-              s = s.substr(s.indexOf("\n") + 1);
-              s = s.substr(0, s.lastIndexOf("\n"));
-              s = s.substr(0, s.lastIndexOf("\n"));
-              $("#code_"+id).html(s);
-          }
-
-          setupExampleCode("e2");
-          setupExampleCode("e3");
-          setupExampleCode("e4");
-          setupExampleCode("e5");
-          setupExampleCode("e6");
-          setupExampleCode("e7");
-          setupExampleCode("e8");
-          prettyPrint();});
-  </script>
 
 <script type="text/javascript">
 
@@ -237,43 +180,6 @@ $("#e8_set").click(
 
 </script>
 
-  </head>
-
-  <body>
-
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <div class="nav-collapse">
-            <ul class="nav">
-                <li><a href="index.html">Select2 2.0</a></li>
-                <li class="active"><a href="select2-1.0.html">Select2 1.0</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>
-    </div>
-
-    <a href="https://github.com/ivaynberg/select2"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 2000" src="https://a248.e.akamai.net/assets.github.com/img/e6bef7a091f5f3138b8cd40bc3e114258dd68ddf/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub"></a>
-
-    <div class="container">
-
-      <div class="hero-unit">
-        <h1>Select2</h1>
-        <p>Select2 is a jQuery based replacement for select boxes.
-            It supports searching, remote data sets, and infinite scrolling of results.
-            Look and feel of Select2 is based on the excellent
-            <a href="http://harvesthq.github.com/chosen/">Chosen</a> library.</p>
-            <p>
-                <a class="btn btn-primary btn-large" href="https://github.com/ivaynberg/select2">Learn more on GitHub&raquo;</a>
-                <a class="btn btn-success btn-large" href="https://github.com/ivaynberg/select2/downloads">Download&raquo;</a>
-            </p>
-      </div>
 
       <div class="row">
           <div class="span12">
@@ -557,31 +463,3 @@ $("#e8_set").click(
           <div class="span12"><h3>selected</h3></div>
       </div>
       <p>Signals a selection has been made</p>
-
-
-      <div class="row">
-           <div class="span12"><h2>Community</h2></div>
-      </div>
-      <div class="row">
-          <div class="span12">
-
-              <ul>
-                 <li><a href="https://github.com/ivaynberg/select2">Project Site</a></li>
-                 <li><a href="https://github.com/ivaynberg/select2/issues">Bug Tracker</a></li>
-                 <li><a href="https://groups.google.com/d/forum/select2">Mailing List</a></li>
-              </ul>
-          </div>
-      </div>
-
-
-        <hr/>
-        <footer>
-        <p>Select2 is licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache Software Foundation License Version 2.0</a></p>
-      </footer>
-
-
-
-
-    </div> <!-- /container -->
-  </body>
-</html>

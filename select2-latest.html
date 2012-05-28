@@ -1,11 +1,11 @@
 ---
 layout: main
-title: Select2 2.0
+title: Select2 Latest
 group: navigation
 ---
 
-    <link href="select2-2.0/select2.css" rel="stylesheet"/>
-      <script src="select2-2.0/select2.js"></script>
+    <link href="select2-master/select2.css" rel="stylesheet"/>
+    <script src="select2-master/select2.js"></script>
 
 <script id="script_e1">
 $(document).ready(function() {
@@ -162,18 +162,19 @@ $("#e10_3").select2({
 });
 </script>
 
+      <div class="row">
+          <div class="span12">
+              <div class="alert alert-block alert-error">
+                  <h4 class="alert-heading">Warning!</h4>
+                  This page refers to an unreleased version of Select2 which may be unstable. For the latest stable
+                  and previous versions please see links at the top. The code for this version is only available in the <a
+                      href="https://github.com/ivaynberg/select2">master branch.</a>
+              </div>
+          </div>
+      </div>
 
-<div class="row">
-    <div class="span12">
-        <div class="alert alert-block alert-info">
-            For latest version see the <strong>Select2 Latest</strong> link in the top menu.
-        </div>
-    </div>
-</div>
 
-
-
-<header class="jumbotron subhead">
+      <header class="jumbotron subhead">
         <div class="subnav">
           <ul class="nav nav-pills">
               <li><a href="#changelog">Changelog</a></li>
@@ -201,8 +202,9 @@ $("#e10_3").select2({
         </div>
       </header>
 
+        <!--
         <section id="changelog">
-            <h2>Changelog from 1.0</h2>
+            <h2>Changelog from 2.0</h2>
             <div class="row"><div class="span12">
                 <ul>
                     <li>Support for selection of multiple values. See <code>multiple</code> option in the docs.</li>
@@ -213,6 +215,7 @@ $("#e10_3").select2({
                 </ul>
             </div></div>
         </section>
+            -->
 
       <section>
       <div class="row">
@@ -236,7 +239,7 @@ $("#e10_3").select2({
         </div>
         <div class="span8">
           <h3>Example Code</h3>
-<pre class="prettyprint linenums">
+<pre class="prettyprint linenums" id="code_e1">
 &lt;head&gt;
     &lt;link href=&quot;select2.css&quot; rel=&quot;stylesheet&quot;/&gt;
     &lt;script src=&quot;select2.js&quot;&gt;&lt;/script&gt;
