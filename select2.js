@@ -352,7 +352,8 @@
             this.id=opts.id;
 
             // destroy if called on an existing component
-            if (opts.element.data("select2") !== undefined) {
+            if (opts.element.data("select2") !== undefined &&
+                opts.element.data("select2") !== null) {
                 this.destroy();
             }
 
@@ -544,6 +545,7 @@
 
             this.updateResults(true);
             this.dropdown.show();
+            this.ensureHighlightVisible();
             this.focusSearch();
         },
 
@@ -1121,6 +1123,7 @@
                         killEvent(e);
                         return;
                     case KEY.ENTER:
+                    case KEY.TAB:
                         this.selectHighlighted();
                         killEvent(e);
                         return;
