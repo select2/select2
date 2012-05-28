@@ -1,0 +1,2 @@
+exclude : ["README.md"]
+BASE_PATH : http://ivaynberg.github.com/select2/
