@@ -262,7 +262,7 @@
      */
     function local(options) {
         var data = options, // data elements
-            text = function (item) { return item.text; }; // function used to retrieve the text portion of a data item that is matched against the search
+            text = function (item) { return ""+item.text; }; // function used to retrieve the text portion of a data item that is matched against the search
 
         if (!$.isArray(data)) {
             text = data.text;
