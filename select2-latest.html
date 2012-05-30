@@ -559,7 +559,36 @@ $("#e14_destroy").click(function() { $("#e14").select2("destroy"); });
           </div>
       </article>
 
-      
+      <article class="row" id="lifecycle">
+<script id="script_e15">
+$(document).ready(function () {
+$("#e15").select2({tags:["red", "green", "blue", "orange", "white", "black", "purple", "cyan", "teal"]});
+$("#e15").on("change", function() { $("#e15_val").html($("#e15").val());});
+
+$("#e15").select2("container").find("ul.select2-choices").sortable({
+    containment: 'parent',
+    start: function() { $("#e15").select2("onSortStart"); },
+    update: function() { $("#e15").select2("onSortEnd"); }
+});
+});
+</script>
+          <div class="span4">
+              <h3>Select2 Drag and Drop Sorting</h3>
+              <p>
+                  Select2 supports drag and drop sorting of selected choices. Select2 does not, itself, provide the necessary code to perform dragging and dropping, instead it provides hooks that other libraries can use to provide the behavior. In this example we are using JQuery UI's <code>sortable()</code> plugin.
+              </p>
+              <p class="alert alert-info">The sorting is only available when Select2 is attached to a hidden <code>input</code> field.</p>
+              <p><input type="hidden" id="e15" style="width:300px;" value="red,green,blue,orange,white,black"/></p>
+              <p><div id="e15_val"></div></p>
+          </div>
+          <div class="span8">
+              <h3>Example Code</h3>
+           <pre class="prettyprint linenums" id="code_e15">
+           </pre>
+          </div>
+      </article>
+
+
       </section>
       
       
@@ -865,9 +894,25 @@ $("#tags").select2({
         <div class="span12"><h3>close</h3></div>
     </div>
     <p>Closes the dropdown</p>
+    <div class="row">
+        <div class="span12"><h3>container</h3></div>
+    </div>
+    <p>Retrieves the main container element that wraps all of DOM added by Select2
+        Example: <code>console.log($("#tags").select2("container"));</code></p>
+    <div class="row">
+        <div class="span12"><h3>onSortStart</h3></div>
+    </div>
+    <p>Notifies Select2 that a drag and drop sorting operation has started. Select2 will hide all non-selection list items such as the search container, etc.
+        Example: <code>$("#tags").select2("onSortStart");</code></p>
+    <div class="row">
+        <div class="span12"><h3>onSortEnd</h3></div>
+    </div>
+    <p>Notifies Select2 that a drag and drop sorting operation has finished. Select2 will re-display any elements previously hidden and update the selection of the element it is attached to.
+        Example: <code>$("#tags").select2("onSortEnd");</code>
+    </p>
 
 
-      <div class="row">
+        <div class="row">
           <div class="span12"><h2>Events</h2></div>
       </div>
 
