@@ -206,7 +206,7 @@
      * @param options object containing configuration paramters
      * @param options.transport function that will be used to execute the ajax request. must be compatible with parameters supported by $.ajax
      * @param options.url url for the data
-     * @param options.data a function(searchTerm, pageNumber) that should return an object containing query string parameters for the above url.
+     * @param options.data a function(searchTerm, pageNumber, roundtripValue) that should return an object containing query string parameters for the above url.
      * @param options.dataType request data type: ajax, jsonp, other datatatypes supported by jQuery's $.ajax function or the transport function if specified
      * @param options.quietMillis (optional) milliseconds to wait before making the ajaxRequest, helps debounce the ajax function if invoked too often
      * @param options.results a function(remoteData, pageNumber) that converts data returned form the remote request to the format expected by Select2.
@@ -229,7 +229,7 @@
                     data = options.data, // ajax data function
                     transport = options.transport || $.ajax;
 
-                data = data.call(this, query.term, query.page);
+                data = data.call(this, query.term, query.page, query.roundtripValue);
 
                 if( null !== handler){
                     handler.abort();
@@ -243,7 +243,9 @@
                             return;
                         }
                         // TODO 3.0 - replace query.page with query so users have access to term, page, etc.
-                        query.callback(options.results(data, query.page));
+                        var results = options.results(data, query.page);
+                        self.resultsRoundtripValue = results['roundtripValue'];
+                        query.callback(results);
                     }
                 });
             }, quietMillis);
@@ -379,6 +381,7 @@
             this.search = search = this.container.find("input[type=text]");
 
             this.resultsPage = 0;
+            this.resultsRoundtripValue = null;
 
             // initialize the container
             this.initContainer();
@@ -649,7 +652,11 @@
 
             if (below <= 0) {
                 more.addClass("select2-active");
-                this.opts.query({term: this.search.val(), page: page, callback: this.bind(function (data) {
+                this.opts.query({
+                        term: this.search.val(),
+                        page: page,
+                        roundtripValue: self.resultsRoundtripValue,
+                        callback: this.bind(function (data) {
                     var parts = [], self = this;
                     $(data.results).each(function () {
                         parts.push("<li class='select2-result'>");
@@ -695,7 +702,11 @@
             }
 
             this.resultsPage = 1;
-            opts.query({term: search.val(), page: this.resultsPage, callback: this.bind(function (data) {
+            opts.query({
+                    term: search.val(),
+                    page: this.resultsPage,
+                    roundtripValue: null,
+                    callback: this.bind(function (data) {
                 var parts = [], // html parts
                     def; // default choice
 
