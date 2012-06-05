@@ -70,6 +70,10 @@
     function indexOf(value, array) {
         var i = 0, l = array.length, v;
 
+        if (typeof value == 'undefined') {
+          return -1;
+        }
+
         if (value.constructor === String) {
             for (; i < l; i = i + 1) if (value.localeCompare(array[i]) === 0) return i;
         } else {
@@ -1387,15 +1391,15 @@
         },
 
         setVal: function (val) {
-            var unique = [];
+            var unique;
             if (this.select) {
                 this.select.val(val);
             } else {
+                unique = [];
                 // filter out duplicates
                 $(val).each(function () {
                     if (indexOf(this, unique) < 0) unique.push(this);
                 });
-
                 this.opts.element.val(unique.length === 0 ? "" : unique.join(","));
             }
         },
@@ -1427,6 +1431,35 @@
             }
 
             this.clearSearch();
+        },
+        onSortStart: function() {
+            if (this.select) {
+                throw new Error("Sorting of elements is not supported when attached to <select>. Attach to <input type='hidden'/> instead.");
+            }
+
+            // collapse search field into 0 width so its container can be collapsed as well
+            this.search.width(0);
+            // hide the container
+            this.searchContainer.hide();
+        },
+        onSortEnd:function() {
+
+            var val=[], self=this;
+
+            // show search and move it to the end of the list
+            this.searchContainer.show();
+            // make sure the search container is the last item in the list
+            this.searchContainer.appendTo(this.searchContainer.parent());
+            // since we collapsed the width in dragStarteed, we resize it here
+            this.resizeSearch();
+
+            // update selection
+
+            this.selection.find(".select2-search-choice").each(function() {
+                val.push(self.opts.id($(this).data("select2-data")));
+            });
+            this.setVal(val);
+            this.triggerChange();
         }
     });
 
@@ -1435,7 +1468,7 @@
         var args = Array.prototype.slice.call(arguments, 0),
             opts,
             select2,
-            value, multiple, allowedMethods = ["val", "destroy", "open", "close", "focus", "isFocused"];
+            value, multiple, allowedMethods = ["val", "destroy", "open", "close", "focus", "isFocused", "container", "onSortStart", "onSortEnd"];
 
         this.each(function () {
             if (args.length === 0 || typeof(args[0]) === "object") {
@@ -1460,7 +1493,11 @@
                 value = undefined;
                 select2 = $(this).data("select2");
                 if (select2 === undefined) return;
-                value = select2[args[0]].apply(select2, args.slice(1));
+                if (args[0] === "container") {
+                    value=select2.container;
+                } else {
+                    value = select2[args[0]].apply(select2, args.slice(1));
+                }
                 if (value !== undefined) {return false;}
             } else {
                 throw "Invalid arguments to select2 plugin: " + args;
