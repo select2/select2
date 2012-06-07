@@ -363,6 +363,7 @@
                 this.destroy();
             }
 
+            this.enabled=true;
             this.container = this.createContainer();
 
             if (opts.element.attr("class") !== undefined) {
@@ -429,6 +430,8 @@
                 // we monitor the change event on the element and trigger it, allowing for two way synchronization
                 this.monitorSource();
             }
+
+            if (opts.element.is(":disabled")) this.disable();
         },
 
         destroy: function () {
@@ -539,6 +542,23 @@
             this.opts.element.data("select2-change-triggered", true);
             this.opts.element.trigger("change");
             this.opts.element.data("select2-change-triggered", false);
+        },
+
+
+        enable: function() {
+            if (this.enabled) return;
+
+            this.enabled=true;
+            this.container.removeClass("select2-container-disabled");
+        },
+
+        disable: function() {
+            if (!this.enabled) return;
+
+            this.close();
+
+            this.enabled=false;
+            this.container.addClass("select2-container-disabled");
         },
 
         opened: function () {
@@ -888,7 +908,7 @@
                 if (this.opened()) {
                     this.close();
                     selection.focus();
-                } else {
+                } else if (this.enabled) {
                     this.open();
                 }
                 e.preventDefault();
@@ -896,7 +916,7 @@
                 clickingInside = false;
             }));
             container.delegate(selector, "keydown", this.bind(function (e) {
-                if (e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e) || e.which === KEY.ESC) {
+                if (!this.enabled || e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e) || e.which === KEY.ESC) {
                     return;
                 }
                 this.open();
@@ -909,13 +929,14 @@
                     killEvent(e);
                 }
             }));
-            container.delegate(selector, "focus", function () { container.addClass("select2-container-active"); });
+            container.delegate(selector, "focus", function () { if (this.enabled) container.addClass("select2-container-active"); });
             container.delegate(selector, "blur", this.bind(function () {
                 if (clickingInside) return;
                 if (!this.opened()) this.blur();
             }));
 
             selection.delegate("abbr", "click", this.bind(function (e) {
+                if (!this.enabled) return;
                 this.val("");
                 killEvent(e);
                 this.close();
@@ -1110,6 +1131,8 @@
             this.selection = selection = this.container.find(selector);
 
             this.search.bind("keydown", this.bind(function (e) {
+                if (!this.enabled) return;
+
                 if (e.which === KEY.BACKSPACE && this.search.val() === "") {
                     this.close();
 
@@ -1164,18 +1187,36 @@
             this.search.bind("keyup", this.bind(this.resizeSearch));
 
             this.container.delegate(selector, "click", this.bind(function (e) {
+                if (!this.enabled) return;
                 this.open();
                 this.focusSearch();
                 e.preventDefault();
             }));
 
             this.container.delegate(selector, "focus", this.bind(function () {
+                if (!this.enabled) return;
                 this.container.addClass("select2-container-active");
                 this.clearPlaceholder();
             }));
 
             // set the placeholder if necessary
             this.clearSearch();
+        },
+
+        enable: function() {
+            if (this.enabled) return;
+
+            this.parent.enable.apply(this, arguments);
+
+            this.search.show();
+        },
+
+        disable: function() {
+            if (!this.enabled) return;
+
+            this.parent.disable.apply(this, arguments);
+
+            this.search.hide();
         },
 
         initSelection: function () {
@@ -1296,12 +1337,15 @@
             choice = $(parts.join(""));
             choice.find("a")
                 .bind("click dblclick", this.bind(function (e) {
+                if (!this.enabled) return;
+
                 this.unselect($(e.target));
                 this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
                 killEvent(e);
                 this.close();
                 this.focusSearch();
             })).bind("focus", this.bind(function () {
+                if (!this.enabled) return;
                 this.container.addClass("select2-container-active");
             }));
 
@@ -1424,7 +1468,7 @@
                 val = (val === null) ? [] : val;
                 this.setVal(val);
                 // val is a list of objects
-
+                                                                                                     st
                 $(val).each(function () { data.push(self.id(this)); });
                 this.setVal(data);
                 this.updateSelection(val);
@@ -1468,7 +1512,7 @@
         var args = Array.prototype.slice.call(arguments, 0),
             opts,
             select2,
-            value, multiple, allowedMethods = ["val", "destroy", "open", "close", "focus", "isFocused", "container", "onSortStart", "onSortEnd"];
+            value, multiple, allowedMethods = ["val", "destroy", "open", "close", "focus", "isFocused", "container", "onSortStart", "onSortEnd", "enable", "disable"];
 
         this.each(function () {
             if (args.length === 0 || typeof(args[0]) === "object") {
