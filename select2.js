@@ -489,9 +489,16 @@
 
                         if (i === 0 && placeholder !== undefined && text === "") return true;
 
-                        if (text.toUpperCase().indexOf(term) >= 0) {
-                            data.results.push({id: e.attr("value"), text: text});
-                        }
+                        if (opts.searchFromStartOfString) {
+                            if (text.toUpperCase().indexOf(term) == 0) { 
+                                data.results.push({id: e.attr("value"), text: text});
+                            }    
+                        } else {
+                            if (text.toUpperCase().indexOf(term) >= 0) { 
+                                data.results.push({id: e.attr("value"), text: text});
+                            }    
+                        }    
+
                     });
                     query.callback(data);
                 });
