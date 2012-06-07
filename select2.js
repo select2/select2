@@ -730,6 +730,25 @@
                 var parts = [], // html parts
                     def; // default choice
 
+				// If we aren't showing the search input, do not filter items
+				// but do highlight an item matching current search
+				if(initial !== true && !this.showSearchInput){
+					if(data.results.length > 0){
+						var key = data.results[0].id,
+							self = this;
+						this.results.find("li").each(function(i, li){
+							if($(li).data("select2-data").id == key){
+								self.highlight(i);
+								return false;
+							}
+						});
+					} else {
+						// if the search doesn't match, reset so user can search again
+						search.val("");
+					}
+					return;
+				}
+
                 // create a default choice and prepend it to the list
                 if (this.opts.createSearchChoice && search.val() !== "") {
                     def = this.opts.createSearchChoice.call(null, search.val(), data.results);
@@ -1017,8 +1036,8 @@
             // hide the search box if this is the first we got the results and there are a few of them
 
             if (initial === true) {
-                showSearchInput = data.results.length >= this.opts.minimumResultsForSearch;
-                this.search.parent().toggle(showSearchInput);
+                showSearchInput = this.showSearchInput = data.results.length >= this.opts.minimumResultsForSearch;
+                this.search.parent()[showSearchInput ? "removeClass" : "addClass"]("select2-hide-search");
 
                 //add "select2-with-searchbox" to the container if search box is shown
                 this.container[showSearchInput ? "addClass" : "removeClass"]("select2-with-searchbox");
