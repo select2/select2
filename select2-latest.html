@@ -780,7 +780,7 @@ $("#tags").select2({
 });
 </pre>
             </td></tr>
-            <tr>
+            <tr id="doc-query">
                 <td>query</td>
                 <td>function</td>
                 <td>
@@ -790,12 +790,14 @@ $("#tags").select2({
                         <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
                         <tr><td>options.term</td><td>string</td><td>Search string entered by user</td></tr>
                         <tr><td>options.page</td><td>int</td><td>1-based page number tracked by Select2 for use with infinite scrolling of results</td></tr>
-                        <tr><td>options.callback</td><td>function</td>
+                        <tr><td>options.context</td><td>object</td><td>An object that persists across the lifecycle of queries for the same search term (the query to retrieve the initial results, and subsequent queries to retrieve more result pages for the same search term). When this function is first called for a new search term this object will be null. The user may choose to set any object in the <code>results.context</code> field - this object will then be used as the context parameter for all calls to the <code>query</code> method that will load more search results for the initial search term. The object will be reset back to null when a new search term is queried. This feature is useful when a page number is not easily mapped against the server side paging mechanism. For example, some server side paging mechanism may return a &quot;continuation token&quot; that needs to be passed back to them in order to retrieve the next page of search results.</td></tr>
+                        <tr id="doc-query-options-callback"><td>options.callback</td><td>function</td>
                             <td>Callback function that should be called with the <code>result</code> object. The result object:
                                 <table class="table table-bordered table-striped">
                                     <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
                                     <tr><td>result.results</td><td>[object]</td><td>Array of result objects. The default renderers expect objects with <code>id</code> and <code>text</code> keys</code>. The <code>id</code> attribute is required</code>, even if custom renderers are used.</td></tr>
                                     <tr><td>result.more</td><td>boolean</td><td><code>true</code>if more results are available for the current search term</td></tr>
+                                    <tr><td>results.context</td><td>object</td><td>A user-defined object that should be made available as the <code>context</code> parameter to the <code>query</code> function on subsequent queries to load more result pages for the same search term. See the description of <a href="#doc-query-options-context">options.context</code></a> parameter.</td></tr>
                                 </table>
                             </td></tr>
                     </table>
@@ -810,7 +812,7 @@ $("#tags").select2({
                     <tr><td>transport</td><td>function</td><td>Function that will be used to perform the ajax request. Must be parameter-compatible with <code>$.ajax</code>. Defaults to <code>$.ajax</code> if not specified.
                         Allows the use of various ajax wrapper libraries such as: <a href="http://www.protofunc.com/scripts/jquery/ajaxManager/">AjaxManager</a>. </td></tr>
                     <tr><td>url</td><td>string</td><td>Ajax url</td></tr>
-                    <tr><td>dataType</td><td>stringt</td><td>Data type for the request. <code>ajax</code>, <code>jsonp</code>, other formats supported by jquery</td></tr>
+                    <tr><td>dataType</td><td>string</td><td>Data type for the request. <code>ajax</code>, <code>jsonp</code>, other formats supported by jquery</td></tr>
                     <tr><td>quietMillis</td><td>int</td><td>Number of milliseconds to wait for the user to stop typing before issuing the ajax request</td></tr>
                     <tr><td>data</td><td>function</td><td>
                         Function to generate query parameters for the ajax request.
@@ -819,6 +821,7 @@ $("#tags").select2({
                             <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
                             <tr><td>term</td><td>string</td><td>Search term</td></tr>
                             <tr><td>page</td><td>int</td><td>1-based page number tracked by Select2 for use with infinite scrolling of results</td></tr>
+                            <tr><td>context</td><td>object</td><td>See <a href="#doc-query-options-callback"><code>options.context</code></a> parameter to the <a href="#doc-query"><code>query</code></a> function above.</td></tr>
                             <tr><td>&lt;returns&gt;</td><td>object</td><td>Object containing url paramters</td></tr>
                         </table>
                     </td></tr>
@@ -829,6 +832,7 @@ $("#tags").select2({
                             <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
                             <tr><td>data</td><td>object</td><td>Retrieved data</td></tr>
                             <tr><td>page</td><td>int</td><td>Page number that was passed into the <code>data</code> function above</td></tr>
+                            <tr><td>context</td><td>object</td><td>See <a href="#doc-query-options-callback"><code>options.context</code></a> parameter to the <a href="#doc-query"><code>query</code></a> function above.</td></tr>
                             <tr><td>&lt;returns&gt;</td><td>object</td><td>Results object. See &quot;options.callback&quot; in the &quot;query&quot; function for format.</td></tr>
                         </table>
                     </td></tr>
