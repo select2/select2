@@ -328,6 +328,10 @@ disabled look for already selected choices in the results dropdown
     margin-top:0;
 }
 
+.select2-container-multi .select2-choices {
+    min-height: 26px;
+}
+
 .select2-container-multi.select2-container-active .select2-choices {
     -webkit-box-shadow: 0 0 5px rgba(0,0,0,.3);
     -moz-box-shadow   : 0 0 5px rgba(0,0,0,.3);
