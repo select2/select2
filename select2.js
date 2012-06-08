@@ -712,6 +712,11 @@
         updateResults: function (initial) {
             var search = this.search, results = this.results, opts = this.opts, self=this;
 
+            // if the search is currently hidden we do not alter the results
+            if (initial !== true && this.showSearchInput === false) {
+                return;
+            }
+
             search.addClass("select2-active");
 
             function render(html) {
@@ -734,25 +739,6 @@
                     callback: this.bind(function (data) {
                 var parts = [], // html parts
                     def; // default choice
-
-				// If we aren't showing the search input, do not filter items
-				// but do highlight an item matching current search
-				if(initial !== true && !this.showSearchInput){
-					if(data.results.length > 0){
-						var key = data.results[0].id,
-							self = this;
-						this.results.find("li").each(function(i, li){
-							if($(li).data("select2-data").id == key){
-								self.highlight(i);
-								return false;
-							}
-						});
-					} else {
-						// if the search doesn't match, reset so user can search again
-						search.val("");
-					}
-					return;
-				}
 
                 // create a default choice and prepend it to the list
                 if (this.opts.createSearchChoice && search.val() !== "") {
@@ -1042,7 +1028,7 @@
 
             if (initial === true) {
                 showSearchInput = this.showSearchInput = data.results.length >= this.opts.minimumResultsForSearch;
-                this.search.parent()[showSearchInput ? "removeClass" : "addClass"]("select2-hide-search");
+                this.container.find(".select2-search")[showSearchInput ? "removeClass" : "addClass"]("select2-search-hidden");
 
                 //add "select2-with-searchbox" to the container if search box is shown
                 this.container[showSearchInput ? "addClass" : "removeClass"]("select2-with-searchbox");

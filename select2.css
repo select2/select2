@@ -144,7 +144,7 @@ Version: @@ver@@ Timestamp: @@timestamp@@
   padding-right: 4px;
 }
 
-.select2-container .select2-hide-search {
+.select2-container .select2-search-hidden {
   display: block;
   position: absolute;
   left: -10000px;
