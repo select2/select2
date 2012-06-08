@@ -144,6 +144,12 @@ Version: @@ver@@ Timestamp: @@timestamp@@
   padding-right: 4px;
 }
 
+.select2-container .select2-hide-search {
+  display: block;
+  position: absolute;
+  left: -10000px;
+}
+
 .select2-container .select2-search input {
     background: #fff url('select2.png') no-repeat 100% -22px;
     background: url('select2.png') no-repeat 100% -22px, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, white), color-stop(0.99, #eeeeee));
