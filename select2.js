@@ -278,13 +278,13 @@
         }
 
         return function (query) {
-            var t = query.term.toUpperCase(), filtered = {};
+            var t = query.term, filtered = {};
             if (t === "") {
                 query.callback({results: data});
                 return;
             }
             filtered.results = $(data)
-                .filter(function () {return text(this).toUpperCase().indexOf(t) >= 0;})
+                .filter(function () {return query.matcher(t, text(this));})
                 .get();
             query.callback(filtered);
         };
@@ -301,11 +301,11 @@
         // if not a function we assume it to be an array
 
         return function (query) {
-            var t = query.term.toUpperCase(), filtered = {results: []};
+            var t = query.term, filtered = {results: []};
             $(data).each(function () {
                 var isObject = this.text !== undefined,
                     text = isObject ? this.text : this;
-                if (t === "" || text.toUpperCase().indexOf(t) >= 0) {
+                if (t === "" || query.matcher(t, text)) {
                     filtered.results.push(isObject ? this : {id: this, text: this});
                 }
             });
@@ -470,7 +470,10 @@
                 formatInputTooShort: function (input, min) { return "Please enter " + (min - input.length) + " more characters"; },
                 minimumResultsForSearch: 0,
                 minimumInputLength: 0,
-                id: function (e) { return e.id; }
+                id: function (e) { return e.id; },
+                matcher: function(term, text) {
+                    return text.toUpperCase().indexOf(term.toUpperCase()) >= 0;
+                }
             }, opts);
 
             if (typeof(opts.id) !== "function") {
@@ -481,7 +484,7 @@
             if (select) {
                 opts.query = this.bind(function (query) {
                     var data = {results: [], more: false},
-                        term = query.term.toUpperCase(),
+                        term = query.term,
                         placeholder = this.getPlaceholder();
                     element.find("option").each(function (i) {
                         var e = $(this),
@@ -489,7 +492,7 @@
 
                         if (i === 0 && placeholder !== undefined && text === "") return true;
 
-                        if (text.toUpperCase().indexOf(term) >= 0) {
+                        if (query.matcher(term, text)) {
                             data.results.push({id: e.attr("value"), text: text});
                         }
                     });
@@ -676,6 +679,7 @@
                         term: this.search.val(),
                         page: page,
                         context: self.context,
+                        matcher: self.opts.matcher,
                         callback: this.bind(function (data) {
                     var parts = [], self = this;
                     $(data.results).each(function () {
@@ -726,6 +730,7 @@
                     term: search.val(),
                     page: this.resultsPage,
                     context: null,
+                    matcher: opts.matcher,
                     callback: this.bind(function (data) {
                 var parts = [], // html parts
                     def; // default choice
