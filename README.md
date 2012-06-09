@@ -19,6 +19,14 @@ result set allowing for the 'infinite scrolling' of results.
 * Ability to add results on the fly: Select2 provides the ability to add results from the search term entered by the user, which allows it to be used for
 tagging.
 
+Browser Compatibility
+--------------------
+* IE 8+ (7 mostly works except for [issue with z-index](https://github.com/ivaynberg/select2/issues/37)
+* Chrome 8+
+* Firefox 3.5+
+* Safari 3+
+* Opera 10.6+
+
 Bug tracker
 -----------
 
