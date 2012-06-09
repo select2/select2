@@ -214,6 +214,17 @@ $("#e10_3").select2({
             </div></div>
         </section>
 
+        <section>
+            <h2>Browser Compatibility</h2>
+            <ul>
+            <li>IE 8+ (7 mostly works except for <a href="https://github.com/ivaynberg/select2/issues/37">issue with z-index</a>)</li>
+            <li>Chrome 8+</li>
+            <li>Firefox 3.5+</li>
+            <li>Safari 3+</li>
+            <li>Opera 10.6+</li>
+            </ul>
+        </section>
+
       <section>
       <div class="row">
           <div class="span12">
@@ -370,7 +381,7 @@ $("#e2_2").select2({
            </pre>
         </div>
        </article>
-          
+
         <article class="zebra row" id="ajax">
            <div class="span12">
              <h3>Loading Remote Data</h3>
@@ -559,15 +570,15 @@ $("#e14_destroy").click(function() { $("#e14").select2("destroy"); });
           </div>
       </article>
 
-      
+
       </section>
-      
-      
+
+
       <!--               -->
       <!-- DOCUMENTATION -->
       <!--               -->
-      
-      
+
+
       <section id="documentation">
 
         <div class="row" style="padding-top: 20px;">
@@ -609,7 +620,7 @@ $("#e14_destroy").click(function() { $("#e14").select2("destroy"); });
                     non-multi-value select boxes an empty first <code>option</code> element must be provided (<code>&lt;option&gt;&lt;/option&gt;</code>)
                     for the placeholder to work.
                 </p>
-                
+
                 <p class="alert alert-warning">When Select2 is used in multi-select mode the placeholder must be a string.</p>
             </td></tr>
             <tr>
@@ -623,9 +634,6 @@ $("#e14_destroy").click(function() { $("#e14").select2("destroy"); });
                         only
                         available when the placeholder is specified.
                     </p>
-                    <p class="alert alert-warning">When attached to a <code>select</code> an <code>option</code> with an empty value must be provided.
-                        This is the option that will be selected when the button is pressed since a select box requires
-                        at least one selection <code>option</code>.</p>
 
                     <p>
                         Also, note that this option only works with
