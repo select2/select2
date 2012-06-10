@@ -144,6 +144,12 @@ Version: @@ver@@ Timestamp: @@timestamp@@
   padding-right: 4px;
 }
 
+.select2-container .select2-search-hidden {
+  display: block;
+  position: absolute;
+  left: -10000px;
+}
+
 .select2-container .select2-search input {
     background: #fff url('select2.png') no-repeat 100% -22px;
     background: url('select2.png') no-repeat 100% -22px, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, white), color-stop(0.99, #eeeeee));
@@ -320,6 +326,10 @@ disabled look for already selected choices in the results dropdown
 
 .select2-container-multi .select2-drop {
     margin-top:0;
+}
+
+.select2-container-multi .select2-choices {
+    min-height: 26px;
 }
 
 .select2-container-multi.select2-container-active .select2-choices {

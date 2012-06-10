@@ -317,7 +317,7 @@
      * blurs any Select2 container that has focus when an element outside them was clicked or received focus
      */
     $(document).ready(function () {
-        $(document).delegate("*", "mousedown focusin", function (e) {
+        $(document).delegate("*", "mousedown focusin touchend", function (e) {
             var target = $(e.target).closest("div.select2-container").get(0);
             $(document).find("div.select2-container-active").each(function () {
                 if (this !== target) $(this).data("select2").blur();
@@ -714,6 +714,11 @@
         updateResults: function (initial) {
             var search = this.search, results = this.results, opts = this.opts, self=this;
 
+            // if the search is currently hidden we do not alter the results
+            if (initial !== true && this.showSearchInput === false) {
+                return;
+            }
+
             search.addClass("select2-active");
 
             function render(html) {
@@ -1028,8 +1033,8 @@
             // hide the search box if this is the first we got the results and there are a few of them
 
             if (initial === true) {
-                showSearchInput = data.results.length >= this.opts.minimumResultsForSearch;
-                this.search.parent().toggle(showSearchInput);
+                showSearchInput = this.showSearchInput = data.results.length >= this.opts.minimumResultsForSearch;
+                this.container.find(".select2-search")[showSearchInput ? "removeClass" : "addClass"]("select2-search-hidden");
 
                 //add "select2-with-searchbox" to the container if search box is shown
                 this.container[showSearchInput ? "addClass" : "removeClass"]("select2-with-searchbox");
