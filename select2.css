@@ -13,11 +13,11 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 .select2-container,
 .select2-drop,
 .select2-search,
-.select2-container .select2-search input{
-  /* 
+.select2-search input{
+  /*
     Force border-box so that % widths fit the parent
     container without overlap because of margin/padding.
-    
+
     More Info : http://www.quirksmode.org/css/box.html
   */
   -moz-box-sizing: border-box;    /* firefox */
@@ -83,7 +83,7 @@ Version: @@ver@@ Timestamp: @@timestamp@@
   cursor: pointer;
 }
 
-.select2-container .select2-drop {
+.select2-drop {
     background: #fff;
     border: 1px solid #aaa;
     border-top: 0;
@@ -133,7 +133,7 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     height: 100%;
 }
 
-.select2-container .select2-search {
+.select2-search {
   display: inline-block;
     white-space: nowrap;
     z-index: 1010;
@@ -144,13 +144,13 @@ Version: @@ver@@ Timestamp: @@timestamp@@
   padding-right: 4px;
 }
 
-.select2-container .select2-search-hidden {
+.select2-search-hidden {
   display: block;
   position: absolute;
   left: -10000px;
 }
 
-.select2-container .select2-search input {
+.select2-search input {
     background: #fff url('select2.png') no-repeat 100% -22px;
     background: url('select2.png') no-repeat 100% -22px, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, white), color-stop(0.99, #eeeeee));
     background: url('select2.png') no-repeat 100% -22px, -webkit-linear-gradient(center bottom, white 85%, #eeeeee 99%);
@@ -172,10 +172,10 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     box-shadow: none;
     border-radius: 0;
     -moz-border-radius: 0;
-    -webkit-border-radius: 0;  
+    -webkit-border-radius: 0;
 }
 
-.select2-container .select2-search input.select2-active {
+.select2-search input.select2-active {
     background: #fff url('spinner.gif') no-repeat 100%;
     background: url('spinner.gif') no-repeat 100%, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, white), color-stop(0.99, #eeeeee));
     background: url('spinner.gif') no-repeat 100%, -webkit-linear-gradient(center bottom, white 85%, #eeeeee 99%);
@@ -228,7 +228,7 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 }
 
 /* results */
-.select2-container .select2-results {
+.select2-results {
   margin: 4px 4px 4px 0;
   padding: 0 0 0 4px;
   position: relative;
@@ -236,7 +236,7 @@ Version: @@ver@@ Timestamp: @@timestamp@@
   overflow-y: auto;
   max-height: 200px;
 }
-.select2-container .select2-results li {
+.select2-results li {
   line-height: 80%;
   padding: 7px 7px 8px;
   margin: 0;
@@ -245,37 +245,37 @@ Version: @@ver@@ Timestamp: @@timestamp@@
   display: list-item;
 }
 
-.select2-container .select2-results .select2-highlighted {
+.select2-results .select2-highlighted {
   background: #3875d7;
   color: #fff;
 }
-.select2-container .select2-results li em {
+.select2-results li em {
   background: #feffde;
   font-style: normal;
 }
-.select2-container .select2-results .select2-highlighted em {
+.select2-results .select2-highlighted em {
   background: transparent;
 }
-.select2-container .select2-results .select2-no-results {
+.select2-results .select2-no-results {
   background: #f4f4f4;
   display: list-item;
 }
 
 /*
 disabled look for already selected choices in the results dropdown
-.select2-container .select2-results .select2-disabled.select2-highlighted {
+.select2-results .select2-disabled.select2-highlighted {
     color: #666;
     background: #f4f4f4;
     display: list-item;
     cursor: default;
 }
-.select2-container .select2-results .select2-disabled {
+.select2-results .select2-disabled {
   background: #f4f4f4;
   display: list-item;
   cursor: default;
 }
 */
-.select2-container .select2-results .select2-disabled {
+.select2-results .select2-disabled {
     display: none;
 }
 

@@ -1,6 +1,6 @@
 ﻿/*
  Copyright 2012 Igor Vaynberg
- 
+
  Version: @@ver@@ Timestamp: @@timestamp@@
 
  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in
@@ -319,9 +319,16 @@
     $(document).ready(function () {
         $(document).delegate("*", "mousedown focusin touchend", function (e) {
             var target = $(e.target).closest("div.select2-container").get(0);
-            $(document).find("div.select2-container-active").each(function () {
-                if (this !== target) $(this).data("select2").blur();
-            });
+            if (target) {
+                $(document).find("div.select2-container-active").each(function () {
+                    if (this !== target) $(this).data("select2").blur();
+                });
+            } else {
+                target = $(e.target).closest("div.select2-drop").get(0);
+                $(document).find("div.select2-drop-active").each(function () {
+                    if (this !== target) $(this).data("select2").blur();
+                });
+            }
         });
     });
 
@@ -378,8 +385,11 @@
             this.container.data("select2", this);
 
             this.dropdown = this.container.find(".select2-drop");
+            this.dropdown.data("select2", this);
+
             this.results = results = this.container.find(resultsSelector);
             this.search = search = this.container.find("input[type=text]");
+            this.dropdown.detach().appendTo('body');
 
             this.resultsPage = 0;
             this.context = null;
@@ -388,10 +398,10 @@
             this.initContainer();
 
             installFilteredMouseMove(this.results);
-            this.container.delegate(resultsSelector, "mousemove-filtered", this.bind(this.highlightUnderEvent));
+            this.dropdown.delegate(resultsSelector, "mousemove-filtered", this.bind(this.highlightUnderEvent));
 
             installDebouncedScroll(80, this.results);
-            this.container.delegate(resultsSelector, "scroll-debounced", this.bind(this.loadMoreIfNeeded));
+            this.dropdown.delegate(resultsSelector, "scroll-debounced", this.bind(this.loadMoreIfNeeded));
 
             // if jquery.mousewheel plugin is installed we can prevent out-of-bounds scrolling of results via mousewheel
             if ($.fn.mousewheel) {
@@ -412,7 +422,7 @@
             search.bind("focus", function () { search.addClass("select2-focused");});
             search.bind("blur", function () { search.removeClass("select2-focused");});
 
-            this.container.delegate(resultsSelector, "click", this.bind(function (e) {
+            this.dropdown.delegate(resultsSelector, "click", this.bind(function (e) {
                 if ($(e.target).closest(".select2-result:not(.select2-disabled)").length > 0) {
                     this.highlightUnderEvent(e);
                     this.selectHighlighted(e);
@@ -438,6 +448,7 @@
             var select2 = this.opts.element.data("select2");
             if (select2 !== undefined) {
                 select2.container.remove();
+                select2.dropdown.remove();
                 select2.opts.element
                     .removeData("select2")
                     .unbind(".select2")
@@ -568,10 +579,26 @@
             return this.container.hasClass("select2-dropdown-open");
         },
 
+        updatePositions: function() {
+            var offset = this.container.offset();
+            var height = this.container.outerHeight();
+            var width  = this.container.outerWidth();
+
+            this.dropdown.css({
+                top: offset.top + height,
+                left: offset.left,
+                width: width,
+                'max-height': 300
+            });
+        },
+
         open: function () {
             if (this.opened()) return;
 
             this.container.addClass("select2-dropdown-open").addClass("select2-container-active");
+            this.dropdown.addClass("select2-drop-active");
+
+            this.updatePositions();
 
             this.updateResults(true);
             this.dropdown.show();
@@ -787,6 +814,7 @@
             window.setTimeout(this.bind(function () {
                 this.close();
                 this.container.removeClass("select2-container-active");
+                this.dropdown.removeClass("select2-drop-active");
                 this.clearSearch();
                 this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
                 this.search.blur();
@@ -888,7 +916,11 @@
 
         initContainer: function () {
 
-            var selection, container = this.container, clickingInside = false,
+            var selection,
+                container = this.container,
+                dropdown = this.dropdown,
+                containerGroup = $([this.container.get(0), this.dropdown.get(0)]),
+                clickingInside = false,
                 selector = ".select2-choice";
 
             this.selection = selection = container.find(selector);
@@ -912,7 +944,7 @@
                 }
             }));
 
-            container.delegate(selector, "click", this.bind(function (e) {
+            containerGroup.delegate(selector, "click", this.bind(function (e) {
                 clickingInside = true;
 
                 if (this.opened()) {
@@ -925,7 +957,7 @@
 
                 clickingInside = false;
             }));
-            container.delegate(selector, "keydown", this.bind(function (e) {
+            containerGroup.delegate(selector, "keydown", this.bind(function (e) {
                 if (!this.enabled || e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e) || e.which === KEY.ESC) {
                     return;
                 }
@@ -939,8 +971,8 @@
                     killEvent(e);
                 }
             }));
-            container.delegate(selector, "focus", function () { if (this.enabled) container.addClass("select2-container-active"); });
-            container.delegate(selector, "blur", this.bind(function () {
+            containerGroup.delegate(selector, "focus", function () { if (this.enabled) { containerGroup.addClass("select2-container-active"); dropdown.addClass("select2-drop-active"); }});
+            containerGroup.delegate(selector, "blur", this.bind(function () {
                 if (clickingInside) return;
                 if (!this.opened()) this.blur();
             }));
@@ -1206,6 +1238,7 @@
             this.container.delegate(selector, "focus", this.bind(function () {
                 if (!this.enabled) return;
                 this.container.addClass("select2-container-active");
+                this.dropdown.addClass("select2-drop-active");
                 this.clearPlaceholder();
             }));
 
@@ -1357,6 +1390,7 @@
             })).bind("focus", this.bind(function () {
                 if (!this.enabled) return;
                 this.container.addClass("select2-container-active");
+                this.dropdown.addClass("select2-drop-active");
             }));
 
             choice.data("select2-data", data);
@@ -1522,7 +1556,7 @@
         var args = Array.prototype.slice.call(arguments, 0),
             opts,
             select2,
-            value, multiple, allowedMethods = ["val", "destroy", "open", "close", "focus", "isFocused", "container", "onSortStart", "onSortEnd", "enable", "disable"];
+            value, multiple, allowedMethods = ["val", "destroy", "open", "close", "focus", "isFocused", "container", "onSortStart", "onSortEnd", "enable", "disable", "updatePositions"];
 
         this.each(function () {
             if (args.length === 0 || typeof(args[0]) === "object") {
