@@ -1136,7 +1136,7 @@
                 "    <input type='text' autocomplete='off' style='width: 25px;'>" ,
                 "  </li>" ,
                 "</ul>" ,
-                "<div class='select2-drop' style='display:none;'>" ,
+                "<div class='select2-drop select2-drop-multi' style='display:none;'>" ,
                 "   <ul class='select2-results'>" ,
                 "   </ul>" ,
                 "</div>"].join(""));
