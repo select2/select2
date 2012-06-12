@@ -236,13 +236,25 @@ Version: @@ver@@ Timestamp: @@timestamp@@
   overflow-y: auto;
   max-height: 200px;
 }
+
+.select2-results ul.select2-result-sub {
+  margin: 0 0 0 15px;
+}
+
 .select2-results li {
+  list-style: none;
+  display: list-item;
+}
+
+.select2-results li.select2-result-with-children > .select2-result-label {
+  font-weight: bold;
+}
+
+.select2-results .select2-result-label {
   line-height: 80%;
   padding: 7px 7px 8px;
   margin: 0;
-  list-style: none;
   cursor: pointer;
-  display: list-item;
 }
 
 .select2-results .select2-highlighted {
