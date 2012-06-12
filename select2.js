@@ -20,7 +20,7 @@
         return;
     }
 
-    var KEY, AbstractSelect2, SingleSelect2, MultiSelect2;
+    var KEY, AbstractSelect2, SingleSelect2, MultiSelect2, uid = 1;;
 
     KEY = {
         TAB: 9,
@@ -475,8 +475,46 @@
             }
 
             opts = $.extend({}, {
-                formatResult: function (data) { return data.text; },
-                formatSelection: function (data) { return data.text; },
+                formatList: function(results) {
+                    var proc = function(results, depth) {
+                        depth = depth || 0;
+                        var parts = [];
+
+                        $.each(results, function() {
+                            var result = this;
+                            parts.push('<li class="select2-result select2-result-uid-' + result.uid + ' select2-result-depth-' + depth);
+                            if (result.unselectable) {
+                                parts.push(' select2-result-unselectable');
+                            }
+                            if (result.children && result.children.length) {
+                                parts.push(' select2-result-with-children');
+                            }
+                            parts.push('" data-select2-uid="' + result.uid + '">');
+
+                            parts.push('<div class="select2-result-label">' + result.text + '</div>');
+
+                            if (result.children && result.children.length) {
+                                parts.push('<ul class="select2-result-sub">');
+                                parts.push(proc(result.children, depth + 1))
+                                parts.push('</ul>');
+                            }
+
+                            parts.push('</li>');
+                        });
+
+
+                        return parts.join('');
+                    };
+
+                    return proc(results, 0);
+                },
+                formatSelection: function (data) {
+                    if (data.fullText) {
+                        return data.fullText;
+                    } else {
+                        return data.text;
+                    }
+                },
                 formatNoMatches: function () { return "No matches found"; },
                 formatInputTooShort: function (input, min) { return "Please enter " + (min - input.length) + " more characters"; },
                 minimumResultsForSearch: 0,
@@ -494,19 +532,80 @@
 
             if (select) {
                 opts.query = this.bind(function (query) {
-                    var data = {results: [], more: false},
+                    var data = {results: [], map: {}, more: false},
                         term = query.term,
+                        idx = 0,
                         placeholder = this.getPlaceholder();
-                    element.find("option").each(function (i) {
-                        var e = $(this),
-                            text = e.text();
 
-                        if (i === 0 && placeholder !== undefined && text === "") return true;
+                    element.find("> *").each(function() {
+                        var el = $(this);
 
-                        if (query.matcher(term, text)) {
-                            data.results.push({id: e.attr("value"), text: text});
+                        if (el.is('optgroup')) {
+                            var item = {
+                                id: 'select2-group-' + (uid++),
+                                uid: uid++,
+                                text: el.attr('label'),
+                                unselectable: true,
+                                children: []
+                            };
+                            data.map[item.uid] = item;
+
+                            el.find('> option').each(function() {
+                                var sub = {
+                                    id: $(this).attr('value'),
+                                    uid: uid++,
+                                    text: $(this).text(),
+                                    unselectable: false,
+                                    fullText: el.attr('label') + ' > ' + $(this).text(),
+                                    children: []
+                                };
+
+                                data.map[sub.uid] = sub;
+                                item.children.push(sub);
+                            });
+
+                            data.results.push(item);
+                        } else {
+                            var item = {
+                                id: $(this).attr('value'),
+                                uid: uid++,
+                                text: $(this).text(),
+                                unselectable: false,
+                                children: []
+                            };
+
+                            data.map[item.uid] = item;
+                            data.results.push(item);
                         }
                     });
+
+                    if (term !== "") {
+                        var filterDeep = function(items, depth) {
+                            var filtered = [];
+                            for (var itemIdx = 0; itemIdx < items.length; itemIdx++) {
+                                var newItem = $.extend(true, [], items[itemIdx]);
+                                if (newItem.children) {
+                                    newItem.children = filterDeep(newItem.children);
+                                }
+
+                                var isMatch = false;
+                                if (newItem.children && newItem.children.length) {
+                                    isMatch = true;
+                                } else if (!newItem.unselectable && query.matcher(term, newItem.text)) {
+                                    isMatch = true;
+                                }
+
+                                if (isMatch) {
+                                    filtered.push(newItem);
+                                }
+                            }
+
+                            return filtered;
+                        }
+
+                        data.results = filterDeep(data.results);
+                    }
+
                     query.callback(data);
                 });
                 // this is needed because inside val() we construct choices from options and there id is hardcoded
@@ -622,7 +721,7 @@
         ensureHighlightVisible: function () {
             var results = this.results, children, index, child, hb, rb, y, more;
 
-            children = results.children(".select2-result");
+            children = results.find(".select2-result");
             index = this.highlight();
 
             if (index < 0) return;
@@ -652,7 +751,7 @@
         },
 
         moveHighlight: function (delta) {
-            var choices = this.results.children(".select2-result"),
+            var choices = this.results.find(".select2-result"),
                 index = this.highlight();
 
             while (index > -1 && index < choices.length) {
@@ -665,16 +764,20 @@
         },
 
         highlight: function (index) {
-            var choices = this.results.children(".select2-result");
+            var choices = this.results.find(".select2-result .select2-result-label");
 
             if (arguments.length === 0) {
                 return indexOf(choices.filter(".select2-highlighted")[0], choices.get());
             }
 
-            choices.removeClass("select2-highlighted");
-
             if (index >= choices.length) index = choices.length - 1;
             if (index < 0) index = 0;
+
+            if ($(choices[index]).parent().is('.select2-result-unselectable')) {
+                return;
+            }
+
+            choices.removeClass("select2-highlighted");
 
             $(choices[index]).addClass("select2-highlighted");
             this.ensureHighlightVisible();
@@ -684,8 +787,9 @@
 
         highlightUnderEvent: function (event) {
             var el = $(event.target).closest(".select2-result");
+            var choices = this.results.find('.select2-result');
             if (el.length > 0) {
-                this.highlight(el.index());
+                this.highlight(choices.index(el));
             }
         },
 
@@ -708,19 +812,15 @@
                         context: self.context,
                         matcher: self.opts.matcher,
                         callback: this.bind(function (data) {
-                    var parts = [], self = this;
-                    $(data.results).each(function () {
-                        parts.push("<li class='select2-result'>");
-                        parts.push(self.opts.formatResult(this));
-                        parts.push("</li>");
-                    });
-                    more.before(parts.join(""));
-                    results.find(".select2-result").each(function (i) {
+                    var self = this;
+                    var htmlResult = self.opts.formatList(data.results);
+                    more.before(htmlResult);
+                    results.find(".select2-result").each(function () {
                         var e = $(this);
                         if (e.data("select2-data") !== undefined) {
                             offset = i;
                         } else {
-                            e.data("select2-data", data.results[i - offset - 1]);
+                            e.data("select2-data", data.map[e.data('select2-uid')]);
                         }
                     });
                     if (data.more) {
@@ -785,19 +885,15 @@
                     return;
                 }
 
-                $(data.results).each(function () {
-                    parts.push("<li class='select2-result'>");
-                    parts.push(opts.formatResult(this));
-                    parts.push("</li>");
-                });
+                var htmlResult = self.opts.formatList(data.results);
 
                 if (data.more === true) {
-                    parts.push("<li class='select2-more-results'>Loading more results...</li>");
+                    htmlResult += "<li class='select2-more-results'>Loading more results...</li>";
                 }
 
-                render(parts.join(""));
-                results.children(".select2-result").each(function (i) {
-                    var d = data.results[i];
+                render(htmlResult);
+                results.find(".select2-result").each(function () {
+                    var d = data.map[$(this).data('select2-uid')];
                     $(this).data("select2-data", d);
                 });
                 this.postprocessResults(data, initial);
@@ -830,7 +926,7 @@
         },
 
         selectHighlighted: function () {
-            var data = this.results.find(".select2-highlighted:not(.select2-disabled)").data("select2-data");
+            var data = this.results.find(".select2-highlighted").not(".select2-disabled").closest('.select2-result').not('.select2-result-unselectable').data("select2-data");
             if (data) {
                 this.onSelect(data);
             }
