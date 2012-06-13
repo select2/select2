@@ -90,7 +90,7 @@
     }
 
     /**
-     * Compares equality of a and b taking into account that a and b may be strings, in which case localCompare is used
+     * Compares equality of a and b taking into account that a and b may be strings, in which case localeCompare is used
      * @param a
      * @param b
      */
