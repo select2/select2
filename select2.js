@@ -389,7 +389,6 @@
 
             this.results = results = this.container.find(resultsSelector);
             this.search = search = this.container.find("input[type=text]");
-            this.dropdown.detach().appendTo('body');
 
             this.resultsPage = 0;
             this.context = null;
@@ -695,7 +694,7 @@
             if (this.opened()) return;
 
             this.container.addClass("select2-dropdown-open").addClass("select2-container-active");
-            this.dropdown.addClass("select2-drop-active");
+            this.dropdown.detach().appendTo('body').addClass("select2-drop-active");
 
             this.updatePositions();
 
