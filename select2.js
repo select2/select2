@@ -70,7 +70,7 @@
     function indexOf(value, array) {
         var i = 0, l = array.length, v;
 
-        if (typeof value == 'undefined') {
+        if (typeof value === "undefined") {
           return -1;
         }
 
@@ -244,7 +244,6 @@
                         }
                         // TODO 3.0 - replace query.page with query so users have access to term, page, etc.
                         var results = options.results(data, query.page);
-                        self.context = results.context;
                         query.callback(results);
                     }
                 });
@@ -678,8 +677,8 @@
                 this.opts.query({
                         term: this.search.val(),
                         page: page,
-                        context: self.context,
-                        matcher: self.opts.matcher,
+                        context: this.context,
+                        matcher: this.opts.matcher,
                         callback: this.bind(function (data) {
                     var parts = [], self = this;
                     $(data.results).each(function () {
@@ -739,6 +738,9 @@
                     callback: this.bind(function (data) {
                 var parts = [], // html parts
                     def; // default choice
+
+                // save context, if any
+                this.context = (data.context===undefined) ? null : data.context;
 
                 // create a default choice and prepend it to the list
                 if (this.opts.createSearchChoice && search.val() !== "") {
@@ -1478,7 +1480,6 @@
                 val = (val === null) ? [] : val;
                 this.setVal(val);
                 // val is a list of objects
-                                                                                                     st
                 $(val).each(function () { data.push(self.id(this)); });
                 this.setVal(data);
                 this.updateSelection(val);
