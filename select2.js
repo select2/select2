@@ -685,8 +685,7 @@
             this.dropdown.css({
                 top: offset.top + height,
                 left: offset.left,
-                width: width,
-                'max-height': 300
+                width: width
             });
         },
 
@@ -1014,7 +1013,7 @@
             var selection,
                 container = this.container,
                 dropdown = this.dropdown,
-                containerGroup = $([this.container.get(0), this.dropdown.get(0)]),
+                containers = $([this.container.get(0), this.dropdown.get(0)]),
                 clickingInside = false,
                 selector = ".select2-choice";
 
@@ -1039,7 +1038,7 @@
                 }
             }));
 
-            containerGroup.delegate(selector, "click", this.bind(function (e) {
+            containers.delegate(selector, "click", this.bind(function (e) {
                 clickingInside = true;
 
                 if (this.opened()) {
@@ -1052,7 +1051,7 @@
 
                 clickingInside = false;
             }));
-            containerGroup.delegate(selector, "keydown", this.bind(function (e) {
+            containers.delegate(selector, "keydown", this.bind(function (e) {
                 if (!this.enabled || e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e) || e.which === KEY.ESC) {
                     return;
                 }
@@ -1066,8 +1065,8 @@
                     killEvent(e);
                 }
             }));
-            containerGroup.delegate(selector, "focus", function () { if (this.enabled) { containerGroup.addClass("select2-container-active"); dropdown.addClass("select2-drop-active"); }});
-            containerGroup.delegate(selector, "blur", this.bind(function () {
+            containers.delegate(selector, "focus", function () { if (this.enabled) { containerGroup.addClass("select2-container-active"); dropdown.addClass("select2-drop-active"); }});
+            containers.delegate(selector, "blur", this.bind(function () {
                 if (clickingInside) return;
                 if (!this.opened()) this.blur();
             }));
