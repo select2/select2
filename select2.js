@@ -677,7 +677,7 @@
             return this.container.hasClass("select2-dropdown-open");
         },
 
-        updatePositions: function() {
+        positionDropdown: function() {
             var offset = this.container.offset();
             var height = this.container.outerHeight();
             var width  = this.container.outerWidth();
@@ -696,7 +696,7 @@
             this.container.addClass("select2-dropdown-open").addClass("select2-container-active");
             this.dropdown.detach().appendTo('body').addClass("select2-drop-active");
 
-            this.updatePositions();
+            this.positionDropdown();
 
             this.updateResults(true);
             this.dropdown.show();
@@ -1651,7 +1651,7 @@
         var args = Array.prototype.slice.call(arguments, 0),
             opts,
             select2,
-            value, multiple, allowedMethods = ["val", "destroy", "open", "close", "focus", "isFocused", "container", "onSortStart", "onSortEnd", "enable", "disable", "updatePositions"];
+            value, multiple, allowedMethods = ["val", "destroy", "open", "close", "focus", "isFocused", "container", "onSortStart", "onSortEnd", "enable", "disable", "positionDropdown"];
 
         this.each(function () {
             if (args.length === 0 || typeof(args[0]) === "object") {
