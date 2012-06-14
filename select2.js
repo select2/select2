@@ -20,7 +20,7 @@
         return;
     }
 
-    var KEY, AbstractSelect2, SingleSelect2, MultiSelect2, uid = 1;;
+    var KEY, AbstractSelect2, SingleSelect2, MultiSelect2, nextUid;
 
     KEY = {
         TAB: 9,
@@ -66,6 +66,8 @@
             return k >= 112 && k <= 123;
         }
     };
+
+    nextUid=(function() { var counter=1; return function() { return counter++; }}());
 
     function indexOf(value, array) {
         var i = 0, l = array.length, v;
@@ -474,38 +476,58 @@
             }
 
             opts = $.extend({}, {
-                formatList: function(results) {
-                    var proc = function(results, depth) {
-                        depth = depth || 0;
-                        var parts = [];
+                populateResults: function(container, results) {
+                    var uidToData={}, populate, markup=[], uid, data, result, children;
 
-                        $.each(results, function() {
-                            var result = this;
-                            parts.push('<li class="select2-result select2-result-uid-' + result.uid + ' select2-result-depth-' + depth);
-                            if (result.unselectable) {
-                                parts.push(' select2-result-unselectable');
+                    populate=function(results, depth) {
+
+                        var i, l, uid, result, selectable, compound;
+                        for (i = 0, l = results.length; i < l; i = i + 1) {
+
+                            result=results[i];
+                            selectable=("id" in result); // TODO switch to id() function
+                            compound=("children" in result) && result.children.length > 0;
+
+                            markup.push("<li class='select2-result-depth-"+depth);
+                            if (!selectable) { markup.push(" select2-result-unselectable"); } else { markup.push(" select2-result");}
+                            if (compound) { markup.push(" select2-result-with-children"); }
+
+                            markup.push("'");
+
+                            if (selectable) {
+                                uid=nextUid();
+                                markup.push(" id='select2-result-"+uid+"'");
+                                uidToData[uid]=result;
                             }
-                            if (result.children && result.children.length) {
-                                parts.push(' select2-result-with-children');
-                            }
-                            parts.push('" data-select2-uid="' + result.uid + '">');
 
-                            parts.push('<div class="select2-result-label">' + result.text + '</div>');
+                            markup.push("><div class='select2-result-label'>"+opts.formatResult(result)+"</div>");
 
-                            if (result.children && result.children.length) {
-                                parts.push('<ul class="select2-result-sub">');
-                                parts.push(proc(result.children, depth + 1))
-                                parts.push('</ul>');
+                            if (compound) {
+                                markup.push("<ul class='select2-result-sub'>");
+                                populate(result.children, depth + 1);
+                                markup.push("</ul>");
                             }
 
-                            parts.push('</li>');
-                        });
-
-
-                        return parts.join('');
+                            markup.push("</li>");
+                        }
                     };
 
-                    return proc(results, 0);
+                    populate(results, 0);
+
+                    children=container.children();
+                    if (children.length==0) {
+                        container.html(markup.join(""));
+                    } else {
+                        $(children[children.length-1]).append(markup.join(""));
+                    }
+
+                    for (uid in uidToData) {
+                        $("#select2-result-"+uid).data("select2-data", uidToData[uid]);
+                    }
+
+                },
+                formatResult: function(result) {
+                     return result.text;
                 },
                 formatSelection: function (data) {
                     if (data.fullText) {
@@ -531,79 +553,26 @@
 
             if (select) {
                 opts.query = this.bind(function (query) {
-                    var data = {results: [], map: {}, more: false},
+                    var data = { results: [], more: false },
                         term = query.term,
-                        idx = 0,
-                        placeholder = this.getPlaceholder();
+                        process;
 
-                    element.find("> *").each(function() {
-                        var el = $(this);
-
-                        if (el.is('optgroup')) {
-                            var item = {
-                                id: 'select2-group-' + (uid++),
-                                uid: uid++,
-                                text: el.attr('label'),
-                                unselectable: true,
-                                children: []
-                            };
-                            data.map[item.uid] = item;
-
-                            el.find('> option').each(function() {
-                                var sub = {
-                                    id: $(this).attr('value'),
-                                    uid: uid++,
-                                    text: $(this).text(),
-                                    unselectable: false,
-                                    fullText: el.attr('label') + ' > ' + $(this).text(),
-                                    children: []
-                                };
-
-                                data.map[sub.uid] = sub;
-                                item.children.push(sub);
-                            });
-
-                            data.results.push(item);
-                        } else {
-                            var item = {
-                                id: $(this).attr('value'),
-                                uid: uid++,
-                                text: $(this).text(),
-                                unselectable: false,
-                                children: []
-                            };
-
-                            data.map[item.uid] = item;
-                            data.results.push(item);
-                        }
-                    });
-
-                    if (term !== "") {
-                        var filterDeep = function(items, depth) {
-                            var filtered = [];
-                            for (var itemIdx = 0; itemIdx < items.length; itemIdx++) {
-                                var newItem = $.extend(true, [], items[itemIdx]);
-                                if (newItem.children) {
-                                    newItem.children = filterDeep(newItem.children);
-                                }
-
-                                var isMatch = false;
-                                if (newItem.children && newItem.children.length) {
-                                    isMatch = true;
-                                } else if (!newItem.unselectable && query.matcher(term, newItem.text)) {
-                                    isMatch = true;
-                                }
-
-                                if (isMatch) {
-                                    filtered.push(newItem);
-                                }
+                    process=function(element, collection) {
+                        var group;
+                        if (element.is("option")) {
+                            if (query.matcher(term, element.text())) {
+                                collection.push({id:element.attr("value"), text:element.text()});
                             }
-
-                            return filtered;
+                        } else if (element.is("optgroup")) {
+                            group={text:element.attr("label"), children:[]};
+                            element.children().each(function() { process($(this), group.children); });
+                            if (group.children.length>0) {
+                                collection.push(group);
+                            }
                         }
+                    };
 
-                        data.results = filterDeep(data.results);
-                    }
+                    element.children().each(function() { process($(this), data.results); });
 
                     query.callback(data);
                 });
@@ -796,10 +765,10 @@
                 more = results.find("li.select2-more-results"),
                 below, // pixels the element is below the scroll fold, below==0 is when the element is starting to be visible
                 offset = -1, // index of first element without data
-                page = this.resultsPage + 1;
+                page = this.resultsPage + 1,
+                self=this;
 
             if (more.length === 0) return;
-
             below = more.offset().top - results.offset().top - results.height();
 
             if (below <= 0) {
@@ -807,26 +776,21 @@
                 this.opts.query({
                         term: this.search.val(),
                         page: page,
-                        context: self.context,
-                        matcher: self.opts.matcher,
+                        context: this.context,
+                        matcher: this.opts.matcher,
                         callback: this.bind(function (data) {
-                    var self = this;
-                    var htmlResult = self.opts.formatList(data.results);
-                    more.before(htmlResult);
-                    results.find(".select2-result").each(function () {
-                        var e = $(this);
-                        if (e.data("select2-data") !== undefined) {
-                            offset = i;
-                        } else {
-                            e.data("select2-data", data.map[e.data('select2-uid')]);
-                        }
-                    });
-                    if (data.more) {
+                            console.log("load more callback", data);
+
+                    self.opts.populateResults(results, data.results);
+
+                    if (data.more===true) {
+                        more.detach();
+                        results.children().filter(":last").append(more);
                         more.removeClass("select2-active");
                     } else {
                         more.remove();
                     }
-                    this.resultsPage = page;
+                    self.resultsPage = page;
                 })});
             }
         },
@@ -844,10 +808,14 @@
 
             search.addClass("select2-active");
 
-            function render(html) {
-                results.html(html);
+            function postRender() {
                 results.scrollTop(0);
                 search.removeClass("select2-active");
+            }
+
+            function render(html) {
+                results.html(html);
+                postRender();
             }
 
             if (search.val().length < opts.minimumInputLength) {
@@ -862,8 +830,7 @@
                     context: null,
                     matcher: opts.matcher,
                     callback: this.bind(function (data) {
-                var parts = [], // html parts
-                    def; // default choice
+                var def; // default choice
 
                 // create a default choice and prepend it to the list
                 if (this.opts.createSearchChoice && search.val() !== "") {
@@ -883,17 +850,14 @@
                     return;
                 }
 
-                var htmlResult = self.opts.formatList(data.results);
+                results.empty();
+                self.opts.populateResults(results, data.results);
+                postRender();
 
                 if (data.more === true) {
-                    htmlResult += "<li class='select2-more-results'>Loading more results...</li>";
+                    results.children().filter(":last").append("<li class='select2-more-results'>Loading more results...</li>");
                 }
 
-                render(htmlResult);
-                results.find(".select2-result").each(function () {
-                    var d = data.map[$(this).data('select2-uid')];
-                    $(this).data("select2-data", d);
-                });
                 this.postprocessResults(data, initial);
             })});
         },
