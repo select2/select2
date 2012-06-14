@@ -67,7 +67,7 @@
         }
     };
 
-    nextUid=(function() { var counter=1; return function() { return counter++; }}());
+    nextUid=(function() { var counter=1; return function() { return counter++; }; }());
 
     function indexOf(value, array) {
         var i = 0, l = array.length, v;
@@ -518,7 +518,7 @@
                     populate(results, 0);
 
                     children=container.children();
-                    if (children.length==0) {
+                    if (children.length===0) {
                         container.html(markup.join(""));
                     } else {
                         $(children[children.length-1]).append(markup.join(""));
@@ -659,7 +659,7 @@
                 width: width
             }
             if (this.opts.dropdownZIndex !== undefined) {
-                css["z-index"] = this.opts.dropdownZIndex
+                css["z-index"] = this.opts.dropdownZIndex;
             }
             this.dropdown.css(css);
         },
@@ -1038,7 +1038,7 @@
                     killEvent(e);
                 }
             }));
-            containers.delegate(selector, "focus", function () { if (this.enabled) { containerGroup.addClass("select2-container-active"); dropdown.addClass("select2-drop-active"); }});
+            containers.delegate(selector, "focus", function () { if (this.enabled) { containers.addClass("select2-container-active"); dropdown.addClass("select2-drop-active"); }});
             containers.delegate(selector, "blur", this.bind(function () {
                 if (clickingInside) return;
                 if (!this.opened()) this.blur();
@@ -1350,9 +1350,7 @@
         clearSearch: function () {
             var placeholder = this.getPlaceholder();
 
-            if (placeholder !== undefined
-                && this.getVal().length === 0
-                && this.search.hasClass("select2-focused") === false) {
+            if (placeholder !== undefined  && this.getVal().length === 0 && this.search.hasClass("select2-focused") === false) {
 
                 this.search.val(placeholder).addClass("select2-default");
                 // stretch the search box to full width of the container so as much of the placeholder is visible as possible
