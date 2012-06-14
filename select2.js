@@ -1,6 +1,6 @@
 ﻿/*
  Copyright 2012 Igor Vaynberg
- 
+
  Version: @@ver@@ Timestamp: @@timestamp@@
 
  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in
@@ -20,7 +20,7 @@
         return;
     }
 
-    var KEY, AbstractSelect2, SingleSelect2, MultiSelect2;
+    var KEY, AbstractSelect2, SingleSelect2, MultiSelect2, nextUid;
 
     KEY = {
         TAB: 9,
@@ -66,6 +66,8 @@
             return k >= 112 && k <= 123;
         }
     };
+
+    nextUid=(function() { var counter=1; return function() { return counter++; }}());
 
     function indexOf(value, array) {
         var i = 0, l = array.length, v;
@@ -318,9 +320,16 @@
     $(document).ready(function () {
         $(document).delegate("*", "mousedown focusin touchend", function (e) {
             var target = $(e.target).closest("div.select2-container").get(0);
-            $(document).find("div.select2-container-active").each(function () {
-                if (this !== target) $(this).data("select2").blur();
-            });
+            if (target) {
+                $(document).find("div.select2-container-active").each(function () {
+                    if (this !== target) $(this).data("select2").blur();
+                });
+            } else {
+                target = $(e.target).closest("div.select2-drop").get(0);
+                $(document).find("div.select2-drop-active").each(function () {
+                    if (this !== target) $(this).data("select2").blur();
+                });
+            }
         });
     });
 
@@ -377,6 +386,8 @@
             this.container.data("select2", this);
 
             this.dropdown = this.container.find(".select2-drop");
+            this.dropdown.data("select2", this);
+
             this.results = results = this.container.find(resultsSelector);
             this.search = search = this.container.find("input[type=text]");
 
@@ -387,10 +398,10 @@
             this.initContainer();
 
             installFilteredMouseMove(this.results);
-            this.container.delegate(resultsSelector, "mousemove-filtered", this.bind(this.highlightUnderEvent));
+            this.dropdown.delegate(resultsSelector, "mousemove-filtered", this.bind(this.highlightUnderEvent));
 
             installDebouncedScroll(80, this.results);
-            this.container.delegate(resultsSelector, "scroll-debounced", this.bind(this.loadMoreIfNeeded));
+            this.dropdown.delegate(resultsSelector, "scroll-debounced", this.bind(this.loadMoreIfNeeded));
 
             // if jquery.mousewheel plugin is installed we can prevent out-of-bounds scrolling of results via mousewheel
             if ($.fn.mousewheel) {
@@ -411,7 +422,7 @@
             search.bind("focus", function () { search.addClass("select2-focused");});
             search.bind("blur", function () { search.removeClass("select2-focused");});
 
-            this.container.delegate(resultsSelector, "click", this.bind(function (e) {
+            this.dropdown.delegate(resultsSelector, "click", this.bind(function (e) {
                 if ($(e.target).closest(".select2-result:not(.select2-disabled)").length > 0) {
                     this.highlightUnderEvent(e);
                     this.selectHighlighted(e);
@@ -437,6 +448,7 @@
             var select2 = this.opts.element.data("select2");
             if (select2 !== undefined) {
                 select2.container.remove();
+                select2.dropdown.remove();
                 select2.opts.element
                     .removeData("select2")
                     .unbind(".select2")
@@ -463,8 +475,66 @@
             }
 
             opts = $.extend({}, {
-                formatResult: function (data) { return data.text; },
-                formatSelection: function (data) { return data.text; },
+                populateResults: function(container, results) {
+                    var uidToData={}, populate, markup=[], uid, data, result, children;
+
+                    populate=function(results, depth) {
+
+                        var i, l, uid, result, selectable, compound;
+                        for (i = 0, l = results.length; i < l; i = i + 1) {
+
+                            result=results[i];
+                            selectable=("id" in result); // TODO switch to id() function
+                            compound=("children" in result) && result.children.length > 0;
+
+                            markup.push("<li class='select2-result-depth-"+depth);
+                            if (!selectable) { markup.push(" select2-result-unselectable"); } else { markup.push(" select2-result");}
+                            if (compound) { markup.push(" select2-result-with-children"); }
+
+                            markup.push("'");
+
+                            if (selectable) {
+                                uid=nextUid();
+                                markup.push(" id='select2-result-"+uid+"'");
+                                uidToData[uid]=result;
+                            }
+
+                            markup.push("><div class='select2-result-label'>"+opts.formatResult(result)+"</div>");
+
+                            if (compound) {
+                                markup.push("<ul class='select2-result-sub'>");
+                                populate(result.children, depth + 1);
+                                markup.push("</ul>");
+                            }
+
+                            markup.push("</li>");
+                        }
+                    };
+
+                    populate(results, 0);
+
+                    children=container.children();
+                    if (children.length==0) {
+                        container.html(markup.join(""));
+                    } else {
+                        $(children[children.length-1]).append(markup.join(""));
+                    }
+
+                    for (uid in uidToData) {
+                        $("#select2-result-"+uid).data("select2-data", uidToData[uid]);
+                    }
+
+                },
+                formatResult: function(result) {
+                     return result.text;
+                },
+                formatSelection: function (data) {
+                    if (data.fullText) {
+                        return data.fullText;
+                    } else {
+                        return data.text;
+                    }
+                },
                 formatNoMatches: function () { return "No matches found"; },
                 formatInputTooShort: function (input, min) { return "Please enter " + (min - input.length) + " more characters"; },
                 minimumResultsForSearch: 0,
@@ -482,19 +552,27 @@
 
             if (select) {
                 opts.query = this.bind(function (query) {
-                    var data = {results: [], more: false},
+                    var data = { results: [], more: false },
                         term = query.term,
-                        placeholder = this.getPlaceholder();
-                    element.find("option").each(function (i) {
-                        var e = $(this),
-                            text = e.text();
+                        process;
 
-                        if (i === 0 && placeholder !== undefined && text === "") return true;
-
-                        if (query.matcher(term, text)) {
-                            data.results.push({id: e.attr("value"), text: text});
+                    process=function(element, collection) {
+                        var group;
+                        if (element.is("option")) {
+                            if (query.matcher(term, element.text())) {
+                                collection.push({id:element.attr("value"), text:element.text()});
+                            }
+                        } else if (element.is("optgroup")) {
+                            group={text:element.attr("label"), children:[]};
+                            element.children().each(function() { process($(this), group.children); });
+                            if (group.children.length>0) {
+                                collection.push(group);
+                            }
                         }
-                    });
+                    };
+
+                    element.children().each(function() { process($(this), data.results); });
+
                     query.callback(data);
                 });
                 // this is needed because inside val() we construct choices from options and there id is hardcoded
@@ -567,10 +645,25 @@
             return this.container.hasClass("select2-dropdown-open");
         },
 
+        positionDropdown: function() {
+            var offset = this.container.offset();
+            var height = this.container.outerHeight();
+            var width  = this.container.outerWidth();
+
+            this.dropdown.css({
+                top: offset.top + height,
+                left: offset.left,
+                width: width
+            });
+        },
+
         open: function () {
             if (this.opened()) return;
 
             this.container.addClass("select2-dropdown-open").addClass("select2-container-active");
+            this.dropdown.detach().appendTo('body').addClass("select2-drop-active");
+
+            this.positionDropdown();
 
             this.updateResults(true);
             this.dropdown.show();
@@ -594,7 +687,7 @@
         ensureHighlightVisible: function () {
             var results = this.results, children, index, child, hb, rb, y, more;
 
-            children = results.children(".select2-result");
+            children = results.find(".select2-result");
             index = this.highlight();
 
             if (index < 0) return;
@@ -624,7 +717,7 @@
         },
 
         moveHighlight: function (delta) {
-            var choices = this.results.children(".select2-result"),
+            var choices = this.results.find(".select2-result"),
                 index = this.highlight();
 
             while (index > -1 && index < choices.length) {
@@ -637,16 +730,20 @@
         },
 
         highlight: function (index) {
-            var choices = this.results.children(".select2-result");
+            var choices = this.results.find(".select2-result .select2-result-label");
 
             if (arguments.length === 0) {
                 return indexOf(choices.filter(".select2-highlighted")[0], choices.get());
             }
 
-            choices.removeClass("select2-highlighted");
-
             if (index >= choices.length) index = choices.length - 1;
             if (index < 0) index = 0;
+
+            if ($(choices[index]).parent().is('.select2-result-unselectable')) {
+                return;
+            }
+
+            choices.removeClass("select2-highlighted");
 
             $(choices[index]).addClass("select2-highlighted");
             this.ensureHighlightVisible();
@@ -656,8 +753,9 @@
 
         highlightUnderEvent: function (event) {
             var el = $(event.target).closest(".select2-result");
+            var choices = this.results.find('.select2-result');
             if (el.length > 0) {
-                this.highlight(el.index());
+                this.highlight(choices.index(el));
             }
         },
 
@@ -666,10 +764,10 @@
                 more = results.find("li.select2-more-results"),
                 below, // pixels the element is below the scroll fold, below==0 is when the element is starting to be visible
                 offset = -1, // index of first element without data
-                page = this.resultsPage + 1;
+                page = this.resultsPage + 1,
+                self=this;
 
             if (more.length === 0) return;
-
             below = more.offset().top - results.offset().top - results.height();
 
             if (below <= 0) {
@@ -680,27 +778,18 @@
                         context: this.context,
                         matcher: this.opts.matcher,
                         callback: this.bind(function (data) {
-                    var parts = [], self = this;
-                    $(data.results).each(function () {
-                        parts.push("<li class='select2-result'>");
-                        parts.push(self.opts.formatResult(this));
-                        parts.push("</li>");
-                    });
-                    more.before(parts.join(""));
-                    results.find(".select2-result").each(function (i) {
-                        var e = $(this);
-                        if (e.data("select2-data") !== undefined) {
-                            offset = i;
-                        } else {
-                            e.data("select2-data", data.results[i - offset - 1]);
-                        }
-                    });
-                    if (data.more) {
+                            console.log("load more callback", data);
+
+                    self.opts.populateResults(results, data.results);
+
+                    if (data.more===true) {
+                        more.detach();
+                        results.children().filter(":last").append(more);
                         more.removeClass("select2-active");
                     } else {
                         more.remove();
                     }
-                    this.resultsPage = page;
+                    self.resultsPage = page;
                 })});
             }
         },
@@ -718,10 +807,14 @@
 
             search.addClass("select2-active");
 
-            function render(html) {
-                results.html(html);
+            function postRender() {
                 results.scrollTop(0);
                 search.removeClass("select2-active");
+            }
+
+            function render(html) {
+                results.html(html);
+                postRender();
             }
 
             if (search.val().length < opts.minimumInputLength) {
@@ -736,8 +829,7 @@
                     context: null,
                     matcher: opts.matcher,
                     callback: this.bind(function (data) {
-                var parts = [], // html parts
-                    def; // default choice
+                var def; // default choice
 
                 // save context, if any
                 this.context = (data.context===undefined) ? null : data.context;
@@ -760,21 +852,14 @@
                     return;
                 }
 
-                $(data.results).each(function () {
-                    parts.push("<li class='select2-result'>");
-                    parts.push(opts.formatResult(this));
-                    parts.push("</li>");
-                });
+                results.empty();
+                self.opts.populateResults(results, data.results);
+                postRender();
 
                 if (data.more === true) {
-                    parts.push("<li class='select2-more-results'>Loading more results...</li>");
+                    results.children().filter(":last").append("<li class='select2-more-results'>Loading more results...</li>");
                 }
 
-                render(parts.join(""));
-                results.children(".select2-result").each(function (i) {
-                    var d = data.results[i];
-                    $(this).data("select2-data", d);
-                });
                 this.postprocessResults(data, initial);
             })});
         },
@@ -789,6 +874,7 @@
             window.setTimeout(this.bind(function () {
                 this.close();
                 this.container.removeClass("select2-container-active");
+                this.dropdown.removeClass("select2-drop-active");
                 this.clearSearch();
                 this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
                 this.search.blur();
@@ -804,7 +890,7 @@
         },
 
         selectHighlighted: function () {
-            var data = this.results.find(".select2-highlighted:not(.select2-disabled)").data("select2-data");
+            var data = this.results.find(".select2-highlighted").not(".select2-disabled").closest('.select2-result').not('.select2-result-unselectable').data("select2-data");
             if (data) {
                 this.onSelect(data);
             }
@@ -890,7 +976,11 @@
 
         initContainer: function () {
 
-            var selection, container = this.container, clickingInside = false,
+            var selection,
+                container = this.container,
+                dropdown = this.dropdown,
+                containers = $([this.container.get(0), this.dropdown.get(0)]),
+                clickingInside = false,
                 selector = ".select2-choice";
 
             this.selection = selection = container.find(selector);
@@ -914,7 +1004,7 @@
                 }
             }));
 
-            container.delegate(selector, "click", this.bind(function (e) {
+            containers.delegate(selector, "click", this.bind(function (e) {
                 clickingInside = true;
 
                 if (this.opened()) {
@@ -927,7 +1017,7 @@
 
                 clickingInside = false;
             }));
-            container.delegate(selector, "keydown", this.bind(function (e) {
+            containers.delegate(selector, "keydown", this.bind(function (e) {
                 if (!this.enabled || e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e) || e.which === KEY.ESC) {
                     return;
                 }
@@ -941,8 +1031,8 @@
                     killEvent(e);
                 }
             }));
-            container.delegate(selector, "focus", function () { if (this.enabled) container.addClass("select2-container-active"); });
-            container.delegate(selector, "blur", this.bind(function () {
+            containers.delegate(selector, "focus", function () { if (this.enabled) { containerGroup.addClass("select2-container-active"); dropdown.addClass("select2-drop-active"); }});
+            containers.delegate(selector, "blur", this.bind(function () {
                 if (clickingInside) return;
                 if (!this.opened()) this.blur();
             }));
@@ -1106,7 +1196,7 @@
                 "    <input type='text' autocomplete='off' style='width: 25px;'>" ,
                 "  </li>" ,
                 "</ul>" ,
-                "<div class='select2-drop' style='display:none;'>" ,
+                "<div class='select2-drop select2-drop-multi' style='display:none;'>" ,
                 "   <ul class='select2-results'>" ,
                 "   </ul>" ,
                 "</div>"].join(""));
@@ -1208,6 +1298,7 @@
             this.container.delegate(selector, "focus", this.bind(function () {
                 if (!this.enabled) return;
                 this.container.addClass("select2-container-active");
+                this.dropdown.addClass("select2-drop-active");
                 this.clearPlaceholder();
             }));
 
@@ -1359,6 +1450,7 @@
             })).bind("focus", this.bind(function () {
                 if (!this.enabled) return;
                 this.container.addClass("select2-container-active");
+                this.dropdown.addClass("select2-drop-active");
             }));
 
             choice.data("select2-data", data);
@@ -1523,7 +1615,7 @@
         var args = Array.prototype.slice.call(arguments, 0),
             opts,
             select2,
-            value, multiple, allowedMethods = ["val", "destroy", "open", "close", "focus", "isFocused", "container", "onSortStart", "onSortEnd", "enable", "disable"];
+            value, multiple, allowedMethods = ["val", "destroy", "open", "close", "focus", "isFocused", "container", "onSortStart", "onSortEnd", "enable", "disable", "positionDropdown"];
 
         this.each(function () {
             if (args.length === 0 || typeof(args[0]) === "object") {
