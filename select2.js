@@ -72,7 +72,7 @@
     function indexOf(value, array) {
         var i = 0, l = array.length, v;
 
-        if (typeof value == 'undefined') {
+        if (typeof value === "undefined") {
           return -1;
         }
 
@@ -246,7 +246,6 @@
                         }
                         // TODO 3.0 - replace query.page with query so users have access to term, page, etc.
                         var results = options.results(data, query.page);
-                        self.context = results.context;
                         query.callback(results);
                     }
                 });
@@ -650,12 +649,15 @@
             var offset = this.container.offset();
             var height = this.container.outerHeight();
             var width  = this.container.outerWidth();
-
-            this.dropdown.css({
+            var css    = {
                 top: offset.top + height,
                 left: offset.left,
                 width: width
-            });
+            }
+            if (this.opts.dropdownZIndex !== undefined) {
+                css["z-index"] = this.opts.dropdownZIndex
+            }
+            this.dropdown.css(css);
         },
 
         open: function () {
@@ -831,6 +833,9 @@
                     matcher: opts.matcher,
                     callback: this.bind(function (data) {
                 var def; // default choice
+
+                // save context, if any
+                this.context = (data.context===undefined) ? null : data.context;
 
                 // create a default choice and prepend it to the list
                 if (this.opts.createSearchChoice && search.val() !== "") {
@@ -1570,7 +1575,6 @@
                 val = (val === null) ? [] : val;
                 this.setVal(val);
                 // val is a list of objects
-                                                                                                     st
                 $(val).each(function () { data.push(self.id(this)); });
                 this.setVal(data);
                 this.updateSelection(val);
