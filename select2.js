@@ -268,13 +268,17 @@
      * the text.
      */
     function local(options) {
-        var data = options, // data elements
+        var data = options, // data elements,
+            dataText = '',
             text = function (item) { return ""+item.text; }; // function used to retrieve the text portion of a data item that is matched against the search
 
         if (!$.isArray(data)) {
             text = data.text;
             // if text is not a function we assume it to be a key name
-            if (!$.isFunction(text)) text = function (item) { return item[data.text]; };
+            if (!$.isFunction(text)) {
+              dataText = data.text; // we need to store this in a seperate variable because in the next step data gets reset and data.text is no longer available
+              text = function (item) { return item[dataText]; };
+            }
             data = data.results;
         }
 
