@@ -1006,7 +1006,7 @@
                     return;
                 case KEY.ESC:
                     this.cancel(e);
-                    e.preventDefault();
+                    killEvent(e);
                     return;
                 }
             }));
@@ -1276,7 +1276,7 @@
                         return;
                     case KEY.ESC:
                         this.cancel(e);
-                        e.preventDefault();
+                        killEvent(e);
                         return;
                     }
                 }
