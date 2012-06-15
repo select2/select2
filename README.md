@@ -27,6 +27,11 @@ Browser Compatibility
 * Safari 3+
 * Opera 10.6+
 
+Ruby on Rails
+-------------
+
+See gem [select2-rails](https://github.com/argerim/select2-rails)
+
 Bug tracker
 -----------
 
