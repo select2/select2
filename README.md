@@ -27,10 +27,11 @@ Browser Compatibility
 * Safari 3+
 * Opera 10.6+
 
-Ruby on Rails
--------------
+Integrations
+------------
 
-See gem [select2-rails](https://github.com/argerim/select2-rails)
+* [Wicket-Select2](https://github.com/ivaynberg/wicket-select2) (Java / Apache Wicket)
+* [select2-rails](https://github.com/argerim/select2-rails) (Ruby on Rails)
 
 Bug tracker
 -----------
