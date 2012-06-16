@@ -201,9 +201,9 @@
         event.stopPropagation();
     }
 
-    function measureTextWidth(e) {
-        var style = e.currentStyle || window.getComputedStyle(e, null);
+    function measureTextWidth(e) {        
         if (!sizer){
+        	var style = e.currentStyle || window.getComputedStyle(e, null);
         	sizer = $("<div></div>").css({
 	            position: "absolute",
 	            left: "-1000px",
