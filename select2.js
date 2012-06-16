@@ -203,7 +203,7 @@
 
     function measureTextWidth(e) {        
         if (!sizer){
-        	var style = e.currentStyle || window.getComputedStyle(e, null);
+        	var style = e[0].currentStyle || window.getComputedStyle(e[0], null);
         	sizer = $("<div></div>").css({
 	            position: "absolute",
 	            left: "-1000px",
