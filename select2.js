@@ -526,7 +526,7 @@
                     }
 
                     for (uid in uidToData) {
-                        $("#select2-result-"+uid).data("select2-data", uidToData[uid]);
+                        $("#select2-result-"+uid, container).data("select2-data", uidToData[uid]);
                     }
 
                 },
