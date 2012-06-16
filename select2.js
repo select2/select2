@@ -40,7 +40,7 @@
         return;
     }
 
-    var KEY, AbstractSelect2, SingleSelect2, MultiSelect2, nextUid;
+    var KEY, AbstractSelect2, SingleSelect2, MultiSelect2, nextUid, sizer;
 
     KEY = {
         TAB: 9,
@@ -202,26 +202,25 @@
     }
 
     function measureTextWidth(e) {
-        var sizer, width,
-        	style = e.currentStyle || window.getComputedStyle(e, null);
-        sizer = $("<div></div>").css({
-            position: "absolute",
-            left: "-1000px",
-            top: "-1000px",
-            display: "none",
-            fontSize: style.fontSize,
-            fontFamily: style.fontFamily,
-            fontStyle: style.fontStyle,
-            fontWeight: style.fontWeight,
-            letterSpacing: style.letterSpacing,
-            textTransform: style.textTransform,
-            whiteSpace: "nowrap"
-        });
-        sizer.text(e.val());
-        $("body").append(sizer);
-        width = sizer.width();
-        sizer.remove();
-        return width;
+        var style = e.currentStyle || window.getComputedStyle(e, null);
+        if (!sizer){
+        	sizer = $("<div></div>").css({
+	            position: "absolute",
+	            left: "-1000px",
+	            top: "-1000px",
+	            display: "none",
+	            fontSize: style.fontSize,
+	            fontFamily: style.fontFamily,
+	            fontStyle: style.fontStyle,
+	            fontWeight: style.fontWeight,
+	            letterSpacing: style.letterSpacing,
+	            textTransform: style.textTransform,
+	            whiteSpace: "nowrap"
+	        });        
+        	$("body").append(sizer);
+        }
+        sizer.text(e.val());        
+        return sizer.width();
     }
 
     /**
@@ -478,7 +477,7 @@
                 select2.opts.element
                     .removeData("select2")
                     .unbind(".select2")
-                    .show();
+                    .show();                
             }
         },
 
