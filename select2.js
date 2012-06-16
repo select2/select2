@@ -161,10 +161,10 @@
      * the elements under the pointer are scrolled.
      */    
     function installFilteredMouseMove(element) {
-    		var context = $(element[0].document);
-    		context.on("mousemove", function (e) {
-		        context.data("select2-lastpos", {x: e.pageX, y: e.pageY});
-		    });
+		var context = $(element[0].document);
+		context.on("mousemove", function (e) {
+	        context.data("select2-lastpos", {x: e.pageX, y: e.pageY});
+	    });
         element.bind("mousemove", function (e) {
             var lastpos = context.data("select2-lastpos");
             if (lastpos === undefined || lastpos.x !== e.pageX || lastpos.y !== e.pageY) {
@@ -422,8 +422,8 @@
             // initialize the container
             this.initContainer();
 
-            installFilteredMouseMove(this.results);
-            this.dropdown.delegate(resultsSelector, "mousemove-filtered", this.bind(this.highlightUnderEvent));
+            //installFilteredMouseMove(this.results);
+            this.dropdown.delegate(resultsSelector, "mouseover", this.bind(this.highlightUnderEvent));
 
             installDebouncedScroll(80, this.results);
             this.dropdown.delegate(resultsSelector, "scroll-debounced", this.bind(this.loadMoreIfNeeded));
@@ -773,13 +773,13 @@
             $(choices[index]).addClass("select2-highlighted");
             this.ensureHighlightVisible();
 
-            if (this.opened()) this.focusSearch();
+            //if (this.opened()) this.focusSearch();
         },
 
         highlightUnderEvent: function (event) {
             var el = $(event.target).closest(".select2-result");            
             if (el.length > 0) {
-            		var choices = this.results.find('.select2-result');
+        		var choices = this.results.find('.select2-result');
                 this.highlight(choices.index(el));
             }
         },
