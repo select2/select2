@@ -12,6 +12,26 @@
  distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and limitations under the License.
  */
+ (function ($) {
+ 	if(typeof $.fn.each2 == "undefined"){
+ 		$.fn.extend({
+ 			/*
+			* 4-10 times faster .each replacement
+			* use it carefully, as it overrides jQuery context of element on each iteration
+			*/
+			each2 : function (c) {
+				var j = $([0]), i = -1, l = this.length;
+				while (
+					++i < l
+					&& (j.context = j[0] = this[i])
+					&& c.call(j[0], i, j) !== false //"this"=DOM, i=index, j=jQuery object
+				);
+				return this;
+			}
+ 		});
+ 	} 
+})(jQuery);
+
 (function ($, undefined) {
     "use strict";
     /*global document, window, jQuery, console */
@@ -182,18 +202,19 @@
     }
 
     function measureTextWidth(e) {
-        var sizer, width;
+        var sizer, width,
+        	style = e.currentStyle || window.getComputedStyle(e, null);
         sizer = $("<div></div>").css({
             position: "absolute",
             left: "-1000px",
             top: "-1000px",
             display: "none",
-            fontSize: e.css("fontSize"),
-            fontFamily: e.css("fontFamily"),
-            fontStyle: e.css("fontStyle"),
-            fontWeight: e.css("fontWeight"),
-            letterSpacing: e.css("letterSpacing"),
-            textTransform: e.css("textTransform"),
+            fontSize: style.fontSize,
+            fontFamily: style.fontFamily,
+            fontStyle: style.fontStyle,
+            fontWeight: style.fontWeight,
+            letterSpacing: style.letterSpacing,
+            textTransform: style.textTransform,
             whiteSpace: "nowrap"
         });
         sizer.text(e.val());
@@ -534,11 +555,7 @@
                      return result.text;
                 },
                 formatSelection: function (data) {
-                    if (data.fullText) {
-                        return data.fullText;
-                    } else {
-                        return data.text;
-                    }
+                    return data.fullText || data.text;
                 },
                 formatNoMatches: function () { return "No matches found"; },
                 formatInputTooShort: function (input, min) { return "Please enter " + (min - input.length) + " more characters"; },
@@ -569,14 +586,14 @@
                             }
                         } else if (element.is("optgroup")) {
                             group={text:element.attr("label"), children:[]};
-                            element.children().each(function() { process($(this), group.children); });
+                            element.children().each2(function(i, elm) { process(elm, group.children); });
                             if (group.children.length>0) {
                                 collection.push(group);
                             }
                         }
                     };
 
-                    element.children().each(function() { process($(this), data.results); });
+                    element.children().each2(function(i, elm) { process(elm, data.results); });
 
                     query.callback(data);
                 });
@@ -694,11 +711,12 @@
 
         ensureHighlightVisible: function () {
             var results = this.results, children, index, child, hb, rb, y, more;
-
-            children = results.find(".select2-result");
+            
             index = this.highlight();
 
             if (index < 0) return;
+            
+            children = results.find(".select2-result");
 
             child = $(children[index]);
 
@@ -760,9 +778,9 @@
         },
 
         highlightUnderEvent: function (event) {
-            var el = $(event.target).closest(".select2-result");
-            var choices = this.results.find('.select2-result');
+            var el = $(event.target).closest(".select2-result");            
             if (el.length > 0) {
+            		var choices = this.results.find('.select2-result');
                 this.highlight(choices.index(el));
             }
         },
@@ -786,7 +804,6 @@
                         context: this.context,
                         matcher: this.opts.matcher,
                         callback: this.bind(function (data) {
-                            console.log("load more callback", data);
 
                     self.opts.populateResults(results, data.results);
 
@@ -1113,8 +1130,8 @@
 
             // find the selected element in the result list
 
-            this.results.find(".select2-result").each(function (i) {
-                if (equal(self.id($(this).data("select2-data")), self.opts.element.val())) {
+            this.results.find(".select2-result").each2(function (i, elm) {
+                if (equal(self.id(elm.data("select2-data")), self.opts.element.val())) {
                     selected = i;
                     return false;
                 }
@@ -1172,8 +1189,8 @@
                 // val is an id
                 this.select
                     .val(val)
-                    .find(":selected").each(function () {
-                        data = {id: $(this).attr("value"), text: $(this).text()};
+                    .find(":selected").each2(function (i, elm) {
+                        data = {id: elm.attr("value"), text: elm.text()};
                         return false;
                     });
                 this.updateSelection(data);
@@ -1223,8 +1240,8 @@
                 // install sthe selection initializer
                 opts.initSelection = function (element) {
                     var data = [];
-                    element.find(":selected").each(function () {
-                        data.push({id: $(this).attr("value"), text: $(this).text()});
+                    element.find(":selected").each2(function (i, elm) {
+                        data.push({id: elm.attr("value"), text: elm.text()});
                     });
                     return data;
                 };
@@ -1492,8 +1509,8 @@
                 choices = this.results.find(".select2-result"),
                 self = this;
 
-            choices.each(function () {
-                var choice = $(this), id = self.id(choice.data("select2-data"));
+            choices.each2(function (i, choice) {
+                var id = self.id(choice.data("select2-data"));
                 if (indexOf(id, val) >= 0) {
                     choice.addClass("select2-disabled");
                 } else {
@@ -1501,8 +1518,8 @@
                 }
             });
 
-            choices.each(function (i) {
-                if (!$(this).hasClass("select2-disabled")) {
+            choices.each2(function (i, choice) {
+                if (!choice.hasClass("select2-disabled")) {
                     self.highlight(i);
                     return false;
                 }
