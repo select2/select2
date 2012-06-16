@@ -12,6 +12,26 @@
  distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and limitations under the License.
  */
+ (function ($) {
+ 	if(typeof $.fn.each2 == "undefined"){
+ 		$.fn.extend({
+ 			/*
+			* 4-10 times faster .each replacement
+			* use it carefully, as it overrides jQuery context of element on each iteration
+			*/
+			each2 : function (c) {
+				var j = $([0]), i = -1, l = this.length;
+				while (
+					++i < l
+					&& (j.context = j[0] = this[i])
+					&& c.call(j[0], i, j) !== false //"this"=DOM, i=index, j=jQuery object
+				);
+				return this;
+			}
+ 		});
+ 	} 
+})(jQuery);
+
 (function ($, undefined) {
     "use strict";
     /*global document, window, jQuery, console */
@@ -20,7 +40,7 @@
         return;
     }
 
-    var KEY, AbstractSelect2, SingleSelect2, MultiSelect2, nextUid;
+    var KEY, AbstractSelect2, SingleSelect2, MultiSelect2, nextUid, sizer;
 
     KEY = {
         TAB: 9,
@@ -139,13 +159,14 @@
      *
      * filters out mouse events that occur when mouse is stationary but
      * the elements under the pointer are scrolled.
-     */
-    $(document).delegate("*", "mousemove", function (e) {
-        $(document).data("select2-lastpos", {x: e.pageX, y: e.pageY});
-    });
+     */    
     function installFilteredMouseMove(element) {
+		var context = $(element[0].document);
+		context.on("mousemove", function (e) {
+	        context.data("select2-lastpos", {x: e.pageX, y: e.pageY});
+	    });
         element.bind("mousemove", function (e) {
-            var lastpos = $(document).data("select2-lastpos");
+            var lastpos = context.data("select2-lastpos");
             if (lastpos === undefined || lastpos.x !== e.pageX || lastpos.y !== e.pageY) {
                 $(e.target).trigger("mousemove-filtered", e);
             }
@@ -180,26 +201,26 @@
         event.stopPropagation();
     }
 
-    function measureTextWidth(e) {
-        var sizer, width;
-        sizer = $("<div></div>").css({
-            position: "absolute",
-            left: "-1000px",
-            top: "-1000px",
-            display: "none",
-            fontSize: e.css("fontSize"),
-            fontFamily: e.css("fontFamily"),
-            fontStyle: e.css("fontStyle"),
-            fontWeight: e.css("fontWeight"),
-            letterSpacing: e.css("letterSpacing"),
-            textTransform: e.css("textTransform"),
-            whiteSpace: "nowrap"
-        });
-        sizer.text(e.val());
-        $("body").append(sizer);
-        width = sizer.width();
-        sizer.remove();
-        return width;
+    function measureTextWidth(e) {        
+        if (!sizer){
+        	var style = e[0].currentStyle || window.getComputedStyle(e[0], null);
+        	sizer = $("<div></div>").css({
+	            position: "absolute",
+	            left: "-1000px",
+	            top: "-1000px",
+	            display: "none",
+	            fontSize: style.fontSize,
+	            fontFamily: style.fontFamily,
+	            fontStyle: style.fontStyle,
+	            fontWeight: style.fontWeight,
+	            letterSpacing: style.letterSpacing,
+	            textTransform: style.textTransform,
+	            whiteSpace: "nowrap"
+	        });        
+        	$("body").append(sizer);
+        }
+        sizer.text(e.val());        
+        return sizer.width();
     }
 
     /**
@@ -401,8 +422,8 @@
             // initialize the container
             this.initContainer();
 
-            installFilteredMouseMove(this.results);
-            this.dropdown.delegate(resultsSelector, "mousemove-filtered", this.bind(this.highlightUnderEvent));
+            //installFilteredMouseMove(this.results);
+            this.dropdown.delegate(resultsSelector, "mouseover", this.bind(this.highlightUnderEvent));
 
             installDebouncedScroll(80, this.results);
             this.dropdown.delegate(resultsSelector, "scroll-debounced", this.bind(this.loadMoreIfNeeded));
@@ -456,7 +477,7 @@
                 select2.opts.element
                     .removeData("select2")
                     .unbind(".select2")
-                    .show();
+                    .show();                
             }
         },
 
@@ -525,7 +546,7 @@
                     }
 
                     for (uid in uidToData) {
-                        $("#select2-result-"+uid).data("select2-data", uidToData[uid]);
+                        $("#select2-result-"+uid, container).data("select2-data", uidToData[uid]);
                     }
 
                 },
@@ -533,11 +554,7 @@
                      return result.text;
                 },
                 formatSelection: function (data) {
-                    if (data.fullText) {
-                        return data.fullText;
-                    } else {
-                        return data.text;
-                    }
+                    return data.fullText || data.text;
                 },
                 formatNoMatches: function () { return "No matches found"; },
                 formatInputTooShort: function (input, min) { return "Please enter " + (min - input.length) + " more characters"; },
@@ -568,14 +585,14 @@
                             }
                         } else if (element.is("optgroup")) {
                             group={text:element.attr("label"), children:[]};
-                            element.children().each(function() { process($(this), group.children); });
+                            element.children().each2(function(i, elm) { process(elm, group.children); });
                             if (group.children.length>0) {
                                 collection.push(group);
                             }
                         }
                     };
 
-                    element.children().each(function() { process($(this), data.results); });
+                    element.children().each2(function(i, elm) { process(elm, data.results); });
 
                     query.callback(data);
                 });
@@ -693,11 +710,12 @@
 
         ensureHighlightVisible: function () {
             var results = this.results, children, index, child, hb, rb, y, more;
-
-            children = results.find(".select2-result");
+            
             index = this.highlight();
 
             if (index < 0) return;
+            
+            children = results.find(".select2-result");
 
             child = $(children[index]);
 
@@ -755,13 +773,13 @@
             $(choices[index]).addClass("select2-highlighted");
             this.ensureHighlightVisible();
 
-            if (this.opened()) this.focusSearch();
+            //if (this.opened()) this.focusSearch();
         },
 
         highlightUnderEvent: function (event) {
-            var el = $(event.target).closest(".select2-result");
-            var choices = this.results.find('.select2-result');
+            var el = $(event.target).closest(".select2-result");            
             if (el.length > 0) {
+        		var choices = this.results.find('.select2-result');
                 this.highlight(choices.index(el));
             }
         },
@@ -785,7 +803,6 @@
                         context: this.context,
                         matcher: this.opts.matcher,
                         callback: this.bind(function (data) {
-                            console.log("load more callback", data);
 
                     self.opts.populateResults(results, data.results);
 
@@ -1112,8 +1129,8 @@
 
             // find the selected element in the result list
 
-            this.results.find(".select2-result").each(function (i) {
-                if (equal(self.id($(this).data("select2-data")), self.opts.element.val())) {
+            this.results.find(".select2-result").each2(function (i, elm) {
+                if (equal(self.id(elm.data("select2-data")), self.opts.element.val())) {
                     selected = i;
                     return false;
                 }
@@ -1171,8 +1188,8 @@
                 // val is an id
                 this.select
                     .val(val)
-                    .find(":selected").each(function () {
-                        data = {id: $(this).attr("value"), text: $(this).text()};
+                    .find(":selected").each2(function (i, elm) {
+                        data = {id: elm.attr("value"), text: elm.text()};
                         return false;
                     });
                 this.updateSelection(data);
@@ -1222,8 +1239,8 @@
                 // install sthe selection initializer
                 opts.initSelection = function (element) {
                     var data = [];
-                    element.find(":selected").each(function () {
-                        data.push({id: $(this).attr("value"), text: $(this).text()});
+                    element.find(":selected").each2(function (i, elm) {
+                        data.push({id: elm.attr("value"), text: elm.text()});
                     });
                     return data;
                 };
@@ -1491,8 +1508,8 @@
                 choices = this.results.find(".select2-result"),
                 self = this;
 
-            choices.each(function () {
-                var choice = $(this), id = self.id(choice.data("select2-data"));
+            choices.each2(function (i, choice) {
+                var id = self.id(choice.data("select2-data"));
                 if (indexOf(id, val) >= 0) {
                     choice.addClass("select2-disabled");
                 } else {
@@ -1500,8 +1517,8 @@
                 }
             });
 
-            choices.each(function (i) {
-                if (!$(this).hasClass("select2-disabled")) {
+            choices.each2(function (i, choice) {
+                if (!choice.hasClass("select2-disabled")) {
                     self.highlight(i);
                     return false;
                 }
