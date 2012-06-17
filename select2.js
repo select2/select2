@@ -483,6 +483,8 @@
 
         prepareOpts: function (opts) {
             var element, select, idKey;
+            
+            opts.elementBody = opts.element.closest("body"); // cache for future access
 
             element = opts.element;
 
@@ -686,7 +688,11 @@
             this.clearPlaceholder();
 
             this.container.addClass("select2-dropdown-open").addClass("select2-container-active");
-            this.dropdown.detach().appendTo(this.opts.element.parents("body")).addClass("select2-drop-active");
+            if(this.dropdown[0] !== this.opts.elementBody.children().last()[0]) { // ensure our dropdown is the last eleemnt, so the z-index is always respected correctly
+                this.dropdown.detach().appendTo(this.opts.elementBody);
+            }
+	
+            this.dropdown.addClass("select2-drop-active");
 
             this.positionDropdown();
 
