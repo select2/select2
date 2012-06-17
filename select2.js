@@ -467,6 +467,7 @@
             }
 
             if (opts.element.is(":disabled")) this.disable();
+            this.dropdown.detach().appendTo(opts.element.closest("body"));
         },
 
         destroy: function () {
@@ -483,8 +484,6 @@
 
         prepareOpts: function (opts) {
             var element, select, idKey;
-            
-            opts.elementBody = opts.element.closest("body"); // cache for future access
 
             element = opts.element;
 
@@ -687,10 +686,7 @@
             if (this.opened()) return;
             this.clearPlaceholder();
 
-            this.container.addClass("select2-dropdown-open").addClass("select2-container-active");
-            if(this.dropdown[0] !== this.opts.elementBody.children().last()[0]) { // ensure our dropdown is the last eleemnt, so the z-index is always respected correctly
-                this.dropdown.detach().appendTo(this.opts.elementBody);
-            }
+            this.container.addClass("select2-dropdown-open").addClass("select2-container-active");            
 	
             this.dropdown.addClass("select2-drop-active");
 
