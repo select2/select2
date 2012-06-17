@@ -683,6 +683,7 @@
 
         open: function () {
             if (this.opened()) return;
+            this.clearPlaceholder();
 
             this.container.addClass("select2-dropdown-open").addClass("select2-container-active");
             this.dropdown.detach().appendTo(this.opts.element.parents("body")).addClass("select2-drop-active");
