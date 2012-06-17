@@ -1528,7 +1528,8 @@
 
         resizeSearch: function () {
 
-            var minimumWidth, left, maxWidth, containerLeft, searchWidth;
+            var minimumWidth, left, maxWidth, containerLeft, searchWidth,
+            	sideBorderPadding = getSideBorderPadding(this.search);
 
             minimumWidth = measureTextWidth(this.search) + 10;
 
@@ -1537,14 +1538,14 @@
             maxWidth = this.selection.width();
             containerLeft = this.selection.offset().left;
 
-            searchWidth = maxWidth - (left - containerLeft) - getSideBorderPadding(this.search);
+            searchWidth = maxWidth - (left - containerLeft) - sideBorderPadding;
 
             if (searchWidth < minimumWidth) {
-                searchWidth = maxWidth - getSideBorderPadding(this.search);
+                searchWidth = maxWidth - sideBorderPadding;
             }
 
             if (searchWidth < 40) {
-                searchWidth = maxWidth - getSideBorderPadding(this.search);
+                searchWidth = maxWidth - sideBorderPadding;
             }
             this.search.width(searchWidth);
         },
