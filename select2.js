@@ -29,7 +29,7 @@
 				return this;
 			}
  		});
- 	} 
+ 	}
 })(jQuery);
 
 (function ($, undefined) {
@@ -163,7 +163,7 @@
      *
      * filters out mouse events that occur when mouse is stationary but
      * the elements under the pointer are scrolled.
-     */    
+     */
     function installFilteredMouseMove(element) {
 	    element.bind("mousemove", function (e) {
             var lastpos = $(document).data("select2-lastpos");
@@ -201,7 +201,7 @@
         event.stopPropagation();
     }
 
-    function measureTextWidth(e) {        
+    function measureTextWidth(e) {
         if (!sizer){
         	var style = e[0].currentStyle || window.getComputedStyle(e[0], null);
         	sizer = $("<div></div>").css({
@@ -216,10 +216,10 @@
 	            letterSpacing: style.letterSpacing,
 	            textTransform: style.textTransform,
 	            whiteSpace: "nowrap"
-	        });        
+	        });
         	$("body").append(sizer);
         }
-        sizer.text(e.val());        
+        sizer.text(e.val());
         return sizer.width();
     }
 
@@ -250,7 +250,8 @@
                 requestSequence += 1; // increment the sequence
                 var requestNumber = requestSequence, // this request's sequence number
                     data = options.data, // ajax data function
-                    transport = options.transport || $.ajax;
+                    transport = options.transport || $.ajax, // get transport
+                    type = options.type || 'GET'; // set type of request (GET or POST)
 
                 data = data.call(this, query.term, query.page, query.context);
 
@@ -261,6 +262,7 @@
                     url: options.url,
                     dataType: options.dataType,
                     data: data,
+                    type: type,
                     success: function (data) {
                         if (requestNumber < requestSequence) {
                             return;
@@ -477,7 +479,7 @@
                 select2.opts.element
                     .removeData("select2")
                     .unbind(".select2")
-                    .show();                
+                    .show();
             }
         },
 
@@ -710,11 +712,11 @@
 
         ensureHighlightVisible: function () {
             var results = this.results, children, index, child, hb, rb, y, more;
-            
+
             index = this.highlight();
 
             if (index < 0) return;
-            
+
             children = results.find(".select2-result");
 
             child = $(children[index]);
@@ -777,7 +779,7 @@
         },
 
         highlightUnderEvent: function (event) {
-            var el = $(event.target).closest(".select2-result");            
+            var el = $(event.target).closest(".select2-result");
             if (el.length > 0) {
         		var choices = this.results.find('.select2-result');
                 this.highlight(choices.index(el));
