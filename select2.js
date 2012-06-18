@@ -161,16 +161,12 @@
      * the elements under the pointer are scrolled.
      */    
     function installFilteredMouseMove(element) {
-		var context = $(element[0].document);
-		context.on("mousemove", function (e) {
-	        context.data("select2-lastpos", {x: e.pageX, y: e.pageY});
-	    });
-        element.bind("mousemove", function (e) {
-            var lastpos = context.data("select2-lastpos");
-            if (lastpos === undefined || lastpos.x !== e.pageX || lastpos.y !== e.pageY) {
-                $(e.target).trigger("mousemove-filtered", e);
-            }
-        });
+		element.bind("mousemove", function (e) {
+    		var _t = $(e.target);
+			if (!_t.is(".select2-highlighted")) {
+				_t.trigger("mousemove-filtered", e);
+			}
+		});
     }
 
     /**
@@ -422,8 +418,8 @@
             // initialize the container
             this.initContainer();
 
-            //installFilteredMouseMove(this.results);
-            this.dropdown.delegate(resultsSelector, "mouseover", this.bind(this.highlightUnderEvent));
+            installFilteredMouseMove(this.results);
+            this.dropdown.delegate(resultsSelector, "mousemove-filtered", this.bind(this.highlightUnderEvent));
 
             installDebouncedScroll(80, this.results);
             this.dropdown.delegate(resultsSelector, "scroll-debounced", this.bind(this.loadMoreIfNeeded));
