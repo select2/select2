@@ -72,7 +72,7 @@ Version: @@ver@@ Timestamp: @@timestamp@@
   width: 12px;
   height: 12px;
   font-size: 1px;
-  background: url(select2.png) right top no-repeat;
+  background: url('select2.png') right top no-repeat;
   cursor: pointer;
   text-decoration: none;
   border:0;
@@ -428,7 +428,7 @@ disabled look for already selected choices in the results dropdown
   width: 12px;
   height: 13px;
   font-size: 1px;
-  background: url(select2.png) right top no-repeat;
+  background: url('select2.png') right top no-repeat;
   outline: none;
 }
 
