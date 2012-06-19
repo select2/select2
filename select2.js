@@ -785,7 +785,7 @@
 
         highlightUnderEvent: function (event) {
             var el = $(event.target).closest(".select2-result");            
-            if (el.length > 0) {
+            if (el.length > 0 && !el.is(".select2-highlighted")) {
         		var choices = this.results.find('.select2-result');
                 this.highlight(choices.index(el));
             }
