@@ -1162,11 +1162,13 @@
             // hide the search box if this is the first we got the results and there are a few of them
 
             if (initial === true) {
+                // TODO below we use data.results.length, but what we really need is something recursive to calc the length
+                // TODO in case there are optgroups
                 showSearchInput = this.showSearchInput = data.results.length >= this.opts.minimumResultsForSearch;
-                this.container.find(".select2-search")[showSearchInput ? "removeClass" : "addClass"]("select2-search-hidden");
+                this.dropdown.find(".select2-search")[showSearchInput ? "removeClass" : "addClass"]("select2-search-hidden");
 
                 //add "select2-with-searchbox" to the container if search box is shown
-                this.container[showSearchInput ? "addClass" : "removeClass"]("select2-with-searchbox");
+                $(this.dropdown, this.container)[showSearchInput ? "addClass" : "removeClass"]("select2-with-searchbox");
             }
 
         },
