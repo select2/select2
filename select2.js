@@ -564,6 +564,7 @@
                 formatLoadMore: function (pageNumber) { return "Loading more results..."; },
                 minimumResultsForSearch: 0,
                 minimumInputLength: 0,
+                minimumWidth: undefined,
                 id: function (e) { return e.id; },
                 matcher: function(term, text) {
                     return text.toUpperCase().indexOf(term.toUpperCase()) >= 0;
@@ -952,7 +953,7 @@
          * @returns The width string (with units) for the container.
          */
         getContainerWidth: function () {
-            var style, attrs, matches, i, l;
+            var style, attrs, matches, i, l, width=0, elWidth;
             if (this.opts.width !== undefined)
                 return this.opts.width;
 
@@ -966,7 +967,12 @@
                         return matches[1];
                 }
             }
-            return this.opts.element.width() + 'px';
+            if (this.opts.minimumWidth !== undefined) {
+                width = parseFloat(this.opts.minimumWidth);
+            }
+            elWidth = this.opts.element.width()
+
+            return (elWidth > width ? elWidth : width)+ 'px';
         }
     });
 
