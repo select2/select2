@@ -398,7 +398,9 @@
 
             this.enabled=true;
             this.container = this.createContainer();
+			this.body = opts.element.closest("body"); // cache for future access
 
+            
             if (opts.element.attr("class") !== undefined) {
                 this.container.addClass(opts.element.attr("class"));
             }
@@ -484,8 +486,6 @@
         prepareOpts: function (opts) {
             var element, select, idKey;
             
-            opts.elementBody = opts.element.closest("body"); // cache for future access
-
             element = opts.element;
 
             if (element.get(0).tagName.toLowerCase() === "select") {
@@ -688,8 +688,9 @@
             this.clearPlaceholder();
 
             this.container.addClass("select2-dropdown-open").addClass("select2-container-active");
-            if(this.dropdown[0] !== this.opts.elementBody.children().last()[0]) { // ensure our dropdown is the last eleemnt, so the z-index is always respected correctly
-                this.dropdown.detach().appendTo(this.opts.elementBody);
+            if(this.dropdown[0] !== this.body.children().last()[0]) { 
+				// ensure the dropdown is the last child of body, so the z-index is always respected correctly
+                this.dropdown.detach().appendTo(this.body);
             }
 	
             this.dropdown.addClass("select2-drop-active");
