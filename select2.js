@@ -579,7 +579,7 @@
                 opts.query = this.bind(function (query) {
                     var data = { results: [], more: false },
                         term = query.term,
-                        process;
+                        children, firstChild, process;
 
                     process=function(element, collection) {
                         var group;
@@ -596,7 +596,17 @@
                         }
                     };
 
-                    element.children().each2(function(i, elm) { process(elm, data.results); });
+                    children=element.children();
+
+                    // ignore the placeholder option if there is one
+                    if (this.getPlaceholder() !== undefined && children.length > 0) {
+                        firstChild = children[0];
+                        if ($(firstChild).text() === "") {
+                            children=children.not(firstChild);
+                        }
+                    }
+
+                    children.each2(function(i, elm) { process(elm, data.results); });
 
                     query.callback(data);
                 });
