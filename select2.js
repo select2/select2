@@ -685,7 +685,6 @@
 
         open: function () {
             if (this.opened()) return;
-            this.clearPlaceholder();
 
             this.container.addClass("select2-dropdown-open").addClass("select2-container-active");
             if(this.dropdown[0] !== this.body.children().last()[0]) { 
@@ -1394,7 +1393,8 @@
         open: function () {
             if (this.opened()) return;
             this.parent.open.apply(this, arguments);
-            this.resizeSearch();
+			this.clearPlaceholder();
+			this.resizeSearch();
             this.focusSearch();
         },
 
