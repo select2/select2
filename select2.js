@@ -401,10 +401,11 @@
             this.container = this.createContainer();
 			this.body = opts.element.closest("body"); // cache for future access
 
-            
             if (opts.element.attr("class") !== undefined) {
                 this.container.addClass(opts.element.attr("class"));
             }
+
+            this.container.css(opts.containerCss);
 
             // swap container for the element
             this.opts.element
@@ -414,6 +415,7 @@
             this.container.data("select2", this);
 
             this.dropdown = this.container.find(".select2-drop");
+            this.dropdown.css(opts.dropdownCss);
             this.dropdown.data("select2", this);
 
             this.results = results = this.container.find(resultsSelector);
@@ -503,6 +505,8 @@
             }
 
             opts = $.extend({}, {
+                containerCss: {},
+                dropdownCss: {},
                 populateResults: function(container, results) {
                     var uidToData={}, populate, markup=[], uid, data, result, children;
 
@@ -688,9 +692,6 @@
                 top: offset.top + height,
                 left: offset.left,
                 width: width
-            }
-            if (this.opts.dropdownZIndex !== undefined) {
-                css["z-index"] = this.opts.dropdownZIndex;
             }
             this.dropdown.css(css);
         },
