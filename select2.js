@@ -560,7 +560,7 @@
                 },
                 formatNoMatches: function () { return "No matches found"; },
                 formatInputTooShort: function (input, min) { return "Please enter " + (min - input.length) + " more characters"; },
-                formatLoadingNextSet: function (pageNumber) { return "Loading more results..."; },
+                formatLoadMore: function (pageNumber) { return "Loading more results..."; },
                 minimumResultsForSearch: 0,
                 minimumInputLength: 0,
                 id: function (e) { return e.id; },
@@ -889,7 +889,7 @@
                 postRender();
 
                 if (data.more === true) {
-                    results.children().filter(":last").append("<li class='select2-more-results'>" + opts.formatLoadingNextSet(this.resultsPage) + "</li>");
+                    results.children().filter(":last").append("<li class='select2-more-results'>" + opts.formatLoadMore(this.resultsPage) + "</li>");
                 }
 
                 this.postprocessResults(data, initial);
