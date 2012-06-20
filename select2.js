@@ -223,6 +223,22 @@
         return sizer.width();
     }
 
+    function markMatch(text, term, markup) {
+        var match=text.toUpperCase().indexOf(term.toUpperCase()),
+            tl=term.length;
+
+        if (match<0) {
+            markup.push(text);
+            return;
+        }
+
+        markup.push(text.substring(0, match));
+        markup.push("<span class='select2-match'>");
+        markup.push(text.substring(match, match + tl));
+        markup.push("</span>");
+        markup.push(text.substring(match + tl, text.length));
+    }
+
     /**
      * Produces an ajax-based query function
      *
@@ -507,8 +523,8 @@
             opts = $.extend({}, {
                 containerCss: {},
                 dropdownCss: {},
-                populateResults: function(container, results) {
-                    var uidToData={}, populate, markup=[], uid, data, result, children;
+                populateResults: function(container, results, query) {
+                    var uidToData={}, populate, markup=[], uid, data, result, children, formatted;
 
                     populate=function(results, depth) {
 
@@ -531,7 +547,13 @@
                                 uidToData[uid]=result;
                             }
 
-                            markup.push("><div class='select2-result-label'>"+opts.formatResult(result)+"</div>");
+                            markup.push("><div class='select2-result-label'>");
+                            formatted=opts.formatResult(result, query, markup);
+                            // for backwards compat with <3.0 versions
+                            if (formatted!==undefined) {
+                                markup.push(formatted);
+                            }
+                            markup.push("</div>");
 
                             if (compound) {
                                 markup.push("<ul class='select2-result-sub'>");
@@ -557,8 +579,8 @@
                     }
 
                 },
-                formatResult: function(result) {
-                     return result.text;
+                formatResult: function(result, query, markup) {
+                    markMatch(result.text, query.term, markup);
                 },
                 formatSelection: function (data) {
                     return data.fullText || data.text;
@@ -824,7 +846,7 @@
                         matcher: this.opts.matcher,
                         callback: this.bind(function (data) {
 
-                    self.opts.populateResults(results, data.results);
+                    self.opts.populateResults(results, data.results, {term: term, page: page, context:context});
 
                     if (data.more===true) {
                         more.detach();
@@ -897,7 +919,7 @@
                 }
 
                 results.empty();
-                self.opts.populateResults(results, data.results);
+                self.opts.populateResults(results, data.results, {term: search.val(), page: this.resultsPage, context:null});
                 postRender();
 
                 if (data.more === true) {
@@ -1706,7 +1728,8 @@
             local: local,
             tags: tags
         }, util: {
-            debounce: debounce
+            debounce: debounce,
+            markMatch: markMatch
         }, "class": {
             "abstract": AbstractSelect2,
             "single": SingleSelect2,

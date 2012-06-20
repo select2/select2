@@ -464,3 +464,5 @@ disabled look for already selected choices in the results dropdown
     display: none;
 }
 /* end multiselect */
+
+.select2-match { text-decoration: underline; }
