@@ -959,6 +959,7 @@
             this.close();
             this.container.removeClass("select2-container-active");
             this.dropdown.removeClass("select2-drop-active");
+            if (this.search.is(":focus")) { this.search.blur(); }
             this.clearSearch();
             this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
         },
@@ -1317,7 +1318,7 @@
             // TODO validate placeholder is a string if specified
 
             if (opts.element.get(0).tagName.toLowerCase() === "select") {
-                // install sthe selection initializer
+                // install the selection initializer
                 opts.initSelection = function (element) {
                     var data = [];
                     element.find(":selected").each2(function (i, elm) {
@@ -1454,7 +1455,6 @@
             var placeholder = this.getPlaceholder();
 
             if (placeholder !== undefined  && this.getVal().length === 0 && this.search.hasClass("select2-focused") === false) {
-
                 this.search.val(placeholder).addClass("select2-default");
                 // stretch the search box to full width of the container so as much of the placeholder is visible as possible
                 this.search.width(this.getContainerWidth());
