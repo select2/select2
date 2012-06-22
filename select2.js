@@ -692,10 +692,13 @@
          * Triggers the change event on the source element
          */
         // abstract
-        triggerChange: function () {
-            // Prevents recursive triggering
+        triggerChange: function (details) {
+
+            details = details || {};
+            details= $.extend({}, details, { type: "change", val: this.val() });
+            // prevents recursive triggering
             this.opts.element.data("select2-change-triggered", true);
-            this.opts.element.trigger("change");
+            this.opts.element.trigger(details);
             this.opts.element.data("select2-change-triggered", false);
         },
 
@@ -1552,7 +1555,7 @@
 
             // since its not possible to select an element that has already been
             // added we do not need to check if this is a new element before firing change
-            this.triggerChange();
+            this.triggerChange({ added: data });
 
             this.focusSearch();
         },
@@ -1602,6 +1605,7 @@
         // multi
         unselect: function (selected) {
             var val = this.getVal(),
+                data,
                 index;
 
             selected = selected.closest(".select2-search-choice");
@@ -1610,7 +1614,9 @@
                 throw "Invalid argument: " + selected + ". Must be .select2-search-choice";
             }
 
-            index = indexOf(this.id(selected.data("select2-data")), val);
+            data = selected.data("select2-data");
+
+            index = indexOf(this.id(data), val);
 
             if (index >= 0) {
                 val.splice(index, 1);
@@ -1618,7 +1624,7 @@
                 if (this.select) this.postprocessResults();
             }
             selected.remove();
-            this.triggerChange();
+            this.triggerChange({ removed: data });
         },
 
         // multi
