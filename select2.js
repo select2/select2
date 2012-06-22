@@ -1022,7 +1022,7 @@
                 "class": "select2-container",
                 "style": "width: " + this.getContainerWidth()
             }).html([
-                "    <a href='javascript:void(0)' class='select2-choice'>",
+                "    <a href='javascript:void(0)' class='select2-choice'><input type='text' class='select2-offscreen select2-focusser'/>",
                 "   <span></span><abbr class='select2-search-choice-close' style='display:none;'></abbr>",
                 "   <div><b></b></div>" ,
                 "</a>",
@@ -1075,7 +1075,8 @@
                 dropdown = this.dropdown,
                 containers = $([this.container.get(0), this.dropdown.get(0)]),
                 clickingInside = false,
-                selector = ".select2-choice";
+                selector = ".select2-choice",
+                focusser=container.find("input.select2-focusser");
 
             this.selection = selection = container.find(selector);
 
@@ -1126,9 +1127,10 @@
                 }
             }));
             containers.delegate(selector, "focus", function () { if (this.enabled) { containers.addClass("select2-container-active"); dropdown.addClass("select2-drop-active"); }});
-            containers.delegate(selector, "blur", this.bind(function () {
+            containers.delegate(selector, "blur", this.bind(function (e) {
                 if (clickingInside) return;
-                if (!this.opened()) this.blur();
+                if (e.target===focusser.get(0)) return; // ignore blurs from focusser
+                if (!this.opened()) { this.blur(); }
             }));
 
             selection.delegate("abbr", "click", this.bind(function (e) {
@@ -1137,9 +1139,18 @@
                 killEvent(e);
                 this.close();
                 this.triggerChange();
+                selection.focus();
             }));
 
             this.setPlaceholder();
+
+            focusser.bind("focus", function() { selection.focus(); });
+            selection.bind("focus", this.bind(function() {
+                focusser.hide();
+                this.container.addClass("select2-container-active");
+            }));
+            selection.bind("blur", function() { focusser.show(); });
+            this.opts.element.bind("open", function() { focusser.hide(); });
         },
 
         /**

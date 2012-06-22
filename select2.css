@@ -469,3 +469,5 @@ disabled look for already selected choices in the results dropdown
 /* end multiselect */
 
 .select2-match { text-decoration: underline; }
+
+.select2-offscreen { position: absolute; left: -1000px; }
