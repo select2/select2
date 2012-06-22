@@ -602,7 +602,7 @@
                 formatLoadMore: function (pageNumber) { return "Loading more results..."; },
                 minimumResultsForSearch: 0,
                 minimumInputLength: 0,
-                id: function (e) { return e.id; },
+                id: function (e) { return e.id || e._id; },
                 matcher: function(term, text) {
                     return text.toUpperCase().indexOf(term.toUpperCase()) >= 0;
                 }
@@ -649,7 +649,7 @@
                     query.callback(data);
                 });
                 // this is needed because inside val() we construct choices from options and there id is hardcoded
-                opts.id=function(e) { return e.id; };
+                opts.id=function(e) { return e.id || e._id; };
             } else {
                 if (!("query" in opts)) {
                     if ("ajax" in opts) {
