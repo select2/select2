@@ -858,7 +858,9 @@
                 below, // pixels the element is below the scroll fold, below==0 is when the element is starting to be visible
                 offset = -1, // index of first element without data
                 page = this.resultsPage + 1,
-                self=this;
+                self=this,
+                term=this.search.val(),
+                context=this.context;
 
             if (more.length === 0) return;
             below = more.offset().top - results.offset().top - results.height();
