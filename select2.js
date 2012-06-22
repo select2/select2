@@ -868,9 +868,9 @@
             if (below <= 0) {
                 more.addClass("select2-active");
                 this.opts.query({
-                        term: this.search.val(),
+                        term: term,
                         page: page,
-                        context: this.context,
+                        context: context,
                         matcher: this.opts.matcher,
                         callback: this.bind(function (data) {
 
