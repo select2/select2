@@ -583,13 +583,15 @@ $("#e11_2").select2({
     multiple: true,
     data: [{id: 0, text: 'story'},{id: 1, text: 'bug'},{id: 2, text: 'task'}]
 });
-function show() {
-    var e=$("<div style='background-color:yellow;'>change fired</div>");
+function show(e) {
+    details = {val:e.val, added:e.added, removed:e.removed};
+    details=JSON.stringify(details);
+    var e=$("<li>change fired: "+details+"</li>");
     $("#events_11").append(e);
-    e.animate({opacity:0}, 1000, 'linear', function() { e.remove(); });
+    e.animate({opacity:1}, 10000, 'linear', function() { e.animate({opacity:0}, 2000, 'linear', function() {e.remove(); }); });
 };
-$("#e11").bind("change", show);
-$("#e11_2").bind("change", show);
+$("#e11").on("change", show);
+$("#e11_2").on("change", show);
 });
 </script>
           <div class="span4">
@@ -602,7 +604,7 @@ $("#e11_2").bind("change", show);
 
               <p><input type="hidden" id="e11_2" style="width:300px"/></p>
 
-              <p id="events_11"></p>
+              <ul id="events_11"></ul>
           </div>
           <div class="span8">
               <h3>Example Code</h3>
@@ -1117,6 +1119,13 @@ $("#tags").select2({
               <h3>change</h3>
               <p>Fired when selection is changed.</p>
               <p class="alert alert-info">This event is not fired when the selection is changed using Select2's <code>val()</code> method.</p>
+              <p>The event object contains the following custom properties:
+              <dl>
+              <dt>val</dt><dd>the current selection (taking into account the result of the change) - id or array of ids</dd>
+              <dt>added</dt><dd>the added element, if any - the full element object, not just the id</dd>
+              <dt>removed</dt><dd>the removed element, if any - the full element object, not just the id</dd>
+                </dl>
+              </p>
           </div>
       </div>
       
