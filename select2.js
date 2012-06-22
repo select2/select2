@@ -392,6 +392,7 @@
 
     AbstractSelect2 = clazz(Object, {
 
+        // abstract
         bind: function (func) {
             var self = this;
             return function () {
@@ -399,6 +400,7 @@
             };
         },
 
+        // abstract
         init: function (opts) {
             var results, search, resultsSelector = ".select2-results";
 
@@ -490,6 +492,7 @@
             if (opts.element.is(":disabled")) this.disable();
         },
 
+        // abstract
         destroy: function () {
             var select2 = this.opts.element.data("select2");
             if (select2 !== undefined) {
@@ -502,6 +505,7 @@
             }
         },
 
+        // abstract
         prepareOpts: function (opts) {
             var element, select, idKey;
             
@@ -667,6 +671,7 @@
         /**
          * Monitor the original element for changes and update select2 accordingly
          */
+        // abstract
         monitorSource: function () {
             this.opts.element.bind("change.select2", this.bind(function (e) {
                 if (this.opts.element.data("select2-change-triggered") !== true) {
@@ -678,6 +683,7 @@
         /**
          * Triggers the change event on the source element
          */
+        // abstract
         triggerChange: function () {
             // Prevents recursive triggering
             this.opts.element.data("select2-change-triggered", true);
@@ -686,6 +692,7 @@
         },
 
 
+        // abstract
         enable: function() {
             if (this.enabled) return;
 
@@ -693,6 +700,7 @@
             this.container.removeClass("select2-container-disabled");
         },
 
+        // abstract
         disable: function() {
             if (!this.enabled) return;
 
@@ -702,10 +710,12 @@
             this.container.addClass("select2-container-disabled");
         },
 
+        // abstract
         opened: function () {
             return this.container.hasClass("select2-dropdown-open");
         },
 
+        // abstract
         positionDropdown: function() {
             var offset = this.container.offset();
             var height = this.container.outerHeight();
@@ -718,6 +728,7 @@
             this.dropdown.css(css);
         },
 
+        // abstract
         open: function () {
             if (this.opened()) return;
 
@@ -737,6 +748,7 @@
             this.focusSearch();
         },
 
+        // abstract
         close: function () {
             if (!this.opened()) return;
 
@@ -746,10 +758,12 @@
             this.clearSearch();
         },
 
+        // abstract
         clearSearch: function () {
 
         },
 
+        // abstract
         ensureHighlightVisible: function () {
             var results = this.results, children, index, child, hb, rb, y, more;
             
@@ -783,6 +797,7 @@
             }
         },
 
+        // abstract
         moveHighlight: function (delta) {
             var choices = this.results.find(".select2-result"),
                 index = this.highlight();
@@ -796,6 +811,7 @@
             }
         },
 
+        // abstract
         highlight: function (index) {
             var choices = this.results.find(".select2-result .select2-result-label");
 
@@ -818,6 +834,7 @@
             //if (this.opened()) this.focusSearch();
         },
 
+        // abstract
         highlightUnderEvent: function (event) {
             var el = $(event.target).closest(".select2-result");            
             if (el.length > 0 && !el.is(".select2-highlighted")) {
@@ -826,6 +843,7 @@
             }
         },
 
+        // abstract
         loadMoreIfNeeded: function () {
             var results = this.results,
                 more = results.find("li.select2-more-results"),
@@ -863,6 +881,7 @@
         /**
          * @param initial whether or not this is the call to this method right after the dropdown has been opened
          */
+        // abstract
         updateResults: function (initial) {
             var search = this.search, results = this.results, opts = this.opts, self=this;
 
@@ -930,10 +949,12 @@
             })});
         },
 
+        // abstract
         cancel: function () {
             this.close();
         },
 
+        // abstract
         blur: function () {
             this.close();
             this.container.removeClass("select2-container-active");
@@ -942,6 +963,7 @@
             this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
         },
 
+        // abstract
         focusSearch: function () {
             /* we do this in a timeout so that current event processing can complete before this code is executed.
              this makes sure the search field is focussed even if the current event would blur it */
@@ -950,6 +972,7 @@
             }), 10);
         },
 
+        // abstract
         selectHighlighted: function () {
             var data = this.results.find(".select2-highlighted").not(".select2-disabled").closest('.select2-result').not('.select2-result-unselectable').data("select2-data");
             if (data) {
@@ -957,6 +980,7 @@
             }
         },
 
+        // abstract
         getPlaceholder: function () {
             return this.opts.element.attr("placeholder") || this.opts.element.data("placeholder") || this.opts.placeholder;
         },
@@ -969,6 +993,7 @@
          *
          * @returns The width string (with units) for the container.
          */
+        // abstract
         getContainerWidth: function () {
             var style, attrs, matches, i, l;
             if (this.opts.width !== undefined)
@@ -990,6 +1015,7 @@
 
     SingleSelect2 = clazz(AbstractSelect2, {
 
+        // single
         createContainer: function () {
             return $("<div></div>", {
                 "class": "select2-container",
@@ -1008,6 +1034,7 @@
                 "</div>"].join(""));
         },
 
+        // single
         open: function () {
 
             if (this.opened()) return;
@@ -1016,25 +1043,30 @@
 
         },
 
+        // single
         close: function () {
             if (!this.opened()) return;
             this.parent.close.apply(this, arguments);
         },
 
+        // single
         focus: function () {
             this.close();
             this.selection.focus();
         },
 
+        // single
         isFocused: function () {
             return this.selection.is(":focus");
         },
 
+        // single
         cancel: function () {
             this.parent.cancel.apply(this, arguments);
             this.selection.focus();
         },
 
+        // single
         initContainer: function () {
 
             var selection,
@@ -1112,6 +1144,7 @@
         /**
          * Sets selection based on source element's value
          */
+        // single
         initSelection: function () {
             var selected;
             if (this.opts.element.val() === "") {
@@ -1127,6 +1160,7 @@
             this.setPlaceholder();
         },
 
+        // single
         prepareOpts: function () {
             var opts = this.parent.prepareOpts.apply(this, arguments);
 
@@ -1142,6 +1176,7 @@
             return opts;
         },
 
+        // single
         setPlaceholder: function () {
             var placeholder = this.getPlaceholder();
 
@@ -1161,6 +1196,7 @@
             }
         },
 
+        // single
         postprocessResults: function (data, initial) {
             var selected = 0, self = this, showSearchInput = true;
 
@@ -1191,6 +1227,7 @@
 
         },
 
+        // single
         onSelect: function (data) {
             var old = this.opts.element.val();
 
@@ -1202,6 +1239,7 @@
             if (!equal(old, this.id(data))) { this.triggerChange(); }
         },
 
+        // single
         updateSelection: function (data) {
             this.selection
                 .find("span")
@@ -1214,6 +1252,7 @@
             }
         },
 
+        // single
         val: function () {
             var val, data = null;
 
@@ -1241,6 +1280,7 @@
 
         },
 
+        // single
         clearSearch: function () {
             this.search.val("");
         }
@@ -1248,6 +1288,7 @@
 
     MultiSelect2 = clazz(AbstractSelect2, {
 
+        // multi
         createContainer: function () {
             return $("<div></div>", {
                 "class": "select2-container select2-container-multi",
@@ -1265,6 +1306,7 @@
                 "</div>"].join(""));
         },
 
+        // multi
         prepareOpts: function () {
             var opts = this.parent.prepareOpts.apply(this, arguments);
 
@@ -1288,6 +1330,7 @@
             return opts;
         },
 
+        // multi
         initContainer: function () {
 
             var selector = ".select2-choices", selection;
@@ -1369,6 +1412,7 @@
             this.clearSearch();
         },
 
+        // multi
         enable: function() {
             if (this.enabled) return;
 
@@ -1377,6 +1421,7 @@
             this.search.show();
         },
 
+        // multi
         disable: function() {
             if (!this.enabled) return;
 
@@ -1385,6 +1430,7 @@
             this.search.hide();
         },
 
+        // multi
         initSelection: function () {
             var data;
             if (this.opts.element.val() === "") {
@@ -1403,6 +1449,7 @@
             this.clearSearch();
         },
 
+        // multi
         clearSearch: function () {
             var placeholder = this.getPlaceholder();
 
@@ -1416,12 +1463,14 @@
             }
         },
 
+        // multi
         clearPlaceholder: function () {
             if (this.search.hasClass("select2-default")) {
                 this.search.val("").removeClass("select2-default");
             }
         },
 
+        // multi
         open: function () {
             if (this.opened()) return;
             this.parent.open.apply(this, arguments);
@@ -1430,20 +1479,24 @@
             this.focusSearch();
         },
 
+        // multi
         close: function () {
             if (!this.opened()) return;
             this.parent.close.apply(this, arguments);
         },
 
+        // multi
         focus: function () {
             this.close();
             this.search.focus();
         },
 
+        // multi
         isFocused: function () {
             return this.search.hasClass("select2-focused");
         },
 
+        // multi
         updateSelection: function (data) {
             var ids = [], filtered = [], self = this;
 
@@ -1463,6 +1516,7 @@
             self.postprocessResults();
         },
 
+        // multi
         onSelect: function (data) {
             this.addSelectedChoice(data);
             if (this.select) { this.postprocessResults(); }
@@ -1482,11 +1536,13 @@
             this.focusSearch();
         },
 
+        // multi
         cancel: function () {
             this.close();
             this.focusSearch();
         },
 
+        // multi
         addSelectedChoice: function (data) {
             var choice,
                 id = this.id(data),
@@ -1522,6 +1578,7 @@
             this.setVal(val);
         },
 
+        // multi
         unselect: function (selected) {
             var val = this.getVal(),
                 index;
@@ -1543,6 +1600,7 @@
             this.triggerChange();
         },
 
+        // multi
         postprocessResults: function () {
             var val = this.getVal(),
                 choices = this.results.find(".select2-result"),
@@ -1566,6 +1624,7 @@
 
         },
 
+        // multi
         resizeSearch: function () {
 
             var minimumWidth, left, maxWidth, containerLeft, searchWidth,
@@ -1590,6 +1649,7 @@
             this.search.width(searchWidth);
         },
 
+        // multi
         getVal: function () {
             var val;
             if (this.select) {
@@ -1601,6 +1661,7 @@
             }
         },
 
+        // multi
         setVal: function (val) {
             var unique;
             if (this.select) {
@@ -1615,6 +1676,7 @@
             }
         },
 
+        // multi
         val: function () {
             var val, data = [], self=this;
 
@@ -1642,6 +1704,8 @@
 
             this.clearSearch();
         },
+
+        // multi
         onSortStart: function() {
             if (this.select) {
                 throw new Error("Sorting of elements is not supported when attached to <select>. Attach to <input type='hidden'/> instead.");
@@ -1652,6 +1716,8 @@
             // hide the container
             this.searchContainer.hide();
         },
+
+        // multi
         onSortEnd:function() {
 
             var val=[], self=this;
