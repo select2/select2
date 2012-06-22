@@ -375,6 +375,10 @@
         });
     });
 
+    function evaluate(val) {
+        return $.isFunction(val) ? val() : val;
+    }
+
     /**
      * Creates a new class
      *
@@ -423,7 +427,8 @@
                 this.container.addClass(opts.element.attr("class"));
             }
 
-            this.container.css(opts.containerCss);
+            this.container.css(evaluate(opts.containerCss));
+            this.container.addClass(evaluate(opts.containerCssClass));
 
             // swap container for the element
             this.opts.element
@@ -433,7 +438,8 @@
             this.container.data("select2", this);
 
             this.dropdown = this.container.find(".select2-drop");
-            this.dropdown.css(opts.dropdownCss);
+            this.dropdown.css(evaluate(opts.dropdownCss));
+            this.dropdown.addClass(evaluate(opts.dropdownCssClass));
             this.dropdown.data("select2", this);
 
             this.results = results = this.container.find(resultsSelector);
@@ -527,6 +533,8 @@
             opts = $.extend({}, {
                 containerCss: {},
                 dropdownCss: {},
+                containerCssClass: "",
+                dropdownCssClass: "",
                 populateResults: function(container, results, query) {
                     var uidToData={}, populate, markup=[], uid, data, result, children, formatted;
 
