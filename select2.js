@@ -881,8 +881,11 @@
                 postRender();
 
                 if (data.more === true) {
-                    results.children().filter(":last").append("<li class='select2-more-results'>" + opts.formatLoadingNextSet(this.resultsPage) + "</li>");
-                }
+					results.children().filter(":last").append("<li class='select2-more-results'>" + opts.formatLoadingNextSet(self.resultsPage) + "</li>");
+					setTimeout(function() {
+						self.loadMoreIfNeeded();
+					}, 10);
+				}
 
                 this.postprocessResults(data, initial);
             })});
