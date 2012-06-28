@@ -979,13 +979,42 @@ $("#tags").select2({
                             <td>Callback function that should be called with the <code>result</code> object. The result object:
                                 <table class="table table-bordered table-striped">
                                     <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-                                    <tr><td>result.results</td><td>[object]</td><td>Array of result objects. The default renderers expect objects with <code>id</code> and <code>text</code> keys</code>. The <code>id</code> attribute is required</code>, even if custom renderers are used.</td></tr>
+                                    <tr><td>result.results</td><td>[object]</td><td>Array of result objects. The default renderers expect objects with <code>id</code> and <code>text</code> keys</code>. The <code>id</code> attribute is required</code>, even if custom renderers are used. The object may also contain a <code>children</code>key if hierarchical data is displayed.</td></tr>
                                     <tr><td>result.more</td><td>boolean</td><td><code>true</code>if more results are available for the current search term</td></tr>
                                     <tr><td>results.context</td><td>object</td><td>A user-defined object that should be made available as the <code>context</code> parameter to the <code>query</code> function on subsequent queries to load more result pages for the same search term. See the description of <a href="#doc-query-options-context">options.context</code></a> parameter.</td></tr>
                                 </table>
                             </td></tr>
                     </table>
                     <p class="alert alert-warning">In order for this function to work Select2 should be attached to a <code>input type='hidden'</code> tag instead of a <code>select</code>.</p>
+                    <p>
+                        <h4>Example Data</h4>
+                        <pre>
+{
+     more: false,
+     results: [
+        { id: "CA", text: "California" },
+        { id: "AL", text: "Alabama" }
+     ]
+}
+                        </pre>
+                    </p>
+                    <p>
+                        <h4>Example Hierarchical Data</h4>
+                        <pre>
+{
+    more: false,
+    results: [
+        { text: "Western", children: [
+            { id: "CA", text: "California" },
+            { id: "AZ", text: "Arizona" }
+        ] },
+        { text: "Eastern", children: [
+            { id: "FL", text: "Florida" }
+        ] }
+    ]
+}
+                        </pre>
+                    </p>
                 </td>
             </tr>
             <tr><td>ajax</td><td>object</td><td>
