@@ -496,7 +496,7 @@ $("#e2_2").select2({
            </pre>
         </div>
        </article>
-          
+
         <article class="zebra row" id="ajax">
            <div class="span12">
              <h3>Loading Remote Data</h3>
@@ -760,13 +760,13 @@ $("#e17").select2({
 
 
       </section>
-      
-      
+
+
       <!--               -->
       <!-- DOCUMENTATION -->
       <!--               -->
-      
-      
+
+
       <section id="documentation">
 
         <div class="row" style="padding-top: 20px;">
@@ -808,7 +808,7 @@ $("#e17").select2({
                     non-multi-value select boxes an empty first <code>option</code> element must be provided (<code>&lt;option&gt;&lt;/option&gt;</code>)
                     for the placeholder to work.
                 </p>
-                
+
                 <p class="alert alert-warning">When Select2 is used in multi-select mode the placeholder must be a string.</p>
             </td></tr>
             <tr>
@@ -932,7 +932,7 @@ $("#e17").select2({
                 If the function returns <code>undefined</code> or <code>null</code> no choice will be created. If a new
                 choice is created it is displayed first in the selection list so that user may select it by simply pressing
                 <code>enter</code>.
-                
+
                 <p class="alert alert-warning">When used in combination with <code>input[type=hidden]</code> tag care
                 must be taken to sanitize the <code>id</code> attribute of the choice object, especially stripping
                 <code>,</code> as it is used as a value separator</p>
@@ -943,24 +943,23 @@ $("#e17").select2({
                 <p>
                 Essentially this is an <code>id->object</code> mapping function.
                 </p>
-                <pre>initSelection(element)</pre>
+                <pre>initSelection(element, callback)</pre>
                 <table class="table table-bordered table-striped">
                     <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
                     <tr><td>element</td><td>jQuery array</td><td>element Select2 is attached to</td></tr>
-                    <tr><td>&lt;returns&gt;</td><td>object or array of objects</td><td><code>Object</code> representing the choice
-                        to be selected, or an <code>array</code> of such objects in case Select2 is in multi mode.</td></tr>
+                    <tr><td>callback</td><td>function</td><td>callback function that should be called with the data which is either an object in case of a single select or an array of objects in case of multi-select</td></tr>
                 </table>
                 <p class="alert alert-info">This function will only be called when there is initial input to be processed.</p>
                 Here is an example implementation used for tags. Tags are the simplest form of data where the id is also
                 the text:
 <pre class="prettyprint">
 $("#tags").select2({
-    initSelection : function (element) {
+    initSelection : function (element, callback) {
         var data = [];
         $(element.val().split(",")).each(function () {
             data.push({id: this, text: this});
         });
-        return data;
+        callback(data);
     }
 });
 </pre>
@@ -1128,6 +1127,6 @@ $("#tags").select2({
               </p>
           </div>
       </div>
-      
+
 
       </section>

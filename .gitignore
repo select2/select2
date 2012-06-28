@@ -2,3 +2,6 @@
 .DS_Store
 select2wip
 _site
+.project
+.classpath
+.settings
