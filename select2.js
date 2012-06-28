@@ -883,11 +883,11 @@
 
                     self.opts.populateResults.call(this, results, data.results, {term: term, page: page, context:context});
 
-                    more.remove();
-
                     if (data.more===true) {
-                        results.children().filter(":last").append("<li class='select2-more-results'>" + self.opts.formatLoadMore(page+1) + "</li>");
+                        more.detach().appendTo(results.children(":last")).text(self.opts.formatLoadMore(page+1));
                         window.setTimeout(function() { self.loadMoreIfNeeded(); }, 10);
+                    } else {
+                        more.remove();
                     }
                     self.resultsPage = page;
                 })});
