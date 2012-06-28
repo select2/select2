@@ -659,12 +659,14 @@
                     } else if ("tags" in opts) {
                         opts.query = tags(opts.tags);
                         opts.createSearchChoice = function (term) { return {id: term, text: term}; };
-                        opts.initSelection = function (element) {
+                        opts.initSelection = function (element, callback) {
                             var data = [];
                             $(splitVal(element.val(), ",")).each(function () {
                                 data.push({id: this, text: this});
                             });
-                            return data;
+
+                            if ($.isFunction(callback))
+                                callback(data);
                         };
                     }
                 }
@@ -1174,15 +1176,18 @@
             var selected;
             if (this.opts.element.val() === "") {
                 this.updateSelection({id: "", text: ""});
+                this.close();
+                this.setPlaceholder();
             } else {
-                selected = this.opts.initSelection.call(null, this.opts.element);
-                if (selected !== undefined && selected !== null) {
-                    this.updateSelection(selected);
-                }
+                var self = this;
+                this.opts.initSelection.call(null, this.opts.element, function(selected){
+                    if (selected !== undefined && selected !== null) {
+                        self.updateSelection(selected);
+                        self.close();
+                        self.setPlaceholder();
+                    }    
+                });
             }
-
-            this.close();
-            this.setPlaceholder();
         },
 
         // single
@@ -1191,10 +1196,11 @@
 
             if (opts.element.get(0).tagName.toLowerCase() === "select") {
                 // install sthe selection initializer
-                opts.initSelection = function (element) {
+                opts.initSelection = function (element, callback) {
                     var selected = element.find(":selected");
                     // a single select box always has a value, no need to null check 'selected'
-                    return {id: selected.attr("value"), text: selected.text()};
+                    if ($.isFunction(callback))
+                        callback({id: selected.attr("value"), text: selected.text()});
                 };
             }
 
@@ -1342,13 +1348,16 @@
             // TODO validate placeholder is a string if specified
 
             if (opts.element.get(0).tagName.toLowerCase() === "select") {
-                // install the selection initializer
-                opts.initSelection = function (element) {
+                // install sthe selection initializer
+                opts.initSelection = function (element,callback) {
+
                     var data = [];
                     element.find(":selected").each2(function (i, elm) {
                         data.push({id: elm.attr("value"), text: elm.text()});
                     });
-                    return data;
+
+                    if ($.isFunction(callback))
+                        callback(data);
                 };
             }
 
@@ -1460,18 +1469,21 @@
             var data;
             if (this.opts.element.val() === "") {
                 this.updateSelection([]);
+                this.close();
+                // set the placeholder if necessary
+                this.clearSearch();
             }
             if (this.select || this.opts.element.val() !== "") {
-                data = this.opts.initSelection.call(null, this.opts.element);
-                if (data !== undefined && data !== null) {
-                    this.updateSelection(data);
-                }
-            }
-
-            this.close();
-
-            // set the placeholder if necessary
-            this.clearSearch();
+                var self = this;
+                this.opts.initSelection.call(null, this.opts.element, function(data){
+                    if (data !== undefined && data !== null) {
+                        self.updateSelection(data);
+                        self.close();
+                        // set the placeholder if necessary
+                        self.clearSearch();
+                    }    
+                });
+            }            
         },
 
         // multi
