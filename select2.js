@@ -79,6 +79,9 @@
             case KEY.ALT:
                 return true;
             }
+
+            if (k.metaKey) return true;
+            
             return false;
         },
         isFunctionKey: function (k) {
