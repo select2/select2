@@ -1,0 +1,351 @@
+@import 'variables'
+
+/*
+Version: @@ver@@ Timestamp: @@timestamp@@
+*/
+.select2-container
+  position: relative
+  display: inline-block
+  /* inline-block for ie7 */
+  zoom: 1
+  *display: inline
+
+.select2-container,
+.select2-drop,
+.select2-search,
+.select2-search input
+  box-sizing: border-box
+
+.select2-container .select2-choice
+  background-color: #fff
+  background-image: linear-gradient(top, #eeeeee 0%, #ffffff 50%)
+  border-radius: 4px
+  background-clip: padding-box
+  border: 1px solid #aaa
+  display: block
+  overflow: hidden
+  white-space: nowrap
+  position: relative
+  height: 26px
+  line-height: 26px
+  padding: 0 0 0 8px
+  color: #444
+  text-decoration: none
+
+  span
+    margin-right: 26px
+    display: block
+    overflow: ellipsis
+
+  abbr
+    display: block
+    position: absolute
+    right: 26px
+    top: 8px
+    width: 12px
+    height: 12px
+    font-size: 1px
+    background: url($png) right top no-repeat
+    cursor: pointer
+    text-decoration: none
+    border:0
+    outline: 0
+
+  abbr:hover
+    background-position: right -11px
+    cursor: pointer
+
+.select2-drop
+  background: #fff
+  border: 1px solid #aaa
+  border-top: 0
+  position: absolute
+  top: 100%
+  box-shadow: 0 4px 5px rgba(0, 0, 0, .15)
+  z-index: 999
+  width: 100%
+  margin-top: -1px
+  border-radius: 0 0 4px 4px
+
+.select2-container .select2-choice div
+  border-radius: 0 4px 4px 0
+  background-clip: padding-box
+  background: #ccc
+  background-image: linear-gradient(top, #cccccc 0%, #eeeeee 60%)
+  border-left: 1px solid #aaa
+  position: absolute
+  right: 0
+  top: 0
+  display: block
+  height: 100%
+  width: 18px
+
+  b
+    background: url($png) no-repeat 0 1px
+    display: block
+    width: 100%
+    height: 100%
+
+.select2-search
+  display: inline-block
+  white-space: nowrap
+  z-index: 1010
+  min-height: 26px
+  width: 100%
+  margin: 0
+  padding-left: 4px
+  padding-right: 4px
+
+.select2-search-hidden
+  display: block
+  position: absolute
+  left: -10000px
+
+.select2-search input
+  background: #fff url($png) no-repeat 100% -22px
+  background: url($png) no-repeat 100% -22px, linear-gradient(top, #ffffff 85%, #eeeeee 99%)
+  padding: 4px 20px 4px 5px
+  outline: 0
+  border: 1px solid #aaa
+  font-family: sans-serif
+  font-size: 1em
+  width: 100%
+  margin: 0
+  height:auto !important
+  min-height: 26px
+  box-shadow: none
+  border-radius: 0
+
+  &.select2-active
+    background: #fff url($spinner) no-repeat 100%
+    background: url($spinner) no-repeat 100%, linear-gradient(top, #ffffff 85%, #eeeeee 99%)
+
+.select2-container-active .select2-choice,
+.select2-container-active .select2-choices
+  box-shadow: 0 0 5px rgba(0,0,0,.3)
+  border: 1px solid #5897fb
+  outline: none
+
+.select2-dropdown-open .select2-choice
+  border: 1px solid #aaa
+  border-bottom-color: transparent
+  box-shadow: 0 1px 0 #fff inset
+  background-color: #eee
+  background-image: linear-gradient(top, #ffffff 0%,#eeeeee 50%)
+  border-radius: bottom left 0
+  border-radius: bottom right 0
+
+  div
+    background: transparent
+    border-left: none
+
+  div b
+    background-position: -18px 1px
+
+/* results */
+.select2-results
+  margin: 4px 4px 4px 0
+  padding: 0 0 0 4px
+  position: relative
+  overflow-x: hidden
+  overflow-y: auto
+  max-height: 200px
+
+  $resultSub = 'ul.select2-result-sub'
+  $resultLabel = '> .select2-result-label'
+  $buf = ''
+
+  ul.select2-result-sub
+    margin: 0 0 0 0
+
+    {$resultLabel}
+      padding-left 20px
+
+    for i in 1..4
+      $buf = $buf + ' ' + $resultSub
+      {$buf} {$resultLabel}
+        padding-left 20px + i*20px
+
+    for i in 1 2
+      $buf = $buf + ' ' + $resultSub
+      {$buf} {$resultLabel}
+        padding-left 100px + i*10px
+
+  li
+    list-style: none
+    display: list-item
+
+  li.select2-result-with-children > .select2-result-label
+    font-weight: bold
+
+  .select2-result-label
+    padding: 3px 7px 4px
+    margin: 0
+    cursor: pointer
+
+  .select2-highlighted
+    background: #3875d7
+    color: #fff
+
+  li em
+    background: #feffde
+    font-style: normal
+
+  .select2-highlighted em
+    background: transparent
+
+  .select2-no-results
+    background: #f4f4f4
+    display: list-item
+
+  .select2-disabled
+    display: none
+
+/*
+disabled look for already selected choices in the results dropdown
+.select2-results .select2-disabled.select2-highlighted 
+    color: #666
+    background: #f4f4f4
+    display: list-item
+    cursor: default
+
+.select2-results .select2-disabled 
+  background: #f4f4f4
+  display: list-item
+  cursor: default
+
+*/
+
+.select2-more-results.select2-active
+  background: #f4f4f4 url($spinner) no-repeat 100%
+
+.select2-more-results
+  background: #f4f4f4
+  display: list-item
+
+/* disabled styles */
+
+.select2-container.select2-container-disabled .select2-choice
+  background-color: #f4f4f4
+  background-image: none
+  border: 1px solid #ddd
+  cursor: default
+
+  div
+    background-color: #f4f4f4
+    background-image: none
+    border-left: 0
+
+
+/* multiselect */
+
+.select2-container-multi .select2-choices
+  background-color: #fff
+  background-image: linear-gradient(top, #eeeeee 1%, #ffffff 15%)
+  border: 1px solid #aaa
+  margin: 0
+  padding: 0
+  cursor: text
+  overflow: hidden
+  height: auto !important
+  height: 1%
+  position: relative
+  min-height: 26px
+
+.select2-container-multi.select2-container-active .select2-choices
+  box-shadow: 0 0 5px rgba(0,0,0,.3)
+  border: 1px solid #5897fb
+  outline: none
+
+.select2-container-multi .select2-choices 
+  li
+    float: left
+    list-style: none
+
+  .select2-search-field
+    white-space: nowrap
+    margin: 0
+    padding: 0
+
+  .select2-search-field input
+    color: #666
+    background: transparent !important
+    font-family: sans-serif
+    font-size: 100%
+    height: 15px
+    padding: 5px
+    margin: 1px 0
+    outline: 0
+    border: 0
+    box-shadow: none
+
+    &.select2-active
+      background: #fff url($spinner) no-repeat 100% !important
+
+.select2-default
+  color: #999 !important
+
+.select2-container-multi .select2-choices .select2-search-choice
+  border-radius: 3px
+  background-clip: padding-box
+  background-color: #e4e4e4
+  background-image: linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%)
+  box-shadow: 0 0 2px #ffffff inset, 0 1px 0 rgba(0,0,0,0.05)
+  color: #333
+  border: 1px solid #aaaaaa
+  line-height: 13px
+  padding: 3px 5px 3px 18px
+  margin: 3px 0 3px 5px
+  position: relative
+  cursor: default
+
+  span
+    cursor: default
+
+  &-focus
+    background: #d4d4d4
+
+.select2-search-choice-close
+  display: block
+  position: absolute
+  right: 3px
+  top: 4px
+  width: 12px
+  height: 13px
+  font-size: 1px
+  background: url($png) right top no-repeat
+  outline: none
+
+  .select2-container-multi &
+    left: 3px
+
+  .select2-container-multi .select2-choices .select2-search-choice &:hover,
+  .select2-container-multi .select2-choices .select2-search-choice-focus &
+    background-position: right -11px
+
+
+/* disabled styles */
+
+.select2-container-multi.select2-container-disabled .select2-choices
+  background-color: #f4f4f4
+  background-image: none
+  border: 1px solid #ddd
+  cursor: default
+
+  .select2-search-choice
+    background-image: none
+    background-color: #f4f4f4
+    border: 1px solid #ddd
+    padding: 3px 5px 3px 5px
+
+    .select2-search-choice-close
+      display: none
+
+/* end multiselect */
+
+.select2-match
+  text-decoration: underline
+
+.select2-offscreen
+  position: absolute 
+  left: -1000px
