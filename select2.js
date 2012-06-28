@@ -536,7 +536,7 @@
                 containerCssClass: "",
                 dropdownCssClass: "",
                 populateResults: function(container, results, query) {
-                    var uidToData={}, populate, markup=[], uid, data, result, children, formatted;
+                    var uidToData={}, populate, markup=[], uid, data, result, children, formatted, id=this.opts.id;
 
                     populate=function(results, depth) {
 
@@ -544,7 +544,7 @@
                         for (i = 0, l = results.length; i < l; i = i + 1) {
 
                             result=results[i];
-                            selectable=("id" in result); // TODO switch to id() function
+                            selectable=id(result) !== undefined;
                             compound=("children" in result) && result.children.length > 0;
 
                             markup.push("<li class='select2-result-depth-"+depth);
@@ -878,7 +878,7 @@
                         matcher: this.opts.matcher,
                         callback: this.bind(function (data) {
 
-                    self.opts.populateResults(results, data.results, {term: term, page: page, context:context});
+                    self.opts.populateResults.call(this, results, data.results, {term: term, page: page, context:context});
 
                     if (data.more===true) {
                         more.detach();
@@ -952,7 +952,7 @@
                 }
 
                 results.empty();
-                self.opts.populateResults(results, data.results, {term: search.val(), page: this.resultsPage, context:null});
+                self.opts.populateResults.call(this, results, data.results, {term: search.val(), page: this.resultsPage, context:null});
                 postRender();
 
                 if (data.more === true) {
