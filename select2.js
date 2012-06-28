@@ -81,7 +81,7 @@
             }
 
             if (k.metaKey) return true;
-            
+
             return false;
         },
         isFunctionKey: function (k) {
@@ -863,7 +863,6 @@
             var results = this.results,
                 more = results.find("li.select2-more-results"),
                 below, // pixels the element is below the scroll fold, below==0 is when the element is starting to be visible
-                offset = -1, // index of first element without data
                 page = this.resultsPage + 1,
                 self=this,
                 term=this.search.val(),
@@ -885,8 +884,8 @@
 
                     if (data.more===true) {
                         more.detach();
-                        results.children().filter(":last").append(more);
-                        more.removeClass("select2-active");
+                        results.children().filter(":last").append("<li class='select2-more-results'>" + opts.formatLoadingNextSet(self.resultsPage) + "</li>");
+                        window.setTimeout(function() { self.loadMoreIfNeeded(); }, 10);
                     } else {
                         more.remove();
                     }
