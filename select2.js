@@ -1127,7 +1127,7 @@
                 clickingInside = false;
             }));
             containers.delegate(selector, "keydown", this.bind(function (e) {
-                if (!this.enabled || e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e) || e.which === KEY.ESC) {
+                if (!this.enabled || e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e) || e.which === KEY.ESC || e.metaKey) {
                     return;
                 }
                 this.open();
@@ -1413,7 +1413,7 @@
                     }
                 }
 
-                if (e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e) || e.which === KEY.BACKSPACE || e.which === KEY.ESC) {
+                if (e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e) || e.which === KEY.BACKSPACE || e.which === KEY.ESC || e.metaKey) {
                     return;
                 }
 
