@@ -81,7 +81,7 @@
             }
 
             if (k.metaKey) return true;
-            
+
             return false;
         },
         isFunctionKey: function (k) {
@@ -883,12 +883,11 @@
 
                     self.opts.populateResults.call(this, results, data.results, {term: term, page: page, context:context});
 
+                    more.remove();
+
                     if (data.more===true) {
-                        more.detach();
-                        results.children().filter(":last").append(more);
-                        more.removeClass("select2-active");
-                    } else {
-                        more.remove();
+                        results.children().filter(":last").append("<li class='select2-more-results'>" + self.opts.formatLoadMore(page+1) + "</li>");
+                        window.setTimeout(function() { self.loadMoreIfNeeded(); }, 10);
                     }
                     self.resultsPage = page;
                 })});
@@ -960,6 +959,7 @@
 
                 if (data.more === true) {
                     results.children().filter(":last").append("<li class='select2-more-results'>" + opts.formatLoadMore(this.resultsPage) + "</li>");
+                    window.setTimeout(function() { self.loadMoreIfNeeded(); }, 10);
                 }
 
                 this.postprocessResults(data, initial);
