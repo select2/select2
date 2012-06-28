@@ -45,7 +45,7 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     width: 12px
     height: 12px
     font-size: 1px
-    background: url($png) right top no-repeat
+    background: url($selectPNG) right top no-repeat
     cursor: pointer
     text-decoration: none
     border:0
@@ -81,7 +81,7 @@ Version: @@ver@@ Timestamp: @@timestamp@@
   width: 18px
 
   b
-    background: url($png) no-repeat 0 1px
+    background: url($selectPNG) no-repeat 0 1px
     display: block
     width: 100%
     height: 100%
@@ -102,8 +102,8 @@ Version: @@ver@@ Timestamp: @@timestamp@@
   left: -10000px
 
 .select2-search input
-  background: #fff url($png) no-repeat 100% -22px
-  background: url($png) no-repeat 100% -22px, linear-gradient(top, #ffffff 85%, #eeeeee 99%)
+  background: #fff url($selectPNG) no-repeat 100% -22px
+  background: url($selectPNG) no-repeat 100% -22px, linear-gradient(top, #ffffff 85%, #eeeeee 99%)
   padding: 4px 20px 4px 5px
   outline: 0
   border: 1px solid #aaa
@@ -117,8 +117,8 @@ Version: @@ver@@ Timestamp: @@timestamp@@
   border-radius: 0
 
   &.select2-active
-    background: #fff url($spinner) no-repeat 100%
-    background: url($spinner) no-repeat 100%, linear-gradient(top, #ffffff 85%, #eeeeee 99%)
+    background: #fff url($selectSpinner) no-repeat 100%
+    background: url($selectSpinner) no-repeat 100%, linear-gradient(top, #ffffff 85%, #eeeeee 99%)
 
 .select2-container-active .select2-choice,
 .select2-container-active .select2-choices
@@ -217,7 +217,7 @@ disabled look for already selected choices in the results dropdown
 */
 
 .select2-more-results.select2-active
-  background: #f4f4f4 url($spinner) no-repeat 100%
+  background: #f4f4f4 url($selectSpinner) no-repeat 100%
 
 .select2-more-results
   background: #f4f4f4
@@ -280,7 +280,7 @@ disabled look for already selected choices in the results dropdown
     box-shadow: none
 
     &.select2-active
-      background: #fff url($spinner) no-repeat 100% !important
+      background: #fff url($selectSpinner) no-repeat 100% !important
 
 .select2-default
   color: #999 !important
@@ -313,7 +313,7 @@ disabled look for already selected choices in the results dropdown
   width: 12px
   height: 13px
   font-size: 1px
-  background: url($png) right top no-repeat
+  background: url($selectPNG) right top no-repeat
   outline: none
 
   .select2-container-multi &
