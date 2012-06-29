@@ -582,12 +582,7 @@
 
                     populate(results, 0);
 
-                    children=container.children();
-                    if (children.length===0) {
-                        container.html(markup.join(""));
-                    } else {
-                        $(children[children.length-1]).append(markup.join(""));
-                    }
+                    container.append(markup.join(""));
 
                     for (uid in uidToData) {
                         $("#select2-result-"+uid, container).data("select2-data", uidToData[uid]);
