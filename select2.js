@@ -1152,7 +1152,7 @@
 
             selection.delegate("abbr", "click", this.bind(function (e) {
                 if (!this.enabled) return;
-                this.val("");
+                this.clear();
                 killEvent(e);
                 this.close();
                 this.triggerChange();
@@ -1168,6 +1168,13 @@
             }));
             selection.bind("blur", function() { focusser.show(); });
             this.opts.element.bind("open", function() { focusser.hide(); });
+        },
+
+        clear: function() {
+            this.opts.element.val("");
+            this.selection.find("span").empty();
+            this.selection.removeData("select2-data");
+            this.setPlaceholder();
         },
 
         /**
@@ -1197,7 +1204,7 @@
             var opts = this.parent.prepareOpts.apply(this, arguments);
 
             if (opts.element.get(0).tagName.toLowerCase() === "select") {
-                // install sthe selection initializer
+                // install the selection initializer
                 opts.initSelection = function (element, callback) {
                     var selected = element.find(":selected");
                     // a single select box always has a value, no need to null check 'selected'
@@ -1274,6 +1281,9 @@
 
         // single
         updateSelection: function (data) {
+
+            this.selection.data("select2-data", data);
+
             this.selection
                 .find("span")
                 .html(this.opts.formatSelection(data));
@@ -1316,6 +1326,20 @@
         // single
         clearSearch: function () {
             this.search.val("");
+        },
+
+        // single
+        data: function(value) {
+            if (arguments.length === 0) {
+                return this.selection.data("select2-data");
+            } else {
+                if (!value || value === "") {
+                    this.clear();
+                } else {
+                    this.opts.element.val(!value ? "" : this.id(value));
+                    this.updateSelection(value);
+                }
+            }
         }
     });
 
@@ -1736,7 +1760,6 @@
                 this.updateSelection(data);
             } else {
                 val = (val === null) ? [] : val;
-                this.setVal(val);
                 // val is a list of objects
                 $(val).each(function () { data.push(self.id(this)); });
                 this.setVal(data);
@@ -1767,7 +1790,7 @@
             this.searchContainer.show();
             // make sure the search container is the last item in the list
             this.searchContainer.appendTo(this.searchContainer.parent());
-            // since we collapsed the width in dragStarteed, we resize it here
+            // since we collapsed the width in dragStarted, we resize it here
             this.resizeSearch();
 
             // update selection
@@ -1777,6 +1800,21 @@
             });
             this.setVal(val);
             this.triggerChange();
+        },
+
+        // multi
+        data: function(values) {
+            var self=this, ids;
+            if (arguments.length === 0) {
+                 return this.selection
+                     .find(".select2-search-choice")
+                     .map(function() { return $(this).data("select2-data"); })
+                     .get();
+            } else {
+                ids = $.map(values, function(e) { return self.opts.id(e)});
+                this.setVal(ids);
+                this.updateSelection(values);
+            }
         }
     });
 
@@ -1785,7 +1823,7 @@
         var args = Array.prototype.slice.call(arguments, 0),
             opts,
             select2,
-            value, multiple, allowedMethods = ["val", "destroy", "open", "close", "focus", "isFocused", "container", "onSortStart", "onSortEnd", "enable", "disable", "positionDropdown"];
+            value, multiple, allowedMethods = ["val", "destroy", "open", "close", "focus", "isFocused", "container", "onSortStart", "onSortEnd", "enable", "disable", "positionDropdown", "data"];
 
         this.each(function () {
             if (args.length === 0 || typeof(args[0]) === "object") {
