@@ -476,7 +476,7 @@
 
             installKeyUpChangeEvent(search);
             search.bind("keyup-change", this.bind(this.updateResults));
-            search.bind("focus", function () { search.addClass("select2-focused");});
+            search.bind("focus", function () { search.addClass("select2-focused"); search.val(""); });
             search.bind("blur", function () { search.removeClass("select2-focused");});
 
             this.dropdown.delegate(resultsSelector, "click", this.bind(function (e) {
@@ -1527,7 +1527,9 @@
                 // stretch the search box to full width of the container so as much of the placeholder is visible as possible
                 this.search.width(this.getContainerWidth());
             } else {
-                this.search.val("").width(10);
+                // we set this to " " instead of "" and later clear it on focus() because there is a firefox bug
+                // that does not properly render the caret when the field starts out blank
+                this.search.val(" ").width(10);
             }
         },
 
