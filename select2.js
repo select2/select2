@@ -1820,6 +1820,7 @@
                 ids = $.map(values, function(e) { return self.opts.id(e)});
                 this.setVal(ids);
                 this.updateSelection(values);
+                this.clearSearch();
             }
         }
     });
