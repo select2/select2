@@ -454,6 +454,22 @@ $("#e2_2").select2({
           <div class="span8">
             <h3>Example Code</h3>
             <pre class="prettyprint linenums" id="code_e4"></pre>
+            <p>
+                You can set <code>data-</code> attributes to <code>&lt;option&gt;</code> (or &lt;optgroup&gt;) and use them inside temptlating functions:
+            </p>
+            <pre class="prettyprint linenums">
+                &lt;select&gt;
+                    &lt;option value="0" data-foo="bar"&gt;option one&lt;/option&gt;
+                    ...
+                &lt;/select&gt;
+            </pre>
+            <pre class="prettyprint linenums">
+                function format(state) {
+                    var originalOption = state.element;
+                    
+                    return "&lt;img class='flag' src='images/flags/" + state.id.toLowerCase() + ".png' alt='" + originalOption.data('foo') + "' /&gt;" + state.text;
+                }
+            </pre>
          </div>
         </article>
 
@@ -897,6 +913,14 @@ $("#e17").select2({
                     <tr><td>&lt;returns&gt;</td><td>string</td><td>Html that represents the selection</td></tr>
                 </table>
                 The default implementation expects the object to have a <code>text</code> property that is returned.
+                <br><br>
+                Original <code>&lt;option&gt;</code> (or &lt;optgroup&gt;) element is accessible inside the specified function through the property <code>item.element</code>:
+                <pre>
+                    format(item) {
+                        var originalOption = item.element;
+                        // return item.text
+                    }
+                </pre>
             </td></tr>
             <tr><td>formatResult</td><td>function</td><td>
                 Function used to render a result that the user can select.
@@ -907,6 +931,14 @@ $("#e17").select2({
                     <tr><td>&lt;returns&gt;</td><td>string</td><td>Html that represents the result</td></tr>
                 </table>
                 The default implementation expects the object to have a <code>text</code> property that is returned.
+                <br><br>
+                Original <code>&lt;option&gt;</code> (or &lt;optgroup&gt;) element is accessible inside the specified function through the property <code>item.element</code>:
+                <pre>
+                    format(item) {
+                        var originalOption = item.element;
+                        // return item.text
+                    }
+                </pre>
             </td></tr>
             <tr><td>formatNoMatches</td><td>function</td><td>
                 Function used to render the &quot;No matches&quot; message
