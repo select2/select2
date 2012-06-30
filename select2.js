@@ -480,7 +480,7 @@
             search.bind("blur", function () { search.removeClass("select2-focused");});
 
             this.dropdown.delegate(resultsSelector, "click", this.bind(function (e) {
-                if ($(e.target).closest(".select2-result:not(.select2-disabled)").length > 0) {
+                if ($(e.target).closest(".select2-result-selectable:not(.select2-disabled)").length > 0) {
                     this.highlightUnderEvent(e);
                     this.selectHighlighted(e);
                 } else {
@@ -550,17 +550,16 @@
                             selectable=id(result) !== undefined;
                             compound=("children" in result) && result.children.length > 0;
 
-                            markup.push("<li class='select2-result-depth-"+depth);
-                            if (!selectable) { markup.push(" select2-result-unselectable"); } else { markup.push(" select2-result");}
+                            markup.push("<li class='select2-result-depth-" + depth);
+                            markup.push(" select2-result");
+                            markup.push(selectable ? " select2-result-selectable" : " select2-result-unselectable");
                             if (compound) { markup.push(" select2-result-with-children"); }
 
                             markup.push("'");
 
-                            if (selectable) {
-                                uid=nextUid();
-                                markup.push(" id='select2-result-"+uid+"'");
-                                uidToData[uid]=result;
-                            }
+                            uid=nextUid();
+                            markup.push(" id='select2-result-"+uid+"'");
+                            uidToData[uid]=result;
 
                             markup.push("><div class='select2-result-label'>");
                             formatted=opts.formatResult(result, query, markup);
@@ -781,7 +780,17 @@
 
             if (index < 0) return;
 
-            children = results.find(".select2-result");
+            if (index == 0) {
+
+                // if the first element is highlighted scroll all the way to the top,
+                // that way any unselectable headers above it will also be scrolled
+                // into view
+
+                results.scrollTop(0);
+                return;
+            }
+
+            children = results.find(".select2-result-selectable");
 
             child = $(children[index]);
 
@@ -809,12 +818,12 @@
 
         // abstract
         moveHighlight: function (delta) {
-            var choices = this.results.find(".select2-result"),
+            var choices = this.results.find(".select2-result-selectable"),
                 index = this.highlight();
 
             while (index > -1 && index < choices.length) {
                 index += delta;
-                if (!$(choices[index]).hasClass("select2-disabled")) {
+                if ($(choices[index]).hasClass("select2-result-selectable")) {
                     this.highlight(index);
                     break;
                 }
@@ -823,7 +832,7 @@
 
         // abstract
         highlight: function (index) {
-            var choices = this.results.find(".select2-result .select2-result-label");
+            var choices = this.results.find(".select2-result-selectable");
 
             if (arguments.length === 0) {
                 return indexOf(choices.filter(".select2-highlighted")[0], choices.get());
@@ -831,10 +840,6 @@
 
             if (index >= choices.length) index = choices.length - 1;
             if (index < 0) index = 0;
-
-            if ($(choices[index]).parent().is('.select2-result-unselectable')) {
-                return;
-            }
 
             choices.removeClass("select2-highlighted");
 
@@ -846,10 +851,13 @@
 
         // abstract
         highlightUnderEvent: function (event) {
-            var el = $(event.target).closest(".select2-result");
+            var el = $(event.target).closest(".select2-result-selectable");
             if (el.length > 0 && !el.is(".select2-highlighted")) {
-        		var choices = this.results.find('.select2-result');
+        		var choices = this.results.find('.select2-result-selectable');
                 this.highlight(choices.index(el));
+            } else if (el.length == 0) {
+                // if we are over an unselectable item remove al highlights
+                this.results.find(".select2-highlighted").removeClass("select2-highlighted");
             }
         },
 
@@ -987,7 +995,7 @@
 
         // abstract
         selectHighlighted: function () {
-            var data = this.results.find(".select2-highlighted").not(".select2-disabled").closest('.select2-result').not('.select2-result-unselectable').data("select2-data");
+            var data = this.results.find(".select2-highlighted").not(".select2-disabled").closest('.select2-result-selectable').data("select2-data");
             if (data) {
                 this.onSelect(data);
             }
@@ -1240,7 +1248,7 @@
 
             // find the selected element in the result list
 
-            this.results.find(".select2-result").each2(function (i, elm) {
+            this.results.find(".select2-result-selectable").each2(function (i, elm) {
                 if (equal(self.id(elm.data("select2-data")), self.opts.element.val())) {
                     selected = i;
                     return false;
@@ -1666,7 +1674,7 @@
         // multi
         postprocessResults: function () {
             var val = this.getVal(),
-                choices = this.results.find(".select2-result"),
+                choices = this.results.find(".select2-result-selectable"),
                 self = this;
 
             choices.each2(function (i, choice) {
