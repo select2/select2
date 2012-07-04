@@ -271,11 +271,11 @@
                     data = options.data, // ajax data function
                     transport = options.transport || $.ajax,
                     type = options.type || 'GET'; // set type of request (GET or POST)
-
+                
                 data = data.call(this, query.term, query.page, query.context);
 
                 if( null !== handler) { handler.abort(); }
-
+                
                 handler = transport.call(null, {
                     url: options.url,
                     dataType: options.dataType,
@@ -1359,7 +1359,6 @@
                 "style": "width: " + this.getContainerWidth()
             }).html([
                 "    <ul class='select2-choices'>",
-                //"<li class='select2-search-choice'><span>California</span><a href="javascript:void(0)" class="select2-search-choice-close"></a></li>" ,
                 "  <li class='select2-search-field'>" ,
                 "    <input type='text' autocomplete='off' style='width: 25px;' class='select2-input'>" ,
                 "  </li>" ,
@@ -1375,7 +1374,12 @@
             var opts = this.parent.prepareOpts.apply(this, arguments);
 
             opts = $.extend({}, {
-                closeOnSelect: true
+                closeOnSelect: true,
+				formatSelectionTemplate: [
+                    "<li class='select2-search-choice'>",
+                        "{formatSelection}",
+                        "<a href='javascript:void(0)' class='select2-search-choice-close' tabindex='-1'></a>",
+                    "</li>"].join("")
             }, opts);
 
             // TODO validate placeholder is a string if specified
@@ -1617,17 +1621,12 @@
         addSelectedChoice: function (data) {
             var choice,
                 id = this.id(data),
-                parts,
+                self = this,
                 val = this.getVal();
 
-            parts = ["<li class='select2-search-choice'>",
-                this.opts.formatSelection(data),
-                "<a href='javascript:void(0)' class='select2-search-choice-close' tabindex='-1'></a>",
-                "</li>"
-            ];
-
-            choice = $(parts.join(""));
-            choice.find("a")
+            choice = $(this.opts.formatSelectionTemplate.replace('{formatSelection}', '<span class="formatSelection"></span>'));
+            choice.find('.formatSelection').replaceWith(this.opts.formatSelection(data));
+            choice.find(".select2-search-choice-close")
                 .bind("click dblclick", this.bind(function (e) {
                 if (!this.enabled) return;
 
