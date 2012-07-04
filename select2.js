@@ -1374,12 +1374,7 @@
             var opts = this.parent.prepareOpts.apply(this, arguments);
 
             opts = $.extend({}, {
-                closeOnSelect: true,
-				formatSelectionTemplate: [
-                    "<li class='select2-search-choice'>",
-                        "{formatSelection}",
-                        "<a href='javascript:void(0)' class='select2-search-choice-close' tabindex='-1'></a>",
-                    "</li>"].join("")
+                closeOnSelect: true
             }, opts);
 
             // TODO validate placeholder is a string if specified
@@ -1621,10 +1616,17 @@
         addSelectedChoice: function (data) {
             var choice,
                 id = this.id(data),
-                self = this,
+                //span.formatSelection is only temporary
+                parts = ["<li class='select2-search-choice'>",
+                    "<span class='formatSelection'></span>",
+                    "<a href='javascript:void(0)' class='select2-search-choice-close' tabindex='-1'></a>",
+                    "</li>"
+                ],
                 val = this.getVal();
 
-            choice = $(this.opts.formatSelectionTemplate.replace('{formatSelection}', '<span class="formatSelection"></span>'));
+            choice = $(parts.join(""));
+            // replace span.formatSelection with the returned value of this.opts.formatSelection(data)
+            // allows the possibility to return jQuery objects with formatSelection
             choice.find('.formatSelection').replaceWith(this.opts.formatSelection(data));
             choice.find(".select2-search-choice-close")
                 .bind("click dblclick", this.bind(function (e) {
