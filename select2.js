@@ -1034,7 +1034,7 @@
                         return matches[1];
                 }
             }
-            return this.opts.element.width() + 'px';
+            return (this.opts.element.width() === 0 ? 'auto' : this.opts.element.width() + 'px');
         }
     });
 
