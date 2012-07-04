@@ -823,7 +823,8 @@
 
             while (index > -1 && index < choices.length) {
                 index += delta;
-                if ($(choices[index]).hasClass("select2-result-selectable")) {
+                var choice = $(choices[index]);
+                if (choice.hasClass("select2-result-selectable") && !choice.hasClass("select2-disabled")) {
                     this.highlight(index);
                     break;
                 }
