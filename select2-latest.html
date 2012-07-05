@@ -193,7 +193,7 @@ $("#e10_3").select2({
                   <li><a href="#infinite">Infinite Scrolling of Remote/AJAX data</a></li>
                   <li><a href="#tags">Tagging Support</a></li>
                   <li><a href="#programmatic">Programmatic control</a></li>
-                  <li><a href="#event_change">Events: Change</a></li>
+                  <li><a href="#events">Events</a></li>
                   <li><a href="#event_ext_change">Events: Reacting to External Changes</a></li>
                   <li><a href="#disabled">Disabled Mode</a></li>
                   <li><a href="#matcher">Custom Matcher Function</a></li>
@@ -466,7 +466,7 @@ $("#e2_2").select2({
             <pre class="prettyprint linenums">
                 function format(state) {
                     var originalOption = state.element;
-                    
+
                     return "&lt;img class='flag' src='images/flags/" + state.id.toLowerCase() + ".png' alt='" + originalOption.data('foo') + "' /&gt;" + state.text;
                 }
             </pre>
@@ -594,7 +594,7 @@ $("#e8_2_close").click(function () { $("#e8_2").select2("close"); });
          </div>
         </article>
 
-      <article class="row" id="event_change">
+      <article class="row" id="events">
 <script id="script_e11">
 $(document).ready(function () {
 $("#e11").select2({
@@ -607,22 +607,25 @@ $("#e11_2").select2({
     multiple: true,
     data: [{id: 0, text: 'story'},{id: 1, text: 'bug'},{id: 2, text: 'task'}]
 });
-function show(e) {
-    details = {val:e.val, added:e.added, removed:e.removed};
-    details=JSON.stringify(details);
-    var e=$("<li>change fired: "+details+"</li>");
+function log(e) {
+    var e=$("<li>"+e+"</li>");
     $("#events_11").append(e);
     e.animate({opacity:1}, 10000, 'linear', function() { e.animate({opacity:0}, 2000, 'linear', function() {e.remove(); }); });
-};
-$("#e11").on("change", show);
-$("#e11_2").on("change", show);
+}
+$("#e11")
+    .on("change", function(e) { log(JSON.stringify({val:e.val, added:e.added, removed:e.removed})); })
+    .on("open", function() { log("open"); });
+$("#e11_2")
+    .on("change", function(e) { log(JSON.stringify({val:e.val, added:e.added, removed:e.removed})); })
+    .on("open", function() { log("open"); });
 });
 </script>
           <div class="span4">
-              <h3>Change Event</h3>
+              <h3>Events</h3>
 
-              <p>Select2 triggers the <code>change</code> event on the original element whenever its value is changed by
+              <p><code>change</code> event is triggered on the original element whenever its value is changed by
                   the user</p>
+              <p><code>open</code> event is triggered on the original element whenever the dropdown needs to be opened</p>
 
               <p><input type="hidden" id="e11" style="width:300px"/></p>
 
@@ -1202,6 +1205,13 @@ $("#tags").select2({
               </p>
           </div>
       </div>
-
+        <div class="row zebra">
+            <div class="span12">
+                <h3>open</h3>
+                <p>Fired when the dropdown is shown.</p>
+                <p>The event listener can prevent the opening by calling <code>preventDefault()</code> on the supplied event object.</p>
+                </p>
+            </div>
+        </div>
 
       </section>
