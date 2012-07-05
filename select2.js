@@ -738,8 +738,26 @@
         },
 
         // abstract
+        shouldOpen: function() {
+            var event;
+
+            if (this.opened()) return false;
+
+            event = jQuery.Event("open");
+            this.opts.element.trigger(event);
+            return !event.isDefaultPrevented();
+        },
+
+        /**
+         * Opens the dropdown
+         *
+         * @return {Boolean} whether or not dropdown was opened. This method will return false if, for example,
+         * the dropdown is already open, or if the 'open' event listener on the element called preventDefault().
+         */
+        // abstract
         open: function () {
-            if (this.opened()) return;
+
+            if (!this.shouldOpen()) return false;
 
             this.container.addClass("select2-dropdown-open").addClass("select2-container-active");
             if(this.dropdown[0] !== this.body.children().last()[0]) {
@@ -755,6 +773,8 @@
             this.dropdown.show();
             this.ensureHighlightVisible();
             this.focusSearch();
+
+            return true;
         },
 
         // abstract
@@ -1058,15 +1078,6 @@
                 "   <ul class='select2-results'>" ,
                 "   </ul>" ,
                 "</div>"].join(""));
-        },
-
-        // single
-        open: function () {
-
-            if (this.opened()) return;
-
-            this.parent.open.apply(this, arguments);
-
         },
 
         // single
@@ -1544,11 +1555,11 @@
 
         // multi
         open: function () {
-            if (this.opened()) return;
-            this.parent.open.apply(this, arguments);
+            if (this.parent.open.apply(this, arguments) === false) return false;
 			this.clearPlaceholder();
 			this.resizeSearch();
             this.focusSearch();
+            return true;
         },
 
         // multi
