@@ -759,6 +759,8 @@
 
             if (!this.shouldOpen()) return false;
 
+            if (this.search.val() === " ") { this.search.val(""); }
+
             this.container.addClass("select2-dropdown-open").addClass("select2-container-active");
             if(this.dropdown[0] !== this.body.children().last()[0]) {
 				// ensure the dropdown is the last child of body, so the z-index is always respected correctly
