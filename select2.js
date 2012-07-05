@@ -1697,18 +1697,20 @@
         // multi
         addSelectedChoice: function (data) {
             var choice,
-                id = this.id(data),
-                parts,
-                val = this.getVal();
-
+            id = this.id(data),
+            //span.formatSelection is only temporary
             parts = ["<li class='select2-search-choice'>",
-                this.opts.formatSelection(data),
+                "<span class='formatSelection'></span>",
                 "<a href='javascript:void(0)' class='select2-search-choice-close' tabindex='-1'></a>",
                 "</li>"
-            ];
+            ],
+            val = this.getVal();
 
             choice = $(parts.join(""));
-            choice.find("a")
+            // replace span.formatSelection with the returned value of this.opts.formatSelection(data)
+            // allows the possibility to return jQuery objects with formatSelection
+            choice.find('.formatSelection').replaceWith(this.opts.formatSelection(data));
+            choice.find(".select2-search-choice-close")
                 .bind("click dblclick", this.bind(function (e) {
                 if (!this.enabled) return;
 
