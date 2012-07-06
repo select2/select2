@@ -524,6 +524,9 @@
                 this.select = select = opts.element;
             }
 
+            //Custom tags separator.
+            opts.tagSeparator = opts.tagSeparator || ",";
+            
             if (select) {
                 // these options are not allowed when attached to a select because they are picked up off the element itself
                 $.each(["id", "multiple", "ajax", "query", "createSearchChoice", "initSelection", "data", "tags"], function () {
@@ -658,7 +661,7 @@
                         opts.createSearchChoice = function (term) { return {id: term, text: term}; };
                         opts.initSelection = function (element, callback) {
                             var data = [];
-                            $(splitVal(element.val(), ",")).each(function () {
+                            $(splitVal(element.val(), opts.tagSeparator)).each(function () {
                                 data.push({id: this, text: this});
                             });
 
@@ -1401,7 +1404,7 @@
             opts = $.extend({}, {
                 closeOnSelect: true
             }, opts);
-
+            
             // TODO validate placeholder is a string if specified
 
             if (opts.element.get(0).tagName.toLowerCase() === "select") {
@@ -1755,7 +1758,7 @@
                 return val === null ? [] : val;
             } else {
                 val = this.opts.element.val();
-                return splitVal(val, ",");
+                return splitVal(val, this.opts.tagSeparator);
             }
         },
 
