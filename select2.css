@@ -102,6 +102,21 @@ Version: @@ver@@ Timestamp: @@timestamp@@
   border-radius: 0 0 4px 4px;
 }
 
+.select2-drop-top
+{
+    -webkit-border-radius: 4px 4px 0px 0px;
+	-moz-border-radius: 4px 4px 0px 0px;
+	border-radius: 4px 4px 0px 0px;
+	margin-top:1px;
+	border-top: 1px solid #aaa;
+	border-bottom: 0;
+	
+	-webkit-box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
+	-moz-box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
+	-o-box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
+	box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
+}
+
 .select2-container .select2-choice div {
     -webkit-border-radius: 0 4px 4px 0;
     -moz-border-radius: 0 4px 4px 0;
