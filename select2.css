@@ -234,6 +234,26 @@ Version: @@ver@@ Timestamp: @@timestamp@@
   border-bottom-right-radius: 0;
 }
 
+.select2-container-opentop .select2-choice
+{
+	border-bottom-color: #aaa;
+	-webkit-border-radius:0px 0px 4px 4px;
+	-moz-border-radius:0px 0px 4px 4px;
+	border-radius:0px 0px 4px 4px;
+	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eeeeee), color-stop(0.9, white));
+	background-image: -webkit-linear-gradient(center bottom, #eeeeee 0%, white 90%);
+	background-image: -moz-linear-gradient(center bottom, #eeeeee 0%, white 90%);
+	background-image: -o-linear-gradient(bottom, #eeeeee 0%, white 90%);
+	background-image: -ms-linear-gradient(top, #eeeeee 0%,#ffffff 90%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#ffffff',GradientType=0 );
+	background-image: linear-gradient(top, #eeeeee 0%,#ffffff 90%);
+}
+
+.select2-drop-top .select2-search input
+{
+	margin-top:4px;
+}
+
 .select2-dropdown-open .select2-choice div {
   background: transparent;
   border-left: none;
