@@ -729,11 +729,30 @@
             var offset = this.container.offset();
             var height = this.container.outerHeight();
             var width  = this.container.outerWidth();
+        	var dropDownHeight = this.dropdown.outerHeight();
+        	var top = offset.top + height;
+        	
+			var bottom = document.body.scrollTop + document.documentElement.clientHeight;
+        	
+			//If the dropdown would appear off the bottom of the screen and it can fit above the input, set the top so it will appear above the input
+        	//Also add a class to the dropdown so we can style it differently when shown on top
+			if (offset.top + height + dropDownHeight > bottom && (offset.top - dropDownHeight) >= document.body.scrollTop)
+			{
+				top = offset.top - dropDownHeight;
+				this.dropdown.addClass("select2-drop-top");
+				this.container.addClass("select2-container-opentop");
+			}
+        	else
+			{
+				this.dropdown.removeClass("select2-drop-top");
+				this.container.removeClass("select2-container-opentop");
+			}
+
             var css    = {
-                top: offset.top + height,
+                top: top,
                 left: offset.left,
                 width: width
-            }
+            };
             this.dropdown.css(css);
         },
 
@@ -769,12 +788,12 @@
 
             this.dropdown.addClass("select2-drop-active");
 
+            //Update results before positioning the drop down as we need the height of the drop down for positioning
+            this.updateResults(true);            
             this.positionDropdown();
-
-            this.updateResults(true);
             this.dropdown.show();
             this.ensureHighlightVisible();
-            this.focusSearch();
+            this.focusSearch(true); //Focusing the search element can cause the page to scroll, so we need to make sure the dropdown is repositioned after focus
 
             return true;
         },
@@ -784,7 +803,7 @@
             if (!this.opened()) return;
 
             this.dropdown.hide();
-            this.container.removeClass("select2-dropdown-open");
+            this.container.removeClass("select2-dropdown-open").removeClass("select2-container-opentop");
             this.results.empty();
             this.clearSearch();
         },
@@ -937,6 +956,7 @@
             function postRender() {
                 results.scrollTop(0);
                 search.removeClass("select2-active");
+                self.positionDropdown();
             }
 
             function render(html) {
@@ -1009,11 +1029,14 @@
         },
 
         // abstract
-        focusSearch: function () {
+        focusSearch: function (repositionDropDown) {
             /* we do this in a timeout so that current event processing can complete before this code is executed.
              this makes sure the search field is focussed even if the current event would blur it */
+             repositionDropDown = repositionDropDown == undefined ? false : repositionDropDown;
             window.setTimeout(this.bind(function () {
                 this.search.focus();
+                if (repositionDropDown)
+                    this.positionDropdown();
             }), 10);
         },
 
