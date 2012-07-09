@@ -93,7 +93,7 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     -moz-box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
     -o-box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
     box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
-    z-index: 999;
+    z-index: 9999;
     width:100%;
     margin-top:-1px;
 
@@ -136,7 +136,7 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 .select2-search {
   display: inline-block;
     white-space: nowrap;
-    z-index: 1010;
+    z-index: 10000;
   min-height: 26px;
   width: 100%;
   margin: 0;
