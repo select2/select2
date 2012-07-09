@@ -1506,6 +1506,7 @@
 
             this.container.delegate(selector, "click", this.bind(function (e) {
                 if (!this.enabled) return;
+                this.clearPlaceholder();
                 this.open();
                 this.focusSearch();
                 e.preventDefault();
@@ -1569,7 +1570,7 @@
             if (placeholder !== undefined  && this.getVal().length === 0 && this.search.hasClass("select2-focused") === false) {
                 this.search.val(placeholder).addClass("select2-default");
                 // stretch the search box to full width of the container so as much of the placeholder is visible as possible
-                this.search.width(this.container.width());
+                this.search.width("auto");
             } else {
                 // we set this to " " instead of "" and later clear it on focus() because there is a firefox bug
                 // that does not properly render the caret when the field starts out blank
@@ -1581,6 +1582,9 @@
         clearPlaceholder: function () {
             if (this.search.hasClass("select2-default")) {
                 this.search.val("").removeClass("select2-default");
+            } else {
+                // work around for the space character we set to avoid firefox caret bug
+                if (this.search.val() === " ") this.search.val("");
             }
         },
 
