@@ -732,7 +732,7 @@
         	var dropDownHeight = this.dropdown.outerHeight();
         	var top = offset.top + height;
         	
-			var bottom = document.body.scrollTop + document.body.clientHeight;
+			var bottom = document.body.scrollTop + document.documentElement.clientHeight;
         	
 			//If the dropdown would appear off the bottom of the screen and it can fit above the input, set the top so it will appear above the input
         	//Also add a class to the dropdown so we can style it differently when shown on top
@@ -740,9 +740,13 @@
 			{
 				top = offset.top - dropDownHeight;
 				this.dropdown.addClass("select2-drop-top");
+				this.container.addClass("select2-container-opentop");
 			}
         	else
+			{
 				this.dropdown.removeClass("select2-drop-top");
+				this.container.removeClass("select2-container-opentop");
+			}
 
             var css    = {
                 top: top,
@@ -799,7 +803,7 @@
             if (!this.opened()) return;
 
             this.dropdown.hide();
-            this.container.removeClass("select2-dropdown-open");
+            this.container.removeClass("select2-dropdown-open").removeClass("select2-container-opentop");
             this.results.empty();
             this.clearSearch();
         },
