@@ -1070,7 +1070,7 @@
             if (style.indexOf("%") > 0) return style;
 
             // finally, fallback on the calculated width of the element
-            return (this.opts.element.width() === 0 ? 'auto' : this.opts.element.width() + 'px');
+            return (this.opts.element.width() === 0 ? 'auto' : this.opts.element.outerWidth() + 'px');
         }
     });
 
