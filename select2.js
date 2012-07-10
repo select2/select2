@@ -726,14 +726,15 @@
 
         // abstract
         positionDropdown: function() {
-            var offset = this.container.offset();
-            var height = this.container.outerHeight();
-            var width  = this.container.outerWidth();
-            var css    = {
+            var offset = this.container.offset(),
+                height = this.container.outerHeight(),
+                width  = this.container.outerWidth(),
+                css = {
                 top: offset.top + height,
                 left: offset.left,
                 width: width
-            }
+            };
+
             this.dropdown.css(css);
         },
 
@@ -915,6 +916,7 @@
                     } else {
                         more.remove();
                     }
+                    self.positionDropdown();
                     self.resultsPage = page;
                 })});
             }
@@ -937,6 +939,7 @@
             function postRender() {
                 results.scrollTop(0);
                 search.removeClass("select2-active");
+                self.positionDropdown();
             }
 
             function render(html) {
