@@ -54,6 +54,21 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     text-decoration: none;
 }
 
+.select2-container.select2-drop-above .select2-choice
+{
+    border-bottom-color: #aaa;
+    -webkit-border-radius:0px 0px 4px 4px;
+    -moz-border-radius:0px 0px 4px 4px;
+    border-radius:0px 0px 4px 4px;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eeeeee), color-stop(0.9, white));
+    background-image: -webkit-linear-gradient(center bottom, #eeeeee 0%, white 90%);
+    background-image: -moz-linear-gradient(center bottom, #eeeeee 0%, white 90%);
+    background-image: -o-linear-gradient(bottom, #eeeeee 0%, white 90%);
+    background-image: -ms-linear-gradient(top, #eeeeee 0%,#ffffff 90%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#ffffff',GradientType=0 );
+    background-image: linear-gradient(top, #eeeeee 0%,#ffffff 90%);
+}
+
 .select2-container .select2-choice span {
     margin-right: 26px;
     display: block;
@@ -100,6 +115,20 @@ Version: @@ver@@ Timestamp: @@timestamp@@
   -webkit-border-radius: 0 0 4px 4px;
   -moz-border-radius: 0 0 4px 4px;
   border-radius: 0 0 4px 4px;
+}
+
+.select2-drop.select2-drop-above {
+    -webkit-border-radius: 4px 4px 0px 0px;
+    -moz-border-radius: 4px 4px 0px 0px;
+    border-radius: 4px 4px 0px 0px;
+    margin-top:1px;
+    border-top: 1px solid #aaa;
+    border-bottom: 0;
+
+    -webkit-box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
+    -moz-box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
+    -o-box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
+    box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
 }
 
 .select2-container .select2-choice div {
@@ -173,6 +202,11 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     border-radius: 0;
     -moz-border-radius: 0;
     -webkit-border-radius: 0;
+}
+
+.select2-drop.select2-drop-above .select2-search input
+{
+    margin-top:4px;
 }
 
 .select2-search input.select2-active {

@@ -728,11 +728,40 @@
         positionDropdown: function() {
             var offset = this.container.offset(),
                 height = this.container.outerHeight(),
-                width  = this.container.outerWidth(),
-                css = {
-                top: offset.top + height,
-                left: offset.left,
-                width: width
+                width = this.container.outerWidth(),
+                dropHeight = this.dropdown.outerHeight(),
+                viewportBottom = document.body.scrollTop + document.documentElement.clientHeight,
+                dropTop = offset.top + height,
+                enoughRoomBelow = dropTop + dropHeight <= viewportBottom,
+                enoughRoomAbove = (offset.top - dropHeight) >= document.body.scrollTop,
+                aboveNow = this.dropdown.hasClass("select2-drop-above"),
+                above,
+                css;
+
+            // always prefer the current above/below alignment, unless there is not enough room
+
+            if (aboveNow) {
+                above = true;
+                if (!enoughRoomAbove && enoughRoomBelow) above = false;
+            } else {
+                above = false;
+                if (!enoughRoomBelow && enoughRoomAbove) above = true;
+            }
+
+            if (above) {
+                dropTop = offset.top - dropHeight;
+                this.container.addClass("select2-drop-above");
+                this.dropdown.addClass("select2-drop-above");
+            }
+            else {
+                this.container.removeClass("select2-drop-above");
+                this.dropdown.removeClass("select2-drop-above");
+            }
+
+            css = {
+                top:dropTop,
+                left:offset.left,
+                width:width
             };
 
             this.dropdown.css(css);
@@ -749,6 +778,13 @@
             return !event.isDefaultPrevented();
         },
 
+        // abstract
+        clearDropdownAlignmentPreference: function() {
+            // clear the classes used to figure out the preference of where the dropdown should be opened
+            this.container.removeClass("select2-drop-above");
+            this.dropdown.removeClass("select2-drop-above");
+        },
+
         /**
          * Opens the dropdown
          *
@@ -759,6 +795,8 @@
         open: function () {
 
             if (!this.shouldOpen()) return false;
+
+            this.clearDropdownAlignmentPreference();
 
             if (this.search.val() === " ") { this.search.val(""); }
 
@@ -783,6 +821,8 @@
         // abstract
         close: function () {
             if (!this.opened()) return;
+
+            this.clearDropdownAlignmentPreference();
 
             this.dropdown.hide();
             this.container.removeClass("select2-dropdown-open");
@@ -1575,7 +1615,8 @@
         // multi
         open: function () {
             if (this.parent.open.apply(this, arguments) === false) return false;
-			this.clearPlaceholder();
+
+            this.clearPlaceholder();
 			this.resizeSearch();
             this.focusSearch();
             return true;
