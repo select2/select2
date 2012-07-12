@@ -216,6 +216,7 @@ $("#e10_3").select2({
                     <li>Dropdown div is now appended directly to <code>body</code> and is absolutely positioned. This should help when Select2 is inside constrained elements such as modals.</li>
                     <li>Optgroups are now supported.</li>
                     <li>Signature of <code>initSeletion</code> has changed to support asynchronous requests</li>
+                    <li>Dropdown can now open below or above the control depending on available screen space</li>
                 </ul>
             </div></div>
         </section>
@@ -1150,12 +1151,12 @@ $("#tags").select2({
                     <tr>
                         <th>Attached to <code>select</code></th>
                         <td>Value of the <code>value</code> attribute of the <code>option</code> that should be selected</td>
-                        <td>Array of values specified to the left. <code>null</code> for empty.</td>
+                        <td>Array of the <code>value</code> attributes of the <code>option</code>s that should be selected. <code>null</code> for empty.</td>
                     </tr>
                   <tr>
                       <th>Attached to <code>input[type=hidden]</code></th>
                       <td>An object representing the selection. Should at least contain an <code>id</code> key. The rest of the keys should be determined by the custom rendering function, the default rendering function only needs an additional <code>text</code> key</td>
-                      <td>Array of objects specified to the left. <code>null</code> for empty.</td>
+                      <td>An array of objects representing the selection. <code>null</code> for empty.</td>
                   </tr>
 
               </table>
