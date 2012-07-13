@@ -147,11 +147,15 @@
     }
 
     function installKeyUpChangeEvent(element) {
+        var key="keyup-change-value";
         element.bind("keydown", function () {
-            element.data("keyup-change-value", element.val());
+            if (!$.hasData(element, key)) {
+                $.data(element, key, element.val());
+            }
         });
         element.bind("keyup", function () {
-            if (element.val() !== element.data("keyup-change-value")) {
+            if (element.val() !== $.data(element, key)) {
+                $.removeData(element, key);
                 element.trigger("keyup-change");
             }
         });
