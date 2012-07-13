@@ -127,7 +127,7 @@
         });
         element.bind("keyup", function () {
             if (element.val() !== element.data("keyup-change-value")) {
-                element.trigger("keyup-change");
+                element.trigger("keyup change");
             }
         });
     }
@@ -411,7 +411,7 @@
             }
 
             installKeyUpChangeEvent(search);
-            search.bind("keyup-change", this.bind(this.updateResults));
+            search.bind("keyup change", this.bind(this.updateResults));
             search.bind("focus", function () { search.addClass("select2-focused");});
             search.bind("blur", function () { search.removeClass("select2-focused");});
 
