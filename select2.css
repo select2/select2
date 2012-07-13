@@ -56,6 +56,7 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 
 .select2-container.select2-drop-above .select2-choice
 {
+    border-top: 0px;
     border-bottom-color: #aaa;
     -webkit-border-radius:0px 0px 4px 4px;
     -moz-border-radius:0px 0px 4px 4px;
@@ -116,6 +117,9 @@ Version: @@ver@@ Timestamp: @@timestamp@@
   -moz-border-radius: 0 0 4px 4px;
   border-radius: 0 0 4px 4px;
 }
+.select2-drop.autoWidth{
+	border-top:1px solid #aaa;
+}
 
 .select2-drop.select2-drop-above {
     -webkit-border-radius: 4px 4px 0px 0px;
@@ -130,7 +134,9 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     -o-box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
     box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
 }
-
+.select2-drop.select2-drop-above.autoWidth{
+	border-bottom:1px solid #aaa;
+}
 .select2-container .select2-choice div {
     -webkit-border-radius: 0 4px 4px 0;
     -moz-border-radius: 0 4px 4px 0;
@@ -171,6 +177,9 @@ Version: @@ver@@ Timestamp: @@timestamp@@
   margin: 0;
   padding-left: 4px;
   padding-right: 4px;
+}
+.autoWidth .select2-search{
+	padding-top: 4px;
 }
 
 .select2-search-hidden {
