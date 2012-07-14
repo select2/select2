@@ -607,6 +607,7 @@
                 formatInputTooShort: function (input, min) { return "Please enter " + (min - input.length) + " more characters"; },
                 formatLoadMore: function (pageNumber) { return "Loading more results..."; },
                 minimumResultsForSearch: 0,
+                autoWidth: false,
                 minimumInputLength: 0,
                 id: function (e) { return e.id; },
                 matcher: function(term, text) {
@@ -737,16 +738,14 @@
         positionDropdown: function() {
             var offset = this.container.offset(),
                 height = this.container.outerHeight(),
-                width = this.container.outerWidth(),
                 dropHeight = this.dropdown.outerHeight(),
                 viewportBottom = document.body.scrollTop + document.documentElement.clientHeight,
                 dropTop = offset.top + height,
                 enoughRoomBelow = dropTop + dropHeight <= viewportBottom,
                 enoughRoomAbove = (offset.top - dropHeight) >= document.body.scrollTop,
                 aboveNow = this.dropdown.hasClass("select2-drop-above"),
-                above,
-                css;
-
+                above;
+            
             // always prefer the current above/below alignment, unless there is not enough room
 
             if (aboveNow) {
@@ -766,14 +765,28 @@
                 this.container.removeClass("select2-drop-above");
                 this.dropdown.removeClass("select2-drop-above");
             }
-
-            css = {
-                top:dropTop,
-                left:offset.left,
-                width:width
-            };
-
-            this.dropdown.css(css);
+            
+            if (this.opts.autoWidth === true){
+            	//this.container.addClass("auto-container");
+            	this.dropdown.addClass("autoWidth")
+	            var width = "auto",
+	            	css;
+	            css = {
+	                width:width
+	            };
+	            this.dropdown.css(css);
+            
+            } else {
+            	//this.container.removeClass("auto-container");
+            	this.dropdown.removeClass("autoWidth")
+	            var width = this.container.outerWidth(),
+	            	css;
+	            css = {
+	                width:width,
+	            };
+	            this.dropdown.css(css);
+	            
+            }
         },
 
         // abstract
@@ -823,6 +836,17 @@
             this.dropdown.show();
             this.ensureHighlightVisible();
             this.focusSearch();
+            position();
+            
+            function position(using) {
+	            $(".select2-drop").position({
+	                my: "left top",
+	                at: "left bottom",
+	                of: $(".select2-dropdown-open"),
+	                using: using,
+	                collision: 'fit flip'
+	            });
+	    	}
 
             return true;
         },
