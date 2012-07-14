@@ -149,12 +149,13 @@
     function installKeyUpChangeEvent(element) {
         var key="keyup-change-value";
         element.bind("keydown", function () {
-            if (!$.hasData(element, key)) {
+            if ($.data(element, key) === undefined) {
                 $.data(element, key, element.val());
             }
         });
         element.bind("keyup", function () {
-            if (element.val() !== $.data(element, key)) {
+            var val= $.data(element, key);
+            if (val !== undefined && element.val() !== val) {
                 $.removeData(element, key);
                 element.trigger("keyup-change");
             }
