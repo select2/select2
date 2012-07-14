@@ -843,25 +843,16 @@ $("#e18,#e18_2").select2();
                 <p class="alert alert-info">Only applies to single-value select boxes</p>
             </td>
             </tr>
-            <tr><td>placeholder</td><td>object/string</td><td>
+            <tr><td>placeholder</td><td>string</td><td>
                 <p>Initial value that is selected if no other selection is made.</p>
-                <p>
-                    The value can be specified either as an <code>object</code> or as a <code>string</code>. If
-                    specified as a <code>string</code> any custom <code>formatSelection</code> function will be
-                    bypassed and the string value will be rendered directly.
-                </p>
                 <p>The placeholder can also be specified as a <code>data-placeholder</code> attribute on the <code>select</code>
-                    or <code>input</code> element that Select2 is attached to. In this case only <code>string</code>
-                    values are supported
+                    or <code>input</code> element that Select2 is attached to.
                 </p>
 
                 <p class="alert alert-warning">Note that because browsers assume the first <code>option</code> element
-                    is selected in
-                    non-multi-value select boxes an empty first <code>option</code> element must be provided (<code>&lt;option&gt;&lt;/option&gt;</code>)
+                    is selected in non-multi-value select boxes an empty first <code>option</code> element must be provided (<code>&lt;option&gt;&lt;/option&gt;</code>)
                     for the placeholder to work.
                 </p>
-
-                <p class="alert alert-warning">When Select2 is used in multi-select mode the placeholder must be a string.</p>
             </td></tr>
             <tr>
                 <td>allowClear</td>
@@ -938,7 +929,7 @@ $("#e18,#e18_2").select2();
                 <table class="table table-bordered table-striped">
                     <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
                     <tr><td>object</td><td>object</td><td>The selected result object returned from the <code>query</code> function</td></tr>
-                    <tr><td>&lt;returns&gt;</td><td>string</td><td>Html that represents the selection</td></tr>
+                    <tr><td>&lt;returns&gt;</td><td>string</td><td>Html string, a DOM element, or a jQuery object that renders the selection</td></tr>
                 </table>
                 The default implementation expects the object to have a <code>text</code> property that is returned.
                 <br><br>
