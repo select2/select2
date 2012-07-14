@@ -1369,7 +1369,7 @@
 
             this.selection
                 .find("span")
-                .html(this.opts.formatSelection(data));
+                .empty().append(this.opts.formatSelection(data));
 
             this.selection.removeClass("select2-default");
 
@@ -1698,18 +1698,17 @@
         addSelectedChoice: function (data) {
             var choice,
             id = this.id(data),
-            //span.formatSelection is only temporary
+
             parts = ["<li class='select2-search-choice'>",
-                "<span class='formatSelection'></span>",
+                "<span class='select2-tmp'></span>",
                 "<a href='javascript:void(0)' class='select2-search-choice-close' tabindex='-1'></a>",
                 "</li>"
             ],
             val = this.getVal();
 
             choice = $(parts.join(""));
-            // replace span.formatSelection with the returned value of this.opts.formatSelection(data)
-            // allows the possibility to return jQuery objects with formatSelection
-            choice.find('.formatSelection').replaceWith(this.opts.formatSelection(data));
+
+            choice.find('.select2-tmp').replaceWith(this.opts.formatSelection(data));
             choice.find(".select2-search-choice-close")
                 .bind("click dblclick", this.bind(function (e) {
                 if (!this.enabled) return;
