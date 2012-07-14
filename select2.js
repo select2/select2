@@ -488,10 +488,15 @@
                     this.highlightUnderEvent(e);
                     this.selectHighlighted(e);
                 } else {
-                    killEvent(e);
                     this.focusSearch();
                 }
+                killEvent(e);
             }));
+
+            // trap all mouse events from leaving the dropdown. sometimes there may be a modal that is listening
+            // for mouse events outside of itself so it can close itself. since the dropdown is now outside the select2's
+            // dom it will trigger the popup close, which is not what we want
+            this.dropdown.bind("click mouseup mousedown", function (e) { e.stopPropagation(); });
 
             if ($.isFunction(this.opts.initSelection)) {
                 // initialize selection based on the current value of the source element
