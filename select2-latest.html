@@ -925,39 +925,48 @@ $("#e18,#e18_2").select2();
             </td></tr>
             <tr><td>formatSelection</td><td>function</td><td>
                 Function used to render the current selection.
-                <pre>formatSelection(object)</pre>
+                <pre>formatSelection(object, container)</pre>
                 <table class="table table-bordered table-striped">
                     <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
                     <tr><td>object</td><td>object</td><td>The selected result object returned from the <code>query</code> function</td></tr>
-                    <tr><td>&lt;returns&gt;</td><td>string</td><td>Html string, a DOM element, or a jQuery object that renders the selection</td></tr>
+                    <tr><td>container</td><td>jQuery object</td><td>jQuery wrapper of the node to which the selection should be appended</td></tr>
+                    <tr><td>&lt;returns&gt;</td><td>string (optional)</td><td>Html string, a DOM element, or a jQuery object that renders the selection</td></tr>
                 </table>
-                The default implementation expects the object to have a <code>text</code> property that is returned.
+                <p>The default implementation expects the object to have a <code>text</code> property that is returned.</p>
+                <p>The implementation may choose to append elements directly to the provided <code>container</code> object, or return a single value and have it automatically appended</p>
                 <br><br>
-                Original <code>&lt;option&gt;</code> (or &lt;optgroup&gt;) element is accessible inside the specified function through the property <code>item.element</code>:
+                <p>
+                When attached to a <code>select</code> the original <code>&lt;option&gt;</code> (or &lt;optgroup&gt;) element is accessible inside the specified function through the property <code>item.element</code>:
                 <pre>
                     format(item) {
                         var originalOption = item.element;
-                        // return item.text
+                        return item.text
                     }
                 </pre>
+                </p>
             </td></tr>
             <tr><td>formatResult</td><td>function</td><td>
                 Function used to render a result that the user can select.
-                <pre>formatResult(object)</pre>
+                <pre>formatResult(object, container, query)</pre>
                 <table class="table table-bordered table-striped">
                     <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
                     <tr><td>object</td><td>object</td><td>One of the result objects returned from the <code>query</code> function</td></tr>
-                    <tr><td>&lt;returns&gt;</td><td>string</td><td>Html that represents the result</td></tr>
+                    <tr><td>container</td><td>jQuery object</td><td>jQuery wrapper of the node that should contain the representation of the result</td></tr>
+                    <tr><td>query</td><td>object</td><td>The query object used to request this set of results</td></tr>
+                    <tr><td>&lt;returns&gt;</td><td>string (optional)</td><td>Html string, a DOM element, or a jQuery object that represents the result</td></tr>
                 </table>
-                The default implementation expects the object to have a <code>text</code> property that is returned.
+                <p>The default implementation expects the object to have a <code>text</code> property that is returned.</p>
+                <p>The implementation may choose to append elements directly to the provided <code>container</code> object, or return a single value and have it automatically appended</p>
                 <br><br>
-                Original <code>&lt;option&gt;</code> (or &lt;optgroup&gt;) element is accessible inside the specified function through the property <code>item.element</code>:
+                <p>
+                When attached to a <code>select</code> the original <code>&lt;option&gt;</code> (or &lt;optgroup&gt;) element is accessible inside the specified function through the property <code>item.element</code>:
                 <pre>
                     format(item) {
                         var originalOption = item.element;
-                        // return item.text
+                        return item.text
                     }
                 </pre>
+                </p>
             </td></tr>
             <tr><td>formatNoMatches</td><td>function</td><td>
                 Function used to render the &quot;No matches&quot; message
