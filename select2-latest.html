@@ -1231,3 +1231,21 @@ $("#tags").select2({
         </div>
 
       </section>
+
+
+    <!--
+    <div style="position: absolute; left:0; top:0; background: white; border: 1px solid red;" id="focus-spy">hello there</div>
+    <script>
+        $(document).ready(function() {
+           var el=$("#focus-spy");
+           $(window).bind("scroll", function(){ el.css({top:$(window).scrollTop()}); });
+           var update=function() {
+                var a=document.activeElement;
+                var b=$(a);
+                el.html("tag: "+a.tagName+" id:"+a.id+" class:"+b.attr("class")+" val:"+b.val());
+                window.setTimeout(update, 100);
+           };
+           update();
+        });
+    </script>
+    -->
