@@ -551,58 +551,53 @@
                 populateResults: function(container, results, query) {
                     var uidToData={}, populate, markup=[], uid, data, result, children, formatted, id=this.opts.id;
 
-                    populate=function(results, depth) {
+                    populate=function(results, container, depth) {
 
-                        var i, l, uid, result, selectable, compound;
+                        var i, l, uid, result, selectable, compound, node, label, innerContainer;
                         for (i = 0, l = results.length; i < l; i = i + 1) {
 
                             result=results[i];
                             selectable=id(result) !== undefined;
                             compound=("children" in result) && result.children.length > 0;
 
-                            markup.push("<li class='select2-result-depth-" + depth);
-                            markup.push(" select2-result");
-                            markup.push(selectable ? " select2-result-selectable" : " select2-result-unselectable");
-                            if (compound) { markup.push(" select2-result-with-children"); }
+                            node=$("<li></li>");
+                            node.addClass("select2-results-dept-"+depth);
+                            node.addClass("select2-result");
+                            node.addClass(selectable ? "select2-result-selectable" : "select2-result-unselectable");
+                            if (compound) { node.addClass("select2-result-with-children"); }
 
-                            markup.push("'");
+                            label=$("<div></div>");
+                            label.addClass("select2-result-label");
 
-                            uid=nextUid();
-                            markup.push(" id='select2-result-"+uid+"'");
-                            uidToData[uid]=result;
-
-                            markup.push("><div class='select2-result-label'>");
-                            formatted=opts.formatResult(result, query, markup);
-                            // for backwards compat with <3.0 versions
+                            var formatted=opts.formatResult(result, label, query);
                             if (formatted!==undefined) {
-                                markup.push(formatted);
+                                label.html(formatted);
                             }
-                            markup.push("</div>");
+
+                            node.append(label);
 
                             if (compound) {
-                                markup.push("<ul class='select2-result-sub'>");
-                                populate(result.children, depth + 1);
-                                markup.push("</ul>");
+
+                                innerContainer=$("<ul></ul>");
+                                innerContainer.addClass("select2-result-sub");
+                                populate(result.children, innerContainer, depth+1);
+                                node.append(innerContainer);
                             }
 
-                            markup.push("</li>");
-                        }
+                            node.data("select2-data", result);
+                            container.append(node);
+    }
                     };
 
-                    populate(results, 0);
-
-                    container.append(markup.join(""));
-
-                    for (uid in uidToData) {
-                        $("#select2-result-"+uid, container).data("select2-data", uidToData[uid]);
-                    }
-
+                    populate(results, container, 0);
                 },
-                formatResult: function(result, query, markup) {
+                formatResult: function(result, container, query) {
+                    var markup=[];
                     markMatch(result.text, query.term, markup);
+                    return markup.join("");
                 },
-                formatSelection: function (data) {
-                    return data.fullText || data.text;
+                formatSelection: function (data, container) {
+                    return data.text;
                 },
                 formatNoMatches: function () { return "No matches found"; },
                 formatInputTooShort: function (input, min) { return "Please enter " + (min - input.length) + " more characters"; },
@@ -1380,11 +1375,15 @@
         // single
         updateSelection: function (data) {
 
+            var container=this.selection.find("span"), formatted;
+
             this.selection.data("select2-data", data);
 
-            this.selection
-                .find("span")
-                .empty().append(this.opts.formatSelection(data));
+            container.empty();
+            formatted=this.opts.formatSelection(data, container);
+            if (formatted !== undefined) {
+                container.append(formatted);
+            }
 
             this.selection.removeClass("select2-default");
 
@@ -1710,19 +1709,20 @@
 
         // multi
         addSelectedChoice: function (data) {
-            var choice,
-            id = this.id(data),
-
-            parts = ["<li class='select2-search-choice'>",
-                "<span class='select2-tmp'></span>",
-                "<a href='javascript:void(0)' class='select2-search-choice-close' tabindex='-1'></a>",
-                "</li>"
-            ],
-            val = this.getVal();
-
-            choice = $(parts.join(""));
+            var choice=$("<li class='select2-search-choice'></li>"),
+                id = this.id(data),
+                val = this.getVal(),
+                formatted;
 
             choice.find('.select2-tmp').replaceWith(this.opts.formatSelection(data));
+
+            formatted=this.opts.formatSelection(data, choice);
+            if (formatted !== undefined) {
+                choice.append(formatted);
+            }
+
+            choice.append("<a href='javascript:void(0)' class='select2-search-choice-close' tabindex='-1'></a>");
+
             choice.find(".select2-search-choice-close")
                 .bind("click dblclick", this.bind(function (e) {
                 if (!this.enabled) return;
