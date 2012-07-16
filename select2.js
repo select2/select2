@@ -717,7 +717,7 @@
                 height = this.container.outerHeight(),
                 width = this.container.outerWidth(),
                 dropHeight = this.dropdown.outerHeight(),
-                viewportBottom = document.body.scrollTop + document.documentElement.clientHeight,
+                viewportBottom = $(window).scrollTop() + document.documentElement.clientHeight,
                 dropTop = offset.top + height,
                 enoughRoomBelow = dropTop + dropHeight <= viewportBottom,
                 enoughRoomAbove = (offset.top - dropHeight) >= document.body.scrollTop,
