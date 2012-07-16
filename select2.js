@@ -429,7 +429,7 @@
 
             this.enabled=true;
             this.container = this.createContainer();
-			this.body = opts.element.closest("body"); // cache for future access
+            this.body = $("body"); // opts.element.closest("body"); // cache for future access
 
             if (opts.element.attr("class") !== undefined) {
                 this.container.addClass(opts.element.attr("class"));
