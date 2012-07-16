@@ -965,7 +965,7 @@
             var search = this.search, results = this.results, opts = this.opts, self=this;
 
             // if the search is currently hidden we do not alter the results
-            if (initial !== true && this.showSearchInput === false) {
+            if (initial !== true && (this.showSearchInput === false || !this.opened())) {
                 return;
             }
 
