@@ -1709,11 +1709,13 @@
                 .bind("click dblclick", this.bind(function (e) {
                 if (!this.enabled) return;
 
-                this.unselect($(e.target));
-                this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
+                $(e.target).closest(".select2-search-choice").fadeOut('fast').animate({width: "hide"}, 50, this.bind(function(){
+                    this.unselect($(e.target));
+                    this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
+                    this.close();
+                    this.focusSearch();
+                })).dequeue();
                 killEvent(e);
-                this.close();
-                this.focusSearch();
             })).bind("focus", this.bind(function () {
                 if (!this.enabled) return;
                 this.container.addClass("select2-container-active");
