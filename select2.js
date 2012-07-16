@@ -547,16 +547,12 @@
             }
 
             opts = $.extend({}, {
-                containerCss: {},
-                dropdownCss: {},
-                containerCssClass: "",
-                dropdownCssClass: "",
                 populateResults: function(container, results, query) {
-                    var uidToData={}, populate, markup=[], uid, data, result, children, formatted, id=this.opts.id;
+                    var populate,  data, result, children, id=this.opts.id;
 
                     populate=function(results, container, depth) {
 
-                        var i, l, uid, result, selectable, compound, node, label, innerContainer;
+                        var i, l, result, selectable, compound, node, label, innerContainer, formatted;
                         for (i = 0, l = results.length; i < l; i = i + 1) {
 
                             result=results[i];
@@ -572,7 +568,7 @@
                             label=$("<div></div>");
                             label.addClass("select2-result-label");
 
-                            var formatted=opts.formatResult(result, label, query);
+                            formatted=opts.formatResult(result, label, query);
                             if (formatted!==undefined) {
                                 label.html(formatted);
                             }
@@ -589,29 +585,12 @@
 
                             node.data("select2-data", result);
                             container.append(node);
-    }
+                        }
                     };
 
                     populate(results, container, 0);
-                },
-                formatResult: function(result, container, query) {
-                    var markup=[];
-                    markMatch(result.text, query.term, markup);
-                    return markup.join("");
-                },
-                formatSelection: function (data, container) {
-                    return data.text;
-                },
-                formatNoMatches: function () { return "No matches found"; },
-                formatInputTooShort: function (input, min) { return "Please enter " + (min - input.length) + " more characters"; },
-                formatLoadMore: function (pageNumber) { return "Loading more results..."; },
-                minimumResultsForSearch: 0,
-                minimumInputLength: 0,
-                id: function (e) { return e.id; },
-                matcher: function(term, text) {
-                    return text.toUpperCase().indexOf(term.toUpperCase()) >= 0;
                 }
-            }, opts);
+            }, $.fn.select2.defaults, opts);
 
             if (typeof(opts.id) !== "function") {
                 idKey = opts.id;
@@ -1968,6 +1947,31 @@
             }
         });
         return (value === undefined) ? this : value;
+    };
+
+    // plugin defaults, accessible to users
+    $.fn.select2.defaults = {
+        containerCss: {},
+        dropdownCss: {},
+        containerCssClass: "",
+        dropdownCssClass: "",
+        formatResult: function(result, container, query) {
+            var markup=[];
+            markMatch(result.text, query.term, markup);
+            return markup.join("");
+        },
+        formatSelection: function (data, container) {
+            return data.text;
+        },
+        formatNoMatches: function () { return "No matches found"; },
+        formatInputTooShort: function (input, min) { return "Please enter " + (min - input.length) + " more characters"; },
+        formatLoadMore: function (pageNumber) { return "Loading more results..."; },
+        minimumResultsForSearch: 0,
+        minimumInputLength: 0,
+        id: function (e) { return e.id; },
+        matcher: function(term, text) {
+            return text.toUpperCase().indexOf(term.toUpperCase()) >= 0;
+        }
     };
 
     // exports
