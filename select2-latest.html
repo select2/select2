@@ -219,6 +219,7 @@ $("#e10_3").select2({
                     <li>Dropdown will now open below or above the control depending on available screen space. No more scrolling the page to see to see all matched results.</li>
                     <li>Signature of <code>formatSelection</code> and <code>formatResult</code> changed in a backwards compatible way to support more powerful constructs than supported by strings alone.</li>
                     <li>Separator in multi-valued selects is now cofigurable, <code>,</code> still the default. See <code>separator</code> option in the docs.</li>
+                    <li>Matching is now customizable. See <a href="#doc-matcher">matcher</a> function in the docs and the <a href="#matcher">Custom Matcher</a> example.</li>
                 </ul>
             </div></div>
         </section>
@@ -918,15 +919,18 @@ $("#e18,#e18_2").select2();
                    </table>
                    The default implementation expects the object to have a <code>id</code> property that is returned.
             </td></tr>
-            <tr><td>matcher</td><td>function</td><td>
+            <tr><td id="doc-matcher">matcher</td><td>function</td><td>
                 Used to determine whether or not the search term matches an option when a built-in query function is used.
                 The built in query function is used when Select2 is attached to a <code>select</code>, or the <code>local</code> or <code>tags</code> helpers are used.
-                <pre>matcher(term, text)</pre>
+                <pre>matcher(term, text, option)</pre>
                 <table class="table table-bordered table-striped">
                     <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
                     <tr><td>term</td><td>string</td><td>search term</td></tr>
                     <tr><td>text</td><td>string</td><td>text of the option being matched</td></tr>
-                    <tr><td>&lt;returns&gt;</td><td>boolean</td><td><code>true</code> if search term matches the option text, or <code>false</code> otherwise</td></tr>
+                    <tr><td>option</td><td>jquery object</td>
+                        <td>the <code>option</code> element we are trying to match. Only given when attached to <code>select</code>.
+                            Can be used to match against custom attributes on the <code>option</code> tag in addition to matching on the <code>option</code>'s text.</code></td></tr>
+                    <tr><td>&lt;returns&gt;</td><td>boolean</td><td><code>true</code> if search term matches the text, or <code>false</code> otherwise</td></tr>
                 </table>
                 The default implementation is case insensitive and matches anywhere in ther term:
                 <code>function(term, text) { return text.toUpperCase().indexOf(term.toUpperCase())>0; }</code>
