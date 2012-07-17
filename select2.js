@@ -197,6 +197,20 @@
         };
     }
 
+    /**
+     * A simple implementation of a thunk
+     * @param formula function used to lazily initialize the thunk
+     * @return {Function}
+     */
+    function thunk(formula) {
+        var evaluated = false,
+            value;
+        return function() {
+            if (evaluated === false) { value = formula(); evaluated=true; }
+            return value;
+        };
+    };
+
     function installDebouncedScroll(threshold, element) {
         var notify = debounce(threshold, function (e) { element.trigger("scroll-debounced", e);});
         element.bind("scroll", function (e) {
@@ -429,7 +443,9 @@
 
             this.enabled=true;
             this.container = this.createContainer();
-            this.body = $("body");  // cache for future access
+
+            // cache the body so future lookups are cheap
+            this.body = thunk(function() { return opts.element.closest("body"); });
 
             if (opts.element.attr("class") !== undefined) {
                 this.container.addClass(opts.element.attr("class"));
@@ -720,7 +736,7 @@
                 viewportBottom = $(window).scrollTop() + document.documentElement.clientHeight,
                 dropTop = offset.top + height,
                 enoughRoomBelow = dropTop + dropHeight <= viewportBottom,
-                enoughRoomAbove = (offset.top - dropHeight) >= document.body.scrollTop,
+                enoughRoomAbove = (offset.top - dropHeight) >= this.body().scrollTop,
                 aboveNow = this.dropdown.hasClass("select2-drop-above"),
                 above,
                 css;
@@ -803,8 +819,8 @@
 
             this.updateResults(true);
 
-            if(this.dropdown[0] !== this.body.children().last()[0]) {
-                this.dropdown.detach().appendTo(this.body);
+            if(this.dropdown[0] !== this.body().children().last()[0]) {
+                this.dropdown.detach().appendTo(this.body());
             }
 
             this.dropdown.show();
