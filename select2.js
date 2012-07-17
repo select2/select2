@@ -622,7 +622,7 @@
                     process=function(element, collection) {
                         var group;
                         if (element.is("option")) {
-                            if (query.matcher(term, element.text())) {
+                            if (query.matcher(term, element.text(), element)) {
                                 collection.push({id:element.attr("value"), text:element.text(), element: element.get()});
                             }
                         } else if (element.is("optgroup")) {
