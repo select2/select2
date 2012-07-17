@@ -163,7 +163,7 @@
     }
 
     $(document).delegate("*", "mousemove", function (e) {
-        $(document).data("select2-lastpos", {x: e.pageX, y: e.pageY});
+        $.data(document, "select2-lastpos", {x: e.pageX, y: e.pageY});
     });
 
     /**
@@ -174,7 +174,7 @@
      */
     function installFilteredMouseMove(element) {
 	    element.bind("mousemove", function (e) {
-            var lastpos = $(document).data("select2-lastpos");
+            var lastpos = $.data(document, "select2-lastpos");
             if (lastpos === undefined || lastpos.x !== e.pageX || lastpos.y !== e.pageY) {
                 $(e.target).trigger("mousemove-filtered", e);
             }
