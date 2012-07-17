@@ -736,10 +736,13 @@
                 viewportBottom = $(window).scrollTop() + document.documentElement.clientHeight,
                 dropTop = offset.top + height,
                 enoughRoomBelow = dropTop + dropHeight <= viewportBottom,
-                enoughRoomAbove = (offset.top - dropHeight) >= this.body().scrollTop,
+                enoughRoomAbove = (offset.top - dropHeight) >= this.body().scrollTop(),
                 aboveNow = this.dropdown.hasClass("select2-drop-above"),
                 above,
                 css;
+
+            //console.log("droptop:", dropTop, "dropHeight", dropHeight, "sum", (dropTop+dropHeight)+" viewport bottom", viewportBottom, "enough?", enoughRoomBelow);
+            //console.log("offset.top", offset.top, "dropHeight", dropHeight, "top", (offset.top-dropHeight), "scrollTop", this.body().scrollTop(), "enough?", enoughRoomAbove);
 
             // always prefer the current above/below alignment, unless there is not enough room
 
@@ -814,8 +817,7 @@
             if (this.search.val() === " ") { this.search.val(""); }
 
             this.dropdown.addClass("select2-drop-active");
-
-            this.positionDropdown();
+            this.container.addClass("select2-dropdown-open").addClass("select2-container-active");
 
             this.updateResults(true);
 
@@ -826,7 +828,7 @@
             this.dropdown.show();
             this.ensureHighlightVisible();
             this.focusSearch();
-            this.container.addClass("select2-dropdown-open").addClass("select2-container-active");
+
         },
 
         // abstract
@@ -1002,6 +1004,9 @@
                 render("<li class='select2-no-results'>" + opts.formatInputTooShort(search.val(), opts.minimumInputLength) + "</li>");
                 return;
             }
+
+            // position dropdown before making a potentially long request
+            this.positionDropdown();
 
             this.resultsPage = 1;
             opts.query({
