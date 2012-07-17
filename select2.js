@@ -206,7 +206,7 @@
         var evaluated = false,
             value;
         return function() {
-            if (evaluated === false) { value = formula(); evaluated=true; }
+            if (evaluated === false) { value = formula(); evaluated = true; }
             return value;
         };
     };
@@ -228,8 +228,8 @@
         	var style = e[0].currentStyle || window.getComputedStyle(e[0], null);
         	sizer = $("<div></div>").css({
 	            position: "absolute",
-	            left: "-1000px",
-	            top: "-1000px",
+	            left: "-10000px",
+	            top: "-10000px",
 	            display: "none",
 	            fontSize: style.fontSize,
 	            fontFamily: style.fontFamily,
