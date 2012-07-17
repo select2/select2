@@ -100,6 +100,7 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 
 .select2-drop {
     background: #fff;
+    color: #000;
     border: 1px solid #aaa;
     border-top: 0;
     position: absolute;
