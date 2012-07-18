@@ -1274,19 +1274,6 @@ $("#tags").select2({
         </div>
     </div>
 
-<input tyoe="hidden" style="width:300px" id="inp"/>
-        <script>
-$(document).ready(function (){
-$('#inp').select2({
-closeOnSelect:false,
-multiple:true,
-query:function (query){
-query.callback({results: [{id:1, text:'1rwrtwert'}, {id:2, text:'342342345234'}]});
-}
-});
-})
-        </script>
-
 <!--
 <div style="position: absolute; left:0; top:0; background: white; border: 1px solid red;" id="focus-spy">hello there</div>
 <script>
