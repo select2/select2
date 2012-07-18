@@ -1281,7 +1281,6 @@
         initSelection: function () {
             var selected;
             if (this.opts.element.val() === "") {
-                this.updateSelection({id: "", text: ""});
                 this.close();
                 this.setPlaceholder();
             } else {
@@ -1322,11 +1321,8 @@
                 // check for a first blank option if attached to a select
                 if (this.select && this.select.find("option:first").text() !== "") return;
 
-                if (typeof(placeholder) === "object") {
-                    this.updateSelection(placeholder);
-                } else {
-                    this.selection.find("span").html(placeholder);
-                }
+                this.selection.find("span").html(placeholder);
+
                 this.selection.addClass("select2-default");
 
                 this.selection.find("abbr").hide();
@@ -1431,8 +1427,12 @@
 
         // single
         data: function(value) {
+            var data;
+
             if (arguments.length === 0) {
-                return this.selection.data("select2-data");
+                data = this.selection.data("select2-data");
+                if (data == undefined) data = null;
+                return data;
             } else {
                 if (!value || value === "") {
                     this.clear();
