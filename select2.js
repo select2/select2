@@ -909,7 +909,7 @@
 
         // abstract
         highlight: function (index) {
-            var choices = this.results.find(".select2-result-selectable");
+            var choices = this.results.find(".select2-result-selectable").not(".select2-disabled");
 
             if (arguments.length === 0) {
                 return indexOf(choices.filter(".select2-highlighted")[0], choices.get());
@@ -923,7 +923,11 @@
             $(choices[index]).addClass("select2-highlighted");
             this.ensureHighlightVisible();
 
-            //if (this.opened()) this.focusSearch();
+        },
+
+        // abstract
+        countSelectableResults: function() {
+            return this.results.find(".select2-result-selectable").not(".select2-disabled").length;
         },
 
         // abstract
@@ -1079,8 +1083,12 @@
 
         // abstract
         selectHighlighted: function () {
-            var data = this.results.find(".select2-highlighted").not(".select2-disabled").closest('.select2-result-selectable').data("select2-data");
+            var index=this.highlight(),
+                highlighted=this.results.find(".select2-highlighted").not(".select2-disabled"),
+                data = highlighted.closest('.select2-result-selectable').data("select2-data");
             if (data) {
+                highlighted.addClass("select2-disabled");
+                this.highlight(index);
                 this.onSelect(data);
             }
         },
@@ -1468,10 +1476,6 @@
         prepareOpts: function () {
             var opts = this.parent.prepareOpts.apply(this, arguments);
 
-            opts = $.extend({}, {
-                closeOnSelect: true
-            }, opts);
-
             // TODO validate placeholder is a string if specified
 
             if (opts.element.get(0).tagName.toLowerCase() === "select") {
@@ -1696,6 +1700,13 @@
             } else {
                 this.search.width(10);
                 this.resizeSearch();
+
+                if (this.countSelectableResults()>0) {
+                    this.positionDropdown();
+                } else {
+                    // if nothing left to select close
+                    this.close();
+                }
             }
 
             // since its not possible to select an element that has already been
@@ -1975,6 +1986,7 @@
 
     // plugin defaults, accessible to users
     $.fn.select2.defaults = {
+        closeOnSelect:true,
         containerCss: {},
         dropdownCss: {},
         containerCssClass: "",
