@@ -1184,16 +1184,17 @@ $("#tags").select2({
                   </tr>
 
               </table>
-
-
           </td></tr>
       </table>
-      Example: <pre class="prettyprint">alert("Selected value is: "+$("#e8").select2("val")); $("#e8").select2("val", {id:"CA", text:"Califoria"});</pre>
+        <p><code>val</code> method invoked on a single-select with an unset value will return <code>""</code>, while a <code>val</code> method invoked on an empty multi-select will return <code>[]</code></p>
+
+        Example: <pre class="prettyprint">alert("Selected value is: "+$("#e8").select2("val")); $("#e8").select2("val", {id:"CA", text:"Califoria"});</pre>
 
         <div class="row">
             <div class="span12"><h3>data</h3></div>
         </div>
         <p>Gets or sets the selection. Analogous to <code>val</code> method, but works with objects instead of ids.</p>
+        <p><code>data</code> method invoked on a single-select with an unset value will return <code>null</code>, while a <code>data</code> method invoked on an empty multi-select will return <code>[]</code></p>
 
 
     <div class="row">
