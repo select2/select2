@@ -1114,7 +1114,7 @@
             var style, attrs, matches, i, l;
 
             // see if there is width specified in opts
-            if (this.opts.width !== undefined)
+            if (this.opts.width !== undefined && this.opts.width !== 'copy')
                 return this.opts.width;
 
             // next check if there is inline style on the element that contains width
@@ -1129,23 +1129,38 @@
                 }
             }
 
-            // next check if css('width') can resolve a width that is percent based, this is sometimes possible
-            // when attached to input type=hidden or elements hidden via css
-            style = this.opts.element.css('width');
-            if (style.indexOf("%") > 0) return style;
+			if (this.opts.width !== 'copy') {
+				// next check if css('width') can resolve a width that is percent based, this is sometimes possible
+				// when attached to input type=hidden or elements hidden via css
+				style = this.opts.element.css('width');
+				if (style.indexOf("%") > 0) return style;
 
-            // finally, fallback on the calculated width of the element
-            return (this.opts.element.width() === 0 ? 'auto' : this.opts.element.outerWidth() + 'px');
-        }
+				// finally, fallback on the calculated width of the element
+				return (this.opts.element.width() === 0 ? 'auto' : this.opts.element.outerWidth() + 'px');
+			}
+			
+			return null;
+        },
+		
+		/**
+         * Set the width for the container element.  
+        **/
+		setContainerWidth : function(container) {
+			var width = this.getContainerWidth();
+            
+			if (!width) return;
+			
+			container.attr('style', "width: " + width);			
+		}
     });
 
     SingleSelect2 = clazz(AbstractSelect2, {
 
         // single
-        createContainer: function () {
-            return $("<div></div>", {
-                "class": "select2-container",
-                "style": "width: " + this.getContainerWidth()
+		
+		createContainer: function () {
+            var container = $("<div></div>", {
+                "class": "select2-container"                
             }).html([
                 "    <a href='javascript:void(0)' class='select2-choice'>",
                 "   <span></span><abbr class='select2-search-choice-close' style='display:none;'></abbr>",
@@ -1158,6 +1173,8 @@
                 "   <ul class='select2-results'>" ,
                 "   </ul>" ,
                 "</div>"].join(""));
+
+			this.setContainerWidth(container);
         },
 
         // single
@@ -1456,9 +1473,8 @@
 
         // multi
         createContainer: function () {
-            return $("<div></div>", {
-                "class": "select2-container select2-container-multi",
-                "style": "width: " + this.getContainerWidth()
+            var container = $("<div></div>", {
+                "class": "select2-container select2-container-multi"                
             }).html([
                 "    <ul class='select2-choices'>",
                 //"<li class='select2-search-choice'><span>California</span><a href="javascript:void(0)" class="select2-search-choice-close"></a></li>" ,
@@ -1470,6 +1486,10 @@
                 "   <ul class='select2-results'>" ,
                 "   </ul>" ,
                 "</div>"].join(""));
+				
+			this.setContainerWidth(container);
+			
+			return container;
         },
 
         // multi
