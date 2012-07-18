@@ -382,7 +382,7 @@
      * blurs any Select2 container that has focus when an element outside them was clicked or received focus
      */
     $(document).ready(function () {
-        $(document).delegate("*", "mousedown focusin touchend", function (e) {
+        $(document).delegate("*", "mousedown touchend", function (e) {
             var target = $(e.target).closest("div.select2-container").get(0);
             if (target) {
                 $(document).find("div.select2-container-active").each(function () {
