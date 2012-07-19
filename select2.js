@@ -1736,20 +1736,17 @@
 
         // multi
         addSelectedChoice: function (data) {
-            var choice=$("<li class='select2-search-choice'></li>"),
+            var choice=$(
+                    "<li class='select2-search-choice'>" +
+                    "    <div></div>" +
+                    "    <a href='javascript:void(0)' class='select2-search-choice-close' tabindex='-1'></a>" +
+                    "</li>"),
                 id = this.id(data),
                 val = this.getVal(),
                 formatted;
 
-            choice.find('.select2-tmp').replaceWith(this.opts.formatSelection(data));
-
             formatted=this.opts.formatSelection(data, choice);
-            if (formatted !== undefined) {
-                choice.append(formatted);
-            }
-
-            choice.append("<a href='javascript:void(0)' class='select2-search-choice-close' tabindex='-1'></a>");
-
+            choice.find("div").replaceWith("<div>"+formatted+"</div>");
             choice.find(".select2-search-choice-close")
                 .bind("click dblclick", this.bind(function (e) {
                 if (!this.enabled) return;
