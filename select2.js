@@ -1215,7 +1215,7 @@
             this.search.bind("keydown", this.bind(function (e) {
                 if (!this.enabled) return;
 
-                if (e.which === KEY.PAGE_UP || e.which === KEY.PAGE_DOWN || e.which === KEY.SPACE) {
+                if (e.which === KEY.PAGE_UP || e.which === KEY.PAGE_DOWN) {
                     // prevent the page from scrolling
                     killEvent(e);
                     return;
