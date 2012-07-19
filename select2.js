@@ -660,9 +660,9 @@
                     } else if ("tags" in opts) {
                         opts.query = tags(opts.tags);
                         opts.createSearchChoice = function (term) { return {id: term, text: term}; };
-                        opts.initSelection = function (element, callback) {
+                        opts.initSelection = function (opts, callback) {
                             var data = [];
-                            $(splitVal(element.val(), opts.separator)).each(function () {
+                            $(splitVal(opts.element.val(), opts.separator)).each(function () {
                                 data.push({id: this, text: this});
                             });
 
@@ -1305,7 +1305,7 @@
                 this.setPlaceholder();
             } else {
                 var self = this;
-                this.opts.initSelection.call(null, this.opts.element, function(selected){
+                this.opts.initSelection.call(null, this.opts, function(selected){
                     if (selected !== undefined && selected !== null) {
                         self.updateSelection(selected);
                         self.close();
@@ -1321,8 +1321,8 @@
 
             if (opts.element.get(0).tagName.toLowerCase() === "select") {
                 // install the selection initializer
-                opts.initSelection = function (element, callback) {
-                    var selected = element.find(":selected");
+                opts.initSelection = function (opts, callback) {
+                    var selected = opts.element.find(":selected");
                     // a single select box always has a value, no need to null check 'selected'
                     if ($.isFunction(callback))
                         callback({id: selected.attr("value"), text: selected.text()});
@@ -1492,7 +1492,7 @@
 
             if (opts.element.get(0).tagName.toLowerCase() === "select") {
                 // install sthe selection initializer
-                opts.initSelection = function (element,callback) {
+                opts.initSelection = function (opts,callback) {
 
                     var data = [];
                     element.find(":selected").each2(function (i, elm) {
@@ -1619,7 +1619,7 @@
             }
             if (this.select || this.opts.element.val() !== "") {
                 var self = this;
-                this.opts.initSelection.call(null, this.opts.element, function(data){
+                this.opts.initSelection.call(null, this.opts, function(data){
                     if (data !== undefined && data !== null) {
                         self.updateSelection(data);
                         self.close();
