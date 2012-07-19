@@ -474,6 +474,7 @@
 
             // initialize the container
             this.initContainer();
+            this.initContainerWidth();
 
             installFilteredMouseMove(this.results);
             this.dropdown.delegate(resultsSelector, "mousemove-filtered", this.bind(this.highlightUnderEvent));
@@ -1106,61 +1107,57 @@
          * derived first from option `width` passed to select2, then
          * the inline 'style' on the original element, and finally
          * falls back to the jQuery calculated element width.
-         *
-         * @returns The width string (with units) for the container.
          */
         // abstract
-        getContainerWidth: function () {
-            var style, attrs, matches, i, l;
+        initContainerWidth: function () {
+            function resolveContainerWidth() {
+                var style, attrs, matches, i, l;
 
-            // see if there is width specified in opts
-            if (this.opts.width !== undefined && this.opts.width !== 'copy')
-                return this.opts.width;
+                if (this.opts.width === "off") {
+                    return null;
+                } else if (this.opts.width === "element"){
+                    return this.opts.element.outerWidth() === 0 ? 'auto' : this.opts.element.outerWidth() + 'px';
+                } else if (this.opts.width === "copy" || this.opts.width === "resolve") {
+                    // check if there is inline style on the element that contains width
+                    style = this.opts.element.attr('style');
+                    if (style !== undefined) {
+                        attrs = style.split(';');
+                        for (i = 0, l = attrs.length; i < l; i = i + 1) {
+                            matches = attrs[i].replace(/\s/g, '')
+                                .match(/width:(([-+]?([0-9]*\.)?[0-9]+)(px|em|ex|%|in|cm|mm|pt|pc))/);
+                            if (matches !== null && matches.length >= 1)
+                                return matches[1];
+                        }
+                    }
 
-            // next check if there is inline style on the element that contains width
-            style = this.opts.element.attr('style');
-            if (style !== undefined) {
-                attrs = style.split(';');
-                for (i = 0, l = attrs.length; i < l; i = i + 1) {
-                    matches = attrs[i].replace(/\s/g, '')
-                        .match(/width:(([-+]?([0-9]*\.)?[0-9]+)(px|em|ex|%|in|cm|mm|pt|pc))/);
-                    if (matches !== null && matches.length >= 1)
-                        return matches[1];
-                }
+                    if (this.opts.width === "resolve") {
+                        // next check if css('width') can resolve a width that is percent based, this is sometimes possible
+                        // when attached to input type=hidden or elements hidden via css
+                        style = this.opts.element.css('width');
+                        if (style.indexOf("%") > 0) return style;
+
+                        // finally, fallback on the calculated width of the element
+                        return (this.opts.element.outerWidth() === 0 ? 'auto' : this.opts.element.outerWidth() + 'px');
+                    }
+                } else {
+                    return this.opts.width;
+               }
+            };
+
+            var width = resolveContainerWidth.call(this);
+            if (width !== null) {
+                this.container.attr("style", "width: "+width);
             }
-
-			if (this.opts.width !== 'copy') {
-				// next check if css('width') can resolve a width that is percent based, this is sometimes possible
-				// when attached to input type=hidden or elements hidden via css
-				style = this.opts.element.css('width');
-				if (style.indexOf("%") > 0) return style;
-
-				// finally, fallback on the calculated width of the element
-				return (this.opts.element.width() === 0 ? 'auto' : this.opts.element.outerWidth() + 'px');
-			}
-			
-			return null;
-        },
-		
-		/**
-         * Set the width for the container element.  
-        **/
-		setContainerWidth : function(container) {
-			var width = this.getContainerWidth();
-            
-			if (!width) return;
-			
-			container.attr('style', "width: " + width);			
-		}
+        }
     });
 
     SingleSelect2 = clazz(AbstractSelect2, {
 
         // single
-		
+
 		createContainer: function () {
             var container = $("<div></div>", {
-                "class": "select2-container"                
+                "class": "select2-container"
             }).html([
                 "    <a href='javascript:void(0)' class='select2-choice'>",
                 "   <span></span><abbr class='select2-search-choice-close' style='display:none;'></abbr>",
@@ -1173,8 +1170,7 @@
                 "   <ul class='select2-results'>" ,
                 "   </ul>" ,
                 "</div>"].join(""));
-
-			this.setContainerWidth(container);
+            return container;
         },
 
         // single
@@ -1474,7 +1470,7 @@
         // multi
         createContainer: function () {
             var container = $("<div></div>", {
-                "class": "select2-container select2-container-multi"                
+                "class": "select2-container select2-container-multi"
             }).html([
                 "    <ul class='select2-choices'>",
                 //"<li class='select2-search-choice'><span>California</span><a href="javascript:void(0)" class="select2-search-choice-close"></a></li>" ,
@@ -1486,9 +1482,6 @@
                 "   <ul class='select2-results'>" ,
                 "   </ul>" ,
                 "</div>"].join(""));
-				
-			this.setContainerWidth(container);
-			
 			return container;
         },
 
@@ -2006,7 +1999,8 @@
 
     // plugin defaults, accessible to users
     $.fn.select2.defaults = {
-        closeOnSelect:true,
+        width: "copy",
+        closeOnSelect: true,
         containerCss: {},
         dropdownCss: {},
         containerCssClass: "",
