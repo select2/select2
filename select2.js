@@ -1138,6 +1138,8 @@
                         // finally, fallback on the calculated width of the element
                         return (this.opts.element.outerWidth() === 0 ? 'auto' : this.opts.element.outerWidth() + 'px');
                     }
+
+                    return null;
                 } else {
                     return this.opts.width;
                }
