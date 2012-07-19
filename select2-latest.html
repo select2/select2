@@ -221,6 +221,7 @@ $("#e10_3").select2({
                     <li>Separator in multi-valued selects is now cofigurable, <code>,</code> still the default. See <code>separator</code> option in the docs.</li>
                     <li>Matching is now customizable. See <a href="#doc-matcher">matcher</a> function in the docs and the <a href="#matcher">Custom Matcher</a> example.</li>
                     <li><code>change</code> event now specifies which elements were added/removed</li>
+                    <li><code>width</code> option now supports various strategies instead of always being copied from the source element</li>
                 </ul>
             </div></div>
         </section>
@@ -848,6 +849,16 @@ $("#e18,#e18_2").select2();
             <tr>
                 <th>Parameter</th><th>Type</th><th>Description</th>
             </tr>
+            <tr><td>width</td><td>string</td><td>
+                Controls the <code>width</code> style attribute of the Select2 container div. The following values are supported:
+                <dl>
+                    <dt>off</dt><dd>No width attribute will be set. Keep in mind that the container div copies classes from the source element so setting the width attribute may not always be necessary.</dd>
+                    <dt>element</dt><dd>Uses javascript to calculate the width of the source element.</dd>
+                    <dt>copy</dt><dd>Copies the value of the width style attribute set on the source element</dd>
+                    <dt>resolve</dt><dd>First attempts to <u>copy</u> than falls back on <u>element</u></dd>
+                    <dt>other values</dt><dd>other values are used verbatim</dd>
+                </dl>
+            </td></tr>
             <tr><td>minimumInputLength</td><td>int</td><td>Number of characters necessary to start a search</td></tr>
             <tr><td>minimumResultsForSearch</td><td>int</td><td>
                 <p>
