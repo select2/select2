@@ -828,8 +828,10 @@
 
             this.dropdown.show();
             this.ensureHighlightVisible();
-            this.focusSearch();
 
+            this.positionDropdown();
+
+            this.focusSearch();
         },
 
         // abstract
@@ -997,7 +999,7 @@
             function postRender() {
                 results.scrollTop(0);
                 search.removeClass("select2-active");
-                self.positionDropdown();
+                if (initial !== true) self.positionDropdown();
             }
 
             function render(html) {
@@ -1009,9 +1011,6 @@
                 render("<li class='select2-no-results'>" + opts.formatInputTooShort(search.val(), opts.minimumInputLength) + "</li>");
                 return;
             }
-
-            // position dropdown before making a potentially long request
-            this.positionDropdown();
 
             this.resultsPage = 1;
             opts.query({
