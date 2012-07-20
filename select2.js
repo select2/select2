@@ -1151,6 +1151,8 @@
                     }
 
                     return null;
+                } else if ($.isFunction(this.opts.width)) {
+                    return this.opts.width();
                 } else {
                     return this.opts.width;
                }
