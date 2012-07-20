@@ -1,4 +1,4 @@
-﻿/*
+/*
  Copyright 2012 Igor Vaynberg
 
  Version: @@ver@@ Timestamp: @@timestamp@@
@@ -744,6 +744,7 @@
 
             // console.log("below/ droptop:", dropTop, "dropHeight", dropHeight, "sum", (dropTop+dropHeight)+" viewport bottom", viewportBottom, "enough?", enoughRoomBelow);
             // console.log("above/ offset.top", offset.top, "dropHeight", dropHeight, "top", (offset.top-dropHeight), "scrollTop", this.body().scrollTop(), "enough?", enoughRoomAbove);
+            // console.log("left:", offset.left, "actual left", $(".select2-container").offset().left);
 
             // always prefer the current above/below alignment, unless there is not enough room
 
@@ -828,7 +829,7 @@
 
             this.dropdown.show();
             this.ensureHighlightVisible();
-
+	    
             this.positionDropdown();
 
             this.focusSearch();
@@ -999,7 +1000,8 @@
             function postRender() {
                 results.scrollTop(0);
                 search.removeClass("select2-active");
-                if (initial !== true) self.positionDropdown();
+                
+                self.positionDropdown();
             }
 
             function render(html) {
@@ -1117,17 +1119,16 @@
                 } else if (this.opts.width === "element"){
                     return this.opts.element.outerWidth() === 0 ? 'auto' : this.opts.element.outerWidth() + 'px';
                 } else if (this.opts.width === "copy" || this.opts.width === "resolve") {
-                    // check if there is inline style on the element that contains width
-                    style = this.opts.element.attr('style');
-                    if (style !== undefined) {
-                        attrs = style.split(';');
-                        for (i = 0, l = attrs.length; i < l; i = i + 1) {
-                            matches = attrs[i].replace(/\s/g, '')
-                                .match(/width:(([-+]?([0-9]*\.)?[0-9]+)(px|em|ex|%|in|cm|mm|pt|pc))/);
-                            if (matches !== null && matches.length >= 1)
-                                return matches[1];
+                   if (this.opts.width === "copy") {
+                       // get the width as computed by jQuery for the original element
+                        var newWidth = this.opts.element.outerWidth();
+                        // if the width of the element is bigger than its parent, get the width relative to the screen
+                        if(this.opts.element.outerWidth() > this.opts.element.parent().outerWidth()) {
+                            newWidth = (this.opts.element.outerWidth() / $(window).outerWidth()) * this.opts.element.parent().outerWidth();
                         }
-                    }
+                        // return it in a pixel value so it is consistent across browsers
+                        return newWidth + "px";
+                   }
 
                     if (this.opts.width === "resolve") {
                         // next check if css('width') can resolve a width that is percent based, this is sometimes possible
