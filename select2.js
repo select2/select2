@@ -380,6 +380,8 @@
 
     /**
      * blurs any Select2 container that has focus when an element outside them was clicked or received focus
+     *
+     * also takes care of clicks on label tags that point to the source element
      */
     $(document).ready(function () {
         $(document).delegate("*", "mousedown touchend", function (e) {
@@ -393,6 +395,13 @@
                 $(document).find("div.select2-drop-active").each(function () {
                     if (this !== target) $(this).data("select2").blur();
                 });
+            }
+
+            target=$(e.target);
+            if ("LABEL" === e.target.tagName && target.attr("for").length > 0) {
+                target = $("#"+target.attr("for"));
+                target = target.data("select2");
+                if (target !== undefined) { target.focus(); e.preventDefault();}
             }
         });
     });
