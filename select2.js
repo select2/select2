@@ -1,4 +1,4 @@
-﻿/*
+/*
  Copyright 2012 Igor Vaynberg
 
  Version: @@ver@@ Timestamp: @@timestamp@@
@@ -744,6 +744,7 @@
 
             // console.log("below/ droptop:", dropTop, "dropHeight", dropHeight, "sum", (dropTop+dropHeight)+" viewport bottom", viewportBottom, "enough?", enoughRoomBelow);
             // console.log("above/ offset.top", offset.top, "dropHeight", dropHeight, "top", (offset.top-dropHeight), "scrollTop", this.body().scrollTop(), "enough?", enoughRoomAbove);
+            // console.log("left:", offset.left, "actual left", $(".select2-container").offset().left);
 
             // always prefer the current above/below alignment, unless there is not enough room
 
@@ -828,7 +829,7 @@
 
             this.dropdown.show();
             this.ensureHighlightVisible();
-
+	    
             this.positionDropdown();
 
             this.focusSearch();
@@ -999,7 +1000,8 @@
             function postRender() {
                 results.scrollTop(0);
                 search.removeClass("select2-active");
-                if (initial !== true) self.positionDropdown();
+                
+                self.positionDropdown();
             }
 
             function render(html) {
