@@ -1128,16 +1128,16 @@
                 } else if (this.opts.width === "element"){
                     return this.opts.element.outerWidth() === 0 ? 'auto' : this.opts.element.outerWidth() + 'px';
                 } else if (this.opts.width === "copy" || this.opts.width === "resolve") {
-                    // check if there is inline style on the element that contains width
-                    style = this.opts.element.attr('style');
-                    if (style !== undefined) {
-                        attrs = style.split(';');
-                        for (i = 0, l = attrs.length; i < l; i = i + 1) {
-                            matches = attrs[i].replace(/\s/g, '')
-                                .match(/width:(([-+]?([0-9]*\.)?[0-9]+)(px|em|ex|%|in|cm|mm|pt|pc))/);
-                            if (matches !== null && matches.length >= 1)
-                                return matches[1];
+                    if (this.opts.width === "copy") {
+                       // get the width as computed by jQuery for the original element
+                        var newWidth = this.opts.element.outerWidth();
+                        // if the width of the element is bigger than its parent, get the width relative to the screen
+                        if(this.opts.element.outerWidth() > this.opts.element.parent().outerWidth()) {
+                            newWidth = (this.opts.element.outerWidth() / $(window).outerWidth()) * 100;
+                            return newWidth + "%";
                         }
+                        // return it in a pixel value so it is consistent across browsers
+                        return newWidth + "px";
                     }
 
                     if (this.opts.width === "resolve") {
