@@ -844,6 +844,8 @@
             this.container.removeClass("select2-dropdown-open");
             this.results.empty();
             this.clearSearch();
+
+            this.opts.element.trigger(jQuery.Event("close"));
         },
 
         // abstract
