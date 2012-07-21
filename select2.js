@@ -1302,6 +1302,7 @@
             }));
         },
 
+        // single
         clear: function() {
             this.opts.element.val("");
             this.selection.find("span").empty();
@@ -1438,7 +1439,6 @@
             val = arguments[0];
 
             if (this.select) {
-                // val is an id
                 this.select
                     .val(val)
                     .find(":selected").each2(function (i, elm) {
@@ -1446,23 +1446,22 @@
                         return false;
                     });
                 this.updateSelection(data);
+                this.setPlaceholder();
             } else {
-                // val is an object. !val is true for [undefined,null,'']
-                if (this.opts.initSelection && val) {
-                    that = this;
-                    this.opts.initSelection(this.opts.element.val(val), function(data){
-                        self.opts.element.val(!data ? "" : self.id(data));
-                        self.updateSelection(data);
-                        self.setPlaceholder();
-                    });
-                    return;
-                } else {
-                    this.opts.element.val(!val ? "" : this.id(val));
-                    this.updateSelection(val);
+                if (this.opts.initSelection === undefined) {
+                    throw new Error("cannot call val() if initSelection() is not defined");
                 }
+                // val is an id. !val is true for [undefined,null,'']
+                if (!val) {
+                    this.clear();
+                    return;
+                }
+                this.opts.initSelection(this.opts.element, function(data){
+                    self.opts.element.val(!data ? "" : self.id(data));
+                    self.updateSelection(data);
+                    self.setPlaceholder();
+                });
             }
-            this.setPlaceholder();
-
         },
 
         // single
@@ -1907,31 +1906,33 @@
 
             val = arguments[0];
 
+            if (!val) {
+                this.opts.element.val("");
+                this.updateSelection([]);
+                this.clearSearch();
+                return;
+            }
+
+            // val is a list of ids
+            this.setVal(val);
+
             if (this.select) {
-                // val is a list of ids
-                this.setVal(val);
                 this.select.find(":selected").each(function () {
                     data.push({id: $(this).attr("value"), text: $(this).text()});
                 });
                 this.updateSelection(data);
             } else {
-                if (this.opts.initSelection && val !== null) {
-                    this.opts.initSelection(this.opts.element.val(val), function(newVal){
-                        $(newVal).each(function () { data.push(self.id(this)); });
-                        self.setVal(data);
-                        self.updateSelection(newVal);
-                        self.clearSearch();
-                    });
-                    return;
-                } else {	
-                    val = (val === null) ? [] : val;
-                    // val is a list of objects
-                    $(val).each(function () { data.push(self.id(this)); });
-                    this.setVal(data);
-                    this.updateSelection(val);
+                if (this.opts.initSelection === undefined) {
+                    throw new Error("val() cannot be called if initSelection() is not defined")
                 }
-            }
 
+                this.opts.initSelection(this.opts.element, function(data){
+                    var ids=$(data).map(self.id);
+                    self.setVal(ids);
+                    self.updateSelection(data);
+                    self.clearSearch();
+                });
+            }
             this.clearSearch();
         },
 
