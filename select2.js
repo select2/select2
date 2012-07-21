@@ -1429,7 +1429,7 @@
 
         // single
         val: function () {
-            var val, data = null;
+            var val, data = null, self = this;
 
             if (arguments.length === 0) {
                 return this.opts.element.val();
@@ -1448,8 +1448,18 @@
                 this.updateSelection(data);
             } else {
                 // val is an object. !val is true for [undefined,null,'']
-                this.opts.element.val(!val ? "" : this.id(val));
-                this.updateSelection(val);
+                if (this.opts.initSelection && val) {
+                    that = this;
+                    this.opts.initSelection(this.opts.element.val(val), function(data){
+                        self.opts.element.val(!data ? "" : self.id(data));
+                        self.updateSelection(data);
+                        self.setPlaceholder();
+                    });
+                    return;
+                } else {
+                    this.opts.element.val(!val ? "" : this.id(val));
+                    this.updateSelection(val);
+                }
             }
             this.setPlaceholder();
 
@@ -1905,11 +1915,21 @@
                 });
                 this.updateSelection(data);
             } else {
-                val = (val === null) ? [] : val;
-                // val is a list of objects
-                $(val).each(function () { data.push(self.id(this)); });
-                this.setVal(data);
-                this.updateSelection(val);
+                if (this.opts.initSelection && val !== null) {
+                    this.opts.initSelection(this.opts.element.val(val), function(newVal){
+                        $(newVal).each(function () { data.push(self.id(this)); });
+                        self.setVal(data);
+                        self.updateSelection(newVal);
+                        self.clearSearch();
+                    });
+                    return;
+                } else {	
+                    val = (val === null) ? [] : val;
+                    // val is a list of objects
+                    $(val).each(function () { data.push(self.id(this)); });
+                    this.setVal(data);
+                    this.updateSelection(val);
+                }
             }
 
             this.clearSearch();
