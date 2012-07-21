@@ -223,6 +223,7 @@ $("#e10_3").select2({
                     <li><code>change</code> event now specifies which elements were added/removed</li>
                     <li><code>width</code> option now supports various strategies instead of always being copied from the source element</li>
                     <li>Clicks on a <code>label</code> associated with the source element are now redirected to Select2.</li>
+                    <li><code>val</code> will now only accept ids, if you want to specify the full object for the selection use the new <code>data</code> method instead. <code>val</code> will also now only work on non-selects if <code>initSelection</code> was specified.</li>
                 </ul>
             </div></div>
         </section>
@@ -560,6 +561,7 @@ $(document).ready(function() {
 $("#e8").select2();
 $("#e8_get").click(function () { alert("Selected value is: "+$("#e8").select2("val"));});
 $("#e8_set").click(function () { $("#e8").select2("val", "CA"); });
+$("#e8_cl").click(function() { $("#e8").select2("val", ""); });
 $("#e8_get2").click(function () { alert("Selected data is: "+JSON.stringify($("#e8").select2("data")));});
 $("#e8_set2").click(function () { $("#e8").select2("data", {id: "CA", text: "California"}); });
 $("#e8_open").click(function () { $("#e8").select2("open"); });
@@ -569,6 +571,7 @@ $("#e8_2_get").click(function () { alert("Selected value is: "+$("#e8_2").select
 $("#e8_2_set").click(function () { $("#e8_2").select2("val", ["CA","MA"]); });
 $("#e8_2_get2").click(function () { alert("Selected value is: "+JSON.stringify($("#e8_2").select2("data")));});
 $("#e8_2_set2").click(function () { $("#e8_2").select2("data", [{id: "CA", text: "California"},{id:"MA", text: "Massachusetts"}]); });
+$("#e8_2_cl").click(function() { $("#e8_2").select2("val", ""); });
 $("#e8_2_open").click(function () { $("#e8_2").select2("open"); });
 $("#e8_2_close").click(function () { $("#e8_2").select2("close"); });
 });
@@ -579,6 +582,7 @@ $("#e8_2_close").click(function () { $("#e8_2").select2("close"); });
                 <p>
                   <input type="button" class="btn-primary" id="e8_get" value="Alert selected value"/>
                   <input type="button" class="btn-info" id="e8_set" value="Set to California"/>
+                  <input type="button" class="btn-info" id="e8_cl" value="Clear"/>
                   <input type="button" class="btn-primary" id="e8_get2" value="Alert selected using data"/>
                   <input type="button" class="btn-info" id="e8_set2" value="Set to California using data"/>
                   <input type="button" class="btn-warning" id="e8_open" value="Open"/>
@@ -592,7 +596,8 @@ $("#e8_2_close").click(function () { $("#e8_2").select2("close"); });
                   <input type="button" class="btn-info" id="e8_2_set" value="Set to California and Massachusetts"/>
                   <input type="button" class="btn-primary" id="e8_2_get2" value="Alert selected value using data"/>
                   <input type="button" class="btn-info" id="e8_2_set2" value="Set to California and Massachusetts using data"/>
-                  <input type="button" class="btn-warning" id="e8_2_open" value="Open"/>
+                    <input type="button" class="btn-info" id="e8_2_cl" value="Clear"/>
+                    <input type="button" class="btn-warning" id="e8_2_open" value="Open"/>
                   <input type="button" class="btn-warning" id="e8_2_close" value="Close"/>
                 </p>
               <p>
@@ -1192,8 +1197,8 @@ $("#tags").select2({
                     </tr>
                   <tr>
                       <th>Attached to <code>input[type=hidden]</code></th>
-                      <td>An object representing the selection. Should at least contain an <code>id</code> key. The rest of the keys should be determined by the custom rendering function, the default rendering function only needs an additional <code>text</code> key</td>
-                      <td>An array of objects representing the selection. <code>null</code> for empty.</td>
+                      <td>Id of the object that should be selected. <code>""</code> to clear. Can only be used if <code>initSelection()</code> was specified.</td>
+                      <td>An array of objects ids that should be selected. <code>""</code> to clear. Can only be used if <code>initSelection()</code> was specified.</td>
                   </tr>
 
               </table>
