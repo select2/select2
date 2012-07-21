@@ -1448,7 +1448,7 @@
                 this.updateSelection(data);
             } else {
                 // val is an object. !val is true for [undefined,null,'']
-                if (this.opts.initSelection) {
+                if (this.opts.initSelection && val) {
                     that = this;
                     this.opts.initSelection(this.opts.element.val(val), function(data){
                         self.opts.element.val(!data ? "" : self.id(data));
@@ -1915,7 +1915,7 @@
                 });
                 this.updateSelection(data);
             } else {
-                if (this.opts.initSelection) {
+                if (this.opts.initSelection && val !== null) {
                     this.opts.initSelection(this.opts.element.val(val), function(newVal){
                         $(newVal).each(function () { data.push(self.id(this)); });
                         self.setVal(data);
