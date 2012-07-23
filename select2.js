@@ -650,7 +650,15 @@
                         opts.initSelection = function (element) {
                             var data = [];
                             $(splitVal(element.val(), ",")).each(function () {
-                                data.push({id: this, text: this});
+                                var id = this;
+                                var text = this;
+                                $(opts.tags).each(function() {
+                                    if (this.id == id) {
+                                        text = this.text;
+                                        return false;
+                                    }
+                                });
+                                data.push({id: id, text: text});
                             });
                             return data;
                         };
