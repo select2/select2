@@ -1089,6 +1089,8 @@
              this makes sure the search field is focussed even if the current event would blur it */
             window.setTimeout(this.bind(function () {
                 this.search.focus();
+                // reset the value so IE places the cursor at the end of the input box
+                this.search.val(this.search.val());
             }), 10);
         },
 
@@ -1203,7 +1205,7 @@
         // single
         focus: function () {
             this.close();
-            this.search.focus();
+            this.container.focus();
         },
 
         // single
@@ -1214,7 +1216,7 @@
         // single
         cancel: function () {
             this.parent.cancel.apply(this, arguments);
-            this.search.focus();
+            this.container.focus();
         },
 
         // single
@@ -1253,7 +1255,47 @@
                             killEvent(e);
                             return;
                     }
-                } else {
+                }
+            }));
+
+            selection.bind("click", this.bind(function (e) {
+                clickingInside = true;
+
+                if (this.opened()) {
+                    this.close();
+                    this.container.focus();
+                } else if (this.enabled) {
+                    this.open();
+                }
+                killEvent(e);
+
+                clickingInside = false;
+            }));
+
+            dropdown.bind("click", this.bind(function() { this.search.focus(); }));
+            
+            container.bind("focus", this.bind(function() {
+                // allows the container to recieve the keyup event
+                this.container.attr("tabindex", 1);
+            }));
+            
+            container.bind("blur", this.bind(function() {
+                // remove the tabindex so the tab key works properly
+                this.container.attr("tabindex", -1);
+            }));
+            
+            container.bind("keydown", this.bind(function(e) {
+                if (!this.enabled) return;
+                
+                this.container.attr("tabindex", -1);
+
+                if (e.which === KEY.PAGE_UP || e.which === KEY.PAGE_DOWN) {
+                    // prevent the page from scrolling
+                    killEvent(e);
+                    return;
+                }
+
+                if (!this.opened()) {
                     if (e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e) || e.which === KEY.ESC) {
                         return;
                     }
@@ -1265,24 +1307,16 @@
                         killEvent(e);
                         return;
                     }
+                    
+                    var keyWritten = String.fromCharCode(e.which).toLowerCase();
+                
+                    if (e.shiftKey) {
+                        keyWritten = keyWritten.toUpperCase();
+                    }
+                    
+                    this.search.val(keyWritten);
                 }
             }));
-
-            selection.bind("click", this.bind(function (e) {
-                clickingInside = true;
-
-                if (this.opened()) {
-                    this.close();
-                    this.search.focus();
-                } else if (this.enabled) {
-                    this.open();
-                }
-                killEvent(e);
-
-                clickingInside = false;
-            }));
-
-            dropdown.bind("click", this.bind(function() { this.search.focus(); }));
 
             selection.delegate("abbr", "click", this.bind(function (e) {
                 if (!this.enabled) return;
@@ -1290,7 +1324,7 @@
                 killEvent(e);
                 this.close();
                 this.triggerChange();
-                this.search.focus();
+                this.container.focus();
             }));
 
             selection.bind("focus", this.bind(function() { this.search.focus(); }));
@@ -1403,7 +1437,7 @@
             this.opts.element.val(this.id(data));
             this.updateSelection(data);
             this.close();
-            this.search.focus();
+            this.container.focus();
 
             if (!equal(old, this.id(data))) { this.triggerChange(); }
         },
@@ -1697,7 +1731,7 @@
         // multi
         focus: function () {
             this.close();
-            this.search.focus();
+            this.container.focus();
         },
 
         // multi
