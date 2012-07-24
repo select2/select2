@@ -1891,20 +1891,29 @@
         postprocessResults: function () {
             var val = this.getVal(),
                 choices = this.results.find(".select2-result-selectable"),
+                compound = this.results.find(".select2-result-with-children"),
                 self = this;
 
             choices.each2(function (i, choice) {
                 var id = self.id(choice.data("select2-data"));
                 if (indexOf(id, val) >= 0) {
-                    choice.addClass("select2-disabled");
+                    choice.addClass("select2-disabled").removeClass("select2-result-selectable");
                 } else {
-                    choice.removeClass("select2-disabled");
+                    choice.removeClass("select2-disabled").addClass("select2-result-selectable");
+                }
+            });
+
+            compound.each2(function(i, e) {
+                if (e.find(".select2-result-selectable").length==0) {
+                    e.addClass("select2-disabled");
+                } else {
+                    e.removeClass("select2-disabled");
                 }
             });
 
             choices.each2(function (i, choice) {
-                if (!choice.hasClass("select2-disabled")) {
-                    self.highlight(i);
+                if (!choice.hasClass("select2-disabled") && choice.hasClass("select2-result-selectable")) {
+                    self.highlight(0);
                     return false;
                 }
             });
