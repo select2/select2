@@ -672,7 +672,10 @@
                         opts.initSelection = function (element, callback) {
                             var data = [];
                             $(splitVal(element.val(), opts.separator)).each(function () {
-                                data.push({id: this, text: this});
+                                var id = this, text = this, tags=opts.tags;
+                                if ($.isFunction(tags)) tags=tags();
+                                $(tags).each(function() { if (equal(this.id, id)) { text = this.text; return false; } });
+                                data.push({id: id, text: text});
                             });
 
                             callback(data);
