@@ -853,7 +853,7 @@
             this.clearDropdownAlignmentPreference();
 
             this.dropdown.hide();
-            this.container.removeClass("select2-dropdown-open");
+            this.container.removeClass("select2-dropdown-open").removeClass("select2-container-active");
             this.results.empty();
             this.clearSearch();
 
@@ -1194,6 +1194,7 @@
 
         // single
         opening: function () {
+            this.search.show();
             this.parent.opening.apply(this, arguments);
             this.dropdown.removeClass("select2-offscreen");
         },
@@ -1208,7 +1209,7 @@
         // single
         focus: function () {
             this.close();
-            this.container.focus();
+            this.selection.focus();
         },
 
         // single
@@ -1219,7 +1220,7 @@
         // single
         cancel: function () {
             this.parent.cancel.apply(this, arguments);
-            this.container.focus();
+            this.selection.focus();
         },
 
         // single
@@ -1258,7 +1259,27 @@
                             killEvent(e);
                             return;
                     }
+                } else {
+
+                    if (e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e) || e.which === KEY.ESC) {
+                        return;
+                    }
+
+                    this.open();
+
+                    if (e.which === KEY.ENTER) {
+                        // do not propagate the event otherwise we open, and propagate enter which closes
+                        return;
+                    }
                 }
+            }));
+
+            this.search.bind("focus", this.bind(function() {
+                this.selection.attr("tabIndex", "-1");
+            }));
+            this.search.bind("blur", this.bind(function() {
+                if (!this.opened()) this.container.removeClass("select2-container-active");
+                window.setTimeout(this.bind(function() { this.selection.removeAttr("tabIndex"); }), 10);
             }));
 
             selection.bind("click", this.bind(function (e) {
@@ -1266,7 +1287,7 @@
 
                 if (this.opened()) {
                     this.close();
-                    this.container.focus();
+                    this.selection.focus();
                 } else if (this.enabled) {
                     this.open();
                 }
@@ -1276,21 +1297,20 @@
             }));
 
             dropdown.bind("click", this.bind(function() { this.search.focus(); }));
-            
-            container.bind("focus", this.bind(function() {
-                // allows the container to recieve the keyup event
-                this.container.attr("tabindex", 1);
+
+            selection.bind("focus", this.bind(function() {
+                this.container.addClass("select2-container-active");
+                // hide the search so the tab key does not focus on it
+                this.search.attr("tabIndex", "-1");
             }));
-            
-            container.bind("blur", this.bind(function() {
-                // remove the tabindex so the tab key works properly
-                this.container.attr("tabindex", -1);
+
+            selection.bind("blur", this.bind(function() {
+                this.container.removeClass("select2-container-active");
+                window.setTimeout(this.bind(function() { this.search.removeAttr("tabIndex"); }), 10);
             }));
-            
-            container.bind("keydown", this.bind(function(e) {
+
+            selection.bind("keydown", this.bind(function(e) {
                 if (!this.enabled) return;
-                
-                this.container.attr("tabindex", -1);
 
                 if (e.which === KEY.PAGE_UP || e.which === KEY.PAGE_DOWN) {
                     // prevent the page from scrolling
@@ -1298,27 +1318,35 @@
                     return;
                 }
 
-                if (!this.opened()) {
-                    if (e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e) || e.which === KEY.ESC) {
-                        return;
-                    }
-
-                    this.open();
-
-                    if (e.which === KEY.ENTER) {
-                        // do not propagate the event otherwise we open, and propagate enter which closes
-                        killEvent(e);
-                        return;
-                    }
-                    
-                    var keyWritten = String.fromCharCode(e.which).toLowerCase();
-                
-                    if (e.shiftKey) {
-                        keyWritten = keyWritten.toUpperCase();
-                    }
-                    
-                    this.search.val(keyWritten);
+                if (e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e) || e.which === KEY.ESC) {
+                    return;
                 }
+
+                this.open();
+
+                if (e.which === KEY.ENTER) {
+                    // do not propagate the event otherwise we open, and propagate enter which closes
+                    killEvent(e);
+                    return;
+                }
+
+                // do not set the search input value for non-alpha-numeric keys
+                // otherwise pressing down results in a '(' being set in the search field
+                if (e.which < 48 ) { // '0' == 48
+                    killEvent(e);
+                    return;
+                }
+
+                var keyWritten = String.fromCharCode(e.which).toLowerCase();
+
+                if (e.shiftKey) {
+                    keyWritten = keyWritten.toUpperCase();
+                }
+
+                this.search.val(keyWritten);
+
+                // prevent event propagation so it doesnt replay on the now focussed search field and result in double key entry
+                killEvent(e);
             }));
 
             selection.delegate("abbr", "click", this.bind(function (e) {
@@ -1327,10 +1355,8 @@
                 killEvent(e);
                 this.close();
                 this.triggerChange();
-                this.container.focus();
+                this.selection.focus();
             }));
-
-            selection.bind("focus", this.bind(function() { this.search.focus(); }));
 
             this.setPlaceholder();
 
@@ -1440,7 +1466,7 @@
             this.opts.element.val(this.id(data));
             this.updateSelection(data);
             this.close();
-            this.container.focus();
+            this.selection.focus();
 
             if (!equal(old, this.id(data))) { this.triggerChange(); }
         },
@@ -1632,6 +1658,10 @@
 
             this.search.bind("keyup", this.bind(this.resizeSearch));
 
+            this.search.bind("blur", this.bind(function() {
+                this.container.removeClass("select2-container-active");
+            }));
+
             this.container.delegate(selector, "click", this.bind(function (e) {
                 if (!this.enabled) return;
                 this.clearPlaceholder();
@@ -1734,7 +1764,7 @@
         // multi
         focus: function () {
             this.close();
-            this.container.focus();
+            this.search.focus();
         },
 
         // multi
