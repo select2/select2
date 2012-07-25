@@ -707,12 +707,17 @@
          */
         // abstract
         triggerChange: function (details) {
-
             details = details || {};
-            details= $.extend({}, details, { type: "change", val: this.val() });
+
             // prevents recursive triggering
             this.opts.element.data("select2-change-triggered", true);
-            this.opts.element.trigger(details);
+			
+            var changeDetails = $.extend({}, details, { type: "change", val: this.val() });
+            this.opts.element.trigger(changeDetails);
+			
+            var clickDetails = $.extend({}, details, { type: "click", button: 0, which: 1 });
+            this.opts.element.trigger(clickDetails);
+			
             this.opts.element.data("select2-change-triggered", false);
         },
 
