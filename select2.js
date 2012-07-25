@@ -92,6 +92,8 @@
 
     nextUid=(function() { var counter=1; return function() { return counter++; }; }());
 
+    function escapeMarkup(markup) { return markup.replace("&", "&amp;"); }
+
     function indexOf(value, array) {
         var i = 0, l = array.length, v;
 
@@ -596,7 +598,7 @@
 
                             formatted=opts.formatResult(result, label, query);
                             if (formatted!==undefined) {
-                                label.html(formatted);
+                                label.html(escapeMarkup(formatted));
                             }
 
                             node.append(label);
@@ -1021,7 +1023,7 @@
             }
 
             function render(html) {
-                results.html(html);
+                results.html(escapeMarkup(html));
                 postRender();
             }
 
@@ -1064,7 +1066,7 @@
                 self.opts.populateResults.call(this, results, data.results, {term: search.val(), page: this.resultsPage, context:null});
 
                 if (data.more === true) {
-                    results.children().filter(":last").append("<li class='select2-more-results'>" + opts.formatLoadMore(this.resultsPage) + "</li>");
+                    results.children().filter(":last").append("<li class='select2-more-results'>" + escapeMarkup(opts.formatLoadMore(this.resultsPage)) + "</li>");
                     window.setTimeout(function() { self.loadMoreIfNeeded(); }, 10);
                 }
 
@@ -1424,7 +1426,7 @@
                 // check for a first blank option if attached to a select
                 if (this.select && this.select.find("option:first").text() !== "") return;
 
-                this.selection.find("span").html(placeholder);
+                this.selection.find("span").html(escapeMarkup(placeholder));
 
                 this.selection.addClass("select2-default");
 
@@ -1485,7 +1487,7 @@
             container.empty();
             formatted=this.opts.formatSelection(data, container);
             if (formatted !== undefined) {
-                container.append(formatted);
+                container.append(escapeMarkup(formatted));
             }
 
             this.selection.removeClass("select2-default");
@@ -1841,7 +1843,7 @@
                 formatted;
 
             formatted=this.opts.formatSelection(data, choice);
-            choice.find("div").replaceWith("<div>"+formatted+"</div>");
+            choice.find("div").replaceWith("<div>"+escapeMarkup(formatted)+"</div>");
             choice.find(".select2-search-choice-close")
                 .bind("click dblclick", this.bind(function (e) {
                 if (!this.enabled) return;
