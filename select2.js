@@ -714,6 +714,10 @@
             this.opts.element.data("select2-change-triggered", true);
             this.opts.element.trigger(details);
             this.opts.element.data("select2-change-triggered", false);
+
+            // some validation frameworks ignore the change event and listen instead to keyup, click for selects
+            // so here we trigger the click event manually
+            this.opts.element.click();
         },
 
 
