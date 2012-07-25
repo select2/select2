@@ -742,6 +742,7 @@
 
         // abstract
         positionDropdown: function() {
+          if (!this.opts.dropdownAttached) {
             var offset = this.container.offset(),
                 height = this.container.outerHeight(),
                 width = this.container.outerWidth(),
@@ -784,6 +785,7 @@
             };
 
             this.dropdown.css(css);
+          }
         },
 
         // abstract
@@ -834,10 +836,12 @@
 
             this.updateResults(true);
 
-            if(this.dropdown[0] !== this.body().children().last()[0]) {
-                this.dropdown.detach().appendTo(this.body());
+            if (!this.opts.dropdownAttached) {
+              if(this.dropdown[0] !== this.body().children().last()[0]) {
+                  this.dropdown.detach().appendTo(this.body());
+              }
             }
-
+          
             this.dropdown.show();
             this.ensureHighlightVisible();
 
@@ -2113,6 +2117,7 @@
         dropdownCss: {},
         containerCssClass: "",
         dropdownCssClass: "",
+        dropdownAttached: false,
         formatResult: function(result, container, query) {
             var markup=[];
             markMatch(result.text, query.term, markup);
