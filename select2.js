@@ -93,7 +93,7 @@
     nextUid=(function() { var counter=1; return function() { return counter++; }; }());
 
     function escapeMarkup(markup) {
-        if (typeof(markup) === "string") {
+        if (markup && typeof(markup) === "string") {
             return markup.replace("&", "&amp;");
         } else {
             return markup;
@@ -393,7 +393,7 @@
      */
     $(document).ready(function () {
         $(document).delegate("*", "mousedown touchend", function (e) {
-            var target = $(e.target).closest("div.select2-container").get(0);
+            var target = $(e.target).closest("div.select2-container").get(0), attr;
             if (target) {
                 $(document).find("div.select2-container-active").each(function () {
                     if (this !== target) $(this).data("select2").blur();
@@ -406,8 +406,9 @@
             }
 
             target=$(e.target);
-            if ("LABEL" === e.target.tagName && target.attr("for").length > 0) {
-                target = $("#"+target.attr("for"));
+            attr = target.attr("for");
+            if ("LABEL" === e.target.tagName && attr && attr.length > 0) {
+                target = $("#"+attr);
                 target = target.data("select2");
                 if (target !== undefined) { target.focus(); e.preventDefault();}
             }
