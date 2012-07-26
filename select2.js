@@ -92,7 +92,13 @@
 
     nextUid=(function() { var counter=1; return function() { return counter++; }; }());
 
-    function escapeMarkup(markup) { return markup.replace("&", "&amp;"); }
+    function escapeMarkup(markup) {
+        if (typeof(markup) === "string") {
+            return markup.replace("&", "&amp;");
+        } else {
+            return markup;
+        }
+    }
 
     function indexOf(value, array) {
         var i = 0, l = array.length, v;
