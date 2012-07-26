@@ -487,6 +487,8 @@
             this.results = results = this.container.find(resultsSelector);
             this.search = search = this.container.find("input.select2-input");
 
+            search.attr("tabIndex", this.opts.element.attr("tabIndex"));
+
             this.resultsPage = 0;
             this.context = null;
 
@@ -1292,7 +1294,7 @@
             }));
             this.search.bind("blur", this.bind(function() {
                 if (!this.opened()) this.container.removeClass("select2-container-active");
-                window.setTimeout(this.bind(function() { this.selection.removeAttr("tabIndex"); }), 10);
+                window.setTimeout(this.bind(function() { this.selection.attr("tabIndex", this.opts.element.attr("tabIndex")); }), 10);
             }));
 
             selection.bind("click", this.bind(function (e) {
@@ -1319,7 +1321,7 @@
 
             selection.bind("blur", this.bind(function() {
                 this.container.removeClass("select2-container-active");
-                window.setTimeout(this.bind(function() { this.search.removeAttr("tabIndex"); }), 10);
+                window.setTimeout(this.bind(function() { this.search.attr("tabIndex", this.opts.element.attr("tabIndex")); }), 10);
             }));
 
             selection.bind("keydown", this.bind(function(e) {
