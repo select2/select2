@@ -1700,7 +1700,7 @@
 
             this.parent.enable.apply(this, arguments);
 
-            this.search.show();
+            this.search.removeAttr("disabled");
         },
 
         // multi
@@ -1709,7 +1709,7 @@
 
             this.parent.disable.apply(this, arguments);
 
-            this.search.hide();
+            this.search.attr("disabled", true);
         },
 
         // multi
