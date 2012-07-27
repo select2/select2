@@ -1,4 +1,4 @@
-﻿/*
+/*
  Copyright 2012 Igor Vaynberg
 
  Version: @@ver@@ Timestamp: @@timestamp@@
@@ -1035,6 +1035,11 @@
                 results.html(escapeMarkup(html));
                 postRender();
             }
+            
+            if (opts.selectionLimit && ("getVal" in this) && this.getVal().length >= opts.selectionLimit) {
+            	render("<li class='select2-selection-limit'>" + opts.formatLimitReached(opts.selectionLimit) + "</li>");
+            	return;
+            }
 
             if (search.val().length < opts.minimumInputLength) {
                 render("<li class='select2-no-results'>" + opts.formatInputTooShort(search.val(), opts.minimumInputLength) + "</li>");
@@ -1983,7 +1988,7 @@
                 $(val).each(function () {
                     if (indexOf(this, unique) < 0) unique.push(this);
                 });
-                this.opts.element.val(unique.length === 0 ? "" : unique.join(","));
+                this.opts.element.val(unique.length === 0 ? "" : unique.join(this.opts.separator));
             }
         },
 
@@ -2138,9 +2143,11 @@
         },
         formatNoMatches: function () { return "No matches found"; },
         formatInputTooShort: function (input, min) { return "Please enter " + (min - input.length) + " more characters"; },
+        formatLimitReached: function (limit) { return "You can only select " + limit + " items"; },
         formatLoadMore: function (pageNumber) { return "Loading more results..."; },
         minimumResultsForSearch: 0,
         minimumInputLength: 0,
+        selectionLimit: 0,
         id: function (e) { return e.id; },
         matcher: function(term, text) {
             return text.toUpperCase().indexOf(term.toUpperCase()) >= 0;
