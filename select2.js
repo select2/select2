@@ -1,4 +1,4 @@
-/*
+﻿/*
  Copyright 2012 Igor Vaynberg
 
  Version: @@ver@@ Timestamp: @@timestamp@@
@@ -1016,7 +1016,7 @@
          */
         // abstract
         updateResults: function (initial) {
-            var search = this.search, results = this.results, opts = this.opts, self=this;
+            var search = this.search, results = this.results, opts = this.opts, data, self=this;
 
             // if the search is currently hidden we do not alter the results
             if (initial !== true && (this.showSearchInput === false || !this.opened())) {
@@ -1035,10 +1035,13 @@
                 results.html(escapeMarkup(html));
                 postRender();
             }
-            
-            if (opts.selectionLimit && ("getVal" in this) && this.getVal().length >= opts.selectionLimit) {
-            	render("<li class='select2-selection-limit'>" + opts.formatLimitReached(opts.selectionLimit) + "</li>");
-            	return;
+
+            if (opts.maximumSelectionSize >=1) {
+                data = this.data();
+                if ($.isArray(data) && data.length >= opts.maximumSelectionSize) {
+            	    render("<li class='select2-selection-limit'>" + opts.formatSelectionTooBig(opts.maximumSelectionSize) + "</li>");
+            	    return;
+                }
             }
 
             if (search.val().length < opts.minimumInputLength) {
@@ -2143,11 +2146,11 @@
         },
         formatNoMatches: function () { return "No matches found"; },
         formatInputTooShort: function (input, min) { return "Please enter " + (min - input.length) + " more characters"; },
-        formatLimitReached: function (limit) { return "You can only select " + limit + " items"; },
+        formatSelectionTooBig: function (limit) { return "You can only select " + limit + " items"; },
         formatLoadMore: function (pageNumber) { return "Loading more results..."; },
         minimumResultsForSearch: 0,
         minimumInputLength: 0,
-        selectionLimit: 0,
+        maximumSelectionSize: 0,
         id: function (e) { return e.id; },
         matcher: function(term, text) {
             return text.toUpperCase().indexOf(term.toUpperCase()) >= 0;
