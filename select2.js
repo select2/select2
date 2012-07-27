@@ -2077,6 +2077,7 @@
                      .map(function() { return $(this).data("select2-data"); })
                      .get();
             } else {
+                if (!values) { values = []; }
                 ids = $.map(values, function(e) { return self.opts.id(e)});
                 this.setVal(ids);
                 this.updateSelection(values);
