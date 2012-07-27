@@ -315,6 +315,11 @@ Version: @@ver@@ Timestamp: @@timestamp@@
   display: list-item;
 }
 
+.select2-results .select2-selection-limit {
+  background: #f4f4f4;
+  display: list-item;
+}
+
 /*
 disabled look for already selected choices in the results dropdown
 .select2-results .select2-disabled.select2-highlighted {
