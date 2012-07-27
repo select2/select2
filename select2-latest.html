@@ -13,6 +13,7 @@ version: 3.0
 $(function() {
    var opts=$("#source").html(), opts2="<option></option>"+opts;
    $("select.populate").each(function() { var e=$(this); e.html(e.hasClass("placeholder")?opts2:opts); });
+   $(".examples article:odd").addClass("zebra");
 });
 
 $(document).ready(function() {
@@ -231,6 +232,7 @@ $("#e10_3").select2({
                     <li><code>width</code> option now supports various strategies instead of always being copied from the source element</li>
                     <li>Clicks on a <code>label</code> associated with the source element are now redirected to Select2.</li>
                     <li><code>val</code> will now only accept ids, if you want to specify the full object for the selection use the new <code>data</code> method instead. <code>val</code> will also now only work on non-selects if <code>initSelection</code> was specified.</li>
+                    <li>It is now possible to limit the number of options that can be selected in a multi-select component. See the <a href="#maximumSelectionSize">Maximum Selection Size</a> example</li>
                 </ul>
             </div></div>
         </section>
@@ -246,7 +248,7 @@ $("#e10_3").select2({
             </ul>
         </section>
 
-      <section>
+      <section class="examples">
       <div class="row">
           <div class="span12">
               <h2>Examples</h2>
@@ -344,7 +346,7 @@ $("#e10_3").select2({
        </div>
       </article>
 
-      <article class="zebra row" id="multi">
+      <article class="row" id="multi">
         <div class="span4">
           <h3>Multi-Value Select Boxes</h3>
            <p>Select2 also supports multi-value select boxes. The <code>select</code> below is declared with the <code>multiple</code> attribute. Select2 automatially picks up on this:</p>
@@ -392,7 +394,7 @@ $("#e2_2").select2({
          </div>
         </article>
 
-        <article class="zebra row" id="minimum">
+        <article class="row" id="minimum">
           <div class="span4">
             <h3>Minimum Input</h3>
              <p>Select2 supports a minimum input setting which is useful for large remote datasets where short search terms are not very useful:</p>
@@ -436,7 +438,7 @@ $("#e2_2").select2({
          </div>
         </article>
 
-       <article class="zebra row" id="data">
+       <article class="row" id="data">
           <div class="span4">
             <h3>Loading Data</h3>
              <p>Select2 uses a function to load result data. Here is a trivial example that creates choices that consist of user's input repeated a number of times:</p>
@@ -451,6 +453,28 @@ $("#e2_2").select2({
             </pre>
          </div>
         </article>
+
+
+<script id="script_e19">
+$(document).ready(function() {
+$("#e19").select2({ maximumSelectionSize: 3 });
+});
+</script>
+      <article class="row" id="maximumSelectionSize">
+          <div class="span4">
+              <h3>Maximum Selection Size</h3>
+              <p>Select2 allows the developer to limit the number of items that can be selected in a multi-select control.
+              In the example below only 3 or less items can be selected.</p>
+              <p>
+                  <select multiple class="populate" id="e19" style="width:300px"></select>
+              </p>
+          </div>
+          <div class="span8">
+              <h3>Example Code</h3>
+            <pre class="prettyprint linenums" id="code_e19">
+            </pre>
+          </div>
+      </article>
 
       <article class="row" id="data_array">
          <div class="span4">
@@ -476,7 +500,7 @@ $("#e2_2").select2({
         </div>
        </article>
 
-        <article class="zebra row" id="ajax">
+        <article class="row" id="ajax">
            <div class="span12">
              <h3>Loading Remote Data</h3>
               <p>Select2 comes with AJAX/JSONP support built in. In this example we will search for a movie using Rotten Tomatoes API:</p>
@@ -506,7 +530,7 @@ $("#e2_2").select2({
             </div>
          </article>
 
-        <article class="zebra row" id="programmatic">
+        <article class="row" id="programmatic">
 <script id="script_e8">
 $(document).ready(function() {
 $("#e8").select2();
@@ -606,7 +630,7 @@ $("#e11_2")
            </pre>
           </div>
       </article>
-      <article class="row zebra" id="tags">
+      <article class="row" id="tags">
 <script id="script_e12">
 $(document).ready(function () {
 $("#e12").select2({tags:["red", "green", "blue"]});
@@ -656,7 +680,7 @@ $("#e13_ak_co").click(function() { $("#e13").val(["AK","CO"]).trigger("change");
           </div>
       </article>
 
-      <article class="row zebra" id="lifecycle">
+      <article class="row" id="lifecycle">
 <script id="script_e14">
 $(document).ready(function () {
 $("#e14").val(["AL","AZ"]).select2();
@@ -710,7 +734,7 @@ $("#e15").select2("container").find("ul.select2-choices").sortable({
       </article>
 
 
-      <article class="row zebra" id="disabled">
+      <article class="row" id="disabled">
           <script id="script_e16">
               $(document).ready(function () {
 $("#e16").select2();
@@ -825,6 +849,14 @@ $("#e18,#e18_2").select2();
                     is not very useful and wastes screen space.
                 </p>
                 <p class="alert alert-info">Only applies to single-value select boxes</p>
+            </td>
+            </tr>
+            <tr><td>maximumSelectionSize</td><td>int</td><td>
+                <p>
+                    The maximum number of items that can be selected in a multi-select control. If this number is less than 1 selection is not limited.
+                </p>
+                <p>Once the number of selected items reaches the maximum specified the contents of the dropdown will be populated
+                by the <code>formatSelectionTooBig</code> function</p>
             </td>
             </tr>
             <tr><td>placeholder</td><td>string</td><td>
@@ -977,6 +1009,15 @@ $("#e18,#e18_2").select2();
                     <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
                     <tr><td>term</td><td>string</td><td>Search string entered by user</td></tr>
                     <tr><td>minLength</td><td>int</td><td>Minimum required term length</td></tr>
+                    <tr><td>&lt;returns&gt;</td><td>string</td><td>Message html</td></tr>
+                </table>
+            </td></tr>
+            <tr><td>formatSelectionTooBig</td><td>function</td><td>
+                Function used to render the &quot;You cannot select any more choices&quot; message
+                <pre>formatSelectionTooBig(maxSize)</pre>
+                <table class="table table-bordered table-striped">
+                    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                    <tr><td>maxSize</td><td>string</td><td>The maximum specified size of the selection</td></tr>
                     <tr><td>&lt;returns&gt;</td><td>string</td><td>Message html</td></tr>
                 </table>
             </td></tr>
