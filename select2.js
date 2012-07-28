@@ -1430,6 +1430,14 @@
                     if ($.isFunction(callback))
                         callback({id: selected.attr("value"), text: selected.text()});
                 };
+            } else if (opts.element.get(0).tagName.toLowerCase() === "input"
+                       && opts.element.attr("hidden") == "hidden"
+                       && opts.initSelection == undefined
+                       && opts.element.data("text")) {
+                // install the selection initializer
+                opts.initSelection = function (element,callback) {
+                    return {id: element.val(), text: element.data("text")};
+                };
             }
 
             return opts;
