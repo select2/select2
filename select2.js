@@ -674,6 +674,7 @@
             } else {
                 if (!("query" in opts)) {
                     if ("ajax" in opts) {
+                        if (!opts.ajax.url) opts.ajax.url = opts.element.data("ajax-url");
                         opts.query = ajax(opts.ajax);
                     } else if ("data" in opts) {
                         opts.query = local(opts.data);
