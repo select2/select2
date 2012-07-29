@@ -1039,13 +1039,21 @@
             if (opts.maximumSelectionSize >=1) {
                 data = this.data();
                 if ($.isArray(data) && data.length >= opts.maximumSelectionSize) {
-            	    render("<li class='select2-selection-limit'>" + opts.formatSelectionTooBig(opts.maximumSelectionSize) + "</li>");
-            	    return;
+                    if (typeof(opts.formatSelectionTooBig) === "function") {
+                        render("<li class='select2-selection-limit'>" + opts.formatSelectionTooBig(opts.maximumSelectionSize) + "</li>");
+                    } else {
+                        render("");
+                    }
+                    return;
                 }
             }
 
             if (search.val().length < opts.minimumInputLength) {
-                render("<li class='select2-no-results'>" + opts.formatInputTooShort(search.val(), opts.minimumInputLength) + "</li>");
+                if (typeof(opts.formatInputTooShort) === "function") {
+                    render("<li class='select2-no-results'>" + opts.formatInputTooShort(search.val(), opts.minimumInputLength) + "</li>");
+                } else {
+                    render("");
+                }
                 return;
             }
 
@@ -1075,7 +1083,11 @@
                 }
 
                 if (data.results.length === 0) {
-                    render("<li class='select2-no-results'>" + opts.formatNoMatches(search.val()) + "</li>");
+                    if (typeof(opts.formatNoMatches) === "function") {
+                        render("<li class='select2-no-results'>" + opts.formatNoMatches(search.val()) + "</li>");
+                    } else {
+                        render("");
+                    }
                     return;
                 }
 
