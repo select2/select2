@@ -1,4 +1,4 @@
-﻿/*
+/*
  Copyright 2012 Igor Vaynberg
 
  Version: @@ver@@ Timestamp: @@timestamp@@
@@ -521,7 +521,7 @@
             search.bind("focus", function () { search.addClass("select2-focused"); if (search.val() === " ") search.val(""); });
             search.bind("blur", function () { search.removeClass("select2-focused");});
 
-            this.dropdown.delegate(resultsSelector, "click", this.bind(function (e) {
+            this.dropdown.delegate(resultsSelector, "mouseup", this.bind(function (e) {
                 if ($(e.target).closest(".select2-result-selectable:not(.select2-disabled)").length > 0) {
                     this.highlightUnderEvent(e);
                     this.selectHighlighted(e);
@@ -1305,7 +1305,7 @@
                 window.setTimeout(this.bind(function() { this.selection.attr("tabIndex", this.opts.element.attr("tabIndex")); }), 10);
             }));
 
-            selection.bind("click", this.bind(function (e) {
+            selection.bind("mousedown", this.bind(function (e) {
                 clickingInside = true;
 
                 if (this.opened()) {
@@ -1319,7 +1319,7 @@
                 clickingInside = false;
             }));
 
-            dropdown.bind("click", this.bind(function() { this.search.focus(); }));
+            dropdown.bind("mousedown", this.bind(function() { this.search.focus(); }));
 
             selection.bind("focus", this.bind(function() {
                 this.container.addClass("select2-container-active");
@@ -1372,7 +1372,7 @@
                 killEvent(e);
             }));
 
-            selection.delegate("abbr", "click", this.bind(function (e) {
+            selection.delegate("abbr", "mousedown", this.bind(function (e) {
                 if (!this.enabled) return;
                 this.clear();
                 killEvent(e);
@@ -1685,7 +1685,7 @@
                 this.container.removeClass("select2-container-active");
             }));
 
-            this.container.delegate(selector, "click", this.bind(function (e) {
+            this.container.delegate(selector, "mousedown", this.bind(function (e) {
                 if (!this.enabled) return;
                 this.clearPlaceholder();
                 this.open();
