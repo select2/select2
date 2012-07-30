@@ -387,6 +387,20 @@
     }
 
     /**
+     * Checks if the formatter function should be used.
+     *
+     * Throws an error if it is not a function. Returns true if it should be used,
+     * false if no formatting should be performed.
+     *
+     * @param formatter
+     */
+    function checkFormatter(formatter, formatterName) {
+        if ($.isFunction(formatter)) return true;
+        if (!formatter) return fasle;
+        throw new Error("formatterName must be a function or a falsy value");
+    }
+
+    /**
      * blurs any Select2 container that has focus when an element outside them was clicked or received focus
      *
      * also takes care of clicks on label tags that point to the source element
@@ -1042,13 +1056,13 @@
 
             if (opts.maximumSelectionSize >=1) {
                 data = this.data();
-                if ($.isArray(data) && data.length >= opts.maximumSelectionSize) {
+                if ($.isArray(data) && data.length >= opts.maximumSelectionSize && checkFormatter(opts.formatSelectionTooBig, "formatSelectionTooBig")) {
             	    render("<li class='select2-selection-limit'>" + opts.formatSelectionTooBig(opts.maximumSelectionSize) + "</li>");
             	    return;
                 }
             }
 
-            if (search.val().length < opts.minimumInputLength) {
+            if (search.val().length < opts.minimumInputLength && checkFormatter(opts.formatInputTooShort, "formatInputTooShort")) {
                 render("<li class='select2-no-results'>" + opts.formatInputTooShort(search.val(), opts.minimumInputLength) + "</li>");
                 return;
             }
@@ -1078,7 +1092,7 @@
                     }
                 }
 
-                if (data.results.length === 0) {
+                if (data.results.length === 0 && checkFormatter(opts.formatNoMatches, "formatNoMatches")) {
                     render("<li class='select2-no-results'>" + opts.formatNoMatches(search.val()) + "</li>");
                     return;
                 }
@@ -1086,7 +1100,7 @@
                 results.empty();
                 self.opts.populateResults.call(this, results, data.results, {term: search.val(), page: this.resultsPage, context:null});
 
-                if (data.more === true) {
+                if (data.more === true && checkFormatter(opts.formatLoadMore, "formatLoadMore")) {
                     results.children().filter(":last").append("<li class='select2-more-results'>" + escapeMarkup(opts.formatLoadMore(this.resultsPage)) + "</li>");
                     window.setTimeout(function() { self.loadMoreIfNeeded(); }, 10);
                 }
