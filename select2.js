@@ -1,4 +1,4 @@
-/*
+﻿/*
  Copyright 2012 Igor Vaynberg
 
  Version: @@ver@@ Timestamp: @@timestamp@@
@@ -563,7 +563,7 @@
 
         // abstract
         prepareOpts: function (opts) {
-            var element, select, idKey;
+            var element, select, idKey, ajaxUrl;
 
             element = opts.element;
 
@@ -674,6 +674,10 @@
             } else {
                 if (!("query" in opts)) {
                     if ("ajax" in opts) {
+                        ajaxUrl = opts.element.data("ajax-url");
+                        if (ajaxUrl && ajaxUrl.length > 0) {
+                            opts.ajax.url = ajaxUrl;
+                        }
                         opts.query = ajax(opts.ajax);
                     } else if ("data" in opts) {
                         opts.query = local(opts.data);
