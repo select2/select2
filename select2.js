@@ -674,6 +674,7 @@
             } else {
                 if (!("query" in opts)) {
                     if ("ajax" in opts) {
+                        if (!opts.ajax.url) opts.ajax.url = opts.element.data("ajax-url");
                         opts.query = ajax(opts.ajax);
                     } else if ("data" in opts) {
                         opts.query = local(opts.data);
@@ -1428,6 +1429,14 @@
                     // a single select box always has a value, no need to null check 'selected'
                     if ($.isFunction(callback))
                         callback({id: selected.attr("value"), text: selected.text()});
+                };
+            } else if (opts.element.get(0).tagName.toLowerCase() === "input"
+                       && opts.element.attr("hidden") == "hidden"
+                       && opts.initSelection == undefined
+                       && opts.element.data("text")) {
+                // install the selection initializer
+                opts.initSelection = function (element,callback) {
+                    return {id: element.val(), text: element.data("text")};
                 };
             }
 
