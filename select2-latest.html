@@ -2,7 +2,7 @@
 layout: main
 title: Select2 Latest
 group: navigation
-version: 3.0
+version: 3.1
 ---
 
 <link href="select2-master/select2.css" rel="stylesheet"/>
@@ -218,21 +218,10 @@ $("#e10_3").select2({
 
 
         <section id="changelog">
-            <h2>Changelog from 2.x</h2>
+            <h2>Changelog from 3.0</h2>
             <div class="row"><div class="span12">
                 <ul>
-                    <li>Dropdown <code>div</code> is now appended directly to <code>body</code> and is absolutely positioned. This should allow the dropdown to overlap height-constrained containers such as modal windows.</li>
-                    <li><code>Optgroup</code>s are now supported in <code>select</code>s. N-level deep nesting of results is supported when attached to <code>input[type=hidden]</code>, see the new <a href="#doc-query">children</a> property described in the docs.</li>
-                    <li>Signature of <code>initSeletion</code> has changed to support initialization from asynchronous requests.</li>
-                    <li>Dropdown will now open below or above the control depending on available screen space. No more scrolling the page to see to see all matched results.</li>
-                    <li>Signature of <code>formatSelection</code> and <code>formatResult</code> changed in a backwards compatible way to support more powerful constructs than supported by strings alone.</li>
-                    <li>Separator in multi-valued selects is now cofigurable, <code>,</code> still the default. See <code>separator</code> option in the docs.</li>
-                    <li>Matching is now customizable. See <a href="#doc-matcher">matcher</a> function in the docs and the <a href="#matcher">Custom Matcher</a> example.</li>
-                    <li><code>change</code> event now specifies which elements were added/removed</li>
-                    <li><code>width</code> option now supports various strategies instead of always being copied from the source element</li>
-                    <li>Clicks on a <code>label</code> associated with the source element are now redirected to Select2.</li>
-                    <li><code>val</code> will now only accept ids, if you want to specify the full object for the selection use the new <code>data</code> method instead. <code>val</code> will also now only work on non-selects if <code>initSelection</code> was specified.</li>
-                    <li>It is now possible to limit the number of options that can be selected in a multi-select component. See the <a href="#maximumSelectionSize">Maximum Selection Size</a> example</li>
+
                 </ul>
             </div></div>
         </section>
@@ -240,7 +229,7 @@ $("#e10_3").select2({
         <section>
             <h2>Browser Compatibility</h2>
             <ul>
-                <li>IE 8+ (7 mostly works except for <a href="https://github.com/ivaynberg/select2/issues/37">issue with z-index</a>)</li>
+                <li>IE 7+</li>
                 <li>Chrome 8+</li>
                 <li>Firefox 3.5+</li>
                 <li>Safari 3+</li>
