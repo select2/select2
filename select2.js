@@ -40,7 +40,7 @@
         return;
     }
 
-    var KEY, AbstractSelect2, SingleSelect2, MultiSelect2, nextUid, sizer;
+    var KEY, AbstractSelect2, SingleSelect2, MultiSelect2, nextUid, sizer, currentSelect2;
 
     KEY = {
         TAB: 9,
@@ -858,6 +858,12 @@
          */
         // abstract
         opening: function() {
+            // We already have an open instance. Close that one!
+            if(currentSelect2) {
+                currentSelect2.close();
+            }
+            currentSelect2 = this;
+
             this.clearDropdownAlignmentPreference();
 
             if (this.search.val() === " ") { this.search.val(""); }
@@ -882,6 +888,9 @@
         // abstract
         close: function () {
             if (!this.opened()) return;
+
+            // Removing us as the currently open instance
+            currentSelect2 = null;
 
             this.clearDropdownAlignmentPreference();
 
