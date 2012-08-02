@@ -1332,7 +1332,6 @@
                 } else if (this.enabled) {
                     this.open();
                 }
-                killEvent(e);
 
                 clickingInside = false;
             }));
@@ -1346,7 +1345,9 @@
             }));
 
             selection.bind("blur", this.bind(function() {
-                this.container.removeClass("select2-container-active");
+                if (!this.opened()) {
+                    this.container.removeClass("select2-container-active");
+                }
                 window.setTimeout(this.bind(function() { this.search.attr("tabIndex", this.opts.element.attr("tabIndex")); }), 10);
             }));
 
