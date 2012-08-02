@@ -1881,6 +1881,7 @@
             formatted=this.opts.formatSelection(data, choice);
             choice.find("div").replaceWith("<div>"+escapeMarkup(formatted)+"</div>");
             choice.find(".select2-search-choice-close")
+                .bind("mousedown", killEvent)
                 .bind("click dblclick", this.bind(function (e) {
                 if (!this.enabled) return;
 
