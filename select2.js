@@ -559,7 +559,7 @@
                 this.monitorSource();
             }
 
-            if (opts.element.is(":disabled")) this.disable();
+            if (opts.element.is(":disabled") || opts.element.is("[readonly='readonly']")) this.disable();
         },
 
         // abstract
