@@ -94,7 +94,7 @@
 
     function escapeMarkup(markup) {
         if (markup && typeof(markup) === "string") {
-            return markup.replace("&", "&amp;");
+            return markup.replace(/&/g, "&amp;");
         } else {
             return markup;
         }
