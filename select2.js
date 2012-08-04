@@ -1360,7 +1360,15 @@
                     return;
                 }
 
-                if (e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e) || e.which === KEY.ESC) {
+                if (e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e)
+                 || e.which === KEY.ESC || e.which == KEY.ENTER) {
+                    return;
+                }
+
+                if (e.which == KEY.DELETE) {
+                    if (this.opts.allowClear) {
+                        this.clear();
+                    }
                     return;
                 }
 
@@ -1686,7 +1694,8 @@
                     }
                 }
 
-                if (e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e) || e.which === KEY.BACKSPACE || e.which === KEY.ESC) {
+                if (e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e)
+                 || e.which === KEY.BACKSPACE || e.which === KEY.ESC || e.which === KEY.ENTER) {
                     return;
                 }
 
