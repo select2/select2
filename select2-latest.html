@@ -227,12 +227,12 @@ $("#e10_3").select2({
                             var url="https://api.github.com/repos/ivaynberg/select2/issues?state=closed&milestone=4";
                             $.ajax({
                                 url: url,
-                                dataType: "json"
+                                dataType: "jsonp"
                             }).done(function(issues) {
                                 var list=$("#changelog ul");
                                 var template="<li><a href='$url'><span>#$num</span> </a>$title</li>";
                                 list.empty();
-                                $.each(issues, function() {
+                                $.each(issues.data, function() {
                                     var markup=template
                                         .replace(/\$url/g, this.url)
                                         .replace(/\$num/g, this.number)
