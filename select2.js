@@ -826,8 +826,8 @@
             }
 
             css = {
-                top:dropTop,
-                left:offset.left,
+                top:Math.floor(dropTop),
+                left:Math.round(offset.left),
                 width:width
             };
 
