@@ -1081,6 +1081,9 @@
                 render("<li class='select2-no-results'>" + opts.formatInputTooShort(search.val(), opts.minimumInputLength) + "</li>");
                 return;
             }
+            else {
+                render("<li class='select2-searching'>" + opts.formatSearching() + "</li>");
+            }
 
             this.resultsPage = 1;
             opts.query({
@@ -2193,6 +2196,7 @@
         formatInputTooShort: function (input, min) { return "Please enter " + (min - input.length) + " more characters"; },
         formatSelectionTooBig: function (limit) { return "You can only select " + limit + " items"; },
         formatLoadMore: function (pageNumber) { return "Loading more results..."; },
+	formatSearch: function () { return "Searching..."; },
         minimumResultsForSearch: 0,
         minimumInputLength: 0,
         maximumSelectionSize: 0,
