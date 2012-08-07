@@ -434,21 +434,6 @@
     });
 
     /**
-     * Closes any opened Select2s when the window is resized
-     */
-    $(window).resize(debounce(100, function() {
-        $(".select2-container.select2-dropdown-open").select2('close');
-    }));
-
-    /**
-     * Closes any opened Select2s when the window is scrolled
-     */
-    $(window).scroll(debounce(100, function() {
-        $(".select2-container.select2-dropdown-open").select2('close');
-    }));
-
-
-    /**
      * Creates a new class
      *
      * @param superClass
@@ -490,6 +475,9 @@
 
             this.enabled=true;
             this.container = this.createContainer();
+
+            this.containerId="s2id"+nextUid();
+            this.container.attr("id", this.containerId);
 
             // cache the body so future lookups are cheap
             this.body = thunk(function() { return opts.element.closest("body"); });
@@ -873,6 +861,27 @@
          */
         // abstract
         opening: function() {
+            var cid = this.containerId, selector = "#"+ cid,
+                scroll = "scroll." + cid, resize = "resize." + cid;
+
+            this.container.parents().each(function() {
+                $(this).bind(scroll, function() {
+                    var s2 = $(selector);
+                    if (s2.length == 0) {
+                        $(this).unbind(scroll);
+                    }
+                    s2.select2("close");
+                });
+            });
+
+            $(window).bind(resize, function() {
+                var s2 = $(selector);
+                if (s2.length == 0) {
+                    $(window).unbind(resize);
+                }
+                s2.select2("close");
+            });
+
             this.clearDropdownAlignmentPreference();
 
             if (this.search.val() === " ") { this.search.val(""); }
@@ -897,6 +906,13 @@
         // abstract
         close: function () {
             if (!this.opened()) return;
+
+            var self = this;
+
+            this.container.parents().each(function() {
+                $(this).unbind("scroll." + self.containerId);
+            });
+            $(window).unbind("resize." + this.containerId);
 
             this.clearDropdownAlignmentPreference();
 
@@ -2138,7 +2154,7 @@
         var args = Array.prototype.slice.call(arguments, 0),
             opts,
             select2,
-            value, multiple, allowedMethods = ["val", "destroy", "open", "close", "focus", "isFocused", "container", "onSortStart", "onSortEnd", "enable", "disable", "positionDropdown", "data"];
+            value, multiple, allowedMethods = ["val", "destroy", "opened", "open", "close", "focus", "isFocused", "container", "onSortStart", "onSortEnd", "enable", "disable", "positionDropdown", "data"];
 
         this.each(function () {
             if (args.length === 0 || typeof(args[0]) === "object") {
