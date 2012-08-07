@@ -934,7 +934,7 @@ $("#e18,#e18_2").select2();
                     <tr><td>&lt;returns&gt;</td><td>boolean</td><td><code>true</code> if search term matches the text, or <code>false</code> otherwise</td></tr>
                 </table>
                 The default implementation is case insensitive and matches anywhere in ther term:
-                <code>function(term, text) { return text.toUpperCase().indexOf(term.toUpperCase())>0; }</code>
+                <code>function(term, text) { return text.toUpperCase().indexOf(term.toUpperCase())>=0; }</code>
             </td></tr>
             <tr><td>formatSelection</td><td>function</td><td>
                 Function used to render the current selection.
