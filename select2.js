@@ -497,7 +497,6 @@
             this.container.data("select2", this);
 
             this.dropdown = this.container.find(".select2-drop");
-            this.dropdown.css(evaluate(opts.dropdownCss));
             this.dropdown.addClass(evaluate(opts.dropdownCssClass));
             this.dropdown.data("select2", this);
 
@@ -886,6 +885,7 @@
 
             if (this.search.val() === " ") { this.search.val(""); }
 
+            this.dropdown.css(evaluate(this.opts.dropdownCss));
             this.dropdown.addClass("select2-drop-active");
             this.container.addClass("select2-dropdown-open").addClass("select2-container-active");
 
