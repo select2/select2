@@ -234,7 +234,7 @@ $("#e10_3").select2({
                                 list.empty();
                                 $.each(issues.data, function() {
                                     var markup=template
-                                        .replace(/\$url/g, this.url)
+                                        .replace(/\$url/g, this.html_url)
                                         .replace(/\$num/g, this.number)
                                         .replace(/\$title/g, this.title)
                                     list.append(markup);
