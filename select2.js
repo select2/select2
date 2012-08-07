@@ -2196,7 +2196,7 @@
         formatInputTooShort: function (input, min) { return "Please enter " + (min - input.length) + " more characters"; },
         formatSelectionTooBig: function (limit) { return "You can only select " + limit + " items"; },
         formatLoadMore: function (pageNumber) { return "Loading more results..."; },
-	formatSearch: function () { return "Searching..."; },
+	    formatSearching: function () { return "Searching..."; },
         minimumResultsForSearch: 0,
         minimumInputLength: 0,
         maximumSelectionSize: 0,

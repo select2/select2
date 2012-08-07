@@ -310,11 +310,8 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 .select2-results .select2-highlighted em {
   background: transparent;
 }
-.select2-results .select2-no-results {
-  background: #f4f4f4;
-  display: list-item;
-}
-
+.select2-results .select2-no-results,
+.select2-results .select2-searching,
 .select2-results .select2-selection-limit {
   background: #f4f4f4;
   display: list-item;
