@@ -492,7 +492,6 @@
             // swap container for the element
             this.opts.element
                 .data("select2", this)
-                .hide()
                 .before(this.container);
             this.container.data("select2", this);
 
@@ -511,6 +510,19 @@
             // initialize the container
             this.initContainer();
             this.initContainerWidth();
+
+            // position element where the container is
+            this.opts.element
+                .css({
+                    position: "absolute",
+                    "z-index": 0,
+                    top: this.container.offset().top,
+                    left: this.container.offset().left,
+                    width: this.container.width(),
+                    height: this.container.height()
+                });
+            // make sure the container is above the element
+            this.container.css("z-index", 1);
 
             installFilteredMouseMove(this.results);
             this.dropdown.delegate(resultsSelector, "mousemove-filtered", this.bind(this.highlightUnderEvent));
