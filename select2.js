@@ -601,7 +601,7 @@
 
             opts = $.extend({}, {
                 populateResults: function(container, results, query) {
-                    var populate,  data, result, children, id=this.opts.id;
+                    var populate,  data, result, children, id=this.opts.id, self=this;
 
                     populate=function(results, container, depth) {
 
@@ -617,6 +617,7 @@
                             node.addClass("select2-result");
                             node.addClass(selectable ? "select2-result-selectable" : "select2-result-unselectable");
                             if (compound) { node.addClass("select2-result-with-children"); }
+                            node.addClass(self.opts.formatResultCssClass(result));
 
                             label=$("<div></div>");
                             label.addClass("select2-result-label");
@@ -660,10 +661,10 @@
                         var group;
                         if (element.is("option")) {
                             if (query.matcher(term, element.text(), element)) {
-                                collection.push({id:element.attr("value"), text:element.text(), element: element.get()});
+                                collection.push({id:element.attr("value"), text:element.text(), element: element.get(), css: element.attr("class")});
                             }
                         } else if (element.is("optgroup")) {
-                            group={text:element.attr("label"), children:[], element: element.get()};
+                            group={text:element.attr("label"), children:[], element: element.get(), css: element.attr("class")};
                             element.children().each2(function(i, elm) { process(elm, group.children); });
                             if (group.children.length>0) {
                                 collection.push(group);
@@ -687,6 +688,7 @@
                 });
                 // this is needed because inside val() we construct choices from options and there id is hardcoded
                 opts.id=function(e) { return e.id; };
+                opts.formatResultCssClass = function(data) { return data.css; }
             } else {
                 if (!("query" in opts)) {
                     if ("ajax" in opts) {
@@ -2208,6 +2210,7 @@
         formatSelection: function (data, container) {
             return data.text;
         },
+        formatResultCssClass: function(data) {return undefined;},
         formatNoMatches: function () { return "No matches found"; },
         formatInputTooShort: function (input, min) { return "Please enter " + (min - input.length) + " more characters"; },
         formatSelectionTooBig: function (limit) { return "You can only select " + limit + " items"; },
