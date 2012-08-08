@@ -511,18 +511,16 @@
             this.initContainer();
             this.initContainerWidth();
 
-            // position element where the container is
-            this.opts.element
-                .css({
-                    position: "absolute",
-                    "z-index": 0,
-                    top: this.container.offset().top,
-                    left: this.container.offset().left,
-                    width: this.container.width(),
-                    height: this.container.height()
-                });
             // make sure the container is above the element
+            this.opts.element.css({
+                position: "absolute",
+                "z-index": 0
+            });
             this.container.css("z-index", 1);
+
+            // install resize handler
+            // TODO: unbind at destroy
+            $(window).bind("resize", this.bind(this.positionElement));
 
             installFilteredMouseMove(this.results);
             this.dropdown.delegate(resultsSelector, "mousemove-filtered", this.bind(this.highlightUnderEvent));
@@ -574,6 +572,19 @@
             }
 
             if (opts.element.is(":disabled") || opts.element.is("[readonly='readonly']")) this.disable();
+
+            // position element
+            this.positionElement();
+        },
+
+        positionElement: function() {
+            // position element where the container is
+            this.opts.element.css({
+                top: this.container.position().top,
+                left: this.container.position().left,
+                width: this.container.outerWidth(),
+                height: this.container.outerHeight()
+            });
         },
 
         // abstract
