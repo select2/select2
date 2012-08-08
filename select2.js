@@ -493,7 +493,7 @@
             this.opts.element
                 .data("select2", this)
                 .hide()
-                .after(this.container);
+                .before(this.container);
             this.container.data("select2", this);
 
             this.dropdown = this.container.find(".select2-drop");
