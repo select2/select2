@@ -642,11 +642,11 @@ $("#e11_2")
           </div>
       </article>
       <article class="row" id="tags">
-<script id="script_e12">
-$(document).ready(function () {
-$("#e12").select2({tags:["red", "green", "blue"]});
-});
-</script>
+          <script id="script_e12">
+              $(document).ready(function () {
+                  $("#e12").select2({tags:["red", "green", "blue"]});
+              });
+          </script>
           <div class="span4">
               <h3>Tagging Support</h3>
 
@@ -662,7 +662,31 @@ $("#e12").select2({tags:["red", "green", "blue"]});
            </pre>
           </div>
       </article>
+      <article class="row" id="token">
+          <script id="script_e20">
+              $(document).ready(function () {
+                  $("#e20").select2({
+                      tags:["red", "green", "blue"],
+                      tokenSeparators: [",", " "]});
+              });
+          </script>
+          <div class="span4">
+              <h3>Auto Tokenization</h3>
 
+              <p>Select2 supports ability to add choices automatically as the user is typing into the search field.
+              This is especially convenient in the tagging usecase where the user can quickly enter a number of tags
+              by separating them with a comma or a space. Try typing in the search field below and entering a space or a comma</p>
+
+              <p><input type="hidden" id="e20" style="width:300px" value="brown"/></p>
+              <p>Note that the separators are defined in the <a href="#doc-tokenSeparators">tokenSeparators</a> option</code></p>
+              <p>Note that this example uses the built in <a href="#doc-tokenizer">tokenizer</a> function, but a custom one can be provided in the options.</p>
+          </div>
+          <div class="span8">
+              <h3>Example Code</h3>
+           <pre class="prettyprint linenums" id="code_e20">
+           </pre>
+          </div>
+      </article>
       <article class="row" id="event_ext_change">
 <script id="script_e13">
 $(document).ready(function () {
@@ -1096,6 +1120,36 @@ $("#tags").select2({
 });
 </pre>
             </td></tr>
+            <tr id="doc-tokenizer"><td>tokenizer</td><td>function</td><td>
+                A tokenizer function can process the input typed into the search field after every keystroke and extract
+                and select choices. This is useful, for example, in tagging scenarios where the user can create tags quickly
+                by separating them with a comma or a space instead of pressing enter.
+                <p class="alert alert-info">Tokenizer only applies to multi-selects</p>
+                <pre>tokenizer(input, selection, selectCallback, opts)</pre>
+                <table class="table table-bordered table-striped">
+                    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                    <tr><td>input</td><td>string</td><td>The text entered into the search field so far</td></tr>
+                    <tr><td>selection</td><td>array</td><td>Array of objects representing the current selection.
+                        Useful if tokenizer needs to filter out duplicates.</td></tr>
+                    <tr><td>selectCallback</td><td>function</td><td>Callback that can be used to add objects to the selection</td></tr>
+                    <tr><td>opts</td><td>object</td><td>Options with which Select2 was initialized. Useful if tokenizer needs to access some properties in the options.</td></tr>
+                    <tr><td>&lt;returns&gt;</td><td>string (optional)</td><td>Returns the string to which the input of
+                        the search field should be set to. Usually this is the remainder, of any, of the string after
+                        the tokens have been stripped. If <code>undefined</code> or <code>null</code> is returned the
+                        input of the search field is unchanged.</code></td></tr>
+                </table>
+
+                The default tokenizer will only be used if the <code>tokenSeparators</code> and <code>createSearchChoice</code>
+                options are specified. The default tokenizer will split the string using any separator in <code>tokenSeparators</code>
+                and will create and select choice objects using <code>createSearhChoice</code> option. It will also
+                ignore duplicates, silently swallowing those tokens.
+            </td></tr>
+            <tr id="doc-tokenSeparators"><td>tokenSeparators</td><td>array</td><td>
+                An array of strings that define token separators for the default <a href="doc-tokenizer">tokenizer</a>
+                function. By default, this option is set to an empty array which means tokenization using the default
+                tokenizer is disabled. Usually it is sensible to set this option to a value similar to <code>[',', ' ']</code>
+            </td></tr>
+
             <tr id="doc-query">
                 <td>query</td>
                 <td>function</td>
