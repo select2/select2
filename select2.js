@@ -1138,11 +1138,17 @@
         updateResults: function (initial) {
             var search = this.search, results = this.results, opts = this.opts, data, self=this, input;
 
+			// display currently selected value inside the searchbox (only for single select)
+            if (initial === true && opts.keepValOnSearch && search.val() == "" && opts.element.attr("multiple") == undefined) {				
+               var selected = opts.element.find(":selected");
+               search.val(selected.text());
+            }
+			
             // if the search is currently hidden we do not alter the results
             if (initial !== true && (this.showSearchInput === false || !this.opened())) {
                 return;
             }
-
+			
             search.addClass("select2-active");
 
             function postRender() {
