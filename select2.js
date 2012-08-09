@@ -417,6 +417,59 @@
     }
 
     /**
+     * Default tokenizer. This function uses breaks the input on substring match of any string from the
+     * opts.tokenSeparators array and uses opts.createSearchChoice to create the choice object. Both of those
+     * two options have to be defined in order for the tokenizer to work.
+     *
+     * @param input text user has typed so far or pasted into the search field
+     * @param selection currently selected choices
+     * @param selectCallback function(choice) callback tho add the choice to selection
+     * @param opts select2's opts
+     * @return undefined/null to leave the current input unchanged, or a string to change the input to the returned value
+     */
+    function defaultTokenizer(input, selection, selectCallback, opts) {
+        var original = input, // store the original so we can compare and know if we need to tell the search to update its text
+            dupe = false, // check for whether a token we extracted represents a duplicate selected choice
+            token, // token
+            index, // position at which the separator was found
+            i, l, // looping variables
+            separator; // the matched separator
+
+        if (!opts.createSearchChoice || !opts.tokenSeparators || opts.tokenSeparators.length < 1) return undefined;
+
+        while (true) {
+            index = -1;
+
+            for (i = 0, l = opts.tokenSeparators.length; i < l; i++) {
+                separator = opts.tokenSeparators[i];
+                index = input.indexOf(separator);
+                if (index >= 0) break;
+            }
+
+            if (index < 0) break; // did not find any token separator in the input string, bail
+
+            token = input.substring(0, index);
+            input = input.substring(index + separator.length);
+
+            if (token.length > 0) {
+                token = opts.createSearchChoice(token, selection);
+                if (token !== undefined && token !== null && opts.id(token) !== undefined && opts.id(token) !== null) {
+                    dupe = false;
+                    for (i = 0, l = selection.length; i < l; i++) {
+                        if (equal(opts.id(token), opts.id(selection[i]))) {
+                            dupe = true; break;
+                        }
+                    }
+
+                    if (!dupe) selectCallback(token);
+                }
+            }
+        }
+
+        if (original.localeCompare(input) != 0) return input;
+    }
+
+    /**
      * blurs any Select2 container that has focus when an element outside them was clicked or received focus
      *
      * also takes care of clicks on label tags that point to the source element
@@ -598,9 +651,6 @@
             if (element.get(0).tagName.toLowerCase() === "select") {
                 this.select = select = opts.element;
             }
-
-            //Custom tags separator.
-            opts.separator = opts.separator || ",";
 
             if (select) {
                 // these options are not allowed when attached to a select because they are picked up off the element itself
@@ -1075,11 +1125,18 @@
         },
 
         /**
+         * Default tokenizer function which does nothing
+         */
+        tokenize: function() {
+
+        },
+
+        /**
          * @param initial whether or not this is the call to this method right after the dropdown has been opened
          */
         // abstract
         updateResults: function (initial) {
-            var search = this.search, results = this.results, opts = this.opts, data, self=this;
+            var search = this.search, results = this.results, opts = this.opts, data, self=this, input;
 
             // if the search is currently hidden we do not alter the results
             if (initial !== true && (this.showSearchInput === false || !this.opened())) {
@@ -1113,6 +1170,12 @@
             }
             else {
                 render("<li class='select2-searching'>" + opts.formatSearching() + "</li>");
+            }
+
+            // give the tokenizer a chance to pre-process the input
+            input = this.tokenize();
+            if (input != undefined && input != null) {
+                search.val(input);
             }
 
             this.resultsPage = 1;
@@ -1889,6 +1952,18 @@
             self.postprocessResults();
         },
 
+        tokenize: function() {
+            var input = this.search.val();
+            input = this.opts.tokenizer(input, this.data(), this.bind(this.onSelect), this.opts);
+            if (input != null && input != undefined) {
+                this.search.val(input);
+                if (input.length > 0) {
+                    this.open();
+                }
+            }
+
+        },
+
         // multi
         onSelect: function (data) {
             this.addSelectedChoice(data);
@@ -1898,10 +1973,9 @@
                 this.close();
                 this.search.width(10);
             } else {
-                this.search.width(10);
-                this.resizeSearch();
-
                 if (this.countSelectableResults()>0) {
+                    this.search.width(10);
+                    this.resizeSearch();
                     this.positionDropdown();
                 } else {
                     // if nothing left to select close
@@ -2032,7 +2106,6 @@
             containerLeft = this.selection.offset().left;
 
             searchWidth = maxWidth - (left - containerLeft) - sideBorderPadding;
-
             if (searchWidth < minimumWidth) {
                 searchWidth = maxWidth - sideBorderPadding;
             }
@@ -2232,7 +2305,10 @@
         id: function (e) { return e.id; },
         matcher: function(term, text) {
             return text.toUpperCase().indexOf(term.toUpperCase()) >= 0;
-        }
+        },
+        separator: ",",
+        tokenSeparators: [],
+        tokenizer: defaultTokenizer
     };
 
     // exports
