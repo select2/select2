@@ -1372,7 +1372,7 @@
         // single
         cancel: function () {
             this.parent.cancel.apply(this, arguments);
-            this.selection.focus();
+            this.selection[0].focus();
         },
 
         // single
