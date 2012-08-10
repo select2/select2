@@ -1625,7 +1625,7 @@
             this.opts.element.val(this.id(data));
             this.updateSelection(data);
             this.close();
-            this.selection.focus();
+            this.selection[0].focus();
 
             if (!equal(old, this.id(data))) { this.triggerChange(); }
         },
