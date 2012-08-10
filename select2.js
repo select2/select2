@@ -1516,7 +1516,7 @@
                 killEvent(e);
                 this.close();
                 this.triggerChange();
-                this.selection.focus();
+                this.selection[0].focus();
             }));
 
             this.setPlaceholder();
