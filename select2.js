@@ -1472,7 +1472,7 @@
                 }
 
                 if (e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e)
-                 || e.which === KEY.ESC || e.which == KEY.ENTER) {
+                 || e.which === KEY.ESC) {
                     return;
                 }
 
