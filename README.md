@@ -33,6 +33,7 @@ Integrations
 * [Wicket-Select2](https://github.com/ivaynberg/wicket-select2) (Java / Apache Wicket)
 * [select2-rails](https://github.com/argerim/select2-rails) (Ruby on Rails)
 * [AngularUI](http://angular-ui.github.com/#directives-select2) ([AngularJS](angularjs.org))
+* [Django](https://github.com/applegrew/django-select2)
 
 Bug tracker
 -----------
