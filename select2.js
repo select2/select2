@@ -1420,6 +1420,10 @@
                         return;
                     }
 
+                    if (this.opts.openOnEnter === false && e.which === KEY.ENTER) {
+                        return;
+                    }
+
                     this.open();
 
                     if (e.which === KEY.ENTER) {
@@ -1475,7 +1479,11 @@
                 }
 
                 if (e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e)
-                 || e.which === KEY.ESC || e.which == KEY.ENTER) {
+                 || e.which === KEY.ESC) {
+                    return;
+                }
+
+                if (this.opts.openOnEnter === false && e.which === KEY.ENTER) {
                     return;
                 }
 
@@ -1807,7 +1815,11 @@
                 }
 
                 if (e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e)
-                 || e.which === KEY.BACKSPACE || e.which === KEY.ESC || e.which === KEY.ENTER) {
+                 || e.which === KEY.BACKSPACE || e.which === KEY.ESC) {
+                    return;
+                }
+
+                if (this.opts.openOnEnter === false && e.which === KEY.ENTER) {
                     return;
                 }
 
@@ -2284,6 +2296,7 @@
     $.fn.select2.defaults = {
         width: "copy",
         closeOnSelect: true,
+        openOnEnter: true,
         containerCss: {},
         dropdownCss: {},
         containerCssClass: "",
