@@ -71,8 +71,8 @@
             }
             return false;
         },
-        isControl: function (k) {
-            k = k.which ? k.which : k;
+        isControl: function (e) {
+            var k = e.which;
             switch (k) {
             case KEY.SHIFT:
             case KEY.CTRL:
@@ -80,7 +80,7 @@
                 return true;
             }
 
-            if (k.metaKey) return true;
+            if (e.metaKey) return true;
 
             return false;
         },
@@ -310,7 +310,7 @@
                     dataType: options.dataType,
                     data: data,
                     type: type,
-                    traditional: traditional,                    
+                    traditional: traditional,
                     success: function (data) {
                         if (requestNumber < requestSequence) {
                             return;
