@@ -1777,7 +1777,7 @@
                     }
 
                     choices = selection.find(".select2-search-choice");
-                    if (choices.length > 0) {
+                    if (choices.length > 0 && this.opts.allowDelete) {
                         choices.last().addClass("select2-search-choice-focus");
                     }
                 } else {
@@ -2006,7 +2006,12 @@
                 id = this.id(data),
                 val = this.getVal(),
                 formatted;
-
+                
+            if (!this.opts.allowDelete) {
+                choice.find(".select2-search-choice-close").remove();
+                choice.addClass("select2-search-choice-locked");
+            }
+            
             formatted=this.opts.formatSelection(data, choice);
             choice.find("div").replaceWith("<div>"+escapeMarkup(formatted)+"</div>");
             choice.find(".select2-search-choice-close")
@@ -2280,6 +2285,7 @@
     // plugin defaults, accessible to users
     $.fn.select2.defaults = {
         width: "copy",
+        allowDelete: true,
         closeOnSelect: true,
         containerCss: {},
         dropdownCss: {},
