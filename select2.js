@@ -1515,6 +1515,8 @@
                     keyWritten = keyWritten.toUpperCase();
                 }
 
+                // focus the field before calling val so the cursor ends up after the value instead of before
+                this.search.focus();
                 this.search.val(keyWritten);
 
                 // prevent event propagation so it doesnt replay on the now focussed search field and result in double key entry
