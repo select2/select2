@@ -2,7 +2,7 @@
 layout: main
 title: Select2 Latest
 group: navigation
-version: 3.1
+version: 3.2
 ---
 
 <link href="select2-master/select2.css" rel="stylesheet"/>
@@ -434,17 +434,17 @@ $("#e2_2").select2({
                 You can set <code>data-</code> attributes to <code>&lt;option&gt;</code> (or &lt;optgroup&gt;) and use them inside temptlating functions:
             </p>
             <pre class="prettyprint linenums">
-                &lt;select&gt;
-                    &lt;option value="0" data-foo="bar"&gt;option one&lt;/option&gt;
-                    ...
-                &lt;/select&gt;
+&lt;select&gt;
+    &lt;option value="0" data-foo="bar"&gt;option one&lt;/option&gt;
+    ...
+&lt;/select&gt;
             </pre>
             <pre class="prettyprint linenums">
-                function format(state) {
-                    var originalOption = state.element;
+function format(state) {
+    var originalOption = state.element;
 
-                    return "&lt;img class='flag' src='images/flags/" + state.id.toLowerCase() + ".png' alt='" + originalOption.data('foo') + "' /&gt;" + state.text;
-                }
+    return "&lt;img class='flag' src='images/flags/" + state.id.toLowerCase() + ".png' alt='" + originalOption.data('foo') + "' /&gt;" + state.text;
+}
             </pre>
          </div>
         </article>
