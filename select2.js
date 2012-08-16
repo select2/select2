@@ -71,8 +71,8 @@
             }
             return false;
         },
-        isControl: function (k) {
-            k = k.which ? k.which : k;
+        isControl: function (e) {
+            var k = e.which;
             switch (k) {
             case KEY.SHIFT:
             case KEY.CTRL:
@@ -80,7 +80,7 @@
                 return true;
             }
 
-            if (k.metaKey) return true;
+            if (e.metaKey) return true;
 
             return false;
         },
@@ -277,6 +277,7 @@
      * @param options.url url for the data
      * @param options.data a function(searchTerm, pageNumber, context) that should return an object containing query string parameters for the above url.
      * @param options.dataType request data type: ajax, jsonp, other datatatypes supported by jQuery's $.ajax function or the transport function if specified
+     * @param options.traditional a boolean flag that should be true if you wish to use the traditional style of param serialization for the ajax request
      * @param options.quietMillis (optional) milliseconds to wait before making the ajaxRequest, helps debounce the ajax function if invoked too often
      * @param options.results a function(remoteData, pageNumber) that converts data returned form the remote request to the format expected by Select2.
      *      The expected format is an object containing the following keys:
@@ -297,6 +298,7 @@
                 var requestNumber = requestSequence, // this request's sequence number
                     data = options.data, // ajax data function
                     transport = options.transport || $.ajax,
+                    traditional = options.traditional || false,
                     type = options.type || 'GET'; // set type of request (GET or POST)
 
                 data = data.call(this, query.term, query.page, query.context);
@@ -308,6 +310,7 @@
                     dataType: options.dataType,
                     data: data,
                     type: type,
+                    traditional: traditional,
                     success: function (data) {
                         if (requestNumber < requestSequence) {
                             return;
@@ -1330,7 +1333,7 @@
             var container = $("<div></div>", {
                 "class": "select2-container"
             }).html([
-                "    <a href='javascript:void(0)' class='select2-choice'>",
+                "    <a href='#' onclick='return false;' class='select2-choice'>",
                 "   <span></span><abbr class='select2-search-choice-close' style='display:none;'></abbr>",
                 "   <div><b></b></div>" ,
                 "</a>",
@@ -1417,6 +1420,10 @@
                         return;
                     }
 
+                    if (this.opts.openOnEnter === false && e.which === KEY.ENTER) {
+                        return;
+                    }
+
                     this.open();
 
                     if (e.which === KEY.ENTER) {
@@ -1472,7 +1479,11 @@
                 }
 
                 if (e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e)
-                 || e.which === KEY.ESC || e.which == KEY.ENTER) {
+                 || e.which === KEY.ESC) {
+                    return;
+                }
+
+                if (this.opts.openOnEnter === false && e.which === KEY.ENTER) {
                     return;
                 }
 
@@ -1504,6 +1515,8 @@
                     keyWritten = keyWritten.toUpperCase();
                 }
 
+                // focus the field before calling val so the cursor ends up after the value instead of before
+                this.search.focus();
                 this.search.val(keyWritten);
 
                 // prevent event propagation so it doesnt replay on the now focussed search field and result in double key entry
@@ -1678,6 +1691,7 @@
                     this.clear();
                     return;
                 }
+                this.opts.element.val(val);
                 this.opts.initSelection(this.opts.element, function(data){
                     self.opts.element.val(!data ? "" : self.id(data));
                     self.updateSelection(data);
@@ -1804,7 +1818,11 @@
                 }
 
                 if (e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e)
-                 || e.which === KEY.BACKSPACE || e.which === KEY.ESC || e.which === KEY.ENTER) {
+                 || e.which === KEY.BACKSPACE || e.which === KEY.ESC) {
+                    return;
+                }
+
+                if (this.opts.openOnEnter === false && e.which === KEY.ENTER) {
                     return;
                 }
 
@@ -2001,7 +2019,7 @@
             var choice=$(
                     "<li class='select2-search-choice'>" +
                     "    <div></div>" +
-                    "    <a href='javascript:void(0)' class='select2-search-choice-close' tabindex='-1'></a>" +
+                    "    <a href='#' onclick='return false;' class='select2-search-choice-close' tabindex='-1'></a>" +
                     "</li>"),
                 id = this.id(data),
                 val = this.getVal(),
@@ -2287,6 +2305,7 @@
         width: "copy",
         allowDelete: true,
         closeOnSelect: true,
+        openOnEnter: true,
         containerCss: {},
         dropdownCss: {},
         containerCssClass: "",

@@ -10,11 +10,12 @@ if [ ! $ver ]; then
 	exit
 fi
 
-name=select2
+name="select2"
 js="$name.js"
 mini="$name.min.js"
 css="$name.css"
 release="$name-$ver"
+releasedir="/tmp/$release"
 tag="release-$ver"
 branch="build-$ver"
 curbranch=`git branch | grep "*" | sed "s/* //"`
@@ -58,19 +59,19 @@ git push "$remote" --tags
 
 echo "Archiving..."
 
-rm -rf "$release"
-mkdir "$release"
+rm -rf "$releasedir"
+mkdir "$releasedir"
 
-cp $name.* "$release"
-cp spinner.gif "$release"
-cp README.* "$release"
+cp $name.* "$releasedir"
+cp spinner.gif "$releasedir"
+cp README.* "$releasedir"
 
-zip -r "$release.zip" "$release"
-rm -rf "$release"
+zip -r "$releasedir.zip" "$releasedir"
+rm -rf "$releasedir"
 
 echo "Cleaning Up..."
 
 git checkout "$curbranch"
 git branch -D "$branch"
 
-echo "Done. Release archive created: $release.zip"
+echo "Done. Release archive created: $releasedir.zip"
