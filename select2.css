@@ -452,9 +452,15 @@ disabled look for already selected choices in the results dropdown
   position: relative;
   cursor: default;
 }
+
 .select2-container-multi .select2-choices .select2-search-choice span {
   cursor: default;
 }
+
+.select2-container-multi .select2-choices .select2-search-choice-locked {
+  padding: 3px 5px;
+}
+
 .select2-container-multi .select2-choices .select2-search-choice-focus {
   background: #d4d4d4;
 }

@@ -1792,7 +1792,10 @@
 
                     choices = selection.find(".select2-search-choice");
                     if (choices.length > 0) {
-                        choices.last().addClass("select2-search-choice-focus");
+                        var data = this.data(), lastData = data[data.length - 1];
+                        if (this.opts.allowDelete === false || ($.isFunction(this.opts.allowDelete) && this.opts.allowDelete(lastData))) {
+                            choices.last().addClass("select2-search-choice-focus");
+                        }
                     }
                 } else {
                     selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
@@ -2024,7 +2027,12 @@
                 id = this.id(data),
                 val = this.getVal(),
                 formatted;
-
+                
+            if (this.opts.allowDelete === false || ($.isFunction(this.opts.allowDelete) && !this.opts.allowDelete(data))) {
+                choice.find(".select2-search-choice-close").remove();
+                choice.addClass("select2-search-choice-locked");
+            }
+            
             formatted=this.opts.formatSelection(data, choice);
             choice.find("div").replaceWith("<div>"+escapeMarkup(formatted)+"</div>");
             choice.find(".select2-search-choice-close")
@@ -2298,6 +2306,7 @@
     // plugin defaults, accessible to users
     $.fn.select2.defaults = {
         width: "copy",
+        allowDelete: true,
         closeOnSelect: true,
         openOnEnter: true,
         containerCss: {},
