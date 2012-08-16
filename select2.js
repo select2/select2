@@ -2019,7 +2019,7 @@
             var choice=$(
                     "<li class='select2-search-choice'>" +
                     "    <div></div>" +
-                    "    <a href='javascript:void(0)' class='select2-search-choice-close' tabindex='-1'></a>" +
+                    "    <a href='#' onclick='return false;' class='select2-search-choice-close' tabindex='-1'></a>" +
                     "</li>"),
                 id = this.id(data),
                 val = this.getVal(),
