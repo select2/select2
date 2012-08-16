@@ -1791,8 +1791,11 @@
                     }
 
                     choices = selection.find(".select2-search-choice");
-                    if (choices.length > 0 && this.opts.allowDelete) {
-                        choices.last().addClass("select2-search-choice-focus");
+                    if (choices.length > 0) {
+                        var data = this.data(), lastData = data[data.length - 1];
+                        if (this.opts.allowDelete === false || ($.isFunction(this.opts.allowDelete) && this.opts.allowDelete(lastData))) {
+                            choices.last().addClass("select2-search-choice-focus");
+                        }
                     }
                 } else {
                     selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
@@ -2025,7 +2028,7 @@
                 val = this.getVal(),
                 formatted;
                 
-            if (!this.opts.allowDelete) {
+            if (this.opts.allowDelete === false || ($.isFunction(this.opts.allowDelete) && !this.opts.allowDelete(data))) {
                 choice.find(".select2-search-choice-close").remove();
                 choice.addClass("select2-search-choice-locked");
             }
