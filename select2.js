@@ -1691,6 +1691,7 @@
                     this.clear();
                     return;
                 }
+                this.opts.element.val(val);
                 this.opts.initSelection(this.opts.element, function(data){
                     self.opts.element.val(!data ? "" : self.id(data));
                     self.updateSelection(data);
