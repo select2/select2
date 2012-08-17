@@ -354,14 +354,29 @@
         }
 
         return function (query) {
-            var t = query.term, filtered = {};
+            var t = query.term, filtered = { results: [] }, process;
             if (t === "") {
                 query.callback({results: data});
                 return;
             }
-            filtered.results = $(data)
-                .filter(function () {return query.matcher(t, text(this));})
-                .get();
+            
+            process = function(datum, collection) {
+                var group;
+                datum = datum[0];
+                if (datum.children) {
+                    group = { text: text(datum), children: [] };
+                    $(datum.children).each2(function(i, childDatum) { process(childDatum, group.children); });
+                    if (group.children.length) {
+                        collection.push(group);
+                    }
+                } else {
+                    if (query.matcher(t, text(datum))) {
+                        collection.push(datum);
+                    }
+                }
+            };
+            
+            $(data).each2(function(i, datum) { process(datum, filtered.results); });
             query.callback(filtered);
         };
     }
