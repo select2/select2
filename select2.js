@@ -1129,6 +1129,10 @@
                         matcher: this.opts.matcher,
                         callback: this.bind(function (data) {
 
+                    // ignore a response if the select2 has been closed before it was received
+                    if (!self.opened()) return;
+
+
                     self.opts.populateResults.call(this, results, data.results, {term: term, page: page, context:context});
 
                     if (data.more===true) {
@@ -1205,6 +1209,9 @@
                     matcher: opts.matcher,
                     callback: this.bind(function (data) {
                 var def; // default choice
+
+                // ignore a response if the select2 has been closed before it was received
+                if (!this.opened()) return;
 
                 // save context, if any
                 this.context = (data.context===undefined) ? null : data.context;
