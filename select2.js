@@ -1266,11 +1266,16 @@
 
         // abstract
         focusSearch: function () {
+            // need to do it here as well as in timeout so it works in IE
+            this.search.show();
+            this.search.focus();
+
             /* we do this in a timeout so that current event processing can complete before this code is executed.
              this makes sure the search field is focussed even if the current event would blur it */
             window.setTimeout(this.bind(function () {
-                this.search.focus();
                 // reset the value so IE places the cursor at the end of the input box
+                this.search.show();
+                this.search.focus();
                 this.search.val(this.search.val());
             }), 10);
         },
