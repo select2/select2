@@ -359,7 +359,7 @@
                 query.callback({results: data});
                 return;
             }
-            
+
             process = function(datum, collection) {
                 var group;
                 datum = datum[0];
@@ -375,7 +375,7 @@
                     }
                 }
             };
-            
+
             $(data).each2(function(i, datum) { process(datum, filtered.results); });
             query.callback(filtered);
         };
@@ -967,8 +967,6 @@
 
             if (this.search.val() === " ") { this.search.val(""); }
 
-            this.dropdown.css(evaluate(this.opts.dropdownCss));
-            this.dropdown.addClass("select2-drop-active");
             this.container.addClass("select2-dropdown-open").addClass("select2-container-active");
 
             this.updateResults(true);
@@ -978,9 +976,12 @@
             }
 
             this.dropdown.show();
-            this.ensureHighlightVisible();
 
             this.positionDropdown();
+            this.dropdown.css(evaluate(this.opts.dropdownCss));
+            this.dropdown.addClass("select2-drop-active");
+
+            this.ensureHighlightVisible();
 
             this.focusSearch();
         },
