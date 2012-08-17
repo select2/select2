@@ -1391,7 +1391,7 @@
         // single
         cancel: function () {
             this.parent.cancel.apply(this, arguments);
-            this.selection.focus();
+            this.selection[0].focus();
         },
 
         // single
@@ -1545,7 +1545,7 @@
                 killEvent(e);
                 this.close();
                 this.triggerChange();
-                this.selection.focus();
+                this.selection[0].focus();
             }));
 
             this.setPlaceholder();
@@ -1654,7 +1654,7 @@
             this.opts.element.val(this.id(data));
             this.updateSelection(data);
             this.close();
-            this.selection.focus();
+            this.selection[0].focus();
 
             if (!equal(old, this.id(data))) { this.triggerChange(); }
         },
