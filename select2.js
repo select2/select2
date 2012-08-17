@@ -2032,7 +2032,7 @@
                 .bind("click dblclick", this.bind(function (e) {
                 if (!this.enabled) return;
 
-                $(e.target).closest(".select2-search-choice").fadeOut('fast').animate({width: "hide"}, 50, this.bind(function(){
+                $(e.target).closest(".select2-search-choice").fadeOut('fast', this.bind(function(){
                     this.unselect($(e.target));
                     this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
                     this.close();
