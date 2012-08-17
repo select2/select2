@@ -1857,6 +1857,10 @@
 
             this.container.delegate(selector, "mousedown", this.bind(function (e) {
                 if (!this.enabled) return;
+                if ($(e.target).closest(".select2-search-choice").length > 0) {
+                    // clicked inside a select2 search choice, do not open
+                    return;
+                }
                 this.clearPlaceholder();
                 this.open();
                 this.focusSearch();
