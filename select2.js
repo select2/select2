@@ -559,7 +559,7 @@
             this.enabled=true;
             this.container = this.createContainer();
 
-            this.containerId="s2id"+nextUid();
+            this.containerId="s2id_"+(opts.element.attr("id") || "autogen"+nextUid());
             this.container.attr("id", this.containerId);
 
             // cache the body so future lookups are cheap
