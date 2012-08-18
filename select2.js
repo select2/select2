@@ -942,7 +942,7 @@
          */
         // abstract
         opening: function() {
-            var cid = this.containerId, selector = "#"+ cid,
+            var cid = this.containerId, selector = "#"+ cid.replace(/([;&,\.\+\*\~':"\!\^#$%@\[\]\(\)=>\|])/g, '\\$1'),
                 scroll = "scroll." + cid, resize = "resize." + cid;
 
             this.container.parents().each(function() {
