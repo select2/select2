@@ -560,6 +560,7 @@
             this.container = this.createContainer();
 
             this.containerId="s2id_"+(opts.element.attr("id") || "autogen"+nextUid());
+            this.containerSelector="#"+this.containerId.replace(/([;&,\.\+\*\~':"\!\^#$%@\[\]\(\)=>\|])/g, '\\$1');
             this.container.attr("id", this.containerId);
 
             // cache the body so future lookups are cheap
@@ -942,7 +943,7 @@
          */
         // abstract
         opening: function() {
-            var cid = this.containerId, selector = "#"+ cid,
+            var cid = this.containerId, selector = this.containerSelector,
                 scroll = "scroll." + cid, resize = "resize." + cid;
 
             this.container.parents().each(function() {
