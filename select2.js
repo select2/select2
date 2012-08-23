@@ -895,11 +895,11 @@
                 this.dropdown.removeClass("select2-drop-above");
             }
 
-            css = {
-                top:dropTop,
-                left:offset.left,
-                width:width
-            };
+            css = $.extend({
+                top: dropTop,
+                left: offset.left,
+                width: width
+            }, evaluate(this.opts.dropdownCss));
 
             this.dropdown.css(css);
         },
@@ -979,7 +979,6 @@
             this.dropdown.show();
 
             this.positionDropdown();
-            this.dropdown.css(evaluate(this.opts.dropdownCss));
             this.dropdown.addClass("select2-drop-active");
 
             this.ensureHighlightVisible();
