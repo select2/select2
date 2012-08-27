@@ -1272,6 +1272,10 @@ $("#tags").select2({
             <tr><td>dropdownCssClass</td><td>function/string</td><td>
                 Css class that will be added to select2's dropdown container
             </td></tr>
+            <tr><td>escapeMarkup</td><td>function</td><td>
+                <code>String escapeMarkup(String markup)</code>
+                <p>Function used to post-process markup returned from formatter functions. By default this function escapes html entities to prevent javascript injection.</p>
+            </td></tr>
         </table>
 
       <div class="row">
