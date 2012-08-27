@@ -2059,7 +2059,6 @@
                 formatted;
 
             formatted=this.opts.formatSelection(data, choice);
-                    console.log(" 7 " + this.escapeMarkup);
             choice.find("div").replaceWith("<div>"+this.escapeMarkup(formatted)+"</div>");
             choice.find(".select2-search-choice-close")
                 .bind("mousedown", killEvent)
