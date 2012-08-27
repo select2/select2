@@ -195,17 +195,17 @@
      *
      * @param quietMillis number of milliseconds to wait before invoking fn
      * @param fn function to be debounced
-     * @param thisobj object to be used as this reference within fn
+     * @param ctx object to be used as this reference within fn
      * @return debounced version of fn
      */
-    function debounce(quietMillis, fn, thisobj) {
-        thisobj = thisobj || undefined;
+    function debounce(quietMillis, fn, ctx) {
+        ctx = ctx || undefined;
         var timeout;
         return function () {
             var args = arguments;
             window.clearTimeout(timeout);
             timeout = window.setTimeout(function() {
-                fn.apply(thisobj, args);
+                fn.apply(ctx, args);
             }, quietMillis);
         };
     }
