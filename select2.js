@@ -92,14 +92,6 @@
 
     nextUid=(function() { var counter=1; return function() { return counter++; }; }());
 
-    function escapeMarkup(markup) {
-        if (markup && typeof(markup) === "string") {
-            return markup.replace(/&/g, "&amp;");
-        } else {
-            return markup;
-        }
-    }
-
     function indexOf(value, array) {
         var i = 0, l = array.length, v;
 
@@ -710,7 +702,7 @@
 
                             formatted=opts.formatResult(result, label, query);
                             if (formatted!==undefined) {
-                                label.html(escapeMarkup(formatted));
+                                label.html(self.escapeMarkup(formatted));
                             }
 
                             node.append(label);
@@ -807,6 +799,15 @@
             }
 
             return opts;
+        },
+
+        escapeMarkup: function (markup) {
+            if (this.opts.doEscapeMarkup) {
+              if (markup && typeof(markup) === "string") {
+                  return markup.replace(/&/g, "&amp;");
+              }
+            }
+            return markup;
         },
 
         /**
@@ -1180,7 +1181,7 @@
             }
 
             function render(html) {
-                results.html(escapeMarkup(html));
+                results.html(self.escapeMarkup(html));
                 postRender();
             }
 
@@ -1243,7 +1244,7 @@
                 self.opts.populateResults.call(this, results, data.results, {term: search.val(), page: this.resultsPage, context:null});
 
                 if (data.more === true && checkFormatter(opts.formatLoadMore, "formatLoadMore")) {
-                    results.append("<li class='select2-more-results'>" + escapeMarkup(opts.formatLoadMore(this.resultsPage)) + "</li>");
+                    results.append("<li class='select2-more-results'>" + self.escapeMarkup(opts.formatLoadMore(this.resultsPage)) + "</li>");
                     window.setTimeout(function() { self.loadMoreIfNeeded(); }, 10);
                 }
 
@@ -1627,7 +1628,7 @@
                 // check for a first blank option if attached to a select
                 if (this.select && this.select.find("option:first").text() !== "") return;
 
-                this.selection.find("span").html(escapeMarkup(placeholder));
+                this.selection.find("span").html(this.escapeMarkup(placeholder));
 
                 this.selection.addClass("select2-default");
 
@@ -1686,7 +1687,7 @@
             container.empty();
             formatted=this.opts.formatSelection(data, container);
             if (formatted !== undefined) {
-                container.append(escapeMarkup(formatted));
+                container.append(this.escapeMarkup(formatted));
             }
 
             this.selection.removeClass("select2-default");
@@ -2063,7 +2064,7 @@
                 formatted;
 
             formatted=this.opts.formatSelection(data, choice);
-            choice.find("div").replaceWith("<div>"+escapeMarkup(formatted)+"</div>");
+            choice.find("div").replaceWith("<div>"+this.escapeMarkup(formatted)+"</div>");
             choice.find(".select2-search-choice-close")
                 .bind("mousedown", killEvent)
                 .bind("click dblclick", this.bind(function (e) {
@@ -2338,6 +2339,7 @@
         closeOnSelect: true,
         openOnEnter: true,
         containerCss: {},
+        doEscapeMarkup: true,
         dropdownCss: {},
         containerCssClass: "",
         dropdownCssClass: "",
@@ -2354,7 +2356,7 @@
         formatInputTooShort: function (input, min) { return "Please enter " + (min - input.length) + " more characters"; },
         formatSelectionTooBig: function (limit) { return "You can only select " + limit + " items"; },
         formatLoadMore: function (pageNumber) { return "Loading more results..."; },
-	    formatSearching: function () { return "Searching..."; },
+      formatSearching: function () { return "Searching..."; },
         minimumResultsForSearch: 0,
         minimumInputLength: 0,
         maximumSelectionSize: 0,
