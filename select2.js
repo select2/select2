@@ -1750,7 +1750,20 @@
                     this.updateSelection(value);
                 }
             }
-        }
+        },
+
+		copy: function() {
+			// Copy currently selected value to clipboard
+			var currentVal = this.val();
+			window.Select2.clipboard = currentVal;
+		},
+		
+		paste: function() {
+			// If a clipboard value exists, then apply it to this select
+			if(window.Select2.clipboard) {
+				this.val(window.Select2.clipboard);
+			}
+		}
     });
 
     MultiSelect2 = clazz(AbstractSelect2, {
@@ -2282,7 +2295,20 @@
                 this.updateSelection(values);
                 this.clearSearch();
             }
-        }
+        },
+
+		copy: function() {
+			// Copy currently selected value to clipboard
+			var currentVal = this.val();
+			window.Select2.clipboard = currentVal;
+		},
+		
+		paste: function() {
+			// If a clipboard value exists, then apply it to this select
+			if(window.Select2.clipboard) {
+				this.val(window.Select2.clipboard);
+			}
+		}
     });
 
     $.fn.select2 = function () {
@@ -2290,7 +2316,7 @@
         var args = Array.prototype.slice.call(arguments, 0),
             opts,
             select2,
-            value, multiple, allowedMethods = ["val", "destroy", "opened", "open", "close", "focus", "isFocused", "container", "onSortStart", "onSortEnd", "enable", "disable", "positionDropdown", "data"];
+            value, multiple, allowedMethods = ["val", "destroy", "opened", "open", "close", "focus", "isFocused", "container", "onSortStart", "onSortEnd", "enable", "disable", "positionDropdown", "data", "copy", "paste"];
 
         this.each(function () {
             if (args.length === 0 || typeof(args[0]) === "object") {
@@ -2382,7 +2408,8 @@
             "abstract": AbstractSelect2,
             "single": SingleSelect2,
             "multi": MultiSelect2
-        }
+        },
+		clipboard: null
     };
 
 }(jQuery));
