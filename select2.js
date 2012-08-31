@@ -358,10 +358,14 @@
             }
 
             process = function(datum, collection) {
-                var group;
+                var group, attr;
                 datum = datum[0];
                 if (datum.children) {
-                    group = { text: text(datum), children: [] };
+                    group = {};
+                    for (attr in datum) {
+                        if (datum.hasOwnProperty(attr)) group[attr]=datum[attr];
+                    }
+                    group.children=[];
                     $(datum.children).each2(function(i, childDatum) { process(childDatum, group.children); });
                     if (group.children.length) {
                         collection.push(group);
