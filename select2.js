@@ -1865,7 +1865,7 @@
 
             this.search.bind("keyup", this.bind(this.resizeSearch));
 
-            this.search.bind("blur", this.bind(function() {
+            this.search.bind("blur", this.bind(function(e) {
                 this.container.removeClass("select2-container-active");
                 this.search.removeClass("select2-focused");
                 this.clearSearch();
