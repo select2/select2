@@ -1867,6 +1867,9 @@
 
             this.search.bind("blur", this.bind(function() {
                 this.container.removeClass("select2-container-active");
+                this.search.removeClass("select2-focused");
+                this.clearSearch();
+                e.stopImmediatePropagation();
             }));
 
             this.container.delegate(selector, "mousedown", this.bind(function (e) {
