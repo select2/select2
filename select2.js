@@ -706,7 +706,7 @@
 
                             formatted=opts.formatResult(result, label, query);
                             if (formatted!==undefined) {
-                                label.html(self.opts.escapeMarkup(formatted));
+                                label.html(formatted);
                             }
 
                             node.append(label);
@@ -1682,7 +1682,7 @@
             container.empty();
             formatted=this.opts.formatSelection(data, container);
             if (formatted !== undefined) {
-                container.append(this.opts.escapeMarkup(formatted));
+                container.append(formatted);
             }
 
             this.selection.removeClass("select2-default");
@@ -2339,11 +2339,11 @@
         dropdownCssClass: "",
         formatResult: function(result, container, query) {
             var markup=[];
-            markMatch(result.text, query.term, markup);
+            markMatch(this.escapeMarkup(result.text), this.escapeMarkup(query.term), markup);
             return markup.join("");
         },
         formatSelection: function (data, container) {
-            return data.text;
+            return this.escapeMarkup(data.text);
         },
         formatResultCssClass: function(data) {return undefined;},
         formatNoMatches: function () { return "No matches found"; },
@@ -2363,7 +2363,16 @@
         tokenizer: defaultTokenizer,
         escapeMarkup: function (markup) {
             if (markup && typeof(markup) === "string") {
-                return markup.replace(/&/g, "&amp;");
+                return markup.replace(/&|'|"|<|>/g, function(chr) {
+                     switch(chr) {
+                     	case '&': return '&amp;';
+                     	case "'": return '&apos;';
+                     	case '"': return '&quot;';
+                     	case '<': return '&lt;';
+                     	case '>': return '&gt;';
+                     }
+                     return '&#' + chr.charCodeAt(0) + ';';
+                });
             }
             return markup;
         }
