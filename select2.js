@@ -867,14 +867,24 @@
                 dropHeight = this.dropdown.outerHeight(),
                 viewportBottom = $(window).scrollTop() + document.documentElement.clientHeight,
                 dropTop = offset.top + height,
+                dropLeft = offset.left,
                 enoughRoomBelow = dropTop + dropHeight <= viewportBottom,
                 enoughRoomAbove = (offset.top - dropHeight) >= this.body().scrollTop(),
                 aboveNow = this.dropdown.hasClass("select2-drop-above"),
+                bodyOffset,
                 above,
                 css;
 
             // console.log("below/ droptop:", dropTop, "dropHeight", dropHeight, "sum", (dropTop+dropHeight)+" viewport bottom", viewportBottom, "enough?", enoughRoomBelow);
             // console.log("above/ offset.top", offset.top, "dropHeight", dropHeight, "top", (offset.top-dropHeight), "scrollTop", this.body().scrollTop(), "enough?", enoughRoomAbove);
+
+            // fix positioning when body has an offset and is not position: static
+
+            if (this.body().css('position') !== 'static') {
+                bodyOffset = this.body().offset();
+                dropTop -= bodyOffset.top;
+                dropLeft -= bodyOffset.left;
+            }
 
             // always prefer the current above/below alignment, unless there is not enough room
 
@@ -898,7 +908,7 @@
 
             css = $.extend({
                 top: dropTop,
-                left: offset.left,
+                left: dropLeft,
                 width: width
             }, evaluate(this.opts.dropdownCss));
 
