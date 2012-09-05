@@ -568,7 +568,7 @@
             this.body = thunk(function() { return opts.element.closest("body"); });
 
             if (opts.element.attr("class") !== undefined) {
-                this.container.addClass(opts.element.attr("class"));
+                this.container.addClass(opts.element.attr("class").replace(/validate\[[\S ]+] ?/, ''));
             }
 
             this.container.css(evaluate(opts.containerCss));
@@ -833,6 +833,11 @@
             // some validation frameworks ignore the change event and listen instead to keyup, click for selects
             // so here we trigger the click event manually
             this.opts.element.click();
+
+            // ValidationEngine ignorea the change event and listens instead to blur
+            // so here we trigger the blur event manually if so desired
+            if (this.opts.blurOnChange)
+                this.opts.element.blur();
         },
 
 
@@ -2379,7 +2384,8 @@
                 return markup.replace(/&/g, "&amp;");
             }
             return markup;
-        }
+        },
+        blurOnChange: false
     };
 
     // exports
