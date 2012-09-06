@@ -692,7 +692,7 @@
 
                             result=results[i];
                             selectable=id(result) !== undefined;
-                            compound=("children" in result) && result.children.length > 0;
+                            compound=result.children && result.children.length > 0;
 
                             node=$("<li></li>");
                             node.addClass("select2-results-dept-"+depth);
