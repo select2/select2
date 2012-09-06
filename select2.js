@@ -162,7 +162,7 @@
         });
     }
 
-    $(document).delegate("*", "mousemove", function (e) {
+    $(document).delegate("body", "mousemove", function (e) {
         $.data(document, "select2-lastpos", {x: e.pageX, y: e.pageY});
     });
 
@@ -494,7 +494,7 @@
      * also takes care of clicks on label tags that point to the source element
      */
     $(document).ready(function () {
-        $(document).delegate("*", "mousedown touchend", function (e) {
+        $(document).delegate("body", "mousedown touchend", function (e) {
             var target = $(e.target).closest("div.select2-container").get(0), attr;
             if (target) {
                 $(document).find("div.select2-container-active").each(function () {
