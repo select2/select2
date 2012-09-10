@@ -1,7 +1,7 @@
 /*
  Copyright 2012 Igor Vaynberg
 
- Version: @@ver@@ Timestamp: @@timestamp@@
+ Version: 3.2 Timestamp: Mon Sep 10 10:38:04 PDT 2012
 
  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in
  compliance with the License. You may obtain a copy of the License in the LICENSE file, or at:
