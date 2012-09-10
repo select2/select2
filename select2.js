@@ -2361,7 +2361,7 @@
             return markup.join("");
         },
         formatSelection: function (data, container) {
-            return data.text;
+            return data ? data.text : undefined;
         },
         formatResultCssClass: function(data) {return undefined;},
         formatNoMatches: function () { return "No matches found"; },
