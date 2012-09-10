@@ -1,12 +1,12 @@
 ---
 layout: main
-title: Select2 3.1
+title: Select2 3.2
 group: navigation
-version: 3.1
+version: 3.2
 ---
 
-<link href="select2-3.1/select2.css" rel="stylesheet"/>
-<script src="select2-3.1/select2.js"></script>
+<link href="select2-3.2/select2.css" rel="stylesheet"/>
+<script src="select2-3.2/select2.js"></script>
 
 <script id="script_e1">
 
@@ -23,40 +23,40 @@ version: 3.1
 
 <script id="script_e3">
     $(document).ready(function() {
-$("#e3").select2({
-    minimumInputLength: 2
-});
+        $("#e3").select2({
+            minimumInputLength: 2
+        });
     });
 </script>
 
 <script id="script_e4">
     $(document).ready(function() {
-function format(state) {
-    if (!state.id) return state.text; // optgroup
-    return "<img class='flag' src='images/flags/" + state.id.toLowerCase() + ".png'/>" + state.text;
-}
-$("#e4").select2({
-    formatResult: format,
-    formatSelection: format
-});
+        function format(state) {
+            if (!state.id) return state.text; // optgroup
+            return "<img class='flag' src='images/flags/" + state.id.toLowerCase() + ".png'/>" + state.text;
+        }
+        $("#e4").select2({
+            formatResult: format,
+            formatSelection: format
+        });
     });
 </script>
 
 
 <script id="script_e5">
     $(document).ready(function() {
-$("#e5").select2({
-    minimumInputLength: 1,
-    query: function (query) {
-        var data = {results: []}, i, j, s;
-        for (i = 1; i < 5; i++) {
-            s = "";
-            for (j = 0; j < i; j++) {s = s + query.term;}
-            data.results.push({id: query.term + i, text: s});
-        }
-        query.callback(data);
-    }
-});
+        $("#e5").select2({
+            minimumInputLength: 1,
+            query: function (query) {
+                var data = {results: []}, i, j, s;
+                for (i = 1; i < 5; i++) {
+                    s = "";
+                    for (j = 0; j < i; j++) {s = s + query.term;}
+                    data.results.push({id: query.term + i, text: s});
+                }
+                query.callback(data);
+            }
+        });
     });
 </script>
 
@@ -86,92 +86,93 @@ $("#e5").select2({
 
 <script id="script_e6">
     $(document).ready(function() {
-$("#e6").select2({
-    placeholder: "Search for a movie",
-    minimumInputLength: 1,
-    ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
-        url: "http://api.rottentomatoes.com/api/public/v1.0/movies.json",
-        dataType: 'jsonp',
-        data: function (term, page) {
-            return {
-                q: term, // search term
-                page_limit: 10,
-                apikey: "ju6z9mjyajq2djue3gbvv26t" // please do not use so this example keeps working
-            };
-        },
-        results: function (data, page) { // parse the results into the format expected by Select2.
-            // since we are using custom formatting functions we do not need to alter remote JSON data
-            return {results: data.movies};
-        }
-    },
-    formatResult: movieFormatResult, // omitted for brevity, see the source of this page
-    formatSelection: movieFormatSelection,  // omitted for brevity, see the source of this page
-    dropdownCssClass: "bigdrop" // apply css that makes the dropdown taller
-});
+        $("#e6").select2({
+            placeholder: "Search for a movie",
+            minimumInputLength: 1,
+            ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+                url: "http://api.rottentomatoes.com/api/public/v1.0/movies.json",
+                dataType: 'jsonp',
+                data: function (term, page) {
+                    return {
+                        q: term, // search term
+                        page_limit: 10,
+                        apikey: "ju6z9mjyajq2djue3gbvv26t" // please do not use so this example keeps working
+                    };
+                },
+                results: function (data, page) { // parse the results into the format expected by Select2.
+                    // since we are using custom formatting functions we do not need to alter remote JSON data
+                    return {results: data.movies};
+                }
+            },
+            formatResult: movieFormatResult, // omitted for brevity, see the source of this page
+            formatSelection: movieFormatSelection,  // omitted for brevity, see the source of this page
+            dropdownCssClass: "bigdrop" // apply css that makes the dropdown taller
+        });
     });
 </script>
 
 <script id="script_e7">
     $(document).ready(function() {
-$("#e7").select2({
-    placeholder: "Search for a movie",
-    minimumInputLength: 3,
-    ajax: {
-        url: "http://api.rottentomatoes.com/api/public/v1.0/movies.json",
-        dataType: 'jsonp',
-        quietMillis: 100,
-        data: function (term, page) { // page is the one-based page number tracked by Select2
-            return {
-                q: term, //search term
-                page_limit: 10, // page size
-                page: page, // page number
-                apikey: "ju6z9mjyajq2djue3gbvv26t" // please do not use so this example keeps working
-            };
-        },
-        results: function (data, page) {
-            var more = (page * 10) < data.total; // whether or not there are more results available
+        $("#e7").select2({
+            placeholder: "Search for a movie",
+            minimumInputLength: 3,
+            ajax: {
+                url: "http://api.rottentomatoes.com/api/public/v1.0/movies.json",
+                dataType: 'jsonp',
+                quietMillis: 100,
+                data: function (term, page) { // page is the one-based page number tracked by Select2
+                    return {
+                        q: term, //search term
+                        page_limit: 10, // page size
+                        page: page, // page number
+                        apikey: "ju6z9mjyajq2djue3gbvv26t" // please do not use so this example keeps working
+                    };
+                },
+                results: function (data, page) {
+                    var more = (page * 10) < data.total; // whether or not there are more results available
 
-            // notice we return the value of more so Select2 knows if more results can be loaded
-            return {results: data.movies, more: more};
-        }
-    },
-    formatResult: movieFormatResult, // omitted for brevity, see the source of this page
-    formatSelection: movieFormatSelection, // omitted for brevity, see the source of this page
-    dropdownCssClass: "bigdrop" // apply css that makes the dropdown taller
-});
+                    // notice we return the value of more so Select2 knows if more results can be loaded
+                    return {results: data.movies, more: more};
+                }
+            },
+            formatResult: movieFormatResult, // omitted for brevity, see the source of this page
+            formatSelection: movieFormatSelection, // omitted for brevity, see the source of this page
+            dropdownCssClass: "bigdrop" // apply css that makes the dropdown taller
+        });
     });
 </script>
 
 <script id="script_e9">
     $(document).ready(function() {
-$("#e9").select2();
+        $("#e9").select2();
     });
 </script>
 
 <script id="script_e10">
     $(document).ready(function() {
 
-$("#e10").select2({
-    data:[{id:0,text:'enhancement'},{id:1,text:'bug'},{id:2,text:'duplicate'},{id:3,text:'invalid'},{id:4,text:'wontfix'}]
-});
+        $("#e10").select2({
+            data:[{id:0,text:'enhancement'},{id:1,text:'bug'},{id:2,text:'duplicate'},{id:3,text:'invalid'},{id:4,text:'wontfix'}]
+        });
 
-var data=[{id:0,tag:'enhancement'},{id:1,tag:'bug'},{id:2,tag:'duplicate'},{id:3,tag:'invalid'},{id:4,tag:'wontfix'}];
-function format(item) { return item.tag; };
+        var data=[{id:0,tag:'enhancement'},{id:1,tag:'bug'},{id:2,tag:'duplicate'},{id:3,tag:'invalid'},{id:4,tag:'wontfix'}];
+        function format(item) { return item.tag; };
 
-$("#e10_2").select2({
-    data:{ results: data, text: 'tag' },
-    formatSelection: format,
-    formatResult: format
-});
+        $("#e10_2").select2({
+            data:{ results: data, text: 'tag' },
+            formatSelection: format,
+            formatResult: format
+        });
 
-$("#e10_3").select2({
-    data:{ results: data, text: function(item) { console.log('called with', item); return item.tag; } },
-    formatSelection: format,
-    formatResult: format
-});
+        $("#e10_3").select2({
+            data:{ results: data, text: function(item) { console.log('called with', item); return item.tag; } },
+            formatSelection: format,
+            formatResult: format
+        });
 
     });
 </script>
+
 
 <header class="jumbotron subhead">
     <div class="subnav">
@@ -206,13 +207,13 @@ $("#e10_3").select2({
 
 
 <section id="changelog">
-    <h2>Changelog from 3.0</h2>
+    <h2>Changelog</h2>
     <div class="row"><div class="span12">
         <ul>
             <li>Loading...</li>
             <script>
                 $(function() {
-                    var url="https://api.github.com/repos/ivaynberg/select2/issues?state=closed&milestone=4";
+                    var url="https://api.github.com/repos/ivaynberg/select2/issues?state=closed&milestone=6";
                     $.ajax({
                         url: url,
                         dataType: "jsonp"
@@ -364,13 +365,13 @@ $("#e10_3").select2({
 <article class="row" id="placeholders">
     <script id="script_e2">
         $(document).ready(function() {
-$("#e2").select2({
-    placeholder: "Select a State",
-    allowClear: true
-});
-$("#e2_2").select2({
-    placeholder: "Select a State"
-});
+            $("#e2").select2({
+                placeholder: "Select a State",
+                allowClear: true
+            });
+            $("#e2_2").select2({
+                placeholder: "Select a State"
+            });
         });
     </script>
     <div class="span4">
@@ -456,7 +457,7 @@ function format(state) {
 
 <script id="script_e19">
     $(document).ready(function() {
-$("#e19").select2({ maximumSelectionSize: 3 });
+        $("#e19").select2({ maximumSelectionSize: 3 });
     });
 </script>
 <article class="row" id="maximumSelectionSize">
@@ -532,22 +533,22 @@ $("#e19").select2({ maximumSelectionSize: 3 });
 <article class="row" id="programmatic">
     <script id="script_e8">
         $(document).ready(function() {
-$("#e8").select2();
-$("#e8_get").click(function () { alert("Selected value is: "+$("#e8").select2("val"));});
-$("#e8_set").click(function () { $("#e8").select2("val", "CA"); });
-$("#e8_cl").click(function() { $("#e8").select2("val", ""); });
-$("#e8_get2").click(function () { alert("Selected data is: "+JSON.stringify($("#e8").select2("data")));});
-$("#e8_set2").click(function () { $("#e8").select2("data", {id: "CA", text: "California"}); });
-$("#e8_open").click(function () { $("#e8").select2("open"); });
-$("#e8_close").click(function () { $("#e8").select2("close"); });
-$("#e8_2").select2();
-$("#e8_2_get").click(function () { alert("Selected value is: "+$("#e8_2").select2("val"));});
-$("#e8_2_set").click(function () { $("#e8_2").select2("val", ["CA","MA"]); });
-$("#e8_2_get2").click(function () { alert("Selected value is: "+JSON.stringify($("#e8_2").select2("data")));});
-$("#e8_2_set2").click(function () { $("#e8_2").select2("data", [{id: "CA", text: "California"},{id:"MA", text: "Massachusetts"}]); });
-$("#e8_2_cl").click(function() { $("#e8_2").select2("val", ""); });
-$("#e8_2_open").click(function () { $("#e8_2").select2("open"); });
-$("#e8_2_close").click(function () { $("#e8_2").select2("close"); });
+            $("#e8").select2();
+            $("#e8_get").click(function () { alert("Selected value is: "+$("#e8").select2("val"));});
+            $("#e8_set").click(function () { $("#e8").select2("val", "CA"); });
+            $("#e8_cl").click(function() { $("#e8").select2("val", ""); });
+            $("#e8_get2").click(function () { alert("Selected data is: "+JSON.stringify($("#e8").select2("data")));});
+            $("#e8_set2").click(function () { $("#e8").select2("data", {id: "CA", text: "California"}); });
+            $("#e8_open").click(function () { $("#e8").select2("open"); });
+            $("#e8_close").click(function () { $("#e8").select2("close"); });
+            $("#e8_2").select2();
+            $("#e8_2_get").click(function () { alert("Selected value is: "+$("#e8_2").select2("val"));});
+            $("#e8_2_set").click(function () { $("#e8_2").select2("val", ["CA","MA"]); });
+            $("#e8_2_get2").click(function () { alert("Selected value is: "+JSON.stringify($("#e8_2").select2("data")));});
+            $("#e8_2_set2").click(function () { $("#e8_2").select2("data", [{id: "CA", text: "California"},{id:"MA", text: "Massachusetts"}]); });
+            $("#e8_2_cl").click(function() { $("#e8_2").select2("val", ""); });
+            $("#e8_2_open").click(function () { $("#e8_2").select2("open"); });
+            $("#e8_2_close").click(function () { $("#e8_2").select2("close"); });
         });
     </script>
     <div class="span4">
@@ -587,27 +588,27 @@ $("#e8_2_close").click(function () { $("#e8_2").select2("close"); });
 <article class="row" id="events">
     <script id="script_e11">
         $(document).ready(function () {
-$("#e11").select2({
-    placeholder: "Select report type",
-    allowClear: true,
-    data: [{id: 0, text: 'story'},{id: 1, text: 'bug'},{id: 2, text: 'task'}]
-});
-$("#e11_2").select2({
-    createSearchChoice:function(term, data) { if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {return {id:term, text:term};} },
-    multiple: true,
-    data: [{id: 0, text: 'story'},{id: 1, text: 'bug'},{id: 2, text: 'task'}]
-});
-function log(e) {
-    var e=$("<li>"+e+"</li>");
-    $("#events_11").append(e);
-    e.animate({opacity:1}, 10000, 'linear', function() { e.animate({opacity:0}, 2000, 'linear', function() {e.remove(); }); });
-}
-$("#e11")
-        .on("change", function(e) { log(JSON.stringify({val:e.val, added:e.added, removed:e.removed})); })
-        .on("open", function() { log("open"); });
-$("#e11_2")
-        .on("change", function(e) { log(JSON.stringify({val:e.val, added:e.added, removed:e.removed})); })
-        .on("open", function() { log("open"); });
+            $("#e11").select2({
+                placeholder: "Select report type",
+                allowClear: true,
+                data: [{id: 0, text: 'story'},{id: 1, text: 'bug'},{id: 2, text: 'task'}]
+            });
+            $("#e11_2").select2({
+                createSearchChoice:function(term, data) { if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {return {id:term, text:term};} },
+                multiple: true,
+                data: [{id: 0, text: 'story'},{id: 1, text: 'bug'},{id: 2, text: 'task'}]
+            });
+            function log(e) {
+                var e=$("<li>"+e+"</li>");
+                $("#events_11").append(e);
+                e.animate({opacity:1}, 10000, 'linear', function() { e.animate({opacity:0}, 2000, 'linear', function() {e.remove(); }); });
+            }
+            $("#e11")
+                    .on("change", function(e) { log(JSON.stringify({val:e.val, added:e.added, removed:e.removed})); })
+                    .on("open", function() { log("open"); });
+            $("#e11_2")
+                    .on("change", function(e) { log(JSON.stringify({val:e.val, added:e.added, removed:e.removed})); })
+                    .on("open", function() { log("open"); });
         });
     </script>
     <div class="span4">
@@ -632,7 +633,7 @@ $("#e11_2")
 <article class="row" id="tags">
     <script id="script_e12">
         $(document).ready(function () {
-$("#e12").select2({tags:["red", "green", "blue"]});
+            $("#e12").select2({tags:["red", "green", "blue"]});
         });
     </script>
     <div class="span4">
@@ -653,9 +654,9 @@ $("#e12").select2({tags:["red", "green", "blue"]});
 <article class="row" id="token">
     <script id="script_e20">
         $(document).ready(function () {
-$("#e20").select2({
-    tags:["red", "green", "blue"],
-    tokenSeparators: [",", " "]});
+            $("#e20").select2({
+                tags:["red", "green", "blue"],
+                tokenSeparators: [",", " "]});
         });
     </script>
     <div class="span4">
@@ -678,9 +679,9 @@ $("#e20").select2({
 <article class="row" id="event_ext_change">
     <script id="script_e13">
         $(document).ready(function () {
-$("#e13").select2();
-$("#e13_ca").click(function() { $("#e13").val("CA").trigger("change"); });
-$("#e13_ak_co").click(function() { $("#e13").val(["AK","CO"]).trigger("change"); });
+            $("#e13").select2();
+            $("#e13_ca").click(function() { $("#e13").val("CA").trigger("change"); });
+            $("#e13_ak_co").click(function() { $("#e13").val(["AK","CO"]).trigger("change"); });
         });
     </script>
     <div class="span4">
@@ -706,9 +707,9 @@ $("#e13_ak_co").click(function() { $("#e13").val(["AK","CO"]).trigger("change");
 <article class="row" id="lifecycle">
     <script id="script_e14">
         $(document).ready(function () {
-$("#e14").val(["AL","AZ"]).select2();
-$("#e14_init").click(function() { $("#e14").select2(); });
-$("#e14_destroy").click(function() { $("#e14").select2("destroy"); });
+            $("#e14").val(["AL","AZ"]).select2();
+            $("#e14_init").click(function() { $("#e14").select2(); });
+            $("#e14_destroy").click(function() { $("#e14").select2("destroy"); });
         });
     </script>
     <div class="span4">
@@ -730,14 +731,14 @@ $("#e14_destroy").click(function() { $("#e14").select2("destroy"); });
 <article class="row" id="lifecycle">
     <script id="script_e15">
         $(document).ready(function () {
-$("#e15").select2({tags:["red", "green", "blue", "orange", "white", "black", "purple", "cyan", "teal"]});
-$("#e15").on("change", function() { $("#e15_val").html($("#e15").val());});
+            $("#e15").select2({tags:["red", "green", "blue", "orange", "white", "black", "purple", "cyan", "teal"]});
+            $("#e15").on("change", function() { $("#e15_val").html($("#e15").val());});
 
-$("#e15").select2("container").find("ul.select2-choices").sortable({
-    containment: 'parent',
-    start: function() { $("#e15").select2("onSortStart"); },
-    update: function() { $("#e15").select2("onSortEnd"); }
-});
+            $("#e15").select2("container").find("ul.select2-choices").sortable({
+                containment: 'parent',
+                start: function() { $("#e15").select2("onSortStart"); },
+                update: function() { $("#e15").select2("onSortEnd"); }
+            });
         });
     </script>
     <div class="span4">
@@ -760,10 +761,10 @@ $("#e15").select2("container").find("ul.select2-choices").sortable({
 <article class="row" id="disabled">
     <script id="script_e16">
         $(document).ready(function () {
-$("#e16").select2();
-$("#e16_2").select2();
-$("#e16_enable").click(function() { $("#e16,#e16_2").select2("enable"); });
-$("#e16_disable").click(function() { $("#e16,#e16_2").select2("disable"); });
+            $("#e16").select2();
+            $("#e16_2").select2();
+            $("#e16_enable").click(function() { $("#e16,#e16_2").select2("enable"); });
+            $("#e16_disable").click(function() { $("#e16,#e16_2").select2("disable"); });
         });
     </script>
     <div class="span4">
@@ -782,19 +783,19 @@ $("#e16_disable").click(function() { $("#e16,#e16_2").select2("disable"); });
 <article class="row" id="matcher">
     <script id="script_e17">
         $(document).ready(function () {
-$("#e17").select2({
-    matcher: function(term, text) { return text.toUpperCase().indexOf(term.toUpperCase())==0; }
-});
+            $("#e17").select2({
+                matcher: function(term, text) { return text.toUpperCase().indexOf(term.toUpperCase())==0; }
+            });
 // <select id="e17_2" style="width:300px">
 //     <option alt="pink">red</option>
 //     <option alt="cyan">blue</option>
 // </select>
-$("#e17_2").select2({
-    matcher: function(term, text, opt) {
-        return text.toUpperCase().indexOf(term.toUpperCase())>=0
-                || opt.attr("alt").toUpperCase().indexOf(term.toUpperCase())>=0;
-    }
-});
+            $("#e17_2").select2({
+                matcher: function(term, text, opt) {
+                    return text.toUpperCase().indexOf(term.toUpperCase())>=0
+                            || opt.attr("alt").toUpperCase().indexOf(term.toUpperCase())>=0;
+                }
+            });
         });
     </script>
     <div class="span4">
@@ -814,7 +815,7 @@ $("#e17_2").select2({
 <article class="row" id="responsive">
     <script id="script_e18">
         $(document).ready(function () {
-$("#e18,#e18_2").select2();
+            $("#e18,#e18_2").select2();
         });
     </script>
     <div class="span12">
@@ -1259,6 +1260,10 @@ $("#tags").select2({
 </td></tr>
 <tr><td>dropdownCssClass</td><td>function/string</td><td>
     Css class that will be added to select2's dropdown container
+</td></tr>
+<tr><td>escapeMarkup</td><td>function</td><td>
+    <code>String escapeMarkup(String markup)</code>
+    <p>Function used to post-process markup returned from formatter functions. By default this function escapes html entities to prevent javascript injection.</p>
 </td></tr>
 </table>
 
