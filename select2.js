@@ -926,7 +926,7 @@
 
             if (this.opened()) return false;
 
-            event = jQuery.Event("open");
+            event = $.Event("open");
             this.opts.element.trigger(event);
             return !event.isDefaultPrevented();
         },
@@ -1020,7 +1020,7 @@
             this.results.empty();
             this.clearSearch();
 
-            this.opts.element.trigger(jQuery.Event("close"));
+            this.opts.element.trigger($.Event("close"));
         },
 
         // abstract
