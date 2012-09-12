@@ -230,6 +230,10 @@
         event.preventDefault();
         event.stopPropagation();
     }
+    function killEventImmediately(event) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+    }
 
     function measureTextWidth(e) {
         if (!sizer){
@@ -1578,7 +1582,7 @@
             selection.delegate("abbr", "mousedown", this.bind(function (e) {
                 if (!this.enabled) return;
                 this.clear();
-                killEvent(e);
+                killEventImmediately(e);
                 this.close();
                 this.triggerChange();
                 this.selection.focus();
