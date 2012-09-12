@@ -1470,23 +1470,7 @@
                 window.setTimeout(this.bind(function() { this.selection.attr("tabIndex", this.opts.element.attr("tabIndex")); }), 10);
             }));
 
-            selection.delegate("abbr", "mousedown", this.bind(function (e) {
-                if (!this.enabled) return;
-                this.clear();
-                killEvent(e);
-                this.close();
-                this.triggerChange();
-                this.selection.focus();
-                this.clearRequested = true;
-            }));
-
             selection.bind("mousedown", this.bind(function (e) {
-                // do not open when clearing
-                if (this.clearRequested) {
-                     this.clearRequested = false;
-                     return;
-                }
-
                 clickingInside = true;
 
                 if (this.opened()) {
@@ -1566,6 +1550,15 @@
 
                 // prevent event propagation so it doesnt replay on the now focussed search field and result in double key entry
                 killEvent(e);
+            }));
+
+            selection.delegate("abbr", "mousedown", this.bind(function (e) {
+                if (!this.enabled) return;
+                this.clear();
+                killEvent(e);
+                this.close();
+                this.triggerChange();
+                this.selection.focus();
             }));
 
             this.setPlaceholder();
