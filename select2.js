@@ -165,7 +165,7 @@
         });
     }
 
-    $document.delegate("body", "mousemove", function (e) {
+    $document.bind("mousemove", function (e) {
         lastMousePosition = {x: e.pageX, y: e.pageY};
     });
 
@@ -497,7 +497,7 @@
      * also takes care of clicks on label tags that point to the source element
      */
     $document.ready(function () {
-        $document.delegate("body", "mousedown touchend", function (e) {
+        $document.bind("mousedown touchend", function (e) {
             var target = $(e.target).closest("div.select2-container").get(0), attr;
             if (target) {
                 $document.find("div.select2-container-active").each(function () {
