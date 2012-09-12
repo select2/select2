@@ -40,7 +40,8 @@
         return;
     }
 
-    var KEY, AbstractSelect2, SingleSelect2, MultiSelect2, nextUid, sizer;
+    var KEY, AbstractSelect2, SingleSelect2, MultiSelect2, nextUid, sizer,
+        lastMousePosition, $document;
 
     KEY = {
         TAB: 9,
@@ -89,6 +90,8 @@
             return k >= 112 && k <= 123;
         }
     };
+
+    $document = $(document);
 
     nextUid=(function() { var counter=1; return function() { return counter++; }; }());
 
@@ -162,8 +165,8 @@
         });
     }
 
-    $(document).delegate("body", "mousemove", function (e) {
-        $.data(document, "select2-lastpos", {x: e.pageX, y: e.pageY});
+    $document.bind("mousemove", function (e) {
+        lastMousePosition = {x: e.pageX, y: e.pageY};
     });
 
     /**
@@ -174,7 +177,7 @@
      */
     function installFilteredMouseMove(element) {
 	    element.bind("mousemove", function (e) {
-            var lastpos = $.data(document, "select2-lastpos");
+            var lastpos = lastMousePosition;
             if (lastpos === undefined || lastpos.x !== e.pageX || lastpos.y !== e.pageY) {
                 $(e.target).trigger("mousemove-filtered", e);
             }
@@ -493,16 +496,16 @@
      *
      * also takes care of clicks on label tags that point to the source element
      */
-    $(document).ready(function () {
-        $(document).delegate("body", "mousedown touchend", function (e) {
+    $document.ready(function () {
+        $document.bind("mousedown touchend", function (e) {
             var target = $(e.target).closest("div.select2-container").get(0), attr;
             if (target) {
-                $(document).find("div.select2-container-active").each(function () {
+                $document.find("div.select2-container-active").each(function () {
                     if (this !== target) $(this).data("select2").blur();
                 });
             } else {
                 target = $(e.target).closest("div.select2-drop").get(0);
-                $(document).find("div.select2-drop-active").each(function () {
+                $document.find("div.select2-drop-active").each(function () {
                     if (this !== target) $(this).data("select2").blur();
                 });
             }
