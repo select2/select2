@@ -1543,10 +1543,11 @@
                     return;
                 }
 
-                if (e.which == KEY.DELETE) {
+                if (e.which == KEY.DELETE || e.which == KEY.BACKSPACE) {
                     if (this.opts.allowClear) {
                         this.clear();
                     }
+                    killEvent(e);
                     return;
                 }
 
