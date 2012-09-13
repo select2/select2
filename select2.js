@@ -1537,18 +1537,10 @@
             selection.bind("keydown", this.bind(function(e) {
                 if (!this.enabled) return;
 
-                if (e.which === KEY.PAGE_UP || e.which === KEY.PAGE_DOWN) {
-                    // prevent the page from scrolling
+                if (e.which == KEY.DOWN || e.which == KEY.UP
+                    || (e.which == KEY.ENTER && this.opts.openOnEnter)) {
+                    this.open();
                     killEvent(e);
-                    return;
-                }
-
-                if (e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e)
-                 || e.which === KEY.ESC) {
-                    return;
-                }
-
-                if (this.opts.openOnEnter === false && e.which === KEY.ENTER) {
                     return;
                 }
 
@@ -1559,34 +1551,11 @@
                     killEvent(e);
                     return;
                 }
-
+            }));
+            selection.bind("keypress", this.bind(function(e) {
+                var key = String.fromCharCode(e.which);
+                this.search.val(key);
                 this.open();
-
-                if (e.which === KEY.ENTER) {
-                    // do not propagate the event otherwise we open, and propagate enter which closes
-                    killEvent(e);
-                    return;
-                }
-
-                // do not set the search input value for non-alpha-numeric keys
-                // otherwise pressing down results in a '(' being set in the search field
-                if (e.which < 48 ) { // '0' == 48
-                    killEvent(e);
-                    return;
-                }
-
-                var keyWritten = String.fromCharCode(e.which).toLowerCase();
-
-                if (e.shiftKey) {
-                    keyWritten = keyWritten.toUpperCase();
-                }
-
-                // focus the field before calling val so the cursor ends up after the value instead of before
-                this.search.focus();
-                this.search.val(keyWritten);
-
-                // prevent event propagation so it doesnt replay on the now focussed search field and result in double key entry
-                killEvent(e);
             }));
 
             this.setPlaceholder();
