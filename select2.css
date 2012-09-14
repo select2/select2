@@ -359,6 +359,10 @@ disabled look for already selected choices in the results dropdown
     border-left: 0;
 }
 
+.select2-container.select2-container-disabled .select2-choice abbr {
+    display: none
+}
+
 
 /* multiselect */
 
