@@ -1,0 +1,5 @@
+{
+  "name": "select2",
+  "version": "3.2",
+  "main": "./select2.js"
+}
