@@ -517,6 +517,7 @@
             target=$(e.target);
             attr = target.attr("for");
             if ("LABEL" === e.target.tagName && attr && attr.length > 0) {
+                attr = attr.replace(/([\[\].])/g,'\\$1'); /* escapes [, ], and . so properly selects the id */
                 target = $("#"+attr);
                 target = target.data("select2");
                 if (target !== undefined) { target.focus(); e.preventDefault();}
