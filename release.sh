@@ -29,6 +29,7 @@ echo "Tokenizing..."
 
 find . -name "$js" | xargs -I{} sed -e "$tokens" -i "" {} 
 find . -name "$css" | xargs -I{} sed -e "$tokens" -i "" {}
+sed -e "s/latest/$ver/g" -i "" component.json
 
 git add "$js"
 git add "$css"
