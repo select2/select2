@@ -2023,7 +2023,7 @@
         // multi
         onSelect: function (data) {
             this.addSelectedChoice(data);
-            if (this.select) { this.postprocessResults(); }
+            if (this.select || !this.opts.closeOnSelect) this.postprocessResults();
 
             if (this.opts.closeOnSelect) {
                 this.close();
