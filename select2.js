@@ -146,7 +146,7 @@
     }
 
     function getSideBorderPadding(element) {
-        return element.outerWidth() - element.width();
+        return element.outerWidth(false) - element.width();
     }
 
     function installKeyUpChangeEvent(element) {
@@ -875,9 +875,9 @@
         // abstract
         positionDropdown: function() {
             var offset = this.container.offset(),
-                height = this.container.outerHeight(),
-                width = this.container.outerWidth(),
-                dropHeight = this.dropdown.outerHeight(),
+                height = this.container.outerHeight(true),
+                width = this.container.outerWidth(true),
+                dropHeight = this.dropdown.outerHeight(true),
                 viewportBottom = $(window).scrollTop() + document.documentElement.clientHeight,
                 dropTop = offset.top + height,
                 dropLeft = offset.left,
@@ -1063,17 +1063,17 @@
 
             child = $(children[index]);
 
-            hb = child.offset().top + child.outerHeight();
+            hb = child.offset().top + child.outerHeight(true);
 
             // if this is the last child lets also make sure select2-more-results is visible
             if (index === children.length - 1) {
                 more = results.find("li.select2-more-results");
                 if (more.length > 0) {
-                    hb = more.offset().top + more.outerHeight();
+                    hb = more.offset().top + more.outerHeight(true);
                 }
             }
 
-            rb = results.offset().top + results.outerHeight();
+            rb = results.offset().top + results.outerHeight(true);
             if (hb > rb) {
                 results.scrollTop(results.scrollTop() + (hb - rb));
             }
@@ -1347,7 +1347,7 @@
                 if (this.opts.width === "off") {
                     return null;
                 } else if (this.opts.width === "element"){
-                    return this.opts.element.outerWidth() === 0 ? 'auto' : this.opts.element.outerWidth() + 'px';
+                    return this.opts.element.outerWidth(false) === 0 ? 'auto' : this.opts.element.outerWidth(false) + 'px';
                 } else if (this.opts.width === "copy" || this.opts.width === "resolve") {
                     // check if there is inline style on the element that contains width
                     style = this.opts.element.attr('style');
@@ -1368,7 +1368,7 @@
                         if (style.indexOf("%") > 0) return style;
 
                         // finally, fallback on the calculated width of the element
-                        return (this.opts.element.outerWidth() === 0 ? 'auto' : this.opts.element.outerWidth() + 'px');
+                        return (this.opts.element.outerWidth(false) === 0 ? 'auto' : this.opts.element.outerWidth(false) + 'px');
                     }
 
                     return null;
