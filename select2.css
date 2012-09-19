@@ -165,8 +165,9 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 
 .select2-search {
   display: inline-block;
-    white-space: nowrap;
-    z-index: 10000;
+  white-space: nowrap;
+  z-index: 10000;
+  position: relative;
   min-height: 26px;
   width: 100%;
   margin: 0;
