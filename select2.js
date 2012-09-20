@@ -855,6 +855,7 @@
 
             this.enabled=true;
             this.container.removeClass("select2-container-disabled");
+            this.opts.element.removeAttr("disabled");
         },
 
         // abstract
@@ -865,6 +866,7 @@
 
             this.enabled=false;
             this.container.addClass("select2-container-disabled");
+            this.opts.element.attr("disabled", "disabled");
         },
 
         // abstract
