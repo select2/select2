@@ -1790,7 +1790,7 @@
 
                     var data = [];
                     element.find(":selected").each2(function (i, elm) {
-                        data.push({id: elm.attr("value"), text: elm.text()});
+                        data.push({id: elm.attr("value"), text: elm.text(), element: elm});
                     });
 
                     if ($.isFunction(callback))
