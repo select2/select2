@@ -1297,6 +1297,7 @@
             if (this.search[0] === document.activeElement) { this.search.blur(); }
             this.clearSearch();
             this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
+            this.opts.element.triggerHandler("blur");
         },
 
         // abstract
