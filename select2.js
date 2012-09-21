@@ -1226,7 +1226,7 @@
                 }
                 return;
             }
-            else {
+            else if (opts.formatSearching() != null) {
                 render("<li class='select2-searching'>" + opts.formatSearching() + "</li>");
             }
 
