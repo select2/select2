@@ -1587,7 +1587,7 @@
         // single
         initSelection: function () {
             var selected;
-            if (this.opts.element.val() === "") {
+            if (this.opts.element.val() === "" && this.opts.element.text() === "") {
                 this.close();
                 this.setPlaceholder();
             } else {
@@ -1921,7 +1921,7 @@
         // multi
         initSelection: function () {
             var data;
-            if (this.opts.element.val() === "") {
+            if (this.opts.element.val() === "" && this.opts.element.text() === "") {
                 this.updateSelection([]);
                 this.close();
                 // set the placeholder if necessary
