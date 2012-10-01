@@ -2300,7 +2300,7 @@
         var args = Array.prototype.slice.call(arguments, 0),
             opts,
             select2,
-            value, multiple, allowedMethods = ["val", "destroy", "opened", "open", "close", "focus", "isFocused", "container", "onSortStart", "onSortEnd", "enable", "disable", "positionDropdown", "data"];
+            value, multiple, allowedMethods = ["search", "val", "destroy", "opened", "open", "close", "focus", "isFocused", "container", "onSortStart", "onSortEnd", "enable", "disable", "positionDropdown", "data"];
 
         this.each(function () {
             if (args.length === 0 || typeof(args[0]) === "object") {
@@ -2327,6 +2327,8 @@
                 if (select2 === undefined) return;
                 if (args[0] === "container") {
                     value=select2.container;
+                } else if (args[0] === "search") {
+                    value=select2.search;
                 } else {
                     value = select2[args[0]].apply(select2, args.slice(1));
                 }
