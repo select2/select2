@@ -1502,7 +1502,15 @@
             }));
             this.search.bind("blur", this.bind(function() {
                 if (!this.opened()) this.container.removeClass("select2-container-active");
-                window.setTimeout(this.bind(function() { this.selection.attr("tabIndex", this.opts.element.attr("tabIndex")); }), 10);
+                window.setTimeout(this.bind(function() {
+                    // restore original tab index
+                    var ti=this.opts.element.attr("tabIndex");
+                    if (ti) {
+                        this.selection.attr("tabIndex", ti);
+                    } else {
+                        this.selection.removeAttr("tabIndex");
+                    }
+                }), 10);
             }));
 
             selection.delegate("abbr", "mousedown", this.bind(function (e) {
