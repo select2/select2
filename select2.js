@@ -794,6 +794,7 @@ the specific language governing permissions and limitations under the Apache Lic
                         }
                         opts.query = ajax(opts.ajax);
                     } else if ("data" in opts) {
+                        
                         opts.query = local(opts.data);
                     } else if ("tags" in opts) {
                         opts.query = tags(opts.tags);
@@ -2071,11 +2072,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // multi
         addSelectedChoice: function (data) {
-            var choice=$(
-                    "<li class='select2-search-choice'>" +
-                    "    <div></div>" +
-                    "    <a href='#' onclick='return false;' class='select2-search-choice-close' tabindex='-1'></a>" +
-                    "</li>"),
+            var choice=$(this.opts.formatChoice(data)),
                 id = this.id(data),
                 val = this.getVal(),
                 formatted;
@@ -2088,7 +2085,9 @@ the specific language governing permissions and limitations under the Apache Lic
                 .bind("mousedown", killEvent)
                 .bind("click dblclick", this.bind(function (e) {
                 if (!this.enabled) return;
-
+                
+                this.opts.element.trigger('removeChoice', event, data);
+                
                 $(e.target).closest(".select2-search-choice").fadeOut('fast', this.bind(function(){
                     this.unselect($(e.target));
                     this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
@@ -2107,6 +2106,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             val.push(id);
             this.setVal(val);
+            this.opts.element.trigger('addChoice', data);
         },
 
         // multi
@@ -2368,6 +2368,12 @@ the specific language governing permissions and limitations under the Apache Lic
         },
         formatSelection: function (data, container) {
             return data ? data.text : undefined;
+        },
+        formatChoice: function (data) {
+            return "<li class='select2-search-choice'>" +
+                   "    <div></div>" +
+                   "    <a href='#' onclick='return false;' class='select2-search-choice-close' tabindex='-1'></a>" +
+                   "</li>"
         },
         formatResultCssClass: function(data) {return undefined;},
         formatNoMatches: function () { return "No matches found"; },
