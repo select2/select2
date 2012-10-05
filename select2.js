@@ -794,6 +794,7 @@ the specific language governing permissions and limitations under the Apache Lic
                         }
                         opts.query = ajax(opts.ajax);
                     } else if ("data" in opts) {
+                        
                         opts.query = local(opts.data);
                     } else if ("tags" in opts) {
                         opts.query = tags(opts.tags);
@@ -2084,7 +2085,9 @@ the specific language governing permissions and limitations under the Apache Lic
                 .bind("mousedown", killEvent)
                 .bind("click dblclick", this.bind(function (e) {
                 if (!this.enabled) return;
-
+                
+                this.opts.element.trigger('removeChoice', event, data);
+                
                 $(e.target).closest(".select2-search-choice").fadeOut('fast', this.bind(function(){
                     this.unselect($(e.target));
                     this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
@@ -2103,6 +2106,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             val.push(id);
             this.setVal(val);
+            this.opts.element.trigger('addChoice', data);
         },
 
         // multi
