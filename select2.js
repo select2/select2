@@ -2071,11 +2071,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // multi
         addSelectedChoice: function (data) {
-            var choice=$(
-                    "<li class='select2-search-choice'>" +
-                    "    <div></div>" +
-                    "    <a href='#' onclick='return false;' class='select2-search-choice-close' tabindex='-1'></a>" +
-                    "</li>"),
+            var choice=$(this.opts.formatChoice(data)),
                 id = this.id(data),
                 val = this.getVal(),
                 formatted;
@@ -2368,6 +2364,12 @@ the specific language governing permissions and limitations under the Apache Lic
         },
         formatSelection: function (data, container) {
             return data ? data.text : undefined;
+        },
+        formatChoice: function (data) {
+            return "<li class='select2-search-choice'>" +
+                   "    <div></div>" +
+                   "    <a href='#' onclick='return false;' class='select2-search-choice-close' tabindex='-1'></a>" +
+                   "</li>"
         },
         formatResultCssClass: function(data) {return undefined;},
         formatNoMatches: function () { return "No matches found"; },
