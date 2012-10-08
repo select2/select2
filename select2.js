@@ -660,6 +660,12 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.monitorSource();
             }
 
+            // GIVA added
+            if ($.isFunction(this.preloadSelections) && (opts.preloadSelected !== undefined && opts.preloadSelected.length > 0)) {
+                this.preloadSelections( opts.preloadSelected );
+                this.monitorSource();
+            }
+
             if (opts.element.is(":disabled") || opts.element.is("[readonly='readonly']")) this.disable();
         },
 
@@ -688,7 +694,8 @@ the specific language governing permissions and limitations under the Apache Lic
 
             if (select) {
                 // these options are not allowed when attached to a select because they are picked up off the element itself
-                $.each(["id", "multiple", "ajax", "query", "createSearchChoice", "initSelection", "data", "tags"], function () {
+                // GIVA - Added preloadSelected
+                $.each(["id", "multiple", "ajax", "query", "createSearchChoice", "preloadSelected", "initSelection", "data", "tags"], function () {
                     if (this in opts) {
                         throw new Error("Option '" + this + "' is not allowed for Select2 when attached to a <select> element.");
                     }
@@ -1815,6 +1822,15 @@ the specific language governing permissions and limitations under the Apache Lic
             return opts;
         },
 
+        // GIVA added
+        preloadSelections: function(data) {
+            var self = this;
+            var opts = self.opts;
+            if(data.length > 0){
+              self.updateSelection(data);
+            }
+        },
+
         // multi
         initContainer: function () {
 
@@ -1838,7 +1854,8 @@ the specific language governing permissions and limitations under the Apache Lic
                         return;
                     }
 
-                    choices = selection.find(".select2-search-choice");
+                    // GIVA - added :not(.select2-preloadDisabled)
+                    choices = selection.find(".select2-search-choice:not(.select2-preloadDisabled)");
                     if (choices.length > 0) {
                         choices.last().addClass("select2-search-choice-focus");
                     }
@@ -2070,37 +2087,56 @@ the specific language governing permissions and limitations under the Apache Lic
         },
 
         // multi
+        // GIVA added
+        clear: function() {
+            this.opts.element.val("");
+            this.selection.find("span").empty();
+            this.selection.removeData("select2-data");
+        },
+
+        // multi
         addSelectedChoice: function (data) {
-            var choice=$(
+            // GIVA modified added 3 vars.
+            var enableChoice = !data.disabled,
+                enabledItem = $(
                     "<li class='select2-search-choice'>" +
                     "    <div></div>" +
                     "    <a href='#' onclick='return false;' class='select2-search-choice-close' tabindex='-1'></a>" +
                     "</li>"),
+                disabledItem = $(
+                    "<li class='select2-search-choice select2-preloadDisabled'>" + 
+                    "<div></div>" +
+                    "</li>");
+            var choice = enableChoice ? enabledItem : disabledItem,
                 id = this.id(data),
                 val = this.getVal(),
                 formatted;
-
+            
             formatted=this.opts.formatSelection(data, choice.find("div"));
             if (formatted != undefined) {
                 choice.find("div").replaceWith("<div>"+this.opts.escapeMarkup(formatted)+"</div>");
             }
-            choice.find(".select2-search-choice-close")
-                .bind("mousedown", killEvent)
-                .bind("click dblclick", this.bind(function (e) {
-                if (!this.enabled) return;
 
-                $(e.target).closest(".select2-search-choice").fadeOut('fast', this.bind(function(){
-                    this.unselect($(e.target));
-                    this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
-                    this.close();
-                    this.focusSearch();
-                })).dequeue();
-                killEvent(e);
-            })).bind("focus", this.bind(function () {
-                if (!this.enabled) return;
-                this.container.addClass("select2-container-active");
-                this.dropdown.addClass("select2-drop-active");
-            }));
+            // GIVA modified - added if conditional
+            if(enableChoice){
+              choice.find(".select2-search-choice-close")
+                  .bind("mousedown", killEvent)
+                  .bind("click dblclick", this.bind(function (e) {
+                  if (!this.enabled) return;
+
+                  $(e.target).closest(".select2-search-choice").fadeOut('fast', this.bind(function(){
+                      this.unselect($(e.target));
+                      this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
+                      this.close();
+                      this.focusSearch();
+                  })).dequeue();
+                  killEvent(e);
+              })).bind("focus", this.bind(function () {
+                  if (!this.enabled) return;
+                  this.container.addClass("select2-container-active");
+                  this.dropdown.addClass("select2-drop-active");
+              }));
+            }
 
             choice.data("select2-data", data);
             choice.insertBefore(this.searchContainer);
@@ -2369,6 +2405,9 @@ the specific language governing permissions and limitations under the Apache Lic
         formatSelection: function (data, container) {
             return data ? data.text : undefined;
         },
+        // GIVA added
+        preloadSelected: {},
+        preloadSelections: function() { return "Preloading..."; },
         formatResultCssClass: function(data) {return undefined;},
         formatNoMatches: function () { return "No matches found"; },
         formatInputTooShort: function (input, min) { return "Please enter " + (min - input.length) + " more characters"; },
