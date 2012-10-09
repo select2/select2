@@ -701,17 +701,18 @@ the specific language governing permissions and limitations under the Apache Lic
 
                     populate=function(results, container, depth) {
 
-                        var i, l, result, selectable, compound, node, label, innerContainer, formatted;
+                        var i, l, result, selectable, disabled, compound, node, label, innerContainer, formatted;
                         for (i = 0, l = results.length; i < l; i = i + 1) {
 
                             result=results[i];
                             selectable=id(result) !== undefined;
+                            disabled=result.element[0].disabled;
                             compound=result.children && result.children.length > 0;
 
                             node=$("<li></li>");
                             node.addClass("select2-results-dept-"+depth);
                             node.addClass("select2-result");
-                            node.addClass(selectable ? "select2-result-selectable" : "select2-result-unselectable");
+                            node.addClass(selectable && !disabled ? "select2-result-selectable" : "select2-result-unselectable");
                             if (compound) { node.addClass("select2-result-with-children"); }
                             node.addClass(self.opts.formatResultCssClass(result));
 

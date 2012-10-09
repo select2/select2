@@ -512,7 +512,7 @@ disabled look for already selected choices in the results dropdown
 .select2-result-selectable .select2-match,
 .select2-result-unselectable .select2-result-selectable .select2-match { text-decoration: underline; }
 .select2-result-unselectable .select2-match { text-decoration: none; }
-
+.select2-result-unselectable { color: #aaa }
 .select2-offscreen { position: absolute; left: -10000px; }
 
 /* Retina-ize icons */
