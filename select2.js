@@ -2151,7 +2151,7 @@ the specific language governing permissions and limitations under the Apache Lic
             });
 
             compound.each2(function(i, e) {
-                if (e.find(".select2-result-selectable").length==0) {
+                if (!e.is('.select2-result-selectable') && e.find(".select2-result-selectable").length==0) {  // FIX FOR HIRECHAL DATA
                     e.addClass("select2-disabled");
                 } else {
                     e.removeClass("select2-disabled");
