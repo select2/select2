@@ -232,7 +232,7 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 }
 
 .select2-search input.select2-active {
-    background: #fff url('select2-select2-spinner.gif') no-repeat 100%;
+    background: #fff url('select2-spinner.gif') no-repeat 100%;
     background: url('select2-spinner.gif') no-repeat 100%, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, white), color-stop(0.99, #eeeeee));
     background: url('select2-spinner.gif') no-repeat 100%, -webkit-linear-gradient(center bottom, white 85%, #eeeeee 99%);
     background: url('select2-spinner.gif') no-repeat 100%, -moz-linear-gradient(center bottom, white 85%, #eeeeee 99%);
