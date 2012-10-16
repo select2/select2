@@ -883,9 +883,9 @@ the specific language governing permissions and limitations under the Apache Lic
         // abstract
         positionDropdown: function() {
             var offset = this.container.offset(),
-                height = this.container.outerHeight(true),
-                width = this.container.outerWidth(true),
-                dropHeight = this.dropdown.outerHeight(true),
+                height = this.container.outerHeight(false),
+                width = this.container.outerWidth(false),
+                dropHeight = this.dropdown.outerHeight(false),
                 viewportBottom = $(window).scrollTop() + document.documentElement.clientHeight,
                 dropTop = offset.top + height,
                 dropLeft = offset.left,
