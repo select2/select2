@@ -705,6 +705,10 @@ the specific language governing permissions and limitations under the Apache Lic
                         for (i = 0, l = results.length; i < l; i = i + 1) {
 
                             result=results[i];
+                            // if the element is already selectec, skip the following code
+                            try {
+                              if($.inArray(""+id(result), self.getVal()) != -1) continue;
+                            } catch(e) {}
                             selectable=id(result) !== undefined;
                             compound=result.children && result.children.length > 0;
 
