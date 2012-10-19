@@ -773,7 +773,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     // ignore the placeholder option if there is one
                     if (this.getPlaceholder() !== undefined && children.length > 0) {
                         firstChild = children[0];
-                        if ($(firstChild).text() === "") {
+                        if ($(firstChild).text() === "" || typeof this.opts.placeholderIndex !== 'undefined') {
                             children=children.not(firstChild);
                         }
                     }
@@ -1339,6 +1339,7 @@ the specific language governing permissions and limitations under the Apache Lic
             return this.opts.element.attr("placeholder") ||
                 this.opts.element.attr("data-placeholder") || // jquery 1.4 compat
                 this.opts.element.data("placeholder") ||
+                (this.select && this.select.children().eq(this.opts.placeholderIndex).text()) ||
                 this.opts.placeholder;
         },
 
@@ -1595,13 +1596,19 @@ the specific language governing permissions and limitations under the Apache Lic
             this.setPlaceholder();
         },
 
+        isPlaceholderOptionSelected: function() {
+            var placeholderValue = this.opts.placeholderValue || "";
+            return (typeof this.opts.placeholderIndex !== 'undefined' && this.select && this.select.find('option:selected').index() === this.opts.placeholderIndex) ||
+                   (this.opts.element.val() === placeholderValue && (!this.select || this.select.find('option:selected').text() === ""));
+        },
+
         /**
          * Sets selection based on source element's value
          */
         // single
         initSelection: function () {
             var selected;
-            if (this.opts.element.val() === "" && this.opts.element.text() === "") {
+            if (this.isPlaceholderOptionSelected()) {
                 this.close();
                 this.setPlaceholder();
             } else {
@@ -1637,10 +1644,11 @@ the specific language governing permissions and limitations under the Apache Lic
         setPlaceholder: function () {
             var placeholder = this.getPlaceholder();
 
-            if (this.opts.element.val() === "" && placeholder !== undefined) {
+            if (this.isPlaceholderOptionSelected() && placeholder !== undefined) {
 
                 // check for a first blank option if attached to a select
-                if (this.select && this.select.find("option:first").text() !== "") return;
+                if (this.select && (this.select.find("option:first").text() !== "" && typeof this.opts.placeholderIndex === 'undefined'))
+                    return;
 
                 this.selection.find("span").html(this.opts.escapeMarkup(placeholder));
 
