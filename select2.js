@@ -1838,7 +1838,7 @@ the specific language governing permissions and limitations under the Apache Lic
                         return;
                     }
 
-                    choices = selection.find(".select2-search-choice");
+                    choices = selection.find(".select2-search-choice:not(.select2-locked)");
                     if (choices.length > 0) {
                         choices.last().addClass("select2-search-choice-focus");
                     }
@@ -2069,38 +2069,46 @@ the specific language governing permissions and limitations under the Apache Lic
             this.focusSearch();
         },
 
-        // multi
         addSelectedChoice: function (data) {
-            var choice=$(
+            var enableChoice = !data.locked,
+                enabledItem = $(
                     "<li class='select2-search-choice'>" +
                     "    <div></div>" +
-                    "    <a href='javascript:void(0)' onclick='return false;' class='select2-search-choice-close' tabindex='-1'></a>" +
+                    "    <a href='#' onclick='return false;' class='select2-search-choice-close' tabindex='-1'></a>" +
                     "</li>"),
+                disabledItem = $(
+                    "<li class='select2-search-choice select2-locked'>" + 
+                    "<div></div>" +
+                    "</li>");
+            var choice = enableChoice ? enabledItem : disabledItem,
                 id = this.id(data),
                 val = this.getVal(),
                 formatted;
-
+            
             formatted=this.opts.formatSelection(data, choice.find("div"));
             if (formatted != undefined) {
                 choice.find("div").replaceWith("<div>"+this.opts.escapeMarkup(formatted)+"</div>");
             }
-            choice.find(".select2-search-choice-close")
-                .bind("mousedown", killEvent)
-                .bind("click dblclick", this.bind(function (e) {
-                if (!this.enabled) return;
 
-                $(e.target).closest(".select2-search-choice").fadeOut('fast', this.bind(function(){
-                    this.unselect($(e.target));
-                    this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
-                    this.close();
-                    this.focusSearch();
-                })).dequeue();
-                killEvent(e);
-            })).bind("focus", this.bind(function () {
-                if (!this.enabled) return;
-                this.container.addClass("select2-container-active");
-                this.dropdown.addClass("select2-drop-active");
-            }));
+            if(enableChoice){
+              choice.find(".select2-search-choice-close")
+                  .bind("mousedown", killEvent)
+                  .bind("click dblclick", this.bind(function (e) {
+                  if (!this.enabled) return;
+
+                  $(e.target).closest(".select2-search-choice").fadeOut('fast', this.bind(function(){
+                      this.unselect($(e.target));
+                      this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
+                      this.close();
+                      this.focusSearch();
+                  })).dequeue();
+                  killEvent(e);
+              })).bind("focus", this.bind(function () {
+                  if (!this.enabled) return;
+                  this.container.addClass("select2-container-active");
+                  this.dropdown.addClass("select2-drop-active");
+              }));
+            }
 
             choice.data("select2-data", data);
             choice.insertBefore(this.searchContainer);
