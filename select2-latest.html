@@ -843,6 +843,52 @@ $("#e18,#e18_2").select2();
           </div>
       </article>
 
+      <article class="row" id="locked-selections">
+          <script id="script_e21">
+
+var preload_data = [
+  { id: 'user0', text: 'Disabled User', locked: true}
+  , { id: 'user1', text: 'Jane Doe'}
+  , { id: 'user2', text: 'John Doe', locked: true }
+  , { id: 'user3', text: 'Robert Paulson', locked: true }
+  , { id: 'user5', text: 'Spongebob Squarepants'}
+  , { id: 'user6', text: 'Planet Bob' }
+  , { id: 'user7', text: 'Inigo Montoya' }
+];
+
+$(document).ready(function () {
+  $('#e21').select2({
+      multiple: true
+      ,query: function (query){
+          var data = {results: []};
+
+          $.each(preload_data, function(){
+              if(query.term.length == 0 || this.text.toUpperCase().indexOf(query.term.toUpperCase()) >= 0 ){
+                  data.results.push({id: this.id, text: this.text });
+              }
+          });
+
+          query.callback(data);
+      }
+  });
+  $('#e21').select2('data', preload_data )
+});
+          </script>
+          <div class="span12">
+              <h3>Lock selections</h3>
+              <p>
+                  In the event that you need to lock certain selections so that they can't be removed by the select2 interface, you can now pass in <code>locked: true</code> with your data. Please note: This also works for incoming values from ajax.
+              </p>
+              <p>
+                  <input type="hidden" id="e21" style="width:300px;"/>
+             </p>
+          </div>
+          <div class="span12">
+              <h3>Example Code</h3>
+        <pre class="prettyprint linenums" id="code_e21">
+        </pre>
+          </div>
+      </article>
 
       </section>
 
