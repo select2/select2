@@ -410,6 +410,10 @@ disabled look for already selected choices in the results dropdown
     background-image: linear-gradient(top, #eeeeee 1%, #ffffff 15%);
 }
 
+.select2-locked {
+  padding: 3px 5px 3px 5px !important;
+}
+
 .select2-container-multi .select2-choices {
     min-height: 26px;
 }
