@@ -443,7 +443,7 @@ $("#e2_2").select2({
 function format(state) {
     var originalOption = state.element;
 
-    return "&lt;img class='flag' src='images/flags/" + state.id.toLowerCase() + ".png' alt='" + originalOption.data('foo') + "' /&gt;" + state.text;
+    return "&lt;img class='flag' src='images/flags/" + state.id.toLowerCase() + ".png' alt='" + $(originalOption).data('foo') + "' /&gt;" + state.text;
 }
             </pre>
          </div>
