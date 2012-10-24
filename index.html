@@ -843,7 +843,7 @@ function format(state) {
         ];
 
         $(document).ready(function () {
-            $('#example').select2({
+            $('#e19').select2({
                 multiple: true
                 ,query: function (query){
                     var data = {results: []};
@@ -857,12 +857,13 @@ function format(state) {
                     query.callback(data);
                 }
             });
-            $('#example').select2('data', preload_data )
+            $('#e19').select2('data', preload_data )
         });
     </script>
     <div class="span12">
         <h3>Lock selections</h3>
         <p>In the event that you need to lock certain selections so that they can't be removed by the select2 interface, you can now pass in <code>locked: true</code> with your data. Please note: This also works for incoming values from ajax.</p>
+        <p><input type="hidden" id="e19" style="width:300px"/></p>
     </div>
     <div class="span12">
         <h3>Example Code</h3>
