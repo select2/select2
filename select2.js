@@ -603,6 +603,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.search = search = this.container.find("input.select2-input");
 
             search.attr("tabIndex", this.opts.element.attr("tabIndex"));
+            search.attr("maxlength", this.opts.maximumInputLength);
 
             this.resultsPage = 0;
             this.context = null;
