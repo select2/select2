@@ -1074,6 +1074,15 @@ function format(state) {
         <tr><td>&lt;returns&gt;</td><td>string</td><td>Message html</td></tr>
     </table>
 </td></tr>
+<tr><td>formatLoadMore</td><td>function</td><td>
+    Function used to render the &quot;Loading more results...&quot; message
+    <pre>formatLoadMore(pageNumber)</pre>
+    <table class="table table-bordered table-striped">
+        <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+        <tr><td>pageNumber</td><td>int</td><td>1-based page number tracked by Select2 for use with infinite scrolling of results</td></tr>
+        <tr><td>&lt;returns&gt;</td><td>string</td><td>Message html</td></tr>
+    </table>
+</td></tr>
 <tr><td>createSearchChoice</td><td>function</td><td>
     Creates a new selectable choice from user's search term. Allows creation of choices not available via the query
     function. Useful when the user can create choices on the fly, eg for the 'tagging' usecase.
