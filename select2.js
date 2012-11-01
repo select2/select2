@@ -2166,7 +2166,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
             });
 
-            if (this.opts.closeOnSelect){
+            if (this.highlight() == -1){
                 choices.each2(function (i, choice) {
                     if (!choice.hasClass("select2-disabled") && choice.hasClass("select2-result-selectable")) {
                         self.highlight(0);
