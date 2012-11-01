@@ -52,6 +52,19 @@ select2@googlegroups.com
 
 https://groups.google.com/d/forum/select2
 
+Using SCSS with Compass
+------------
+
+#### Command line
+You need to have [Compass](http://compass-style.org/install/) installed. You can run the command from the `SCSS` dir.
+
+ * `compass compile` will compile the CSS file one time.
+ * `compass watch` will compile the CSS each time there is a change to the SCSS file.
+
+#### GUI Tools
+ * [Compass.app](http://compass.handlino.com/)
+ * [Scout](http://mhs.github.com/scout-app/)
+
 
 Copyright and License
 ---------------------
