@@ -1,35 +1,41 @@
 /*
- Copyright 2012 Igor Vaynberg
+Copyright 2012 Igor Vaynberg
 
- Version: 3.2 Timestamp: Mon Sep 10 10:38:04 PDT 2012
+Version: @@ver@@ Timestamp: @@timestamp@@
 
- Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in
- compliance with the License. You may obtain a copy of the License in the LICENSE file, or at:
+This software is licensed under the Apache License, Version 2.0 (the "Apache License") or the GNU
+General Public License version 2 (the "GPL License"). You may choose either license to govern your
+use of this software only upon the condition that you accept all of the terms of either the Apache
+License or the GPL License.
 
- http://www.apache.org/licenses/LICENSE-2.0
+You may obtain a copy of the Apache License and the GPL License at:
 
- Unless required by applicable law or agreed to in writing, software distributed under the License is
- distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and limitations under the License.
- */
+    http://www.apache.org/licenses/LICENSE-2.0
+    http://www.gnu.org/licenses/gpl-2.0.html
+
+Unless required by applicable law or agreed to in writing, software distributed under the
+Apache License or the GPL Licesnse is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the Apache License and the GPL License for
+the specific language governing permissions and limitations under the Apache License and the GPL License.
+*/
  (function ($) {
-    if(typeof $.fn.each2 == "undefined"){
-        $.fn.extend({
-            /*
-            * 4-10 times faster .each replacement
-            * use it carefully, as it overrides jQuery context of element on each iteration
-            */
-            each2 : function (c) {
-                var j = $([0]), i = -1, l = this.length;
-                while (
-                    ++i < l
-                    && (j.context = j[0] = this[i])
-                    && c.call(j[0], i, j) !== false //"this"=DOM, i=index, j=jQuery object
-                );
-                return this;
-            }
-        });
-    }
+ 	if(typeof $.fn.each2 == "undefined"){
+ 		$.fn.extend({
+ 			/*
+			* 4-10 times faster .each replacement
+			* use it carefully, as it overrides jQuery context of element on each iteration
+			*/
+			each2 : function (c) {
+				var j = $([0]), i = -1, l = this.length;
+				while (
+					++i < l
+					&& (j.context = j[0] = this[i])
+					&& c.call(j[0], i, j) !== false //"this"=DOM, i=index, j=jQuery object
+				);
+				return this;
+			}
+ 		});
+ 	}
 })(jQuery);
 
 (function ($, undefined) {
@@ -40,7 +46,8 @@
         return;
     }
 
-    var KEY, AbstractSelect2, SingleSelect2, MultiSelect2, nextUid, sizer;
+    var KEY, AbstractSelect2, SingleSelect2, MultiSelect2, nextUid, sizer,
+        lastMousePosition, $document;
 
     KEY = {
         TAB: 9,
@@ -89,6 +96,8 @@
             return k >= 112 && k <= 123;
         }
     };
+
+    $document = $(document);
 
     nextUid=(function() { var counter=1; return function() { return counter++; }; }());
 
@@ -143,7 +152,7 @@
     }
 
     function getSideBorderPadding(element) {
-        return element.outerWidth() - element.width();
+        return element.outerWidth(false) - element.width();
     }
 
     function installKeyUpChangeEvent(element) {
@@ -162,8 +171,8 @@
         });
     }
 
-    $(document).delegate("body", "mousemove", function (e) {
-        $.data(document, "select2-lastpos", {x: e.pageX, y: e.pageY});
+    $document.bind("mousemove", function (e) {
+        lastMousePosition = {x: e.pageX, y: e.pageY};
     });
 
     /**
@@ -173,8 +182,8 @@
      * the elements under the pointer are scrolled.
      */
     function installFilteredMouseMove(element) {
-        element.bind("mousemove", function (e) {
-            var lastpos = $.data(document, "select2-lastpos");
+	    element.bind("mousemove", function (e) {
+            var lastpos = lastMousePosition;
             if (lastpos === undefined || lastpos.x !== e.pageX || lastpos.y !== e.pageY) {
                 $(e.target).trigger("mousemove-filtered", e);
             }
@@ -227,24 +236,28 @@
         event.preventDefault();
         event.stopPropagation();
     }
+    function killEventImmediately(event) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+    }
 
     function measureTextWidth(e) {
         if (!sizer){
-            var style = e[0].currentStyle || window.getComputedStyle(e[0], null);
-            sizer = $("<div></div>").css({
-                position: "absolute",
-                left: "-10000px",
-                top: "-10000px",
-                display: "none",
-                fontSize: style.fontSize,
-                fontFamily: style.fontFamily,
-                fontStyle: style.fontStyle,
-                fontWeight: style.fontWeight,
-                letterSpacing: style.letterSpacing,
-                textTransform: style.textTransform,
-                whiteSpace: "nowrap"
-            });
-            $("body").append(sizer);
+        	var style = e[0].currentStyle || window.getComputedStyle(e[0], null);
+        	sizer = $("<div></div>").css({
+	            position: "absolute",
+	            left: "-10000px",
+	            top: "-10000px",
+	            display: "none",
+	            fontSize: style.fontSize,
+	            fontFamily: style.fontFamily,
+	            fontStyle: style.fontStyle,
+	            fontWeight: style.fontWeight,
+	            letterSpacing: style.letterSpacing,
+	            textTransform: style.textTransform,
+	            whiteSpace: "nowrap"
+	        });
+        	$("body").append(sizer);
         }
         sizer.text(e.val());
         return sizer.width();
@@ -367,7 +380,7 @@
                     }
                     group.children=[];
                     $(datum.children).each2(function(i, childDatum) { process(childDatum, group.children); });
-                    if (group.children.length) {
+                    if (group.children.length || query.matcher(t, text(group))) {
                         collection.push(group);
                     }
                 } else {
@@ -493,16 +506,16 @@
      *
      * also takes care of clicks on label tags that point to the source element
      */
-    $(document).ready(function () {
-        $(document).delegate("body", "mousedown touchend", function (e) {
+    $document.ready(function () {
+        $document.bind("mousedown touchend", function (e) {
             var target = $(e.target).closest("div.select2-container").get(0), attr;
             if (target) {
-                $(document).find("div.select2-container-active").each(function () {
+                $document.find("div.select2-container-active").each(function () {
                     if (this !== target) $(this).data("select2").blur();
                 });
             } else {
                 target = $(e.target).closest("div.select2-drop").get(0);
-                $(document).find("div.select2-drop-active").each(function () {
+                $document.find("div.select2-drop-active").each(function () {
                     if (this !== target) $(this).data("select2").blur();
                 });
             }
@@ -510,6 +523,7 @@
             target=$(e.target);
             attr = target.attr("for");
             if ("LABEL" === e.target.tagName && attr && attr.length > 0) {
+                attr = attr.replace(/([\[\].])/g,'\\$1'); /* escapes [, ], and . so properly selects the id */
                 target = $("#"+attr);
                 target = target.data("select2");
                 if (target !== undefined) { target.focus(); e.preventDefault();}
@@ -560,12 +574,6 @@
             this.enabled=true;
             this.container = this.createContainer();
 
-            var formatContainer = $.fn.select2.defaults.formatContainer;
-            if(opts.formatContainer && typeof(opts.formatContainer) == 'function') {
-                formatContainer = opts.formatContainer;
-            }
-            this.container = formatContainer(this.container);
-
             this.containerId="s2id_"+(opts.element.attr("id") || "autogen"+nextUid());
             this.containerSelector="#"+this.containerId.replace(/([;&,\.\+\*\~':"\!\^#$%@\[\]\(\)=>\|])/g, '\\$1');
             this.container.attr("id", this.containerId);
@@ -612,7 +620,7 @@
             // if jquery.mousewheel plugin is installed we can prevent out-of-bounds scrolling of results via mousewheel
             if ($.fn.mousewheel) {
                 results.mousewheel(function (e, delta, deltaX, deltaY) {
-                    var top = results.scrollTop() - results.position().top;
+                    var top = results.scrollTop(), height;
                     if (deltaY > 0 && top - deltaY <= 0) {
                         results.scrollTop(0);
                         killEvent(e);
@@ -698,9 +706,6 @@
 
                             result=results[i];
                             selectable=id(result) !== undefined;
-                            if(opts.selectable && typeof(opts.selectable) == 'function') {
-                                selectable = opts.selectable(result);
-                            }
                             compound=result.children && result.children.length > 0;
 
                             node=$("<li></li>");
@@ -713,7 +718,7 @@
                             label=$("<div></div>");
                             label.addClass("select2-result-label");
 
-                            formatted=opts.formatResult(result, label, query, selectable);
+                            formatted=opts.formatResult(result, label, query);
                             if (formatted!==undefined) {
                                 label.html(self.opts.escapeMarkup(formatted));
                             }
@@ -856,6 +861,7 @@
 
             this.enabled=true;
             this.container.removeClass("select2-container-disabled");
+            this.opts.element.removeAttr("disabled");
         },
 
         // abstract
@@ -866,6 +872,7 @@
 
             this.enabled=false;
             this.container.addClass("select2-container-disabled");
+            this.opts.element.attr("disabled", "disabled");
         },
 
         // abstract
@@ -876,9 +883,9 @@
         // abstract
         positionDropdown: function() {
             var offset = this.container.offset(),
-                height = this.container.outerHeight(),
-                width = this.container.outerWidth(),
-                dropHeight = this.dropdown.outerHeight(),
+                height = this.container.outerHeight(false),
+                width = this.container.outerWidth(false),
+                dropHeight = this.dropdown.outerHeight(false),
                 viewportBottom = $(window).scrollTop() + document.documentElement.clientHeight,
                 dropTop = offset.top + height,
                 dropLeft = offset.left,
@@ -981,13 +988,18 @@
                 });
             });
 
-            $(window).bind(resize, function() {
-                var s2 = $(selector);
-                if (s2.length == 0) {
-                    $(window).unbind(resize);
-                }
-                s2.select2("close");
-            });
+            window.setTimeout(function() {
+                // this is done inside a timeout because IE will sometimes fire a resize event while opening
+                // the dropdown and that causes this handler to immediately close it. this way the dropdown
+                // has a chance to fully open before we start listening to resize events
+                $(window).bind(resize, function() {
+                    var s2 = $(selector);
+                    if (s2.length == 0) {
+                        $(window).unbind(resize);
+                    }
+                    s2.select2("close");
+                })
+            }, 10);
 
             this.clearDropdownAlignmentPreference();
 
@@ -1059,17 +1071,17 @@
 
             child = $(children[index]);
 
-            hb = child.offset().top + child.outerHeight();
+            hb = child.offset().top + child.outerHeight(true);
 
             // if this is the last child lets also make sure select2-more-results is visible
             if (index === children.length - 1) {
                 more = results.find("li.select2-more-results");
                 if (more.length > 0) {
-                    hb = more.offset().top + more.outerHeight();
+                    hb = more.offset().top + more.outerHeight(true);
                 }
             }
 
-            rb = results.offset().top + results.outerHeight();
+            rb = results.offset().top + results.outerHeight(true);
             if (hb > rb) {
                 results.scrollTop(results.scrollTop() + (hb - rb));
             }
@@ -1123,7 +1135,7 @@
         highlightUnderEvent: function (event) {
             var el = $(event.target).closest(".select2-result-selectable");
             if (el.length > 0 && !el.is(".select2-highlighted")) {
-                var choices = this.results.find('.select2-result-selectable');
+        		var choices = this.results.find('.select2-result-selectable');
                 this.highlight(choices.index(el));
             } else if (el.length == 0) {
                 // if we are over an unselectable item remove al highlights
@@ -1197,7 +1209,6 @@
                 results.scrollTop(0);
                 search.removeClass("select2-active");
                 self.positionDropdown();
-                self.results.trigger('select2.results-loaded')
             }
 
             function render(html) {
@@ -1208,16 +1219,20 @@
             if (opts.maximumSelectionSize >=1) {
                 data = this.data();
                 if ($.isArray(data) && data.length >= opts.maximumSelectionSize && checkFormatter(opts.formatSelectionTooBig, "formatSelectionTooBig")) {
-                    render("<li class='select2-selection-limit'>" + opts.formatSelectionTooBig(opts.maximumSelectionSize) + "</li>");
-                    return;
+            	    render("<li class='select2-selection-limit'>" + opts.formatSelectionTooBig(opts.maximumSelectionSize) + "</li>");
+            	    return;
                 }
             }
 
-            if (search.val().length < opts.minimumInputLength && checkFormatter(opts.formatInputTooShort, "formatInputTooShort")) {
-                render("<li class='select2-no-results'>" + opts.formatInputTooShort(search.val(), opts.minimumInputLength) + "</li>");
+            if (search.val().length < opts.minimumInputLength) {
+                if (checkFormatter(opts.formatInputTooShort, "formatInputTooShort")) {
+                    render("<li class='select2-no-results'>" + opts.formatInputTooShort(search.val(), opts.minimumInputLength) + "</li>");
+                } else {
+                    render("");
+                }
                 return;
             }
-            else {
+            else if (opts.formatSearching()) {
                 render("<li class='select2-searching'>" + opts.formatSearching() + "</li>");
             }
 
@@ -1288,6 +1303,7 @@
             if (this.search[0] === document.activeElement) { this.search.blur(); }
             this.clearSearch();
             this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
+            this.opts.element.triggerHandler("blur");
         },
 
         // abstract
@@ -1340,7 +1356,7 @@
                 if (this.opts.width === "off") {
                     return null;
                 } else if (this.opts.width === "element"){
-                    return this.opts.element.outerWidth() === 0 ? 'auto' : this.opts.element.outerWidth() + 'px';
+                    return this.opts.element.outerWidth(false) === 0 ? 'auto' : this.opts.element.outerWidth(false) + 'px';
                 } else if (this.opts.width === "copy" || this.opts.width === "resolve") {
                     // check if there is inline style on the element that contains width
                     style = this.opts.element.attr('style');
@@ -1361,7 +1377,7 @@
                         if (style.indexOf("%") > 0) return style;
 
                         // finally, fallback on the calculated width of the element
-                        return (this.opts.element.outerWidth() === 0 ? 'auto' : this.opts.element.outerWidth() + 'px');
+                        return (this.opts.element.outerWidth(false) === 0 ? 'auto' : this.opts.element.outerWidth(false) + 'px');
                     }
 
                     return null;
@@ -1383,11 +1399,11 @@
 
         // single
 
-        createContainer: function () {
+		createContainer: function () {
             var container = $("<div></div>", {
                 "class": "select2-container"
             }).html([
-                "    <a href='#' onclick='return false;' class='select2-choice'>",
+                "    <a href='javascript:void(0)' onclick='return false;' class='select2-choice'>",
                 "   <span></span><abbr class='select2-search-choice-close' style='display:none;'></abbr>",
                 "   <div><b></b></div>" ,
                 "</a>",
@@ -1492,7 +1508,24 @@
             }));
             this.search.bind("blur", this.bind(function() {
                 if (!this.opened()) this.container.removeClass("select2-container-active");
-                window.setTimeout(this.bind(function() { this.selection.attr("tabIndex", this.opts.element.attr("tabIndex")); }), 10);
+                window.setTimeout(this.bind(function() {
+                    // restore original tab index
+                    var ti=this.opts.element.attr("tabIndex");
+                    if (ti) {
+                        this.selection.attr("tabIndex", ti);
+                    } else {
+                        this.selection.removeAttr("tabIndex");
+                    }
+                }), 10);
+            }));
+
+            selection.delegate("abbr", "mousedown", this.bind(function (e) {
+                if (!this.enabled) return;
+                this.clear();
+                killEventImmediately(e);
+                this.close();
+                this.triggerChange();
+                this.selection.focus();
             }));
 
             selection.bind("mousedown", this.bind(function (e) {
@@ -1526,64 +1559,25 @@
             selection.bind("keydown", this.bind(function(e) {
                 if (!this.enabled) return;
 
-                if (e.which === KEY.PAGE_UP || e.which === KEY.PAGE_DOWN) {
-                    // prevent the page from scrolling
+                if (e.which == KEY.DOWN || e.which == KEY.UP
+                    || (e.which == KEY.ENTER && this.opts.openOnEnter)) {
+                    this.open();
                     killEvent(e);
                     return;
                 }
 
-                if (e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e)
-                 || e.which === KEY.ESC) {
-                    return;
-                }
-
-                if (this.opts.openOnEnter === false && e.which === KEY.ENTER) {
-                    return;
-                }
-
-                if (e.which == KEY.DELETE) {
+                if (e.which == KEY.DELETE || e.which == KEY.BACKSPACE) {
                     if (this.opts.allowClear) {
                         this.clear();
                     }
-                    return;
-                }
-
-                this.open();
-
-                if (e.which === KEY.ENTER) {
-                    // do not propagate the event otherwise we open, and propagate enter which closes
                     killEvent(e);
                     return;
                 }
-
-                // do not set the search input value for non-alpha-numeric keys
-                // otherwise pressing down results in a '(' being set in the search field
-                if (e.which < 48 ) { // '0' == 48
-                    killEvent(e);
-                    return;
-                }
-
-                var keyWritten = String.fromCharCode(e.which).toLowerCase();
-
-                if (e.shiftKey) {
-                    keyWritten = keyWritten.toUpperCase();
-                }
-
-                // focus the field before calling val so the cursor ends up after the value instead of before
-                this.search.focus();
-                this.search.val(keyWritten);
-
-                // prevent event propagation so it doesnt replay on the now focussed search field and result in double key entry
-                killEvent(e);
             }));
-
-            selection.delegate("abbr", "mousedown", this.bind(function (e) {
-                if (!this.enabled) return;
-                this.clear();
-                killEvent(e);
-                this.close();
-                this.triggerChange();
-                this.selection.focus();
+            selection.bind("keypress", this.bind(function(e) {
+                var key = String.fromCharCode(e.which);
+                this.search.val(key);
+                this.open();
             }));
 
             this.setPlaceholder();
@@ -1607,7 +1601,7 @@
         // single
         initSelection: function () {
             var selected;
-            if (this.opts.element.val() === "") {
+            if (this.opts.element.val() === "" && this.opts.element.text() === "") {
                 this.close();
                 this.setPlaceholder();
             } else {
@@ -1632,7 +1626,7 @@
                     var selected = element.find(":selected");
                     // a single select box always has a value, no need to null check 'selected'
                     if ($.isFunction(callback))
-                        callback({id: selected.attr("value"), text: selected.text()});
+                        callback({id: selected.attr("value"), text: selected.text(), element:selected});
                 };
             }
 
@@ -1786,6 +1780,7 @@
                 "class": "select2-container select2-container-multi"
             }).html([
                 "    <ul class='select2-choices'>",
+                //"<li class='select2-search-choice'><span>California</span><a href="javascript:void(0)" class="select2-search-choice-close"></a></li>" ,
                 "  <li class='select2-search-field'>" ,
                 "    <input type='text' autocomplete='off' class='select2-input'>" ,
                 "  </li>" ,
@@ -1794,7 +1789,7 @@
                 "   <ul class='select2-results'>" ,
                 "   </ul>" ,
                 "</div>"].join(""));
-            return container;
+			return container;
         },
 
         // multi
@@ -1809,7 +1804,7 @@
 
                     var data = [];
                     element.find(":selected").each2(function (i, elm) {
-                        data.push({id: elm.attr("value"), text: elm.text()});
+                        data.push({id: elm.attr("value"), text: elm.text(), element: elm});
                     });
 
                     if ($.isFunction(callback))
@@ -1843,7 +1838,7 @@
                         return;
                     }
 
-                    choices = selection.find(".select2-search-choice");
+                    choices = selection.find(".select2-search-choice:not(.select2-locked)");
                     if (choices.length > 0) {
                         choices.last().addClass("select2-search-choice-focus");
                     }
@@ -1940,7 +1935,7 @@
         // multi
         initSelection: function () {
             var data;
-            if (this.opts.element.val() === "") {
+            if (this.opts.element.val() === "" && this.opts.element.text() === "") {
                 this.updateSelection([]);
                 this.close();
                 // set the placeholder if necessary
@@ -1989,7 +1984,7 @@
             this.parent.opening.apply(this, arguments);
 
             this.clearPlaceholder();
-            this.resizeSearch();
+			this.resizeSearch();
             this.focusSearch();
         },
 
@@ -2045,7 +2040,7 @@
         // multi
         onSelect: function (data) {
             this.addSelectedChoice(data);
-            if (this.select) { this.postprocessResults(); }
+            if (this.select || !this.opts.closeOnSelect) this.postprocessResults();
 
             if (this.opts.closeOnSelect) {
                 this.close();
@@ -2074,36 +2069,46 @@
             this.focusSearch();
         },
 
-        // multi
         addSelectedChoice: function (data) {
-            var choice=$(
+            var enableChoice = !data.locked,
+                enabledItem = $(
                     "<li class='select2-search-choice'>" +
                     "    <div></div>" +
                     "    <a href='#' onclick='return false;' class='select2-search-choice-close' tabindex='-1'></a>" +
                     "</li>"),
+                disabledItem = $(
+                    "<li class='select2-search-choice select2-locked'>" + 
+                    "<div></div>" +
+                    "</li>");
+            var choice = enableChoice ? enabledItem : disabledItem,
                 id = this.id(data),
                 val = this.getVal(),
                 formatted;
+            
+            formatted=this.opts.formatSelection(data, choice.find("div"));
+            if (formatted != undefined) {
+                choice.find("div").replaceWith("<div>"+this.opts.escapeMarkup(formatted)+"</div>");
+            }
 
-            formatted=this.opts.formatSelection(data, choice);
-            choice.find("div").replaceWith("<div>"+this.opts.escapeMarkup(formatted)+"</div>");
-            choice.find(".select2-search-choice-close")
-                .bind("mousedown", killEvent)
-                .bind("click dblclick", this.bind(function (e) {
-                if (!this.enabled) return;
+            if(enableChoice){
+              choice.find(".select2-search-choice-close")
+                  .bind("mousedown", killEvent)
+                  .bind("click dblclick", this.bind(function (e) {
+                  if (!this.enabled) return;
 
-                $(e.target).closest(".select2-search-choice").fadeOut('fast', this.bind(function(){
-                    this.unselect($(e.target));
-                    this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
-                    this.close();
-                    this.focusSearch();
-                })).dequeue();
-                killEvent(e);
-            })).bind("focus", this.bind(function () {
-                if (!this.enabled) return;
-                this.container.addClass("select2-container-active");
-                this.dropdown.addClass("select2-drop-active");
-            }));
+                  $(e.target).closest(".select2-search-choice").fadeOut('fast', this.bind(function(){
+                      this.unselect($(e.target));
+                      this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
+                      this.close();
+                      this.focusSearch();
+                  })).dequeue();
+                  killEvent(e);
+              })).bind("focus", this.bind(function () {
+                  if (!this.enabled) return;
+                  this.container.addClass("select2-container-active");
+                  this.dropdown.addClass("select2-drop-active");
+              }));
+            }
 
             choice.data("select2-data", data);
             choice.insertBefore(this.searchContainer);
@@ -2154,7 +2159,7 @@
             });
 
             compound.each2(function(i, e) {
-                if (e.find(".select2-result-selectable").length==0) {
+                if (!e.is('.select2-result-selectable') && e.find(".select2-result-selectable").length==0) {  // FIX FOR HIRECHAL DATA
                     e.addClass("select2-disabled");
                 } else {
                     e.removeClass("select2-disabled");
@@ -2174,7 +2179,7 @@
         resizeSearch: function () {
 
             var minimumWidth, left, maxWidth, containerLeft, searchWidth,
-                sideBorderPadding = getSideBorderPadding(this.search);
+            	sideBorderPadding = getSideBorderPadding(this.search);
 
             minimumWidth = measureTextWidth(this.search) + 10;
 
@@ -2364,9 +2369,6 @@
         dropdownCss: {},
         containerCssClass: "",
         dropdownCssClass: "",
-        formatContainer: function(container) {
-            return container;
-        },
         formatResult: function(result, container, query) {
             var markup=[];
             markMatch(result.text, query.term, markup);
