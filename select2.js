@@ -1088,7 +1088,7 @@ the specific language governing permissions and limitations under the Apache Lic
             y = child.offset().top - results.offset().top;
 
             // make sure the top of the element is visible
-            if (y < 0) {
+            if (y < 0 && child.css('display') != 'none' ) {
                 results.scrollTop(results.scrollTop() + y); // y is negative
             }
         },
@@ -2166,12 +2166,14 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
             });
 
-            choices.each2(function (i, choice) {
-                if (!choice.hasClass("select2-disabled") && choice.hasClass("select2-result-selectable")) {
-                    self.highlight(0);
-                    return false;
-                }
-            });
+            if (this.highlight() == -1){
+                choices.each2(function (i, choice) {
+                    if (!choice.hasClass("select2-disabled") && choice.hasClass("select2-result-selectable")) {
+                        self.highlight(0);
+                        return false;
+                    }
+                });
+            }
 
         },
 
