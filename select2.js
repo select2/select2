@@ -719,22 +719,24 @@ the specific language governing permissions and limitations under the Apache Lic
                             label.addClass("select2-result-label");
 
                             formatted=opts.formatResult(result, label, query);
-                            if (formatted!==undefined) {
-                                label.html(self.opts.escapeMarkup(formatted));
+                            if (formatted!==false) {
+                                if (formatted!==undefined) {
+                                    label.html(self.opts.escapeMarkup(formatted));
+                                }
+
+                                node.append(label);
+
+                                if (compound) {
+
+                                    innerContainer=$("<ul></ul>");
+                                    innerContainer.addClass("select2-result-sub");
+                                    populate(result.children, innerContainer, depth+1);
+                                    node.append(innerContainer);
+                                }
+
+                                node.data("select2-data", result);
+                                container.append(node);
                             }
-
-                            node.append(label);
-
-                            if (compound) {
-
-                                innerContainer=$("<ul></ul>");
-                                innerContainer.addClass("select2-result-sub");
-                                populate(result.children, innerContainer, depth+1);
-                                node.append(innerContainer);
-                            }
-
-                            node.data("select2-data", result);
-                            container.append(node);
                         }
                     };
 
