@@ -19,23 +19,23 @@ CONDITIONS OF ANY KIND, either express or implied. See the Apache License and th
 the specific language governing permissions and limitations under the Apache License and the GPL License.
 */
  (function ($) {
- 	if(typeof $.fn.each2 == "undefined"){
- 		$.fn.extend({
- 			/*
-			* 4-10 times faster .each replacement
-			* use it carefully, as it overrides jQuery context of element on each iteration
-			*/
-			each2 : function (c) {
-				var j = $([0]), i = -1, l = this.length;
-				while (
-					++i < l
-					&& (j.context = j[0] = this[i])
-					&& c.call(j[0], i, j) !== false //"this"=DOM, i=index, j=jQuery object
-				);
-				return this;
-			}
- 		});
- 	}
+  if(typeof $.fn.each2 == "undefined"){
+    $.fn.extend({
+      /*
+      * 4-10 times faster .each replacement
+      * use it carefully, as it overrides jQuery context of element on each iteration
+      */
+      each2 : function (c) {
+        var j = $([0]), i = -1, l = this.length;
+        while (
+          ++i < l
+          && (j.context = j[0] = this[i])
+          && c.call(j[0], i, j) !== false //"this"=DOM, i=index, j=jQuery object
+        );
+        return this;
+      }
+    });
+  }
 })(jQuery);
 
 (function ($, undefined) {
@@ -182,7 +182,7 @@ the specific language governing permissions and limitations under the Apache Lic
      * the elements under the pointer are scrolled.
      */
     function installFilteredMouseMove(element) {
-	    element.bind("mousemove", function (e) {
+      element.bind("mousemove", function (e) {
             var lastpos = lastMousePosition;
             if (lastpos === undefined || lastpos.x !== e.pageX || lastpos.y !== e.pageY) {
                 $(e.target).trigger("mousemove-filtered", e);
@@ -243,21 +243,21 @@ the specific language governing permissions and limitations under the Apache Lic
 
     function measureTextWidth(e) {
         if (!sizer){
-        	var style = e[0].currentStyle || window.getComputedStyle(e[0], null);
-        	sizer = $("<div></div>").css({
-	            position: "absolute",
-	            left: "-10000px",
-	            top: "-10000px",
-	            display: "none",
-	            fontSize: style.fontSize,
-	            fontFamily: style.fontFamily,
-	            fontStyle: style.fontStyle,
-	            fontWeight: style.fontWeight,
-	            letterSpacing: style.letterSpacing,
-	            textTransform: style.textTransform,
-	            whiteSpace: "nowrap"
-	        });
-        	$("body").append(sizer);
+          var style = e[0].currentStyle || window.getComputedStyle(e[0], null);
+          sizer = $("<div></div>").css({
+              position: "absolute",
+              left: "-10000px",
+              top: "-10000px",
+              display: "none",
+              fontSize: style.fontSize,
+              fontFamily: style.fontFamily,
+              fontStyle: style.fontStyle,
+              fontWeight: style.fontWeight,
+              letterSpacing: style.letterSpacing,
+              textTransform: style.textTransform,
+              whiteSpace: "nowrap"
+          });
+          $("body").append(sizer);
         }
         sizer.text(e.val());
         return sizer.width();
@@ -595,6 +595,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 .before(this.container);
             this.container.data("select2", this);
 
+            this.dropdownContainer = this.opts.dropdownContainer || this.body()
             this.dropdown = this.container.find(".select2-drop");
             this.dropdown.addClass(evaluate(opts.dropdownCssClass));
             this.dropdown.data("select2", this);
@@ -1009,8 +1010,8 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.updateResults(true);
 
-            if(this.dropdown[0] !== this.body().children().last()[0]) {
-                this.dropdown.detach().appendTo(this.body());
+            if(this.dropdown[0] !== this.dropdownContainer.children().last()[0]) {
+                this.dropdown.detach().appendTo(this.dropdownContainer);
             }
 
             this.dropdown.show();
@@ -1135,7 +1136,7 @@ the specific language governing permissions and limitations under the Apache Lic
         highlightUnderEvent: function (event) {
             var el = $(event.target).closest(".select2-result-selectable");
             if (el.length > 0 && !el.is(".select2-highlighted")) {
-        		var choices = this.results.find('.select2-result-selectable');
+            var choices = this.results.find('.select2-result-selectable');
                 this.highlight(choices.index(el));
             } else if (el.length == 0) {
                 // if we are over an unselectable item remove al highlights
@@ -1219,8 +1220,8 @@ the specific language governing permissions and limitations under the Apache Lic
             if (opts.maximumSelectionSize >=1) {
                 data = this.data();
                 if ($.isArray(data) && data.length >= opts.maximumSelectionSize && checkFormatter(opts.formatSelectionTooBig, "formatSelectionTooBig")) {
-            	    render("<li class='select2-selection-limit'>" + opts.formatSelectionTooBig(opts.maximumSelectionSize) + "</li>");
-            	    return;
+                  render("<li class='select2-selection-limit'>" + opts.formatSelectionTooBig(opts.maximumSelectionSize) + "</li>");
+                  return;
                 }
             }
 
@@ -1399,7 +1400,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // single
 
-		createContainer: function () {
+    createContainer: function () {
             var container = $("<div></div>", {
                 "class": "select2-container"
             }).html([
@@ -1789,7 +1790,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 "   <ul class='select2-results'>" ,
                 "   </ul>" ,
                 "</div>"].join(""));
-			return container;
+      return container;
         },
 
         // multi
@@ -1984,7 +1985,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.parent.opening.apply(this, arguments);
 
             this.clearPlaceholder();
-			this.resizeSearch();
+      this.resizeSearch();
             this.focusSearch();
         },
 
@@ -2181,7 +2182,7 @@ the specific language governing permissions and limitations under the Apache Lic
         resizeSearch: function () {
 
             var minimumWidth, left, maxWidth, containerLeft, searchWidth,
-            	sideBorderPadding = getSideBorderPadding(this.search);
+              sideBorderPadding = getSideBorderPadding(this.search);
 
             minimumWidth = measureTextWidth(this.search) + 10;
 
