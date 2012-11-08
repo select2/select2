@@ -3,33 +3,33 @@
 @SpinnerPath = "select2-spinner.gif";
 
 #gradient {
-	.vertical-stopped(@startColor: #555, @startStop: 0%, @endColor: #333, @endStop: 0%) {
+	.vertical-stopped(@startColor: #555, @startStop: 0%, @endColor: #333, @endStop: 100%) {
 		background-color: mix(@startColor, @endColor, 60%);
 		background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@startStop @startColor), to(@endStop @endColor));
 		background-image: -webkit-linear-gradient(top, @startColor @startStop, @endColor @endStop);
-		background-image: -moz-linear-gradient(top, @startColor @startStop, @endColor endStop);
-		background-image: -o-linear-gradient(@startColor @startStop, @endColor endStop);
-		background-image: linear-gradient(@startColor @startStop, @endColor endStop);
+		background-image: -moz-linear-gradient(top, @startColor @startStop, @endColor @endStop);
+		background-image: -o-linear-gradient(@startColor @startStop, @endColor @endStop);
+		background-image: linear-gradient(@startColor @startStop, @endColor @endStop);
 		background-repeat: no-repeat;
 		filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",argb(@startColor),argb(@endColor)));
 	}
-	.vertical-imgstopped(@img, @startColor: #555, @startStop: 0%, @endColor: #333, @endStop: 0%) {
+	.vertical-imgstopped(@img, @startColor: #555, @startStop: 0%, @endColor: #333, @endStop: 100%) {
 		background-color: mix(@startColor, @endColor, 60%) @img;
 		background-image: @img, -webkit-gradient(linear, 0 0, 0 100%, from(@startStop @startColor), to(@endStop @endColor));
 		background-image: @img, -webkit-linear-gradient(top, @startColor @startStop, @endColor @endStop);
-		background-image: @img, -moz-linear-gradient(top, @startColor @startStop, @endColor endStop);
-		background-image: @img, -o-linear-gradient(@startColor @startStop, @endColor endStop);
-		background-image: @img, linear-gradient(@startColor @startStop, @endColor endStop);
+		background-image: @img, -moz-linear-gradient(top, @startColor @startStop, @endColor @endStop);
+		background-image: @img, -o-linear-gradient(@startColor @startStop, @endColor @endStop);
+		background-image: @img, linear-gradient(@startColor @startStop, @endColor @endStop);
 		background-repeat: no-repeat;
 		filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",argb(@startColor),argb(@endColor)));
 	}
-	.vertical-4stop(@startColor: #555, @startStop: 0%, @stop1Color: #555, @stop1Stop: 0%, @stop2Color: #555, @stop2Stop: 0%, @endColor: #333, @endStop: 0%) {
+	.vertical-4stop(@startColor: #555, @startStop: 0%, @stop1Color: #555, @stop1Stop: 33%, @stop2Color: #555, @stop2Stop: 66%, @endColor: #333, @endStop: 100%) {
 		background-color: mix(@startColor, @endColor, 60%);
 		background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@startStop @startColor), color-stop(@stop1Stop @stop1Color), color-stop(@stop2Stop @stop2Color), to(@endStop @endColor));
 		background-image: -webkit-linear-gradient(top, @startColor @startStop, @stop1Color @stop1Stop, @stop2Color @stop2Stop, @endColor @endStop);
-		background-image: -moz-linear-gradient(top, @startColor @startStop, @stop1Color @stop1Stop, @stop2Color @stop2Stop, @endColor endStop);
-		background-image: -o-linear-gradient(@startColor @startStop, @stop1Color @stop1Stop, @stop2Color @stop2Stop, @endColor endStop);
-		background-image: linear-gradient(@startColor @startStop, @stop1Color @stop1Stop, @stop2Color @stop2Stop, @endColor endStop);
+		background-image: -moz-linear-gradient(top, @startColor @startStop, @stop1Color @stop1Stop, @stop2Color @stop2Stop, @endColor @endStop);
+		background-image: -o-linear-gradient(@startColor @startStop, @stop1Color @stop1Stop, @stop2Color @stop2Stop, @endColor @endStop);
+		background-image: linear-gradient(@startColor @startStop, @stop1Color @stop1Stop, @stop2Color @stop2Stop, @endColor @endStop);
 		background-repeat: no-repeat;
 		filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",argb(@startColor),argb(@endColor)));
 	}
