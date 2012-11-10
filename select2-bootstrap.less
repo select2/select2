@@ -185,7 +185,12 @@
 			border-top: 1px solid #aaa;
 			border-bottom: 0;
 			.box-shadow(0 -4px 5px rgba(0, 0, 0, .15));
-			.select2-search input { margin-top:4px; }
+			.select2-search input {
+				margin-top:4px;
+			}
+			span.add-on {
+				margin-top: 4px;
+			}
 		}
 		&down-open .select2-choice {
 			border: 1px solid #aaa;
@@ -194,6 +199,10 @@
 			#gradient > .vertical-stopped(#fff, 0%, #eee, 50%);
 			.border-bottom-left-radius(0);
 			.border-bottom-right-radius(0);
+			&:hover {
+				#gradient > .vertical-stopped(#fff, 0%, #eee, 50%) !important;
+				background-position: 0;
+			}
 			div {
 				background: transparent;
 				border-left: none;
@@ -212,9 +221,9 @@
 		input {
 			margin-left: 4px;
 			width: 85%;
-			min-height: 26px;
 		}
 		span.add-on {
+			margin-top: 0;
 			padding: 5px 4px 3px 4px;
 		}
 		&-hidden {
