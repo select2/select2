@@ -241,9 +241,8 @@
 		.select2-active { background: #f4f4f4; }
 	}
 	&-results {
-		margin: 4px 4px 4px 0;
+		margin: 4px 2px 4px 0;
 		padding: 0 0 0 4px;
-		position: relative;
 		overflow-x: hidden;
 		overflow-y: auto;
 		max-height: 200px;
@@ -269,10 +268,16 @@
 		}
 		li {
 			list-style: none;
-			display: list-item;
 			em {
 				background: #feffde;
 				font-style: normal;
+			}
+			&:hover,
+			&:focus {
+			  text-decoration: none;
+			  color: @dropdownLinkColorHover;
+			  background-color: @dropdownLinkBackgroundHover;
+			  #gradient > .vertical(@dropdownLinkBackgroundHover, darken(@dropdownLinkBackgroundHover, 5%));
 			}
 			.select2-result-with-children > .select2-result-label { font-weight: bold; }
 		}
@@ -287,11 +292,6 @@
 				padding: 3px 7px 4px;
 				margin: 0;
 				cursor: pointer;
-			}
-			&-highlighted {
-				background: #3875d7;
-				color: #fff;
-				em { background: transparent; }
 			}
 			&-disabled { display: none; }
 		}
