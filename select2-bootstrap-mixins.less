@@ -107,7 +107,7 @@
 				}
 			}
 		}
-		.select2-drop-above .select2-choice {
+		&.select2-drop-above .select2-choice {
 			border-bottom-color: #aaa;
 			.border-radius(0px 0px 4px 4px);
 			#gradient > .vertical-stopped(#eee, 0%, #fff, 90%);
@@ -155,7 +155,7 @@
 							outline: 0;
 							border: 0;
 							.box-shadow(none);
-							.select2-active { background: #fff url("@{SpinnerPath}") no-repeat 100% !important; }
+							&.select2-active { background: #fff url("@{SpinnerPath}") no-repeat 100% !important; }
 						}
 					}
 					&-choice {
@@ -184,7 +184,7 @@
 					}
 				}
 			}
-			.select2-container {
+			&.select2-container {
 				&-active .select2-choices {
 					.box-shadow(0 0 5px rgba(0,0,0,.3));
 					border: 1px solid #5897fb;
@@ -226,7 +226,7 @@
 		width:100%;
 		margin-top:-1px;
 		.border-radius(0 0 4px 4px);
-		.select2-drop-above {
+		&.select2-drop-above {
 			.border-radius(4px 4px 0px 0px);
 			margin-top:1px;
 			border-top: 1px solid #aaa;
@@ -299,7 +299,7 @@
 	&-more-results {
 		background: #f4f4f4;
 		display: list-item;
-		.select2-active { background: #f4f4f4 url("@{SpinnerPath}") no-repeat 100%; }
+		&.select2-active { background: #f4f4f4 url("@{SpinnerPath}") no-repeat 100%; }
 	}
 	&-results {
 		margin: 4px 4px 4px 0;
@@ -335,7 +335,7 @@
 				background: #feffde;
 				font-style: normal;
 			}
-			.select2-result-with-children > .select2-result-label { font-weight: bold; }
+			&.select2-result-with-children > .select2-result-label { font-weight: bold; }
 		}
 		.select2 {
 			&-no-results,
