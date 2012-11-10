@@ -1,9 +1,9 @@
 #gradient {
 	.vertical-stopped(@startColor: #555, @startStop: 0%, @endColor: #333, @endStop: 100%) {
 		background-color: mix(@startColor, @endColor, 60%);
-		background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@startStop @startColor), to(@endStop @endColor));
-		background-image: -webkit-linear-gradient(top, @startColor @startStop, @endColor @endStop);
-		background-image: -moz-linear-gradient(top, @startColor @startStop, @endColor @endStop);
+		background-image: -webkit-gradient(linear, 0 100%, 0 0, from(@startStop @startColor), to(@endStop @endColor));
+		background-image: -webkit-linear-gradient(bottom, @startColor @startStop, @endColor @endStop);
+		background-image: -moz-linear-gradient(bottom, @startColor @startStop, @endColor @endStop);
 		background-image: -o-linear-gradient(@startColor @startStop, @endColor @endStop);
 		background-image: linear-gradient(@startColor @startStop, @endColor @endStop);
 		background-repeat: no-repeat;
@@ -22,10 +22,6 @@
 }
 
 .select2 {
-	&-container,
-	&-drop,
-	&-search,
-	&-search input { .box-sizing(border-box); }
 	&-container {
 		position: relative;
 		display: inline-block;
@@ -34,19 +30,11 @@
 		*display: inline;
 		vertical-align: top;
 		.select2-choice {
-			border: 1px solid #aaa;
 			display: block;
 			overflow: hidden;
 			white-space: nowrap;
 			position: relative;
-			height: 26px;
-			line-height: 26px;
-			padding: 0 0 0 8px;
-			color: #444;
-			text-decoration: none;
-			#gradient > .vertical-stopped(#eee, 0%, #fff, 50%);
-			.border-radius(4px);
-			.background-clip(padding-box);
+			padding-left: 8px;
 			span {
 				margin-right: 26px;
 				display: block;
@@ -55,33 +43,19 @@
 				-o-text-overflow: ellipsis;
 				-ms-text-overflow: ellipsis;
 				text-overflow: ellipsis;
+				text-align: left;
 			}
 			div {
 				.border-radius(0 4px 4px 0);
-				.background-clip(padding-box);
-				#gradient > .vertical-stopped(#ccc, 0%, #eee, 60%);
+				#gradient > .vertical(#eee, #ccc);
 				border-left: 1px solid #aaa;
 				position: absolute;
 				right: 0;
 				top: 0;
-				display: block;
 				height: 100%;
-				width: 18px;
-			}
-			abbr {
-				display: block;
-				position: absolute;
-				right: 26px;
-				top: 8px;
-				width: 12px;
-				height: 12px;
-				font-size: 1px;
-				cursor: pointer;
-				text-decoration: none;
-				border:0;
-				outline: 0;
+				width: 0;
+				padding: 4px 12px 0px 4px;
 				&:hover {
-					background-position: right -11px;
 					cursor: pointer;
 				}
 			}
@@ -223,35 +197,24 @@
 			div {
 				background: transparent;
 				border-left: none;
-				b { background-position: -18px 1px; }
+				.caret {
+				    border-top: 0;
+				    border-bottom: 4px solid @black;
+				    content: "";
+				}
 			}
 		}
 	}
 	&-search {
-		display: inline-block;
 		white-space: nowrap;
 		z-index: 10000;
-		min-height: 26px;
 		width: 100%;
-		margin: 0;
-		padding-left: 4px;
-		padding-right: 4px;
+		padding: 4px;
 		input {
-			#gradient > .vertical-stopped(#fff, 85%, #eee, 99%);
-			padding: 4px 20px 4px 5px;
-			outline: 0;
-			border: 1px solid #aaa;
-			font-family: sans-serif;
-			font-size: 1em;
-			width:100%;
-			margin:0;
-			height:auto !important;
-			min-height: 26px;
-			.box-shadow(none);
-			.border-radius(0);
+			width: 70%;
 		}
-		input.select2-active {
-			#gradient > .vertical-stopped( #fff, 85%, #eee, 99%);
+		span.add-on {
+			padding: 5px 4px 1px 4px;
 		}
 		&-hidden {
 			display: block;

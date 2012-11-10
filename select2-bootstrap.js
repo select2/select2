@@ -1390,7 +1390,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             var width = resolveContainerWidth.call(this);
             if (width !== null) {
-                this.container.attr("style", "width: "+width);
+                this.container.attr("style", "width: "+(width-2));
             }
         }
     });
@@ -1403,14 +1403,14 @@ the specific language governing permissions and limitations under the Apache Lic
             var container = $("<div></div>", {
                 "class": "select2-container"
             }).html([
-                "<a href='javascript:void(0)' onclick='return false;' class='select2-choice'>",
+                "<a href='javascript:void(0)' onclick='return false;' class='select2-choice btn'>",
                 "   <span></span><abbr class='select2-search-choice-close' style='display:none;'>&times;</abbr>",
-                "   <div><i class='icon-chevron-down'></i></div>" ,
+                "   <div><span class='caret'></span></div>" ,
                 "</a>",
                 "   <div class='select2-drop select2-offscreen'>" ,
                 "   <div class='select2-search input-append'>" ,
                 "       <input type='text' autocomplete='off' class='select2-input'/>" ,
-                "       <span class='add-on'><i class='icon-search'></i></span>",
+                "       <span class='add-on'><i class='bsicon-search'></i></span>",
                 "   </div>" ,
                 "   <ul class='select2-results'>" ,
                 "   </ul>" ,
