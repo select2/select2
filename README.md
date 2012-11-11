@@ -3,7 +3,6 @@ Select2 (-less-bootstrap)
 
 A fork of select2 adding in less files and providing tigher integration with bootstrap.
 
-Check it out live here: [daviddeutsch.github.com/select2-less-bootstrap](http://daviddeutsch.github.com/select2-less-bootstrap/)
 
 What Does Select2 Support That Chosen Does Not?
 -------------------------------------------------
