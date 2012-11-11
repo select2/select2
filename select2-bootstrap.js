@@ -861,6 +861,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.enabled=true;
             this.container.removeClass("select2-container-disabled");
+            this.container.find(".btn").removeClass("disabled");
             this.opts.element.removeAttr("disabled");
         },
 
@@ -872,6 +873,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.enabled=false;
             this.container.addClass("select2-container-disabled");
+            this.container.find(".btn").addClass("disabled");
             this.opts.element.attr("disabled", "disabled");
         },
 
@@ -1404,7 +1406,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 "class": "select2-container"
             }).html([
                 "<a href='javascript:void(0)' onclick='return false;' class='select2-choice btn'>",
-                "   <span></span><abbr class='select2-search-choice-close' style='display:none;'>&times;</abbr>",
+                "   <span></span>" ,
                 "   <div><span class='caret'></span></div>" ,
                 "</a>",
                 "   <div class='select2-drop select2-offscreen'>" ,
@@ -1643,7 +1645,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 // check for a first blank option if attached to a select
                 if (this.select && this.select.find("option:first").text() !== "") return;
 
-                this.selection.find("span").html(this.opts.escapeMarkup(placeholder));
+                this.selection.find("span:not(.caret)").html(this.opts.escapeMarkup(placeholder));
 
                 this.selection.addClass("select2-default");
 
@@ -1781,7 +1783,6 @@ the specific language governing permissions and limitations under the Apache Lic
                 "class": "select2-container select2-container-multi"
             }).html([
                 "    <ul class='select2-choices'>",
-                //"<li class='select2-search-choice'><span>California</span><a href="javascript:void(0)" class="select2-search-choice-close"></a></li>" ,
                 "  <li class='select2-search-field'>" ,
                 "    <input type='text' autocomplete='off' class='select2-input'>" ,
                 "  </li>" ,
@@ -2073,12 +2074,12 @@ the specific language governing permissions and limitations under the Apache Lic
         addSelectedChoice: function (data) {
             var enableChoice = !data.locked,
                 enabledItem = $(
-                    "<li class='select2-search-choice'>" +
+                    "<li class='select2-search-choice btn'>" +
+                    "    <a href='#' onclick='return false;' class='select2-search-choice-close close' tabindex='-1'>&times;</a>" +
                     "    <div></div>" +
-                    "    <a href='#' onclick='return false;' class='select2-search-choice-close' tabindex='-1'></a>" +
                     "</li>"),
                 disabledItem = $(
-                    "<li class='select2-search-choice select2-locked'>" + 
+                    "<li class='select2-search-choice select2-locked btn disabled'>" + 
                     "<div></div>" +
                     "</li>");
             var choice = enableChoice ? enabledItem : disabledItem,
@@ -2153,17 +2154,17 @@ the specific language governing permissions and limitations under the Apache Lic
             choices.each2(function (i, choice) {
                 var id = self.id(choice.data("select2-data"));
                 if (indexOf(id, val) >= 0) {
-                    choice.addClass("select2-disabled").removeClass("select2-result-selectable");
+                    choice.addClass("select2-disabled disabled").removeClass("select2-result-selectable");
                 } else {
-                    choice.removeClass("select2-disabled").addClass("select2-result-selectable");
+                    choice.removeClass("select2-disabled disabled").addClass("select2-result-selectable");
                 }
             });
 
             compound.each2(function(i, e) {
                 if (!e.is('.select2-result-selectable') && e.find(".select2-result-selectable").length==0) {  // FIX FOR HIRECHAL DATA
-                    e.addClass("select2-disabled");
+                    e.addClass("select2-disabled disabled");
                 } else {
-                    e.removeClass("select2-disabled");
+                    e.removeClass("select2-disabled disabled");
                 }
             });
 
