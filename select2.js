@@ -1632,7 +1632,7 @@ the specific language governing permissions and limitations under the Apache Lic
             if (opts.element.get(0).tagName.toLowerCase() === "select") {
                 // install the selection initializer
                 opts.initSelection = function (element, callback) {
-                    var selected = element.find(":selected");
+                    var selected = element.find("option[selected]");
                     // a single select box always has a value, no need to null check 'selected'
                     if ($.isFunction(callback))
                         callback({id: selected.attr("value"), text: selected.text(), element:selected});
@@ -1733,7 +1733,7 @@ the specific language governing permissions and limitations under the Apache Lic
             if (this.select) {
                 this.select
                     .val(val)
-                    .find(":selected").each2(function (i, elm) {
+                    .find("option[selected]").each2(function (i, elm) {
                         data = {id: elm.attr("value"), text: elm.text()};
                         return false;
                     });
@@ -1812,7 +1812,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 opts.initSelection = function (element,callback) {
 
                     var data = [];
-                    element.find(":selected").each2(function (i, elm) {
+                    element.find("option[selected]").each2(function (i, elm) {
                         data.push({id: elm.attr("value"), text: elm.text(), element: elm});
                     });
 
@@ -2258,7 +2258,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.setVal(val);
 
             if (this.select) {
-                this.select.find(":selected").each(function () {
+                this.select.find("option[selected]").each(function () {
                     data.push({id: $(this).attr("value"), text: $(this).text()});
                 });
                 this.updateSelection(data);
