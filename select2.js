@@ -797,7 +797,9 @@ the specific language governing permissions and limitations under the Apache Lic
                         opts.query = local(opts.data);
                     } else if ("tags" in opts) {
                         opts.query = tags(opts.tags);
-                        opts.createSearchChoice = function (term) { return {id: term, text: term}; };
+                        if (opts.createSearchChoice === undefined) {
+                            opts.createSearchChoice = function (term) { return {id: term, text: term}; };
+                        }
                         opts.initSelection = function (element, callback) {
                             var data = [];
                             $(splitVal(element.val(), opts.separator)).each(function () {
@@ -2084,14 +2086,14 @@ the specific language governing permissions and limitations under the Apache Lic
                     "    <a href='#' onclick='return false;' class='select2-search-choice-close' tabindex='-1'></a>" +
                     "</li>"),
                 disabledItem = $(
-                    "<li class='select2-search-choice select2-locked'>" + 
+                    "<li class='select2-search-choice select2-locked'>" +
                     "<div></div>" +
                     "</li>");
             var choice = enableChoice ? enabledItem : disabledItem,
                 id = this.id(data),
                 val = this.getVal(),
                 formatted;
-            
+
             formatted=this.opts.formatSelection(data, choice.find("div"));
             if (formatted != undefined) {
                 choice.find("div").replaceWith("<div>"+this.opts.escapeMarkup(formatted)+"</div>");
