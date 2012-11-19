@@ -510,8 +510,8 @@ the specific language governing permissions and limitations under the Apache Lic
         $document.bind("mousedown touchend", function (e) {
             var target = $(e.target).closest("div.select2-container").get(0), attr;
             if (target) {
-                $document.find("div.select2-container-active").each(function () {
-                    if (this !== target) $(this).data("select2").blur();
+                $document.find("div.select2-container").not(target).each(function () {
+                    if ($(this).is('.select2-container-active, .select2-dropdown-open')) $(this).data("select2").blur();
                 });
             } else {
                 target = $(e.target).closest("div.select2-drop").get(0);
