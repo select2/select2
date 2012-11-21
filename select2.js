@@ -1337,7 +1337,9 @@ the specific language governing permissions and limitations under the Apache Lic
                 highlighted=this.results.find(".select2-highlighted").not(".select2-disabled"),
                 data = highlighted.closest('.select2-result-selectable').data("select2-data");
             if (data) {
-                highlighted.addClass("select2-disabled");
+                if (this.opts.multiple || this.opts.closeOnSelect) {
+                    highlighted.addClass("select2-disabled");
+                }
                 this.highlight(index);
                 this.onSelect(data);
             }
@@ -1694,8 +1696,11 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.opts.element.val(this.id(data));
             this.updateSelection(data);
-            this.close();
-            this.selection.focus();
+
+            if (this.opts.closeOnSelect) {
+                this.close();
+                this.selection.focus();
+            }
 
             if (!equal(old, this.id(data))) { this.triggerChange(); }
         },
