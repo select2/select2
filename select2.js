@@ -702,6 +702,9 @@ the specific language governing permissions and limitations under the Apache Lic
                     populate=function(results, container, depth) {
 
                         var i, l, result, selectable, compound, node, label, innerContainer, formatted;
+
+                        results = opts.sortResults(results, container, query);
+
                         for (i = 0, l = results.length; i < l; i = i + 1) {
 
                             result=results[i];
@@ -2387,6 +2390,9 @@ the specific language governing permissions and limitations under the Apache Lic
         },
         formatSelection: function (data, container) {
             return data ? data.text : undefined;
+        },
+        sortResults: function (results, container, query) {
+            return results;
         },
         formatResultCssClass: function(data) {return undefined;},
         formatNoMatches: function () { return "No matches found"; },
