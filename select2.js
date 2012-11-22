@@ -516,7 +516,13 @@ the specific language governing permissions and limitations under the Apache Lic
             } else {
                 target = $(e.target).closest("div.select2-drop").get(0);
                 $document.find("div.select2-drop-active").each(function () {
-                    if (this !== target) $(this).data("select2").blur();
+                    if (this !== target) {
+                        var el = $(this).data("select2");
+                        if (el.opts.selectOnExternalMouseDown)
+                            el.selectHighlighted();
+                        else
+                            el.blur();
+                    }
                 });
             }
 
@@ -2410,7 +2416,8 @@ the specific language governing permissions and limitations under the Apache Lic
             }
             return markup;
         },
-        blurOnChange: false
+        blurOnChange: false,
+        selectOnExternalMouseDown: false
     };
 
     // exports
