@@ -520,8 +520,7 @@ the specific language governing permissions and limitations under the Apache Lic
                         var el = $(this).data("select2");
                         if (el.opts.selectOnExternalMouseDown)
                             el.selectHighlighted();
-                        else
-                            el.blur();
+                        el.blur();
                     }
                 });
             }
