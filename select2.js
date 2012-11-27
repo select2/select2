@@ -18,24 +18,24 @@ Apache License or the GPL Licesnse is distributed on an "AS IS" BASIS, WITHOUT W
 CONDITIONS OF ANY KIND, either express or implied. See the Apache License and the GPL License for
 the specific language governing permissions and limitations under the Apache License and the GPL License.
 */
- (function ($) {
- 	if(typeof $.fn.each2 == "undefined"){
- 		$.fn.extend({
- 			/*
-			* 4-10 times faster .each replacement
-			* use it carefully, as it overrides jQuery context of element on each iteration
-			*/
-			each2 : function (c) {
-				var j = $([0]), i = -1, l = this.length;
-				while (
-					++i < l
-					&& (j.context = j[0] = this[i])
-					&& c.call(j[0], i, j) !== false //"this"=DOM, i=index, j=jQuery object
-				);
-				return this;
-			}
- 		});
- 	}
+(function ($) {
+    if(typeof $.fn.each2 == "undefined"){
+        $.fn.extend({
+            /*
+             * 4-10 times faster .each replacement use it carefully, as it
+             * overrides jQuery context of element on each iteration
+             */
+            each2 : function (c) {
+                var j = $([0]), i = -1, l = this.length;
+                while (
+                    ++i < l
+                        && (j.context = j[0] = this[i])
+                    && c.call(j[0], i, j) !== false //"this"=DOM, i=index, j=jQuery object
+                );
+                return this;
+            }
+        });
+    }
 })(jQuery);
 
 (function ($, undefined) {
@@ -182,7 +182,7 @@ the specific language governing permissions and limitations under the Apache Lic
      * the elements under the pointer are scrolled.
      */
     function installFilteredMouseMove(element) {
-	    element.bind("mousemove", function (e) {
+      element.bind("mousemove", function (e) {
             var lastpos = lastMousePosition;
             if (lastpos === undefined || lastpos.x !== e.pageX || lastpos.y !== e.pageY) {
                 $(e.target).trigger("mousemove-filtered", e);
@@ -245,18 +245,18 @@ the specific language governing permissions and limitations under the Apache Lic
         if (!sizer){
         	var style = e[0].currentStyle || window.getComputedStyle(e[0], null);
         	sizer = $("<div></div>").css({
-	            position: "absolute",
-	            left: "-10000px",
-	            top: "-10000px",
-	            display: "none",
-	            fontSize: style.fontSize,
-	            fontFamily: style.fontFamily,
-	            fontStyle: style.fontStyle,
-	            fontWeight: style.fontWeight,
-	            letterSpacing: style.letterSpacing,
-	            textTransform: style.textTransform,
-	            whiteSpace: "nowrap"
-	        });
+              position: "absolute",
+              left: "-10000px",
+              top: "-10000px",
+              display: "none",
+              fontSize: style.fontSize,
+              fontFamily: style.fontFamily,
+              fontStyle: style.fontStyle,
+              fontWeight: style.fontWeight,
+              letterSpacing: style.letterSpacing,
+              textTransform: style.textTransform,
+              whiteSpace: "nowrap"
+          });
         	$("body").append(sizer);
         }
         sizer.text(e.val());
@@ -888,14 +888,14 @@ the specific language governing permissions and limitations under the Apache Lic
                 height = this.container.outerHeight(false),
                 width = this.container.outerWidth(false),
                 dropHeight = this.dropdown.outerHeight(false),
-	        viewPortRight = $(window).scrollLeft() + document.documentElement.clientWidth,
+          viewPortRight = $(window).scrollLeft() + document.documentElement.clientWidth,
                 viewportBottom = $(window).scrollTop() + document.documentElement.clientHeight,
                 dropTop = offset.top + height,
                 dropLeft = offset.left,
                 enoughRoomBelow = dropTop + dropHeight <= viewportBottom,
                 enoughRoomAbove = (offset.top - dropHeight) >= this.body().scrollTop(),
-	        dropWidth = this.dropdown.outerWidth(false),
-	        enoughRoomOnRight = dropLeft + dropWidth <= viewPortRight,
+          dropWidth = this.dropdown.outerWidth(false),
+          enoughRoomOnRight = dropLeft + dropWidth <= viewPortRight,
                 aboveNow = this.dropdown.hasClass("select2-drop-above"),
                 bodyOffset,
                 above,
@@ -922,9 +922,9 @@ the specific language governing permissions and limitations under the Apache Lic
                 if (!enoughRoomBelow && enoughRoomAbove) above = true;
             }
 
-	    if (!enoughRoomOnRight) {
-		   dropLeft = offset.left + width - dropWidth;
-	    }
+      if (!enoughRoomOnRight) {
+       dropLeft = offset.left + width - dropWidth;
+      }
 
             if (above) {
                 dropTop = offset.top - dropHeight;
@@ -1408,7 +1408,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // single
 
-		createContainer: function () {
+    createContainer: function () {
             var container = $("<div></div>", {
                 "class": "select2-container"
             }).html([
@@ -1798,7 +1798,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 "   <ul class='select2-results'>" ,
                 "   </ul>" ,
                 "</div>"].join(""));
-			return container;
+      return container;
         },
 
         // multi
@@ -1993,7 +1993,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.parent.opening.apply(this, arguments);
 
             this.clearPlaceholder();
-			this.resizeSearch();
+            this.resizeSearch();
             this.focusSearch();
         },
 
