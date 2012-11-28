@@ -1584,6 +1584,9 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
             }));
             selection.bind("keypress", this.bind(function(e) {
+		if (e.which == KEY.DELETE || e.which == KEY.BACKSPACE || e.which == KEY.TAB || e.which == KEY.ENTER || e.which == 0) {
+			return
+		}
                 var key = String.fromCharCode(e.which);
                 this.search.val(key);
                 this.open();
