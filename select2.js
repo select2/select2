@@ -1644,12 +1644,19 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // single
         setPlaceholder: function () {
-            var placeholder = this.getPlaceholder();
+            var first, selected,
+                placeholder = this.getPlaceholder();
 
             if (this.opts.element.val() === "" && placeholder !== undefined) {
 
-                // check for a first blank option if attached to a select
-                if (this.select && this.select.find("option:first").text() !== "") return;
+                if (this.select == null) return;
+
+                first = this.select.find('option:first');
+                selected = this.select.find('option:selected');
+
+
+                if ((selected.length && selected.text() !== "") || 
+                    (!selected.length && first.text() !== "")) return;
 
                 this.selection.find("span").html(this.opts.escapeMarkup(placeholder));
 
