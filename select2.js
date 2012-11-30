@@ -1644,12 +1644,18 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // single
         setPlaceholder: function () {
-            var placeholder = this.getPlaceholder();
+            var first, selected,
+                placeholder = this.getPlaceholder();
 
             if (this.opts.element.val() === "" && placeholder !== undefined) {
 
-                // check for a first blank option if attached to a select
-                if (this.select && this.select.find("option:first").text() !== "") return;
+                if (this.select == null) return;
+
+                first = this.select.find('option:first');
+                selected = this.select.find('option:selected');
+
+                if ((selected.length && selected.text() !== "") || 
+                    (!selected.length && first.text() !== "")) return;
 
                 this.selection.find("span").html(this.opts.escapeMarkup(placeholder));
 
@@ -1718,6 +1724,10 @@ the specific language governing permissions and limitations under the Apache Lic
             if (this.opts.allowClear && this.getPlaceholder() !== undefined) {
                 this.selection.find("abbr").show();
             }
+
+            // Reapply the placeholder. This handles the case when user
+            // reselects a blank option that happens to be the last one.
+            this.setPlaceholder();
         },
 
         // single
