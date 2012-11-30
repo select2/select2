@@ -1654,7 +1654,6 @@ the specific language governing permissions and limitations under the Apache Lic
                 first = this.select.find('option:first');
                 selected = this.select.find('option:selected');
 
-
                 if ((selected.length && selected.text() !== "") || 
                     (!selected.length && first.text() !== "")) return;
 
@@ -1725,6 +1724,10 @@ the specific language governing permissions and limitations under the Apache Lic
             if (this.opts.allowClear && this.getPlaceholder() !== undefined) {
                 this.selection.find("abbr").show();
             }
+
+            // Reapply the placeholder. This handles the case when user
+            // reselects a blank option that happens to be the last one.
+            this.setPlaceholder();
         },
 
         // single
