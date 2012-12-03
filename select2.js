@@ -1488,6 +1488,15 @@ the specific language governing permissions and limitations under the Apache Lic
                             this.selectHighlighted();
                             killEvent(e);
                             return;
+                        case KEY.HOME:
+                            this.highlight(0);
+                            killEvent(e);
+                            return;
+                        case KEY.END:
+                            var choices = this.results.find(".select2-result-selectable");
+                            this.highlight(choices.length);
+                            killEvent(e);
+                            return;
                         case KEY.ESC:
                             this.cancel(e);
                             killEvent(e);
