@@ -1739,6 +1739,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     });
                 this.updateSelection(data);
                 this.setPlaceholder();
+                this.triggerChange();
             } else {
                 if (this.opts.initSelection === undefined) {
                     throw new Error("cannot call val() if initSelection() is not defined");
@@ -1746,6 +1747,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 // val is an id. !val is true for [undefined,null,'']
                 if (!val) {
                     this.clear();
+                    this.triggerChange();
                     return;
                 }
                 this.opts.element.val(val);
@@ -1753,6 +1755,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     self.opts.element.val(!data ? "" : self.id(data));
                     self.updateSelection(data);
                     self.setPlaceholder();
+                    self.triggerChange();
                 });
             }
         },
@@ -2251,6 +2254,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.opts.element.val("");
                 this.updateSelection([]);
                 this.clearSearch();
+                this.triggerChange();
                 return;
             }
 
@@ -2262,6 +2266,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     data.push({id: $(this).attr("value"), text: $(this).text()});
                 });
                 this.updateSelection(data);
+                this.triggerChange();
             } else {
                 if (this.opts.initSelection === undefined) {
                     throw new Error("val() cannot be called if initSelection() is not defined")
@@ -2272,6 +2277,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     self.setVal(ids);
                     self.updateSelection(data);
                     self.clearSearch();
+                    self.triggerChange();
                 });
             }
             this.clearSearch();
