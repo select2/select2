@@ -1598,7 +1598,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // single
         clear: function() {
-            this.opts.element.val("");
+            this.opts.element.val(this.opts.clearValue);
             this.selection.find("span").empty();
             this.selection.removeData("select2-data");
             this.setPlaceholder();
@@ -2374,6 +2374,7 @@ the specific language governing permissions and limitations under the Apache Lic
     // plugin defaults, accessible to users
     $.fn.select2.defaults = {
         width: "copy",
+        clearValue: "",
         closeOnSelect: true,
         openOnEnter: true,
         containerCss: {},
