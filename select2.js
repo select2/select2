@@ -1,17 +1,23 @@
 /*
- Copyright 2012 Igor Vaynberg
+Copyright 2012 Igor Vaynberg
 
- Version: @@ver@@ Timestamp: @@timestamp@@
+Version: @@ver@@ Timestamp: @@timestamp@@
 
- Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in
- compliance with the License. You may obtain a copy of the License in the LICENSE file, or at:
+This software is licensed under the Apache License, Version 2.0 (the "Apache License") or the GNU
+General Public License version 2 (the "GPL License"). You may choose either license to govern your
+use of this software only upon the condition that you accept all of the terms of either the Apache
+License or the GPL License.
 
- http://www.apache.org/licenses/LICENSE-2.0
+You may obtain a copy of the Apache License and the GPL License at:
 
- Unless required by applicable law or agreed to in writing, software distributed under the License is
- distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and limitations under the License.
- */
+    http://www.apache.org/licenses/LICENSE-2.0
+    http://www.gnu.org/licenses/gpl-2.0.html
+
+Unless required by applicable law or agreed to in writing, software distributed under the
+Apache License or the GPL Licesnse is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the Apache License and the GPL License for
+the specific language governing permissions and limitations under the Apache License and the GPL License.
+*/
  (function ($) {
  	if(typeof $.fn.each2 == "undefined"){
  		$.fn.extend({
@@ -374,7 +380,7 @@
                     }
                     group.children=[];
                     $(datum.children).each2(function(i, childDatum) { process(childDatum, group.children); });
-                    if (group.children.length) {
+                    if (group.children.length || query.matcher(t, text(group))) {
                         collection.push(group);
                     }
                 } else {
@@ -854,6 +860,7 @@
 
             this.enabled=true;
             this.container.removeClass("select2-container-disabled");
+            this.opts.element.removeAttr("disabled");
         },
 
         // abstract
@@ -864,6 +871,7 @@
 
             this.enabled=false;
             this.container.addClass("select2-container-disabled");
+            this.opts.element.attr("disabled", "disabled");
         },
 
         // abstract
@@ -874,14 +882,17 @@
         // abstract
         positionDropdown: function() {
             var offset = this.container.offset(),
-                height = this.container.outerHeight(true),
-                width = this.container.outerWidth(true),
-                dropHeight = this.dropdown.outerHeight(true),
+                height = this.container.outerHeight(false),
+                width = this.container.outerWidth(false),
+                dropHeight = this.dropdown.outerHeight(false),
+	        viewPortRight = $(window).scrollLeft() + document.documentElement.clientWidth,
                 viewportBottom = $(window).scrollTop() + document.documentElement.clientHeight,
                 dropTop = offset.top + height,
                 dropLeft = offset.left,
                 enoughRoomBelow = dropTop + dropHeight <= viewportBottom,
                 enoughRoomAbove = (offset.top - dropHeight) >= this.body().scrollTop(),
+	        dropWidth = this.dropdown.outerWidth(false),
+	        enoughRoomOnRight = dropLeft + dropWidth <= viewPortRight,
                 aboveNow = this.dropdown.hasClass("select2-drop-above"),
                 bodyOffset,
                 above,
@@ -907,6 +918,10 @@
                 above = false;
                 if (!enoughRoomBelow && enoughRoomAbove) above = true;
             }
+
+	    if (!enoughRoomOnRight) {
+		   dropLeft = offset.left + width - dropWidth;
+	    }
 
             if (above) {
                 dropTop = offset.top - dropHeight;
@@ -1079,7 +1094,7 @@
             y = child.offset().top - results.offset().top;
 
             // make sure the top of the element is visible
-            if (y < 0) {
+            if (y < 0 && child.css('display') != 'none' ) {
                 results.scrollTop(results.scrollTop() + y); // y is negative
             }
         },
@@ -1223,7 +1238,7 @@
                 }
                 return;
             }
-            else {
+            else if (opts.formatSearching()) {
                 render("<li class='select2-searching'>" + opts.formatSearching() + "</li>");
             }
 
@@ -1294,6 +1309,7 @@
             if (this.search[0] === document.activeElement) { this.search.blur(); }
             this.clearSearch();
             this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
+            this.opts.element.triggerHandler("blur");
         },
 
         // abstract
@@ -1393,7 +1409,7 @@
             var container = $("<div></div>", {
                 "class": "select2-container"
             }).html([
-                "    <a href='#' onclick='return false;' class='select2-choice'>",
+                "    <a href='javascript:void(0)' onclick='return false;' class='select2-choice'>",
                 "   <span></span><abbr class='select2-search-choice-close' style='display:none;'></abbr>",
                 "   <div><b></b></div>" ,
                 "</a>",
@@ -1498,7 +1514,15 @@
             }));
             this.search.bind("blur", this.bind(function() {
                 if (!this.opened()) this.container.removeClass("select2-container-active");
-                window.setTimeout(this.bind(function() { this.selection.attr("tabIndex", this.opts.element.attr("tabIndex")); }), 10);
+                window.setTimeout(this.bind(function() {
+                    // restore original tab index
+                    var ti=this.opts.element.attr("tabIndex");
+                    if (ti) {
+                        this.selection.attr("tabIndex", ti);
+                    } else {
+                        this.selection.removeAttr("tabIndex");
+                    }
+                }), 10);
             }));
 
             selection.delegate("abbr", "mousedown", this.bind(function (e) {
@@ -1583,7 +1607,7 @@
         // single
         initSelection: function () {
             var selected;
-            if (this.opts.element.val() === "") {
+            if (this.opts.element.val() === "" && this.opts.element.text() === "") {
                 this.close();
                 this.setPlaceholder();
             } else {
@@ -1608,7 +1632,7 @@
                     var selected = element.find(":selected");
                     // a single select box always has a value, no need to null check 'selected'
                     if ($.isFunction(callback))
-                        callback({id: selected.attr("value"), text: selected.text()});
+                        callback({id: selected.attr("value"), text: selected.text(), element:selected});
                 };
             }
 
@@ -1726,6 +1750,7 @@
                     this.updateSelection(data);
                 }
                 this.setPlaceholder();
+                this.triggerChange();
             } else {
                 if (this.opts.initSelection === undefined) {
                     throw new Error("cannot call val() if initSelection() is not defined");
@@ -1733,6 +1758,7 @@
                 // val is an id. !val is true for [undefined,null,'']
                 if (!val) {
                     this.clear();
+                    this.triggerChange();
                     return;
                 }
                 this.opts.element.val(val);
@@ -1740,6 +1766,7 @@
                     self.opts.element.val(!data ? "" : self.id(data));
                     self.updateSelection(data);
                     self.setPlaceholder();
+                    self.triggerChange();
                 });
             }
         },
@@ -1800,7 +1827,7 @@
 
                     var data = [];
                     element.find(":selected").each2(function (i, elm) {
-                        data.push({id: elm.attr("value"), text: elm.text()});
+                        data.push({id: elm.attr("value"), text: elm.text(), element: elm});
                     });
 
                     if ($.isFunction(callback))
@@ -1834,7 +1861,7 @@
                         return;
                     }
 
-                    choices = selection.find(".select2-search-choice");
+                    choices = selection.find(".select2-search-choice:not(.select2-locked)");
                     if (choices.length > 0) {
                         choices.last().addClass("select2-search-choice-focus");
                     }
@@ -1931,7 +1958,7 @@
         // multi
         initSelection: function () {
             var data;
-            if (this.opts.element.val() === "") {
+            if (this.opts.element.val() === "" && this.opts.element.text() === "") {
                 this.updateSelection([]);
                 this.close();
                 // set the placeholder if necessary
@@ -2036,7 +2063,7 @@
         // multi
         onSelect: function (data) {
             this.addSelectedChoice(data);
-            if (this.select) { this.postprocessResults(); }
+            if (this.select || !this.opts.closeOnSelect) this.postprocessResults();
 
             if (this.opts.closeOnSelect) {
                 this.close();
@@ -2065,13 +2092,18 @@
             this.focusSearch();
         },
 
-        // multi
         addSelectedChoice: function (data) {
-            var choice=$(
+            var enableChoice = !data.locked,
+                enabledItem = $(
                     "<li class='select2-search-choice'>" +
                     "    <div></div>" +
                     "    <a href='#' onclick='return false;' class='select2-search-choice-close' tabindex='-1'></a>" +
                     "</li>"),
+                disabledItem = $(
+                    "<li class='select2-search-choice select2-locked'>" +
+                    "<div></div>" +
+                    "</li>");
+            var choice = enableChoice ? enabledItem : disabledItem,
                 id = this.id(data),
                 val = this.getVal(),
                 formatted;
@@ -2080,23 +2112,26 @@
             if (formatted != undefined) {
                 choice.find("div").replaceWith("<div>"+this.opts.escapeMarkup(formatted)+"</div>");
             }
-            choice.find(".select2-search-choice-close")
-                .bind("mousedown", killEvent)
-                .bind("click dblclick", this.bind(function (e) {
-                if (!this.enabled) return;
 
-                $(e.target).closest(".select2-search-choice").fadeOut('fast', this.bind(function(){
-                    this.unselect($(e.target));
-                    this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
-                    this.close();
-                    this.focusSearch();
-                })).dequeue();
-                killEvent(e);
-            })).bind("focus", this.bind(function () {
-                if (!this.enabled) return;
-                this.container.addClass("select2-container-active");
-                this.dropdown.addClass("select2-drop-active");
-            }));
+            if(enableChoice){
+              choice.find(".select2-search-choice-close")
+                  .bind("mousedown", killEvent)
+                  .bind("click dblclick", this.bind(function (e) {
+                  if (!this.enabled) return;
+
+                  $(e.target).closest(".select2-search-choice").fadeOut('fast', this.bind(function(){
+                      this.unselect($(e.target));
+                      this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
+                      this.close();
+                      this.focusSearch();
+                  })).dequeue();
+                  killEvent(e);
+              })).bind("focus", this.bind(function () {
+                  if (!this.enabled) return;
+                  this.container.addClass("select2-container-active");
+                  this.dropdown.addClass("select2-drop-active");
+              }));
+            }
 
             choice.data("select2-data", data);
             choice.insertBefore(this.searchContainer);
@@ -2155,19 +2190,21 @@
             });
 
             compound.each2(function(i, e) {
-                if (e.find(".select2-result-selectable").length==0) {
+                if (!e.is('.select2-result-selectable') && e.find(".select2-result-selectable").length==0) {  // FIX FOR HIRECHAL DATA
                     e.addClass("select2-disabled");
                 } else {
                     e.removeClass("select2-disabled");
                 }
             });
 
-            choices.each2(function (i, choice) {
-                if (!choice.hasClass("select2-disabled") && choice.hasClass("select2-result-selectable")) {
-                    self.highlight(0);
-                    return false;
-                }
-            });
+            if (this.highlight() == -1){
+                choices.each2(function (i, choice) {
+                    if (!choice.hasClass("select2-disabled") && choice.hasClass("select2-result-selectable")) {
+                        self.highlight(0);
+                        return false;
+                    }
+                });
+            }
 
         },
 
@@ -2236,6 +2273,7 @@
                 this.opts.element.val("");
                 this.updateSelection([]);
                 this.clearSearch();
+                this.triggerChange();
                 return;
             }
 
@@ -2247,6 +2285,7 @@
                     data.push({id: $(this).attr("value"), text: $(this).text()});
                 });
                 this.updateSelection(data);
+                this.triggerChange();
             } else {
                 if (this.opts.initSelection === undefined) {
                     throw new Error("val() cannot be called if initSelection() is not defined")
@@ -2257,6 +2296,7 @@
                     self.setVal(ids);
                     self.updateSelection(data);
                     self.clearSearch();
+                    self.triggerChange();
                 });
             }
             this.clearSearch();
@@ -2375,7 +2415,7 @@
         },
         formatResultCssClass: function(data) {return undefined;},
         formatNoMatches: function () { return "No matches found"; },
-        formatInputTooShort: function (input, min) { return "Please enter " + (min - input.length) + " more characters"; },
+        formatInputTooShort: function (input, min) { var n = min - input.length; return "Please enter " + n + " more character" + (n == 1? "" : "s"); },
         formatSelectionTooBig: function (limit) { return "You can only select " + limit + " item" + (limit == 1 ? "" : "s"); },
         formatLoadMore: function (pageNumber) { return "Loading more results..."; },
         formatSearching: function () { return "Searching..."; },
