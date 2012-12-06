@@ -1,0 +1,99 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="select2.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+		<script type="text/javascript" src="select2.js"></script>
+		<script>
+			$(document).ready(function() {
+				$("#test-select").select2({
+					allowClear: true,
+					placeholder: $(this).val()
+					// change: function() {
+					// 	console.log($(this).data("select2"));
+					// 	alert('change!');
+					// }
+				});
+				$("#test-hidden").select2({
+					minimumInputLength: 1,
+					query: function (query) {
+						var data = {results: []}, i, j, s;
+						for (i = 1; i < 5; i++) {
+							s = "";
+							for (j = 0; j < i; j++) {s = s + query.term;}
+							data.results.push({id: query.term + i, text: s});
+						}
+						query.callback(data);
+					},
+					allowClear: true,
+					placeholder: $(this).val()
+				});
+
+				function log(e) {
+				var e=$("<li>"+e+"</li>");
+				$("#events_11").append(e);
+				e.animate({opacity:1}, 10000, 'linear', function() { e.animate({opacity:0}, 2000, 'linear', function() {e.remove(); }); });
+				}
+				// $("#e11")
+				// .on("change", function(e) { log(JSON.stringify({val:e.val, added:e.added, removed:e.removed})); })
+				// .on("open", function() { log("open"); });
+				// $("#e11_2")
+				// .on("change", function(e) { log(JSON.stringify({val:e.val, added:e.added, removed:e.removed})); })
+				// .on("open", function() { log("open"); });
+
+				$("#test-select").on("change", function(e) { 
+					log(JSON.stringify({val:e.val, added:e.added, removed:e.removed}));
+					// var div1 = document.getElementById("#test-select");
+					// var align = div1.getAttribute("selected");
+					// console.log(align);
+
+					// var e = document.getElementById("ddlViewBy");
+					// var strUser = this.options[this.selectedIndex].value;
+					// strUser.setAttribute("selected",false);
+					// var sel = this.options[this.selectedIndex].getAttribute("selected");
+					// console.log(sel);
+
+					// console.log(this.option);
+					// console.log($(this).data("select2"));
+					// console.log(document.getElementById('test-select').selectedValue);
+				});
+
+				// console.log(document.getElementById('test-select').selectedValue);
+
+
+			});
+		</script>
+		<style>
+		.select-wrapper, .hidden-wrapper {
+			width: 400px;
+			height: 400px;
+		}
+
+		.select-wrapper {
+			float: left;
+		}
+
+		.hidden-wrapper {
+			float: left;
+		}
+
+		.select-wrapper .select2-container, .hidden-wrapper .select2-container {
+			width: 300px;
+		}
+		</style>
+	</head>
+	<body>
+		<div class="select-wrapper">
+			<select name="testSelect" id="test-select">
+				<option value="0">NEW</option>
+				<option value="">-------------</option>
+				<option value="123">123</option>
+				<option value="456">456</option>
+				<option value="789">789</option>
+			</select>
+		</div>
+		<div class="hidden-wrapper">
+			<input type="hidden" id="test-hidden">
+		</div>
+		<ul id="events_11"></ul>
+	</body>
+</html>
