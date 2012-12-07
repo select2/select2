@@ -1601,9 +1601,7 @@ the specific language governing permissions and limitations under the Apache Lic
             if (this.select) {
                 this.opts
                     .element
-                    .find(":selected").each2(function () {
-                        this.removeAttribute("selected");
-                    });
+                    .val($("option:first").val());
             } else {
                 this.opts.element.val("");
             }
