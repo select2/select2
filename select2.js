@@ -1598,7 +1598,13 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // single
         clear: function() {
-            this.opts.element.val("");
+            if (this.select) {
+                this.opts
+                    .element
+                    .val($("option:first").val());
+            } else {
+                this.opts.element.val("");
+            }
             this.selection.find("span").empty();
             this.selection.removeData("select2-data");
             this.setPlaceholder();
