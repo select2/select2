@@ -509,16 +509,19 @@ the specific language governing permissions and limitations under the Apache Lic
     $document.ready(function () {
         $document.bind("mousedown touchend", function (e) {
             var target = $(e.target).closest("div.select2-container").get(0), attr;
+            var targetDropdown = null;
             if (target) {
                 $document.find("div.select2-container-active").each(function () {
                     if (this !== target) $(this).data("select2").blur();
                 });
-            } else {
-                target = $(e.target).closest("div.select2-drop").get(0);
-                $document.find("div.select2-drop-active").each(function () {
-                    if (this !== target) $(this).data("select2").blur();
-                });
+                targetDropdown = $(target).data('select2').dropdown.get(0);
             }
+
+            // close any other active dropdowns
+            target = targetDropdown || $(e.target).closest("div.select2-drop").get(0);
+            $document.find("div.select2-drop-active").each(function () {
+                if (this !== target) $(this).data("select2").blur();
+            });
 
             target=$(e.target);
             attr = target.attr("for");
