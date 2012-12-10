@@ -511,7 +511,7 @@ the specific language governing permissions and limitations under the Apache Lic
             var target = $(e.target).closest("div.select2-container").get(0), attr;
             var targetDropdown = null;
             if (target) {
-                $document.find("div.select2-container-active").each(function () {
+                $document.find(".select2-container-active, .select2-dropdown-open").each(function () {
                     if (this !== target) $(this).data("select2").blur();
                 });
                 targetDropdown = $(target).data('select2').dropdown.get(0);
