@@ -709,7 +709,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
                             result=results[i];
                             selectable=id(result) !== undefined;
-                            disabled=result.element[0].disabled;
+                            disabled=result.element ? result.element[0].disabled : false;
                             compound=result.children && result.children.length > 0;
 
                             node=$("<li></li>");
