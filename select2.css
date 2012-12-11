@@ -554,6 +554,8 @@ disabled look for already selected choices in the results dropdown
     text-decoration: none;
 }
 
+.select2-result-unselectable { color: #aaa }
+
 .select2-offscreen {
     position: absolute;
     left: -10000px;
