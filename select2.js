@@ -1308,6 +1308,10 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // abstract
         blur: function () {
+            // if selectOnBlur == true, select the currently highlighted option
+            if (this.opts.selectOnBlur)
+                this.selectHighlighted({noFocus: true});
+
             this.close();
             this.container.removeClass("select2-container-active");
             this.dropdown.removeClass("select2-drop-active");
@@ -1335,14 +1339,14 @@ the specific language governing permissions and limitations under the Apache Lic
         },
 
         // abstract
-        selectHighlighted: function () {
+        selectHighlighted: function (options) {
             var index=this.highlight(),
                 highlighted=this.results.find(".select2-highlighted").not(".select2-disabled"),
                 data = highlighted.closest('.select2-result-selectable').data("select2-data");
             if (data) {
                 highlighted.addClass("select2-disabled");
                 this.highlight(index);
-                this.onSelect(data);
+                this.onSelect(data, options);
             }
         },
 
@@ -1692,13 +1696,15 @@ the specific language governing permissions and limitations under the Apache Lic
         },
 
         // single
-        onSelect: function (data) {
+        onSelect: function (data, options) {
             var old = this.opts.element.val();
 
             this.opts.element.val(this.id(data));
             this.updateSelection(data);
             this.close();
-            this.selection.focus();
+
+            if (!options || !options.noFocus)
+                this.selection.focus();
 
             if (!equal(old, this.id(data))) { this.triggerChange(); }
         },
@@ -2053,7 +2059,7 @@ the specific language governing permissions and limitations under the Apache Lic
         },
 
         // multi
-        onSelect: function (data) {
+        onSelect: function (data, options) {
             this.addSelectedChoice(data);
             if (this.select || !this.opts.closeOnSelect) this.postprocessResults();
 
@@ -2075,7 +2081,8 @@ the specific language governing permissions and limitations under the Apache Lic
             // added we do not need to check if this is a new element before firing change
             this.triggerChange({ added: data });
 
-            this.focusSearch();
+            if (!options || !options.noFocus)
+                this.focusSearch();
         },
 
         // multi
@@ -2424,7 +2431,8 @@ the specific language governing permissions and limitations under the Apache Lic
             }
             return markup;
         },
-        blurOnChange: false
+        blurOnChange: false,
+        selectOnBlur: false
     };
 
     // exports
