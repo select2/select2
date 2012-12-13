@@ -1522,7 +1522,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 if (!this.opened()) this.container.removeClass("select2-container-active");
                 window.setTimeout(this.bind(function() {
                     // restore original tab index
-                    var ti=this.opts.element.attr("tabIndex");
+                    var ti=this.opts.element.attr("tabIndex") || 0;
                     if (ti) {
                         this.selection.attr("tabIndex", ti);
                     } else {
@@ -1565,7 +1565,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 if (!this.opened()) {
                     this.container.removeClass("select2-container-active");
                 }
-                window.setTimeout(this.bind(function() { this.search.attr("tabIndex", this.opts.element.attr("tabIndex")); }), 10);
+                window.setTimeout(this.bind(function() { this.search.attr("tabIndex", this.opts.element.attr("tabIndex") || 0); }), 10);
             }));
 
             selection.bind("keydown", this.bind(function(e) {
