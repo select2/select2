@@ -509,16 +509,19 @@ the specific language governing permissions and limitations under the Apache Lic
     $document.ready(function () {
         $document.bind("mousedown touchend", function (e) {
             var target = $(e.target).closest("div.select2-container").get(0), attr;
+            var targetDropdown = null;
             if (target) {
                 $document.find("div.select2-container").not(target).each(function () {
                     if ($(this).is('.select2-container-active, .select2-dropdown-open')) $(this).data("select2").blur();
                 });
-            } else {
-                target = $(e.target).closest("div.select2-drop").get(0);
-                $document.find("div.select2-drop-active").each(function () {
-                    if (this !== target) $(this).data("select2").blur();
-                });
+                targetDropdown = $(target).data('select2').dropdown.get(0);
             }
+
+            // close any other active dropdowns
+            target = targetDropdown || $(e.target).closest("div.select2-drop").get(0);
+            $document.find("div.select2-drop-active").each(function () {
+                if (this !== target) $(this).data("select2").blur();
+            });
 
             target=$(e.target);
             attr = target.attr("for");
@@ -1519,7 +1522,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 if (!this.opened()) this.container.removeClass("select2-container-active");
                 window.setTimeout(this.bind(function() {
                     // restore original tab index
-                    var ti=this.opts.element.attr("tabIndex");
+                    var ti=this.opts.element.attr("tabIndex") || 0;
                     if (ti) {
                         this.selection.attr("tabIndex", ti);
                     } else {
@@ -1562,7 +1565,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 if (!this.opened()) {
                     this.container.removeClass("select2-container-active");
                 }
-                window.setTimeout(this.bind(function() { this.search.attr("tabIndex", this.opts.element.attr("tabIndex")); }), 10);
+                window.setTimeout(this.bind(function() { this.search.attr("tabIndex", this.opts.element.attr("tabIndex") || 0); }), 10);
             }));
 
             selection.bind("keydown", this.bind(function(e) {
@@ -1739,6 +1742,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     });
                 this.updateSelection(data);
                 this.setPlaceholder();
+                this.triggerChange();
             } else {
                 if (this.opts.initSelection === undefined) {
                     throw new Error("cannot call val() if initSelection() is not defined");
@@ -1746,6 +1750,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 // val is an id. !val is true for [undefined,null,'']
                 if (!val) {
                     this.clear();
+                    this.triggerChange();
                     return;
                 }
                 this.opts.element.val(val);
@@ -1753,6 +1758,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     self.opts.element.val(!data ? "" : self.id(data));
                     self.updateSelection(data);
                     self.setPlaceholder();
+                    self.triggerChange();
                 });
             }
         },
@@ -2207,6 +2213,11 @@ the specific language governing permissions and limitations under the Apache Lic
             if (searchWidth < 40) {
                 searchWidth = maxWidth - sideBorderPadding;
             }
+            
+            if (searchWidth <= 0) {
+              searchWidth = minimumWidth
+            }
+            
             this.search.width(searchWidth);
         },
 
@@ -2251,6 +2262,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.opts.element.val("");
                 this.updateSelection([]);
                 this.clearSearch();
+                this.triggerChange();
                 return;
             }
 
@@ -2262,6 +2274,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     data.push({id: $(this).attr("value"), text: $(this).text()});
                 });
                 this.updateSelection(data);
+                this.triggerChange();
             } else {
                 if (this.opts.initSelection === undefined) {
                     throw new Error("val() cannot be called if initSelection() is not defined")
@@ -2272,6 +2285,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     self.setVal(ids);
                     self.updateSelection(data);
                     self.clearSearch();
+                    self.triggerChange();
                 });
             }
             this.clearSearch();
