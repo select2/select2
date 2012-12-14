@@ -577,6 +577,12 @@ the specific language governing permissions and limitations under the Apache Lic
             this.enabled=true;
             this.container = this.createContainer();
 
+            var formatContainer = $.fn.select2.defaults.formatContainer;
+            if(opts.formatContainer && typeof(opts.formatContainer) == 'function') {
+                formatContainer = opts.formatContainer;
+            }
+            this.container = formatContainer(this.container);
+
             this.containerId="s2id_"+(opts.element.attr("id") || "autogen"+nextUid());
             this.containerSelector="#"+this.containerId.replace(/([;&,\.\+\*\~':"\!\^#$%@\[\]\(\)=>\|])/g, '\\$1');
             this.container.attr("id", this.containerId);
@@ -623,7 +629,7 @@ the specific language governing permissions and limitations under the Apache Lic
             // if jquery.mousewheel plugin is installed we can prevent out-of-bounds scrolling of results via mousewheel
             if ($.fn.mousewheel) {
                 results.mousewheel(function (e, delta, deltaX, deltaY) {
-                    var top = results.scrollTop(), height;
+                    var top = results.scrollTop() - results.position().top;
                     if (deltaY > 0 && top - deltaY <= 0) {
                         results.scrollTop(0);
                         killEvent(e);
@@ -709,6 +715,9 @@ the specific language governing permissions and limitations under the Apache Lic
 
                             result=results[i];
                             selectable=id(result) !== undefined;
+                            if(opts.selectable && typeof(opts.selectable) == 'function') {
+                                selectable = opts.selectable(result);
+                            }
                             compound=result.children && result.children.length > 0;
 
                             node=$("<li></li>");
@@ -721,7 +730,7 @@ the specific language governing permissions and limitations under the Apache Lic
                             label=$("<div></div>");
                             label.addClass("select2-result-label");
 
-                            formatted=opts.formatResult(result, label, query);
+                            formatted=opts.formatResult(result, label, query, selectable);
                             if (formatted!==undefined) {
                                 label.html(self.opts.escapeMarkup(formatted));
                             }
@@ -1221,6 +1230,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 results.scrollTop(0);
                 search.removeClass("select2-active");
                 self.positionDropdown();
+                self.results.trigger('select2.results-loaded')
             }
 
             function render(html) {
@@ -2398,6 +2408,9 @@ the specific language governing permissions and limitations under the Apache Lic
             var markup=[];
             markMatch(result.text, query.term, markup);
             return markup.join("");
+        },
+        formatContainer: function(container) {
+            return container;
         },
         formatSelection: function (data, container) {
             return data ? data.text : undefined;
