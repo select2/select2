@@ -38,6 +38,26 @@ the specific language governing permissions and limitations under the Apache Lic
  	}
 })(jQuery);
 
+function deepCopy(obj) {
+    if (Object.prototype.toString.call(obj) === '[object Array]') {
+        var out = [], i = 0, len = obj.length;
+        for ( ; i < len; i++ ) {
+            // out[i] = arguments.callee(obj[i]);
+            out[i] = deepCopy(obj[i]);
+        }
+        return out;
+    }
+    if (typeof obj === 'object') {
+        var out = {}, i;
+        for ( i in obj ) {
+            // out[i] = arguments.callee(obj[i]);
+            out[i] = deepCopy(obj[i]);
+        }
+        return out;
+    }
+    return obj;
+}
+
 (function ($, undefined) {
     "use strict";
     /*global document, window, jQuery, console */
@@ -339,7 +359,8 @@ the specific language governing permissions and limitations under the Apache Lic
      *
      * @param options object containing configuration parameters. The options parameter can either be an array or an
      * object.
-     *
+     * @param isMatchAllChildrenOnParentMatch false (by default) if the search matches only the leaves, true for matching all nodes.
+     *       
      * If the array form is used it is assumed that it contains objects with 'id' and 'text' keys.
      *
      * If the object form is used ti is assumed that it contains 'data' and 'text' keys. The 'data' key should contain
@@ -348,7 +369,7 @@ the specific language governing permissions and limitations under the Apache Lic
      * value of 'text' which will be used to match choices. Alternatively, text can be a function(item) that can extract
      * the text.
      */
-    function local(options) {
+    function local(options, isMatchAllChildrenOnParentMatch) {
         var data = options, // data elements
             dataText,
             text = function (item) { return ""+item.text; }; // function used to retrieve the text portion of a data item that is matched against the search
@@ -365,32 +386,69 @@ the specific language governing permissions and limitations under the Apache Lic
 
         return function (query) {
             var t = query.term, filtered = { results: [] }, process;
+            
             if (t === "") {
                 query.callback({results: data});
                 return;
             }
 
-            process = function(datum, collection) {
-                var group, attr;
-                datum = datum[0];
-                if (datum.children) {
-                    group = {};
-                    for (attr in datum) {
-                        if (datum.hasOwnProperty(attr)) group[attr]=datum[attr];
-                    }
-                    group.children=[];
-                    $(datum.children).each2(function(i, childDatum) { process(childDatum, group.children); });
-                    if (group.children.length || query.matcher(t, text(group))) {
-                        collection.push(group);
-                    }
-                } else {
-                    if (query.matcher(t, text(datum))) {
-                        collection.push(datum);
+            // 2012-12-24, FP: filtering with the term ==> t
+            process = function(datum) 
+            {
+                var res = new Array();
+                
+                if (!datum.children)
+                {
+                    // 2012-12-24, FP: we process a leaf. We watch if the label 
+                    // of the leaf matches the term. 
+                    if (query.matcher(t, text(datum))) 
+                    {
+                        res.push(datum);
                     }
                 }
+                else
+                {
+                    // 2012-12-24, FP: the node has at least one child. We start if the label 
+                    // of the node matches the term.  
+                    if (isMatchAllChildrenOnParentMatch && query.matcher(t, text(datum))) 
+                    {
+                        res.push(datum);
+                    }
+                    else
+                    {
+                        // 2012-12-24, FP: the label of node don't match the term,
+                        // we must searching if the children match the term.
+                        var children = datum.children;
+                        datum.children = new Array();
+                        
+                        $(children).each2(function (j, child)
+                        {
+                            var reschildren = process(child[0]);
+                            $(reschildren).each2(function (k, el)
+                            {
+                               datum.children.push(el[k]);
+                            });
+                        });
+                        
+                        // 2012-12-24, FP: at least one child match the term, we add the current
+                        // element to final result.
+                        if (datum.children.length > 0)
+                        {
+                            res.push(datum);
+                        }
+                    }
+                }
+                return res;
             };
 
-            $(data).each2(function(i, datum) { process(datum, filtered.results); });
+            $(data).each2(function(i, datum) { 
+                var mytab = process(deepCopy(datum[0]));
+                $(mytab).each2(function (m, el)
+                {
+                   filtered.results.push(el[m]);
+                });
+            });
+            
             query.callback(filtered);
         };
     }
@@ -701,13 +759,11 @@ the specific language governing permissions and limitations under the Apache Lic
             opts = $.extend({}, {
                 populateResults: function(container, results, query) {
                     var populate,  data, result, children, id=this.opts.id, self=this;
-
+                    
                     populate=function(results, container, depth) {
 
                         var i, l, result, selectable, compound, node, label, innerContainer, formatted;
-
                         results = opts.sortResults(results, container, query);
-
                         for (i = 0, l = results.length; i < l; i = i + 1) {
 
                             result=results[i];
@@ -800,7 +856,7 @@ the specific language governing permissions and limitations under the Apache Lic
                         }
                         opts.query = ajax(opts.ajax);
                     } else if ("data" in opts) {
-                        opts.query = local(opts.data);
+                        opts.query = local(opts.data, (!!opts.matchAllChildrenOnParentMatch)?opts.matchAllChildrenOnParentMatch:false);
                     } else if ("tags" in opts) {
                         opts.query = tags(opts.tags);
                         if (opts.createSearchChoice === undefined) {
@@ -2441,7 +2497,8 @@ the specific language governing permissions and limitations under the Apache Lic
             }
             return markup;
         },
-        blurOnChange: false
+        blurOnChange: false,
+        matchAllChildrenOnParentMatch: false
     };
 
     // exports
