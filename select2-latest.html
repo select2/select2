@@ -207,6 +207,7 @@ $("#e10_3").select2({
                   <li><a href="#event_ext_change">Events: Reacting to External Changes</a></li>
                   <li><a href="#disabled">Disabled Mode</a></li>
                   <li><a href="#matcher">Custom Matcher Function</a></li>
+                  <li><a href="#sort_results">Sorting Displayed Results</a></li>
                   <li><a href="#responsive">Responsive Design</a></li>
               </ul>
             </li>
@@ -823,6 +824,44 @@ $("#e17_2").select2({
           </div>
       </article>
 
+      <article class="row" id="sort_results">
+        <script id="script_e22">
+$('#e22').select2({
+    sortResults: function(results, container, query) {
+        if (query.term) {
+            // use the built in javascript sort function
+            return results.sort(function(a, b) {
+                if (a.text.length > b.text.length) {
+                    return 1;
+                } else if (a.text.length < b.text.length) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            });
+        }
+        return results;
+    }
+});
+        </script>
+        <div class="span4">
+            <h3>Sorting Displayed Results</h3>
+                <p>Unlike other dropdowns on this page, this one filters results by query string normally, but returns the matched results sorted from shortest to longest by string length. Try typing 'e' and seeing how the results are sorted. This function is useful for sorting results by relevance to a user's query.</p>
+                <p>
+                    <select id="e22" style="width:300px">
+                        <option value="red">red</option>
+                        <option value="green">green</option>
+                        <option value="blue">blue</option>
+                    </select><br/>
+                </p>
+        </div>
+        <div class="span8">
+            <h3>Example Code</h3>
+            <pre class="prettyprint linenums" id="code_e22">
+            </pre>
+        </div>
+      </article>
+
       <article class="row" id="responsive">
           <script id="script_e18">
               $(document).ready(function () {
@@ -1036,8 +1075,20 @@ $(document).ready(function () {
                             Can be used to match against custom attributes on the <code>option</code> tag in addition to matching on the <code>option</code>'s text.</code></td></tr>
                     <tr><td>&lt;returns&gt;</td><td>boolean</td><td><code>true</code> if search term matches the text, or <code>false</code> otherwise</td></tr>
                 </table>
-                The default implementation is case insensitive and matches anywhere in ther term:
+                The default implementation is case insensitive and matches anywhere in the term:
                 <code>function(term, text) { return text.toUpperCase().indexOf(term.toUpperCase())>=0; }</code>
+            </td></tr>
+            <tr><td id="doc-sort-results">sortResults</td><td>function</td><td>
+                Used to sort the results list for searching right before display. Useful for sorting matches by relevance to the user's search term.
+                <pre>sortResults(results, container, query)</pre>
+                <table class="table table-bordered table-striped">
+                    <tr><td>object</td><td>object</td><td>One of the result objects returned from the <code>query</code> function</td></tr>
+                    <tr><td>container</td><td>jQuery object</td><td>jQuery wrapper of the node that should contain the representation of the result</td></tr>
+                    <tr><td>query</td><td>object</td><td>The query object used to request this set of results</td></tr>
+                    <tr><td>&lt;returns&gt;</td><td>object</td><td>A results object.</td></tr>
+                </table>
+                Defaults to no sorting:
+                <code>function(results, container, query) { return results; }</code>
             </td></tr>
             <tr><td>formatSelection</td><td>function</td><td>
                 Function used to render the current selection.
