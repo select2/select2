@@ -826,6 +826,7 @@ $("#e17_2").select2({
 
       <article class="row" id="sort_results">
         <script id="script_e22">
+$(document).ready(function () {
 $('#e22').select2({
     sortResults: function(results, container, query) {
         if (query.term) {
@@ -842,6 +843,7 @@ $('#e22').select2({
         }
         return results;
     }
+});
 });
         </script>
         <div class="span4">
