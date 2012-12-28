@@ -191,6 +191,7 @@ version: 3.2
                     <li><a href="#ajax">Remote/AJAX Data</a></li>
                     <li><a href="#infinite">Infinite Scrolling of Remote/AJAX data</a></li>
                     <li><a href="#tags">Tagging Support</a></li>
+                    <li><a href="#maximum">Maximum Input Length</a></li>
                     <li><a href="#programmatic">Programmatic control</a></li>
                     <li><a href="#events">Events</a></li>
                     <li><a href="#event_ext_change">Events: Reacting to External Changes</a></li>
@@ -651,6 +652,31 @@ function format(state) {
            </pre>
     </div>
 </article>
+
+<article class="row" id="maximum">
+    <script id="script_e21">
+        $(document).ready(function () {
+            $("#e21").select2({
+              tags:["red", "green", "blue"], 
+              maximumInputLength: 10
+            });
+        });
+    </script>
+    <div class="span4">
+        <h3>Maximum Input Length</h3>
+
+        <p>Select2 can be set a limit on the number of characters that can be entered per tag.</p>
+
+        <p><input type="hidden" id="e21" style="width:300px" value="brown, red, green"/></p>
+        <p>You would not be able to enter any input of more than 10 characters long.</p>
+    </div>
+    <div class="span8">
+        <h3>Example Code</h3>
+           <pre class="prettyprint linenums" id="code_e21">
+           </pre>
+    </div>
+</article>
+
 <article class="row" id="token">
     <script id="script_e20">
         $(document).ready(function () {
@@ -865,6 +891,7 @@ function format(state) {
     </dl>
 </td></tr>
 <tr><td>minimumInputLength</td><td>int</td><td>Number of characters necessary to start a search</td></tr>
+<tr><td>maximumInputLength</td><td>int</td><td>Maximum number of characters that can be entered for an input</td></tr>
 <tr><td>minimumResultsForSearch</td><td>int</td><td>
     <p>
         The minimum number of results that must be initially (after opening the dropdown for the first time)
