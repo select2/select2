@@ -592,10 +592,13 @@ the specific language governing permissions and limitations under the Apache Lic
             this.container.addClass(evaluate(opts.containerCssClass));
 
             // swap container for the element
-            this.opts.element
-                .data("select2", this)
-                .hide()
-                .before(this.container);
+            var element = this.opts.element;
+            element.data("select2", this).hide();
+            if(opts["createAfter"]) {
+              element.after(this.container);
+            } else {
+              element.before(this.container);
+            }
             this.container.data("select2", this);
 
             this.dropdown = this.container.find(".select2-drop");
@@ -2461,3 +2464,5 @@ the specific language governing permissions and limitations under the Apache Lic
     };
 
 }(jQuery));
+: AbstractSelect2,
+            
