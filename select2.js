@@ -704,20 +704,24 @@ the specific language governing permissions and limitations under the Apache Lic
 
                     populate=function(results, container, depth) {
 
-                        var i, l, result, selectable, compound, node, label, innerContainer, formatted;
+                        var i, l, result, selectable, disabled, compound, node, label, innerContainer, formatted;
 
                         results = opts.sortResults(results, container, query);
 
                         for (i = 0, l = results.length; i < l; i = i + 1) {
 
                             result=results[i];
-                            selectable=id(result) !== undefined;
+
+                            disabled = (result.disabled === true);
+                            selectable = (!disabled) && (id(result) !== undefined);
+
                             compound=result.children && result.children.length > 0;
 
                             node=$("<li></li>");
                             node.addClass("select2-results-dept-"+depth);
                             node.addClass("select2-result");
                             node.addClass(selectable ? "select2-result-selectable" : "select2-result-unselectable");
+                            if (disabled) { node.addClass("select2-disabled"); }
                             if (compound) { node.addClass("select2-result-with-children"); }
                             node.addClass(self.opts.formatResultCssClass(result));
 
@@ -763,7 +767,7 @@ the specific language governing permissions and limitations under the Apache Lic
                         var group;
                         if (element.is("option")) {
                             if (query.matcher(term, element.text(), element)) {
-                                collection.push({id:element.attr("value"), text:element.text(), element: element.get(), css: element.attr("class")});
+                                collection.push({id:element.attr("value"), text:element.text(), element: element.get(), css: element.attr("class"), disabled: equal(element.attr("disabled"), "disabled") });
                             }
                         } else if (element.is("optgroup")) {
                             group={text:element.attr("label"), children:[], element: element.get(), css: element.attr("class")};
@@ -2186,7 +2190,7 @@ the specific language governing permissions and limitations under the Apache Lic
             });
 
             compound.each2(function(i, e) {
-                if (!e.is('.select2-result-selectable') && e.find(".select2-result-selectable").length==0) {  // FIX FOR HIRECHAL DATA
+                if (!e.is('.select2-result-selectable') && e.find(".select2-result-selectable").length==0) {  // FIX FOR HIERARCHICAL DATA
                     e.addClass("select2-disabled");
                 } else {
                     e.removeClass("select2-disabled");
@@ -2225,11 +2229,11 @@ the specific language governing permissions and limitations under the Apache Lic
             if (searchWidth < 40) {
                 searchWidth = maxWidth - sideBorderPadding;
             }
-            
+
             if (searchWidth <= 0) {
               searchWidth = minimumWidth
             }
-            
+
             this.search.width(searchWidth);
         },
 
