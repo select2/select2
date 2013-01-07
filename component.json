@@ -1,7 +1,7 @@
 {
     "name": "select2",
     "version": "3.2.0",
-    "main": ["select2.js", "select2.css", "select2.png", "select2x2.png", "spinner.gif"],
+    "main": ["js/select2.js", "css/select2.css", "img/select2.png", "img/select2x2.png", "img/spinner.gif"],
     "dependencies": {
         "jquery": "~1.4.4"
     }
