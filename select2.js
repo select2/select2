@@ -316,7 +316,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 if( null !== handler) { handler.abort(); }
 
                 handler = transport.call(null, {
-                    url: options.url,
+                    url: ((typeof options.url === 'function')?options.url():options.url),
                     dataType: options.dataType,
                     data: data,
                     type: type,
