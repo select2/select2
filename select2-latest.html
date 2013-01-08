@@ -1319,7 +1319,7 @@ $("#tags").select2({
                     <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
                     <tr><td>transport</td><td>function</td><td>Function that will be used to perform the ajax request. Must be parameter-compatible with <code>$.ajax</code>. Defaults to <code>$.ajax</code> if not specified.
                         Allows the use of various ajax wrapper libraries such as: <a href="http://www.protofunc.com/scripts/jquery/ajaxManager/">AjaxManager</a>. </td></tr>
-                    <tr><td>url</td><td>string</td><td>Ajax url</td></tr>
+                    <tr><td>url</td><td>string/function</td><td>String containing the ajax url or a function that returns such a string.</td></tr>
                     <tr><td>dataType</td><td>string</td><td>Data type for the request. <code>ajax</code>, <code>jsonp</code>, other formats supported by jquery</td></tr>
                     <tr><td>quietMillis</td><td>int</td><td>Number of milliseconds to wait for the user to stop typing before issuing the ajax request</td></tr>
                     <tr><td>data</td><td>function</td><td>
