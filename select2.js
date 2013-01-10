@@ -1176,7 +1176,7 @@ the specific language governing permissions and limitations under the Apache Lic
             if (more.length === 0) return;
             below = more.offset().top - results.offset().top - results.height();
 
-            if (below <= 0) {
+            if (below <= this.opts.loadMorePadding) {
                 more.addClass("select2-active");
                 this.opts.query({
                         term: term,
@@ -2411,6 +2411,7 @@ the specific language governing permissions and limitations under the Apache Lic
     // plugin defaults, accessible to users
     $.fn.select2.defaults = {
         width: "copy",
+        loadMorePadding: 0,
         closeOnSelect: true,
         openOnEnter: true,
         containerCss: {},
