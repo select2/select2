@@ -511,8 +511,8 @@ the specific language governing permissions and limitations under the Apache Lic
             var target = $(e.target).closest("div.select2-container").get(0), attr;
             var targetDropdown = null;
             if (target) {
-                $document.find("div.select2-container-active").each(function () {
-                    if (this !== target) $(this).data("select2").blur();
+                $document.find("div.select2-container").not(target).each(function () {
+                    if ($(this).is('.select2-container-active, .select2-dropdown-open')) $(this).data("select2").blur();
                 });
                 targetDropdown = $(target).data('select2').dropdown.get(0);
             }
@@ -1759,7 +1759,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.select
                     .val(val)
                     .find(":selected").each2(function (i, elm) {
-                        data = {id: elm.attr("value"), text: elm.text()};
+                        data = {id: elm.attr("value"), text: elm.text(), locked: elm.data("locked")};
                         return false;
                     });
                 this.updateSelection(data);
@@ -2294,7 +2294,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             if (this.select) {
                 this.select.find(":selected").each(function () {
-                    data.push({id: $(this).attr("value"), text: $(this).text()});
+                    data.push({id: $(this).attr("value"), text: $(this).text(), locked: $(this).data("locked")});
                 });
                 this.updateSelection(data);
                 this.triggerChange();
