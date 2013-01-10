@@ -1759,7 +1759,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.select
                     .val(val)
                     .find(":selected").each2(function (i, elm) {
-                        data = {id: elm.attr("value"), text: elm.text()};
+                        data = {id: elm.attr("value"), text: elm.text(), locked: elm.data("locked")};
                         return false;
                     });
                 this.updateSelection(data);
@@ -2294,7 +2294,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             if (this.select) {
                 this.select.find(":selected").each(function () {
-                    data.push({id: $(this).attr("value"), text: $(this).text()});
+                    data.push({id: $(this).attr("value"), text: $(this).text(), locked: $(this).data("locked")});
                 });
                 this.updateSelection(data);
                 this.triggerChange();
