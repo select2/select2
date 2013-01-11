@@ -1,41 +1,41 @@
 /*
-Copyright 2012 Igor Vaynberg
+ Copyright 2012 Igor Vaynberg
 
-Version: @@ver@@ Timestamp: @@timestamp@@
+ Version: @@ver@@ Timestamp: @@timestamp@@
 
-This software is licensed under the Apache License, Version 2.0 (the "Apache License") or the GNU
-General Public License version 2 (the "GPL License"). You may choose either license to govern your
-use of this software only upon the condition that you accept all of the terms of either the Apache
-License or the GPL License.
+ This software is licensed under the Apache License, Version 2.0 (the "Apache License") or the GNU
+ General Public License version 2 (the "GPL License"). You may choose either license to govern your
+ use of this software only upon the condition that you accept all of the terms of either the Apache
+ License or the GPL License.
 
-You may obtain a copy of the Apache License and the GPL License at:
+ You may obtain a copy of the Apache License and the GPL License at:
 
-    http://www.apache.org/licenses/LICENSE-2.0
-    http://www.gnu.org/licenses/gpl-2.0.html
+ http://www.apache.org/licenses/LICENSE-2.0
+ http://www.gnu.org/licenses/gpl-2.0.html
 
-Unless required by applicable law or agreed to in writing, software distributed under the
-Apache License or the GPL Licesnse is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
-CONDITIONS OF ANY KIND, either express or implied. See the Apache License and the GPL License for
-the specific language governing permissions and limitations under the Apache License and the GPL License.
-*/
- (function ($) {
- 	if(typeof $.fn.each2 == "undefined"){
- 		$.fn.extend({
- 			/*
-			* 4-10 times faster .each replacement
-			* use it carefully, as it overrides jQuery context of element on each iteration
-			*/
-			each2 : function (c) {
-				var j = $([0]), i = -1, l = this.length;
-				while (
-					++i < l
-					&& (j.context = j[0] = this[i])
-					&& c.call(j[0], i, j) !== false //"this"=DOM, i=index, j=jQuery object
-				);
-				return this;
-			}
- 		});
- 	}
+ Unless required by applicable law or agreed to in writing, software distributed under the
+ Apache License or the GPL Licesnse is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+ CONDITIONS OF ANY KIND, either express or implied. See the Apache License and the GPL License for
+ the specific language governing permissions and limitations under the Apache License and the GPL License.
+ */
+(function ($) {
+    if(typeof $.fn.each2 == "undefined"){
+        $.fn.extend({
+            /*
+             * 4-10 times faster .each replacement
+             * use it carefully, as it overrides jQuery context of element on each iteration
+             */
+            each2 : function (c) {
+                var j = $([0]), i = -1, l = this.length;
+                while (
+                    ++i < l
+                        && (j.context = j[0] = this[i])
+                        && c.call(j[0], i, j) !== false //"this"=DOM, i=index, j=jQuery object
+                    );
+                return this;
+            }
+        });
+    }
 })(jQuery);
 
 (function ($, undefined) {
