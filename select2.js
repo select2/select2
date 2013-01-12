@@ -1235,10 +1235,11 @@ the specific language governing permissions and limitations under the Apache Lic
                 postRender();
             }
 
-            if (opts.maximumSelectionSize >=1) {
+            var maxSelSize = $.isFunction(opts.maximumSelectionSize) ? opts.maximumSelectionSize() : opts.maximumSelectionSize;
+            if (maxSelSize >=1) {
                 data = this.data();
-                if ($.isArray(data) && data.length >= opts.maximumSelectionSize && checkFormatter(opts.formatSelectionTooBig, "formatSelectionTooBig")) {
-            	    render("<li class='select2-selection-limit'>" + opts.formatSelectionTooBig(opts.maximumSelectionSize) + "</li>");
+                if ($.isArray(data) && data.length >= maxSelSize && checkFormatter(opts.formatSelectionTooBig, "formatSelectionTooBig")) {
+            	    render("<li class='select2-selection-limit'>" + opts.formatSelectionTooBig(maxSelSize) + "</li>");
             	    return;
                 }
             }
