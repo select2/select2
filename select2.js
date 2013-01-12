@@ -263,20 +263,20 @@ the specific language governing permissions and limitations under the Apache Lic
         return sizer.width();
     }
 
-    function markMatch(text, term, markup) {
+    function markMatch(text, term, markup, escapeMarkup) {
         var match=text.toUpperCase().indexOf(term.toUpperCase()),
             tl=term.length;
 
         if (match<0) {
-            markup.push(text);
+            markup.push(escapeMarkup(text));
             return;
         }
 
-        markup.push(text.substring(0, match));
+        markup.push(escapeMarkup(text.substring(0, match)));
         markup.push("<span class='select2-match'>");
-        markup.push(text.substring(match, match + tl));
+        markup.push(escapeMarkup(text.substring(match, match + tl)));
         markup.push("</span>");
-        markup.push(text.substring(match + tl, text.length));
+        markup.push(escapeMarkup(text.substring(match + tl, text.length)));
     }
 
     /**
@@ -730,7 +730,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
                             formatted=opts.formatResult(result, label, query);
                             if (formatted!==undefined) {
-                                label.html(self.opts.escapeMarkup(formatted));
+                                label.html(formatted);
                             }
 
                             node.append(label);
@@ -1231,7 +1231,7 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             function render(html) {
-                results.html(self.opts.escapeMarkup(html));
+                results.html(html);
                 postRender();
             }
 
@@ -2420,7 +2420,7 @@ the specific language governing permissions and limitations under the Apache Lic
         dropdownCssClass: "",
         formatResult: function(result, container, query) {
             var markup=[];
-            markMatch(result.text, query.term, markup);
+            markMatch(result.text, query.term, markup, this.escapeMarkup);
             return markup.join("");
         },
         formatSelection: function (data, container) {
@@ -2448,9 +2448,21 @@ the specific language governing permissions and limitations under the Apache Lic
         tokenSeparators: [],
         tokenizer: defaultTokenizer,
         escapeMarkup: function (markup) {
-            if (markup && typeof(markup) === "string") {
-                return markup.replace(/&/g, "&amp;");
-            }
+            var replace_map = {
+                '\\': '&#92;',
+                '&': '&#amp;',
+                '<': '&#lt;',
+                '>': '&#rt;',
+                '"': '&#quot;',
+                "'": '&#39;',
+                "/": '&#x2F;'
+            };
+            //'--': '-&#45;'
+
+            return String(html).replace(/[&<>"'/\\]/g, function (match) {
+                    return replace_map[match[0]];
+            });
+
             return markup;
         },
         blurOnChange: false,
