@@ -2450,16 +2450,15 @@ the specific language governing permissions and limitations under the Apache Lic
         escapeMarkup: function (markup) {
             var replace_map = {
                 '\\': '&#92;',
-                '&': '&#amp;',
-                '<': '&#lt;',
-                '>': '&#rt;',
-                '"': '&#quot;',
-                "'": '&#39;',
-                "/": '&#x2F;'
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&apos;',
+                "/": '&#47;'
             };
-            //'--': '-&#45;'
 
-            return String(html).replace(/[&<>"'/\\]/g, function (match) {
+            return String(markup).replace(/[&<>"'/\\]/g, function (match) {
                     return replace_map[match[0]];
             });
 
