@@ -380,11 +380,11 @@ the specific language governing permissions and limitations under the Apache Lic
                     }
                     group.children=[];
                     $(datum.children).each2(function(i, childDatum) { process(childDatum, group.children); });
-                    if (group.children.length || query.matcher(t, text(group))) {
+                    if (group.children.length || query.matcher(t, text(group), datum)) {
                         collection.push(group);
                     }
                 } else {
-                    if (query.matcher(t, text(datum))) {
+                    if (query.matcher(t, text(datum), datum)) {
                         collection.push(datum);
                     }
                 }
@@ -1663,6 +1663,20 @@ the specific language governing permissions and limitations under the Apache Lic
                     if ($.isFunction(callback))
                         callback({id: selected.attr("value"), text: selected.text(), element:selected});
                 };
+            } else if ("data" in opts) {
+                // install default initSelection when applied to hidden input and data is local
+                opts.initSelection = opts.initSelection || function (element, callback) {
+                    var id = element.val();
+                    //search in data by id 
+                    opts.query({
+                        matcher: function(term, text, el){
+                            return equal(id, opts.id(el));
+                        }, 
+                        callback: !$.isFunction(callback) ? $.noop : function(filtered) {
+                            callback(filtered.results.length ? filtered.results[0] : null);
+                        }
+                    });
+                };
             }
 
             return opts;
@@ -1849,6 +1863,22 @@ the specific language governing permissions and limitations under the Apache Lic
 
                     if ($.isFunction(callback))
                         callback(data);
+                };
+            } else if ("data" in opts) {
+                // install default initSelection when applied to hidden input and data is local
+                opts.initSelection = opts.initSelection || function (element, callback) {
+                    var ids = splitVal(element.val(), opts.separator);
+                    //search in data by array of ids
+                    opts.query({
+                        matcher: function(term, text, el){
+                            return $.grep(ids, function(id) { 
+                                return equal(id, opts.id(el));
+                            }).length;
+                        }, 
+                        callback: !$.isFunction(callback) ? $.noop : function(filtered) {
+                            callback(filtered.results);
+                        }
+                    });
                 };
             }
 
