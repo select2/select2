@@ -1660,6 +1660,23 @@ the specific language governing permissions and limitations under the Apache Lic
                     if ($.isFunction(callback))
                         callback({id: selected.attr("value"), text: selected.text(), element:selected});
                 };
+            } else if ("data" in opts) {
+                // install default initSelection when applied to hidden input and data is local
+                opts.initSelection = opts.initSelection || function (element, callback) {
+                    var data,
+                        id = element.val();
+                        
+                    $.each(opts.data, function(k, v){
+                        if(id == opts.id(v)) {
+                            data = v;
+                            return false;
+                        }
+                    });
+                    
+                    if ($.isFunction(callback)) {
+                        callback(data);
+                    }
+                };
             }
 
             return opts;
