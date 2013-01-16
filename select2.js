@@ -380,11 +380,11 @@ the specific language governing permissions and limitations under the Apache Lic
                     }
                     group.children=[];
                     $(datum.children).each2(function(i, childDatum) { process(childDatum, group.children); });
-                    if (group.children.length || query.matcher(t, text(group))) {
+                    if (group.children.length || query.matcher(t, text(group), datum)) {
                         collection.push(group);
                     }
                 } else {
-                    if (query.matcher(t, text(datum))) {
+                    if (query.matcher(t, text(datum), datum)) {
                         collection.push(datum);
                     }
                 }
