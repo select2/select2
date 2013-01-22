@@ -244,7 +244,7 @@ the specific language governing permissions and limitations under the Apache Lic
     function measureTextWidth(e) {
         if (!sizer){
         	var style = e[0].currentStyle || window.getComputedStyle(e[0], null);
-        	sizer = $("<div></div>").css({
+        	sizer = $(document.createElement("div")).css({
 	            position: "absolute",
 	            left: "-10000px",
 	            top: "-10000px",
@@ -725,7 +725,7 @@ the specific language governing permissions and limitations under the Apache Lic
                             if (compound) { node.addClass("select2-result-with-children"); }
                             node.addClass(self.opts.formatResultCssClass(result));
 
-                            label=$("<div></div>");
+                            label=$(document.createElement("div"));
                             label.addClass("select2-result-label");
 
                             formatted=opts.formatResult(result, label, query);
@@ -1432,7 +1432,7 @@ the specific language governing permissions and limitations under the Apache Lic
         // single
 
 		createContainer: function () {
-            var container = $("<div></div>", {
+            var container = $(document.createElement("div").attr({
                 "class": "select2-container"
             }).html([
                 "    <a href='javascript:void(0)' onclick='return false;' class='select2-choice'>",
@@ -1830,7 +1830,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // multi
         createContainer: function () {
-            var container = $("<div></div>", {
+            var container = $(document.createElement("div").attr({
                 "class": "select2-container select2-container-multi"
             }).html([
                 "    <ul class='select2-choices'>",
