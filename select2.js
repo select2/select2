@@ -321,6 +321,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     data: data,
                     type: type,
                     traditional: traditional,
+                    contentType: options.contentType,
                     success: function (data) {
                         if (requestNumber < requestSequence) {
                             return;
