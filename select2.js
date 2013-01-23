@@ -397,17 +397,10 @@ the specific language governing permissions and limitations under the Apache Lic
 
     // TODO javadoc
     function tags(data) {
-        // TODO even for a function we should probably return a wrapper that does the same object/string check as
-        // the function for arrays. otherwise only functions that return objects are supported.
-        if ($.isFunction(data)) {
-            return data;
-        }
-
-        // if not a function we assume it to be an array
-
+        var isFunc = $.isFunction(data);
         return function (query) {
             var t = query.term, filtered = {results: []};
-            $(data).each(function () {
+            $(isFunc ? data() : data).each(function () {
                 var isObject = this.text !== undefined,
                     text = isObject ? this.text : this;
                 if (t === "" || query.matcher(t, text)) {
