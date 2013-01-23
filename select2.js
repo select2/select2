@@ -1445,7 +1445,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 "   </div>" ,
                 "   <ul class='select2-results'>" ,
                 "   </ul>" ,
-                "</div>"].join(""));
+                "</div>"].join("")));
             return container;
         },
 
@@ -1842,7 +1842,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 "<div class='select2-drop select2-drop-multi' style='display:none;'>" ,
                 "   <ul class='select2-results'>" ,
                 "   </ul>" ,
-                "</div>"].join(""));
+                "</div>"].join("")));
 			return container;
         },
 
