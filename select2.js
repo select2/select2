@@ -311,7 +311,11 @@ the specific language governing permissions and limitations under the Apache Lic
                     traditional = options.traditional || false,
                     type = options.type || 'GET'; // set type of request (GET or POST)
 
-                data = data.call(this, query.term, query.page, query.context);
+
+                if(data)
+                    data = data.call(this, query.term, query.page, query.context);
+                else
+                    data = null;
 
                 if( null !== handler) { handler.abort(); }
 
@@ -1434,10 +1438,9 @@ the specific language governing permissions and limitations under the Apache Lic
 		createContainer: function () {
             var container = $(document.createElement("div")).attr({
                 "class": "select2-container"
-            }).html([
-                "    <a href='javascript:void(0)' onclick='return false;' class='select2-choice'>",
+            }).html(["    <a href='javascript:void(0)' onclick='return false;' class='select2-choice'>",
                 "   <span></span><abbr class='select2-search-choice-close' style='display:none;'></abbr>",
-                "   <div><b></b></div>" ,
+                "   <div><b></b></div>",
                 "</a>",
                 "    <div class='select2-drop select2-offscreen'>" ,
                 "   <div class='select2-search'>" ,
