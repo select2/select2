@@ -311,7 +311,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     traditional = options.traditional || false,
                     type = options.type || 'GET'; // set type of request (GET or POST)
 
-                data = data.call(this, query.term, query.page, query.context);
+                data = data ? data.call(this, query.term, query.page, query.context) : null;
 
                 if( null !== handler) { handler.abort(); }
 
