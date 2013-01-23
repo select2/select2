@@ -1432,7 +1432,7 @@ the specific language governing permissions and limitations under the Apache Lic
         // single
 
 		createContainer: function () {
-            var container = $(document.createElement("div").attr({
+            var container = $(document.createElement("div")).attr({
                 "class": "select2-container"
             }).html([
                 "    <a href='javascript:void(0)' onclick='return false;' class='select2-choice'>",
@@ -1830,7 +1830,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // multi
         createContainer: function () {
-            var container = $(document.createElement("div").attr({
+            var container = $(document.createElement("div")).attr({
                 "class": "select2-container select2-container-multi"
             }).html([
                 "    <ul class='select2-choices'>",
