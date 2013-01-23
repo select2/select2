@@ -529,7 +529,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 attr = attr.replace(/([\[\].])/g,'\\$1'); /* escapes [, ], and . so properly selects the id */
                 target = $("#"+attr);
                 target = target.data("select2");
-                if (target !== undefined) { target.focus(); e.preventDefault();}
+                if (target !== undefined && target !== null) { target.focus(); e.preventDefault();}
             }
         });
     });
