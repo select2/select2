@@ -1432,7 +1432,7 @@ the specific language governing permissions and limitations under the Apache Lic
         // single
 
 		createContainer: function () {
-            var container = $(document.createElement("div").attr({
+            var container = $(document.createElement("div")).attr({
                 "class": "select2-container"
             }).html([
                 "    <a href='javascript:void(0)' onclick='return false;' class='select2-choice'>",
@@ -1445,7 +1445,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 "   </div>" ,
                 "   <ul class='select2-results'>" ,
                 "   </ul>" ,
-                "</div>"].join("")));
+                "</div>"].join(""));
             return container;
         },
 
@@ -1667,11 +1667,11 @@ the specific language governing permissions and limitations under the Apache Lic
                 // install default initSelection when applied to hidden input and data is local
                 opts.initSelection = opts.initSelection || function (element, callback) {
                     var id = element.val();
-                    //search in data by id 
+                    //search in data by id
                     opts.query({
                         matcher: function(term, text, el){
                             return equal(id, opts.id(el));
-                        }, 
+                        },
                         callback: !$.isFunction(callback) ? $.noop : function(filtered) {
                             callback(filtered.results.length ? filtered.results[0] : null);
                         }
@@ -1830,7 +1830,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // multi
         createContainer: function () {
-            var container = $(document.createElement("div").attr({
+            var container = $(document.createElement("div")).attr({
                 "class": "select2-container select2-container-multi"
             }).html([
                 "    <ul class='select2-choices'>",
@@ -1842,7 +1842,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 "<div class='select2-drop select2-drop-multi' style='display:none;'>" ,
                 "   <ul class='select2-results'>" ,
                 "   </ul>" ,
-                "</div>"].join("")));
+                "</div>"].join(""));
 			return container;
         },
 
@@ -1871,10 +1871,10 @@ the specific language governing permissions and limitations under the Apache Lic
                     //search in data by array of ids
                     opts.query({
                         matcher: function(term, text, el){
-                            return $.grep(ids, function(id) { 
+                            return $.grep(ids, function(id) {
                                 return equal(id, opts.id(el));
                             }).length;
-                        }, 
+                        },
                         callback: !$.isFunction(callback) ? $.noop : function(filtered) {
                             callback(filtered.results);
                         }
