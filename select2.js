@@ -612,7 +612,7 @@ the specific language governing permissions and limitations under the Apache Lic
             search.bind("blur", function () { search.removeClass("select2-focused");});
 
             this.dropdown.delegate(resultsSelector, "mouseup", this.bind(function (e) {
-                if ($(e.target).closest(".select2-result-selectable:not(.select2-disabled)").length > 0) {
+                if ($(e.target).closest(".select2-result-selectable:visible").length > 0) {
                     this.highlightUnderEvent(e);
                     this.selectHighlighted(e);
                 } else {
@@ -1058,7 +1058,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 return;
             }
 
-            children = results.find(".select2-result-selectable");
+            children = results.find(".select2-result:visible");
 
             child = $(children[index]);
 
@@ -1086,13 +1086,13 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // abstract
         moveHighlight: function (delta) {
-            var choices = this.results.find(".select2-result-selectable"),
+            var choices = this.results.find(".select2-result:visible"),
                 index = this.highlight();
 
             while (index > -1 && index < choices.length) {
                 index += delta;
                 var choice = $(choices[index]);
-                if (choice.hasClass("select2-result-selectable") && !choice.hasClass("select2-disabled")) {
+                if (choice.hasClass("select2-result-selectable") && !choice.hasClass("select2-disabled") && !choice.hasClass("select2-selected")) {
                     this.highlight(index);
                     break;
                 }
@@ -1101,7 +1101,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // abstract
         highlight: function (index) {
-            var choices = this.results.find(".select2-result-selectable").not(".select2-disabled");
+            var choices = this.results.find(".select2-result:visible");
 
             if (arguments.length === 0) {
                 return indexOf(choices.filter(".select2-highlighted")[0], choices.get());
@@ -1119,14 +1119,14 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // abstract
         countSelectableResults: function() {
-            return this.results.find(".select2-result-selectable").not(".select2-disabled").length;
+            return this.results.find(".select2-result-selectable").not(".select2-disabled").not(".select2-selected").length;
         },
 
         // abstract
         highlightUnderEvent: function (event) {
             var el = $(event.target).closest(".select2-result-selectable");
             if (el.length > 0 && !el.is(".select2-highlighted")) {
-        		var choices = this.results.find('.select2-result-selectable');
+        		var choices = this.results.find('.select2-result');
                 this.highlight(choices.index(el));
             } else if (el.length == 0) {
                 // if we are over an unselectable item remove al highlights
@@ -1329,10 +1329,10 @@ the specific language governing permissions and limitations under the Apache Lic
         // abstract
         selectHighlighted: function (options) {
             var index=this.highlight(),
-                highlighted=this.results.find(".select2-highlighted").not(".select2-disabled"),
-                data = highlighted.closest('.select2-result-selectable').data("select2-data");
+                highlighted=this.results.find(".select2-highlighted:visible"),
+                data = highlighted.closest('.select2-result:visible').data("select2-data");
             if (data) {
-                highlighted.addClass("select2-disabled");
+                highlighted.addClass("select2-selected");
                 this.highlight(index);
                 this.onSelect(data, options);
             }
@@ -1677,7 +1677,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             // find the selected element in the result list
 
-            this.results.find(".select2-result-selectable").each2(function (i, elm) {
+            this.results.find(".select2-result:visible").each2(function (i, elm) {
                 if (equal(self.id(elm.data("select2-data")), self.opts.element.val())) {
                     selected = i;
                     return false;
@@ -2188,30 +2188,30 @@ the specific language governing permissions and limitations under the Apache Lic
         // multi
         postprocessResults: function () {
             var val = this.getVal(),
-                choices = this.results.find(".select2-result-selectable"),
+                choices = this.results.find(".select2-result:visible"),
                 compound = this.results.find(".select2-result-with-children"),
                 self = this;
 
             choices.each2(function (i, choice) {
                 var id = self.id(choice.data("select2-data"));
                 if (indexOf(id, val) >= 0) {
-                    choice.addClass("select2-disabled").removeClass("select2-result-selectable");
+                    choice.addClass("select2-selected").removeClass("select2-result-selectable");
                 } else {
-                    choice.removeClass("select2-disabled").addClass("select2-result-selectable");
+                    choice.removeClass("select2-selected").addClass("select2-result-selectable");
                 }
             });
 
             compound.each2(function(i, e) {
                 if (!e.is('.select2-result-selectable') && e.find(".select2-result-selectable").length==0) {  // FIX FOR HIERARCHICAL DATA
-                    e.addClass("select2-disabled");
+                    e.addClass("select2-selected");
                 } else {
-                    e.removeClass("select2-disabled");
+                    e.removeClass("select2-selected");
                 }
             });
 
             if (this.highlight() == -1){
                 choices.each2(function (i, choice) {
-                    if (!choice.hasClass("select2-disabled") && choice.hasClass("select2-result-selectable")) {
+                    if (!choice.hasClass("select2-selected") &&!choice.hasClass("select2-disabled") && choice.hasClass("select2-result-selectable")) {
                         self.highlight(0);
                         return false;
                     }
