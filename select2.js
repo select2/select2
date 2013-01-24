@@ -102,39 +102,18 @@ the specific language governing permissions and limitations under the Apache Lic
     nextUid=(function() { var counter=1; return function() { return counter++; }; }());
 
     function indexOf(value, array) {
-        var i = 0, l = array.length, v;
-
-        if (typeof value === "undefined") {
-          return -1;
-        }
-
-        if (value.constructor === String) {
-            for (; i < l; i = i + 1) if (value.localeCompare(array[i]) === 0) return i;
-        } else {
-            for (; i < l; i = i + 1) {
-                v = array[i];
-                if (v.constructor === String) {
-                    if (v.localeCompare(value) === 0) return i;
-                } else {
-                    if (v === value) return i;
-                }
-            }
-        }
+        var i = 0, l = array.length;
+        for (; i < l; i = i + 1) if (value === array[i]) return i;
         return -1;
     }
 
     /**
-     * Compares equality of a and b taking into account that a and b may be strings, in which case localeCompare is used
+     * Compares equality of a and b
      * @param a
      * @param b
      */
     function equal(a, b) {
-        if (a === b) return true;
-        if (a === undefined || b === undefined) return false;
-        if (a === null || b === null) return false;
-        if (a.constructor === String) return a.localeCompare(b) === 0;
-        if (b.constructor === String) return b.localeCompare(a) === 0;
-        return false;
+        return a===b;
     }
 
     /**
@@ -491,7 +470,7 @@ the specific language governing permissions and limitations under the Apache Lic
             }
         }
 
-        if (original.localeCompare(input) != 0) return input;
+        if (original!==input) return input;
     }
 
     /**
