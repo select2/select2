@@ -2209,30 +2209,30 @@ the specific language governing permissions and limitations under the Apache Lic
         // multi
         postprocessResults: function () {
             var val = this.getVal(),
-                choices = this.results.find(".select2-result-selectable"),
+                choices = this.results.find(".select2-result:visible"),
                 compound = this.results.find(".select2-result-with-children"),
                 self = this;
 
             choices.each2(function (i, choice) {
                 var id = self.id(choice.data("select2-data"));
                 if (indexOf(id, val) >= 0) {
-                    choice.addClass("select2-disabled").removeClass("select2-result-selectable");
+                    choice.addClass("select2-selected").removeClass("select2-result-selectable");
                 } else {
-                    choice.removeClass("select2-disabled").addClass("select2-result-selectable");
+                    choice.removeClass("select2-selected").addClass("select2-result-selectable");
                 }
             });
 
             compound.each2(function(i, e) {
                 if (!e.is('.select2-result-selectable') && e.find(".select2-result-selectable").length==0) {  // FIX FOR HIERARCHICAL DATA
-                    e.addClass("select2-disabled");
+                    e.addClass("select2-selected");
                 } else {
-                    e.removeClass("select2-disabled");
+                    e.removeClass("select2-selected");
                 }
             });
 
             if (this.highlight() == -1){
                 choices.each2(function (i, choice) {
-                    if (!choice.hasClass("select2-disabled") && choice.hasClass("select2-result-selectable")) {
+                    if (!choice.hasClass("select2-selected") &&!choice.hasClass("select2-disabled") && choice.hasClass("select2-result-selectable")) {
                         self.highlight(0);
                         return false;
                     }
