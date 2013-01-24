@@ -343,7 +343,8 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 }
 
 /*
-disabled look for already selected choices in the results dropdown
+disabled look for disabled choices in the results dropdown
+*/
 .select2-results .select2-disabled.select2-highlighted {
     color: #666;
     background: #f4f4f4;
@@ -355,8 +356,8 @@ disabled look for already selected choices in the results dropdown
   display: list-item;
   cursor: default;
 }
-*/
-.select2-results .select2-disabled {
+
+.select2-results .select2-selected {
     display: none;
 }
 
