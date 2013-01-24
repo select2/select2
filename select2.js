@@ -1524,7 +1524,14 @@ the specific language governing permissions and limitations under the Apache Lic
             }));
 
             selection.delegate("abbr", "mousedown", this.bind(function (e) {
-                if (!this.enabled) return;
+                if (!this.enabled) {
+                   if (this.opts.clearEnable) {
+                       this.enable();
+                       this.open();
+                   } else {
+                       return;
+                   }
+                }
                 this.clear();
                 killEventImmediately(e);
                 this.close();
