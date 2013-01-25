@@ -969,28 +969,32 @@ the specific language governing permissions and limitations under the Apache Lic
             var cid = this.containerId, selector = this.containerSelector,
                 scroll = "scroll." + cid, resize = "resize." + cid;
 
-            this.container.parents().each(function() {
-                $(this).bind(scroll, function() {
-                    var s2 = $(selector);
-                    if (s2.length == 0) {
-                        $(this).unbind(scroll);
-                    }
-                    s2.select2("close");
+            if (this.opts.closeOnScroll){
+                this.container.parents().each(function() {
+                    $(this).bind(scroll, function() {
+                        var s2 = $(selector);
+                        if (s2.length == 0) {
+                            $(this).unbind(scroll);
+                        }
+                        s2.select2("close");
+                    });
                 });
-            });
+            }
 
-            window.setTimeout(function() {
-                // this is done inside a timeout because IE will sometimes fire a resize event while opening
-                // the dropdown and that causes this handler to immediately close it. this way the dropdown
-                // has a chance to fully open before we start listening to resize events
-                $(window).bind(resize, function() {
-                    var s2 = $(selector);
-                    if (s2.length == 0) {
-                        $(window).unbind(resize);
-                    }
-                    s2.select2("close");
-                })
-            }, 10);
+            if (this.opts.closeOnResize){
+                window.setTimeout(function() {
+                    // this is done inside a timeout because IE will sometimes fire a resize event while opening
+                    // the dropdown and that causes this handler to immediately close it. this way the dropdown
+                    // has a chance to fully open before we start listening to resize events
+                    $(window).bind(resize, function() {
+                        var s2 = $(selector);
+                        if (s2.length == 0) {
+                            $(window).unbind(resize);
+                        }
+                        s2.select2("close");
+                    })
+                }, 10);
+            }
 
             this.clearDropdownAlignmentPreference();
 
@@ -2418,6 +2422,8 @@ the specific language governing permissions and limitations under the Apache Lic
         width: "copy",
         loadMorePadding: 0,
         closeOnSelect: true,
+        closeOnResize: true,
+        closeOnScroll: true,
         openOnEnter: true,
         containerCss: {},
         dropdownCss: {},
