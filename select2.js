@@ -286,16 +286,18 @@ the specific language governing permissions and limitations under the Apache Lic
                 requestSequence += 1; // increment the sequence
                 var requestNumber = requestSequence, // this request's sequence number
                     data = options.data, // ajax data function
+                    url = options.url, // ajax url string or function
                     transport = options.transport || $.ajax,
                     traditional = options.traditional || false,
                     type = options.type || 'GET'; // set type of request (GET or POST)
 
                 data = data ? data.call(this, query.term, query.page, query.context) : null;
+                url = (typeof url === 'function') ? url.call(this, query.term, query.page, query.context) : url;
 
                 if( null !== handler) { handler.abort(); }
 
                 handler = transport.call(null, {
-                    url: ((typeof options.url === 'function')?options.url():options.url),
+                    url: url,
                     dataType: options.dataType,
                     data: data,
                     type: type,
