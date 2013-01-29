@@ -1,6 +1,6 @@
-func([
+[
             {id: 1, text: 'Aaa'},
             {id: 2, text: 'Aab'},
             {id: 3, text: 'Aac'},
             {id: 4, text: 'Aad'},
-        ]);
+        ];
