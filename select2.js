@@ -150,25 +150,6 @@ the specific language governing permissions and limitations under the Apache Lic
         });
     }
 
-
-    $(window).bind("resize", function(e) {
-        var dropdown=$("#select2-drop");
-        if (dropdown.length>0) {
-            // there is an open dropdown
-
-            // adjust dropdown positioning so it sizes with the content
-            dropdown.data("select2").positionDropdown();
-        }
-    }).delegate("*", "scroll", function(e) {
-        var dropdown=$("#select2-drop");
-        if (dropdown.length>0) {
-            // there is an open dropdown
-
-            // adjust dropdown positioning so it scrolls with the content
-            dropdown.data("select2").positionDropdown();
-        }
-    });
-
     $document.bind("mousemove", function (e) {
         lastMousePosition = {x: e.pageX, y: e.pageY};
     });
@@ -553,7 +534,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // abstract
         init: function (opts) {
-            var results, search, resultsSelector = ".select2-results";
+            var results, search, resultsSelector = ".select2-results", mask;
 
             // prepare options
             this.opts = opts = this.prepareOpts(opts);
@@ -575,6 +556,15 @@ the specific language governing permissions and limitations under the Apache Lic
 
             // cache the body so future lookups are cheap
             this.body = thunk(function() { return opts.element.closest("body"); });
+
+            // create the dropdown mask if doesnt already exist
+            mask = $("#select2-drop-mask");
+            if (mask.length == 0) {
+                mask = $(document.createElement("div"));
+                mask.attr("id","select2-drop-mask").attr("class","select2-drop-mask");
+                mask.hide();
+                mask.appendTo(this.body());
+            }
 
             if (opts.element.attr("class") !== undefined) {
                 this.container.addClass(opts.element.attr("class").replace(/validate\[[\S ]+] ?/, ''));
@@ -986,7 +976,10 @@ the specific language governing permissions and limitations under the Apache Lic
          */
         // abstract
         opening: function() {
-            var cid = this.containerId, selector = this.containerSelector;
+            var cid = this.containerId,
+                scroll = "scroll." + cid,
+                resize = "resize."+cid,
+                mask;
 
             this.clearDropdownAlignmentPreference();
 
@@ -1000,16 +993,39 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.dropdown.detach().appendTo(this.body());
             }
 
+            mask = $("#select2-drop-mask");
+
+            // ensure the mask is always right before the dropdown
+            if (this.dropdown.prev()[0] !== mask[0]) {
+                this.dropdown.before(mask);
+            }
+
             // move the global id to the correct dropdown
             $("#select2-drop").removeAttr("id");
             this.dropdown.attr("id", "select2-drop");
 
             // show the elements
+            mask.css({
+                width: document.documentElement.scrollWidth,
+                height: document.documentElement.scrollHeight});
+            mask.show();
             this.dropdown.show();
             this.positionDropdown();
 
             this.dropdown.addClass("select2-drop-active");
             this.ensureHighlightVisible();
+
+            // attach listeners to events that can change the position of the container and thus require
+            // the position of the dropdown to be updated as well so it does not come unglued from the container
+            this.container.parents().add(window).each(function () {
+                $(this).bind(resize+" "+scroll, function (e) {
+                    $("#select2-drop-mask").css({
+                        width:document.documentElement.scrollWidth,
+                        height:document.documentElement.scrollHeight});
+                    $("#select2-drop").data("select2").positionDropdown();
+                });
+            });
+
             this.focusSearch();
         },
 
@@ -1017,10 +1033,16 @@ the specific language governing permissions and limitations under the Apache Lic
         close: function () {
             if (!this.opened()) return;
 
-            var self = this;
+            var cid = this.containerId,
+                scroll = "scroll." + cid,
+                resize = "resize."+cid;
+
+            // unbind event listeners
+            this.container.parents().add(window).each(function () { $(this).unbind(scroll).unbind(resize); });
 
             this.clearDropdownAlignmentPreference();
 
+            $("#select2-drop-mask").hide();
             this.dropdown.removeAttr("id"); // only the active dropdown has the select2-drop id
             this.dropdown.hide();
             this.container.removeClass("select2-dropdown-open").removeClass("select2-container-active");
