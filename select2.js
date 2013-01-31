@@ -298,23 +298,23 @@ the specific language governing permissions and limitations under the Apache Lic
         var timeout, // current scheduled but not yet executed request
             requestSequence = 0, // sequence used to drop out-of-order responses
             handler = null,
-            quietMillis = options.quietMillis || 100;
+            quietMillis = options.quietMillis || 100,
+            dataFunc = options.data; 
 
         return function (query) {
             window.clearTimeout(timeout);
             timeout = window.setTimeout(function () {
                 requestSequence += 1; // increment the sequence
                 var requestNumber = requestSequence, // this request's sequence number
-                    data = options.data, // ajax data function
+                    data = null,
                     transport = options.transport || $.ajax,
                     traditional = options.traditional || false,
                     type = options.type || 'GET'; // set type of request (GET or POST)
 
-                data = data ? data.call(this, query.term, query.page, query.context) : null;
-
+                data = dataFunc ? dataFunc.call(this, query.term, query.page, query.context) : null;
                 if( null !== handler) { handler.abort(); }
-
-                handler = transport.call(null, {
+                
+                var defaults = {
                     url: ((typeof options.url === 'function')?options.url():options.url),
                     dataType: options.dataType,
                     data: data,
@@ -328,7 +328,9 @@ the specific language governing permissions and limitations under the Apache Lic
                         var results = options.results(data, query.page);
                         query.callback(results);
                     }
-                });
+                };
+                var ajaxOptions = $.extend(options,defaults);
+                handler = transport.call(null, ajaxOptions);
             }, quietMillis);
         };
     }
