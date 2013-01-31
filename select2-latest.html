@@ -663,6 +663,29 @@ $("#e11_2")
            </pre>
           </div>
       </article>
+      <article class="row" id="maximum">
+          <script id="script_e23">
+              $(document).ready(function () {
+                  $("#e23").select2({
+                      tags:["red", "green", "blue"],
+                      maximumInputLength: 10
+                  });
+              });
+          </script>
+          <div class="span4">
+              <h3>Maximum Input Length</h3>
+
+              <p>Select2 can be set a limit on the number of characters that can be entered per tag.</p>
+
+              <p><input type="hidden" id="e23" style="width:300px" value="brown, red, green"/></p>
+              <p>You would not be able to enter any input of more than 10 characters long.</p>
+          </div>
+          <div class="span8">
+              <h3>Example Code</h3>
+           <pre class="prettyprint linenums" id="code_e23">
+           </pre>
+          </div>
+      </article>
       <article class="row" id="token">
           <script id="script_e20">
               $(document).ready(function () {
