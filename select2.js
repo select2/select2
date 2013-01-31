@@ -2461,8 +2461,6 @@ the specific language governing permissions and limitations under the Apache Lic
             return String(markup).replace(/[&<>"'/\\]/g, function (match) {
                     return replace_map[match[0]];
             });
-
-            return markup;
         },
         blurOnChange: false,
         selectOnBlur: false
