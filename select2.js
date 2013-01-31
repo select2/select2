@@ -1757,7 +1757,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // single
         val: function () {
-            var val, triggerChange = true, data = null, self = this;
+            var val, triggerChange = false, data = null, self = this;
 
             if (arguments.length === 0) {
                 return this.opts.element.val();
@@ -2310,7 +2310,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // multi
         val: function () {
-            var val, triggerChange = true, data = [], self=this;
+            var val, triggerChange = false, data = [], self=this;
 
             if (arguments.length === 0) {
                 return this.getVal();
