@@ -2387,6 +2387,11 @@ the specific language governing permissions and limitations under the Apache Lic
                     multiple = opts.element.attr("multiple");
                 } else {
                     multiple = opts.multiple || false;
+                    
+                    if ($.isArray(opts.element.data("select2Tags")) && opts.element.data("select2Tags").length > 0) {
+                        opts.tags = opts.element.data('select2Tags');
+                    }
+                    
                     if ("tags" in opts) {opts.multiple = multiple = true;}
                 }
 
