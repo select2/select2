@@ -1757,13 +1757,17 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // single
         val: function () {
-            var val, data = null, self = this;
+            var val, triggerChange = true, data = null, self = this;
 
             if (arguments.length === 0) {
                 return this.opts.element.val();
             }
 
             val = arguments[0];
+
+            if (arguments.length > 1) {
+                triggerChange = arguments[1];
+            }
 
             if (this.select) {
                 this.select
@@ -1774,7 +1778,9 @@ the specific language governing permissions and limitations under the Apache Lic
                     });
                 this.updateSelection(data);
                 this.setPlaceholder();
-                this.triggerChange();
+                if (triggerChange) {
+                    this.triggerChange();
+                }
             } else {
                 if (this.opts.initSelection === undefined) {
                     throw new Error("cannot call val() if initSelection() is not defined");
@@ -1782,7 +1788,9 @@ the specific language governing permissions and limitations under the Apache Lic
                 // val is an id. !val is true for [undefined,null,'']
                 if (!val) {
                     this.clear();
-                    this.triggerChange();
+                    if (triggerChange) {
+                        this.triggerChange();
+                    }
                     return;
                 }
                 this.opts.element.val(val);
@@ -2302,7 +2310,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // multi
         val: function () {
-            var val, data = [], self=this;
+            var val, triggerChange = true, data = [], self=this;
 
             if (arguments.length === 0) {
                 return this.getVal();
@@ -2310,11 +2318,17 @@ the specific language governing permissions and limitations under the Apache Lic
 
             val = arguments[0];
 
+            if (arguments.length > 1) {
+                triggerChange = arguments[1];
+            }
+
             if (!val) {
                 this.opts.element.val("");
                 this.updateSelection([]);
                 this.clearSearch();
-                this.triggerChange();
+                if (triggerChange) {
+                    this.triggerChange();
+                }
                 return;
             }
 
@@ -2326,7 +2340,9 @@ the specific language governing permissions and limitations under the Apache Lic
                     data.push({id: $(this).attr("value"), text: $(this).text()});
                 });
                 this.updateSelection(data);
-                this.triggerChange();
+                if (triggerChange) {
+                    this.triggerChange();
+                }
             } else {
                 if (this.opts.initSelection === undefined) {
                     throw new Error("val() cannot be called if initSelection() is not defined")
@@ -2337,7 +2353,9 @@ the specific language governing permissions and limitations under the Apache Lic
                     self.setVal(ids);
                     self.updateSelection(data);
                     self.clearSearch();
-                    self.triggerChange();
+                    if (triggerChange) {
+                        self.triggerChange();
+                    }
                 });
             }
             this.clearSearch();
