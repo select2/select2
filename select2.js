@@ -759,7 +759,13 @@ the specific language governing permissions and limitations under the Apache Lic
                         var group;
                         if (element.is("option")) {
                             if (query.matcher(term, element.text(), element)) {
-                                collection.push({id:element.attr("value"), text:element.text(), element: element.get(), css: element.attr("class"), disabled: equal(element.attr("disabled"), "disabled") });
+                            	// if groupPrefix is set and a 
+                            	if(opts.groupPrefix && (element.val().length > 0 && element.parent().is('optgroup'))){
+                            	    collection.push({id:element.attr("value"), text:element.parent().attr('label')+": "+element.text(), element: element.get(), css: element.attr("class"), disabled: equal(element.attr("disabled"), "disabled") });
+                            	}
+                            	else{
+                            	    collection.push({id:element.attr("value"), text:element.text(), element: element.get(), css: element.attr("class"), disabled: equal(element.attr("disabled"), "disabled") });
+                            	}
                             }
                         } else if (element.is("optgroup")) {
                             group={text:element.attr("label"), children:[], element: element.get(), css: element.attr("class")};
@@ -2442,6 +2448,7 @@ the specific language governing permissions and limitations under the Apache Lic
         formatSelectionTooBig: function (limit) { return "You can only select " + limit + " item" + (limit == 1 ? "" : "s"); },
         formatLoadMore: function (pageNumber) { return "Loading more results..."; },
         formatSearching: function () { return "Searching..."; },
+        groupPrefix: false,
         minimumResultsForSearch: 0,
         minimumInputLength: 0,
         maximumInputLength: null,
