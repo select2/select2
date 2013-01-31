@@ -574,7 +574,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.container.attr("id", this.containerId);
 
             // cache the body so future lookups are cheap
-            this.body = thunk(function() { return opts.element.closest("body"); });
+            this.body = thunk(function() { return opts.dropdownContainer || opts.element.closest("body"); });
 
             if (opts.element.attr("class") !== undefined) {
                 this.container.addClass(opts.element.attr("class").replace(/validate\[[\S ]+] ?/, ''));
