@@ -2169,6 +2169,12 @@ the specific language governing permissions and limitations under the Apache Lic
 
             data = selected.data("select2-data");
 
+            if (!data) {
+                // prevent a race condition when the 'x' is clicked really fast repeatedly the event can be queued
+                // and invoked on an element already removed
+                return;
+            }
+
             index = indexOf(this.id(data), val);
 
             if (index >= 0) {
