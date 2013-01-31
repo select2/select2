@@ -1218,7 +1218,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
                 return;
             }
-            else if (opts.formatSearching()) {
+            else if (opts.formatSearching() && initial===true) {
                 render("<li class='select2-searching'>" + opts.formatSearching() + "</li>");
             }
 
