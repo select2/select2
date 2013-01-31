@@ -622,7 +622,7 @@ the specific language governing permissions and limitations under the Apache Lic
             search.bind("blur", function () { search.removeClass("select2-focused");});
 
             this.dropdown.delegate(resultsSelector, "mouseup", this.bind(function (e) {
-                if ($(e.target).closest(".select2-result-selectable:visible").length > 0) {
+                if ($(e.target).closest(".select2-result-selectable").length > 0) {
                     this.highlightUnderEvent(e);
                     this.selectHighlighted(e);
                 } else {
@@ -1075,7 +1075,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 return;
             }
 
-            children = results.find(".select2-result:visible");
+            children = this.findHighlightableChoices();
 
             child = $(children[index]);
 
@@ -1102,8 +1102,13 @@ the specific language governing permissions and limitations under the Apache Lic
         },
 
         // abstract
+        findHighlightableChoices: function() {
+            return this.results.find(".select2-result-selectable:not(.select2-selected):not(.select2-disabled)");
+        },
+
+        // abstract
         moveHighlight: function (delta) {
-            var choices = this.results.find(".select2-result:visible"),
+            var choices = this.findHighlightableChoices(),
                 index = this.highlight();
 
             while (index > -1 && index < choices.length) {
@@ -1118,7 +1123,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // abstract
         highlight: function (index) {
-            var choices = this.results.find(".select2-result:visible");
+            var choices = this.findHighlightableChoices();
 
             if (arguments.length === 0) {
                 return indexOf(choices.filter(".select2-highlighted")[0], choices.get());
@@ -1131,19 +1136,18 @@ the specific language governing permissions and limitations under the Apache Lic
 
             $(choices[index]).addClass("select2-highlighted");
             this.ensureHighlightVisible();
-
         },
 
         // abstract
         countSelectableResults: function() {
-            return this.results.find(".select2-result-selectable").not(".select2-disabled").not(".select2-selected").length;
+            return this.findHighlightableChoices().length;
         },
 
         // abstract
         highlightUnderEvent: function (event) {
             var el = $(event.target).closest(".select2-result-selectable");
             if (el.length > 0 && !el.is(".select2-highlighted")) {
-        		var choices = this.results.find('.select2-result:visible');
+        		var choices = this.findHighlightableChoices();
                 this.highlight(choices.index(el));
             } else if (el.length == 0) {
                 // if we are over an unselectable item remove al highlights
@@ -1346,8 +1350,8 @@ the specific language governing permissions and limitations under the Apache Lic
         // abstract
         selectHighlighted: function (options) {
             var index=this.highlight(),
-                highlighted=this.results.find(".select2-highlighted:visible"),
-                data = highlighted.closest('.select2-result:visible').data("select2-data");
+                highlighted=this.results.find(".select2-highlighted"),
+                data = highlighted.closest('.select2-result').data("select2-data");
             if (data) {
                 highlighted.addClass("select2-selected");
                 this.highlight(index);
@@ -1694,7 +1698,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             // find the selected element in the result list
 
-            this.results.find(".select2-result:visible").each2(function (i, elm) {
+            this.findHighlightableChoices().each2(function (i, elm) {
                 if (equal(self.id(elm.data("select2-data")), self.opts.element.val())) {
                     selected = i;
                     return false;
@@ -2211,34 +2215,31 @@ the specific language governing permissions and limitations under the Apache Lic
         // multi
         postprocessResults: function () {
             var val = this.getVal(),
-                choices = this.results.find(".select2-result:visible"),
+                choices = this.results.find(".select2-result"),
                 compound = this.results.find(".select2-result-with-children"),
                 self = this;
 
             choices.each2(function (i, choice) {
                 var id = self.id(choice.data("select2-data"));
                 if (indexOf(id, val) >= 0) {
-                    choice.addClass("select2-selected").removeClass("select2-result-selectable");
+                    choice.addClass("select2-selected");
                 } else {
-                    choice.removeClass("select2-selected").addClass("select2-result-selectable");
+                    choice.removeClass("select2-selected");
                 }
             });
 
-            compound.each2(function(i, e) {
-                if (!e.is('.select2-result-selectable') && e.find(".select2-result-selectable").length==0) {  // FIX FOR HIERARCHICAL DATA
-                    e.addClass("select2-selected");
+            compound.each2(function(i, choice) {
+                // hide an optgroup if it doesnt have any selectable children
+                if (!choice.is('.select2-result-selectable')
+                    && choice.find(".select2-result-selectable:not(.select2-selected)").length === 0) {
+                    choice.addClass("select2-selected");
                 } else {
-                    e.removeClass("select2-selected");
+                    choice.removeClass("select2-selected");
                 }
             });
 
             if (this.highlight() == -1){
-                choices.each2(function (i, choice) {
-                    if (!choice.hasClass("select2-selected") &&!choice.hasClass("select2-disabled") && choice.hasClass("select2-result-selectable")) {
-                        self.highlight(0);
-                        return false;
-                    }
-                });
+                self.highlight(0);
             }
 
         },
