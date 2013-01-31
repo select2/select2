@@ -1851,7 +1851,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
                     var data = [];
                     element.find(":selected").each2(function (i, elm) {
-                        data.push({id: elm.attr("value"), text: elm.text(), element: elm});
+                        data.push({id: elm.attr("value"), text: elm.text(), element: $(this)});
                     });
 
                     if ($.isFunction(callback))
