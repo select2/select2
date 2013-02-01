@@ -1011,11 +1011,12 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.container.addClass("select2-dropdown-open").addClass("select2-container-active");
 
-            this.updateResults(true);
 
             if(this.dropdown[0] !== this.body().children().last()[0]) {
                 this.dropdown.detach().appendTo(this.body());
             }
+
+            this.updateResults(true);
 
             mask = $("#select2-drop-mask");
 
