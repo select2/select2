@@ -1129,6 +1129,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // abstract
         findHighlightableChoices: function() {
+            var h=this.results.find(".select2-result-selectable:not(.select2-selected):not(.select2-disabled)");
             return this.results.find(".select2-result-selectable:not(.select2-selected):not(.select2-disabled)");
         },
 
@@ -1158,7 +1159,7 @@ the specific language governing permissions and limitations under the Apache Lic
             if (index >= choices.length) index = choices.length - 1;
             if (index < 0) index = 0;
 
-            choices.removeClass("select2-highlighted");
+            this.results.find(".select2-highlighted").removeClass("select2-highlighted");
 
             $(choices[index]).addClass("select2-highlighted");
             this.ensureHighlightVisible();
@@ -1378,8 +1379,8 @@ the specific language governing permissions and limitations under the Apache Lic
             var index=this.highlight(),
                 highlighted=this.results.find(".select2-highlighted"),
                 data = highlighted.closest('.select2-result').data("select2-data");
+
             if (data) {
-                highlighted.addClass("select2-selected");
                 this.highlight(index);
                 this.onSelect(data, options);
             }
@@ -2265,8 +2266,8 @@ the specific language governing permissions and limitations under the Apache Lic
                 var id = self.id(choice.data("select2-data"));
                 if (indexOf(id, val) >= 0) {
                     choice.addClass("select2-selected");
-                } else {
-                    choice.removeClass("select2-selected");
+                    // mark all children of the selected parent as selected
+                    choice.find(".select2-result-selectable").addClass("select2-selected");
                 }
             });
 
@@ -2275,8 +2276,6 @@ the specific language governing permissions and limitations under the Apache Lic
                 if (!choice.is('.select2-result-selectable')
                     && choice.find(".select2-result-selectable:not(.select2-selected)").length === 0) {
                     choice.addClass("select2-selected");
-                } else {
-                    choice.removeClass("select2-selected");
                 }
             });
 

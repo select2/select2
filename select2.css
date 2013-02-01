@@ -337,13 +337,22 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     background: #3875d7;
     color: #fff;
 }
+
 .select2-results li em {
     background: #feffde;
     font-style: normal;
 }
+
 .select2-results .select2-highlighted em {
     background: transparent;
 }
+
+.select2-results .select2-highlighted ul {
+    background: white;
+    color: #000;
+}
+
+
 .select2-results .select2-no-results,
 .select2-results .select2-searching,
 .select2-results .select2-selection-limit {
