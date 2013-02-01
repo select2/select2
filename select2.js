@@ -741,6 +741,13 @@ the specific language governing permissions and limitations under the Apache Lic
                 opts.id = function (e) { return e[idKey]; };
             }
 
+            if ($.isArray(opts.element.data("select2Tags"))) {
+                if ("tags" in opts) {
+                    throw "tags specified as both an attribute 'data-select2-tags' and in options of Select2 " + opts.element.attr("id");
+                }
+                opts.tags=opts.element.attr("data-select2-tags");
+            }
+
             if (select) {
                 opts.query = this.bind(function (query) {
                     var data = { results: [], more: false },
@@ -781,6 +788,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 opts.formatResultCssClass = function(data) { return data.css; }
             } else {
                 if (!("query" in opts)) {
+
                     if ("ajax" in opts) {
                         ajaxUrl = opts.element.data("ajax-url");
                         if (ajaxUrl && ajaxUrl.length > 0) {
@@ -1789,8 +1797,8 @@ the specific language governing permissions and limitations under the Apache Lic
                 if (this.opts.initSelection === undefined) {
                     throw new Error("cannot call val() if initSelection() is not defined");
                 }
-                // val is an id. !val is true for [undefined,null,'']
-                if (!val) {
+                // val is an id. !val is true for [undefined,null,'',0] - 0 is legal
+                if (!val && val !== 0) {
                     this.clear();
                     if (triggerChange) {
                         this.triggerChange();
@@ -2326,7 +2334,8 @@ the specific language governing permissions and limitations under the Apache Lic
                 triggerChange = arguments[1];
             }
 
-            if (!val) {
+            // val is an id. !val is true for [undefined,null,'',0] - 0 is legal
+            if (!val && val !== 0) {
                 this.opts.element.val("");
                 this.updateSelection([]);
                 this.clearSearch();
