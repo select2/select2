@@ -981,6 +981,7 @@ the specific language governing permissions and limitations under the Apache Lic
             var cid = this.containerId,
                 scroll = "scroll." + cid,
                 resize = "resize."+cid,
+                orient = "orientationchange."+cid,
                 mask;
 
             this.clearDropdownAlignmentPreference();
@@ -1020,7 +1021,7 @@ the specific language governing permissions and limitations under the Apache Lic
             // attach listeners to events that can change the position of the container and thus require
             // the position of the dropdown to be updated as well so it does not come unglued from the container
             this.container.parents().add(window).each(function () {
-                $(this).bind(resize+" "+scroll, function (e) {
+                $(this).bind(resize+" "+scroll+" "+orient, function (e) {
                     $("#select2-drop-mask").css({
                         width:document.documentElement.scrollWidth,
                         height:document.documentElement.scrollHeight});
@@ -1037,10 +1038,11 @@ the specific language governing permissions and limitations under the Apache Lic
 
             var cid = this.containerId,
                 scroll = "scroll." + cid,
-                resize = "resize."+cid;
+                resize = "resize."+cid,
+                orient = "orientationchange."+cid;
 
             // unbind event listeners
-            this.container.parents().add(window).each(function () { $(this).unbind(scroll).unbind(resize); });
+            this.container.parents().add(window).each(function () { $(this).unbind(scroll).unbind(resize).unbind(orient); });
 
             this.clearDropdownAlignmentPreference();
 
