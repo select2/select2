@@ -836,7 +836,6 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.opts.element.blur();
         },
 
-
         // abstract
         enable: function() {
             if (this.enabled) return;
@@ -1351,6 +1350,14 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // abstract
         getPlaceholder: function () {
+
+            // if a placeholder is specified on a select without the first empty option ignore it
+            if (this.select) {
+               if (this.select.find("option").first().text() !== "") {
+                   return undefined;
+               }
+            }
+
             return this.opts.element.attr("placeholder") ||
                 this.opts.element.attr("data-placeholder") || // jquery 1.4 compat
                 this.opts.element.data("placeholder") ||
