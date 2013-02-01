@@ -634,7 +634,11 @@ the specific language governing permissions and limitations under the Apache Lic
         // abstract
         destroy: function () {
             var select2 = this.opts.element.data("select2");
+
+            if (this.propertyObserver) { delete this.propertyObserver; this.propertyObserver = null; }
+
             if (select2 !== undefined) {
+
                 select2.container.remove();
                 select2.dropdown.remove();
                 select2.opts.element
@@ -810,11 +814,39 @@ the specific language governing permissions and limitations under the Apache Lic
          */
         // abstract
         monitorSource: function () {
-            this.opts.element.bind("change.select2", this.bind(function (e) {
+            var el = this.opts.element, sync;
+
+            el.bind("change.select2", this.bind(function (e) {
                 if (this.opts.element.data("select2-change-triggered") !== true) {
                     this.initSelection();
                 }
             }));
+
+            sync = this.bind(function () {
+                var enabled = this.opts.element.attr("disabled") !== "disabled";
+                var readonly = this.opts.element.attr("readonly") === "readonly";
+
+                enabled = enabled && !readonly;
+
+                if (this.enabled !== enabled) {
+                    if (enabled) {
+                        this.enable();
+                    } else {
+                        this.disable();
+                    }
+                }
+            });
+
+            // mozilla and IE
+            el.bind("propertychange.select2 DOMAttrModified.select2", sync);
+            // safari and chrome
+            if (typeof WebKitMutationObserver !== "undefined") {
+                if (this.propertyObserver) { delete this.propertyObserver; this.propertyObserver = null; }
+                this.propertyObserver = new WebKitMutationObserver(function (mutations) {
+                    mutations.forEach(sync);
+                });
+                this.propertyObserver.observe(el.get(0), { attributes:true, subtree:false });
+            }
         },
 
         /**
