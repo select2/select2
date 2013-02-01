@@ -477,39 +477,6 @@ the specific language governing permissions and limitations under the Apache Lic
     }
 
     /**
-     * blurs any Select2 container that has focus when an element outside them was clicked or received focus
-     *
-     * also takes care of clicks on label tags that point to the source element
-     */
-    $document.ready(function () {
-        $document.bind("mousedown touchend", function (e) {
-            var target = $(e.target).closest("div.select2-container").get(0), attr;
-            var targetDropdown = null;
-            if (target && $(target).data("select2") ) {
-                $document.find("div.select2-container-active").each(function () {
-                    if (this !== target) $(this).data("select2").blur();
-                });
-                targetDropdown = $(target).data('select2').dropdown.get(0);
-            }
-
-            // close any other active dropdowns
-            target = targetDropdown || $(e.target).closest("div.select2-drop").get(0);
-            $document.find("div.select2-drop-active").each(function () {
-                if (this !== target) $(this).data("select2").blur();
-            });
-
-            target=$(e.target);
-            attr = target.attr("for");
-            if ("LABEL" === e.target.tagName && attr && attr.length > 0) {
-                attr = attr.replace(/([\[\].])/g,'\\$1'); /* escapes [, ], and . so properly selects the id */
-                target = $("#"+attr);
-                target = target.data("select2");
-                if (target !== undefined && target !== null) { target.focus(); e.preventDefault();}
-            }
-        });
-    });
-
-    /**
      * Creates a new class
      *
      * @param superClass
@@ -566,6 +533,12 @@ the specific language governing permissions and limitations under the Apache Lic
                 mask.attr("id","select2-drop-mask").attr("class","select2-drop-mask");
                 mask.hide();
                 mask.appendTo(this.body());
+                mask.bind("mousedown touchstart", function (e) {
+                    var dropdown = $("#select2-drop");
+                    if (dropdown.length > 0) {
+                        dropdown.data("select2").close();
+                    }
+                });
             }
 
             if (opts.element.attr("class") !== undefined) {
@@ -575,10 +548,14 @@ the specific language governing permissions and limitations under the Apache Lic
             this.container.css(evaluate(opts.containerCss));
             this.container.addClass(evaluate(opts.containerCssClass));
 
+            this.elementTabIndex = this.opts.element.attr("tabIndex");
+
             // swap container for the element
             this.opts.element
                 .data("select2", this)
-                .hide()
+                .addClass("select2-offscreen")
+                .bind("focus.select2", function() { $(this).select2("focus")})
+                .attr("tabIndex", "-1")
                 .before(this.container);
             this.container.data("select2", this);
 
@@ -589,7 +566,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.results = results = this.container.find(resultsSelector);
             this.search = search = this.container.find("input.select2-input");
 
-            search.attr("tabIndex", this.opts.element.attr("tabIndex"));
+            search.attr("tabIndex", this.elementTabIndex);
 
             this.resultsPage = 0;
             this.context = null;
@@ -659,6 +636,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 select2.opts.element
                     .removeData("select2")
                     .unbind(".select2")
+                    .attr("tabIndex", this.elementTabIndex)
                     .show();
             }
         },
@@ -1547,7 +1525,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 if (!this.opened()) this.container.removeClass("select2-container-active");
                 window.setTimeout(this.bind(function() {
                     // restore original tab index
-                    var ti=this.opts.element.attr("tabIndex") || 0;
+                    var ti=this.elementTabIndex || 0;
                     if (ti) {
                         this.selection.attr("tabIndex", ti);
                     } else {
@@ -1590,7 +1568,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 if (!this.opened()) {
                     this.container.removeClass("select2-container-active");
                 }
-                window.setTimeout(this.bind(function() { this.search.attr("tabIndex", this.opts.element.attr("tabIndex") || 0); }), 10);
+                window.setTimeout(this.bind(function() { this.search.attr("tabIndex", this.elementTabIndex || 0); }), 10);
             }));
 
             selection.bind("keydown", this.bind(function(e) {
