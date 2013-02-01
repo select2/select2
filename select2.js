@@ -534,9 +534,13 @@ the specific language governing permissions and limitations under the Apache Lic
                 mask.hide();
                 mask.appendTo(this.body());
                 mask.bind("mousedown touchstart", function (e) {
-                    var dropdown = $("#select2-drop");
+                    var dropdown = $("#select2-drop"), self;
                     if (dropdown.length > 0) {
-                        dropdown.data("select2").close();
+                        self=dropdown.data("select2");
+                        if (self.opts.selectOnBlur) {
+                            self.selectHighlighted({noFocus: true});
+                        }
+                        self.close();
                     }
                 });
             }
