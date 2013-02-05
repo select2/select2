@@ -37,7 +37,8 @@ function format(state) {
 }
 $("#e4").select2({
     formatResult: format,
-    formatSelection: format
+    formatSelection: format,
+    escapeMarkup: function(m) { return m; }
 });
 });
 </script>
@@ -106,7 +107,8 @@ $("#e6").select2({
     },
     formatResult: movieFormatResult, // omitted for brevity, see the source of this page
     formatSelection: movieFormatSelection,  // omitted for brevity, see the source of this page
-    dropdownCssClass: "bigdrop" // apply css that makes the dropdown taller
+    dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
+    escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
 });
 });
 </script>
@@ -137,7 +139,8 @@ $("#e7").select2({
     },
     formatResult: movieFormatResult, // omitted for brevity, see the source of this page
     formatSelection: movieFormatSelection, // omitted for brevity, see the source of this page
-    dropdownCssClass: "bigdrop" // apply css that makes the dropdown taller
+    dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
+    escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
 });
 });
 </script>
@@ -997,7 +1000,7 @@ $(document).ready(function () {
                 <p class="alert alert-info">Only applies to single-value select boxes</p>
             </td>
             </tr>
-            <tr><td>maximumSelectionSize</td><td>int</td><td>
+            <tr><td>maximumSelectionSize</td><td>int/function</td><td>
                 <p>
                     The maximum number of items that can be selected in a multi-select control. If this number is less than 1 selection is not limited.
                 </p>

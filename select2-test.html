@@ -1,0 +1,37 @@
+<html>
+<head>
+
+    <script src="js/jquery-1.8.1.js"></script>
+    <script src="select2-master/select2.js"></script>
+    <link href="select2-master/select2.css" rel="stylesheet"/>
+    <style>img.flag { height: 10px; width: 15px; padding-right: 10px; }
+    </style>
+</head>
+<body>
+
+<div style="padding: 10px; margin: 10px;">
+    <select id="e4" style="width:300px" class="populate">
+            <option value="AK">Alaska</option>
+            <option value="HI">Hawaii</option>
+            <option value="CA">California</option>
+            <option value="NV">Nevada</option>
+            <option value="OR">Oregon</option>
+            <option value="WA">Washington</option>
+    </select><br/>
+</div>
+   <script>
+       $(document).ready(function() {
+           function format(state) {
+               if (!state.id) return state.text; // optgroup
+               return "<img class='flag' src='images/flags/" + state.id.toLowerCase() + ".png'/>" + state.text;
+           }
+           $("#e4").select2({
+               formatResult: format,
+               formatSelection: format
+           });
+       });
+</script>
+
+
+</body>
+</html>
