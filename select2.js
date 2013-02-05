@@ -2020,7 +2020,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.search.bind("blur", this.bind(function(e) {
                 this.container.removeClass("select2-container-active");
                 this.search.removeClass("select2-focused");
-                this.clearSearch();
+                if (!this.opened()) this.clearSearch();
                 e.stopImmediatePropagation();
             }));
 
