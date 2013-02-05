@@ -1478,6 +1478,31 @@ the specific language governing permissions and limitations under the Apache Lic
         },
 
         // single
+        disable: function() {
+            if (!this.enabled) return;
+
+            this.parent.disable.apply(this, arguments);
+
+            this.selection.attr("tabIndex", "-1");
+            this.search.attr("tabIndex", "-1");
+        },
+
+        // single
+        enable: function() {
+            if (this.enabled) return;
+
+            this.parent.enable.apply(this, arguments);
+
+            if (this.elementTabIndex) {
+                this.selection.attr("tabIndex", this.elementTabIndex)
+            } else {
+                this.selection.removeAttr("tabIndex");
+            }
+
+            this.search.removeAttr("tabIndex");
+        },
+
+        // single
         opening: function () {
             this.search.show();
             this.parent.opening.apply(this, arguments);
@@ -1604,6 +1629,8 @@ the specific language governing permissions and limitations under the Apache Lic
             dropdown.bind("mousedown", this.bind(function() { this.search.focus(); }));
 
             selection.bind("focus", this.bind(function() {
+                if (!this.enabled) return;
+
                 this.container.addClass("select2-container-active");
                 // hide the search so the tab key does not focus on it
                 this.search.attr("tabIndex", "-1");
