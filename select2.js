@@ -698,7 +698,7 @@ the specific language governing permissions and limitations under the Apache Lic
                             label=$(document.createElement("div"));
                             label.addClass("select2-result-label");
 
-                            formatted=opts.formatResult(result, label, query);
+                            formatted=opts.escapeMarkup(opts.formatResult(result, label, query));
                             if (formatted!==undefined) {
                                 label.html(formatted);
                             }
