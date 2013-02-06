@@ -302,6 +302,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     dataType: options.dataType,
                     data: data,
                     type: type,
+                    cache: false,
                     traditional: traditional,
                     success: function (data) {
                         if (requestNumber < requestSequence) {
