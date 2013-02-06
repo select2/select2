@@ -1073,8 +1073,11 @@ the specific language governing permissions and limitations under the Apache Lic
             this.dropdown.removeAttr("id"); // only the active dropdown has the select2-drop id
             this.dropdown.hide();
             this.container.removeClass("select2-dropdown-open").removeClass("select2-container-active");
-            this.results.empty();
-            this.clearSearch();
+
+            if (this.opts.clearOnClose) {
+                this.results.empty();
+                this.clearSearch();
+            }
 
             this.opts.element.trigger($.Event("close"));
         },
@@ -2575,7 +2578,8 @@ the specific language governing permissions and limitations under the Apache Lic
             });
         },
         blurOnChange: false,
-        selectOnBlur: false
+        selectOnBlur: false,
+        clearOnClose: true
     };
 
     // exports
