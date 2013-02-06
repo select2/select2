@@ -782,6 +782,31 @@ the specific language governing permissions and limitations under the Apache Lic
                             opts.ajax.url = ajaxUrl;
                         }
                         opts.query = ajax(opts.ajax);
+
+                        if (opts.ajax.cache) {
+                            var ajaxQuery = opts.query;
+                            var cache = {};
+
+                            opts.query = function (query) {
+                                var cacheKey = query.term + ":" + query.page;
+
+                                var cached = cache[cacheKey];
+                                if (cached) {
+                                    query.callback(cached);
+                                    return;
+                                }
+
+                                var callback = query.callback;
+                                query.callback = function(results) {
+                                    cache[cacheKey] = results;
+
+                                    callback(results);
+                                };
+
+                                ajaxQuery(query);
+                            }
+                        }
+
                     } else if ("data" in opts) {
                         opts.query = local(opts.data);
                     } else if ("tags" in opts) {
