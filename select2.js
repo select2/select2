@@ -789,17 +789,19 @@ the specific language governing permissions and limitations under the Apache Lic
                         if (opts.createSearchChoice === undefined) {
                             opts.createSearchChoice = function (term) { return {id: term, text: term}; };
                         }
-                        opts.initSelection = function (element, callback) {
-                            var data = [];
-                            $(splitVal(element.val(), opts.separator)).each(function () {
-                                var id = this, text = this, tags=opts.tags;
-                                if ($.isFunction(tags)) tags=tags();
-                                $(tags).each(function() { if (equal(this.id, id)) { text = this.text; return false; } });
-                                data.push({id: id, text: text});
-                            });
+                        if (opts.initSelection === undefined) {
+                            opts.initSelection = function (element, callback) {
+                                var data = [];
+                                $(splitVal(element.val(), opts.separator)).each(function () {
+                                    var id = this, text = this, tags=opts.tags;
+                                    if ($.isFunction(tags)) tags=tags();
+                                    $(tags).each(function() { if (equal(this.id, id)) { text = this.text; return false; } });
+                                    data.push({id: id, text: text});
+                                });
 
-                            callback(data);
-                        };
+                                callback(data);
+                            };
+                        }
                     }
                 }
             }
