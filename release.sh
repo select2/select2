@@ -15,13 +15,21 @@ js="$name.js"
 mini="$name.min.js"
 css="$name.css"
 release="$name-$ver"
-tag="release-$ver"
+tag="$ver"
 branch="build-$ver"
 curbranch=`git branch | grep "*" | sed "s/* //"`
 timestamp=$(date)
 tokens="s/@@ver@@/$ver/g;s/\@@timestamp@@/$timestamp/g"
 remote="github"
 
+echo "Updating Version Identifiers"
+
+sed -E -e "s/\"version\": \"([0-9\.]+)\",/\"version\": \"$ver\",/g" -i "" component.json select2.jquery.json
+git add component.json
+git add select2.jquery.json
+git commit -m "modified version identifiers in descriptors for release $ver"
+git push
+ 
 git branch "$branch"
 git checkout "$branch"
 
