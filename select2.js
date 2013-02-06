@@ -645,7 +645,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 select2.opts.element
                     .removeData("select2")
                     .unbind(".select2")
-                    .attr("tabIndex", this.elementTabIndex)
+                    .attr({"tabIndex": this.elementTabIndex})
                     .show();
             }
         },
