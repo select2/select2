@@ -698,7 +698,7 @@ the specific language governing permissions and limitations under the Apache Lic
                             label=$(document.createElement("div"));
                             label.addClass("select2-result-label");
 
-                            formatted=opts.escapeMarkup(opts.formatResult(result, label, query));
+                            formatted=opts.formatResult(result, label, query, self.opts.escapeMarkup);
                             if (formatted!==undefined) {
                                 label.html(formatted);
                             }
@@ -1521,6 +1521,7 @@ the specific language governing permissions and limitations under the Apache Lic
         focus: function () {
             this.close();
             this.selection.focus();
+            this.opts.element.triggerHandler("focus");
         },
 
         // single
@@ -2132,6 +2133,7 @@ the specific language governing permissions and limitations under the Apache Lic
         focus: function () {
             this.close();
             this.search.focus();
+            this.opts.element.triggerHandler("focus");
         },
 
         // multi
@@ -2527,9 +2529,9 @@ the specific language governing permissions and limitations under the Apache Lic
         dropdownCss: {},
         containerCssClass: "",
         dropdownCssClass: "",
-        formatResult: function(result, container, query) {
+        formatResult: function(result, container, query, escapeMarkup) {
             var markup=[];
-            markMatch(result.text, query.term, markup, this.escapeMarkup);
+            markMatch(result.text, query.term, markup, escapeMarkup);
             return markup.join("");
         },
         formatSelection: function (data, container) {
