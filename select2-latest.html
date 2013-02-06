@@ -634,12 +634,12 @@ $("#e11_2")
               <p><code>open</code> event is triggered on the original element whenever the dropdown needs to be opened</p>
 
               <p><input type="hidden" id="e11" style="width:300px"/></p>
-
               <p><input type="hidden" id="e11_2" style="width:300px"/></p>
 
-              <ul id="events_11"></ul>
           </div>
           <div class="span8">
+              <h3>Event Log</h3>
+              <ul id="events_11"></ul>
               <h3>Example Code</h3>
            <pre class="prettyprint linenums" id="code_e11">
            </pre>
@@ -1149,6 +1149,7 @@ $(document).ready(function () {
                     <tr><td>object</td><td>object</td><td>One of the result objects returned from the <code>query</code> function</td></tr>
                     <tr><td>container</td><td>jQuery object</td><td>jQuery wrapper of the node that should contain the representation of the result</td></tr>
                     <tr><td>query</td><td>object</td><td>The query object used to request this set of results</td></tr>
+                    <tr><td>escapeMarkup</td><td>function</td><td>Function used to escape markup in results. If you do not expect to render custom markup you should pass your text through this function to escape any markup that may have been accidentally returned. This function is configurable in options of select2.</td></tr>
                     <tr><td>&lt;returns&gt;</td><td>string (optional)</td><td>Html string, a DOM element, or a jQuery object that represents the result</td></tr>
                 </table>
                 <p>The default implementation expects the object to have a <code>text</code> property that is returned.</p>
