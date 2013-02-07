@@ -1,0 +1,8 @@
+{
+	"name": "@@name",
+	"version": "@@version",
+	"main": ["select2.js", "select2.css", "select2.png", "select2x2.png", "select2-spinner.gif"],
+	"dependencies": {
+		"jquery": "@@jquery_version"
+	}
+}
