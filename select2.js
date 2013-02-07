@@ -559,7 +559,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.opts.element
                 .data("select2", this)
                 .addClass("select2-offscreen")
-                .bind("focus.select2", function() { $(this).select2("focus")})
+                .bind("focus.select2", function() { $(this).select2("focus"); })
                 .attr("tabIndex", "-1")
                 .before(this.container);
             this.container.data("select2", this);
@@ -772,7 +772,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 });
                 // this is needed because inside val() we construct choices from options and there id is hardcoded
                 opts.id=function(e) { return e.id; };
-                opts.formatResultCssClass = function(data) { return data.css; }
+                opts.formatResultCssClass = function(data) { return data.css; };
             } else {
                 if (!("query" in opts)) {
 
@@ -1498,7 +1498,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.parent.enable.apply(this, arguments);
 
             if (this.elementTabIndex) {
-                this.selection.attr("tabIndex", this.elementTabIndex)
+                this.selection.attr("tabIndex", this.elementTabIndex);
             } else {
                 this.selection.removeAttr("tabIndex");
             }
@@ -1668,7 +1668,7 @@ the specific language governing permissions and limitations under the Apache Lic
             }));
             selection.bind("keypress", this.bind(function(e) {
 		if (e.which == KEY.DELETE || e.which == KEY.BACKSPACE || e.which == KEY.TAB || e.which == KEY.ENTER || e.which == 0) {
-			return
+			return;
 		}
                 var key = String.fromCharCode(e.which);
                 this.search.val(key);
@@ -2341,7 +2341,7 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             if (searchWidth <= 0) {
-              searchWidth = minimumWidth
+              searchWidth = minimumWidth;
             }
 
             this.search.width(searchWidth);
@@ -2412,7 +2412,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
             } else {
                 if (this.opts.initSelection === undefined) {
-                    throw new Error("val() cannot be called if initSelection() is not defined")
+                    throw new Error("val() cannot be called if initSelection() is not defined");
                 }
 
                 this.opts.initSelection(this.opts.element, function(data){
@@ -2471,7 +2471,7 @@ the specific language governing permissions and limitations under the Apache Lic
                      .get();
             } else {
                 if (!values) { values = []; }
-                ids = $.map(values, function(e) { return self.opts.id(e)});
+                ids = $.map(values, function(e) { return self.opts.id(e); });
                 this.setVal(ids);
                 this.updateSelection(values);
                 this.clearSearch();
