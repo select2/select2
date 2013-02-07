@@ -1,4 +1,5 @@
 node_modules
 dist/select2.js
 dist/select2.min.js
+banner.txt
 npm-debug.log
