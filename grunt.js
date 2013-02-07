@@ -28,12 +28,19 @@ module.exports = function(grunt) {
 			}
 		},
 		concat : {
-			dist : {
+			js: {
 				src : [
 					'banner.txt',
 					'src/select2.js'
 				],
 				dest : 'dist/select2.js'
+			},
+			css: {
+				src : [
+					'banner.txt',
+					'src/select2.css'
+				],
+				dest : 'dist/select2.css'
 			}
 		},
 		lint : {
@@ -69,5 +76,5 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-replace');
 
 	// Default task.
-	grunt.registerTask('default', 'replace concat min');
+	grunt.registerTask('default', 'replace concat:js concat:css min');
 };
