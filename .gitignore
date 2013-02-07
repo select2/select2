@@ -1,3 +1,4 @@
 node_modules
 dist/select2.js
 dist/select2.min.js
+npm-debug.log
