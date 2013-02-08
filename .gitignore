@@ -1,0 +1,6 @@
+node_modules
+dist/select2.js
+dist/select2.min.js
+dist/select2.css
+banner.txt
+npm-debug.log
