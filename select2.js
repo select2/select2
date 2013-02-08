@@ -211,6 +211,34 @@ the specific language governing permissions and limitations under the Apache Lic
         });
     }
 
+    function focus($el) {
+        if ($el[0] === document.activeElement) return;
+
+        /* set the focus in a 0 timeout - that way the focus is set after the processing
+            of the current event has finished - which seems like the only reliable way
+            to set focus */
+        window.setTimeout(function() {
+            var el=$el[0], pos=$el.val().length, range;
+
+            $el.focus();
+
+            /* after the focus is set move the caret to the end, necessary when we val()
+                just before setting focus */
+            if(el.setSelectionRange)
+            {
+                el.setSelectionRange(pos, pos);
+            }
+            else if (el.createTextRange) {
+                range = el.createTextRange();
+                range.collapse(true);
+                range.moveEnd('character', pos);
+                range.moveStart('character', pos);
+                range.select();
+            }
+
+        }, 0);
+    }
+
     function killEvent(event) {
         event.preventDefault();
         event.stopPropagation();
@@ -1075,7 +1103,7 @@ the specific language governing permissions and limitations under the Apache Lic
             $("#select2-drop-mask").hide();
             this.dropdown.removeAttr("id"); // only the active dropdown has the select2-drop id
             this.dropdown.hide();
-            this.container.removeClass("select2-dropdown-open").removeClass("select2-container-active");
+            this.container.removeClass("select2-dropdown-open");
             this.results.empty();
             this.clearSearch();
 
@@ -1355,7 +1383,6 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.close();
             this.container.removeClass("select2-container-active");
-            this.dropdown.removeClass("select2-drop-active");
             // synonymous to .is(':focus'), which is available in jquery >= 1.6
             if (this.search[0] === document.activeElement) { this.search.blur(); }
             this.clearSearch();
@@ -1364,18 +1391,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // abstract
         focusSearch: function () {
-            // need to do it here as well as in timeout so it works in IE
-            this.search.show();
-            this.search.focus();
-
-            /* we do this in a timeout so that current event processing can complete before this code is executed.
-             this makes sure the search field is focussed even if the current event would blur it */
-            window.setTimeout(this.bind(function () {
-                // reset the value so IE places the cursor at the end of the input box
-                this.search.show();
-                this.search.focus();
-                this.search.val(this.search.val());
-            }), 10);
+            focus(this.search);
         },
 
         // abstract
@@ -1467,11 +1483,12 @@ the specific language governing permissions and limitations under the Apache Lic
             var container = $(document.createElement("div")).attr({
                 "class": "select2-container"
             }).html([
-                "    <a href='javascript:void(0)' onclick='return false;' class='select2-choice'>",
+                "<a href='javascript:void(0)' onclick='return false;' class='select2-choice' tabindex='-1'>",
                 "   <span></span><abbr class='select2-search-choice-close' style='display:none;'></abbr>",
                 "   <div><b></b></div>" ,
                 "</a>",
-                "    <div class='select2-drop select2-offscreen'>" ,
+                "<input class='select2-focusser select2-offscreen' type='text'/>",
+                "<div class='select2-drop' style='display:none'>" ,
                 "   <div class='select2-search'>" ,
                 "       <input type='text' autocomplete='off' class='select2-input'/>" ,
                 "   </div>" ,
@@ -1487,8 +1504,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.parent.disable.apply(this, arguments);
 
-            this.selection.attr("tabIndex", "-1");
-            this.search.attr("tabIndex", "-1");
+            this.focusser.attr("disabled", "disabled");
         },
 
         // single
@@ -1497,44 +1513,43 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.parent.enable.apply(this, arguments);
 
-            if (this.elementTabIndex) {
-                this.selection.attr("tabIndex", this.elementTabIndex);
-            } else {
-                this.selection.removeAttr("tabIndex");
-            }
-
-            this.search.removeAttr("tabIndex");
+            this.focusser.removeAttr("disabled");
         },
 
         // single
         opening: function () {
-            this.search.show();
             this.parent.opening.apply(this, arguments);
-            this.dropdown.removeClass("select2-offscreen");
+            this.focusser.attr("disabled", "disabled");
         },
 
         // single
         close: function () {
             if (!this.opened()) return;
             this.parent.close.apply(this, arguments);
-            this.dropdown.removeAttr("style").addClass("select2-offscreen").insertAfter(this.selection).show();
+            this.focusser.removeAttr("disabled");
+            focus(this.focusser);
         },
 
         // single
         focus: function () {
-            this.close();
-            this.selection.focus();
+            if (this.opened()) {
+                this.close();
+            } else {
+                this.focusser.removeAttr("disabled");
+                this.focusser.focus();
+            }
         },
 
         // single
         isFocused: function () {
-            return this.selection[0] === document.activeElement;
+            return this.container.hasClass("select2-container-active");
         },
 
         // single
         cancel: function () {
             this.parent.cancel.apply(this, arguments);
-            this.selection.focus();
+            this.focusser.removeAttr("disabled");
+            this.focusser.focus();
         },
 
         // single
@@ -1547,6 +1562,8 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.selection = selection = container.find(".select2-choice");
 
+            this.focusser = container.find(".select2-focusser");
+
             this.search.bind("keydown", this.bind(function (e) {
                 if (!this.enabled) return;
 
@@ -1556,99 +1573,35 @@ the specific language governing permissions and limitations under the Apache Lic
                     return;
                 }
 
-                if (this.opened()) {
-                    switch (e.which) {
-                        case KEY.UP:
-                        case KEY.DOWN:
-                            this.moveHighlight((e.which === KEY.UP) ? -1 : 1);
-                            killEvent(e);
-                            return;
-                        case KEY.TAB:
-                        case KEY.ENTER:
-                            this.selectHighlighted();
-                            killEvent(e);
-                            return;
-                        case KEY.ESC:
-                            this.cancel(e);
-                            killEvent(e);
-                            return;
-                    }
-                } else {
-
-                    if (e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e) || e.which === KEY.ESC) {
+                switch (e.which) {
+                    case KEY.UP:
+                    case KEY.DOWN:
+                        this.moveHighlight((e.which === KEY.UP) ? -1 : 1);
+                        killEvent(e);
                         return;
-                    }
-
-                    if (this.opts.openOnEnter === false && e.which === KEY.ENTER) {
+                    case KEY.TAB:
+                    case KEY.ENTER:
+                        this.selectHighlighted();
+                        killEvent(e);
                         return;
-                    }
-
-                    this.open();
-
-                    if (e.which === KEY.ENTER) {
-                        // do not propagate the event otherwise we open, and propagate enter which closes
+                    case KEY.ESC:
+                        this.cancel(e);
+                        killEvent(e);
                         return;
-                    }
                 }
             }));
 
-            this.search.bind("focus", this.bind(function() {
-                this.selection.attr("tabIndex", "-1");
-            }));
-            this.search.bind("blur", this.bind(function() {
-                if (!this.opened()) this.container.removeClass("select2-container-active");
-                window.setTimeout(this.bind(function() {
-                    // restore original tab index
-                    var ti=this.elementTabIndex || 0;
-                    if (ti) {
-                        this.selection.attr("tabIndex", ti);
-                    } else {
-                        this.selection.removeAttr("tabIndex");
-                    }
-                }), 10);
-            }));
-
-            selection.delegate("abbr", "mousedown", this.bind(function (e) {
+            this.focusser.bind("keydown", this.bind(function (e) {
                 if (!this.enabled) return;
-                this.clear();
-                killEventImmediately(e);
-                this.close();
-                this.triggerChange();
-                this.selection.focus();
-            }));
 
-            selection.bind("mousedown", this.bind(function (e) {
-                clickingInside = true;
-
-                if (this.opened()) {
-                    this.close();
-                    this.selection.focus();
-                } else if (this.enabled) {
-                    this.open();
+                if (e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e) || e.which === KEY.ESC) {
+                    return;
                 }
 
-                clickingInside = false;
-            }));
-
-            dropdown.bind("mousedown", this.bind(function() { this.search.focus(); }));
-
-            selection.bind("focus", this.bind(function() {
-                if (!this.enabled) return;
-
-                this.container.addClass("select2-container-active");
-                // hide the search so the tab key does not focus on it
-                this.search.attr("tabIndex", "-1");
-            }));
-
-            selection.bind("blur", this.bind(function() {
-                if (!this.opened()) {
-                    this.container.removeClass("select2-container-active");
+                if (this.opts.openOnEnter === false && e.which === KEY.ENTER) {
+                    killEvent(e);
+                    return;
                 }
-                window.setTimeout(this.bind(function() { this.search.attr("tabIndex", this.elementTabIndex || 0); }), 10);
-            }));
-
-            selection.bind("keydown", this.bind(function(e) {
-                if (!this.enabled) return;
 
                 if (e.which == KEY.DOWN || e.which == KEY.UP
                     || (e.which == KEY.ENTER && this.opts.openOnEnter)) {
@@ -1665,20 +1618,58 @@ the specific language governing permissions and limitations under the Apache Lic
                     return;
                 }
             }));
-            selection.bind("keypress", this.bind(function(e) {
-		if (e.which == KEY.DELETE || e.which == KEY.BACKSPACE || e.which == KEY.TAB || e.which == KEY.ENTER || e.which == 0) {
-			return;
-		}
-                var key = String.fromCharCode(e.which);
-                this.search.val(key);
+
+
+            installKeyUpChangeEvent(this.focusser);
+            this.focusser.bind("keyup-change input", this.bind(function(e) {
+                if (this.opened()) return;
                 this.open();
+                this.search.val(this.focusser.val());
+                this.focusser.val("");
+                killEvent(e);
             }));
 
+            selection.delegate("abbr", "mousedown", this.bind(function (e) {
+                if (!this.enabled) return;
+                this.clear();
+                killEventImmediately(e);
+                this.close();
+                this.triggerChange();
+                this.selection.focus();
+            }));
+
+            selection.bind("mousedown", this.bind(function (e) {
+                clickingInside = true;
+
+                if (this.opened()) {
+                    this.close();
+                } else if (this.enabled) {
+                    this.open();
+                }
+
+                killEvent(e);
+
+                clickingInside = false;
+            }));
+
+            dropdown.bind("mousedown", this.bind(function() { this.search.focus(); }));
+
+            selection.bind("focus", this.bind(function(e) {
+                killEvent(e);
+            }));
+
+            this.focusser.bind("focus", this.bind(function(){
+                this.container.addClass("select2-container-active");
+            })).bind("blur", this.bind(function() {
+                if (!this.opened()) {
+                    this.container.removeClass("select2-container-active");
+                }
+            }));
+            this.search.bind("focus", this.bind(function(){
+                this.container.addClass("select2-container-active");
+            }))
             this.setPlaceholder();
 
-            this.search.bind("focus", this.bind(function() {
-                this.container.addClass("select2-container-active");
-            }));
         },
 
         // single
@@ -1872,6 +1863,7 @@ the specific language governing permissions and limitations under the Apache Lic
         // single
         clearSearch: function () {
             this.search.val("");
+            this.focusser.val("");
         },
 
         // single
