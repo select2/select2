@@ -1855,7 +1855,9 @@ the specific language governing permissions and limitations under the Apache Lic
                     self.opts.element.val(!data ? "" : self.id(data));
                     self.updateSelection(data);
                     self.setPlaceholder();
-                    self.triggerChange();
+                    if (triggerChange) {
+                        self.triggerChange();
+                    }
                 });
             }
         },
