@@ -998,7 +998,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             if (this.opened()) return false;
 
-            event = $.Event("open");
+            event = $.Event("opening");
             this.opts.element.trigger(event);
             return !event.isDefaultPrevented();
         },
@@ -1520,6 +1520,8 @@ the specific language governing permissions and limitations under the Apache Lic
         opening: function () {
             this.parent.opening.apply(this, arguments);
             this.focusser.attr("disabled", "disabled");
+            
+            this.opts.element.trigger($.Event("open"));
         },
 
         // single
@@ -2117,6 +2119,8 @@ the specific language governing permissions and limitations under the Apache Lic
             this.clearPlaceholder();
 			this.resizeSearch();
             this.focusSearch();
+
+            this.opts.element.trigger($.Event("open"));
         },
 
         // multi
