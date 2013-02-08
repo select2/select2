@@ -10,7 +10,10 @@
 <body>
 
 <div style="padding: 10px; margin: 10px;">
+    <br/><br/><br/>
+    <input type="text" size="30"/><br/>
     <select id="e4" style="width:300px" class="populate">
+            <option></option>
             <option value="AK">Alaska</option>
             <option value="HI">Hawaii</option>
             <option value="CA">California</option>
@@ -18,6 +21,7 @@
             <option value="OR">Oregon</option>
             <option value="WA">Washington</option>
     </select><br/>
+    <input type="text" size="30"/>
 </div>
    <script>
        $(document).ready(function() {
@@ -27,11 +31,28 @@
            }
            $("#e4").select2({
                formatResult: format,
-               formatSelection: format
+               formatSelection: format,
+               escapeMarkup: function(m) { return m; },
+               allowClear:true,
+               placeholder: "select a state"
            });
        });
 </script>
 
+<div style="position: absolute; left:0; top:0; background: white; border: 1px solid red;" id="focus-spy">hello there</div>
+<script>
+    $(document).ready(function() {
+        var el=$("#focus-spy");
+        $(window).bind("scroll", function(){ el.css({top:$(window).scrollTop()}); });
+        var update=function() {
+            var a=document.activeElement;
+            var b=$(a);
+            el.html("tag: "+a.tagName+" id:"+a.id+" class:"+b.attr("class")+" val:"+b.val());
+            window.setTimeout(update, 100);
+        };
+        update();
+    });
+</script>
 
 </body>
 </html>
