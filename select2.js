@@ -1470,7 +1470,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             var width = resolveContainerWidth.call(this);
             if (width !== null) {
-                this.container.css({"style": "width: "+width});
+                this.container.css("width", width);
             }
         }
     });
