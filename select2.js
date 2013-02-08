@@ -1359,7 +1359,6 @@ the specific language governing permissions and limitations under the Apache Lic
             if (this.search[0] === document.activeElement) { this.search.blur(); }
             this.clearSearch();
             this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
-            this.opts.element.triggerHandler("blur");
         },
 
         // abstract
@@ -1524,7 +1523,6 @@ the specific language governing permissions and limitations under the Apache Lic
         focus: function () {
             this.close();
             this.selection.focus();
-            this.opts.element.triggerHandler("focus");
         },
 
         // single
