@@ -643,6 +643,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 select2.container.remove();
                 select2.dropdown.remove();
                 select2.opts.element
+                    .removeClass("select2-offscreen")
                     .removeData("select2")
                     .unbind(".select2")
                     .attr({"tabIndex": this.elementTabIndex})
