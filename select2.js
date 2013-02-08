@@ -550,9 +550,6 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.container.addClass(opts.element.attr("class").replace(/validate\[[\S ]+] ?/, ''));
             }
 
-            this.container.css(evaluate(opts.containerCss));
-            this.container.addClass(evaluate(opts.containerCssClass));
-
             this.elementTabIndex = this.opts.element.attr("tabIndex");
 
             // swap container for the element
@@ -579,6 +576,9 @@ the specific language governing permissions and limitations under the Apache Lic
             // initialize the container
             this.initContainer();
             this.initContainerWidth();
+
+            this.container.css(evaluate(opts.containerCss));
+            this.container.addClass(evaluate(opts.containerCssClass));
 
             installFilteredMouseMove(this.results);
             this.dropdown.delegate(resultsSelector, "mousemove-filtered", this.bind(this.highlightUnderEvent));
