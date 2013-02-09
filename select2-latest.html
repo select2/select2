@@ -1419,6 +1419,26 @@ $("#tags").select2({
             <tr><td>dropdownCssClass</td><td>function/string</td><td>
                 Css class that will be added to select2's dropdown container
             </td></tr>
+            <tr><td>adaptContainerCssClass</td><td>function</td><td>
+                Function that filters/renames css classes as they are copied from the source tag to the select2 container tag.
+                <pre>adaptContainerCssClass(clazz)</pre>
+                <table class="table table-bordered table-striped">
+                    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                    <tr><td>clazz</td><td>string</td><td>Css class being copied</td></tr>
+                    <tr><td>&lt;returns&gt;</td><td>string</td><td>Css class to be applied or <code>null/undefined/''</code> to not apply it</td></tr>
+                </table>
+                The default implementation applies all classes without modification.
+            </td></tr>
+            <tr><td>adaptDropdownCssClass</td><td>function</td><td>
+                Function that filters/renames css classes as they are copied from the source tag to the select2 dropdown tag.
+                <pre>adaptDropdownCssClass(clazz)</pre>
+                <table class="table table-bordered table-striped">
+                    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                    <tr><td>clazz</td><td>string</td><td>Css class being copied</td></tr>
+                    <tr><td>&lt;returns&gt;</td><td>string</td><td>Css class to be applied or <code>null/undefined/''</code> to not apply it</td></tr>
+                </table>
+                The default implementation always returns <code>null</code> thereby filtering out all classes.
+            </td></tr>
             <tr><td>escapeMarkup</td><td>function</td><td>
                 <code>String escapeMarkup(String markup)</code>
                 <p>Function used to post-process markup returned from formatter functions. By default this function escapes html entities to prevent javascript injection.</p>
