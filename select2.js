@@ -583,7 +583,7 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             if (opts.element.attr("class") !== undefined) {
-                this.container.addClass(opts.element.attr("class").replace(/validate\[[\S ]+] ?/, ''));
+                this.container.addClass(opts.element.attr("class"));
             }
 
             this.container.css(evaluate(opts.containerCss));
@@ -863,8 +863,13 @@ the specific language governing permissions and limitations under the Apache Lic
             }));
 
             sync = this.bind(function () {
-                var enabled = this.opts.element.attr("disabled") !== "disabled";
-                var readonly = this.opts.element.attr("readonly") === "readonly";
+
+                var enabled, readonly, self = this;
+
+                // sync enabled state
+
+                enabled = this.opts.element.attr("disabled") !== "disabled";
+                readonly = this.opts.element.attr("readonly") === "readonly";
 
                 enabled = enabled && !readonly;
 
@@ -875,6 +880,35 @@ the specific language governing permissions and limitations under the Apache Lic
                         this.disable();
                     }
                 }
+
+                function syncCssClasses(dest, accept) {
+                    var classes, replacements = [];
+
+                    classes = dest.attr("class");
+                    if (typeof classes === "string") {
+                        $(classes.split(" ")).each2(function() {
+                            if (this.indexOf("select2-") === 0) {
+                                replacements.push(this);
+                            }
+                        });
+                    }
+                    classes = self.opts.element.attr("class");
+                    if (typeof classes === "string") {
+                        $(classes.split(" ")).each2(function() {
+                            if (this.indexOf("select2-") !== 0 && accept(this)) {
+                                replacements.push(this);
+                            }
+                        });
+                    }
+                    dest.attr("class", replacements.join(" "));
+                }
+
+                syncCssClasses(this.container, this.opts.acceptContainerCssClass);
+                this.container.addClass(evaluate(this.opts.containerCssClass));
+
+                syncCssClasses(this.dropdown, this.opts.acceptDropdownCssClass);
+                this.dropdown.addClass(evaluate(this.opts.dropdownCssClass));
+
             });
 
             // mozilla and IE
@@ -2580,7 +2614,9 @@ the specific language governing permissions and limitations under the Apache Lic
             });
         },
         blurOnChange: false,
-        selectOnBlur: false
+        selectOnBlur: false,
+        acceptContainerCssClass: function(c) { return true; },
+        acceptDropdownCssClass: function(c) { return true; }
     };
 
     // exports
