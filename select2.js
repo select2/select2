@@ -271,6 +271,32 @@ the specific language governing permissions and limitations under the Apache Lic
         return sizer.width();
     }
 
+    function syncCssClasses(dest, src, adapter) {
+        var classes, replacements = [], adapted;
+
+        classes = dest.attr("class");
+        if (typeof classes === "string") {
+            $(classes.split(" ")).each2(function() {
+                if (this.indexOf("select2-") === 0) {
+                    replacements.push(this);
+                }
+            });
+        }
+        classes = src.attr("class");
+        if (typeof classes === "string") {
+            $(classes.split(" ")).each2(function() {
+                if (this.indexOf("select2-") !== 0) {
+                    adapted = adapter(this);
+                    if (typeof adapted === "string" && adapted.length > 0) {
+                        replacements.push(this);
+                    }
+                }
+            });
+        }
+        dest.attr("class", replacements.join(" "));
+    }
+
+
     function markMatch(text, term, markup, escapeMarkup) {
         var match=text.toUpperCase().indexOf(term.toUpperCase()),
             tl=term.length;
@@ -582,10 +608,8 @@ the specific language governing permissions and limitations under the Apache Lic
                 });
             }
 
-            if (opts.element.attr("class") !== undefined) {
-                this.container.addClass(opts.element.attr("class"));
-            }
-
+            syncCssClasses(this.container, this.opts.element, this.opts.adaptContainerCssClass);
+         
             this.container.css(evaluate(opts.containerCss));
             this.container.addClass(evaluate(opts.containerCssClass));
 
@@ -881,32 +905,11 @@ the specific language governing permissions and limitations under the Apache Lic
                     }
                 }
 
-                function syncCssClasses(dest, accept) {
-                    var classes, replacements = [];
 
-                    classes = dest.attr("class");
-                    if (typeof classes === "string") {
-                        $(classes.split(" ")).each2(function() {
-                            if (this.indexOf("select2-") === 0) {
-                                replacements.push(this);
-                            }
-                        });
-                    }
-                    classes = self.opts.element.attr("class");
-                    if (typeof classes === "string") {
-                        $(classes.split(" ")).each2(function() {
-                            if (this.indexOf("select2-") !== 0 && accept(this)) {
-                                replacements.push(this);
-                            }
-                        });
-                    }
-                    dest.attr("class", replacements.join(" "));
-                }
-
-                syncCssClasses(this.container, this.opts.acceptContainerCssClass);
+                syncCssClasses(this.container, this.opts.element, this.opts.adaptContainerCssClass);
                 this.container.addClass(evaluate(this.opts.containerCssClass));
 
-                syncCssClasses(this.dropdown, this.opts.acceptDropdownCssClass);
+                syncCssClasses(this.dropdown, this.opts.element, this.opts.adaptDropdownCssClass);
                 this.dropdown.addClass(evaluate(this.opts.dropdownCssClass));
 
             });
@@ -2615,8 +2618,8 @@ the specific language governing permissions and limitations under the Apache Lic
         },
         blurOnChange: false,
         selectOnBlur: false,
-        acceptContainerCssClass: function(c) { return true; },
-        acceptDropdownCssClass: function(c) { return true; }
+        adaptContainerCssClass: function(c) { return c; },
+        adaptDropdownCssClass: function(c) { return null; }
     };
 
     // exports
