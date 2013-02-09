@@ -1932,15 +1932,14 @@ the specific language governing permissions and limitations under the Apache Lic
 
             if (opts.element.get(0).tagName.toLowerCase() === "select") {
                 // install sthe selection initializer
-                opts.initSelection = function (element,callback) {
+                opts.initSelection = function (element, callback) {
 
                     var data = [];
-                    element.find(":selected").each2(function (i, elm) {
-                        data.push({id: elm.attr("value"), text: elm.text(), element: elm});
-                    });
 
-                    if ($.isFunction(callback))
-                        callback(data);
+                    element.find(":selected").each2(function (i, elm) {
+                        data.push({id: elm.attr("value"), text: elm.text(), element: elm[0]});
+                    });
+                    callback(data);
                 };
             } else if ("data" in opts) {
                 // install default initSelection when applied to hidden input and data is local
@@ -2410,10 +2409,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.setVal(val);
 
             if (this.select) {
-                this.select.find(":selected").each(function () {
-                    data.push({id: $(this).attr("value"), text: $(this).text()});
-                });
-                this.updateSelection(data);
+                this.opts.initSelection(this.select, this.bind(this.updateSelection));
                 if (triggerChange) {
                     this.triggerChange();
                 }
