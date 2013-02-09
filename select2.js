@@ -1768,12 +1768,16 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // single
         postprocessResults: function (data, initial) {
-            var selected = 0, self = this, showSearchInput = true;
+            var selected = 0, self = this, showSearchInput = true, elementVal = this.opts.element.val();
 
+            // Want to show the new search value as selected if we have any
+            if (initial.target && initial.target.value) {
+              elementVal = initial.target.value;
+            }
+            
             // find the selected element in the result list
-
             this.findHighlightableChoices().each2(function (i, elm) {
-                if (equal(self.id(elm.data("select2-data")), self.opts.element.val())) {
+                if (equal(self.id(elm.data("select2-data")), elementVal)) {
                     selected = i;
                     return false;
                 }
