@@ -317,30 +317,38 @@ the specific language governing permissions and limitations under the Apache Lic
                     data = options.data, // ajax data function
                     url = options.url, // ajax url string or function
                     transport = options.transport || $.ajax,
-                    traditional = options.traditional || false,
-                    type = options.type || 'GET'; // set type of request (GET or POST)
+                    type = options.type || 'GET', // set type of request (GET or POST)
+                    params = {};
 
                 data = data ? data.call(this, query.term, query.page, query.context) : null;
                 url = (typeof url === 'function') ? url.call(this, query.term, query.page, query.context) : url;
 
                 if( null !== handler) { handler.abort(); }
 
-                handler = transport.call(null, {
+                if (options.params) {
+                    if ($.isFunction(options.params)) {
+                        $.extend(params, options.params.call(null));
+                    } else {
+                        $.extend(params, options.params);
+                    }
+                }
+
+                $.extend(params, {
                     url: url,
                     dataType: options.dataType,
                     data: data,
                     type: type,
                     cache: false,
-                    traditional: traditional,
                     success: function (data) {
                         if (requestNumber < requestSequence) {
                             return;
                         }
-                        // TODO 3.0 - replace query.page with query so users have access to term, page, etc.
+                        // TODO - replace query.page with query so users have access to term, page, etc.
                         var results = options.results(data, query.page);
                         query.callback(results);
                     }
                 });
+                handler = transport.call(null, params);
             }, quietMillis);
         };
     }
