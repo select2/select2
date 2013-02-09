@@ -634,10 +634,14 @@ function log(e) {
 }
 $("#e11")
     .on("change", function(e) { log(JSON.stringify({val:e.val, added:e.added, removed:e.removed})); })
-    .on("open", function() { log("open"); });
+    .on("opening", function() { log("opening"); })
+    .on("open", function() { log("open"); })
+    .on("highlight", function(e) { log ("highlighted val="+ e.val+" choice="+ JSON.stringify(e.choice));});
 $("#e11_2")
     .on("change", function(e) { log(JSON.stringify({val:e.val, added:e.added, removed:e.removed})); })
-    .on("open", function() { log("open"); });
+    .on("opening", function() { log("opening"); })
+    .on("open", function() { log("open"); })
+    .on("highlight", function(e) { log ("highlighted val="+ e.val+" choice="+ JSON.stringify(e.choice));});
 });
 </script>
           <div class="span4">
@@ -1386,6 +1390,8 @@ $("#tags").select2({
                             <tr><td>&lt;returns&gt;</td><td>object</td><td>Results object. See &quot;options.callback&quot; in the &quot;query&quot; function for format.</td></tr>
                         </table>
                     </td></tr>
+                    <tr><td>params</td><td>object/function</td><td>An object or a function that returns an object that contains extra parameters that will be passed to the transport. For example it can be used to set the content type: <code>{contentType: "application/json;charset=utf-8"}</code></td></tr>
+
                 </table>
                 <p class="alert alert-warning">In order for this function to work Select2 should be attached to a <code>input type='hidden'</code> tag instead of a <code>select</code>.</p>
             </td></tr>
@@ -1514,7 +1520,6 @@ $("#tags").select2({
           <div class="span12">
               <h3>change</h3>
               <p>Fired when selection is changed.</p>
-              <p class="alert alert-info">This event is not fired when the selection is changed using Select2's <code>val()</code> method.</p>
               <p>The event object contains the following custom properties:
               <dl>
               <dt>val</dt><dd>the current selection (taking into account the result of the change) - id or array of ids</dd>
@@ -1526,9 +1531,29 @@ $("#tags").select2({
       </div>
         <div class="row zebra">
             <div class="span12">
-                <h3>open</h3>
-                <p>Fired when the dropdown is shown.</p>
+                <h3>opening</h3>
+                <p>Fired before the dropdown is shown.</p>
                 <p>The event listener can prevent the opening by calling <code>preventDefault()</code> on the supplied event object.</p>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span12">
+                <h3>open</h3>
+                <p>Fired after the dropdown is shown.</p>
+                </p>
+            </div>
+        </div>
+        <div class="row zebra">
+            <div class="span12">
+                <h3>highlight</h3>
+                <p>Fired when a choice is highlighted in the dropdown.</p>
+                </p>
+                <p>The event object contains the following custom properties:
+                <dl>
+                    <dt>val</dt><dd>the id of the highlighted choice object</dd>
+                    <dt>object</dt><dd>the highlighted choice object</dd>
+                </dl>
                 </p>
             </div>
         </div>
@@ -1537,7 +1562,7 @@ $("#tags").select2({
 
     <div class="row">
         <div class="span12">
-            <h3>Configuring Defaults</h3>
+            <h2>Configuring Defaults</h2>
             Select2 exposes its default options via the <code>$.fn.select2.defaults</code> object. Properties changed in this object (same properties configurable through the constructor) will take effect for every instance created after the change
 
         </div>
