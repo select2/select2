@@ -1835,6 +1835,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.opts.element.val(this.id(data));
             this.updateSelection(data);
+            this.opts.element.trigger({ type: "select", val: this.id(data), choice: data });
             this.close();
 
             if (!options || !options.noFocus)
