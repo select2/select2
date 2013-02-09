@@ -105,6 +105,20 @@ $("#e6").select2({
             return {results: data.movies};
         }
     },
+    initSelection: function(element, callback) {
+        // the input tag has a value attribute preloaded that points to a preselected movie's id
+        // this function resolves that id attribute to an object that select2 can render
+        // using its formatResult renderer - that way the movie name is shown preselected
+        var id=$(element).val();
+        if (id!=="") {
+            $.ajax("http://api.rottentomatoes.com/api/public/v1.0/movies/"+id+".json", {
+                data: {
+                    apikey: "ju6z9mjyajq2djue3gbvv26t"
+                },
+                dataType: "jsonp"
+            }).done(function(data) { callback(data); });
+        }
+    },
     formatResult: movieFormatResult, // omitted for brevity, see the source of this page
     formatSelection: movieFormatSelection,  // omitted for brevity, see the source of this page
     dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
@@ -520,7 +534,7 @@ $("#e19").select2({ maximumSelectionSize: 3 });
              <h3>Loading Remote Data</h3>
               <p>Select2 comes with AJAX/JSONP support built in. In this example we will search for a movie using Rotten Tomatoes API:</p>
               <p>
-                  <input type="hidden" class="bigdrop" id="e6" style="width:600px"/>
+                  <input type="hidden" class="bigdrop" id="e6" style="width:600px" value="16340"/>
               </p>
                <p class="alert alert-warning">If this example does not work it is probably because the Rotten Tomatoes API key usage of 10000 requests per day has been exhausted. Please try again tomorrow.</p>
                <h3>Example Code</h3>
