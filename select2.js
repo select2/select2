@@ -630,7 +630,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             installKeyUpChangeEvent(search);
             search.bind("keyup-change input", this.bind(this.updateResults));
-            search.bind("focus", function () { search.addClass("select2-focused"); if (search.val() === " ") search.val(""); });
+            search.bind("focus", function () { search.addClass("select2-focused"); });
             search.bind("blur", function () { search.removeClass("select2-focused");});
 
             this.dropdown.delegate(resultsSelector, "mouseup", this.bind(function (e) {
@@ -1038,8 +1038,6 @@ the specific language governing permissions and limitations under the Apache Lic
                 mask;
 
             this.clearDropdownAlignmentPreference();
-
-            if (this.search.val() === " ") { this.search.val(""); }
 
             this.container.addClass("select2-dropdown-open").addClass("select2-container-active");
 
@@ -1520,7 +1518,7 @@ the specific language governing permissions and limitations under the Apache Lic
         opening: function () {
             this.parent.opening.apply(this, arguments);
             this.focusser.attr("disabled", "disabled");
-            
+
             this.opts.element.trigger($.Event("open"));
         },
 
@@ -2096,9 +2094,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 // stretch the search box to full width of the container so as much of the placeholder is visible as possible
                 this.resizeSearch();
             } else {
-                // we set this to " " instead of "" and later clear it on focus() because there is a firefox bug
-                // that does not properly render the caret when the field starts out blank
-                this.search.val(" ").width(10);
+                this.search.val("").width(10);
             }
         },
 
@@ -2106,9 +2102,6 @@ the specific language governing permissions and limitations under the Apache Lic
         clearPlaceholder: function () {
             if (this.search.hasClass("select2-default")) {
                 this.search.val("").removeClass("select2-default");
-            } else {
-                // work around for the space character we set to avoid firefox caret bug
-                if (this.search.val() === " ") this.search.val("");
             }
         },
 
