@@ -609,7 +609,7 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             syncCssClasses(this.container, this.opts.element, this.opts.adaptContainerCssClass);
-         
+
             this.container.css(evaluate(opts.containerCss));
             this.container.addClass(evaluate(opts.containerCssClass));
 
@@ -1158,6 +1158,11 @@ the specific language governing permissions and limitations under the Apache Lic
 
         },
 
+        //abstract
+        getMaximumSelectionSize: function() {
+            return evaluate(this.opts.maximumSelectionSize);
+        },
+
         // abstract
         ensureHighlightVisible: function () {
             var results = this.results, children, index, child, hb, rb, y, more;
@@ -1339,7 +1344,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 postRender();
             }
 
-            var maxSelSize = $.isFunction(opts.maximumSelectionSize) ? opts.maximumSelectionSize() : opts.maximumSelectionSize;
+            var maxSelSize = this.getMaximumSelectionSize();
             if (maxSelSize >=1) {
                 data = this.data();
                 if ($.isArray(data) && data.length >= maxSelSize && checkFormatter(opts.formatSelectionTooBig, "formatSelectionTooBig")) {
@@ -2222,6 +2227,7 @@ the specific language governing permissions and limitations under the Apache Lic
         // multi
         onSelect: function (data, options) {
             this.addSelectedChoice(data);
+
             if (this.select || !this.opts.closeOnSelect) this.postprocessResults();
 
             if (this.opts.closeOnSelect) {
@@ -2231,10 +2237,16 @@ the specific language governing permissions and limitations under the Apache Lic
                 if (this.countSelectableResults()>0) {
                     this.search.width(10);
                     this.resizeSearch();
+                    if (this.val().length >= this.getMaximumSelectionSize()) {
+                        // if we reached max selection size repaint the results so choices
+                        // are replaced with the max selection reached message
+                        this.updateResults(true);
+                    }
                     this.positionDropdown();
                 } else {
                     // if nothing left to select close
                     this.close();
+                    this.search.width(10);
                 }
             }
 
