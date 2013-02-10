@@ -636,6 +636,7 @@ $("#e11")
     .on("change", function(e) { log("change "+JSON.stringify({val:e.val, added:e.added, removed:e.removed})); })
     .on("opening", function() { log("opening"); })
     .on("open", function() { log("open"); })
+    .on("close", function() { log("close"); })
     .on("highlight", function(e) { log ("highlighted val="+ e.val+" choice="+ JSON.stringify(e.choice));})
     .on("selected", function(e) { log ("selected val="+ e.val+" choice="+ JSON.stringify(e.choice));})
     .on("removed", function(e) { log ("removed val="+ e.val+" choice="+ JSON.stringify(e.choice));});
@@ -643,6 +644,7 @@ $("#e11_2")
     .on("change", function(e) { log("change "+JSON.stringify({val:e.val, added:e.added, removed:e.removed})); })
     .on("opening", function() { log("opening"); })
     .on("open", function() { log("open"); })
+    .on("close", function() { log("close"); })
     .on("highlight", function(e) { log ("highlighted val="+ e.val+" choice="+ JSON.stringify(e.choice));})
     .on("selected", function(e) { log ("selected val="+ e.val+" choice="+ JSON.stringify(e.choice));})
     .on("removed", function(e) { log ("removed val="+ e.val+" choice="+ JSON.stringify(e.choice));});
@@ -1317,6 +1319,7 @@ $("#tags").select2({
                     <pre>query(options)</pre>
                     <table class="table table-bordered table-striped">
                         <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                        <tr><td>options.element</td><td>jquery object</td><td>The element Select2 is attached to</td></tr>
                         <tr><td>options.term</td><td>string</td><td>Search string entered by user</td></tr>
                         <tr><td>options.page</td><td>int</td><td>1-based page number tracked by Select2 for use with infinite scrolling of results</td></tr>
                         <tr><td>options.context</td><td>object</td><td>An object that persists across the lifecycle of queries for the same search term (the query to retrieve the initial results, and subsequent queries to retrieve more result pages for the same search term). When this function is first called for a new search term this object will be null. The user may choose to set any object in the <code>results.context</code> field - this object will then be used as the context parameter for all calls to the <code>query</code> method that will load more search results for the initial search term. The object will be reset back to null when a new search term is queried. This feature is useful when a page number is not easily mapped against the server side paging mechanism. For example, some server side paging mechanism may return a &quot;continuation token&quot; that needs to be passed back to them in order to retrieve the next page of search results.</td></tr>
