@@ -1288,6 +1288,7 @@ the specific language governing permissions and limitations under the Apache Lic
             if (below <= this.opts.loadMorePadding) {
                 more.addClass("select2-active");
                 this.opts.query({
+                        element: this.opts.element,
                         term: term,
                         page: page,
                         context: context,
@@ -1382,6 +1383,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.resultsPage = 1;
             opts.query({
+                element: opts.element,
                     term: search.val(),
                     page: this.resultsPage,
                     context: null,
