@@ -1733,10 +1733,13 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // single
         clear: function() {
+            var data=this.selection.data("select2-data");
             this.opts.element.val("");
             this.selection.find("span").empty();
             this.selection.removeData("select2-data");
             this.setPlaceholder();
+
+            this.opts.element.trigger({ type: "removed", val: this.id(data), choice: data });
         },
 
         /**
@@ -1847,6 +1850,8 @@ the specific language governing permissions and limitations under the Apache Lic
 
             if (!options || !options.noFocus)
                 this.selection.focus();
+
+            this.opts.element.trigger({ type: "selected", val: this.id(data), choice: data });
 
             if (!equal(old, this.id(data))) { this.triggerChange(); }
         },
@@ -2250,6 +2255,8 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
             }
 
+            this.opts.element.trigger({ type: "selected", val: this.id(data), choice: data });
+
             // since its not possible to select an element that has already been
             // added we do not need to check if this is a new element before firing change
             this.triggerChange({ added: data });
@@ -2340,6 +2347,9 @@ the specific language governing permissions and limitations under the Apache Lic
                 if (this.select) this.postprocessResults();
             }
             selected.remove();
+
+            this.opts.element.trigger({ type: "removed", val: this.id(data), choice: data });
+
             this.triggerChange({ removed: data });
         },
 
