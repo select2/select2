@@ -2076,8 +2076,12 @@ the specific language governing permissions and limitations under the Apache Lic
                     return;
                 }
 
-                if (this.opts.openOnEnter === false && e.which === KEY.ENTER) {
-                    return;
+                if (e.which === KEY.ENTER) {
+                    if (this.opts.openOnEnter === false) {
+                        return;
+                    } else if (e.altKey || e.ctrlKey || e.shiftKey || e.metaKey) {
+                        return;
+                    }
                 }
 
                 this.open();
