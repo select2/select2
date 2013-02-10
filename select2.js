@@ -1846,12 +1846,13 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.opts.element.val(this.id(data));
             this.updateSelection(data);
+
+            this.opts.element.trigger({ type: "selected", val: this.id(data), choice: data });
+
             this.close();
 
             if (!options || !options.noFocus)
                 this.selection.focus();
-
-            this.opts.element.trigger({ type: "selected", val: this.id(data), choice: data });
 
             if (!equal(old, this.id(data))) { this.triggerChange(); }
         },
@@ -2233,6 +2234,8 @@ the specific language governing permissions and limitations under the Apache Lic
         onSelect: function (data, options) {
             this.addSelectedChoice(data);
 
+            this.opts.element.trigger({ type: "selected", val: this.id(data), choice: data });
+
             if (this.select || !this.opts.closeOnSelect) this.postprocessResults();
 
             if (this.opts.closeOnSelect) {
@@ -2254,8 +2257,6 @@ the specific language governing permissions and limitations under the Apache Lic
                     this.search.width(10);
                 }
             }
-
-            this.opts.element.trigger({ type: "selected", val: this.id(data), choice: data });
 
             // since its not possible to select an element that has already been
             // added we do not need to check if this is a new element before firing change
