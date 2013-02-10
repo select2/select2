@@ -103,7 +103,9 @@ the specific language governing permissions and limitations under the Apache Lic
 
     function indexOf(value, array) {
         var i = 0, l = array.length;
-        for (; i < l; i = i + 1) if (value === array[i]) return i;
+        for (; i < l; i = i + 1) {
+            if (equal(value, array[i])) return i;
+        }
         return -1;
     }
 
@@ -113,7 +115,12 @@ the specific language governing permissions and limitations under the Apache Lic
      * @param b
      */
     function equal(a, b) {
-        return a===b;
+        if (a === b) return true;
+        if (a === undefined || b === undefined) return false;
+        if (a === null || b === null) return false;
+        if (a.constructor === String) return a === b+'';
+        if (b.constructor === String) return b === a+'';
+        return false;
     }
 
     /**
