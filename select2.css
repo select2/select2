@@ -48,6 +48,13 @@ Version: @@ver@@ Timestamp: @@timestamp@@
        -moz-background-clip: padding;
             background-clip: padding-box;
 
+    -webkit-touch-callout: none;
+      -webkit-user-select: none;
+       -khtml-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none;
+
     background-color: #fff;
     background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eeeeee), color-stop(0.5, white));
     background-image: -webkit-linear-gradient(center bottom, #eeeeee 0%, white 50%);
@@ -330,6 +337,13 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     padding: 3px 7px 4px;
     margin: 0;
     cursor: pointer;
+
+    -webkit-touch-callout: none;
+      -webkit-user-select: none;
+       -khtml-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none;
 }
 
 .select2-results .select2-highlighted {
@@ -502,6 +516,13 @@ disabled look for disabled choices in the results dropdown
     -webkit-background-clip: padding-box;
        -moz-background-clip: padding;
             background-clip: padding-box;
+
+    -webkit-touch-callout: none;
+      -webkit-user-select: none;
+       -khtml-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none;
 
     background-color: #e4e4e4;
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#f4f4f4', GradientType=0 );
