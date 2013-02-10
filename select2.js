@@ -661,7 +661,7 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             installKeyUpChangeEvent(search);
-            search.bind("keyup-change input", this.bind(this.updateResults));
+            search.bind("keyup-change input paste", this.bind(this.updateResults));
             search.bind("focus", function () { search.addClass("select2-focused"); });
             search.bind("blur", function () { search.removeClass("select2-focused");});
 
@@ -2021,6 +2021,13 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.searchContainer = this.container.find(".select2-search-field");
             this.selection = selection = this.container.find(selector);
+
+            this.search.bind("input paste", this.bind(function() {
+                if (!this.enabled) return;
+                if (!this.opened()) {
+                    this.open();
+                }
+            }));
 
             this.search.bind("keydown", this.bind(function (e) {
                 if (!this.enabled) return;
