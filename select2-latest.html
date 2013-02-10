@@ -633,15 +633,19 @@ function log(e) {
     e.animate({opacity:1}, 10000, 'linear', function() { e.animate({opacity:0}, 2000, 'linear', function() {e.remove(); }); });
 }
 $("#e11")
-    .on("change", function(e) { log(JSON.stringify({val:e.val, added:e.added, removed:e.removed})); })
+    .on("change", function(e) { log("change "+JSON.stringify({val:e.val, added:e.added, removed:e.removed})); })
     .on("opening", function() { log("opening"); })
     .on("open", function() { log("open"); })
-    .on("highlight", function(e) { log ("highlighted val="+ e.val+" choice="+ JSON.stringify(e.choice));});
+    .on("highlight", function(e) { log ("highlighted val="+ e.val+" choice="+ JSON.stringify(e.choice));})
+    .on("selected", function(e) { log ("selected val="+ e.val+" choice="+ JSON.stringify(e.choice));})
+    .on("removed", function(e) { log ("removed val="+ e.val+" choice="+ JSON.stringify(e.choice));});
 $("#e11_2")
-    .on("change", function(e) { log(JSON.stringify({val:e.val, added:e.added, removed:e.removed})); })
+    .on("change", function(e) { log("change "+JSON.stringify({val:e.val, added:e.added, removed:e.removed})); })
     .on("opening", function() { log("opening"); })
     .on("open", function() { log("open"); })
-    .on("highlight", function(e) { log ("highlighted val="+ e.val+" choice="+ JSON.stringify(e.choice));});
+    .on("highlight", function(e) { log ("highlighted val="+ e.val+" choice="+ JSON.stringify(e.choice));})
+    .on("selected", function(e) { log ("selected val="+ e.val+" choice="+ JSON.stringify(e.choice));})
+    .on("removed", function(e) { log ("removed val="+ e.val+" choice="+ JSON.stringify(e.choice));});
 });
 </script>
           <div class="span4">
@@ -1568,6 +1572,32 @@ $("#tags").select2({
             <div class="span12">
                 <h3>highlight</h3>
                 <p>Fired when a choice is highlighted in the dropdown.</p>
+                </p>
+                <p>The event object contains the following custom properties:
+                <dl>
+                    <dt>val</dt><dd>the id of the highlighted choice object</dd>
+                    <dt>object</dt><dd>the highlighted choice object</dd>
+                </dl>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span12">
+                <h3>selected</h3>
+                <p>Fired when a choice is selected in the dropdown.</p>
+                </p>
+                <p>The event object contains the following custom properties:
+                <dl>
+                    <dt>val</dt><dd>the id of the highlighted choice object</dd>
+                    <dt>object</dt><dd>the highlighted choice object</dd>
+                </dl>
+                </p>
+            </div>
+        </div>
+        <div class="row zebra">
+            <div class="span12">
+                <h3>removed</h3>
+                <p>Fired when a choice is removed or cleared</p>
                 </p>
                 <p>The event object contains the following custom properties:
                 <dl>
