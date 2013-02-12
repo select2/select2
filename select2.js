@@ -1953,6 +1953,14 @@ the specific language governing permissions and limitations under the Apache Lic
             this.focusser.val("");
         },
 
+		setData: function(value) {
+			var val = this.opts.element.val();
+			if (val && val != "") {
+				this.clear();
+			}
+			this.opts.query = local(value);
+		},
+		
         // single
         data: function(value) {
             var data;
@@ -1964,9 +1972,9 @@ the specific language governing permissions and limitations under the Apache Lic
             } else {
                 if (!value || value === "") {
                     this.clear();
-                } else {
-                    this.opts.element.val(!value ? "" : this.id(value));
-                    this.updateSelection(value);
+                } else {							
+					this.opts.element.val(!value ? "" : this.id(value));
+					this.updateSelection(value);				
                 }
             }
         }
@@ -2554,6 +2562,15 @@ the specific language governing permissions and limitations under the Apache Lic
             this.triggerChange();
         },
 
+		// multi
+		setData: function(value) {
+			var val = this.opts.element.val();
+			if (val && val != "") {
+				this.clear();
+			}
+			this.opts.query = local(value);
+		},
+		
         // multi
         data: function(values) {
             var self=this, ids;
@@ -2577,7 +2594,7 @@ the specific language governing permissions and limitations under the Apache Lic
         var args = Array.prototype.slice.call(arguments, 0),
             opts,
             select2,
-            value, multiple, allowedMethods = ["val", "destroy", "opened", "open", "close", "focus", "isFocused", "container", "onSortStart", "onSortEnd", "enable", "disable", "positionDropdown", "data"];
+            value, multiple, allowedMethods = ["val", "destroy", "opened", "open", "close", "focus", "isFocused", "container", "onSortStart", "onSortEnd", "enable", "disable", "positionDropdown", "data", "setData"];
 
         this.each(function () {
             if (args.length === 0 || typeof(args[0]) === "object") {
