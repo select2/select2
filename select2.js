@@ -2555,10 +2555,12 @@ the specific language governing permissions and limitations under the Apache Lic
 
 		// multi
 		setData: function(value) {
-			this.clearSearch();
+			var val = this.opts.element.val();
+			if (val && val != "") {
+				this.clear();
+			}
 			this.opts.query = local(value);
 		},
-
 		
         // multi
         data: function(values) {
