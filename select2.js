@@ -1627,6 +1627,8 @@ the specific language governing permissions and limitations under the Apache Lic
                 dropdown = this.dropdown,
                 clickingInside = false;
 
+            this.showSearch(this.opts.minimumResultsForSearch >= 0);
+
             this.selection = selection = container.find(".select2-choice");
 
             this.focusser = container.find(".select2-focusser");
@@ -1691,7 +1693,9 @@ the specific language governing permissions and limitations under the Apache Lic
             this.focusser.bind("keyup-change input", this.bind(function(e) {
                 if (this.opened()) return;
                 this.open();
-                this.search.val(this.focusser.val());
+                if (this.showSearchInput !== false) {
+                    this.search.val(this.focusser.val());
+                }
                 this.focusser.val("");
                 killEvent(e);
             }));
@@ -1840,13 +1844,20 @@ the specific language governing permissions and limitations under the Apache Lic
             // hide the search box if this is the first we got the results and there are a few of them
 
             if (initial === true) {
-                showSearchInput = this.showSearchInput = countResults(data.results) >= this.opts.minimumResultsForSearch;
-                this.dropdown.find(".select2-search")[showSearchInput ? "removeClass" : "addClass"]("select2-search-hidden");
-
-                //add "select2-with-searchbox" to the container if search box is shown
-                $(this.dropdown, this.container)[showSearchInput ? "addClass" : "removeClass"]("select2-with-searchbox");
+                var min=this.opts.minimumResultsForSearch;
+                showSearchInput  = min < 0 ? false : countResults(data.results) >= min;
+                this.showSearch(showSearchInput);
             }
 
+        },
+
+        // single
+        showSearch: function(showSearchInput) {
+            this.showSearchInput = showSearchInput;
+
+            this.dropdown.find(".select2-search")[showSearchInput ? "removeClass" : "addClass"]("select2-search-hidden");
+            //add "select2-with-searchbox" to the container if search box is shown
+            $(this.dropdown, this.container)[showSearchInput ? "addClass" : "removeClass"]("select2-with-searchbox");
         },
 
         // single
