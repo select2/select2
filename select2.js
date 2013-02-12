@@ -596,25 +596,6 @@ the specific language governing permissions and limitations under the Apache Lic
             // cache the body so future lookups are cheap
             this.body = thunk(function() { return opts.element.closest("body"); });
 
-            // create the dropdown mask if doesnt already exist
-            mask = $("#select2-drop-mask");
-            if (mask.length == 0) {
-                mask = $(document.createElement("div"));
-                mask.attr("id","select2-drop-mask").attr("class","select2-drop-mask");
-                mask.hide();
-                mask.appendTo(this.body());
-                mask.bind("mousedown touchstart", function (e) {
-                    var dropdown = $("#select2-drop"), self;
-                    if (dropdown.length > 0) {
-                        self=dropdown.data("select2");
-                        if (self.opts.selectOnBlur) {
-                            self.selectHighlighted({noFocus: true});
-                        }
-                        self.close();
-                    }
-                });
-            }
-
             syncCssClasses(this.container, this.opts.element, this.opts.adaptContainerCssClass);
 
             this.container.css(evaluate(opts.containerCss));
@@ -1100,7 +1081,24 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.updateResults(true);
 
+            // create the dropdown mask if doesnt already exist
             mask = $("#select2-drop-mask");
+            if (mask.length == 0) {
+                mask = $(document.createElement("div"));
+                mask.attr("id","select2-drop-mask").attr("class","select2-drop-mask");
+                mask.hide();
+                mask.appendTo(this.body());
+                mask.bind("mousedown touchstart", function (e) {
+                    var dropdown = $("#select2-drop"), self;
+                    if (dropdown.length > 0) {
+                        self=dropdown.data("select2");
+                        if (self.opts.selectOnBlur) {
+                            self.selectHighlighted({noFocus: true});
+                        }
+                        self.close();
+                    }
+                });
+            }
 
             // ensure the mask is always right before the dropdown
             if (this.dropdown.prev()[0] !== mask[0]) {
