@@ -1,0 +1,39 @@
+<html>
+    <head>
+		<script type='text/javascript' src='http://code.jquery.com/jquery-1.8.3.js'></script>
+        <link href="select2.css" rel="stylesheet"/>
+        <script src="select2.js"></script>
+    </head>
+    <body>
+Attribute:
+<select name="attribute" id="attribute">
+    <option value="0">Color</option>
+    <option value="1">Size</option>
+    <option value="3">Lee playing</option>
+</select>
+
+Value:
+<input id="value" type="hidden" style="width:300px"/>
+        
+<script>
+	$(function() {
+    var data = [
+        [{id:0,text:'black'},{id:1,text:'blue'}],
+        [{id:0,text:'9'},{id:1,text:'10'}]
+    ];
+
+	$('#value').select2({ data: [], placeholder: "Some random text" } );
+    $('#attribute').select2().on('change', function() {
+		if ($(this).val() == "3")
+		{
+			$('#value').select2("setData", []);
+		}
+		else
+		{
+			$('#value').select2("setData", data[$(this).val()]);
+		}
+    }).trigger('change');
+});
+</script>		
+    </body>
+</html>
