@@ -309,6 +309,7 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     position: relative;
     overflow-x: hidden;
     overflow-y: auto;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 .select2-results ul.select2-result-sub {
