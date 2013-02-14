@@ -657,10 +657,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 if ($(e.target).closest(".select2-result-selectable").length > 0) {
                     this.highlightUnderEvent(e);
                     this.selectHighlighted(e);
-                } else {
-                    this.focusSearch();
                 }
-                killEvent(e);
             }));
 
             // trap all mouse events from leaving the dropdown. sometimes there may be a modal that is listening
