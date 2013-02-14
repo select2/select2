@@ -626,7 +626,6 @@ the specific language governing permissions and limitations under the Apache Lic
 
             // initialize the container
             this.initContainer();
-            this.initContainerWidth();
 
             installFilteredMouseMove(this.results);
             this.dropdown.delegate(resultsSelector, "mousemove-filtered touchstart touchmove touchend", this.bind(this.highlightUnderEvent));
@@ -1728,6 +1727,8 @@ the specific language governing permissions and limitations under the Apache Lic
             this.search.bind("focus", this.bind(function(){
                 this.container.addClass("select2-container-active");
             }))
+
+            this.initContainerWidth();
             this.setPlaceholder();
 
         },
@@ -2137,6 +2138,8 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.clearPlaceholder();
             }));
 
+            this.initContainerWidth();
+
             // set the placeholder if necessary
             this.clearSearch();
         },
@@ -2417,7 +2420,6 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // multi
         resizeSearch: function () {
-
             var minimumWidth, left, maxWidth, containerLeft, searchWidth,
             	sideBorderPadding = getSideBorderPadding(this.search);
 
@@ -2429,6 +2431,7 @@ the specific language governing permissions and limitations under the Apache Lic
             containerLeft = this.selection.offset().left;
 
             searchWidth = maxWidth - (left - containerLeft) - sideBorderPadding;
+
             if (searchWidth < minimumWidth) {
                 searchWidth = maxWidth - sideBorderPadding;
             }
