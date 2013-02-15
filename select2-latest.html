@@ -186,6 +186,11 @@ $("#e10_3").select2({
     formatSelection: format,
     formatResult: format
 });
+$("#e10_4").select2({
+    data:function() { return { results: data }; },
+    formatSelection: format,
+    formatResult: format
+});
 
 });
 </script>
@@ -521,6 +526,11 @@ $("#e19").select2({ maximumSelectionSize: 3 });
              <p>
                  <input type="hidden" id="e10_3" style="width:300px"/>
              </p>
+             <p><code>data</code> can also itself be a function that returns a results object:</p>
+             <p>
+                 <input type="hidden" id="e10_4" style="width:300px"/>
+             </p>
+
          </div>
          <div class="span8">
            <h3>Example Code</h3>
