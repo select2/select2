@@ -1728,20 +1728,28 @@ the specific language governing permissions and limitations under the Apache Lic
             }));
 
             this.focusser.bind("focus", this.bind(function(){
-                this.container.addClass("select2-container-active");
-                this.opts.element.trigger('select2:focus');
+                if (!this.container.hasClass("select2-container-active")) {
+                    this.container.addClass("select2-container-active");
+                    this.opts.element.trigger('select2:focus');
+                }
             })).bind("blur", this.bind(function() {
                 if (!this.opened()) {
                     this.container.removeClass("select2-container-active");
                 }
-                this.opts.element.trigger('select2:blur');
+                if (!this.container.hasClass("select2-container-active")) {
+                    this.opts.element.trigger('select2:blur');
+                }
             }));
             this.search.bind("focus", this.bind(function(){
-                this.container.addClass("select2-container-active");
-                this.opts.element.trigger('select2:focus');
+                if (!this.container.hasClass("select2-container-active")) {
+                    this.container.addClass("select2-container-active");
+                    this.opts.element.trigger('select2:focus');
+                }
             }));
             this.search.bind("blur", this.bind(function(){
-                this.opts.element.trigger('select2:blur');
+                if (!this.container.hasClass("select2-container-active")) {
+                    this.opts.element.trigger('select2:blur');
+                }
             }));
 
             this.initContainerWidth();
