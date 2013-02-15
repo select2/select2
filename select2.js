@@ -1737,7 +1737,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     this.container.removeClass("select2-container-active");
                 }
                 if (!this.container.hasClass("select2-container-active")) {
-                    this.opts.element.trigger('select2:blur');
+                    this.opts.element.trigger('blur');
                 }
             }));
             this.search.bind("focus", this.bind(function(){
@@ -1748,7 +1748,7 @@ the specific language governing permissions and limitations under the Apache Lic
             }));
             this.search.bind("blur", this.bind(function(){
                 if (!this.container.hasClass("select2-container-active")) {
-                    this.opts.element.trigger('select2:blur');
+                    this.opts.element.trigger('blur');
                 }
             }));
 
