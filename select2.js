@@ -403,6 +403,7 @@ the specific language governing permissions and limitations under the Apache Lic
     function local(options) {
         var data = options, // data elements
             dataText,
+            tmp,
             text = function (item) { return ""+item.text; }; // function used to retrieve the text portion of a data item that is matched against the search
 
         if (!$.isArray(data)) {
@@ -412,13 +413,22 @@ the specific language governing permissions and limitations under the Apache Lic
               dataText = data.text; // we need to store this in a separate variable because in the next step data gets reset and data.text is no longer available
               text = function (item) { return item[dataText]; };
             }
-            data = data.results;
+        }
+
+        if ($.isArray(data)) {
+            tmp = data;
+            data = {results:tmp};
+        }
+
+        if ($.isFunction(data) === false) {
+            tmp = data;
+            data = function() { return tmp; };
         }
 
         return function (query) {
             var t = query.term, filtered = { results: [] }, process;
             if (t === "") {
-                query.callback({results: data});
+                query.callback(data());
                 return;
             }
 
@@ -442,7 +452,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
             };
 
-            $(data).each2(function(i, datum) { process(datum, filtered.results); });
+            $(data()).each2(function(i, datum) { process(datum, filtered.results); });
             query.callback(filtered);
         };
     }
@@ -1384,6 +1394,7 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             this.resultsPage = 1;
+
             opts.query({
                 element: opts.element,
                     term: search.val(),
@@ -1398,7 +1409,6 @@ the specific language governing permissions and limitations under the Apache Lic
 
                 // save context, if any
                 this.context = (data.context===undefined) ? null : data.context;
-
                 // create a default choice and prepend it to the list
                 if (this.opts.createSearchChoice && search.val() !== "") {
                     def = this.opts.createSearchChoice.call(null, search.val(), data.results);
