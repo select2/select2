@@ -406,24 +406,25 @@ the specific language governing permissions and limitations under the Apache Lic
             tmp,
             text = function (item) { return ""+item.text; }; // function used to retrieve the text portion of a data item that is matched against the search
 
-        if (!$.isArray(data)) {
-            text = data.text;
-            // if text is not a function we assume it to be a key name
-            if (!$.isFunction(text)) {
-              dataText = data.text; // we need to store this in a separate variable because in the next step data gets reset and data.text is no longer available
-              text = function (item) { return item[dataText]; };
-            }
-        }
-
-        if ($.isArray(data)) {
+		 if ($.isArray(data)) {
             tmp = data;
-            data = {results:tmp};
+            data = { results: tmp };
         }
-
-        if ($.isFunction(data) === false) {
+		
+		 if ($.isFunction(data) === false) {
             tmp = data;
             data = function() { return tmp; };
         }
+
+        var dataItem = data();
+        if (dataItem.text) {            
+            text = dataItem.text;
+            // if text is not a function we assume it to be a key name
+            if (!$.isFunction(text)) {
+                dataText = data.text; // we need to store this in a separate variable because in the next step data gets reset and data.text is no longer available
+                text = function (item) { return item[dataText]; };
+            }
+        }	
 
         return function (query) {
             var t = query.term, filtered = { results: [] }, process;
@@ -452,7 +453,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
             };
 
-            $(data()).each2(function(i, datum) { process(datum, filtered.results); });
+            $(data().results).each2(function(i, datum) { process(datum, filtered.results); });
             query.callback(filtered);
         };
     }
