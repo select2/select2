@@ -411,21 +411,21 @@ the specific language governing permissions and limitations under the Apache Lic
             tmp = data;
             data = { results: tmp };
         }
-		
+
 		 if ($.isFunction(data) === false) {
             tmp = data;
             data = function() { return tmp; };
         }
 
         var dataItem = data();
-        if (dataItem.text) {            
+        if (dataItem.text) {
             text = dataItem.text;
             // if text is not a function we assume it to be a key name
             if (!$.isFunction(text)) {
                 dataText = data.text; // we need to store this in a separate variable because in the next step data gets reset and data.text is no longer available
                 text = function (item) { return item[dataText]; };
             }
-        }	
+        }
 
         return function (query) {
             var t = query.term, filtered = { results: [] }, process;
@@ -838,7 +838,7 @@ the specific language governing permissions and limitations under the Apache Lic
                         if (ajaxUrl && ajaxUrl.length > 0) {
                             opts.ajax.url = ajaxUrl;
                         }
-                        opts.query = ajax(opts.ajax);
+                        opts.query = ajax.call(opts.element, opts.ajax);
                     } else if ("data" in opts) {
                         opts.query = local(opts.data);
                     } else if ("tags" in opts) {
