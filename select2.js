@@ -1129,12 +1129,13 @@ the specific language governing permissions and limitations under the Apache Lic
 
             // attach listeners to events that can change the position of the container and thus require
             // the position of the dropdown to be updated as well so it does not come unglued from the container
+            var that = this;
             this.container.parents().add(window).each(function () {
                 $(this).bind(resize+" "+scroll+" "+orient, function (e) {
                     $("#select2-drop-mask").css({
                         width:document.documentElement.scrollWidth,
                         height:document.documentElement.scrollHeight});
-                    $("#select2-drop").data("select2").positionDropdown();
+                    that.positionDropdown();
                 });
             });
 
