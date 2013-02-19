@@ -340,7 +340,8 @@ the specific language governing permissions and limitations under the Apache Lic
         var timeout, // current scheduled but not yet executed request
             requestSequence = 0, // sequence used to drop out-of-order responses
             handler = null,
-            quietMillis = options.quietMillis || 100;
+            quietMillis = options.quietMillis || 100,
+            ajaxUrl = options.url;
 
         return function (query) {
             window.clearTimeout(timeout);
@@ -348,7 +349,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 requestSequence += 1; // increment the sequence
                 var requestNumber = requestSequence, // this request's sequence number
                     data = options.data, // ajax data function
-                    url = options.url, // ajax url string or function
+                    url = ajaxUrl, // ajax url string or function
                     transport = options.transport || $.ajax,
                     type = options.type || 'GET', // set type of request (GET or POST)
                     params = {};
