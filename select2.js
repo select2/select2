@@ -341,7 +341,8 @@ the specific language governing permissions and limitations under the Apache Lic
             requestSequence = 0, // sequence used to drop out-of-order responses
             handler = null,
             quietMillis = options.quietMillis || 100,
-            ajaxUrl = options.url;
+            ajaxUrl = options.url,
+            self = this;
 
         return function (query) {
             window.clearTimeout(timeout);
@@ -354,14 +355,14 @@ the specific language governing permissions and limitations under the Apache Lic
                     type = options.type || 'GET', // set type of request (GET or POST)
                     params = {};
 
-                data = data ? data.call(this, query.term, query.page, query.context) : null;
-                url = (typeof url === 'function') ? url.call(this, query.term, query.page, query.context) : url;
+                data = data ? data.call(self.opts.element, query.term, query.page, query.context) : null;
+                url = (typeof url === 'function') ? url.call(self.opts.element, query.term, query.page, query.context) : url;
 
                 if( null !== handler) { handler.abort(); }
 
                 if (options.params) {
                     if ($.isFunction(options.params)) {
-                        $.extend(params, options.params.call(null));
+                        $.extend(params, options.params.call(self.opts.element));
                     } else {
                         $.extend(params, options.params);
                     }
@@ -382,7 +383,7 @@ the specific language governing permissions and limitations under the Apache Lic
                         query.callback(results);
                     }
                 });
-                handler = transport.call(null, params);
+                handler = transport.call(self.opts.element, params);
             }, quietMillis);
         };
     }
