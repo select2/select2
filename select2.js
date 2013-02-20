@@ -1707,7 +1707,6 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.clear();
                 killEventImmediately(e);
                 this.close();
-                this.triggerChange();
                 this.selection.focus();
             }));
 
