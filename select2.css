@@ -140,7 +140,6 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 
     -webkit-box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
        -moz-box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
-         -o-box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
             box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
 }
 
@@ -155,7 +154,6 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 
     -webkit-box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
        -moz-box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
-         -o-box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
             box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
 }
 
@@ -263,7 +261,6 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 
     -webkit-box-shadow: 0 0 5px rgba(0,0,0,.3);
        -moz-box-shadow: 0 0 5px rgba(0,0,0,.3);
-         -o-box-shadow: 0 0 5px rgba(0,0,0,.3);
             box-shadow: 0 0 5px rgba(0,0,0,.3);
 }
 
@@ -271,7 +268,6 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     border-bottom-color: transparent;
     -webkit-box-shadow: 0 1px 0 #fff inset;
        -moz-box-shadow: 0 1px 0 #fff inset;
-         -o-box-shadow: 0 1px 0 #fff inset;
             box-shadow: 0 1px 0 #fff inset;
 
     -webkit-border-bottom-left-radius: 0;
@@ -458,7 +454,6 @@ disabled look for disabled choices in the results dropdown
 
     -webkit-box-shadow: 0 0 5px rgba(0,0,0,.3);
        -moz-box-shadow: 0 0 5px rgba(0,0,0,.3);
-         -o-box-shadow: 0 0 5px rgba(0,0,0,.3);
             box-shadow: 0 0 5px rgba(0,0,0,.3);
 }
 .select2-container-multi .select2-choices li {
@@ -482,7 +477,6 @@ disabled look for disabled choices in the results dropdown
     border: 0;
     -webkit-box-shadow: none;
        -moz-box-shadow: none;
-         -o-box-shadow: none;
             box-shadow: none;
     background: transparent !important;
 }
