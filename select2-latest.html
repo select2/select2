@@ -1290,6 +1290,14 @@ $("#tags").select2({
         callback(data);
     }
 });
+
+// Or for single select elements:
+$("#select").select2({
+    initSelection : function (element, callback) {
+        var data = {id: element.val(), text: element.val()};
+        callback(data);
+    }
+});
 </pre>
             </td></tr>
             <tr id="doc-tokenizer"><td>tokenizer</td><td>function</td><td>
