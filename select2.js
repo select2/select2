@@ -118,8 +118,8 @@ the specific language governing permissions and limitations under the Apache Lic
         if (a === b) return true;
         if (a === undefined || b === undefined) return false;
         if (a === null || b === null) return false;
-        if (a.constructor === String) return a === b+'';
-        if (b.constructor === String) return b === a+'';
+        if (a.constructor === String) return a+'' === b+''; // IE requires a+'' instead of just a
+        if (b.constructor === String) return b+'' === a+''; // IE requires b+'' instead of just b
         return false;
     }
 
