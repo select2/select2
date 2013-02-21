@@ -1747,7 +1747,7 @@ the specific language governing permissions and limitations under the Apache Lic
         },
 
         // single
-        clear: function() {
+        clear: function(triggerChange) {
             var data=this.selection.data("select2-data");
             if (data) { // guard against queued quick consecutive clicks
                 this.opts.element.val("");
@@ -1755,8 +1755,10 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.selection.removeData("select2-data");
                 this.setPlaceholder();
 
-                this.opts.element.trigger({ type: "removed", val: this.id(data), choice: data });
-                this.triggerChange({removed:data});
+                if (triggerChange !== false){
+                    this.opts.element.trigger({ type: "removed", val: this.id(data), choice: data });
+                    this.triggerChange({removed:data});
+                }
             }
         },
 
@@ -1946,7 +1948,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
                 // val is an id. !val is true for [undefined,null,'',0] - 0 is legal
                 if (!val && val !== 0) {
-                    this.clear();
+                    this.clear(triggerChange);
                     if (triggerChange) {
                         this.triggerChange();
                     }
