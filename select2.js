@@ -1749,13 +1749,15 @@ the specific language governing permissions and limitations under the Apache Lic
         // single
         clear: function() {
             var data=this.selection.data("select2-data");
-            this.opts.element.val("");
-            this.selection.find("span").empty();
-            this.selection.removeData("select2-data");
-            this.setPlaceholder();
+            if (data) { // guard against queued quick consecutive clicks
+                this.opts.element.val("");
+                this.selection.find("span").empty();
+                this.selection.removeData("select2-data");
+                this.setPlaceholder();
 
-            this.opts.element.trigger({ type: "removed", val: this.id(data), choice: data });
-            this.triggerChange({removed:data});
+                this.opts.element.trigger({ type: "removed", val: this.id(data), choice: data });
+                this.triggerChange({removed:data});
+            }
         },
 
         /**
