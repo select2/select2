@@ -1363,7 +1363,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 postRender(stayActive);
             }
 
-            var maxSelSize = $.isFunction(opts.maximumSelectionSize) ? opts.maximumSelectionSize() : opts.maximumSelectionSize;
+            var maxSelSize = this.getMaximumSelectionSize();
             if (maxSelSize >=1) {
                 data = this.data();
                 if ($.isArray(data) && data.length >= maxSelSize && checkFormatter(opts.formatSelectionTooBig, "formatSelectionTooBig")) {
