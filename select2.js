@@ -229,20 +229,22 @@ the specific language governing permissions and limitations under the Apache Lic
 
             $el.focus();
 
-            /* after the focus is set move the caret to the end, necessary when we val()
-                just before setting focus */
-            if(el.setSelectionRange)
-            {
-                el.setSelectionRange(pos, pos);
-            }
-            else if (el.createTextRange) {
-                range = el.createTextRange();
-                range.collapse(true);
-                range.moveEnd('character', pos);
-                range.moveStart('character', pos);
-                range.select();
-            }
+            /* make sure el received focus so we do not error out when trying to manipulate the caret.
+                sometimes modals or others listeners may steal it after its set */
+            if ($el.is(":visible") && el === document.activeElement) {
 
+                /* after the focus is set move the caret to the end, necessary when we val()
+                    just before setting focus */
+                if(el.setSelectionRange)
+                {
+                    el.setSelectionRange(pos, pos);
+                }
+                else if (el.createTextRange) {
+                    range = el.createTextRange();
+                    range.collapse(false);
+                    range.select();
+                }
+            }
         }, 0);
     }
 
