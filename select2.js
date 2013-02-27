@@ -1350,15 +1350,17 @@ the specific language governing permissions and limitations under the Apache Lic
 
             search.addClass("select2-active");
 
-            function postRender() {
+            function postRender(stayActive) {
                 results.scrollTop(0);
-                search.removeClass("select2-active");
+                if (!stayActive) {
+                    search.removeClass("select2-active");
+                }
                 self.positionDropdown();
             }
 
-            function render(html) {
+            function render(html,stayActive) {
                 results.html(html);
-                postRender();
+                postRender(stayActive);
             }
 
             var maxSelSize = this.getMaximumSelectionSize();
@@ -1371,6 +1373,8 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             if (search.val().length < opts.minimumInputLength) {
+
+                self.currentDataLength = 0;
                 if (checkFormatter(opts.formatInputTooShort, "formatInputTooShort")) {
                     render("<li class='select2-no-results'>" + opts.formatInputTooShort(search.val(), opts.minimumInputLength) + "</li>");
                 } else {
@@ -1378,8 +1382,8 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
                 return;
             }
-            else if (opts.formatSearching() && initial===true) {
-                render("<li class='select2-searching'>" + opts.formatSearching() + "</li>");
+            else if (opts.formatSearching() && (!self.currentDataLength || (self.currentDataLength <= 0))) {
+                render("<li class='select2-searching'>" + opts.formatSearching() + "</li>",true);
             }
 
             if (opts.maximumInputLength && search.val().length > opts.maximumInputLength) {
@@ -1406,6 +1410,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     context: null,
                     matcher: opts.matcher,
                     callback: this.bind(function (data) {
+                        self.currentDataLength = data.results.length;
                 var def; // default choice
 
                 // ignore a response if the select2 has been closed before it was received
