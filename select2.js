@@ -1812,13 +1812,18 @@ the specific language governing permissions and limitations under the Apache Lic
                 // install default initSelection when applied to hidden input and data is local
                 opts.initSelection = opts.initSelection || function (element, callback) {
                     var id = element.val();
-                    //search in data by id
+                    //search in data by id, storing the actual matching item
+                    var match = null;
                     opts.query({
                         matcher: function(term, text, el){
-                            return equal(id, opts.id(el));
+                            var is_match = equal(id, opts.id(el));
+                            if (is_match) {
+                                match = el;
+                            }
+                            return is_match;
                         },
-                        callback: !$.isFunction(callback) ? $.noop : function(filtered) {
-                            callback(filtered.results.length ? filtered.results[0] : null);
+                        callback: !$.isFunction(callback) ? $.noop : function() {
+                            callback(match);
                         }
                     });
                 };
@@ -2045,15 +2050,20 @@ the specific language governing permissions and limitations under the Apache Lic
                 // install default initSelection when applied to hidden input and data is local
                 opts.initSelection = opts.initSelection || function (element, callback) {
                     var ids = splitVal(element.val(), opts.separator);
-                    //search in data by array of ids
+                    //search in data by array of ids, storing matching items in a list
+                    var matches = [];
                     opts.query({
                         matcher: function(term, text, el){
-                            return $.grep(ids, function(id) {
+                            var is_match = $.grep(ids, function(id) {
                                 return equal(id, opts.id(el));
                             }).length;
+                            if (is_match) {
+                                matches.push(el);
+                            }
+                            return is_match;
                         },
-                        callback: !$.isFunction(callback) ? $.noop : function(filtered) {
-                            callback(filtered.results);
+                        callback: !$.isFunction(callback) ? $.noop : function() {
+                            callback(matches);
                         }
                     });
                 };
