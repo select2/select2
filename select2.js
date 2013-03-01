@@ -1121,9 +1121,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.dropdown.attr("id", "select2-drop");
 
             // show the elements
-            mask.css({
-                width: document.documentElement.scrollWidth,
-                height: document.documentElement.scrollHeight});
+            mask.css(_makeMaskCss());
             mask.show();
             this.dropdown.show();
             this.positionDropdown();
@@ -1136,14 +1134,19 @@ the specific language governing permissions and limitations under the Apache Lic
             var that = this;
             this.container.parents().add(window).each(function () {
                 $(this).bind(resize+" "+scroll+" "+orient, function (e) {
-                    $("#select2-drop-mask").css({
-                        width:document.documentElement.scrollWidth,
-                        height:document.documentElement.scrollHeight});
+                    $("#select2-drop-mask").css(_makeMaskCss());
                     that.positionDropdown();
                 });
             });
 
             this.focusSearch();
+
+            function _makeMaskCss() {
+                return {
+                    width  : Math.max(document.documentElement.scrollWidth,  $(window).width()),
+                    height : Math.max(document.documentElement.scrollHeight, $(window).height())
+                }
+            }
         },
 
         // abstract
