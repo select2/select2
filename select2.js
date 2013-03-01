@@ -1664,6 +1664,16 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
             }));
 
+            this.search.bind("blur", this.bind(function(e) {
+                // a workaround for chrome to keep the search field focussed when the scroll bar is used to scroll the dropdown.
+                // without this the search field loses focus which is annoying
+                if (document.activeElement === this.body().get(0)) {
+                    window.setTimeout(this.bind(function() {
+                        this.search.focus();
+                    }), 0);
+                }
+            }));
+
             this.focusser.bind("keydown", this.bind(function (e) {
                 if (!this.enabled) return;
 
