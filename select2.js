@@ -2220,7 +2220,8 @@ the specific language governing permissions and limitations under the Apache Lic
             if (placeholder !== undefined  && this.getVal().length === 0 && this.search.hasClass("select2-focused") === false) {
                 this.search.val(placeholder).addClass("select2-default");
                 // stretch the search box to full width of the container so as much of the placeholder is visible as possible
-                this.resizeSearch();
+                // we could call this.resizeSearch(), but we do not because that requires a sizer and we do not want to create one so early because of a firefox bug, see #944
+                this.search.width(this.getMaxSearchWidth());
             } else {
                 this.search.val("").width(10);
             }
@@ -2445,6 +2446,11 @@ the specific language governing permissions and limitations under the Apache Lic
                 self.highlight(0);
             }
 
+        },
+
+        // multi
+        getMaxSearchWidth: function() {
+            return this.selection.width() - getSideBorderPadding(this.search);
         },
 
         // multi
