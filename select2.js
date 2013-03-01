@@ -1946,7 +1946,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.select
                     .val(val)
                     .find(":selected").each2(function (i, elm) {
-                        data = {id: elm.attr("value"), text: elm.text()};
+                        data = {id: elm.attr("value"), text: elm.text(), element: elm.get(0)};
                         return false;
                     });
                 this.updateSelection(data);
