@@ -1320,7 +1320,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
 
                     self.opts.populateResults.call(this, results, data.results, {term: term, page: page, context:context});
-                    self.postprocessResults(data);
+                    self.postprocessResults(data, false, false);
                             
                     if (data.more===true) {
                         more.detach().appendTo(results).text(self.opts.formatLoadMore(page+1));
@@ -1865,7 +1865,7 @@ the specific language governing permissions and limitations under the Apache Lic
         },
 
         // single
-        postprocessResults: function (data, initial) {
+        postprocessResults: function (data, initial, noHighlightUpdate) {
             var selected = 0, self = this, showSearchInput = true;
 
             // find the selected element in the result list
@@ -1878,8 +1878,9 @@ the specific language governing permissions and limitations under the Apache Lic
             });
 
             // and highlight it
-
-            this.highlight(selected);
+            if (noHighlightUpdate !== false) {
+                this.highlight(selected);
+            }
 
             // hide the search box if this is the first we got the results and there are a few of them
 
