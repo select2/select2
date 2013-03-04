@@ -2419,7 +2419,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 return;
             }
 
-            index = indexOf(this.id(data), val);
+            index = indexOf(String(this.id(data)), val);
 
             if (index >= 0) {
                 val.splice(index, 1);
