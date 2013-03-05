@@ -2325,7 +2325,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 if (this.countSelectableResults()>0) {
                     this.search.width(10);
                     this.resizeSearch();
-                    if (this.val().length >= this.getMaximumSelectionSize()) {
+                    if (this.getMaximumSelectionSize() > 0 && this.val().length >= this.getMaximumSelectionSize()) {
                         // if we reached max selection size repaint the results so choices
                         // are replaced with the max selection reached message
                         this.updateResults(true);
