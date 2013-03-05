@@ -1321,7 +1321,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
                     self.opts.populateResults.call(this, results, data.results, {term: term, page: page, context:context});
                     self.postprocessResults(data, false, false);
-                            
+
                     if (data.more===true) {
                         more.detach().appendTo(results).text(self.opts.formatLoadMore(page+1));
                         window.setTimeout(function() { self.loadMoreIfNeeded(); }, 10);
@@ -2230,13 +2230,14 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // multi
         clearSearch: function () {
-            var placeholder = this.getPlaceholder();
+            var placeholder = this.getPlaceholder(),
+                maxWidth = this.getMaxSearchWidth();
 
             if (placeholder !== undefined  && this.getVal().length === 0 && this.search.hasClass("select2-focused") === false) {
                 this.search.val(placeholder).addClass("select2-default");
                 // stretch the search box to full width of the container so as much of the placeholder is visible as possible
                 // we could call this.resizeSearch(), but we do not because that requires a sizer and we do not want to create one so early because of a firefox bug, see #944
-                this.search.width(this.getMaxSearchWidth());
+                this.search.width(maxWidth > 0 ? maxWidth : this.container.css("width"));
             } else {
                 this.search.val("").width(10);
             }
