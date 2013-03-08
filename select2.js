@@ -1321,7 +1321,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
                     self.opts.populateResults.call(this, results, data.results, {term: term, page: page, context:context});
                     self.postprocessResults(data, false, false);
-                            
+
                     if (data.more===true) {
                         more.detach().appendTo(results).text(self.opts.formatLoadMore(page+1));
                         window.setTimeout(function() { self.loadMoreIfNeeded(); }, 10);
@@ -2703,7 +2703,7 @@ the specific language governing permissions and limitations under the Apache Lic
         maximumSelectionSize: 0,
         id: function (e) { return e.id; },
         matcher: function(term, text) {
-            return text.toUpperCase().indexOf(term.toUpperCase()) >= 0;
+            return (''+text).toUpperCase().indexOf((''+term).toUpperCase()) >= 0;
         },
         separator: ",",
         tokenSeparators: [],
