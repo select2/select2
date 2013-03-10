@@ -8,6 +8,7 @@
         "component/jquery": "*"
     },
     "license": "GPLv2",
+    "main": "select2.js",
     "scripts": [
         "select2.js"
     ],
