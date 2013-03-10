@@ -1,8 +1,23 @@
 {
     "name": "select2",
+    "repo": "richthegeek/select2",
+    "description": "Select2 is a jQuery based replacement for select boxes. It supports searching, remote data sets, and infinite scrolling of results.",
     "version": "3.3.1",
-    "main": ["select2.js", "select2.css", "select2.png", "select2x2.png", "spinner.gif"],
+    "keywords": ["select", "dropdown", "autocomplete", "tagging"],
     "dependencies": {
-        "jquery": "~1.4.4"
-    }
+        "component/jquery": "*"
+    },
+    "license": "GPLv2",
+    "main": "select2.js",
+    "scripts": [
+        "select2.js"
+    ],
+    "styles": [
+        "select2.css"
+    ],
+    "images": [
+        "select2.png",
+        "select2x2.png",
+        "select2-spinner.gif"
+    ]
 }
