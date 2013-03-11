@@ -591,6 +591,7 @@ disabled look for disabled choices in the results dropdown
 .select2-offscreen {
     position: absolute;
     left: -10000px;
+    right: 10000px;
 }
 
 /* Retina-ize icons */
