@@ -642,6 +642,10 @@ the specific language governing permissions and limitations under the Apache Lic
             // initialize the container
             this.initContainer();
 
+            // Fix the label so it leads to the field
+            var labels = $('label[for="' + opts.element.attr("id") + '"]');
+            labels.prop('for', $(this.container).find('input.select2-input').attr('id'));
+
             installFilteredMouseMove(this.results);
             this.dropdown.delegate(resultsSelector, "mousemove-filtered touchstart touchmove touchend", this.bind(this.highlightUnderEvent));
 
@@ -1563,7 +1567,8 @@ the specific language governing permissions and limitations under the Apache Lic
                 "<input class='select2-focusser select2-offscreen' type='text'/>",
                 "<div class='select2-drop' style='display:none'>" ,
                 "   <div class='select2-search'>" ,
-                "       <input type='text' autocomplete='off' class='select2-input'/>" ,
+                "       <input type='text' autocomplete='off' class='select2-input' id='s2id_autogen" + nextUid() + "'/>" ,
+
                 "   </div>" ,
                 "   <ul class='select2-results'>" ,
                 "   </ul>" ,
@@ -2023,7 +2028,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 "    <ul class='select2-choices'>",
                 //"<li class='select2-search-choice'><span>California</span><a href="javascript:void(0)" class="select2-search-choice-close"></a></li>" ,
                 "  <li class='select2-search-field'>" ,
-                "    <input type='text' autocomplete='off' class='select2-input'>" ,
+                "    <input type='text' autocomplete='off' class='select2-input' id='s2id_autogen" + nextUid() + "'/>" ,
                 "  </li>" ,
                 "</ul>" ,
                 "<div class='select2-drop select2-drop-multi' style='display:none;'>" ,
