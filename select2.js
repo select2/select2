@@ -2724,8 +2724,8 @@ the specific language governing permissions and limitations under the Apache Lic
             });
         },
         blurOnChange: false,
-        selectOnBlur: false,
-        adaptContainerCssClass: function(c) { return c; },
+        selectOnBlur: false,   
+        adaptContainerCssClass: function(c) { if (typeof c === 'object' && c.length) return c + ''; return c; },
         adaptDropdownCssClass: function(c) { return null; }
     };
 
