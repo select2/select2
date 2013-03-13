@@ -36,13 +36,21 @@ Integrations
 * [Django](https://github.com/applegrew/django-select2)
 * [Symfony](https://github.com/19Gerhard85/sfSelect2WidgetsPlugin)
 
+Internationalization (i18n)
+---------------------------
+
+Select2 supports multiple languages by simply including the right
+language JS file (`select2_locale_it.js`, `select2_locale_nl.js` etc.).
+
+Missing a language? Just copy `select2_locale_en.js.template`, translate
+it and make a pull request back to Select2 here on Github.
+
 Bug tracker
 -----------
 
 Have a bug? Please create an issue here on GitHub!
 
 https://github.com/ivaynberg/select2/issues
-
 
 Mailing list
 ------------
