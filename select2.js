@@ -2721,7 +2721,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 "/": '&#47;'
             };
 
-            return String(markup).replace(/[&<>"'/\\]/g, function (match) {
+            return String(markup).replace(/[&<>"'\/\\]/g, function (match) {
                     return replace_map[match[0]];
             });
         },
