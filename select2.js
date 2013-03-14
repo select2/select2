@@ -1356,8 +1356,6 @@ the specific language governing permissions and limitations under the Apache Lic
                 return;
             }
 
-            search.addClass("select2-active");
-
             function postRender() {
                 results.scrollTop(0);
                 search.removeClass("select2-active");
@@ -1386,9 +1384,6 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
                 return;
             }
-            else if (opts.formatSearching() && initial===true) {
-                render("<li class='select2-searching'>" + opts.formatSearching() + "</li>");
-            }
 
             if (opts.maximumInputLength && search.val().length > opts.maximumInputLength) {
                 if (checkFormatter(opts.formatInputTooLong, "formatInputTooLong")) {
@@ -1398,6 +1393,12 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
                 return;
             }
+
+            if (opts.formatSearching && this.findHighlightableChoices().length === 0) {
+                render("<li class='select2-searching'>" + opts.formatSearching() + "</li>");
+            }
+
+            search.addClass("select2-active");
 
             // give the tokenizer a chance to pre-process the input
             input = this.tokenize();
