@@ -1418,7 +1418,10 @@ the specific language governing permissions and limitations under the Apache Lic
                 var def; // default choice
 
                 // ignore a response if the select2 has been closed before it was received
-                if (!this.opened()) return;
+                if (!this.opened()) {
+                    this.search.removeClass("select2-active");
+                    return;
+                }
 
                 // save context, if any
                 this.context = (data.context===undefined) ? null : data.context;
@@ -2308,6 +2311,7 @@ the specific language governing permissions and limitations under the Apache Lic
             self.postprocessResults();
         },
 
+        // multi
         tokenize: function() {
             var input = this.search.val();
             input = this.opts.tokenizer(input, this.data(), this.bind(this.onSelect), this.opts);
