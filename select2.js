@@ -2260,10 +2260,11 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // multi
         opening: function () {
+            this.clearPlaceholder(); // should be done before super so placeholder is not used to search
+            this.resizeSearch();
+
             this.parent.opening.apply(this, arguments);
 
-            this.clearPlaceholder();
-			this.resizeSearch();
             this.focusSearch();
 
             this.opts.element.trigger($.Event("open"));
