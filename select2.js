@@ -2155,6 +2155,12 @@ the specific language governing permissions and limitations under the Apache Lic
                     // prevent the page from scrolling
                     killEvent(e);
                 }
+
+                if (e.which === KEY.ENTER) {
+                    // prevent form from being submitted
+                    killEvent(e);
+                }
+
             }));
 
             this.search.bind("keyup", this.bind(this.resizeSearch));
