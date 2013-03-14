@@ -1349,7 +1349,17 @@ the specific language governing permissions and limitations under the Apache Lic
          */
         // abstract
         updateResults: function (initial) {
-            var search = this.search, results = this.results, opts = this.opts, data, self=this, input;
+            var search = this.search,
+                results = this.results,
+                opts = this.opts,
+                data,
+                self = this,
+                input,
+                term = search.val(),
+                lastTerm=$.data(this.container, "select2-last-term");
+
+            // prevent duplicate queries against the same term
+            if (initial !== true && lastTerm && equal(term, lastTerm)) return;
 
             // if the search is currently hidden we do not alter the results
             if (initial !== true && (this.showSearchInput === false || !this.opened())) {
@@ -1407,6 +1417,8 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             this.resultsPage = 1;
+
+            $.data(this.container, "select2-last-term", term);
 
             opts.query({
                 element: opts.element,
