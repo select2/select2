@@ -20,6 +20,7 @@
             <option value="NV">Nevada</option>
             <option value="OR">Oregon</option>
             <option value="WA">Washington</option>
+        <!--
         <option value="AK1">Alaska</option>
         <option value="HI1">Hawaii</option>
         <option value="CA1">California</option>
@@ -31,6 +32,7 @@
         <option value="NV2">Nevada</option>
         <option value="OR2">Oregon</option>
         <option value="WA2">Washington</option>
+        -->
     </select><br/>
     <input type="text" size="30"/>
 </div>
@@ -95,7 +97,7 @@
         $("#e6").select2({
             placeholder: "Search for a movie",
             minimumInputLength: 1,
-            multiple:true,
+            multiple:false,
             ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
                 url: "http://api.rottentomatoes.com/api/public/v1.0/movies.json",
                 dataType: 'jsonp',
@@ -128,6 +130,7 @@
             formatResult: movieFormatResult, // omitted for brevity, see the source of this page
             formatSelection: movieFormatSelection,  // omitted for brevity, see the source of this page
             dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
+            formatSearching: function() {return "Searching...";},
             escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
         });
     });

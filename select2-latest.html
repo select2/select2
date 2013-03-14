@@ -580,7 +580,7 @@ $("#e8_get2").click(function () { alert("Selected data is: "+JSON.stringify($("#
 $("#e8_set2").click(function () { $("#e8").select2("data", {id: "CA", text: "California"}); });
 $("#e8_open").click(function () { $("#e8").select2("open"); });
 $("#e8_close").click(function () { $("#e8").select2("close"); });
-$("#e8_2").select2();
+$("#e8_2").select2({placeholder: "Select a state"});
 $("#e8_2_get").click(function () { alert("Selected value is: "+$("#e8_2").select2("val"));});
 $("#e8_2_set").click(function () { $("#e8_2").select2("val", ["CA","MA"]); });
 $("#e8_2_get2").click(function () { alert("Selected value is: "+JSON.stringify($("#e8_2").select2("data")));});
@@ -615,7 +615,7 @@ $("#e8_2_close").click(function () { $("#e8_2").select2("close"); });
                   <input type="button" class="btn-warning" id="e8_2_close" value="Close"/>
                 </p>
               <p>
-                  <select id="e8_2" multiple style="width:300px" class="populate"></select><br/>
+                  <select id="e8_2" multiple style="width:300px" class="populate"><option></option></select><br/>
               </p>
           </div>
           <div class="span8">
@@ -649,7 +649,8 @@ $("#e11")
     .on("close", function() { log("close"); })
     .on("highlight", function(e) { log ("highlighted val="+ e.val+" choice="+ JSON.stringify(e.choice));})
     .on("selected", function(e) { log ("selected val="+ e.val+" choice="+ JSON.stringify(e.choice));})
-    .on("removed", function(e) { log ("removed val="+ e.val+" choice="+ JSON.stringify(e.choice));});
+    .on("removed", function(e) { log ("removed val="+ e.val+" choice="+ JSON.stringify(e.choice));})
+    .on("loaded", function(e) { log ("loaded (data property omitted for brevitiy)");});
 $("#e11_2")
     .on("change", function(e) { log("change "+JSON.stringify({val:e.val, added:e.added, removed:e.removed})); })
     .on("opening", function() { log("opening"); })
@@ -657,7 +658,8 @@ $("#e11_2")
     .on("close", function() { log("close"); })
     .on("highlight", function(e) { log ("highlighted val="+ e.val+" choice="+ JSON.stringify(e.choice));})
     .on("selected", function(e) { log ("selected val="+ e.val+" choice="+ JSON.stringify(e.choice));})
-    .on("removed", function(e) { log ("removed val="+ e.val+" choice="+ JSON.stringify(e.choice));});
+    .on("removed", function(e) { log ("removed val="+ e.val+" choice="+ JSON.stringify(e.choice));})
+    .on("loaded", function(e) { log ("loaded (data property omitted for brevitiy)");});
 });
 </script>
           <div class="span4">
@@ -1629,6 +1631,19 @@ $("#select").select2({
                 </p>
             </div>
         </div>
+        <div class="row">
+            <div class="span12">
+                <h3>loaded</h3>
+                <p>Fired when query function is done loading the data and the results list has been updated</p>
+                </p>
+                <p>The event object contains the following custom properties:
+                <dl>
+                    <dt>data</dt><dd>data that was used to populate the results</dd>
+                </dl>
+                </p>
+            </div>
+        </div>
+
 
       </section>
 
