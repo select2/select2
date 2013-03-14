@@ -1454,6 +1454,8 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.postprocessResults(data, initial);
 
                 postRender();
+
+                this.opts.element.trigger({ type: "loaded", data:data });
             })});
         },
 
