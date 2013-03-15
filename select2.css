@@ -339,6 +339,8 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     margin: 0;
     cursor: pointer;
 
+    min-height: 1em;
+
     -webkit-touch-callout: none;
       -webkit-user-select: none;
        -khtml-user-select: none;
