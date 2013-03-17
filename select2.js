@@ -1949,6 +1949,12 @@ the specific language governing permissions and limitations under the Apache Lic
             formatted=this.opts.formatSelection(data, container);
             if (formatted !== undefined) {
                 container.append(this.opts.escapeMarkup(formatted));
+                
+                if (container[0].offsetWidth < container[0].scrollWidth) {
+                    container.attr('title', formatted);
+                } else {
+                    container.removeAttr('title');
+                }
             }
 
             this.selection.removeClass("select2-default");
