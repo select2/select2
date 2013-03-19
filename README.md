@@ -5,19 +5,17 @@ Select2 is a jQuery based replacement for select boxes. It supports searching, r
 
 To get started checkout examples and documentation at http://ivaynberg.github.com/select2
 
-What Does Select2 Support That Chosen Does Not?
+What Usecases Does Select2 Support
 -------------------------------------------------
 
-* Working with large datasets: Chosen requires the entire dataset to be loaded as `option` tags in the DOM, which limits
-it to working with small-ish datasets. Select2 uses a function to find results on-the-fly, which allows it to partially
-load results.
-* Paging of results: Since Select2 works with large datasets and only loads a small amount of matching results at a time
-it has to support paging. Select2 will call the search function when the user scrolls to the bottom of currently loaded
-result set allowing for the 'infinite scrolling' of results.
-* Custom markup for results: Chosen only supports rendering text results because that is the only markup supported by
-`option` tags. Select2 provides an extension point which can be used to produce any kind of markup to represent results.
-* Ability to add results on the fly: Select2 provides the ability to add results from the search term entered by the user, which allows it to be used for
-tagging.
+* Enhances native selects with search
+* Enhances native selects with a better multi-select interface
+* Loading data from javascript: easily load items via ajax and have them searchable
+* Nested optgroups: native selects only support one level of nested, Select2 does not have this restriction
+* Tagging: ability to add new items on the fly
+* Working with large remote datesets: ability to partially load a dataset based on the search term
+* Paging of large datasets: easy support for loading more pages when the results are scrolled to the end
+* Templating: support for custom rendering of results and selections
 
 Browser Compatibility
 --------------------
