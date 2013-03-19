@@ -1361,6 +1361,8 @@ the specific language governing permissions and limitations under the Apache Lic
             // prevent duplicate queries against the same term
             if (initial !== true && lastTerm && equal(term, lastTerm)) return;
 
+            $.data(this.container, "select2-last-term", term);
+
             // if the search is currently hidden we do not alter the results
             if (initial !== true && (this.showSearchInput === false || !this.opened())) {
                 return;
@@ -1417,8 +1419,6 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             this.resultsPage = 1;
-
-            $.data(this.container, "select2-last-term", term);
 
             opts.query({
                 element: opts.element,
