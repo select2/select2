@@ -1661,6 +1661,11 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.focusser = container.find(".select2-focusser");
 
+            // rewrite labels from original element to focusser
+            this.focusser.attr("id", "s2id_autogen"+nextUid());
+            $("label[for='" + this.opts.element.attr("id") + "']")
+                .attr('for', this.focusser.attr('id'));
+
             this.search.bind("keydown", this.bind(function (e) {
                 if (!this.enabled) return;
 
@@ -2103,6 +2108,11 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.searchContainer = this.container.find(".select2-search-field");
             this.selection = selection = this.container.find(selector);
+
+            // rewrite labels from original element to focusser
+            this.search.attr("id", "s2id_autogen"+nextUid());
+            $("label[for='" + this.opts.element.attr("id") + "']")
+                .attr('for', this.search.attr('id'));
 
             this.search.bind("input paste", this.bind(function() {
                 if (!this.enabled) return;
