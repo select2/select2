@@ -2297,7 +2297,7 @@ the specific language governing permissions and limitations under the Apache Lic
         focus: function () {
             this.close();
             this.search.focus();
-            this.opts.element.triggerHandler("focus");
+            //this.opts.element.triggerHandler("focus");
         },
 
         // multi
