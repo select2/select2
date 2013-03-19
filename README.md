@@ -1,9 +1,9 @@
 Select2
 =================
 
-Select2 is a jQuery based replacement for select boxes. It supports searching, remote data sets, and infinite scrolling of results. Look and feel of Select2 is based on the excellent [Chosen](http://harvesthq.github.com/chosen/) library.
+Select2 is a jQuery based replacement for select boxes. It supports searching, remote data sets, and infinite scrolling of results.
 
-To get started -- checkout http://ivaynberg.github.com/select2!
+To get started checkout examples and documentation at http://ivaynberg.github.com/select2
 
 What Does Select2 Support That Chosen Does Not?
 -------------------------------------------------
