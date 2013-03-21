@@ -60,6 +60,9 @@ select2@googlegroups.com
 
 https://groups.google.com/d/forum/select2
 
+to do
+------------
+add knckout integration Documentation
 
 Copyright and License
 ---------------------
