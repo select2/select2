@@ -1387,11 +1387,26 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             if (search.val().length < opts.minimumInputLength) {
+                var renderHtml = "";
                 if (checkFormatter(opts.formatInputTooShort, "formatInputTooShort")) {
-                    render("<li class='select2-no-results'>" + opts.formatInputTooShort(search.val(), opts.minimumInputLength) + "</li>");
-                } else {
-                    render("");
+                    renderHtml = "<li class='select2-no-results'>" + opts.formatInputTooShort(search.val(), opts.minimumInputLength) + "</li>"
                 }
+                
+                if(opts.popularItems)
+                {
+                    results.empty();
+
+                    self.opts.populateResults.call(this, results, opts.popularItems, {term: search.val(), page: this.resultsPage, context:null});
+                    this.postprocessResults({more: false, results: opts.popularItems}, initial);
+                    
+                    if(this.highlight() !== -1 && checkFormatter(opts.formatSelectPopular, "formatSelectPopular"))
+                        renderHtml = "<li class='select2-no-results'>" + opts.formatSelectPopular(search.val(), opts.minimumInputLength) + "</li>";
+                    results.prepend(renderHtml);
+                }
+                else
+                    results.html(renderHtml);
+                
+                postRender();
                 return;
             }
 
@@ -1469,6 +1484,19 @@ the specific language governing permissions and limitations under the Apache Lic
 
                 this.opts.element.trigger({ type: "loaded", data:data });
             })});
+        },
+        
+        // abstract
+        popularItems: function (items) {
+            if (arguments.length === 0) {
+                return this.opts.popularItems;
+            } else {
+                if (!items || (typeof items !== "object")) {
+                    this.opts.popularItems = null;
+                } else {
+                    this.opts.popularItems = items;
+                }
+            }
         },
 
         // abstract
@@ -2659,7 +2687,7 @@ the specific language governing permissions and limitations under the Apache Lic
         var args = Array.prototype.slice.call(arguments, 0),
             opts,
             select2,
-            value, multiple, allowedMethods = ["val", "destroy", "opened", "open", "close", "focus", "isFocused", "container", "onSortStart", "onSortEnd", "enable", "disable", "positionDropdown", "data"];
+            value, multiple, allowedMethods = ["val", "destroy", "opened", "open", "close", "focus", "isFocused", "container", "onSortStart", "onSortEnd", "enable", "disable", "positionDropdown", "data", "popularItems"];
 
         this.each(function () {
             if (args.length === 0 || typeof(args[0]) === "object") {
@@ -2725,10 +2753,12 @@ the specific language governing permissions and limitations under the Apache Lic
         formatSelectionTooBig: function (limit) { return "You can only select " + limit + " item" + (limit == 1 ? "" : "s"); },
         formatLoadMore: function (pageNumber) { return "Loading more results..."; },
         formatSearching: function () { return "Searching..."; },
+        formatSelectPopular: function (input, min) { var n = min - input.length; return "Please enter " + n + " more character" + (n == 1? "" : "s") + ", or choose a popular item" },
         minimumResultsForSearch: 0,
         minimumInputLength: 0,
         maximumInputLength: null,
         maximumSelectionSize: 0,
+        popularItems: null,
         id: function (e) { return e.id; },
         matcher: function(term, text) {
             return (''+text).toUpperCase().indexOf((''+term).toUpperCase()) >= 0;
