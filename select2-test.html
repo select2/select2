@@ -12,6 +12,7 @@
 <div style="padding: 10px; margin: 10px;">
     <br/><br/><br/>
     <input type="text" size="30"/><br/>
+    <label for="e4">Label: </label>
     <select id="e4" style="width:300px" class="populate">
             <option></option>
             <option value="AK">Alaska</option>
@@ -37,6 +38,7 @@
     <input type="text" size="30"/>
 </div>
 
+<label for="e6">Label: </label>
 <input type="hidden" class="bigdrop" id="e6" style="width:600px" value="16340"/>
 
 <script>
@@ -97,7 +99,7 @@
         $("#e6").select2({
             placeholder: "Search for a movie",
             minimumInputLength: 1,
-            multiple:false,
+            multiple:true,
             ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
                 url: "http://api.rottentomatoes.com/api/public/v1.0/movies.json",
                 dataType: 'jsonp',
