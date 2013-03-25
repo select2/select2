@@ -240,36 +240,52 @@ $("#e10_4").select2({
       </header>
 
 
-        <section id="changelog">
-            <h2>Changelog</h2>
-            <div class="row"><div class="span12">
-                <ul>
-                    <li>Loading...</li>
-                    <script>
-                        $(function() {
-                            var url="https://api.github.com/repos/ivaynberg/select2/issues?state=closed&milestone=8";
-                            $.ajax({
-                                url: url,
-                                dataType: "jsonp"
-                            }).done(function(issues) {
+<section id="changelog">
+    <h2>Changelog <span id="milestones"></span> <span id="totalissues"></span></h2>
+    <div class="row"><div class="span12">
+        <ul>
+            <li>Loading...</li>
+            <script>
+                $(function() {
+                    var url="https://api.github.com/repos/ivaynberg/select2/issues?state=closed&milestone=10";
+                    $.ajax({
+                        url: url,
+                        dataType: "jsonp"
+                    }).done(function(issues) {
                                 var list=$("#changelog ul");
                                 var template="<li><a href='$url'><span>#$num</span> </a>$title</li>";
                                 list.empty();
                                 $.each(issues.data, function() {
                                     var markup=template
-                                        .replace(/\$url/g, this.html_url)
-                                        .replace(/\$num/g, this.number)
-                                        .replace(/\$title/g, this.title)
+                                            .replace(/\$url/g, this.html_url)
+                                            .replace(/\$num/g, this.number)
+                                            .replace(/\$title/g, this.title)
                                     list.append(markup);
                                 });
+
+                                $("#totalissues").html("("+issues.data.length+")");
+
+                                var milestones=$.map(issues.data, function(e) {
+                                    return e.milestone.title;
+                                });
+
+                                for (var i=1;i<milestones.length;i++) {
+                                    if (milestones[i-1]===milestones[i]) {
+                                        milestones.splice(i, 1);
+                                        i--;
+                                    }
+                                }
+                                $("#milestones").html(milestones.join(", "));
+
+
                             }).fail(function() {
                                 $("#changelog ul").empty().append("<li class='alert alert-error'>Error retrieving changelog</li>");
                             });
-                        });
-                    </script>
-                </ul>
-            </div></div>
-        </section>
+                });
+            </script>
+        </ul>
+    </div></div>
+</section>
 
         <section>
             <h2>Browser Compatibility</h2>
