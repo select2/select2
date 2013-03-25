@@ -355,7 +355,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 var requestNumber = requestSequence, // this request's sequence number
                     data = options.data, // ajax data function
                     url = ajaxUrl, // ajax url string or function
-                    transport = options.transport,
+                    transport = options.transport || $.ajax,
                     type = options.type || 'GET', // set type of request (GET or POST)
                     params = {};
 
@@ -731,7 +731,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 });
             }
 
-            opts = $.extend(true, {}, {
+            opts = $.extend({}, {
                 populateResults: function(container, results, query) {
                     var populate,  data, result, children, id=this.opts.id, self=this;
 
@@ -2764,12 +2764,7 @@ the specific language governing permissions and limitations under the Apache Lic
         blurOnChange: false,
         selectOnBlur: false,
         adaptContainerCssClass: function(c) { return c; },
-        adaptDropdownCssClass: function(c) { return null; },
-        ajax: {
-            transport: function(options) {
-                return $.ajax(options);
-            }
-        }
+        adaptDropdownCssClass: function(c) { return null; }
     };
 
     // exports
