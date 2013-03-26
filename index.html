@@ -1469,15 +1469,14 @@ $("#select").select2({
       </table>
         <p><code>val</code> method invoked on a single-select with an unset value will return <code>""</code>, while a <code>val</code> method invoked on an empty multi-select will return <code>[]</code></p>
 
-        Example: <pre class="prettyprint">alert("Selected value is: "+$("#e8").select2("val")); $("#e8").select2("val", {id:"CA", text:"Califoria"});</pre>
+        Example: <pre class="prettyprint">alert("Selected value is: "+$("#e8").select2("val")); $("#e8").select2("val", "CA"});</pre>
+        <p class="alert alert-info">Notice that in order to use this method you must define the <code>initSelection</code> function in the options so Select2 knows how to transform the id of the object you pass in <code>val()</code> to the full object it needs to render selection. If you are attaching to a <code>select</code> element this function is already provided for you.</p>
 
         <div class="row">
             <div class="span12"><h3>data</h3></div>
         </div>
         <p>Gets or sets the selection. Analogous to <code>val</code> method, but works with objects instead of ids.</p>
         <p><code>data</code> method invoked on a single-select with an unset value will return <code>null</code>, while a <code>data</code> method invoked on an empty multi-select will return <code>[]</code></p>
-
-
     <div class="row">
         <div class="span12"><h3>destroy</h3></div>
     </div>
