@@ -34,6 +34,7 @@ Integrations
 * [Django](https://github.com/applegrew/django-select2)
 * [Symfony](https://github.com/19Gerhard85/sfSelect2WidgetsPlugin)
 * [Bootstrap](https://github.com/t0m/select2-bootstrap-css) (CSS skin)
+* [Yii](https://github.com/tonybolzan/yii-select2)
 
 Internationalization (i18n)
 ---------------------------
