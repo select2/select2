@@ -2320,7 +2320,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             // filter out duplicates
             $(data).each(function () {
-                if (indexOf(self.id(this), ids) < 0) {
+                if (!self.contains(self.id(this), ids)) {
                     ids.push(self.id(this));
                     filtered.push(this);
                 }
@@ -2548,6 +2548,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // multi
         setVal: function (val) {
+            var self = this;
             var unique;
             if (this.select) {
                 this.select.val(val);
@@ -2555,11 +2556,23 @@ the specific language governing permissions and limitations under the Apache Lic
                 unique = [];
                 // filter out duplicates
                 $(val).each(function () {
-                    if (indexOf(this, unique) < 0) unique.push(this);
+                    if (!self.contains(this, unique)) unique.push(this);
                 });
                 this.opts.element.val(unique.length === 0 ? "" : unique.join(this.opts.separator));
             }
         },
+        
+        // multi
+        contains: function(array, value) {
+  		var index = -1,
+		length = array.length;
+		while (++index < length) {
+			if (array[index] === value) {
+				return true;
+			}
+		}
+		return false;
+	},
 
         // multi
         val: function () {
