@@ -2319,13 +2319,7 @@ the specific language governing permissions and limitations under the Apache Lic
             var ids = [], filtered = [], self = this;
 
             // filter out duplicates
-            $(data).each(function () {
-                if (indexOf(self.id(this), ids) < 0) {
-                    ids.push(self.id(this));
-                    filtered.push(this);
-                }
-            });
-            data = filtered;
+            data = $.unique(data);
 
             this.selection.find(".select2-search-choice").remove();
             $(data).each(function () {
@@ -2552,11 +2546,7 @@ the specific language governing permissions and limitations under the Apache Lic
             if (this.select) {
                 this.select.val(val);
             } else {
-                unique = [];
-                // filter out duplicates
-                $(val).each(function () {
-                    if (indexOf(this, unique) < 0) unique.push(this);
-                });
+                unique = $.unique(val);
                 this.opts.element.val(unique.length === 0 ? "" : unique.join(this.opts.separator));
             }
         },
