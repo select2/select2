@@ -763,6 +763,9 @@ the specific language governing permissions and limitations under the Apache Lic
 
                             formatted=opts.formatResult(result, label, query, self.opts.escapeMarkup);
                             if (formatted!==undefined) {
+                                if (result.newItem) {
+                                    formatted = opts.formatCreateNew(formatted);
+                                }
                                 label.html(formatted);
                             }
 
@@ -1444,7 +1447,8 @@ the specific language governing permissions and limitations under the Apache Lic
                             function () {
                                 return equal(self.id(this), self.id(def));
                             }).length === 0) {
-                            data.results.unshift(def);
+                            def.newItem = true;
+                            data.results.push(def);
                         }
                     }
                 }
@@ -2734,6 +2738,7 @@ the specific language governing permissions and limitations under the Apache Lic
         formatSelectionTooBig: function (limit) { return "You can only select " + limit + " item" + (limit == 1 ? "" : "s"); },
         formatLoadMore: function (pageNumber) { return "Loading more results..."; },
         formatSearching: function () { return "Searching..."; },
+        formatCreateNew: function (term) { return term; },
         minimumResultsForSearch: 0,
         minimumInputLength: 0,
         maximumInputLength: null,
