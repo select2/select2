@@ -968,6 +968,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.enabled=false;
             this.container.addClass("select2-container-disabled");
             this.opts.element.attr("disabled", "disabled");
+            this.container.find("abbr").hide();
         },
 
         // abstract
