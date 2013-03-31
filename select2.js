@@ -839,6 +839,9 @@ the specific language governing permissions and limitations under the Apache Lic
                 if (!("query" in opts)) {
 
                     if ("ajax" in opts) {
+                        if ($.fn.select2.ajaxDefaults) {//extend default ajax options
+                            opts.ajax = $.extend({}, $.fn.select2.ajaxDefaults, opts.ajax);
+                        }
                         ajaxUrl = opts.element.data("ajax-url");
                         if (ajaxUrl && ajaxUrl.length > 0) {
                             opts.ajax.url = ajaxUrl;
