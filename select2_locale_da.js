@@ -1,0 +1,15 @@
+/**
+ * Select2 Danish translation
+ */
+(function ($) {
+    "use strict";
+
+    $.extend($.fn.select2.defaults, {
+        formatNoMatches: function () { return "Ingen resultater fundet"; },
+        formatInputTooShort: function (input, min) { var n = min - input.length; return "Angiv venligst " + n + " tegn mere"; },
+        formatInputTooLong: function (input, max) { var n = input.length - max; return "Angiv venligst " + n + " tegn mindre"; },
+        formatSelectionTooBig: function (limit) { return "Du kan kun vælge " + limit + " emne" + (limit === 1 ? "" : "r"); },
+        formatLoadMore: function (pageNumber) { return "Indlæs flere resultater…"; },
+        formatSearching: function () { return "Søger…"; }
+    });
+})(jQuery);
