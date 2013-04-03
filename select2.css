@@ -147,6 +147,15 @@ Version: @@ver@@ Timestamp: @@timestamp@@
             box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
 }
 
+.select2-drop-auto-width {
+    border-top: 1px solid #aaa;
+    width: auto;
+}
+
+.select2-drop-auto-width .select2-search {
+    padding-top: 4px;
+}
+
 .select2-drop.select2-drop-above {
     margin-top: 1px;
     border-top: 1px solid #aaa;
