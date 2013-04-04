@@ -228,6 +228,7 @@ the specific language governing permissions and limitations under the Apache Lic
     function installDebouncedScroll(threshold, element) {
         var notify = debounce(threshold, function (e) { element.trigger("scroll-debounced", e);});
         element.bind("scroll", function (e) {
+        	element.parent().trigger("mousemove");     
             if (indexOf(e.target, element.get()) >= 0) notify(e);
         });
     }
