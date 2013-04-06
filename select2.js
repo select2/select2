@@ -783,7 +783,9 @@ the specific language governing permissions and limitations under the Apache Lic
                                 label.html(formatted);
                             }
 
-                            node.append(label);
+                            if (!label.is(":empty") || self.opts.addEmptyResultLabels) {
+                                node.append(label);
+                            }
 
                             if (compound) {
 
@@ -2749,6 +2751,7 @@ the specific language governing permissions and limitations under the Apache Lic
         dropdownCss: {},
         containerCssClass: "",
         dropdownCssClass: "",
+        addEmptyResultLabels: true,
         formatResult: function(result, container, query, escapeMarkup) {
             var markup=[];
             markMatch(result.text, query.term, markup, escapeMarkup);
