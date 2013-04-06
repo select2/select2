@@ -1265,6 +1265,13 @@ $(document).ready(function () {
                     <tr><td>&lt;returns&gt;</td><td>string</td><td>Message html</td></tr>
                 </table>
             </td></tr>
+            <tr><td>addEmptyResultLabels</td><td>boolean</td><td>
+               <p>
+                If set to <code>false</code>, then no labels for result items with empty content
+                (that is when <code>formatResult</code> returned <code>undefined</code> or <code>null</code> or empty string)
+                will be appended to dropdown.
+               </p>
+            </td></tr>
             <tr><td>createSearchChoice</td><td>function</td><td>
                 Creates a new selectable choice from user's search term. Allows creation of choices not available via the query
                 function. Useful when the user can create choices on the fly, eg for the 'tagging' usecase.
