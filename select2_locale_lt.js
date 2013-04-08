@@ -1,7 +1,7 @@
 /**
  * Select2 lithuanian translation.
  * 
- * Author: CRONUS Karmalakas <cronus.karmalakas@gmail.com>
+ * Author: CRONUS Karmalakas <cronus dot karmalakas at gmail dot com>
  */
 (function ($) {
     "use strict";
