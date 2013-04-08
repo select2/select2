@@ -119,7 +119,7 @@ the specific language governing permissions and limitations under the Apache Lic
             height: $template.height() - $template[0].clientHeight
         };
         $template.remove();
-        
+
         return dim;
     }
 
@@ -637,7 +637,6 @@ the specific language governing permissions and limitations under the Apache Lic
             // swap container for the element
             this.opts.element
                 .data("select2", this)
-                .addClass("select2-offscreen")
                 .bind("focus.select2", function() { $(this).select2("focus"); })
                 .attr("tabIndex", "-1")
                 .before(this.container);
@@ -1574,12 +1573,12 @@ the specific language governing permissions and limitations under the Apache Lic
                         }
                     }
 
-                    if (this.opts.width === "resolve") {
-                        // next check if css('width') can resolve a width that is percent based, this is sometimes possible
-                        // when attached to input type=hidden or elements hidden via css
-                        style = this.opts.element.css('width');
-                        if (style.indexOf("%") > 0) return style;
+                    // next check if css('width') can resolve a width that is percent based, this is sometimes possible
+                    // when attached to input type=hidden or elements hidden via css
+                    style = this.opts.element.css('width');
+                    if (style && style.length > 0) return style;
 
+                    if (this.opts.width === "resolve") {
                         // finally, fallback on the calculated width of the element
                         return (this.opts.element.outerWidth(false) === 0 ? 'auto' : this.opts.element.outerWidth(false) + 'px');
                     }
@@ -1593,6 +1592,7 @@ the specific language governing permissions and limitations under the Apache Lic
             };
 
             var width = resolveContainerWidth.call(this);
+            console.log("width: ",width);
             if (width !== null) {
                 this.container.css("width", width);
             }
@@ -1811,11 +1811,11 @@ the specific language governing permissions and limitations under the Apache Lic
             }));
             this.search.bind("focus", this.bind(function(){
                 this.container.addClass("select2-container-active");
-            }))
+            }));
 
             this.initContainerWidth();
+            this.opts.element.addClass("select2-offscreen");
             this.setPlaceholder();
-
         },
 
         // single
@@ -2251,6 +2251,7 @@ the specific language governing permissions and limitations under the Apache Lic
             }));
 
             this.initContainerWidth();
+            this.opts.element.addClass("select2-offscreen");
 
             // set the placeholder if necessary
             this.clearSearch();
