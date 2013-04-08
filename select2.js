@@ -47,7 +47,7 @@ the specific language governing permissions and limitations under the Apache Lic
     }
 
     var KEY, AbstractSelect2, SingleSelect2, MultiSelect2, nextUid, sizer,
-        lastMousePosition, $document;
+        lastMousePosition, $document, scrollBarDimensions,
 
     KEY = {
         TAB: 9,
@@ -95,7 +95,8 @@ the specific language governing permissions and limitations under the Apache Lic
             k = k.which ? k.which : k;
             return k >= 112 && k <= 123;
         }
-    };
+    },
+    MEASURE_SCROLLBAR_TEMPLATE = "<div style='position:absolute; top:-10000px; left:-10000px; width:100px; height:100px; overflow:scroll;'></div>";
 
     $document = $(document);
 
@@ -107,6 +108,19 @@ the specific language governing permissions and limitations under the Apache Lic
             if (equal(value, array[i])) return i;
         }
         return -1;
+    }
+
+    function measureScrollbar () {
+        var $template = $( MEASURE_SCROLLBAR_TEMPLATE );
+        $template.appendTo('body');
+
+        var dim = {
+            width: $template.width() - $template[0].clientWidth,
+            height: $template.height() - $template[0].clientHeight
+        };
+        $template.remove();
+        
+        return dim;
     }
 
     /**
@@ -691,6 +705,9 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             if (opts.element.is(":disabled") || opts.element.is("[readonly='readonly']")) this.disable();
+
+            // Calculate size of scrollbar
+            scrollBarDimensions = scrollBarDimensions || measureScrollbar();
         },
 
         // abstract
@@ -977,22 +994,37 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // abstract
         positionDropdown: function() {
-            var offset = this.container.offset(),
+            var $dropdown = this.dropdown,
+                offset = this.container.offset(),
                 height = this.container.outerHeight(false),
                 width = this.container.outerWidth(false),
-                dropHeight = this.dropdown.outerHeight(false),
+                dropHeight = $dropdown.outerHeight(false),
 	            viewPortRight = $(window).scrollLeft() + $(window).width(),
                 viewportBottom = $(window).scrollTop() + $(window).height(),
                 dropTop = offset.top + height,
                 dropLeft = offset.left,
                 enoughRoomBelow = dropTop + dropHeight <= viewportBottom,
                 enoughRoomAbove = (offset.top - dropHeight) >= this.body().scrollTop(),
-	            dropWidth = this.dropdown.outerWidth(false),
+	            dropWidth = $dropdown.outerWidth(false),
 	            enoughRoomOnRight = dropLeft + dropWidth <= viewPortRight,
-                aboveNow = this.dropdown.hasClass("select2-drop-above"),
+                aboveNow = $dropdown.hasClass("select2-drop-above"),
                 bodyOffset,
                 above,
-                css;
+                css,
+                resultsListNode;
+
+            if (this.opts.dropdownAutoWidth) {
+                resultsListNode = $('.select2-results', $dropdown)[0];
+                $dropdown.addClass('select2-drop-auto-width');
+                $dropdown.css('width', '');
+                // Add scrollbar width to dropdown if vertical scrollbar is present
+                dropWidth = $dropdown.outerWidth(false) + (resultsListNode.scrollHeight === resultsListNode.clientHeight ? 0 : scrollBarDimensions.width);
+                dropWidth > width ? width = dropWidth : dropWidth = width;
+                enoughRoomOnRight = dropLeft + dropWidth <= viewPortRight;
+            }
+            else {
+                this.container.removeClass('select2-drop-auto-width');
+            }
 
             //console.log("below/ droptop:", dropTop, "dropHeight", dropHeight, "sum", (dropTop+dropHeight)+" viewport bottom", viewportBottom, "enough?", enoughRoomBelow);
             //console.log("above/ offset.top", offset.top, "dropHeight", dropHeight, "top", (offset.top-dropHeight), "scrollTop", this.body().scrollTop(), "enough?", enoughRoomAbove);
@@ -1022,11 +1054,11 @@ the specific language governing permissions and limitations under the Apache Lic
             if (above) {
                 dropTop = offset.top - dropHeight;
                 this.container.addClass("select2-drop-above");
-                this.dropdown.addClass("select2-drop-above");
+                $dropdown.addClass("select2-drop-above");
             }
             else {
                 this.container.removeClass("select2-drop-above");
-                this.dropdown.removeClass("select2-drop-above");
+                $dropdown.removeClass("select2-drop-above");
             }
 
             css = $.extend({
@@ -1035,7 +1067,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 width: width
             }, evaluate(this.opts.dropdownCss));
 
-            this.dropdown.css(css);
+            $dropdown.css(css);
         },
 
         // abstract
