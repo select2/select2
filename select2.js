@@ -1592,7 +1592,6 @@ the specific language governing permissions and limitations under the Apache Lic
             };
 
             var width = resolveContainerWidth.call(this);
-            console.log("width: ",width);
             if (width !== null) {
                 this.container.css("width", width);
             }
@@ -1959,7 +1958,8 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // single
         onSelect: function (data, options) {
-            var old = this.opts.element.val();
+            var old = this.opts.element.val(),
+                oldData = this.data();
 
             this.opts.element.val(this.id(data));
             this.updateSelection(data);
@@ -1971,7 +1971,7 @@ the specific language governing permissions and limitations under the Apache Lic
             if (!options || !options.noFocus)
                 this.selection.focus();
 
-            if (!equal(old, this.id(data))) { this.triggerChange(); }
+            if (!equal(old, this.id(data))) { this.triggerChange({added:data,removed:oldData}); }
         },
 
         // single
@@ -1996,7 +1996,11 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // single
         val: function () {
-            var val, triggerChange = false, data = null, self = this;
+            var val,
+                triggerChange = false,
+                data = null,
+                self = this,
+                oldData = this.data();
 
             if (arguments.length === 0) {
                 return this.opts.element.val();
@@ -2018,7 +2022,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.updateSelection(data);
                 this.setPlaceholder();
                 if (triggerChange) {
-                    this.triggerChange();
+                    this.triggerChange({added: data, removed:oldData});
                 }
             } else {
                 if (this.opts.initSelection === undefined) {
@@ -2027,9 +2031,6 @@ the specific language governing permissions and limitations under the Apache Lic
                 // val is an id. !val is true for [undefined,null,'',0] - 0 is legal
                 if (!val && val !== 0) {
                     this.clear(triggerChange);
-                    if (triggerChange) {
-                        this.triggerChange();
-                    }
                     return;
                 }
                 this.opts.element.val(val);
@@ -2038,7 +2039,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     self.updateSelection(data);
                     self.setPlaceholder();
                     if (triggerChange) {
-                        self.triggerChange();
+                        self.triggerChange({added: data, removed:oldData});
                     }
                 });
             }
@@ -2051,7 +2052,7 @@ the specific language governing permissions and limitations under the Apache Lic
         },
 
         // single
-        data: function(value) {
+        data: function(value, triggerChange) {
             var data;
 
             if (arguments.length === 0) {
@@ -2060,10 +2061,14 @@ the specific language governing permissions and limitations under the Apache Lic
                 return data;
             } else {
                 if (!value || value === "") {
-                    this.clear();
+                    this.clear(triggerChange);
                 } else {
+                    data = this.data();
                     this.opts.element.val(!value ? "" : this.id(value));
                     this.updateSelection(value);
+                    if (triggerChange) {
+                        this.triggerChange({added: value, removed:data});
+                    }
                 }
             }
         }
@@ -2596,18 +2601,37 @@ the specific language governing permissions and limitations under the Apache Lic
         },
 
         // multi
-        val: function () {
-            var val, triggerChange = false, data = [], self=this;
+        buildChangeDetails: function (old, current) {
+            console.log("current", current, "old", old);
+            var current = current.slice(0),
+                old = old.slice(0);
+
+            // remove intersection from each array
+            for (var i = 0; i < current.length; i++) {
+                for (var j = 0; j < old.length; j++) {
+                    if (equal(this.opts.id(current[i]), this.opts.id(old[j]))) {
+                        current.splice(i, 1);
+                        i--;
+                        old.splice(j, 1);
+                        j--;
+                    }
+                }
+            }
+
+            return {added: current, removed: old};
+        },
+
+
+        // multi
+        val: function (val, triggerChange) {
+            var oldData, self=this, changeDetails;
 
             if (arguments.length === 0) {
                 return this.getVal();
             }
 
-            val = arguments[0];
-
-            if (arguments.length > 1) {
-                triggerChange = arguments[1];
-            }
+            oldData=this.data();
+            if (!oldData.length) oldData=[];
 
             // val is an id. !val is true for [undefined,null,'',0] - 0 is legal
             if (!val && val !== 0) {
@@ -2615,7 +2639,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.updateSelection([]);
                 this.clearSearch();
                 if (triggerChange) {
-                    this.triggerChange();
+                    this.triggerChange({added: this.data(), removed: oldData});
                 }
                 return;
             }
@@ -2626,7 +2650,7 @@ the specific language governing permissions and limitations under the Apache Lic
             if (this.select) {
                 this.opts.initSelection(this.select, this.bind(this.updateSelection));
                 if (triggerChange) {
-                    this.triggerChange();
+                    this.triggerChange(this.buildChangeDetails(oldData, this.data()));
                 }
             } else {
                 if (this.opts.initSelection === undefined) {
@@ -2639,7 +2663,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     self.updateSelection(data);
                     self.clearSearch();
                     if (triggerChange) {
-                        self.triggerChange();
+                        self.triggerChange(this.buildChangeDetails(oldData, this.data()));
                     }
                 });
             }
@@ -2680,19 +2704,23 @@ the specific language governing permissions and limitations under the Apache Lic
         },
 
         // multi
-        data: function(values) {
-            var self=this, ids;
+        data: function(values, triggerChange) {
+            var self=this, ids, old;
             if (arguments.length === 0) {
                  return this.selection
                      .find(".select2-search-choice")
                      .map(function() { return $(this).data("select2-data"); })
                      .get();
             } else {
+                old = this.data();
                 if (!values) { values = []; }
                 ids = $.map(values, function(e) { return self.opts.id(e); });
                 this.setVal(ids);
                 this.updateSelection(values);
                 this.clearSearch();
+                if (triggerChange) {
+                    this.triggerChange(this.buildChangeDetails(old, this.data()));
+                }
             }
         }
     });
