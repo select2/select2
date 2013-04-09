@@ -1592,7 +1592,6 @@ the specific language governing permissions and limitations under the Apache Lic
             };
 
             var width = resolveContainerWidth.call(this);
-            console.log("width: ",width);
             if (width !== null) {
                 this.container.css("width", width);
             }
