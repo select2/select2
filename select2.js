@@ -729,8 +729,29 @@ the specific language governing permissions and limitations under the Apache Lic
         },
 
         // abstract
+        optionToData: function(element) {
+            if (element.is("option")) {
+                return {
+                    id:element.attr("value"),
+                    text:element.text(),
+                    element: element.get(),
+                    css: element.attr("class"),
+                    disabled: equal(element.attr("disabled"), "disabled"),
+                    locked: equal(element.attr("locked"), "locked")
+                };
+            } else if (element.is("optgroup")) {
+                return {
+                    text:element.attr("label"),
+                    children:[],
+                    element: element.get(),
+                    css: element.attr("class")
+                };
+            }
+        },
+
+        // abstract
         prepareOpts: function (opts) {
-            var element, select, idKey, ajaxUrl;
+            var element, select, idKey, ajaxUrl, self = this;
 
             element = opts.element;
 
@@ -749,7 +770,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             opts = $.extend({}, {
                 populateResults: function(container, results, query) {
-                    var populate,  data, result, children, id=this.opts.id, self=this;
+                    var populate,  data, result, children, id=this.opts.id;
 
                     populate=function(results, container, depth) {
 
@@ -823,10 +844,10 @@ the specific language governing permissions and limitations under the Apache Lic
                         var group;
                         if (element.is("option")) {
                             if (query.matcher(term, element.text(), element)) {
-                                collection.push({id:element.attr("value"), text:element.text(), element: element.get(), css: element.attr("class"), disabled: equal(element.attr("disabled"), "disabled") });
+                                collection.push(self.optionToData(element));
                             }
                         } else if (element.is("optgroup")) {
-                            group={text:element.attr("label"), children:[], element: element.get(), css: element.attr("class")};
+                            group=self.optionToData(element);
                             element.children().each2(function(i, elm) { process(elm, group.children); });
                             if (group.children.length>0) {
                                 collection.push(group);
@@ -1856,15 +1877,15 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // single
         prepareOpts: function () {
-            var opts = this.parent.prepareOpts.apply(this, arguments);
+            var opts = this.parent.prepareOpts.apply(this, arguments),
+                self=this;
 
             if (opts.element.get(0).tagName.toLowerCase() === "select") {
                 // install the selection initializer
                 opts.initSelection = function (element, callback) {
                     var selected = element.find(":selected");
                     // a single select box always has a value, no need to null check 'selected'
-                    if ($.isFunction(callback))
-                        callback({id: selected.attr("value"), text: selected.text(), element:selected});
+                    callback(self.optionToData(selected));
                 };
             } else if ("data" in opts) {
                 // install default initSelection when applied to hidden input and data is local
@@ -2016,7 +2037,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.select
                     .val(val)
                     .find(":selected").each2(function (i, elm) {
-                        data = {id: elm.attr("value"), text: elm.text(), element: elm.get(0)};
+                        data = self.optionToData(elm);
                         return false;
                     });
                 this.updateSelection(data);
@@ -2096,7 +2117,8 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // multi
         prepareOpts: function () {
-            var opts = this.parent.prepareOpts.apply(this, arguments);
+            var opts = this.parent.prepareOpts.apply(this, arguments),
+                self=this;
 
             // TODO validate placeholder is a string if specified
 
@@ -2107,7 +2129,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     var data = [];
 
                     element.find(":selected").each2(function (i, elm) {
-                        data.push({id: elm.attr("value"), text: elm.text(), element: elm[0]});
+                        data.push(self.optionToData(elm));
                     });
                     callback(data);
                 };
