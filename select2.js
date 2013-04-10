@@ -632,13 +632,13 @@ the specific language governing permissions and limitations under the Apache Lic
             this.container.css(evaluate(opts.containerCss));
             this.container.addClass(evaluate(opts.containerCssClass));
 
-            this.elementTabIndex = this.opts.element.attr("tabIndex");
+            this.elementTabIndex = this.opts.element.attr("tabindex");
 
             // swap container for the element
             this.opts.element
                 .data("select2", this)
                 .bind("focus.select2", function() { $(this).select2("focus"); })
-                .attr("tabIndex", "-1")
+                .attr("tabindex", "-1")
                 .before(this.container);
             this.container.data("select2", this);
 
@@ -649,7 +649,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.results = results = this.container.find(resultsSelector);
             this.search = search = this.container.find("input.select2-input");
 
-            search.attr("tabIndex", this.elementTabIndex);
+            this.container.find(".select2-focusser").attr("tabindex", this.elementTabIndex);
 
             this.resultsPage = 0;
             this.context = null;
@@ -723,7 +723,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     .removeClass("select2-offscreen")
                     .removeData("select2")
                     .unbind(".select2")
-                    .attr({"tabIndex": this.elementTabIndex})
+                    .attr({"tabindex": this.elementTabIndex})
                     .show();
             }
         },
