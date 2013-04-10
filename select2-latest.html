@@ -1625,6 +1625,20 @@ $("#select").select2({
                 </p>
             </div>
         </div>
+        <div class="row zebra">
+            <div class="span12">
+                <h3>select</h3>
+                <p>Fired when a choice is being selected in the dropdown, but before any modification has been made to the selection.
+                    This event is used to allow the user to reject selection by calling <code>event.preventDefault()</code></p>
+                </p>
+                <p>The event object contains the following custom properties:
+                <dl>
+                    <dt>val</dt><dd>the id of the highlighted choice object</dd>
+                    <dt>object</dt><dd>the choice object about to be selected</dd>
+                </dl>
+                </p>
+            </div>
+        </div>
         <div class="row">
             <div class="span12">
                 <h3>selected</h3>
@@ -1633,7 +1647,7 @@ $("#select").select2({
                 <p>The event object contains the following custom properties:
                 <dl>
                     <dt>val</dt><dd>the id of the highlighted choice object</dd>
-                    <dt>object</dt><dd>the highlighted choice object</dd>
+                    <dt>object</dt><dd>the choice object that was selected</dd>
                 </dl>
                 </p>
             </div>
