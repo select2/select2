@@ -1705,7 +1705,7 @@ the specific language governing permissions and limitations under the Apache Lic
         // single
         initContainer: function () {
 
-            var sel0ection,
+            var selection,
                 container = this.container,
                 dropdown = this.dropdown,
                 clickingInside = false;
