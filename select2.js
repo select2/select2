@@ -2395,9 +2395,9 @@ the specific language governing permissions and limitations under the Apache Lic
 					}
 				});
 				data = filtered;
-
-				this.selection.find(".select2-search-choice").remove();
 			}
+
+			this.selection.find(".select2-search-choice").remove();
 			
             $(data).each(function () {
                 self.addSelectedChoice(this);
@@ -2560,17 +2560,17 @@ the specific language governing permissions and limitations under the Apache Lic
 						choice.find(".select2-result-selectable").addClass("select2-selected");
 					}
 				});
-
-				compound.each2(function(i, choice) {
-					// hide an optgroup if it doesnt have any selectable children
-					if (!choice.is('.select2-result-selectable')
-						&& choice.find(".select2-result-selectable:not(.select2-selected)").length === 0) {
-						choice.addClass("select2-selected");
-					}
-				});
 			}
 
-            if (this.highlight() == -1){
+			compound.each2(function(i, choice) {
+				// hide an optgroup if it doesnt have any selectable children
+				if (!choice.is('.select2-result-selectable')
+					&& choice.find(".select2-result-selectable:not(.select2-selected)").length === 0) {
+					choice.addClass("select2-selected");
+				}
+			});
+            
+			if (this.highlight() == -1){
                 self.highlight(0);
             }
 
