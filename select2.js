@@ -1135,16 +1135,13 @@ the specific language governing permissions and limitations under the Apache Lic
                 orient = "orientationchange."+cid,
                 mask;
 
-            this.clearDropdownAlignmentPreference();
-
             this.container.addClass("select2-dropdown-open").addClass("select2-container-active");
 
+            this.clearDropdownAlignmentPreference();
 
             if(this.dropdown[0] !== this.body().children().last()[0]) {
                 this.dropdown.detach().appendTo(this.body());
             }
-
-            this.updateResults(true);
 
             // create the dropdown mask if doesnt already exist
             mask = $("#select2-drop-mask");
@@ -1192,8 +1189,6 @@ the specific language governing permissions and limitations under the Apache Lic
                     that.positionDropdown();
                 });
             });
-
-            this.focusSearch();
 
             function _makeMaskCss() {
                 return {
@@ -1663,8 +1658,12 @@ the specific language governing permissions and limitations under the Apache Lic
         // single
         opening: function () {
             this.parent.opening.apply(this, arguments);
-            this.focusser.attr("disabled", "disabled");
-
+            if (this.showSearchInput !== false) {
+                this.search.val(this.focusser.val());
+            }
+            this.search.focus();
+            this.focusser.attr("disabled", "disabled").val("");
+            this.updateResults(true);
             this.opts.element.trigger($.Event("open"));
         },
 
@@ -1785,13 +1784,9 @@ the specific language governing permissions and limitations under the Apache Lic
 
             installKeyUpChangeEvent(this.focusser);
             this.focusser.bind("keyup-change input", this.bind(function(e) {
+                e.stopPropagation();
                 if (this.opened()) return;
                 this.open();
-                if (this.showSearchInput !== false) {
-                    this.search.val(this.focusser.val());
-                }
-                this.focusser.val("");
-                killEvent(e);
             }));
 
             selection.delegate("abbr", "mousedown", this.bind(function (e) {
@@ -2354,6 +2349,8 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.focusSearch();
 
+            this.updateResults(true);
+            this.search.focus();
             this.opts.element.trigger($.Event("open"));
         },
 
