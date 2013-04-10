@@ -964,6 +964,13 @@ the specific language governing permissions and limitations under the Apache Lic
             }
         },
 
+        // abstract
+        triggerSelect: function(data) {
+            var evt = $.Event("selected", { val: this.id(data), object: data });
+            this.opts.element.trigger(evt);
+            return !evt.isDefaultPrevented();
+        },
+
         /**
          * Triggers the change event on the source element
          */
@@ -1974,6 +1981,9 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // single
         onSelect: function (data, options) {
+
+            if (!this.triggerSelect(data)) { return; }
+
             var old = this.opts.element.val(),
                 oldData = this.data();
 
@@ -2407,6 +2417,9 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // multi
         onSelect: function (data, options) {
+
+            if (!this.triggerSelect(data)) { return; }
+
             this.addSelectedChoice(data);
 
             this.opts.element.trigger({ type: "selected", val: this.id(data), choice: data });
