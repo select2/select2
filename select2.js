@@ -1863,6 +1863,7 @@ the specific language governing permissions and limitations under the Apache Lic
         initSelection: function () {
             var selected;
             if (this.opts.element.val() === "" && this.opts.element.text() === "") {
+                this.updateSelection([]);
                 this.close();
                 this.setPlaceholder();
             } else {
