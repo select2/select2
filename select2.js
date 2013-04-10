@@ -649,8 +649,6 @@ the specific language governing permissions and limitations under the Apache Lic
             this.results = results = this.container.find(resultsSelector);
             this.search = search = this.container.find("input.select2-input");
 
-            this.container.find(".select2-focusser").attr("tabindex", this.elementTabIndex);
-
             this.resultsPage = 0;
             this.context = null;
 
@@ -1707,7 +1705,7 @@ the specific language governing permissions and limitations under the Apache Lic
         // single
         initContainer: function () {
 
-            var selection,
+            var sel0ection,
                 container = this.container,
                 dropdown = this.dropdown,
                 clickingInside = false;
@@ -1720,8 +1718,11 @@ the specific language governing permissions and limitations under the Apache Lic
 
             // rewrite labels from original element to focusser
             this.focusser.attr("id", "s2id_autogen"+nextUid());
+
             $("label[for='" + this.opts.element.attr("id") + "']")
                 .attr('for', this.focusser.attr('id'));
+
+            this.focusser.attr("tabindex", this.elementTabIndex);
 
             this.search.bind("keydown", this.bind(function (e) {
                 if (!this.enabled) return;
@@ -2184,6 +2185,8 @@ the specific language governing permissions and limitations under the Apache Lic
                     this.open();
                 }
             }));
+
+            this.search.attr("tabindex", this.elementTabIndex);
 
             this.search.bind("keydown", this.bind(function (e) {
                 if (!this.enabled) return;
