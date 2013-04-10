@@ -2391,16 +2391,19 @@ the specific language governing permissions and limitations under the Apache Lic
         updateSelection: function (data) {
             var ids = [], filtered = [], self = this;
 
-            // filter out duplicates
-            $(data).each(function () {
-                if (indexOf(self.id(this), ids) < 0) {
-                    ids.push(self.id(this));
-                    filtered.push(this);
-                }
-            });
-            data = filtered;
+			if (!this.opts.allowDuplicates) {
+				// filter out duplicates
+				$(data).each(function () {
+					if (indexOf(self.id(this), ids) < 0) {
+						ids.push(self.id(this));
+						filtered.push(this);
+					}
+				});
+				data = filtered;
+			}
 
-            this.selection.find(".select2-search-choice").remove();
+			this.selection.find(".select2-search-choice").remove();
+			
             $(data).each(function () {
                 self.addSelectedChoice(this);
             });
@@ -2553,24 +2556,26 @@ the specific language governing permissions and limitations under the Apache Lic
                 compound = this.results.find(".select2-result-with-children"),
                 self = this;
 
-            choices.each2(function (i, choice) {
-                var id = self.id(choice.data("select2-data"));
-                if (indexOf(id, val) >= 0) {
-                    choice.addClass("select2-selected");
-                    // mark all children of the selected parent as selected
-                    choice.find(".select2-result-selectable").addClass("select2-selected");
-                }
-            });
+			if (!this.opts.allowDuplicates) {
+				choices.each2(function (i, choice) {
+					var id = self.id(choice.data("select2-data"));
+					if (indexOf(id, val) >= 0) {
+						choice.addClass("select2-selected");
+						// mark all children of the selected parent as selected
+						choice.find(".select2-result-selectable").addClass("select2-selected");
+					}
+				});
+			}
 
-            compound.each2(function(i, choice) {
-                // hide an optgroup if it doesnt have any selectable children
-                if (!choice.is('.select2-result-selectable')
-                    && choice.find(".select2-result-selectable:not(.select2-selected)").length === 0) {
-                    choice.addClass("select2-selected");
-                }
-            });
-
-            if (this.highlight() == -1){
+			compound.each2(function(i, choice) {
+				// hide an optgroup if it doesnt have any selectable children
+				if (!choice.is('.select2-result-selectable')
+					&& choice.find(".select2-result-selectable:not(.select2-selected)").length === 0) {
+					choice.addClass("select2-selected");
+				}
+			});
+            
+			if (this.highlight() == -1){
                 self.highlight(0);
             }
 
@@ -2862,7 +2867,8 @@ the specific language governing permissions and limitations under the Apache Lic
         blurOnChange: false,
         selectOnBlur: false,
         adaptContainerCssClass: function(c) { return c; },
-        adaptDropdownCssClass: function(c) { return null; }
+        adaptDropdownCssClass: function(c) { return null; },
+		allowDuplicates: false
     };
 
     // exports
