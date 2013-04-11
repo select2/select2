@@ -81,6 +81,10 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     background-image: linear-gradient(top, #eeeeee 0%,#ffffff 90%);
 }
 
+.select2-container.select2-allowclear .select2-choice span {
+    margin-right: 42px;
+}
+
 .select2-container .select2-choice span {
     margin-right: 26px;
     display: block;
@@ -94,11 +98,11 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 }
 
 .select2-container .select2-choice abbr {
-    display: block;
+    display: inline-block;
     width: 12px;
     height: 12px;
     position: absolute;
-    right: 26px;
+    right: 24px;
     top: 8px;
 
     font-size: 1px;
@@ -171,7 +175,7 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 }
 
 .select2-container .select2-choice div {
-    display: block;
+    display: inline-block;
     width: 18px;
     height: 100%;
     position: absolute;
