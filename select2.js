@@ -705,7 +705,8 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.monitorSource();
             }
 
-            if (opts.element.is(":disabled") || opts.element.is("[readonly='readonly']")) this.disable();
+            if (opts.element.is(":disabled")) this.disable();
+            if (opts.element.is("[readonly='readonly']")) this.readonly();
 
             // Calculate size of scrollbar
             scrollBarDimensions = scrollBarDimensions || measureScrollbar();
@@ -940,6 +941,8 @@ the specific language governing permissions and limitations under the Apache Lic
                 if (this.enabled !== enabled) {
                     if (enabled) {
                         this.enable();
+                    } else if (readonly) {
+                    	this.readonly();
                     } else {
                         this.disable();
                     }
@@ -1002,9 +1005,21 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.enabled=true;
             this.container.removeClass("select2-container-disabled");
+            this.opts.element.removeAttr("readonly");
             this.opts.element.removeAttr("disabled");
         },
 
+        // abstract
+        readonly: function() {
+            if (!this.enabled) return;
+
+            this.close();
+
+            this.enabled=false;
+            this.container.addClass("select2-container-disabled");
+            this.opts.element.attr("readonly", "readonly");
+        },
+        
         // abstract
         disable: function() {
             if (!this.enabled) return;
