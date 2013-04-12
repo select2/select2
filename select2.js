@@ -661,6 +661,10 @@ the specific language governing permissions and limitations under the Apache Lic
             installDebouncedScroll(80, this.results);
             this.dropdown.delegate(resultsSelector, "scroll-debounced", this.bind(this.loadMoreIfNeeded));
 
+            // do not propagate change event from the search field out of the component
+            $(this.container).delegate(".select2-input", "change", function(e) {e.stopPropagation();});
+            $(this.dropdown).delegate(".select2-input", "change", function(e) {e.stopPropagation();});
+
             // if jquery.mousewheel plugin is installed we can prevent out-of-bounds scrolling of results via mousewheel
             if ($.fn.mousewheel) {
                 results.mousewheel(function (e, delta, deltaX, deltaY) {
