@@ -116,6 +116,26 @@
 </script>
 
 
+<form>
+    <select id="select7">
+        <option value=""></option>
+        <option value="1" selected="selected">Foo</option>
+        <option value="2">Bar</option>
+        <option value="3">Baaaaaaaaaaaaaaz</option>
+    </select>
+</form>
+<script>
+
+    $(function () {
+        $('#select7').select2({
+            allowClear: true,
+            placeholder: 'Loooooong string',
+            width: 'off'
+        });
+    });
+
+</script>
+
 <div style="position: absolute; left:0; top:0; background: white; border: 1px solid red;" id="focus-spy">hello there</div>
 <script>
     $(document).ready(function() {
