@@ -1944,7 +1944,6 @@ the specific language governing permissions and limitations under the Apache Lic
 
                 this.selection.addClass("select2-default");
 
-                this.container.removeClass("select2-allowclear");
                 this.selection.find("abbr").hide();
             }
         },
@@ -2023,7 +2022,6 @@ the specific language governing permissions and limitations under the Apache Lic
             this.selection.removeClass("select2-default");
 
             if (this.opts.allowClear && this.getPlaceholder() !== undefined) {
-                this.container.addClass("select2-allowclear");
                 this.selection.find("abbr").show();
             }
         },
