@@ -2553,7 +2553,7 @@ the specific language governing permissions and limitations under the Apache Lic
         },
 
         // multi
-        postprocessResults: function () {
+        postprocessResults: function (dummy1, dummy2, noHighlightUpdate) {
             var val = this.getVal(),
                 choices = this.results.find(".select2-result"),
                 compound = this.results.find(".select2-result-with-children"),
@@ -2576,7 +2576,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
             });
 
-            if (this.highlight() == -1){
+            if (this.highlight() == -1 && noHighlightUpdate !== false){
                 self.highlight(0);
             }
 
