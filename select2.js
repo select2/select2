@@ -346,6 +346,8 @@ the specific language governing permissions and limitations under the Apache Lic
      * @param options.url url for the data
      * @param options.data a function(searchTerm, pageNumber, context) that should return an object containing query string parameters for the above url.
      * @param options.dataType request data type: ajax, jsonp, other datatatypes supported by jQuery's $.ajax function or the transport function if specified
+     * @param options.cache set to true to disable jquery's cache-busting url parameters
+     * @param options.jsonpCallback set to override the jquery callback function - useful in conjunction with options.cache
      * @param options.traditional a boolean flag that should be true if you wish to use the traditional style of param serialization for the ajax request
      * @param options.quietMillis (optional) milliseconds to wait before making the ajaxRequest, helps debounce the ajax function if invoked too often
      * @param options.results a function(remoteData, pageNumber) that converts data returned form the remote request to the format expected by Select2.
@@ -370,6 +372,8 @@ the specific language governing permissions and limitations under the Apache Lic
                     data = options.data, // ajax data function
                     url = ajaxUrl, // ajax url string or function
                     transport = options.transport || $.ajax,
+                    cache = options.cache || false,
+                    jsonpCallback = options.jsonpCallback || undefined,
                     type = options.type || 'GET', // set type of request (GET or POST)
                     params = {};
 
@@ -391,7 +395,8 @@ the specific language governing permissions and limitations under the Apache Lic
                     dataType: options.dataType,
                     data: data,
                     type: type,
-                    cache: false,
+                    cache: cache,
+                    jsonpCallback: jsonpCallback,
                     success: function (data) {
                         if (requestNumber < requestSequence) {
                             return;
