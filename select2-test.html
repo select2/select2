@@ -8,7 +8,7 @@
     </style>
 </head>
 <body>
-
+<div style="height:200px;"></div>
 <div style="padding: 10px; margin: 10px;">
     <br/><br/><br/>
     <input type="text" size="30"/><br/>
@@ -21,43 +21,56 @@
             <option value="NV">Nevada</option>
             <option value="OR">Oregon</option>
             <option value="WA">Washington</option>
-        <!--
-        <option value="AK1">Alaska</option>
-        <option value="HI1">Hawaii</option>
-        <option value="CA1">California</option>
-        <option value="NV1">Nevada</option>
-        <option value="OR1">Oregon</option>
-        <option value="WA1">Washington</option><option value="AK2">Alaska</option>
-        <option value="HI2">Hawaii</option>
-        <option value="CA2">California</option>
-        <option value="NV2">Nevada</option>
-        <option value="OR2">Oregon</option>
-        <option value="WA2">Washington</option>
-        -->
     </select><br/>
-    <input type="text" size="30"/>
+    <input type="text" size="30"/><br/>
+    <select>
+        <option></option>
+        <option value="AK">Alaska</option>
+        <option value="HI">Hawaii</option>
+        <option value="CA">California</option>
+        <option value="NV">Nevada</option>
+        <option value="OR">Oregon</option>
+        <option value="WA">Washington</option>
+    </select><br/>
+
+
+    <div class="a">INSIDE A</div>
+    <div class="b">INSIDE B<input type="text" value="hello" class="c"/></div>
+    <script>
+        $(function() {
+           $(".c").on("focus", function() {
+              $(this).detach().appendTo($(".a"));
+              this.focus();
+           });
+        });
+    </script>
+
 </div>
 
+<script>
+    $(document).ready(function() {
+        function format(state) {
+            if (!state.id) return state.text; // optgroup
+            return "<img class='flag' src='images/flags/" + state.id.toLowerCase() + ".png'/>" + state.text;
+        }
+        $("#e4").select2({
+            formatResult: format,
+            formatSelection: format,
+            escapeMarkup: function(m) { return m; },
+            allowClear:true,
+            placeholder: "select a state",
+            maximumInputLength:3
+
+        });
+    });
+</script>
+
+<!--
 <label for="e6">Label: </label>
+
 <input type="hidden" class="bigdrop" id="e6" style="width:600px" value="16340"/>
 
-<script>
-       $(document).ready(function() {
-           function format(state) {
-               if (!state.id) return state.text; // optgroup
-               return "<img class='flag' src='images/flags/" + state.id.toLowerCase() + ".png'/>" + state.text;
-           }
-           $("#e4").select2({
-               formatResult: format,
-               formatSelection: format,
-               escapeMarkup: function(m) { return m; },
-               allowClear:true,
-               placeholder: "select a state",
-               maximumInputLength:3
 
-           });
-       });
-</script>
 
 
 <script id="script_e6">
@@ -135,7 +148,7 @@
     });
 
 </script>
-
+-->
 <div style="position: absolute; left:0; top:0; background: white; border: 1px solid red;" id="focus-spy">hello there</div>
 <script>
     $(document).ready(function() {
