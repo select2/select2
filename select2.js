@@ -235,6 +235,11 @@ the specific language governing permissions and limitations under the Apache Lic
     function focus($el) {
         if ($el[0] === document.activeElement) return;
 
+		/* Set focus immediately within event handler, otherwise mobile browsers will not set the focus
+		 See: http://typeof.it/30/how-to-show-the-virtual-keyboard-using-javascript-in-ios/
+		 */
+		$el.focus();
+
         /* set the focus in a 0 timeout - that way the focus is set after the processing
             of the current event has finished - which seems like the only reliable way
             to set focus */
@@ -2278,7 +2283,8 @@ the specific language governing permissions and limitations under the Apache Lic
                 e.stopImmediatePropagation();
             }));
 
-            this.container.delegate(selector, "mousedown", this.bind(function (e) {
+			// Need to bind to "click" additionally so that focus can be set on input field on mobile devices
+			this.container.delegate(selector, "mousedown click", this.bind(function (e) {
                 if (!this.enabled) return;
                 if ($(e.target).closest(".select2-search-choice").length > 0) {
                     // clicked inside a select2 search choice, do not open
