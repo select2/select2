@@ -1,7 +1,7 @@
 /*
 Copyright 2012 Igor Vaynberg
 
-Version: @@ver@@ Timestamp: @@timestamp@@
+Version: 3.3.2 Timestamp: Mon Mar 25 12:14:18 PDT 2013
 
 This software is licensed under the Apache License, Version 2.0 (the "Apache License") or the GNU
 General Public License version 2 (the "GPL License"). You may choose either license to govern your
@@ -1169,7 +1169,11 @@ the specific language governing permissions and limitations under the Apache Lic
                     if (dropdown.length > 0) {
                         self=dropdown.data("select2");
                         if (self.opts.selectOnBlur) {
-                            self.selectHighlighted({noFocus: true});
+                            if(self.opts.createSearchChoice) {
+                                self.selectInput({noFocus: true});
+                            } else {
+                                self.selectHighlighted({noFocus: true});
+                            }
                         }
                         self.close();
                     }
@@ -1564,6 +1568,17 @@ the specific language governing permissions and limitations under the Apache Lic
             if (data) {
                 this.highlight(index);
                 this.onSelect(data, options);
+            }
+        },
+
+        // abstract
+        selectInput: function (options) {
+            var term = this.search.val();
+            if (term) {
+                var data = this.opts.createSearchChoice(term);
+                if (data) {
+                    this.onSelect(data, options);
+                }
             }
         },
 
