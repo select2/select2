@@ -18,7 +18,15 @@ Apache License or the GPL Licesnse is distributed on an "AS IS" BASIS, WITHOUT W
 CONDITIONS OF ANY KIND, either express or implied. See the Apache License and the GPL License for
 the specific language governing permissions and limitations under the Apache License and the GPL License.
 */
- (function ($) {
+(function (factory) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define(['jquery'], factory);
+    } else {
+        // Browser globals
+        factory(jQuery);
+    }
+}(function ($, undefined) {
  	if(typeof $.fn.each2 == "undefined"){
  		$.fn.extend({
  			/*
@@ -36,9 +44,7 @@ the specific language governing permissions and limitations under the Apache Lic
 			}
  		});
  	}
-})(jQuery);
 
-(function ($, undefined) {
     "use strict";
     /*global document, window, jQuery, console */
 
@@ -2891,4 +2897,4 @@ the specific language governing permissions and limitations under the Apache Lic
         }
     };
 
-}(jQuery));
+}));
