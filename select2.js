@@ -961,12 +961,19 @@ the specific language governing permissions and limitations under the Apache Lic
 
             // mozilla and IE
             el.bind("propertychange.select2 DOMAttrModified.select2", sync);
+
+
+            // hold onto a reference of the callback to work around a chromium bug
+            if (this.mutationCallback === undefined) {
+                this.mutationCallback = function (mutations) {
+                    mutations.forEach(sync);
+                }
+            }
+
             // safari and chrome
             if (typeof WebKitMutationObserver !== "undefined") {
                 if (this.propertyObserver) { delete this.propertyObserver; this.propertyObserver = null; }
-                this.propertyObserver = new WebKitMutationObserver(function (mutations) {
-                    mutations.forEach(sync);
-                });
+                this.propertyObserver = new WebKitMutationObserver(this.mutationCallback);
                 this.propertyObserver.observe(el.get(0), { attributes:true, subtree:false });
             }
         },
