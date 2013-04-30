@@ -7,7 +7,7 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     /* inline-block for ie7 */
     zoom: 1;
     *display: inline;
-    vertical-align: top;
+    vertical-align: middle;
 }
 
 .select2-container,
@@ -81,6 +81,10 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     background-image: linear-gradient(top, #eeeeee 0%,#ffffff 90%);
 }
 
+.select2-container.select2-allowclear .select2-choice span {
+    margin-right: 42px;
+}
+
 .select2-container .select2-choice span {
     margin-right: 26px;
     display: block;
@@ -94,11 +98,11 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 }
 
 .select2-container .select2-choice abbr {
-    display: block;
+    display: inline-block;
     width: 12px;
     height: 12px;
     position: absolute;
-    right: 26px;
+    right: 24px;
     top: 8px;
 
     font-size: 1px;
@@ -119,7 +123,11 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     left: 0;
     top: 0;
     z-index: 9998;
+    background-color: #fff;
     opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)"; /* works in IE 8 */
+        filter: "alpha(opacity=0)"; /* expected to work in IE 8 */
+        filter: alpha(opacity=0); /* IE 4-7 */
 }
 
 .select2-drop {
@@ -143,6 +151,15 @@ Version: @@ver@@ Timestamp: @@timestamp@@
             box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
 }
 
+.select2-drop-auto-width {
+    border-top: 1px solid #aaa;
+    width: auto;
+}
+
+.select2-drop-auto-width .select2-search {
+    padding-top: 4px;
+}
+
 .select2-drop.select2-drop-above {
     margin-top: 1px;
     border-top: 1px solid #aaa;
@@ -158,7 +175,7 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 }
 
 .select2-container .select2-choice div {
-    display: block;
+    display: inline-block;
     width: 18px;
     height: 100%;
     position: absolute;
@@ -288,6 +305,20 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     background-image: linear-gradient(top, #ffffff 0%,#eeeeee 50%);
 }
 
+.select2-dropdown-open.select2-drop-above .select2-choice,
+.select2-dropdown-open.select2-drop-above .select2-choices {
+    border: 1px solid #5897fb;
+    border-top-color: transparent;
+
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, white), color-stop(0.5, #eeeeee));
+    background-image: -webkit-linear-gradient(center top, white 0%, #eeeeee 50%);
+    background-image: -moz-linear-gradient(center top, white 0%, #eeeeee 50%);
+    background-image: -o-linear-gradient(top, white 0%, #eeeeee 50%);
+    background-image: -ms-linear-gradient(bottom, #ffffff 0%,#eeeeee 50%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#ffffff',GradientType=0 );
+    background-image: linear-gradient(bottom, #ffffff 0%,#eeeeee 50%);
+}
+
 .select2-dropdown-open .select2-choice div {
     background: transparent;
     border-left: none;
@@ -334,6 +365,8 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     padding: 3px 7px 4px;
     margin: 0;
     cursor: pointer;
+
+    min-height: 1em;
 
     -webkit-touch-callout: none;
       -webkit-user-select: none;
@@ -414,7 +447,7 @@ disabled look for disabled choices in the results dropdown
 }
 
 .select2-container.select2-container-disabled .select2-choice abbr {
-    display: none
+    display: none;
 }
 
 
@@ -573,8 +606,8 @@ disabled look for disabled choices in the results dropdown
     background-color: #f4f4f4;
 }
 
-.select2-container-multi.select2-container-disabled .select2-choices .select2-search-choice .select2-search-choice-close {
-    display: none;
+.select2-container-multi.select2-container-disabled .select2-choices .select2-search-choice .select2-search-choice-close {    display: none;
+    background:none;
 }
 /* end multiselect */
 
@@ -585,10 +618,28 @@ disabled look for disabled choices in the results dropdown
 }
 
 .select2-offscreen {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
     position: absolute;
-    left: -10000px;
+    width: 1px;
 }
 
+.select2-display-none {
+    display: none;
+}
+
+.select2-measure-scrollbar {
+    position: absolute;
+    top: -10000px;
+    left: -10000px;
+    width: 100px;
+    height: 100px;
+    overflow: scroll;
+}
 /* Retina-ize icons */
 
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-resolution: 144dpi)  {
