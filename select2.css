@@ -1,4 +1,4 @@
-/*
+﻿/*
 Version: @@ver@@ Timestamp: @@timestamp@@
 */
 .select2-container {
@@ -497,7 +497,6 @@ disabled look for disabled choices in the results dropdown
     margin: 0;
     padding: 0;
     white-space: nowrap;
-    position: relative;
 }
 
 .select2-container-multi .select2-choices .select2-search-field input {
@@ -513,16 +512,6 @@ disabled look for disabled choices in the results dropdown
        -moz-box-shadow: none;
             box-shadow: none;
     background: transparent !important;
-}
-
-.select2-container-multi .select2-choices .select2-search-field .carret-hider {
-    position: absolute;
-    background-color: white;
-    top: 0;
-    left: 0;
-    width: 6px;
-    height: 100%;
-    display: none;
 }
 
 .select2-container-multi .select2-choices .select2-search-field input.select2-active {

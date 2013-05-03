@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright 2012 Igor Vaynberg
 
 Version: @@ver@@ Timestamp: @@timestamp@@
@@ -1237,7 +1237,7 @@ the specific language governing permissions and limitations under the Apache Lic
         },
 
         // abstract
-        close: function (keepSearchText) {
+        close: function () {
             if (!this.opened()) return;
 
             var cid = this.containerId,
@@ -1256,9 +1256,8 @@ the specific language governing permissions and limitations under the Apache Lic
             this.container.removeClass("select2-dropdown-open");
             this.results.empty();
 
-            if (!keepSearchText) {
+
                this.clearSearch();
-            }
             this.search.removeClass("select2-active");
             this.opts.element.trigger($.Event("close"));
         },
@@ -2150,7 +2149,6 @@ the specific language governing permissions and limitations under the Apache Lic
                 "    <ul class='select2-choices'>",
                 //"<li class='select2-search-choice'><span>California</span><a href="javascript:void(0)" class="select2-search-choice-close"></a></li>" ,
                 "  <li class='select2-search-field'>" ,
-                "   <div class='carret-hider'></div>",
                 "    <input type='text' autocomplete='off' class='select2-input'>" ,
                 "  </li>" ,
                 "</ul>" ,
@@ -2207,8 +2205,6 @@ the specific language governing permissions and limitations under the Apache Lic
 
         selectChoice: function (choice) {
 
-            this.carretHider.css("display", "none");
-
             var selected = this.container.find(".select2-search-choice-focus");
             if (selected.length && choice && choice[0] == selected[0]) {
 
@@ -2218,10 +2214,9 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
                 selected.removeClass("select2-search-choice-focus");
                 if (choice && choice.length) {
-                    this.close(true);
+                    this.close();
                     choice.addClass("select2-search-choice-focus");
                     this.opts.element.trigger("choice-selected", choice);
-                    this.carretHider.css("display", "block");
                 }
             }
         },
@@ -2233,7 +2228,6 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.searchContainer = this.container.find(".select2-search-field");
             this.selection = selection = this.container.find(selector);
-            this.carretHider = $(".carret-hider", this.container);
 
             var _this = this;
             this.selection.on("mousedown", ".select2-search-choice", function (e) {
@@ -2261,9 +2255,11 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.search.attr("tabindex", this.elementTabIndex);
 
+            this.keydowns = 0;
             this.search.bind("keydown", this.bind(function (e) {
                 if (!this.enabled) return;
 
+                ++this.keydowns;
                 var selected = selection.find(".select2-search-choice-focus");
                 var prev = selected.prev(".select2-search-choice:not(.select2-locked)");
                 var next = selected.next(".select2-search-choice:not(.select2-locked)");
@@ -2296,7 +2292,7 @@ the specific language governing permissions and limitations under the Apache Lic
                         this.open();
                     }
                     return;
-                } else if ((e.which === KEY.BACKSPACE
+                } else if (((e.which === KEY.BACKSPACE && this.keydowns == 1)
                     || e.which == KEY.LEFT) && (pos.offset == 0 && !pos.length)) {
 
                     this.selectChoice(selection.find(".select2-search-choice:not(.select2-locked)").last());
@@ -2352,7 +2348,11 @@ the specific language governing permissions and limitations under the Apache Lic
 
             }));
 
-            this.search.bind("keyup", this.bind(this.resizeSearch));
+            this.search.bind("keyup", this.bind(function (e) {
+                this.keydowns = 0;
+                this.resizeSearch();
+            })
+            );
 
             this.search.bind("blur", this.bind(function(e) {
                 this.container.removeClass("select2-container-active");
