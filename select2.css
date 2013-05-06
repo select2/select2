@@ -616,13 +616,14 @@ disabled look for disabled choices in the results dropdown
 .select2-offscreen {
     border: 0;
     clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
+    height: 0;
+    margin: 0;
     overflow: hidden;
     padding: 0;
     position: absolute;
-    width: 1px;
-    left: 0;
+    width: 0;
+    display:block;
+    left: -10000px;
 }
 
 .select2-display-none {
