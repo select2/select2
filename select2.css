@@ -626,6 +626,7 @@ disabled look for disabled choices in the results dropdown
     padding: 0;
     position: absolute;
     width: 1px;
+    left: 0;
 }
 
 .select2-display-none {
