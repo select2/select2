@@ -710,7 +710,8 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.monitorSource();
             }
 
-            if (opts.element.is(":disabled") || opts.element.is("[readonly='readonly']")) this.disable();
+            if (opts.element.is(":disabled")) this.disable();
+            if (opts.element.is("[readonly='readonly']"))  this.disable(true);
 
             // Calculate size of scrollbar
             scrollBarDimensions = scrollBarDimensions || measureScrollbar();
@@ -940,16 +941,14 @@ the specific language governing permissions and limitations under the Apache Lic
                 enabled = this.opts.element.attr("disabled") !== "disabled";
                 readonly = this.opts.element.attr("readonly") === "readonly";
 
-                enabled = enabled && !readonly;
-
-                if (this.enabled !== enabled) {
-                    if (enabled) {
-                        this.enable();
-                    } else {
-                        this.disable();
-                    }
+                if(enabled && !readonly){
+                    this.enable();
+                }else if(readonly){
+                    //Pass in true to make it readonly
+                    this.disable(true);
+                }else{
+                    this.disable();
                 }
-
 
                 syncCssClasses(this.container, this.opts.element, this.opts.adaptContainerCssClass);
                 this.container.addClass(evaluate(this.opts.containerCssClass));
@@ -1014,18 +1013,24 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.enabled=true;
             this.container.removeClass("select2-container-disabled");
-            this.opts.element.removeAttr("disabled");
+            this.opts.element.removeAttr("disabled readonly");
         },
 
         // abstract
-        disable: function() {
+        disable: function(readonly) {
             if (!this.enabled) return;
 
             this.close();
 
             this.enabled=false;
             this.container.addClass("select2-container-disabled");
-            this.opts.element.attr("disabled", "disabled");
+
+            if(readonly){
+                window.c = this.opts.element;
+                this.opts.element.attr("readonly", "readonly");
+            }else{
+                this.opts.element.attr("disabled", "disabled");
+            }
         },
 
         // abstract
