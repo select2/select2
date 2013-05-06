@@ -998,7 +998,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // abstract
         triggerSelect: function(data) {
-            var evt = $.Event("selected", { val: this.id(data), object: data });
+            var evt = $.Event("select2-selecting", { val: this.id(data), object: data });
             this.opts.element.trigger(evt);
             return !evt.isDefaultPrevented();
         },
@@ -1157,7 +1157,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             if (this.opened()) return false;
 
-            event = $.Event("opening");
+            event = $.Event("select2-opening");
             this.opts.element.trigger(event);
             return !event.isDefaultPrevented();
         },
@@ -1282,7 +1282,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
                this.clearSearch();
             this.search.removeClass("select2-active");
-            this.opts.element.trigger($.Event("close"));
+            this.opts.element.trigger($.Event("select2-close"));
         },
 
         // abstract
@@ -1381,7 +1381,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             data = choice.data("select2-data");
             if (data) {
-                this.opts.element.trigger({ type: "highlight", val: this.id(data), choice: data });
+                this.opts.element.trigger({ type: "select2-highlight", val: this.id(data), choice: data });
             }
         },
 
@@ -1576,7 +1576,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
                 postRender();
 
-                this.opts.element.trigger({ type: "loaded", data:data });
+                this.opts.element.trigger({ type: "select2-loaded", data:data });
             })});
         },
 
@@ -1716,7 +1716,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.search.focus();
             this.focusser.prop("disabled", true).val("");
             this.updateResults(true);
-            this.opts.element.trigger($.Event("open"));
+            this.opts.element.trigger($.Event("select2-open"));
         },
 
         // single
@@ -1898,7 +1898,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.setPlaceholder();
 
                 if (triggerChange !== false){
-                    this.opts.element.trigger({ type: "removed", val: this.id(data), choice: data });
+                    this.opts.element.trigger({ type: "select2-removed", val: this.id(data), choice: data });
                     this.triggerChange({removed:data});
                 }
             }
@@ -2040,7 +2040,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.opts.element.val(this.id(data));
             this.updateSelection(data);
 
-            this.opts.element.trigger({ type: "selected", val: this.id(data), choice: data });
+            this.opts.element.trigger({ type: "select2-selected", val: this.id(data), choice: data });
 
             this.close();
 
