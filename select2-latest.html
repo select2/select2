@@ -592,7 +592,7 @@ $("#e8").select2();
 $("#e8_get").click(function () { alert("Selected value is: "+$("#e8").select2("val"));});
 $("#e8_set").click(function () { $("#e8").select2("val", "CA"); });
 $("#e8_cl").click(function() { $("#e8").select2("val", ""); });
-$("#e8_get2").click(function () { alert("Selected data is: "+JSON.stringify($("#e8").select2("data")));});
+$("#e8_get2").click(function () { var data = $("#e8").select2("data"); delete data.element; alert("Selected data is: "+JSON.stringify(data));});
 $("#e8_set2").click(function () { $("#e8").select2("data", {id: "CA", text: "California"}); });
 $("#e8_open").click(function () { $("#e8").select2("open"); });
 $("#e8_close").click(function () { $("#e8").select2("close"); });
