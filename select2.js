@@ -765,7 +765,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     text:element.text(),
                     element: element.get(),
                     css: element.attr("class"),
-                    disabled: equal(element.attr("disabled"), "disabled"),
+                    disabled: element.prop("disabled"),
                     locked: equal(element.attr("locked"), "locked")
                 };
             } else if (element.is("optgroup")) {
@@ -1714,7 +1714,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.search.val(this.focusser.val());
             }
             this.search.focus();
-            this.focusser.attr("disabled", "disabled").val("");
+            this.focusser.prop("disabled", true).val("");
             this.updateResults(true);
             this.opts.element.trigger($.Event("open"));
         },
