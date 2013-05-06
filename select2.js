@@ -739,7 +739,7 @@ the specific language governing permissions and limitations under the Apache Lic
         optionToData: function(element) {
             if (element.is("option")) {
                 return {
-                    id:element.attr("value"),
+                    id:element.attr("value") || element.text(),
                     text:element.text(),
                     element: element.get(),
                     css: element.attr("class"),
