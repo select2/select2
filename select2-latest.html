@@ -853,8 +853,11 @@ $("#e15").select2("container").find("ul.select2-choices").sortable({
               $(document).ready(function () {
 $("#e16").select2();
 $("#e16_2").select2();
-$("#e16_enable").click(function() { $("#e16,#e16_2").select2("enable"); });
-$("#e16_disable").click(function() { $("#e16,#e16_2").select2("disable"); });
+$("#e16_enable").click(function() { $("#e16,#e16_2").select2("enable", true); });
+$("#e16_disable").click(function() { $("#e16,#e16_2").select2("enable", false); });
+$("#e16_readonly").click(function() { $("#e16,#e16_2").select2("readonly", true); });
+$("#e16_writable").click(function() { $("#e16,#e16_2").select2("readonly", false); });
+
               });
           </script>
           <div class="span4">
@@ -862,6 +865,7 @@ $("#e16_disable").click(function() { $("#e16,#e16_2").select2("disable"); });
               <p><select disabled="disabled" id="e16" style="width:300px" class="populate"></select><br/></p>
               <p><select disabled="disabled" id="e16_2" multiple style="width:300px" class="populate"></select><br/></p>
               <p><input type="button" id="e16_enable" class="btn btn-primary" value="Enable"/> <input type="button" id="e16_disable" class="btn btn-warning"value="Disable"/></p>
+              <p><input type="button" id="e16_writable" class="btn btn-primary" value="Writable"/> <input type="button" id="e16_readonly" class="btn btn-warning"value="Readonly"/></p>
           </div>
           <div class="span8">
               <h3>Example Code</h3>
@@ -1556,13 +1560,13 @@ $("#select").select2({
     </div>
     <p>Closes the dropdown</p>
     <div class="row">
-        <div class="span12"><h3>disable</h3></div>
+        <div class="span12"><h3>enable(boolean)</h3></div>
     </div>
-    <p>Disables Select2. During this mode the user is not allowed to manipulate the selection.</p>
+    <p>Enables or disables Select2 and its underlying form component based on the boolean parameter.</p>
     <div class="row">
-        <div class="span12"><h3>enable</h3></div>
+        <div class="span12"><h3>readonly(boolean)</h3></div>
     </div>
-    <p>Enables Select2.</p>
+    <p>Toggles readonly mode on Select2 and its underlying form component based on the boolean parameter.</p>
 
     <div class="row">
     <div class="span12"><h3>container</h3></div>
