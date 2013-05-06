@@ -2243,14 +2243,14 @@ the specific language governing permissions and limitations under the Apache Lic
 
             var _this = this;
             this.selection.on("mousedown", ".select2-search-choice", function (e) {
-                //killEvent(e);                
+                //killEvent(e);
                 _this.search[0].focus();
                 _this.selectChoice($(this));
             })
             //.sortable({
             //    items: " > li",
             //    tolerance: "pointer",
-            //    revert: 100                
+            //    revert: 100
             //});
 
             // rewrite labels from original element to focusser
@@ -2644,7 +2644,7 @@ the specific language governing permissions and limitations under the Apache Lic
         },
 
         // multi
-        postprocessResults: function (dummy1, dummy2, noHighlightUpdate) {
+        postprocessResults: function (data, initial, noHighlightUpdate) {
             var val = this.getVal(),
                 choices = this.results.find(".select2-result"),
                 compound = this.results.find(".select2-result-with-children"),
