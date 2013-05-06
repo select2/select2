@@ -1545,6 +1545,12 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // abstract
         blur: function () {
+            // if tokenizeOnBlur == true, add untokenized input to tags
+            if(this.opts.tokenizeOnBlur && this.search.val() !== "") {
+                var val=this.search.val();
+                if($.trim(val)!='') this.onSelect({id:val,text:val});
+            }
+
             // if selectOnBlur == true, select the currently highlighted option
             if (this.opts.selectOnBlur)
                 this.selectHighlighted({noFocus: true});
