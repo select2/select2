@@ -2,6 +2,7 @@
 Version: @@ver@@ Timestamp: @@timestamp@@
 */
 .select2-container {
+    margin: 0;
     position: relative;
     display: inline-block;
     /* inline-block for ie7 */
