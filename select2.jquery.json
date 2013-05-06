@@ -31,6 +31,6 @@
     "docs": "http://ivaynberg.github.com/select2/",
     "download": "https://github.com/ivaynberg/select2/tags",
     "dependencies": {
-        "jquery": ">=1.4.4"
+        "jquery": ">=1.7.1"
     }
 }
