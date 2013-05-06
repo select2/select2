@@ -609,7 +609,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // abstract
         init: function (opts) {
-            var results, search, resultsSelector = ".select2-results", mask;
+            var results, search, resultsSelector = ".select2-results", disabled, readonly;
 
             // prepare options
             this.opts = opts = this.prepareOpts(opts);
@@ -622,7 +622,6 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.destroy();
             }
 
-            this.enabled=true;
             this.container = this.createContainer();
 
             this.containerId="s2id_"+(opts.element.attr("id") || "autogen"+nextUid());
@@ -710,7 +709,13 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.monitorSource();
             }
 
-            if (opts.element.is(":disabled") || opts.element.is("[readonly='readonly']")) this.disable();
+            var disabled = opts.element.prop("disabled");
+            if (disabled === undefined) disabled = false;
+            this.enable(!disabled);
+
+            var readonly = opts.element.prop("readonly");
+            if (readonly === undefined) readonly = false;
+            this.readonly(readonly);
 
             // Calculate size of scrollbar
             scrollBarDimensions = scrollBarDimensions || measureScrollbar();
@@ -937,19 +942,15 @@ the specific language governing permissions and limitations under the Apache Lic
 
                 // sync enabled state
 
-                enabled = this.opts.element.attr("disabled") !== "disabled";
-                readonly = this.opts.element.attr("readonly") === "readonly";
+                //console.log("sync enabled: ", this._enabled, "readonly: ", this._readonly);
 
-                enabled = enabled && !readonly;
+                var disabled = el.prop("disabled");
+                if (disabled === undefined) disabled = false;
+                this.enable(!disabled);
 
-                if (this.enabled !== enabled) {
-                    if (enabled) {
-                        this.enable();
-                    } else {
-                        this.disable();
-                    }
-                }
-
+                var readonly = el.prop("readonly");
+                if (readonly === undefined) readonly = false;
+                this.readonly(readonly);
 
                 syncCssClasses(this.container, this.opts.element, this.opts.adaptContainerCssClass);
                 this.container.addClass(evaluate(this.opts.containerCssClass));
@@ -1008,24 +1009,46 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.opts.element.blur();
         },
 
-        // abstract
-        enable: function() {
-            if (this.enabled) return;
-
-            this.enabled=true;
-            this.container.removeClass("select2-container-disabled");
-            this.opts.element.removeAttr("disabled");
+        //abstract
+        isInterfaceEnabled: function()
+        {
+            return this.enabledInterface === true;
         },
 
         // abstract
-        disable: function() {
-            if (!this.enabled) return;
+        enableInterface: function() {
+            var enabled = this._enabled && !this._readonly,
+                disabled = !enabled;
 
+            if (enabled === this.enabledInterface) return false;
+
+            this.container.toggleClass("select2-container-disabled", disabled);
             this.close();
+            this.enabledInterface = enabled;
 
-            this.enabled=false;
-            this.container.addClass("select2-container-disabled");
-            this.opts.element.attr("disabled", "disabled");
+            return true;
+        },
+
+        // abstract
+        enable: function(enabled) {
+            if (enabled === undefined) enabled = true;
+            if (this._enabled === enabled) return false;
+            this._enabled = enabled;
+
+            this.opts.element.prop("disabled", !enabled);
+            this.enableInterface();
+            return true;
+        },
+
+        // abstract
+        readonly: function(enabled) {
+            if (enabled === undefined) enabled = false;
+            if (this._readonly === enabled) return false;
+            this._readonly = enabled;
+
+            this.opts.element.prop("readonly", enabled);
+            this.enableInterface();
+            return true;
         },
 
         // abstract
@@ -1659,21 +1682,10 @@ the specific language governing permissions and limitations under the Apache Lic
         },
 
         // single
-        disable: function() {
-            if (!this.enabled) return;
-
-            this.parent.disable.apply(this, arguments);
-
-            this.focusser.attr("disabled", "disabled");
-        },
-
-        // single
-        enable: function() {
-            if (this.enabled) return;
-
-            this.parent.enable.apply(this, arguments);
-
-            this.focusser.removeAttr("disabled");
+        enableInterface: function() {
+            if (this.parent.enableInterface.apply(this, arguments)) {
+                this.focusser.prop("disabled", !this.isInterfaceEnabled());
+            }
         },
 
         // single
@@ -1741,7 +1753,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.focusser.attr("tabindex", this.elementTabIndex);
 
             this.search.bind("keydown", this.bind(function (e) {
-                if (!this.enabled) return;
+                if (!this.isInterfaceEnabled()) return;
 
                 if (e.which === KEY.PAGE_UP || e.which === KEY.PAGE_DOWN) {
                     // prevent the page from scrolling
@@ -1778,7 +1790,7 @@ the specific language governing permissions and limitations under the Apache Lic
             }));
 
             this.focusser.bind("keydown", this.bind(function (e) {
-                if (!this.enabled) return;
+                if (!this.isInterfaceEnabled()) return;
 
                 if (e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e) || e.which === KEY.ESC) {
                     return;
@@ -1814,7 +1826,7 @@ the specific language governing permissions and limitations under the Apache Lic
             }));
 
             selection.delegate("abbr", "mousedown", this.bind(function (e) {
-                if (!this.enabled) return;
+                if (!this.isInterfaceEnabled()) return;
                 this.clear();
                 killEventImmediately(e);
                 this.close();
@@ -1826,7 +1838,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
                 if (this.opened()) {
                     this.close();
-                } else if (this.enabled) {
+                } else if (this.isInterfaceEnabled()) {
                     this.open();
                 }
 
@@ -2198,7 +2210,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 .attr('for', this.search.attr('id'));
 
             this.search.bind("input paste", this.bind(function() {
-                if (!this.enabled) return;
+                if (!this.isInterfaceEnabled()) return;
                 if (!this.opened()) {
                     this.open();
                 }
@@ -2207,7 +2219,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.search.attr("tabindex", this.elementTabIndex);
 
             this.search.bind("keydown", this.bind(function (e) {
-                if (!this.enabled) return;
+                if (!this.isInterfaceEnabled()) return;
 
                 if (e.which === KEY.BACKSPACE && this.search.val() === "") {
                     this.close();
@@ -2286,7 +2298,7 @@ the specific language governing permissions and limitations under the Apache Lic
             }));
 
             this.container.delegate(selector, "mousedown", this.bind(function (e) {
-                if (!this.enabled) return;
+                if (!this.isInterfaceEnabled()) return;
                 if ($(e.target).closest(".select2-search-choice").length > 0) {
                     // clicked inside a select2 search choice, do not open
                     return;
@@ -2298,7 +2310,7 @@ the specific language governing permissions and limitations under the Apache Lic
             }));
 
             this.container.delegate(selector, "focus", this.bind(function () {
-                if (!this.enabled) return;
+                if (!this.isInterfaceEnabled()) return;
                 this.container.addClass("select2-container-active");
                 this.dropdown.addClass("select2-drop-active");
                 this.clearPlaceholder();
@@ -2312,21 +2324,10 @@ the specific language governing permissions and limitations under the Apache Lic
         },
 
         // multi
-        enable: function() {
-            if (this.enabled) return;
-
-            this.parent.enable.apply(this, arguments);
-
-            this.search.removeAttr("disabled");
-        },
-
-        // multi
-        disable: function() {
-            if (!this.enabled) return;
-
-            this.parent.disable.apply(this, arguments);
-
-            this.search.attr("disabled", true);
+        enableInterface: function() {
+            if (this.parent.enableInterface.apply(this, arguments)) {
+                this.search.prop("disabled", !this.isInterfaceEnabled());
+            }
         },
 
         // multi
@@ -2508,7 +2509,7 @@ the specific language governing permissions and limitations under the Apache Lic
               choice.find(".select2-search-choice-close")
                   .bind("mousedown", killEvent)
                   .bind("click dblclick", this.bind(function (e) {
-                  if (!this.enabled) return;
+                  if (!this.isInterfaceEnabled()) return;
 
                   $(e.target).closest(".select2-search-choice").fadeOut('fast', this.bind(function(){
                       this.unselect($(e.target));
@@ -2518,7 +2519,7 @@ the specific language governing permissions and limitations under the Apache Lic
                   })).dequeue();
                   killEvent(e);
               })).bind("focus", this.bind(function () {
-                  if (!this.enabled) return;
+                  if (!this.isInterfaceEnabled()) return;
                   this.container.addClass("select2-container-active");
                   this.dropdown.addClass("select2-drop-active");
               }));
@@ -2784,7 +2785,9 @@ the specific language governing permissions and limitations under the Apache Lic
         var args = Array.prototype.slice.call(arguments, 0),
             opts,
             select2,
-            value, multiple, allowedMethods = ["val", "destroy", "opened", "open", "close", "focus", "isFocused", "container", "onSortStart", "onSortEnd", "enable", "disable", "positionDropdown", "data"];
+            value, multiple,
+            allowedMethods = ["val", "destroy", "opened", "open", "close", "focus", "isFocused", "container", "onSortStart", "onSortEnd", "enable", "readonly", "positionDropdown", "data"],
+            valueMethods = ["val", "opened", "isFocused", "container", "data"];
 
         this.each(function () {
             if (args.length === 0 || typeof(args[0]) === "object") {
@@ -2814,7 +2817,9 @@ the specific language governing permissions and limitations under the Apache Lic
                 } else {
                     value = select2[args[0]].apply(select2, args.slice(1));
                 }
-                if (value !== undefined) {return false;}
+                if (indexOf(args[0], valueMethods) >= 0) {
+                    return false;
+                }
             } else {
                 throw "Invalid arguments to select2 plugin: " + args;
             }
