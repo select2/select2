@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright 2012 Igor Vaynberg
 
 Version: @@ver@@ Timestamp: @@timestamp@@
@@ -260,6 +260,23 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
             }
         }, 0);
+    }
+
+    function getCursorInfo(el) {
+        el = $(el)[0];
+        var offset = 0;
+        var length = 0;
+        if ('selectionStart' in el) {
+            offset = el.selectionStart;
+            length = el.selectionEnd - offset;
+        } else if ('selection' in document) {
+            el.focus();
+            var sel = document.selection.createRange();
+            length = document.selection.createRange().text.length;
+            sel.moveStart('character', -el.value.length);
+            offset = sel.text.length - length;
+        }
+        return { offset: offset, length: length };
     }
 
     function killEvent(event) {
@@ -1261,7 +1278,9 @@ the specific language governing permissions and limitations under the Apache Lic
             this.dropdown.hide();
             this.container.removeClass("select2-dropdown-open");
             this.results.empty();
-            this.clearSearch();
+
+
+               this.clearSearch();
             this.search.removeClass("select2-active");
             this.opts.element.trigger($.Event("close"));
         },
@@ -2196,6 +2215,24 @@ the specific language governing permissions and limitations under the Apache Lic
             return opts;
         },
 
+        selectChoice: function (choice) {
+
+            var selected = this.container.find(".select2-search-choice-focus");
+            if (selected.length && choice && choice[0] == selected[0]) {
+
+            } else {
+                if (selected.length) {
+                    this.opts.element.trigger("choice-deselected", selected);
+                }
+                selected.removeClass("select2-search-choice-focus");
+                if (choice && choice.length) {
+                    this.close();
+                    choice.addClass("select2-search-choice-focus");
+                    this.opts.element.trigger("choice-selected", choice);
+                }
+            }
+        },
+
         // multi
         initContainer: function () {
 
@@ -2203,6 +2240,18 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.searchContainer = this.container.find(".select2-search-field");
             this.selection = selection = this.container.find(selector);
+
+            var _this = this;
+            this.selection.on("mousedown", ".select2-search-choice", function (e) {
+                //killEvent(e);                
+                _this.search[0].focus();
+                _this.selectChoice($(this));
+            })
+            //.sortable({
+            //    items: " > li",
+            //    tolerance: "pointer",
+            //    revert: 100                
+            //});
 
             // rewrite labels from original element to focusser
             this.search.attr("id", "s2id_autogen"+nextUid());
@@ -2218,27 +2267,51 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.search.attr("tabindex", this.elementTabIndex);
 
+            this.keydowns = 0;
             this.search.bind("keydown", this.bind(function (e) {
                 if (!this.isInterfaceEnabled()) return;
 
-                if (e.which === KEY.BACKSPACE && this.search.val() === "") {
-                    this.close();
+                ++this.keydowns;
+                var selected = selection.find(".select2-search-choice-focus");
+                var prev = selected.prev(".select2-search-choice:not(.select2-locked)");
+                var next = selected.next(".select2-search-choice:not(.select2-locked)");
+                var pos = getCursorInfo(this.search);
 
-                    var choices,
-                        selected = selection.find(".select2-search-choice-focus");
-                    if (selected.length > 0) {
+                if (selected.length &&
+                    (e.which == KEY.LEFT || e.which == KEY.RIGHT || e.which == KEY.BACKSPACE || e.which == KEY.DELETE || e.which == KEY.ENTER)) {
+                    var selectedChoice = selected;
+                    if (e.which == KEY.LEFT && prev.length) {
+                        selectedChoice = prev;
+                    }
+                    else if (e.which == KEY.RIGHT) {
+                        selectedChoice = next.length ? next : null;
+                    }
+                    else if (e.which === KEY.BACKSPACE) {
                         this.unselect(selected.first());
                         this.search.width(10);
-                        killEvent(e);
-                        return;
+                        selectedChoice = prev.length ? prev : next;
+                    } else if (e.which == KEY.DELETE) {
+                        this.unselect(selected.first());
+                        this.search.width(10);
+                        selectedChoice = next.length ? next : null;
+                    } else if (e.which == KEY.ENTER) {
+                        selectedChoice = null;
                     }
 
-                    choices = selection.find(".select2-search-choice:not(.select2-locked)");
-                    if (choices.length > 0) {
-                        choices.last().addClass("select2-search-choice-focus");
+                    this.selectChoice(selectedChoice);
+                    killEvent(e);
+                    if (!selectedChoice || !selectedChoice.length) {
+                        this.open();
                     }
+                    return;
+                } else if (((e.which === KEY.BACKSPACE && this.keydowns == 1)
+                    || e.which == KEY.LEFT) && (pos.offset == 0 && !pos.length)) {
+
+                    this.selectChoice(selection.find(".select2-search-choice:not(.select2-locked)").last());
+                    killEvent(e);
+                    return;
                 } else {
-                    selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
+                    this.selectChoice(null);
                 }
 
                 if (this.opened()) {
@@ -2287,12 +2360,16 @@ the specific language governing permissions and limitations under the Apache Lic
 
             }));
 
-            this.search.bind("keyup", this.bind(this.resizeSearch));
+            this.search.bind("keyup", this.bind(function (e) {
+                this.keydowns = 0;
+                this.resizeSearch();
+            })
+            );
 
             this.search.bind("blur", this.bind(function(e) {
                 this.container.removeClass("select2-container-active");
                 this.search.removeClass("select2-focused");
-                this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
+                this.selectChoice(null);
                 if (!this.opened()) this.clearSearch();
                 e.stopImmediatePropagation();
             }));
@@ -2303,6 +2380,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     // clicked inside a select2 search choice, do not open
                     return;
                 }
+                this.selectChoice(null);
                 this.clearPlaceholder();
                 this.open();
                 this.focusSearch();
