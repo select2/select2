@@ -124,11 +124,6 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     left: 0;
     top: 0;
     z-index: 9998;
-    background-color: #fff;
-    opacity: 0;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)"; /* works in IE 8 */
-        filter: "alpha(opacity=0)"; /* expected to work in IE 8 */
-        filter: alpha(opacity=0); /* IE 4-7 */
 }
 
 .select2-drop {
