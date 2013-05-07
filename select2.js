@@ -963,8 +963,6 @@ the specific language governing permissions and limitations under the Apache Lic
 
                 // sync enabled state
 
-                //console.log("sync enabled: ", this._enabled, "readonly: ", this._readonly);
-
                 var disabled = el.prop("disabled");
                 if (disabled === undefined) disabled = false;
                 this.enable(!disabled);
@@ -1160,6 +1158,8 @@ the specific language governing permissions and limitations under the Apache Lic
             var event;
 
             if (this.opened()) return false;
+
+            if (this._enabled === false || this._readonly === true) return false;
 
             event = $.Event("select2-opening");
             this.opts.element.trigger(event);
