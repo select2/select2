@@ -1285,7 +1285,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.results.empty();
 
 
-               this.clearSearch();
+            this.clearSearch();
             this.search.removeClass("select2-active");
             this.opts.element.trigger($.Event("select2-close"));
         },
@@ -1729,7 +1729,7 @@ the specific language governing permissions and limitations under the Apache Lic
             if (!this.opened()) return;
             this.parent.close.apply(this, arguments);
             this.focusser.removeAttr("disabled");
-            focus(this.focusser);
+            this.focusser.focus();
         },
 
         // single
@@ -1791,10 +1791,12 @@ the specific language governing permissions and limitations under the Apache Lic
                         this.moveHighlight((e.which === KEY.UP) ? -1 : 1);
                         killEvent(e);
                         return;
-                    case KEY.TAB:
                     case KEY.ENTER:
                         this.selectHighlighted();
                         killEvent(e);
+                        return;
+                    case KEY.TAB:
+                        this.selectHighlighted({noFocus: true});
                         return;
                     case KEY.ESC:
                         this.cancel(e);
@@ -2328,9 +2330,11 @@ the specific language governing permissions and limitations under the Apache Lic
                         killEvent(e);
                         return;
                     case KEY.ENTER:
-                    case KEY.TAB:
                         this.selectHighlighted();
                         killEvent(e);
+                        return;
+                    case KEY.TAB:
+                        this.selectHighlighted({noFocus:true});
                         return;
                     case KEY.ESC:
                         this.cancel(e);
