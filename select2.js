@@ -736,6 +736,10 @@ the specific language governing permissions and limitations under the Apache Lic
 
             // Calculate size of scrollbar
             scrollBarDimensions = scrollBarDimensions || measureScrollbar();
+
+            this.autofocus = opts.element.prop("autofocus")
+            opts.element.prop("autofocus", false);
+            if (this.autofocus) this.focus();
         },
 
         // abstract
@@ -753,6 +757,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     .removeData("select2")
                     .unbind(".select2")
                     .attr({"tabindex": this.elementTabIndex})
+                    .prop("autofocus", this.autofocus)
                     .show();
             }
         },
@@ -1886,6 +1891,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.initContainerWidth();
             this.opts.element.addClass("select2-offscreen");
             this.setPlaceholder();
+
         },
 
         // single
