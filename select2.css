@@ -99,7 +99,7 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 }
 
 .select2-container .select2-choice abbr {
-    display: inline-block;
+    display: none;
     width: 12px;
     height: 12px;
     position: absolute;
@@ -114,6 +114,11 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     cursor: pointer;
     outline: 0;
 }
+
+.select2-container.select2-allowclear .select2-choice abbr {
+    display: inline-block;
+}
+
 .select2-container .select2-choice abbr:hover {
     background-position: right -11px;
     cursor: pointer;

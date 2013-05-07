@@ -1693,7 +1693,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 "class": "select2-container"
             }).html([
                 "<a href='javascript:void(0)' onclick='return false;' class='select2-choice' tabindex='-1'>",
-                "   <span>&nbsp;</span><abbr class='select2-search-choice-close select2-display-none'></abbr>",
+                "   <span>&nbsp;</span><abbr class='select2-search-choice-close'></abbr>",
                 "   <div><b></b></div>" ,
                 "</a>",
                 "<input class='select2-focusser select2-offscreen' type='text'/>",
@@ -2005,7 +2005,6 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.selection.addClass("select2-default");
 
                 this.container.removeClass("select2-allowclear");
-                this.selection.find("abbr").hide();
             }
         },
 
@@ -2084,7 +2083,6 @@ the specific language governing permissions and limitations under the Apache Lic
 
             if (this.opts.allowClear && this.getPlaceholder() !== undefined) {
                 this.container.addClass("select2-allowclear");
-                this.selection.find("abbr").show();
             }
         },
 
