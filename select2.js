@@ -1761,8 +1761,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             var selection,
                 container = this.container,
-                dropdown = this.dropdown,
-                clickingInside = false;
+                dropdown = this.dropdown;
 
             this.showSearch(this.opts.minimumResultsForSearch >= 0);
 
@@ -1862,7 +1861,10 @@ the specific language governing permissions and limitations under the Apache Lic
             }));
 
             selection.bind("mousedown", this.bind(function (e) {
-                clickingInside = true;
+
+                if (!this.container.hasClass("select2-container-active")) {
+                    this.opts.element.trigger($.Event("select2-focus"));
+                }
 
                 if (this.opened()) {
                     this.close();
@@ -1871,8 +1873,6 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
 
                 killEvent(e);
-
-                clickingInside = false;
             }));
 
             dropdown.bind("mousedown", this.bind(function() { this.search.focus(); }));
@@ -1882,6 +1882,9 @@ the specific language governing permissions and limitations under the Apache Lic
             }));
 
             this.focusser.bind("focus", this.bind(function(){
+                if (!this.container.hasClass("select2-container-active")) {
+                    this.opts.element.trigger($.Event("select2-focus"));
+                }
                 this.container.addClass("select2-container-active");
             })).bind("blur", this.bind(function() {
                 if (!this.opened()) {
@@ -1890,6 +1893,9 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
             }));
             this.search.bind("focus", this.bind(function(){
+                if (!this.container.hasClass("select2-container-active")) {
+                    this.opts.element.trigger($.Event("select2-focus"));
+                }
                 this.container.addClass("select2-container-active");
             }));
 
@@ -2396,6 +2402,9 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
                 this.selectChoice(null);
                 this.clearPlaceholder();
+                if (!this.container.hasClass("select2-container-active")) {
+                    this.opts.element.trigger($.Event("select2-focus"));
+                }
                 this.open();
                 this.focusSearch();
                 e.preventDefault();
@@ -2403,6 +2412,9 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.container.delegate(selector, "focus", this.bind(function () {
                 if (!this.isInterfaceEnabled()) return;
+                if (!this.container.hasClass("select2-container-active")) {
+                    this.opts.element.trigger($.Event("select2-focus"));
+                }
                 this.container.addClass("select2-container-active");
                 this.dropdown.addClass("select2-drop-active");
                 this.clearPlaceholder();
