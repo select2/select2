@@ -1509,6 +1509,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 } else {
                     render("");
                 }
+                if (initial) this.showSearch(true);
                 return;
             }
 
@@ -2040,7 +2041,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             // show the search box if this is the first we got the results and there are enough of them for search
 
-            if (initial === true) {
+            if (initial === true && this.showSearchInput === false) {
                 var min=this.opts.minimumResultsForSearch;
                 if (min>=0) {
                     this.showSearch(countResults(data.results)>=min);
