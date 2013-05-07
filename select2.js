@@ -359,13 +359,11 @@ the specific language governing permissions and limitations under the Apache Lic
      * Produces an ajax-based query function
      *
      * @param options object containing configuration paramters
+     * @param options.params parameter map for the transport ajax call, can contain such options as cache, jsonpCallback, etc. see $.ajax
      * @param options.transport function that will be used to execute the ajax request. must be compatible with parameters supported by $.ajax
      * @param options.url url for the data
      * @param options.data a function(searchTerm, pageNumber, context) that should return an object containing query string parameters for the above url.
      * @param options.dataType request data type: ajax, jsonp, other datatatypes supported by jQuery's $.ajax function or the transport function if specified
-     * @param options.cache set to true to disable jquery's cache-busting url parameters
-     * @param options.jsonpCallback set to override the jquery callback function - useful in conjunction with options.cache
-     * @param options.traditional a boolean flag that should be true if you wish to use the traditional style of param serialization for the ajax request
      * @param options.quietMillis (optional) milliseconds to wait before making the ajaxRequest, helps debounce the ajax function if invoked too often
      * @param options.results a function(remoteData, pageNumber) that converts data returned form the remote request to the format expected by Select2.
      *      The expected format is an object containing the following keys:
@@ -388,11 +386,15 @@ the specific language governing permissions and limitations under the Apache Lic
                 var requestNumber = requestSequence, // this request's sequence number
                     data = options.data, // ajax data function
                     url = ajaxUrl, // ajax url string or function
-                    transport = options.transport || $.ajax,
-                    cache = options.cache || false,
-                    jsonpCallback = options.jsonpCallback || undefined,
-                    type = options.type || 'GET', // set type of request (GET or POST)
-                    params = {};
+                    transport = options.transport || $.fn.select2.defaults.ajax.transport,
+                    // deprecated - to be removed in 4.0  - use params instead
+                    deprecated = {
+                        type: options.type || 'GET', // set type of request (GET or POST)
+                        cache: options.cache || false,
+                        jsonpCallback: options.jsonpCallback||undefined,
+                        dataType: options.dataType||"json"
+                    },
+                    params = $.extend({}, $.fn.select2.defaults.ajax.params, deprecated);
 
                 data = data ? data.call(self, query.term, query.page, query.context) : null;
                 url = (typeof url === 'function') ? url.call(self, query.term, query.page, query.context) : url;
@@ -411,9 +413,6 @@ the specific language governing permissions and limitations under the Apache Lic
                     url: url,
                     dataType: options.dataType,
                     data: data,
-                    type: type,
-                    cache: cache,
-                    jsonpCallback: jsonpCallback,
                     success: function (data) {
                         if (requestNumber < requestSequence) {
                             return;
@@ -3000,6 +2999,14 @@ the specific language governing permissions and limitations under the Apache Lic
             return String(markup).replace(/[&<>"'\/\\]/g, function (match) {
                     return replace_map[match];
             });
+        },
+        ajax: {
+            transport: $.ajax,
+            params: {
+                type: "GET",
+                cache: false,
+                dataType: "json"
+            }
         },
         blurOnChange: false,
         selectOnBlur: false,
