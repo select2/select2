@@ -1775,7 +1775,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 container = this.container,
                 dropdown = this.dropdown;
 
-            this.showSearch(this.opts.minimumResultsForSearch >= 0);
+            this.showSearch(false);
 
             this.selection = selection = container.find(".select2-choice");
 
@@ -2038,12 +2038,13 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.highlight(selected);
             }
 
-            // hide the search box if this is the first we got the results and there are a few of them
+            // show the search box if this is the first we got the results and there are enough of them for search
 
             if (initial === true) {
                 var min=this.opts.minimumResultsForSearch;
-                showSearchInput  = min < 0 ? false : countResults(data.results) >= min;
-                this.showSearch(showSearchInput);
+                if (min>=0) {
+                    this.showSearch(countResults(data.results)>=min);
+                }
             }
 
         },
@@ -2052,9 +2053,10 @@ the specific language governing permissions and limitations under the Apache Lic
         showSearch: function(showSearchInput) {
             this.showSearchInput = showSearchInput;
 
-            this.dropdown.find(".select2-search")[showSearchInput ? "removeClass" : "addClass"]("select2-search-hidden");
+            this.dropdown.find(".select2-search").toggleClass("select2-search-hidden", !showSearchInput);
+            this.dropdown.find(".select2-search").toggleClass("select2-offscreen", !showSearchInput);
             //add "select2-with-searchbox" to the container if search box is shown
-            $(this.dropdown, this.container)[showSearchInput ? "addClass" : "removeClass"]("select2-with-searchbox");
+            $(this.dropdown, this.container).toggleClass("select2-with-searchbox", showSearchInput);
         },
 
         // single

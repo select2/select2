@@ -223,12 +223,6 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     white-space: nowrap;
 }
 
-.select2-search-hidden {
-    display: block;
-    position: absolute;
-    left: -10000px;
-}
-
 .select2-search input {
     width: 100%;
     height: auto !important;
@@ -619,16 +613,16 @@ disabled look for disabled choices in the results dropdown
 }
 
 .select2-offscreen {
-    border: 0;
     clip: rect(0 0 0 0);
-    height: 1;
+    width: 1px;
+    height: 1px;
+    border: 0;
     margin: 0;
-    overflow: hidden;
     padding: 0;
+    overflow: hidden;
     position: absolute;
-    width: 1;
-    display:block;
-    left: -10000px;
+    outline: none;
+    left: 0px;
 }
 
 .select2-display-none {
