@@ -1283,10 +1283,12 @@ the specific language governing permissions and limitations under the Apache Lic
             this.dropdown.removeAttr("id"); // only the active dropdown has the select2-drop id
             this.dropdown.hide();
             this.container.removeClass("select2-dropdown-open");
-            this.results.empty();
 
+            if (!this.opts.preserveQueryOnClose) {
+                this.results.empty();
+                this.clearSearch();
+            }
 
-            this.clearSearch();
             this.search.removeClass("select2-active");
             this.opts.element.trigger($.Event("select2-close"));
         },
@@ -2953,6 +2955,7 @@ the specific language governing permissions and limitations under the Apache Lic
     $.fn.select2.defaults = {
         width: "copy",
         loadMorePadding: 0,
+        preserveQueryOnClose: false,
         closeOnSelect: true,
         openOnEnter: true,
         containerCss: {},
