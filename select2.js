@@ -1716,11 +1716,24 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // single
         opening: function () {
+            var el, range;
             this.parent.opening.apply(this, arguments);
             if (this.showSearchInput !== false) {
+                // IE appends focusser.val() at the end of field :/ so we manually insert it at the beginning using a range
+                // all other browsers handle this just fine
+
                 this.search.val(this.focusser.val());
             }
             this.search.focus();
+            // in IE we have to move the cursor to the end after focussing, otherwise it will be at the beginning and
+            // new text will appear *before* focusser.val()
+            el = this.search.get(0);
+            if (el.createTextRange) {
+                range = el.createTextRange();
+                range.collapse(false);
+                range.select();
+            }
+
             this.focusser.prop("disabled", true).val("");
             this.updateResults(true);
             this.opts.element.trigger($.Event("select2-open"));
