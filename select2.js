@@ -1224,6 +1224,8 @@ the specific language governing permissions and limitations under the Apache Lic
                             self.selectHighlighted({noFocus: true});
                         }
                         self.close();
+                        e.preventDefault();
+                        e.stopPropagation();
                     }
                 });
             }
@@ -1884,6 +1886,7 @@ the specific language governing permissions and limitations under the Apache Lic
             })).bind("blur", this.bind(function() {
                 if (!this.opened()) {
                     this.container.removeClass("select2-container-active");
+                    this.opts.element.trigger($.Event("select2-blur"));
                 }
             }));
             this.search.bind("focus", this.bind(function(){
@@ -2382,6 +2385,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.selectChoice(null);
                 if (!this.opened()) this.clearSearch();
                 e.stopImmediatePropagation();
+                this.opts.element.trigger($.Event("select2-blur"));
             }));
 
             this.container.delegate(selector, "mousedown", this.bind(function (e) {
