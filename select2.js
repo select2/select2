@@ -386,7 +386,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 var requestNumber = requestSequence, // this request's sequence number
                     data = options.data, // ajax data function
                     url = ajaxUrl, // ajax url string or function
-                    transport = options.transport || $.fn.select2.defaults.ajax.transport,
+                    transport = options.transport || $.fn.select2.ajaxDefaults.transport,
                     // deprecated - to be removed in 4.0  - use params instead
                     deprecated = {
                         type: options.type || 'GET', // set type of request (GET or POST)
@@ -394,7 +394,7 @@ the specific language governing permissions and limitations under the Apache Lic
                         jsonpCallback: options.jsonpCallback||undefined,
                         dataType: options.dataType||"json"
                     },
-                    params = $.extend({}, $.fn.select2.defaults.ajax.params, deprecated);
+                    params = $.extend({}, $.fn.select2.ajaxDefaults.params, deprecated);
 
                 data = data ? data.call(self, query.term, query.page, query.context) : null;
                 url = (typeof url === 'function') ? url.call(self, query.term, query.page, query.context) : url;
@@ -2502,7 +2502,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.updateResults(true);
             this.search.focus();
-            this.opts.element.trigger($.Event("open"));
+            this.opts.element.trigger($.Event("select2-open"));
         },
 
         // multi
@@ -3003,18 +3003,19 @@ the specific language governing permissions and limitations under the Apache Lic
                     return replace_map[match];
             });
         },
-        ajax: {
-            transport: $.ajax,
-            params: {
-                type: "GET",
-                cache: false,
-                dataType: "json"
-            }
-        },
         blurOnChange: false,
         selectOnBlur: false,
         adaptContainerCssClass: function(c) { return c; },
         adaptDropdownCssClass: function(c) { return null; }
+    };
+
+    $.fn.select2.ajaxDefaults = {
+        transport: $.ajax,
+        params: {
+            type: "GET",
+            cache: false,
+            dataType: "json"
+        }
     };
 
     // exports
