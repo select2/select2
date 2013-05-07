@@ -13,7 +13,8 @@
     <br/><br/><br/>
     <input type="text" size="30"/><br/>
     <label for="e4">Label: </label>
-    <select id="e4" style="width:300px" class="populate" autofocus>
+    <div style="white-space: nowrap">
+    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<select id="e4" style="width:300px" class="populate" >
             <option></option>
             <option value="AK">Alaska</option>
             <option value="HI">Hawaii</option>
@@ -21,7 +22,7 @@
             <option value="NV">Nevada</option>
             <option value="OR">Oregon</option>
             <option value="WA">Washington</option>
-    </select><br/>
+    </select></div><br/>
     <input type="text" size="30"/><br/>
     <select id="e5" style="width:300px" multiple>
         <option value="AK">Alaska</option>
@@ -60,7 +61,8 @@
             escapeMarkup: function(m) { return m; },
             allowClear:true,
             placeholder: "select a state",
-            maximumInputLength:3
+            maximumInputLength:3,
+            minimumResultsForSearch: 2
 
         });
     });
