@@ -660,22 +660,26 @@ function log(e) {
 }
 $("#e11")
     .on("change", function(e) { log("change "+JSON.stringify({val:e.val, added:e.added, removed:e.removed})); })
-    .on("opening", function() { log("opening"); })
-    .on("open", function() { log("open"); })
-    .on("close", function() { log("close"); })
-    .on("highlight", function(e) { log ("highlighted val="+ e.val+" choice="+ JSON.stringify(e.choice));})
-    .on("selected", function(e) { log ("selected val="+ e.val+" choice="+ JSON.stringify(e.choice));})
-    .on("removed", function(e) { log ("removed val="+ e.val+" choice="+ JSON.stringify(e.choice));})
-    .on("loaded", function(e) { log ("loaded (data property omitted for brevitiy)");});
+    .on("select2-opening", function() { log("opening"); })
+    .on("select2-open", function() { log("open"); })
+    .on("select2-close", function() { log("close"); })
+    .on("select2-highlight", function(e) { log ("highlighted val="+ e.val+" choice="+ JSON.stringify(e.choice));})
+    .on("select2-selecting", function(e) { log ("selecting val="+ e.val+" choice="+ JSON.stringify(e.choice));})
+    .on("select2-removed", function(e) { log ("removed val="+ e.val+" choice="+ JSON.stringify(e.choice));})
+    .on("select2-loaded", function(e) { log ("loaded (data property omitted for brevitiy)");})
+    .on("select2-focus", function(e) { log ("focus");})
+    .on("select2-blur", function(e) { log ("blur");});
 $("#e11_2")
     .on("change", function(e) { log("change "+JSON.stringify({val:e.val, added:e.added, removed:e.removed})); })
-    .on("opening", function() { log("opening"); })
-    .on("open", function() { log("open"); })
-    .on("close", function() { log("close"); })
-    .on("highlight", function(e) { log ("highlighted val="+ e.val+" choice="+ JSON.stringify(e.choice));})
-    .on("selected", function(e) { log ("selected val="+ e.val+" choice="+ JSON.stringify(e.choice));})
-    .on("removed", function(e) { log ("removed val="+ e.val+" choice="+ JSON.stringify(e.choice));})
-    .on("loaded", function(e) { log ("loaded (data property omitted for brevitiy)");});
+    .on("select2-opening", function() { log("opening"); })
+    .on("select2-open", function() { log("open"); })
+    .on("select2-close", function() { log("close"); })
+    .on("select2-highlight", function(e) { log ("highlighted val="+ e.val+" choice="+ JSON.stringify(e.choice));})
+    .on("select2-selecting", function(e) { log ("selecting val="+ e.val+" choice="+ JSON.stringify(e.choice));})
+    .on("select2-removed", function(e) { log ("removed val="+ e.val+" choice="+ JSON.stringify(e.choice));})
+    .on("select2-loaded", function(e) { log ("loaded (data property omitted for brevitiy)");})
+    .on("select2-focus", function(e) { log ("focus");})
+    .on("select2-blur", function(e) { log ("blur");});
 });
 </script>
           <div class="span4">
@@ -1605,7 +1609,7 @@ $("#select").select2({
       </div>
         <div class="row zebra">
             <div class="span12">
-                <h3>opening</h3>
+                <h3>select2-opening</h3>
                 <p>Fired before the dropdown is shown.</p>
                 <p>The event listener can prevent the opening by calling <code>preventDefault()</code> on the supplied event object.</p>
                 </p>
@@ -1613,14 +1617,14 @@ $("#select").select2({
         </div>
         <div class="row">
             <div class="span12">
-                <h3>open</h3>
+                <h3>select2-open</h3>
                 <p>Fired after the dropdown is shown.</p>
                 </p>
             </div>
         </div>
         <div class="row zebra">
             <div class="span12">
-                <h3>highlight</h3>
+                <h3>select2-highlight</h3>
                 <p>Fired when a choice is highlighted in the dropdown.</p>
                 </p>
                 <p>The event object contains the following custom properties:
@@ -1631,9 +1635,9 @@ $("#select").select2({
                 </p>
             </div>
         </div>
-        <div class="row zebra">
+        <div class="row">
             <div class="span12">
-                <h3>select</h3>
+                <h3>select2-selecting</h3>
                 <p>Fired when a choice is being selected in the dropdown, but before any modification has been made to the selection.
                     This event is used to allow the user to reject selection by calling <code>event.preventDefault()</code></p>
                 </p>
@@ -1645,22 +1649,9 @@ $("#select").select2({
                 </p>
             </div>
         </div>
-        <div class="row">
-            <div class="span12">
-                <h3>selected</h3>
-                <p>Fired when a choice is selected in the dropdown.</p>
-                </p>
-                <p>The event object contains the following custom properties:
-                <dl>
-                    <dt>val</dt><dd>the id of the highlighted choice object</dd>
-                    <dt>object</dt><dd>the choice object that was selected</dd>
-                </dl>
-                </p>
-            </div>
-        </div>
         <div class="row zebra">
             <div class="span12">
-                <h3>removed</h3>
+                <h3>select2-removed</h3>
                 <p>Fired when a choice is removed or cleared</p>
                 </p>
                 <p>The event object contains the following custom properties:
@@ -1673,7 +1664,7 @@ $("#select").select2({
         </div>
         <div class="row">
             <div class="span12">
-                <h3>loaded</h3>
+                <h3>select2-loaded</h3>
                 <p>Fired when query function is done loading the data and the results list has been updated</p>
                 </p>
                 <p>The event object contains the following custom properties:
@@ -1683,8 +1674,20 @@ $("#select").select2({
                 </p>
             </div>
         </div>
-
-
+        <div class="row zebra">
+            <div class="span12">
+                <h3>select2-focus</h3>
+                <p>Fired when the control is focussed
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span12">
+                <h3>select2-blur</h3>
+                <p>Fired when the control is blurred
+                </p>
+            </div>
+        </div>
       </section>
 
     <div class="row">

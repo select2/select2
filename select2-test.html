@@ -8,12 +8,12 @@
     </style>
 </head>
 <body>
-<div style="height:200px;"></div>
+<!-- <div style="height:200px;"></div> -->
 <div style="padding: 10px; margin: 10px;">
     <br/><br/><br/>
     <input type="text" size="30"/><br/>
     <label for="e4">Label: </label>
-    <select id="e4" style="width:300px" class="populate">
+    <select id="e4" style="width:300px" class="populate" autofocus>
             <option></option>
             <option value="AK">Alaska</option>
             <option value="HI">Hawaii</option>
@@ -23,8 +23,7 @@
             <option value="WA">Washington</option>
     </select><br/>
     <input type="text" size="30"/><br/>
-    <select>
-        <option></option>
+    <select id="e5" style="width:300px" multiple>
         <option value="AK">Alaska</option>
         <option value="HI">Hawaii</option>
         <option value="CA">California</option>
@@ -32,8 +31,9 @@
         <option value="OR">Oregon</option>
         <option value="WA">Washington</option>
     </select><br/>
+    <input type="text" size="30"/><br/>
 
-
+<!--
     <div class="a">INSIDE A</div>
     <div class="b">INSIDE B<input type="text" value="hello" class="c"/></div>
     <script>
@@ -44,7 +44,7 @@
            });
         });
     </script>
-
+-->
 </div>
 
 <script>
@@ -53,6 +53,7 @@
             if (!state.id) return state.text; // optgroup
             return "<img class='flag' src='images/flags/" + state.id.toLowerCase() + ".png'/>" + state.text;
         }
+        $("#e5").select2();
         $("#e4").select2({
             formatResult: format,
             formatSelection: format,
@@ -161,6 +162,8 @@
             window.setTimeout(update, 100);
         };
         update();
+
+
     });
 </script>
 
