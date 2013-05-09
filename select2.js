@@ -2236,7 +2236,21 @@ the specific language governing permissions and limitations under the Apache Lic
                             return is_match;
                         },
                         callback: !$.isFunction(callback) ? $.noop : function() {
-                            callback(matches);
+                            // reorder matches based on the order they appear in the ids array because right now
+                            // they are in the order in which they appear in data array
+                            var ordered = [];
+                            for (var i = 0; i < ids.length; i++) {
+                                var id = ids[i];
+                                for (var j = 0; j < matches.length; j++) {
+                                    var match = matches[j];
+                                    if (equal(id, opts.id(match))) {
+                                        ordered.push(match);
+                                        matches.splice(j, 1);
+                                        break;
+                                    }
+                                }
+                            }
+                            callback(ordered);
                         }
                     });
                 };
