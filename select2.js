@@ -756,7 +756,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     .removeData("select2")
                     .unbind(".select2")
                     .attr({"tabindex": this.elementTabIndex})
-                    .prop("autofocus", this.autofocus)
+                    .prop("autofocus", this.autofocus||false)
                     .show();
             }
         },
