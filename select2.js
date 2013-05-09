@@ -1183,7 +1183,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             if (!this.shouldOpen()) return false;
 
-            window.setTimeout(this.bind(this.opening), 1);
+            this.opening();
 
             return true;
         },
