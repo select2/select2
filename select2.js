@@ -2416,6 +2416,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.search.removeClass("select2-focused");
                 this.selectChoice(null);
                 if (!this.opened()) this.clearSearch();
+                this.opts.element.trigger($.Event("blur"));
                 e.stopImmediatePropagation();
                 this.opts.element.trigger($.Event("select2-blur"));
             }));
