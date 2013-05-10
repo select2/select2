@@ -724,6 +724,10 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.monitorSource();
             }
 
+            if (opts.maximumInputLength !== null) {
+                this.search.attr("maxlength", opts.maximumInputLength);
+            }
+
             var disabled = opts.element.prop("disabled");
             if (disabled === undefined) disabled = false;
             this.enable(!disabled);
