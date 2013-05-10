@@ -892,7 +892,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     // ignore the placeholder option if there is one
                     if (this.getPlaceholder() !== undefined && children.length > 0) {
                         firstChild = children[0];
-                        if ($(firstChild).text() === "") {
+                        if ($.trim($(firstChild).text()) === "") {
                             children=children.not(firstChild);
                         }
                     }
@@ -1995,7 +1995,7 @@ the specific language governing permissions and limitations under the Apache Lic
         getPlaceholder: function() {
             // if a placeholder is specified on a single select without the first empty option ignore it
             if (this.select) {
-                if (this.select.find("option").first().text() !== "") {
+                if ($.trim(this.select.find("option").first().text()) !== "") {
                     return undefined;
                 }
             }
@@ -2005,13 +2005,10 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // single
         setPlaceholder: function () {
-            var placeholder = this.getPlaceholder();
+            var placeholder = this.getPlaceholder(),
+                value = this.opts.element.val();
 
-            if (this.opts.element.val() === "" && placeholder !== undefined) {
-
-                // check for a first blank option if attached to a select
-                if (this.select && this.select.find("option:first").text() !== "") return;
-
+            if (placeholder !== undefined && (value === "" || value == 0)) {
                 this.selection.find("span").html(this.opts.escapeMarkup(placeholder));
 
                 this.selection.addClass("select2-default");
