@@ -612,7 +612,7 @@ disabled look for disabled choices in the results dropdown
     text-decoration: underline;
 }
 
-.select2-offscreen {
+.select2-offscreen, .select2-offscreen:focus {
     clip: rect(0 0 0 0);
     width: 1px;
     height: 1px;
@@ -621,7 +621,7 @@ disabled look for disabled choices in the results dropdown
     padding: 0;
     overflow: hidden;
     position: absolute;
-    outline: none;
+    outline: 0;
     left: 0px;
 }
 
