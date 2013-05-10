@@ -247,7 +247,7 @@ $("#e10_4").select2({
             <li>Loading...</li>
             <script>
                 $(function() {
-                    var url="https://api.github.com/repos/ivaynberg/select2/issues?state=closed&milestone=8";
+                    var url="https://api.github.com/repos/ivaynberg/select2/issues?state=closed&milestone=8&per_page=100";
                     $.ajax({
                         url: url,
                         dataType: "jsonp"
@@ -259,7 +259,7 @@ $("#e10_4").select2({
                                     var markup=template
                                             .replace(/\$url/g, this.html_url)
                                             .replace(/\$num/g, this.number)
-                                            .replace(/\$title/g, this.title)
+                                            .replace(/\$title/g, this.title.replace("<", "&lt;"))
                                     list.append(markup);
                                 });
 
