@@ -2,7 +2,7 @@
 layout: main
 title: Select2 Latest
 group: navigation
-version: 3.4
+version: 4.0
 ---
 
 <link href="select2-master/select2.css?ts={{ site.time | date_to_xmlschema | cgi_escape}}" rel="stylesheet"/>
@@ -241,13 +241,14 @@ $("#e10_4").select2({
 
 
 <section id="changelog">
-    <h2>Changelog <span id="milestones"></span> <span id="totalissues"></span></h2>
+    <h2>Changelog <span id="milestones"><small>(Loading...)</small></span> <span id="totalissues"></span></h2>
     <div class="row"><div class="span12">
-        <ul>
+        <a href="#changelog" style="display:none" class="details">show/hide details</a>
+        <ul style="display:none">
             <li>Loading...</li>
             <script>
                 $(function() {
-                    var url="https://api.github.com/repos/ivaynberg/select2/issues?state=closed&milestone=8&per_page=100";
+                    var url="https://api.github.com/repos/ivaynberg/select2/issues?state=closed&milestone=5&per_page=100";
                     $.ajax({
                         url: url,
                         dataType: "jsonp"
@@ -276,23 +277,23 @@ $("#e10_4").select2({
                                     }
                                 }
                                 $("#milestones").html(milestones.join(", "));
-
+                                $("#changelog .details").show();
 
                             }).fail(function() {
                                 $("#changelog ul").empty().append("<li class='alert alert-error'>Error retrieving changelog</li>");
                             });
+                    $("#changelog .details").on("click", function() { $("#changelog ul").toggle(); });
                 });
             </script>
         </ul>
     </div></div>
 </section>
-
         <section>
             <h2>Browser Compatibility</h2>
             <ul>
-                <li>IE 7+</li>
+                <li>IE 8+</li>
                 <li>Chrome 8+</li>
-                <li>Firefox 3.5+</li>
+                <li>Firefox 10++</li>
                 <li>Safari 3+</li>
                 <li>Opera 10.6+</li>
             </ul>
@@ -1448,6 +1449,7 @@ $("#select").select2({
 
                 </table>
                 <p class="alert alert-warning">In order for this function to work Select2 should be attached to a <code>input type='hidden'</code> tag instead of a <code>select</code>.</p>
+                <p class="alert alert-info">For documentation of the data format see the <a href="#doc-query">query</a> function</p>
             </td></tr>
             <tr><td>data</td><td>array/object</td><td>
                 Options for the built in query function that works with arrays.

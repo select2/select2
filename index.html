@@ -1,12 +1,12 @@
 ---
 layout: main
-title: Select2 3.3.2
+title: Select2
 group: navigation
-version: 3.3.2
+version: 3.4.0
 ---
 
-<link href="select2-3.3.2/select2.css" rel="stylesheet"/>
-<script src="select2-3.3.2/select2.js"></script>
+<link href="select2-master/select2.css?ts={{ site.time | date_to_xmlschema | cgi_escape}}" rel="stylesheet"/>
+<script src="select2-master/select2.js?ts={{ site.time | date_to_xmlschema | cgi_escape}}"></script>
 
 <script id="script_e1">
 
@@ -186,6 +186,11 @@ $("#e10_3").select2({
     formatSelection: format,
     formatResult: format
 });
+$("#e10_4").select2({
+    data:function() { return { text:'tag', results: data }; },
+    formatSelection: format,
+    formatResult: format
+});
 
 });
 </script>
@@ -223,26 +228,27 @@ $("#e10_3").select2({
       </header>
 
 
-        <section id="changelog">
-            <h2>Changelog <span id="milestones"></span> <span id="totalissues"></span></h2>
-            <div class="row"><div class="span12">
-                <ul>
-                    <li>Loading...</li>
-                    <script>
-                        $(function() {
-                            var url="https://api.github.com/repos/ivaynberg/select2/issues?state=closed&milestone=10";
-                            $.ajax({
-                                url: url,
-                                dataType: "jsonp"
-                            }).done(function(issues) {
+<section id="changelog">
+    <h2>Changelog <span id="milestones"><small>(Loading...)</small></span> <span id="totalissues"></span></h2>
+    <div class="row"><div class="span12">
+        <a href="#changelog" style="display:none" class="details">show/hide details</a>
+        <ul style="display:none">
+            <li>Loading...</li>
+            <script>
+                $(function() {
+                    var url="https://api.github.com/repos/ivaynberg/select2/issues?state=closed&milestone=8&per_page=100";
+                    $.ajax({
+                        url: url,
+                        dataType: "jsonp"
+                    }).done(function(issues) {
                                 var list=$("#changelog ul");
                                 var template="<li><a href='$url'><span>#$num</span> </a>$title</li>";
                                 list.empty();
                                 $.each(issues.data, function() {
                                     var markup=template
-                                        .replace(/\$url/g, this.html_url)
-                                        .replace(/\$num/g, this.number)
-                                        .replace(/\$title/g, this.title)
+                                            .replace(/\$url/g, this.html_url)
+                                            .replace(/\$num/g, this.number)
+                                            .replace(/\$title/g, this.title.replace("<", "&lt;"))
                                     list.append(markup);
                                 });
 
@@ -259,23 +265,24 @@ $("#e10_3").select2({
                                     }
                                 }
                                 $("#milestones").html(milestones.join(", "));
-
+                                $("#changelog .details").show();
 
                             }).fail(function() {
                                 $("#changelog ul").empty().append("<li class='alert alert-error'>Error retrieving changelog</li>");
                             });
-                        });
-                    </script>
-                </ul>
-            </div></div>
-        </section>
+                    $("#changelog .details").on("click", function() { $("#changelog ul").toggle(); });
+                });
+            </script>
+        </ul>
+    </div></div>
+</section>
 
         <section>
             <h2>Browser Compatibility</h2>
             <ul>
-                <li>IE 7+</li>
+                <li>IE 8+</li>
                 <li>Chrome 8+</li>
-                <li>Firefox 3.5+</li>
+                <li>Firefox 10++</li>
                 <li>Safari 3+</li>
                 <li>Opera 10.6+</li>
             </ul>
@@ -525,6 +532,11 @@ $("#e19").select2({ maximumSelectionSize: 3 });
              <p>
                  <input type="hidden" id="e10_3" style="width:300px"/>
              </p>
+             <p><code>data</code> can also itself be a function that returns a results object:</p>
+             <p>
+                 <input type="hidden" id="e10_4" style="width:300px"/>
+             </p>
+
          </div>
          <div class="span8">
            <h3>Example Code</h3>
@@ -574,7 +586,7 @@ $("#e8_get2").click(function () { var data = $("#e8").select2("data"); delete da
 $("#e8_set2").click(function () { $("#e8").select2("data", {id: "CA", text: "California"}); });
 $("#e8_open").click(function () { $("#e8").select2("open"); });
 $("#e8_close").click(function () { $("#e8").select2("close"); });
-$("#e8_2").select2();
+$("#e8_2").select2({placeholder: "Select a state"});
 $("#e8_2_get").click(function () { alert("Selected value is: "+$("#e8_2").select2("val"));});
 $("#e8_2_set").click(function () { $("#e8_2").select2("val", ["CA","MA"]); });
 $("#e8_2_get2").click(function () { alert("Selected value is: "+JSON.stringify($("#e8_2").select2("data")));});
@@ -609,7 +621,7 @@ $("#e8_2_close").click(function () { $("#e8_2").select2("close"); });
                   <input type="button" class="btn-warning" id="e8_2_close" value="Close"/>
                 </p>
               <p>
-                  <select id="e8_2" multiple style="width:300px" class="populate"></select><br/>
+                  <select id="e8_2" multiple style="width:300px" class="populate"><option></option></select><br/>
               </p>
           </div>
           <div class="span8">
@@ -637,11 +649,27 @@ function log(e) {
     e.animate({opacity:1}, 10000, 'linear', function() { e.animate({opacity:0}, 2000, 'linear', function() {e.remove(); }); });
 }
 $("#e11")
-    .on("change", function(e) { log(JSON.stringify({val:e.val, added:e.added, removed:e.removed})); })
-    .on("open", function() { log("open"); });
+    .on("change", function(e) { log("change "+JSON.stringify({val:e.val, added:e.added, removed:e.removed})); })
+    .on("select2-opening", function() { log("opening"); })
+    .on("select2-open", function() { log("open"); })
+    .on("select2-close", function() { log("close"); })
+    .on("select2-highlight", function(e) { log ("highlighted val="+ e.val+" choice="+ JSON.stringify(e.choice));})
+    .on("select2-selecting", function(e) { log ("selecting val="+ e.val+" choice="+ JSON.stringify(e.choice));})
+    .on("select2-removed", function(e) { log ("removed val="+ e.val+" choice="+ JSON.stringify(e.choice));})
+    .on("select2-loaded", function(e) { log ("loaded (data property omitted for brevitiy)");})
+    .on("select2-focus", function(e) { log ("focus");})
+    .on("select2-blur", function(e) { log ("blur");});
 $("#e11_2")
-    .on("change", function(e) { log(JSON.stringify({val:e.val, added:e.added, removed:e.removed})); })
-    .on("open", function() { log("open"); });
+    .on("change", function(e) { log("change "+JSON.stringify({val:e.val, added:e.added, removed:e.removed})); })
+    .on("select2-opening", function() { log("opening"); })
+    .on("select2-open", function() { log("open"); })
+    .on("select2-close", function() { log("close"); })
+    .on("select2-highlight", function(e) { log ("highlighted val="+ e.val+" choice="+ JSON.stringify(e.choice));})
+    .on("select2-selecting", function(e) { log ("selecting val="+ e.val+" choice="+ JSON.stringify(e.choice));})
+    .on("select2-removed", function(e) { log ("removed val="+ e.val+" choice="+ JSON.stringify(e.choice));})
+    .on("select2-loaded", function(e) { log ("loaded (data property omitted for brevitiy)");})
+    .on("select2-focus", function(e) { log ("focus");})
+    .on("select2-blur", function(e) { log ("blur");});
 });
 </script>
           <div class="span4">
@@ -819,8 +847,11 @@ $("#e15").select2("container").find("ul.select2-choices").sortable({
               $(document).ready(function () {
 $("#e16").select2();
 $("#e16_2").select2();
-$("#e16_enable").click(function() { $("#e16,#e16_2").select2("enable"); });
-$("#e16_disable").click(function() { $("#e16,#e16_2").select2("disable"); });
+$("#e16_enable").click(function() { $("#e16,#e16_2").select2("enable", true); });
+$("#e16_disable").click(function() { $("#e16,#e16_2").select2("enable", false); });
+$("#e16_readonly").click(function() { $("#e16,#e16_2").select2("readonly", true); });
+$("#e16_writable").click(function() { $("#e16,#e16_2").select2("readonly", false); });
+
               });
           </script>
           <div class="span4">
@@ -828,6 +859,7 @@ $("#e16_disable").click(function() { $("#e16,#e16_2").select2("disable"); });
               <p><select disabled="disabled" id="e16" style="width:300px" class="populate"></select><br/></p>
               <p><select disabled="disabled" id="e16_2" multiple style="width:300px" class="populate"></select><br/></p>
               <p><input type="button" id="e16_enable" class="btn btn-primary" value="Enable"/> <input type="button" id="e16_disable" class="btn btn-warning"value="Disable"/></p>
+              <p><input type="button" id="e16_writable" class="btn btn-primary" value="Writable"/> <input type="button" id="e16_readonly" class="btn btn-warning"value="Readonly"/></p>
           </div>
           <div class="span8">
               <h3>Example Code</h3>
@@ -1015,6 +1047,7 @@ $(document).ready(function () {
                     is useful for cases where local data is used with just a few results, in which case the search box
                     is not very useful and wastes screen space.
                 </p>
+                <p>The option can be set to a <code>negative value</code> to permanently hide the search field</p>
                 <p class="alert alert-info">Only applies to single-value select boxes</p>
             </td>
             </tr>
@@ -1082,7 +1115,7 @@ $(document).ready(function () {
                 <td>boolean</td>
                 <td>
                     <p>
-                        If set to false the dropdown is not closed after a selection is made, allowing for rapid selection of multiple items. By default this option is set to <code>true</code>.
+                       If set to false the dropdown is not closed after a selection is made, allowing for rapid selection of multiple items. By default this option is set to <code>true</code>.
                     </p>
 
                     <p class="alert alert-info">
@@ -1321,6 +1354,7 @@ $("#select").select2({
                     <pre>query(options)</pre>
                     <table class="table table-bordered table-striped">
                         <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                        <tr><td>options.element</td><td>jquery object</td><td>The element Select2 is attached to</td></tr>
                         <tr><td>options.term</td><td>string</td><td>Search string entered by user</td></tr>
                         <tr><td>options.page</td><td>int</td><td>1-based page number tracked by Select2 for use with infinite scrolling of results</td></tr>
                         <tr><td>options.context</td><td>object</td><td>An object that persists across the lifecycle of queries for the same search term (the query to retrieve the initial results, and subsequent queries to retrieve more result pages for the same search term). When this function is first called for a new search term this object will be null. The user may choose to set any object in the <code>results.context</code> field - this object will then be used as the context parameter for all calls to the <code>query</code> method that will load more search results for the initial search term. The object will be reset back to null when a new search term is queried. This feature is useful when a page number is not easily mapped against the server side paging mechanism. For example, some server side paging mechanism may return a &quot;continuation token&quot; that needs to be passed back to them in order to retrieve the next page of search results.</td></tr>
@@ -1376,6 +1410,8 @@ $("#select").select2({
                     <tr><td>url</td><td>string/function</td><td>String containing the ajax url or a function that returns such a string.</td></tr>
                     <tr><td>dataType</td><td>string</td><td>Data type for the request. <code>ajax</code>, <code>jsonp</code>, other formats supported by jquery</td></tr>
                     <tr><td>quietMillis</td><td>int</td><td>Number of milliseconds to wait for the user to stop typing before issuing the ajax request</td></tr>
+                    <tr><td>cache</td><td>boolean</td><td>If set to <code>false</code>, it will force requested pages not to be cached by the browser. Default is <code>false</code></td></tr>
+                    <tr><td>jsonpCallback</td><td>string/function</td><td>The callback function name for a JSONP request. This value will be used instead of the random name automatically generated by jQuery. It is preferable to let jQuery generate a unique name as it'll make it easier to manage the requests and provide callbacks and error handling. You may want to specify the callback when you want to enable better browser caching of GET requests.</td></tr>
                     <tr><td>data</td><td>function</td><td>
                         Function to generate query parameters for the ajax request.
                         <pre>data(term, page)</pre>
@@ -1398,8 +1434,11 @@ $("#select").select2({
                             <tr><td>&lt;returns&gt;</td><td>object</td><td>Results object. See &quot;options.callback&quot; in the &quot;query&quot; function for format.</td></tr>
                         </table>
                     </td></tr>
+                    <tr><td>params</td><td>object/function</td><td>An object or a function that returns an object that contains extra parameters that will be passed to the transport. For example it can be used to set the content type: <code>{contentType: "application/json;charset=utf-8"}</code></td></tr>
+
                 </table>
                 <p class="alert alert-warning">In order for this function to work Select2 should be attached to a <code>input type='hidden'</code> tag instead of a <code>select</code>.</p>
+                <p class="alert alert-info">For documentation of the data format see the <a href="#doc-query">query</a> function</p>
             </td></tr>
             <tr><td>data</td><td>array/object</td><td>
                 Options for the built in query function that works with arrays.
@@ -1424,6 +1463,29 @@ $("#select").select2({
             </td></tr>
             <tr><td>dropdownCssClass</td><td>function/string</td><td>
                 Css class that will be added to select2's dropdown container
+            </td></tr>
+            <tr><td>dropdownAutoWidth</td><td>boolean</td><td>
+                When set to <code>true</code> attempts to automatically size the width of the dropdown based on content inside.
+            </td></tr>
+            <tr><td>adaptContainerCssClass</td><td>function</td><td>
+                Function that filters/renames css classes as they are copied from the source tag to the select2 container tag.
+                <pre>adaptContainerCssClass(clazz)</pre>
+                <table class="table table-bordered table-striped">
+                    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                    <tr><td>clazz</td><td>string</td><td>Css class being copied</td></tr>
+                    <tr><td>&lt;returns&gt;</td><td>string</td><td>Css class to be applied or <code>null/undefined/''</code> to not apply it</td></tr>
+                </table>
+                The default implementation applies all classes without modification.
+            </td></tr>
+            <tr><td>adaptDropdownCssClass</td><td>function</td><td>
+                Function that filters/renames css classes as they are copied from the source tag to the select2 dropdown tag.
+                <pre>adaptDropdownCssClass(clazz)</pre>
+                <table class="table table-bordered table-striped">
+                    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                    <tr><td>clazz</td><td>string</td><td>Css class being copied</td></tr>
+                    <tr><td>&lt;returns&gt;</td><td>string</td><td>Css class to be applied or <code>null/undefined/''</code> to not apply it</td></tr>
+                </table>
+                The default implementation always returns <code>null</code> thereby filtering out all classes.
             </td></tr>
             <tr><td>escapeMarkup</td><td>function</td><td>
                 <code>String escapeMarkup(String markup)</code>
@@ -1477,6 +1539,8 @@ $("#select").select2({
         </div>
         <p>Gets or sets the selection. Analogous to <code>val</code> method, but works with objects instead of ids.</p>
         <p><code>data</code> method invoked on a single-select with an unset value will return <code>null</code>, while a <code>data</code> method invoked on an empty multi-select will return <code>[]</code></p>
+
+
     <div class="row">
         <div class="span12"><h3>destroy</h3></div>
     </div>
@@ -1491,13 +1555,13 @@ $("#select").select2({
     </div>
     <p>Closes the dropdown</p>
     <div class="row">
-        <div class="span12"><h3>disable</h3></div>
+        <div class="span12"><h3>enable(boolean)</h3></div>
     </div>
-    <p>Disables Select2. During this mode the user is not allowed to manipulate the selection.</p>
+    <p>Enables or disables Select2 and its underlying form component based on the boolean parameter.</p>
     <div class="row">
-        <div class="span12"><h3>enable</h3></div>
+        <div class="span12"><h3>readonly(boolean)</h3></div>
     </div>
-    <p>Enables Select2.</p>
+    <p>Toggles readonly mode on Select2 and its underlying form component based on the boolean parameter.</p>
 
     <div class="row">
     <div class="span12"><h3>container</h3></div>
@@ -1525,7 +1589,6 @@ $("#select").select2({
           <div class="span12">
               <h3>change</h3>
               <p>Fired when selection is changed.</p>
-              <p class="alert alert-info">This event is not fired when the selection is changed using Select2's <code>val()</code> method.</p>
               <p>The event object contains the following custom properties:
               <dl>
               <dt>val</dt><dd>the current selection (taking into account the result of the change) - id or array of ids</dd>
@@ -1537,18 +1600,90 @@ $("#select").select2({
       </div>
         <div class="row zebra">
             <div class="span12">
-                <h3>open</h3>
-                <p>Fired when the dropdown is shown.</p>
+                <h3>select2-opening</h3>
+                <p>Fired before the dropdown is shown.</p>
                 <p>The event listener can prevent the opening by calling <code>preventDefault()</code> on the supplied event object.</p>
                 </p>
             </div>
         </div>
-
+        <div class="row">
+            <div class="span12">
+                <h3>select2-open</h3>
+                <p>Fired after the dropdown is shown.</p>
+                </p>
+            </div>
+        </div>
+        <div class="row zebra">
+            <div class="span12">
+                <h3>select2-highlight</h3>
+                <p>Fired when a choice is highlighted in the dropdown.</p>
+                </p>
+                <p>The event object contains the following custom properties:
+                <dl>
+                    <dt>val</dt><dd>the id of the highlighted choice object</dd>
+                    <dt>object</dt><dd>the highlighted choice object</dd>
+                </dl>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span12">
+                <h3>select2-selecting</h3>
+                <p>Fired when a choice is being selected in the dropdown, but before any modification has been made to the selection.
+                    This event is used to allow the user to reject selection by calling <code>event.preventDefault()</code></p>
+                </p>
+                <p>The event object contains the following custom properties:
+                <dl>
+                    <dt>val</dt><dd>the id of the highlighted choice object</dd>
+                    <dt>object</dt><dd>the choice object about to be selected</dd>
+                </dl>
+                </p>
+            </div>
+        </div>
+        <div class="row zebra">
+            <div class="span12">
+                <h3>select2-removed</h3>
+                <p>Fired when a choice is removed or cleared</p>
+                </p>
+                <p>The event object contains the following custom properties:
+                <dl>
+                    <dt>val</dt><dd>the id of the highlighted choice object</dd>
+                    <dt>object</dt><dd>the highlighted choice object</dd>
+                </dl>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span12">
+                <h3>select2-loaded</h3>
+                <p>Fired when query function is done loading the data and the results list has been updated</p>
+                </p>
+                <p>The event object contains the following custom properties:
+                <dl>
+                    <dt>data</dt><dd>data that was used to populate the results</dd>
+                </dl>
+                </p>
+            </div>
+        </div>
+        <div class="row zebra">
+            <div class="span12">
+                <h3>select2-focus</h3>
+                <p>Fired when the control is focussed
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span12">
+                <h3>select2-blur</h3>
+                <p>Fired when the control is blurred
+                </p>
+            </div>
+        </div>
       </section>
 
     <div class="row">
         <div class="span12">
-            <h3>Configuring Defaults</h3>
+            <h2>Configuring Defaults</h2>
             Select2 exposes its default options via the <code>$.fn.select2.defaults</code> object. Properties changed in this object (same properties configurable through the constructor) will take effect for every instance created after the change
 
         </div>
