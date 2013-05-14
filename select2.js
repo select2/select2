@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright 2012 Igor Vaynberg
 
 Version: @@ver@@ Timestamp: @@timestamp@@
@@ -1702,7 +1702,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 "<input class='select2-focusser select2-offscreen' type='text'/>",
                 "<div class='select2-drop select2-display-none'>" ,
                 "   <div class='select2-search'>" ,
-                "       <input type='text' autocomplete='off' autocorrect='off' autocapitilize='off' spellcheck='false' class='select2-input'/>" ,
+                "       <input type='text' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' class='select2-input'/>" ,
                 "   </div>" ,
                 "   <ul class='select2-results'>" ,
                 "   </ul>" ,
