@@ -1,23 +1,21 @@
 Select2
 =================
 
-Select2 is a jQuery based replacement for select boxes. It supports searching, remote data sets, and infinite scrolling of results. Look and feel of Select2 is based on the excellent [Chosen](http://harvesthq.github.com/chosen/) library.
+Select2 is a jQuery based replacement for select boxes. It supports searching, remote data sets, and infinite scrolling of results.
 
-To get started -- checkout http://ivaynberg.github.com/select2!
+To get started checkout examples and documentation at http://ivaynberg.github.com/select2
 
-What Does Select2 Support That Chosen Does Not?
+What Usecases Does Select2 Support
 -------------------------------------------------
 
-* Working with large datasets: Chosen requires the entire dataset to be loaded as `option` tags in the DOM, which limits
-it to working with small-ish datasets. Select2 uses a function to find results on-the-fly, which allows it to partially
-load results.
-* Paging of results: Since Select2 works with large datasets and only loads a small amount of matching results at a time
-it has to support paging. Select2 will call the search function when the user scrolls to the bottom of currently loaded
-result set allowing for the 'infinite scrolling' of results.
-* Custom markup for results: Chosen only supports rendering text results because that is the only markup supported by
-`option` tags. Select2 provides an extension point which can be used to produce any kind of markup to represent results.
-* Ability to add results on the fly: Select2 provides the ability to add results from the search term entered by the user, which allows it to be used for
-tagging.
+* Enhances native selects with search
+* Enhances native selects with a better multi-select interface
+* Loading data from javascript: easily load items via ajax and have them searchable
+* Nested optgroups: native selects only support one level of nested, Select2 does not have this restriction
+* Tagging: ability to add new items on the fly
+* Working with large remote datesets: ability to partially load a dataset based on the search term
+* Paging of large datasets: easy support for loading more pages when the results are scrolled to the end
+* Templating: support for custom rendering of results and selections
 
 Browser Compatibility
 --------------------
@@ -30,10 +28,22 @@ Browser Compatibility
 Integrations
 ------------
 
-* [Wicket-Select2](https://github.com/ivaynberg/wicket-select2) (Java / Apache Wicket)
+* [Wicket-Select2](https://github.com/ivaynberg/wicket-select2) (Java / [Apache Wicket](http://wicket.apache.org))
 * [select2-rails](https://github.com/argerim/select2-rails) (Ruby on Rails)
 * [AngularUI](http://angular-ui.github.com/#directives-select2) ([AngularJS](angularjs.org))
 * [Django](https://github.com/applegrew/django-select2)
+* [Symfony](https://github.com/19Gerhard85/sfSelect2WidgetsPlugin)
+* [Bootstrap](https://github.com/t0m/select2-bootstrap-css) (CSS skin)
+* [Yii](https://github.com/tonybolzan/yii-select2)
+
+Internationalization (i18n)
+---------------------------
+
+Select2 supports multiple languages by simply including the right
+language JS file (`select2_locale_it.js`, `select2_locale_nl.js` etc.).
+
+Missing a language? Just copy `select2_locale_en.js.template`, translate
+it and make a pull request back to Select2 here on Github.
 
 Bug tracker
 -----------
@@ -41,7 +51,6 @@ Bug tracker
 Have a bug? Please create an issue here on GitHub!
 
 https://github.com/ivaynberg/select2/issues
-
 
 Mailing list
 ------------

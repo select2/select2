@@ -11,7 +11,7 @@
         "tag",
         "tagging"
     ],
-    "version": "3.3.0",
+    "version": "3.3.2",
     "author": {
         "name": "Igor Vaynberg",
         "url": "https://github.com/ivaynberg"
@@ -31,6 +31,6 @@
     "docs": "http://ivaynberg.github.com/select2/",
     "download": "https://github.com/ivaynberg/select2/tags",
     "dependencies": {
-        "jquery": ">=1.4.6"
+        "jquery": ">=1.7.1"
     }
 }

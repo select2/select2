@@ -1,13 +1,14 @@
-/*
+﻿/*
 Version: @@ver@@ Timestamp: @@timestamp@@
 */
 .select2-container {
+    margin: 0;
     position: relative;
     display: inline-block;
     /* inline-block for ie7 */
     zoom: 1;
     *display: inline;
-    vertical-align: top;
+    vertical-align: middle;
 }
 
 .select2-container,
@@ -81,6 +82,10 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     background-image: linear-gradient(top, #eeeeee 0%,#ffffff 90%);
 }
 
+.select2-container.select2-allowclear .select2-choice span {
+    margin-right: 42px;
+}
+
 .select2-container .select2-choice span {
     margin-right: 26px;
     display: block;
@@ -94,11 +99,11 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 }
 
 .select2-container .select2-choice abbr {
-    display: block;
+    display: none;
     width: 12px;
     height: 12px;
     position: absolute;
-    right: 26px;
+    right: 24px;
     top: 8px;
 
     font-size: 1px;
@@ -109,6 +114,11 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     cursor: pointer;
     outline: 0;
 }
+
+.select2-container.select2-allowclear .select2-choice abbr {
+    display: inline-block;
+}
+
 .select2-container .select2-choice abbr:hover {
     background-position: right -11px;
     cursor: pointer;
@@ -119,7 +129,6 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     left: 0;
     top: 0;
     z-index: 9998;
-    opacity: 0;
 }
 
 .select2-drop {
@@ -140,8 +149,16 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 
     -webkit-box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
        -moz-box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
-         -o-box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
             box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
+}
+
+.select2-drop-auto-width {
+    border-top: 1px solid #aaa;
+    width: auto;
+}
+
+.select2-drop-auto-width .select2-search {
+    padding-top: 4px;
 }
 
 .select2-drop.select2-drop-above {
@@ -155,12 +172,11 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 
     -webkit-box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
        -moz-box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
-         -o-box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
             box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
 }
 
 .select2-container .select2-choice div {
-    display: block;
+    display: inline-block;
     width: 18px;
     height: 100%;
     position: absolute;
@@ -205,12 +221,6 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     z-index: 10000;
 
     white-space: nowrap;
-}
-
-.select2-search-hidden {
-    display: block;
-    position: absolute;
-    left: -10000px;
 }
 
 .select2-search input {
@@ -263,7 +273,6 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 
     -webkit-box-shadow: 0 0 5px rgba(0,0,0,.3);
        -moz-box-shadow: 0 0 5px rgba(0,0,0,.3);
-         -o-box-shadow: 0 0 5px rgba(0,0,0,.3);
             box-shadow: 0 0 5px rgba(0,0,0,.3);
 }
 
@@ -271,7 +280,6 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     border-bottom-color: transparent;
     -webkit-box-shadow: 0 1px 0 #fff inset;
        -moz-box-shadow: 0 1px 0 #fff inset;
-         -o-box-shadow: 0 1px 0 #fff inset;
             box-shadow: 0 1px 0 #fff inset;
 
     -webkit-border-bottom-left-radius: 0;
@@ -290,6 +298,20 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     background-image: -ms-linear-gradient(top, #ffffff 0%,#eeeeee 50%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#ffffff',GradientType=0 );
     background-image: linear-gradient(top, #ffffff 0%,#eeeeee 50%);
+}
+
+.select2-dropdown-open.select2-drop-above .select2-choice,
+.select2-dropdown-open.select2-drop-above .select2-choices {
+    border: 1px solid #5897fb;
+    border-top-color: transparent;
+
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, white), color-stop(0.5, #eeeeee));
+    background-image: -webkit-linear-gradient(center top, white 0%, #eeeeee 50%);
+    background-image: -moz-linear-gradient(center top, white 0%, #eeeeee 50%);
+    background-image: -o-linear-gradient(top, white 0%, #eeeeee 50%);
+    background-image: -ms-linear-gradient(bottom, #ffffff 0%,#eeeeee 50%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#ffffff',GradientType=0 );
+    background-image: linear-gradient(bottom, #ffffff 0%,#eeeeee 50%);
 }
 
 .select2-dropdown-open .select2-choice div {
@@ -314,6 +336,7 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 
 .select2-results ul.select2-result-sub {
     margin: 0;
+    padding-left: 0;
 }
 
 .select2-results ul.select2-result-sub > li .select2-result-label { padding-left: 20px }
@@ -338,6 +361,8 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     padding: 3px 7px 4px;
     margin: 0;
     cursor: pointer;
+
+    min-height: 1em;
 
     -webkit-touch-callout: none;
       -webkit-user-select: none;
@@ -418,7 +443,7 @@ disabled look for disabled choices in the results dropdown
 }
 
 .select2-container.select2-container-disabled .select2-choice abbr {
-    display: none
+    display: none;
 }
 
 
@@ -458,7 +483,6 @@ disabled look for disabled choices in the results dropdown
 
     -webkit-box-shadow: 0 0 5px rgba(0,0,0,.3);
        -moz-box-shadow: 0 0 5px rgba(0,0,0,.3);
-         -o-box-shadow: 0 0 5px rgba(0,0,0,.3);
             box-shadow: 0 0 5px rgba(0,0,0,.3);
 }
 .select2-container-multi .select2-choices li {
@@ -482,7 +506,6 @@ disabled look for disabled choices in the results dropdown
     border: 0;
     -webkit-box-shadow: none;
        -moz-box-shadow: none;
-         -o-box-shadow: none;
             box-shadow: none;
     background: transparent !important;
 }
@@ -579,8 +602,8 @@ disabled look for disabled choices in the results dropdown
     background-color: #f4f4f4;
 }
 
-.select2-container-multi.select2-container-disabled .select2-choices .select2-search-choice .select2-search-choice-close {
-    display: none;
+.select2-container-multi.select2-container-disabled .select2-choices .select2-search-choice .select2-search-choice-close {    display: none;
+    background:none;
 }
 /* end multiselect */
 
@@ -590,11 +613,31 @@ disabled look for disabled choices in the results dropdown
     text-decoration: underline;
 }
 
-.select2-offscreen {
+.select2-offscreen, .select2-offscreen:focus {
+    clip: rect(0 0 0 0);
+    width: 1px;
+    height: 1px;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
     position: absolute;
-    left: -10000px;
+    outline: 0;
+    left: 0px;
 }
 
+.select2-display-none {
+    display: none;
+}
+
+.select2-measure-scrollbar {
+    position: absolute;
+    top: -10000px;
+    left: -10000px;
+    width: 100px;
+    height: 100px;
+    overflow: scroll;
+}
 /* Retina-ize icons */
 
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-resolution: 144dpi)  {
