@@ -19,9 +19,9 @@ What Usecases Does Select2 Support
 
 Browser Compatibility
 --------------------
-* IE 8+ (7 mostly works except for [issue with z-index](https://github.com/ivaynberg/select2/issues/37))
+* IE 8+
 * Chrome 8+
-* Firefox 3.5+
+* Firefox 10+
 * Safari 3+
 * Opera 10.6+
 
