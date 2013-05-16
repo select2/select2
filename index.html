@@ -1226,6 +1226,15 @@ $(document).ready(function () {
                 </table>
                 <p class="alert alert-info">By default when attached to a <code>select</code> css classes from <code>option</code>s will be automatically copied</p>
             </td></tr>
+            <tr><td>formatSelectionCssClass</td><td>function</td><td>
+                Function used to add css classes to selected elements
+                <pre>formatSelectionCssClass(object)</pre>
+                <table class="table table-bordered table-striped">
+                    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                    <tr><td>object</td><td>object</td><td>One of the result objects returned from the <code>query</code> function</td></tr>
+                    <tr><td>&lt;returns&gt;</td><td>string (optional)</td><td>String containing css class names separated by a space</td></tr>
+                </table>
+            </td></tr>
             <tr><td>formatNoMatches</td><td>function</td><td>
                 Function used to render the &quot;No matches&quot; message
                 <pre>formatNoMatches(term)</pre>
