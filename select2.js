@@ -2087,7 +2087,7 @@ the specific language governing permissions and limitations under the Apache Lic
         // single
         updateSelection: function (data) {
 
-            var container=this.selection.find("span"), formatted;
+            var container=this.selection.find("span"), formatted, cssClass;
 
             this.selection.data("select2-data", data);
 
@@ -2636,7 +2636,7 @@ the specific language governing permissions and limitations under the Apache Lic
             var choice = enableChoice ? enabledItem : disabledItem,
                 id = this.id(data),
                 val = this.getVal(),
-                formatted;
+                formatted,
                 cssClass;
 
             formatted=this.opts.formatSelection(data, choice.find("div"));
