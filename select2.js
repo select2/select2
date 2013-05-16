@@ -2670,7 +2670,8 @@ the specific language governing permissions and limitations under the Apache Lic
         unselect: function (selected) {
             var val = this.getVal(),
                 data,
-                index;
+                index,
+                i;
 
             selected = selected.closest(".select2-search-choice");
 
@@ -2686,13 +2687,19 @@ the specific language governing permissions and limitations under the Apache Lic
                 return;
             }
 
-            index = indexOf(this.id(data), val);
-
-            if (index >= 0) {
-                val.splice(index, 1);
-                this.setVal(val);
-                if (this.select) this.postprocessResults();
+            if (Object.prototype.toString.call( this.id(data) ) !== '[object Array]') {
+              index = [indexOf(this.id(data), val)];
+            } else {
+              index = this.id(data).map(function(id){ return indexOf(id, val);})
             }
+
+            for (i in index) {
+                if (i >= 0) {
+                    val.splice(i, 1);
+                    this.setVal(val);
+                }
+            }
+            if (this.select) this.postprocessResults();
             selected.remove();
 
             this.opts.element.trigger({ type: "removed", val: this.id(data), choice: data });
