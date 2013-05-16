@@ -2087,7 +2087,7 @@ the specific language governing permissions and limitations under the Apache Lic
         // single
         updateSelection: function (data) {
 
-            var container=this.selection.find("span"), formatted;
+            var container=this.selection.find("span"), formatted, cssClass;
 
             this.selection.data("select2-data", data);
 
@@ -2095,6 +2095,10 @@ the specific language governing permissions and limitations under the Apache Lic
             formatted=this.opts.formatSelection(data, container);
             if (formatted !== undefined) {
                 container.append(this.opts.escapeMarkup(formatted));
+            }
+            cssClass=this.opts.formatSelectionCssClass(data, container);
+            if (cssClass !== undefined) {
+                container.addClass(cssClass);
             }
 
             this.selection.removeClass("select2-default");
@@ -2632,11 +2636,16 @@ the specific language governing permissions and limitations under the Apache Lic
             var choice = enableChoice ? enabledItem : disabledItem,
                 id = this.id(data),
                 val = this.getVal(),
-                formatted;
+                formatted,
+                cssClass;
 
             formatted=this.opts.formatSelection(data, choice.find("div"));
             if (formatted != undefined) {
                 choice.find("div").replaceWith("<div title='"+this.opts.escapeMarkup(formatted)+"'>"+this.opts.escapeMarkup(formatted)+"</div>");
+            }
+            cssClass=this.opts.formatSelectionCssClass(data, choice.find("div"));
+            if (cssClass != undefined) {
+                choice.addClass(cssClass);
             }
 
             if(enableChoice){
@@ -2988,6 +2997,7 @@ the specific language governing permissions and limitations under the Apache Lic
             return results;
         },
         formatResultCssClass: function(data) {return undefined;},
+        formatSelectionCssClass: function(data, container) {return undefined;},
         formatNoMatches: function () { return "No matches found"; },
         formatInputTooShort: function (input, min) { var n = min - input.length; return "Please enter " + n + " more character" + (n == 1? "" : "s"); },
         formatInputTooLong: function (input, max) { var n = input.length - max; return "Please delete " + n + " character" + (n == 1? "" : "s"); },
