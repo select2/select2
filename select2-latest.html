@@ -2,7 +2,8 @@
 layout: main
 title: Select2 Latest
 group: navigation
-version: 4.0
+version: 3.4.1
+milestone: 11
 ---
 
 <link href="select2-master/select2.css?ts={{ site.time | date_to_xmlschema | cgi_escape}}" rel="stylesheet"/>
@@ -248,7 +249,7 @@ $("#e10_4").select2({
             <li>Loading...</li>
             <script>
                 $(function() {
-                    var url="https://api.github.com/repos/ivaynberg/select2/issues?state=closed&milestone=5&per_page=100";
+                    var url="https://api.github.com/repos/ivaynberg/select2/issues?state=closed&milestone={{ page.milestone }}&per_page=100";
                     $.ajax({
                         url: url,
                         dataType: "jsonp"
