@@ -1083,7 +1083,7 @@ the specific language governing permissions and limitations under the Apache Lic
             var $dropdown = this.dropdown,
                 offset = this.container.offset(),
                 height = this.container.outerHeight(false),
-                width = this.container.outerWidth(false),
+                width = this.resolveWidth(this.opts.dropdownWidth),
                 dropHeight = $dropdown.outerHeight(false),
 	            viewPortRight = $(window).scrollLeft() + $(window).width(),
                 viewportBottom = $(window).scrollTop() + $(window).height(),
@@ -1641,46 +1641,47 @@ the specific language governing permissions and limitations under the Apache Lic
          * falls back to the jQuery calculated element width.
          */
         // abstract
+        resolveWidth: function(width) {
+            var style, attrs, matches, i, l;
+
+            if (width === "off") {
+                return null;
+            } else if (width === "element"){
+                return this.opts.element.outerWidth(false) === 0 ? 'auto' : this.opts.element.outerWidth(false) + 'px';
+            } else if (width === "copy" || width === "resolve") {
+                // check if there is inline style on the element that contains width
+                style = this.opts.element.attr('style');
+                if (style !== undefined) {
+                    attrs = style.split(';');
+                    for (i = 0, l = attrs.length; i < l; i = i + 1) {
+                        matches = attrs[i].replace(/\s/g, '')
+                            .match(/width:(([-+]?([0-9]*\.)?[0-9]+)(px|em|ex|%|in|cm|mm|pt|pc))/i);
+                        if (matches !== null && matches.length >= 1)
+                            return matches[1];
+                    }
+                }
+
+                // next check if css('width') can resolve a width that is percent based, this is sometimes possible
+                // when attached to input type=hidden or elements hidden via css
+                style = this.opts.element.css('width');
+                if (style && style.length > 0) return style;
+
+                if (width === "resolve") {
+                    // finally, fallback on the calculated width of the element
+                    return (this.opts.element.outerWidth(false) === 0 ? 'auto' : this.opts.element.outerWidth(false) + 'px');
+                }
+
+                return null;
+            } else if ($.isFunction(width)) {
+                return width();
+            } else {
+                return width;
+           }
+        },
+        
+        // abstract
         initContainerWidth: function () {
-            function resolveContainerWidth() {
-                var style, attrs, matches, i, l;
-
-                if (this.opts.width === "off") {
-                    return null;
-                } else if (this.opts.width === "element"){
-                    return this.opts.element.outerWidth(false) === 0 ? 'auto' : this.opts.element.outerWidth(false) + 'px';
-                } else if (this.opts.width === "copy" || this.opts.width === "resolve") {
-                    // check if there is inline style on the element that contains width
-                    style = this.opts.element.attr('style');
-                    if (style !== undefined) {
-                        attrs = style.split(';');
-                        for (i = 0, l = attrs.length; i < l; i = i + 1) {
-                            matches = attrs[i].replace(/\s/g, '')
-                                .match(/width:(([-+]?([0-9]*\.)?[0-9]+)(px|em|ex|%|in|cm|mm|pt|pc))/i);
-                            if (matches !== null && matches.length >= 1)
-                                return matches[1];
-                        }
-                    }
-
-                    // next check if css('width') can resolve a width that is percent based, this is sometimes possible
-                    // when attached to input type=hidden or elements hidden via css
-                    style = this.opts.element.css('width');
-                    if (style && style.length > 0) return style;
-
-                    if (this.opts.width === "resolve") {
-                        // finally, fallback on the calculated width of the element
-                        return (this.opts.element.outerWidth(false) === 0 ? 'auto' : this.opts.element.outerWidth(false) + 'px');
-                    }
-
-                    return null;
-                } else if ($.isFunction(this.opts.width)) {
-                    return this.opts.width();
-                } else {
-                    return this.opts.width;
-               }
-            };
-
-            var width = resolveContainerWidth.call(this);
+            var width = this.resolveWidth(this.opts.width);
             if (width !== null) {
                 this.container.css("width", width);
             }
@@ -2978,6 +2979,7 @@ the specific language governing permissions and limitations under the Apache Lic
     // plugin defaults, accessible to users
     $.fn.select2.defaults = {
         width: "copy",
+        dropdownWidth: "copy",
         loadMorePadding: 0,
         closeOnSelect: true,
         openOnEnter: true,
