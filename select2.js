@@ -47,7 +47,7 @@ the specific language governing permissions and limitations under the Apache Lic
     }
 
     var KEY, AbstractSelect2, SingleSelect2, MultiSelect2, nextUid, sizer,
-        lastMousePosition, $document, scrollBarDimensions,
+        lastMousePosition={x:0,y:0}, $document, scrollBarDimensions,
 
     KEY = {
         TAB: 9,
@@ -172,7 +172,8 @@ the specific language governing permissions and limitations under the Apache Lic
     }
 
     $document.on("mousemove", function (e) {
-        lastMousePosition = {x: e.pageX, y: e.pageY};
+        lastMousePosition.x = e.pageX;
+        lastMousePosition.y = e.pageY;
     });
 
     /**
