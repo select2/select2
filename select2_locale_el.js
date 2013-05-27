@@ -7,11 +7,11 @@
     "use strict";
 
     $.extend($.fn.select2.defaults, {
-        formatNoMatches: function () { return "Δεν βρέθηκαν αποτελέσματα"; },
-        formatInputTooShort: function (input, min) { var n = min - input.length; return "Παρακαλούμε εισάγετε " + n + " περισσότερους χαρακτήρες" + (n == 1 ? "" : "s"); },
-        formatInputTooLong: function (input, max) { var n = input.length - max; return "Παρακαλούμε διαγράψτε " + n + " χαρακτήρες" + (n == 1 ? "" : "s"); },
-        formatSelectionTooBig: function (limit) { return "Μπορείτε να επιλέξετε μόνο " + limit + " αντικείμενο" + (limit == 1 ? "" : "s"); },
-        formatLoadMore: function (pageNumber) { return "Φόρτωση περισσότερων..."; },
-        formatSearching: function () { return "Αναζήτηση..."; }
+        formatNoMatches: function () { return "Ξ”ΞµΞ½ Ξ²ΟΞ­ΞΈΞ·ΞΊΞ±Ξ½ Ξ±Ο€ΞΏΟ„ΞµΞ»Ξ­ΟƒΞΌΞ±Ο„Ξ±"; },
+        formatInputTooShort: function (input, min) { var n = min - input.length; return "Ξ Ξ±ΟΞ±ΞΊΞ±Ξ»ΞΏΟΞΌΞµ ΞµΞΉΟƒΞ¬Ξ³ΞµΟ„Ξµ " + n + " Ο€ΞµΟΞΉΟƒΟƒΟΟ„ΞµΟΞΏΟ…Ο‚ Ο‡Ξ±ΟΞ±ΞΊΟ„Ξ®ΟΞµΟ‚" + (n == 1 ? "" : "s"); },
+        formatInputTooLong: function (input, max) { var n = input.length - max; return "Ξ Ξ±ΟΞ±ΞΊΞ±Ξ»ΞΏΟΞΌΞµ Ξ΄ΞΉΞ±Ξ³ΟΞ¬ΟΟ„Ξµ " + n + " Ο‡Ξ±ΟΞ±ΞΊΟ„Ξ®ΟΞµΟ‚" + (n == 1 ? "" : "s"); },
+        formatSelectionTooBig: function (limit) { return "ΞΟ€ΞΏΟΞµΞ―Ο„Ξµ Ξ½Ξ± ΞµΟ€ΞΉΞ»Ξ­ΞΎΞµΟ„Ξµ ΞΌΟΞ½ΞΏ " + limit + " Ξ±Ξ½Ο„ΞΉΞΊΞµΞ―ΞΌΞµΞ½ΞΏ" + (limit == 1 ? "" : "s"); },
+        formatLoadMore: function (pageNumber) { return "Ξ¦ΟΟΟ„Ο‰ΟƒΞ· Ο€ΞµΟΞΉΟƒΟƒΟΟ„ΞµΟΟ‰Ξ½..."; },
+        formatSearching: function () { return "Ξ‘Ξ½Ξ±Ξ¶Ξ®Ο„Ξ·ΟƒΞ·..."; }
     });
 })(jQuery);
