@@ -2445,7 +2445,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.opts.element.trigger($.Event("select2-blur"));
             }));
 
-            this.container.on("mousedown", selector, this.bind(function (e) {
+            this.container.on("click", selector, this.bind(function (e) {
                 if (!this.isInterfaceEnabled()) return;
                 if ($(e.target).closest(".select2-search-choice").length > 0) {
                     // clicked inside a select2 search choice, do not open
