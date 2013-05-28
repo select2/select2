@@ -1720,8 +1720,14 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // single
         opening: function () {
-            var el, range;
+            var el, range, len;
+
+            if (this.opts.minimumResultsForSearch >= 0) {
+                this.showSearch(true);
+            }
+
             this.parent.opening.apply(this, arguments);
+
             if (this.showSearchInput !== false) {
                 // IE appends focusser.val() at the end of field :/ so we manually insert it at the beginning using a range
                 // all other browsers handle this just fine
@@ -1729,13 +1735,16 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.search.val(this.focusser.val());
             }
             this.search.focus();
-            // in IE we have to move the cursor to the end after focussing, otherwise it will be at the beginning and
+            // move the cursor to the end after focussing, otherwise it will be at the beginning and
             // new text will appear *before* focusser.val()
             el = this.search.get(0);
             if (el.createTextRange) {
                 range = el.createTextRange();
                 range.collapse(false);
                 range.select();
+            } else if (el.setSelectionRange) {
+                len = this.search.val().length;
+                el.setSelectionRange(len, len);
             }
 
             this.focusser.prop("disabled", true).val("");
@@ -1780,7 +1789,11 @@ the specific language governing permissions and limitations under the Apache Lic
                 container = this.container,
                 dropdown = this.dropdown;
 
-            this.showSearch(false);
+            if (this.opts.minimumResultsForSearch < 0) {
+                this.showSearch(false);
+            } else {
+                this.showSearch(true);
+            }
 
             this.selection = selection = container.find(".select2-choice");
 
@@ -1864,9 +1877,11 @@ the specific language governing permissions and limitations under the Apache Lic
 
             installKeyUpChangeEvent(this.focusser);
             this.focusser.on("keyup-change input", this.bind(function(e) {
-                e.stopPropagation();
-                if (this.opened()) return;
-                this.open();
+                if (this.opts.minimumResultsForSearch >= 0) {
+                    e.stopPropagation();
+                    if (this.opened()) return;
+                    this.open();
+                }
             }));
 
             selection.on("mousedown", "abbr", this.bind(function (e) {
@@ -2043,19 +2058,20 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.highlight(selected);
             }
 
-            // show the search box if this is the first we got the results and there are enough of them for search
+            // hide the search box if this is the first we got the results and there are enough of them for search
 
-            if (initial === true && this.showSearchInput === false) {
-                var min=this.opts.minimumResultsForSearch;
-                if (min>=0) {
-                    this.showSearch(countResults(data.results)>=min);
+            if (initial === true) {
+                var min = this.opts.minimumResultsForSearch;
+                if (min >= 0) {
+                    this.showSearch(countResults(data.results) >= min);
                 }
             }
-
         },
 
         // single
         showSearch: function(showSearchInput) {
+            if (this.showSearchInput === showSearchInput) return;
+
             this.showSearchInput = showSearchInput;
 
             this.dropdown.find(".select2-search").toggleClass("select2-search-hidden", !showSearchInput);
@@ -2739,7 +2755,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             //If all results are chosen render formatNoMAtches
             if(!this.opts.createSearchChoice && !choices.filter('.select2-result:not(.select2-selected)').length > 0){
-            	if(!data || data && !data.more) {
+            	if(!data || data && !data.more && this.results.find(".select2-no-results").length === 0) {
             	    this.results.append("<li class='select2-no-results'>" + self.opts.formatNoMatches(self.search.val()) + "</li>");
             	}
             }
