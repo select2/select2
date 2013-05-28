@@ -1663,12 +1663,12 @@ the specific language governing permissions and limitations under the Apache Lic
                         }
                     }
 
-                    // next check if css('width') can resolve a width that is percent based, this is sometimes possible
-                    // when attached to input type=hidden or elements hidden via css
-                    style = this.opts.element.css('width');
-                    if (style && style.length > 0) return style;
-
                     if (this.opts.width === "resolve") {
+                        // next check if css('width') can resolve a width that is percent based, this is sometimes possible
+                        // when attached to input type=hidden or elements hidden via css
+                        style = this.opts.element.css('width');
+                        if (style.indexOf("%") > 0) return style;
+
                         // finally, fallback on the calculated width of the element
                         return (this.opts.element.outerWidth(false) === 0 ? 'auto' : this.opts.element.outerWidth(false) + 'px');
                     }
