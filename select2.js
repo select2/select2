@@ -1343,7 +1343,7 @@ the specific language governing permissions and limitations under the Apache Lic
          * Opens control, sets input value, and updates results.
          */
         // abstract
-        setSearch: function (term) {
+        search: function (term) {
             this.open();
             this.search.val(term);
             this.updateResults(false);
@@ -3034,7 +3034,7 @@ the specific language governing permissions and limitations under the Apache Lic
             opts,
             select2,
             value, multiple,
-            allowedMethods = ["val", "destroy", "opened", "open", "close", "focus", "isFocused", "container", "onSortStart", "onSortEnd", "enable", "readonly", "positionDropdown", "data", "setSearch"],
+            allowedMethods = ["val", "destroy", "opened", "open", "close", "focus", "isFocused", "container", "onSortStart", "onSortEnd", "enable", "readonly", "positionDropdown", "data", "search"],
             valueMethods = ["val", "opened", "isFocused", "container", "data"];
 
         this.each(function () {
