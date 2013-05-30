@@ -875,7 +875,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 opts.query = this.bind(function (query) {
                     var data = { results: [], more: false },
                         term = query.term,
-                        children, firstChild, process;
+                        children, placeholderOption, process;
 
                     process=function(element, collection) {
                         var group;
@@ -896,9 +896,9 @@ the specific language governing permissions and limitations under the Apache Lic
 
                     // ignore the placeholder option if there is one
                     if (this.getPlaceholder() !== undefined && children.length > 0) {
-                        firstChild = children[0];
-                        if ($(firstChild).text() === "") {
-                            children=children.not(firstChild);
+                        placeholderOption = this.getPlaceholderOption();
+                        if (placeholderOption) {
+                            children=children.not(placeholderOption);
                         }
                     }
 
@@ -1629,10 +1629,27 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // abstract
         getPlaceholder: function () {
+            var placeholderOption;
             return this.opts.element.attr("placeholder") ||
                 this.opts.element.attr("data-placeholder") || // jquery 1.4 compat
                 this.opts.element.data("placeholder") ||
-                this.opts.placeholder;
+                this.opts.placeholder ||
+                ((placeholderOption = this.getPlaceholderOption()) !== undefined && placeholderOption.text());
+        },
+        
+        // abstract
+        getPlaceholderOption: function() {
+            if (this.select) {
+                var firstOption = this.select.children().first();
+                if (this.opts.placeholderOption !== undefined ) {
+                    //Determine the placeholder option based on the specified placeholderOption setting
+                    return (this.opts.placeholderOption === "first" && firstOption) ||
+                           (typeof this.opts.placeholderOption === "function" && this.opts.placeholderOption(this.select));
+                } else if (firstOption.text() === "" && firstOption.val() === "") {
+                    //No explicit placeholder option specified, use the first if it's blank
+                    return firstOption;
+                }
+            }
         },
 
         /**
@@ -1941,7 +1958,8 @@ the specific language governing permissions and limitations under the Apache Lic
         clear: function(triggerChange) {
             var data=this.selection.data("select2-data");
             if (data) { // guard against queued quick consecutive clicks
-                this.opts.element.val("");
+                var placeholderOption = this.getPlaceholderOption();
+                this.opts.element.val(placeholderOption ? placeholderOption.val() : "");
                 this.selection.find("span").empty();
                 this.selection.removeData("select2-data");
                 this.setPlaceholder();
@@ -1959,7 +1977,7 @@ the specific language governing permissions and limitations under the Apache Lic
         // single
         initSelection: function () {
             var selected;
-            if (this.opts.element.val() === "" && this.opts.element.text() === "") {
+            if (this.isPlaceholderOptionSelected()) {
                 this.updateSelection([]);
                 this.close();
                 this.setPlaceholder();
@@ -1973,6 +1991,14 @@ the specific language governing permissions and limitations under the Apache Lic
                     }
                 });
             }
+        },
+        
+        isPlaceholderOptionSelected: function() {
+            var placeholderOption;
+            return ((placeholderOption = this.getPlaceholderOption()) !== undefined && placeholderOption.is(':selected')) ||
+                   (this.opts.element.val() === "") ||
+                   (this.opts.element.val() === undefined) ||
+                   (this.opts.element.val() === null);
         },
 
         // single
@@ -2013,9 +2039,9 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // single
         getPlaceholder: function() {
-            // if a placeholder is specified on a single select without the first empty option ignore it
+            // if a placeholder is specified on a single select without a valid placeholder option ignore it
             if (this.select) {
-                if (this.select.find("option").first().text() !== "") {
+                if (this.getPlaceholderOption() === undefined) {
                     return undefined;
                 }
             }
@@ -2027,10 +2053,10 @@ the specific language governing permissions and limitations under the Apache Lic
         setPlaceholder: function () {
             var placeholder = this.getPlaceholder();
 
-            if (this.opts.element.val() === "" && placeholder !== undefined) {
+            if (this.isPlaceholderOptionSelected() && placeholder !== undefined) {
 
-                // check for a first blank option if attached to a select
-                if (this.select && this.select.find("option:first").text() !== "") return;
+                // check for a placeholder option if attached to a select
+                if (this.select && this.getPlaceholderOption() === undefined) return;
 
                 this.selection.find("span").html(this.opts.escapeMarkup(placeholder));
 
