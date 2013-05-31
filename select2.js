@@ -2953,7 +2953,7 @@ the specific language governing permissions and limitations under the Apache Lic
             opts,
             select2,
             value, multiple,
-            allowedMethods = ["val", "destroy", "opened", "open", "close", "focus", "isFocused", "container", "onSortStart", "onSortEnd", "enable", "readonly", "positionDropdown", "data"],
+            allowedMethods = ["val", "destroy", "opened", "open", "close", "focus", "isFocused", "container", "dropdown", "onSortStart", "onSortEnd", "enable", "readonly", "positionDropdown", "data"],
             valueMethods = ["val", "opened", "isFocused", "container", "data"];
 
         this.each(function () {
@@ -2980,7 +2980,9 @@ the specific language governing permissions and limitations under the Apache Lic
                 select2 = $(this).data("select2");
                 if (select2 === undefined) return;
                 if (args[0] === "container") {
-                    value=select2.container;
+                    value = select2.container;
+                } else if (args[0] === "dropdown") {
+                    value = select2.dropdown;
                 } else {
                     value = select2[args[0]].apply(select2, args.slice(1));
                 }
