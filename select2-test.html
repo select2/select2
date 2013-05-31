@@ -48,8 +48,24 @@
 -->
 </div>
 
+
+<input id="filter" multiple style="width: 250px;">
+
+<button id='reset' class='btn'>Reset</button>
+
 <script>
     $(document).ready(function() {
+
+
+        $('#filter').select2({
+            multiple: true,
+            data:[{id:0,text:'enhancement'},{id:1,text:'bug'}]
+        });
+        $('#reset').on('click', function() {
+            $('#filter').select2('val','');
+        });
+
+
         function format(state) {
             if (!state.id) return state.text; // optgroup
             return "<img class='flag' src='images/flags/" + state.id.toLowerCase() + ".png'/>" + state.text;
