@@ -1636,7 +1636,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.opts.placeholder ||
                 ((placeholderOption = this.getPlaceholderOption()) !== undefined && placeholderOption.text());
         },
-        
+
         // abstract
         getPlaceholderOption: function() {
             if (this.select) {
@@ -1992,7 +1992,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 });
             }
         },
-        
+
         isPlaceholderOptionSelected: function() {
             var placeholderOption;
             return ((placeholderOption = this.getPlaceholderOption()) !== undefined && placeholderOption.is(':selected')) ||
@@ -2182,13 +2182,13 @@ the specific language governing permissions and limitations under the Apache Lic
                     this.triggerChange({added: data, removed:oldData});
                 }
             } else {
-                if (this.opts.initSelection === undefined) {
-                    throw new Error("cannot call val() if initSelection() is not defined");
-                }
                 // val is an id. !val is true for [undefined,null,'',0] - 0 is legal
                 if (!val && val !== 0) {
                     this.clear(triggerChange);
                     return;
+                }
+                if (this.opts.initSelection === undefined) {
+                    throw new Error("cannot call val() if initSelection() is not defined");
                 }
                 this.opts.element.val(val);
                 this.opts.initSelection(this.opts.element, function(data){
