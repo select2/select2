@@ -1662,7 +1662,8 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.opts.element.attr("data-placeholder") || // jquery 1.4 compat
                 this.opts.element.data("placeholder") ||
                 this.opts.placeholder ||
-                ((placeholderOption = this.getPlaceholderOption()) !== undefined && placeholderOption.text());
+                ((placeholderOption = this.getPlaceholderOption()) !== undefined && placeholderOption.text() ||
+                "");
         },
 
         // abstract
