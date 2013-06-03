@@ -2934,7 +2934,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
 
                 this.opts.initSelection(this.opts.element, function(data){
-                    var ids=$(data).map(self.id);
+                    var ids=$.map(data, self.id);
                     self.setVal(ids);
                     self.updateSelection(data);
                     self.clearSearch();
