@@ -1233,8 +1233,9 @@ the specific language governing permissions and limitations under the Apache Lic
                 });
             }
 
-            // ie requires an iframe shim to cover controls like selects
-            if($.browser.msie) {
+            // IE requires an iframe shim to cover controls like selects
+            if($.support.opacity) {
+                // a hack to detect older IE browsers - they do not support opacity
                 undermask=$("#select2-drop-undermask");
                 if (undermask.length==0) {
                     undermask = $(document.createElement("iframe"));
