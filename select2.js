@@ -356,6 +356,22 @@ the specific language governing permissions and limitations under the Apache Lic
         markup.push(escapeMarkup(text.substring(match + tl, text.length)));
     }
 
+    function defaultEscapeMarkup(markup) {
+        var replace_map = {
+            '\\': '&#92;',
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;',
+            "/": '&#47;'
+        };
+
+        return String(markup).replace(/[&<>"'\/\\]/g, function (match) {
+            return replace_map[match];
+        });
+    }
+
     /**
      * Produces an ajax-based query function
      *
@@ -3091,21 +3107,7 @@ the specific language governing permissions and limitations under the Apache Lic
         separator: ",",
         tokenSeparators: [],
         tokenizer: defaultTokenizer,
-        escapeMarkup: function (markup) {
-            var replace_map = {
-                '\\': '&#92;',
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                '"': '&quot;',
-                "'": '&#39;',
-                "/": '&#47;'
-            };
-
-            return String(markup).replace(/[&<>"'\/\\]/g, function (match) {
-                    return replace_map[match];
-            });
-        },
+        escapeMarkup: defaultEscapeMarkup,
         blurOnChange: false,
         selectOnBlur: false,
         adaptContainerCssClass: function(c) { return c; },
@@ -3129,7 +3131,8 @@ the specific language governing permissions and limitations under the Apache Lic
             tags: tags
         }, util: {
             debounce: debounce,
-            markMatch: markMatch
+            markMatch: markMatch,
+            escapeMarkup: defaultEscapeMarkup
         }, "class": {
             "abstract": AbstractSelect2,
             "single": SingleSelect2,
