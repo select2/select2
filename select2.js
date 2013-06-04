@@ -1339,6 +1339,16 @@ the specific language governing permissions and limitations under the Apache Lic
             this.opts.element.trigger($.Event("select2-close"));
         },
 
+        /**
+         * Opens control, sets input value, and updates results.
+         */
+        // abstract
+        search: function (term) {
+            this.open();
+            this.search.val(term);
+            this.updateResults(false);
+        },
+
         // abstract
         clearSearch: function () {
 
@@ -3024,7 +3034,7 @@ the specific language governing permissions and limitations under the Apache Lic
             opts,
             select2,
             value, multiple,
-            allowedMethods = ["val", "destroy", "opened", "open", "close", "focus", "isFocused", "container", "dropdown", "onSortStart", "onSortEnd", "enable", "readonly", "positionDropdown", "data"],
+            allowedMethods = ["val", "destroy", "opened", "open", "close", "focus", "isFocused", "container", "dropdown", "onSortStart", "onSortEnd", "enable", "readonly", "positionDropdown", "data", "search"],
             valueMethods = ["val", "opened", "isFocused", "container", "data"];
 
         this.each(function () {
