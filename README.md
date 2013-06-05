@@ -1,21 +1,21 @@
 Select2
 =======
 
-Select2 is a jQuery based replacement for select boxes. It supports searching, remote data sets, and infinite scrolling of results.
+Select2 is a jQuery-based replacement for select boxes. It supports searching, remote data sets, and infinite scrolling of results.
 
-To get started checkout examples and documentation at http://ivaynberg.github.com/select2
+To get started, checkout examples and documentation at http://ivaynberg.github.com/select2
 
 Use cases
 ---------
 
-* Enhancing native selects with search
-* Enhancing native selects with a better multi-select interface
-* Loading data from JavaScript: easily load items via ajax and have them searchable
-* Nesting optgroups: native selects only support one level of nested, Select2 does not have this restriction
-* Tagging: ability to add new items on the fly
-* Working with large remote datasets: ability to partially load a dataset based on the search term
-* Paging of large datasets: easy support for loading more pages when the results are scrolled to the end
-* Templating: support for custom rendering of results and selections
+* Enhancing native selects with search.
+* Enhancing native selects with a better multi-select interface.
+* Loading data from JavaScript: easily load items via ajax and have them searchable.
+* Nesting optgroups: native selects only support one level of nested. Select2 does not have this restriction.
+* Tagging: ability to add new items on the fly.
+* Working with large, remote datasets: ability to partially load a dataset based on the search term.
+* Paging of large datasets: easy support for loading more pages when the results are scrolled to the end.
+* Templating: support for custom rendering of results and selections.
 
 Browser compatibility
 ---------------------
@@ -40,10 +40,10 @@ Internationalization (i18n)
 ---------------------------
 
 Select2 supports multiple languages by simply including the right
-language JS file (`select2_locale_it.js`, `select2_locale_nl.js` etc.).
+language JS file (`select2_locale_it.js`, `select2_locale_nl.js`, etc.).
 
 Missing a language? Just copy `select2_locale_en.js.template`, translate
-it and make a pull request back to Select2 here on GitHub.
+it, and make a pull request back to Select2 here on GitHub.
 
 Bug tracker
 -----------
