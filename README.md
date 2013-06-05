@@ -1,12 +1,12 @@
 Select2
-=================
+=======
 
 Select2 is a jQuery based replacement for select boxes. It supports searching, remote data sets, and infinite scrolling of results.
 
 To get started checkout examples and documentation at http://ivaynberg.github.com/select2
 
-What Usecases Does Select2 Support
--------------------------------------------------
+Use cases
+---------
 
 * Enhances native selects with search
 * Enhances native selects with a better multi-select interface
@@ -17,8 +17,8 @@ What Usecases Does Select2 Support
 * Paging of large datasets: easy support for loading more pages when the results are scrolled to the end
 * Templating: support for custom rendering of results and selections
 
-Browser Compatibility
---------------------
+Browser compatibility
+---------------------
 * IE 8+
 * Chrome 8+
 * Firefox 10+
@@ -62,7 +62,7 @@ select2@googlegroups.com
 https://groups.google.com/d/forum/select2
 
 
-Copyright and License
+Copyright and license
 ---------------------
 
 Copyright 2012 Igor Vaynberg
