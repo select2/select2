@@ -10,10 +10,10 @@ Use cases
 
 * Enhancing native selects with search
 * Enhancing native selects with a better multi-select interface
-* Loading data from javascript: easily load items via ajax and have them searchable
+* Loading data from JavaScript: easily load items via ajax and have them searchable
 * Nesting optgroups: native selects only support one level of nested, Select2 does not have this restriction
 * Tagging: ability to add new items on the fly
-* Working with large remote datesets: ability to partially load a dataset based on the search term
+* Working with large remote datasets: ability to partially load a dataset based on the search term
 * Paging of large datasets: easy support for loading more pages when the results are scrolled to the end
 * Templating: support for custom rendering of results and selections
 
@@ -43,7 +43,7 @@ Select2 supports multiple languages by simply including the right
 language JS file (`select2_locale_it.js`, `select2_locale_nl.js` etc.).
 
 Missing a language? Just copy `select2_locale_en.js.template`, translate
-it and make a pull request back to Select2 here on Github.
+it and make a pull request back to Select2 here on GitHub.
 
 Bug tracker
 -----------
@@ -67,17 +67,17 @@ Copyright and license
 
 Copyright 2012 Igor Vaynberg
 
-This software is licensed under the Apache License, Version 2.0 (the "Apache License") or the GNU 
-General Public License version 2 (the "GPL License"). You may choose either license to govern your 
-use of this software only upon the condition that you accept all of the terms of either the Apache 
-License or the GPL License. 
+This software is licensed under the Apache License, Version 2.0 (the "Apache License") or the GNU
+General Public License version 2 (the "GPL License"). You may choose either license to govern your
+use of this software only upon the condition that you accept all of the terms of either the Apache
+License or the GPL License.
 
 You may obtain a copy of the Apache License and the GPL License in the LICENSE file, or at:
 
 http://www.apache.org/licenses/LICENSE-2.0
 http://www.gnu.org/licenses/gpl-2.0.html
 
-Unless required by applicable law or agreed to in writing, software distributed under the Apache License 
-or the GPL Licesnse is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
-either express or implied. See the Apache License and the GPL License for the specific language governing 
+Unless required by applicable law or agreed to in writing, software distributed under the Apache License
+or the GPL License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+either express or implied. See the Apache License and the GPL License for the specific language governing
 permissions and limitations under the Apache License and the GPL License.
