@@ -8,10 +8,10 @@ To get started checkout examples and documentation at http://ivaynberg.github.co
 Use cases
 ---------
 
-* Enhances native selects with search
-* Enhances native selects with a better multi-select interface
+* Enhancing native selects with search
+* Enhancing native selects with a better multi-select interface
 * Loading data from javascript: easily load items via ajax and have them searchable
-* Nested optgroups: native selects only support one level of nested, Select2 does not have this restriction
+* Nesting optgroups: native selects only support one level of nested, Select2 does not have this restriction
 * Tagging: ability to add new items on the fly
 * Working with large remote datesets: ability to partially load a dataset based on the search term
 * Paging of large datasets: easy support for loading more pages when the results are scrolled to the end
