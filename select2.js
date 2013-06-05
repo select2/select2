@@ -416,7 +416,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 data = data ? data.call(self, query.term, query.page, query.context) : null;
                 url = (typeof url === 'function') ? url.call(self, query.term, query.page, query.context) : url;
 
-                if( null !== handler) { handler.abort(); }
+                if (handler !== undefined && handler !== null) { handler.abort(); }
 
                 if (options.params) {
                     if ($.isFunction(options.params)) {
