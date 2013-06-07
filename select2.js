@@ -1343,7 +1343,7 @@ the specific language governing permissions and limitations under the Apache Lic
          * Opens control, sets input value, and updates results.
          */
         // abstract
-        search: function (term) {
+        externalSearch: function (term) {
             this.open();
             this.search.val(term);
             this.updateResults(false);
@@ -3033,9 +3033,10 @@ the specific language governing permissions and limitations under the Apache Lic
         var args = Array.prototype.slice.call(arguments, 0),
             opts,
             select2,
-            value, multiple,
+            method, value, multiple,
             allowedMethods = ["val", "destroy", "opened", "open", "close", "focus", "isFocused", "container", "dropdown", "onSortStart", "onSortEnd", "enable", "readonly", "positionDropdown", "data", "search"],
-            valueMethods = ["val", "opened", "isFocused", "container", "data"];
+            valueMethods = ["val", "opened", "isFocused", "container", "data"],
+            methodsMap = { search: "externalSearch" };
 
         this.each(function () {
             if (args.length === 0 || typeof(args[0]) === "object") {
@@ -3060,12 +3061,17 @@ the specific language governing permissions and limitations under the Apache Lic
                 value = undefined;
                 select2 = $(this).data("select2");
                 if (select2 === undefined) return;
-                if (args[0] === "container") {
+
+                method=args[0];
+
+                if (method === "container") {
                     value = select2.container;
-                } else if (args[0] === "dropdown") {
+                } else if (method === "dropdown") {
                     value = select2.dropdown;
                 } else {
-                    value = select2[args[0]].apply(select2, args.slice(1));
+                    if (methodsMap[method]) method = methodsMap[method];
+
+                    value = select2[method].apply(select2, args.slice(1));
                 }
                 if (indexOf(args[0], valueMethods) >= 0) {
                     return false;
