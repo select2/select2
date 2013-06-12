@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright 2012 Igor Vaynberg
 
 Version: @@ver@@ Timestamp: @@timestamp@@
@@ -1529,7 +1529,8 @@ the specific language governing permissions and limitations under the Apache Lic
                 self = this,
                 input,
                 term = search.val(),
-                lastTerm=$.data(this.container, "select2-last-term");
+                lastTerm=$.data(this.container, "select2-last-term"),
+                selectedItem = this.val();
 
             // prevent duplicate queries against the same term
             if (initial !== true && lastTerm && equal(term, lastTerm)) return;
@@ -1542,7 +1543,9 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             function postRender() {
-                results.scrollTop(0);
+                if (!selectedItem) {
+                    results.scrollTop(0);
+                }
                 search.removeClass("select2-active");
                 self.positionDropdown();
             }
