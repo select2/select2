@@ -2133,7 +2133,11 @@ the specific language governing permissions and limitations under the Apache Lic
 
             // and highlight it
             if (noHighlightUpdate !== false) {
-                this.highlight(selected);
+                if (initial === true && selected >= 0) {
+                    this.highlight(selected);
+                } else {
+                    this.highlight(0);
+                }
             }
 
             // hide the search box if this is the first we got the results and there are enough of them for search
