@@ -1250,7 +1250,7 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             // IE requires an iframe shim to cover controls like selects
-            if($.support.opacity) {
+            if($.support.opacity === false) {
                 // a hack to detect older IE browsers - they do not support opacity
                 undermask=$("#select2-drop-undermask");
                 if (undermask.length==0) {
