@@ -1290,7 +1290,6 @@ the specific language governing permissions and limitations under the Apache Lic
             this.positionDropdown();
 
             this.dropdown.addClass("select2-drop-active");
-            this.ensureHighlightVisible();
 
             // attach listeners to events that can change the position of the container and thus require
             // the position of the dropdown to be updated as well so it does not come unglued from the container
@@ -1542,7 +1541,6 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             function postRender() {
-                results.scrollTop(0);
                 search.removeClass("select2-active");
                 self.positionDropdown();
             }
