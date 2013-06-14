@@ -1218,7 +1218,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 scroll = "scroll." + cid,
                 resize = "resize."+cid,
                 orient = "orientationchange."+cid,
-                mask, undermask = undefined, maskCss;
+                mask, maskCss;
 
             this.container.addClass("select2-dropdown-open").addClass("select2-container-active");
 
@@ -1249,30 +1249,9 @@ the specific language governing permissions and limitations under the Apache Lic
                 });
             }
 
-            // IE requires an iframe shim to cover controls like selects
-            if($.support.opacity === false) {
-                // a hack to detect older IE browsers - they do not support opacity
-                undermask=$("#select2-drop-undermask");
-                if (undermask.length==0) {
-                    undermask = $(document.createElement("iframe"));
-                    undermask.attr("src","about:blank");
-                    undermask.attr("id","select2-drop-undermask").attr("class","select2-drop-undermask");
-                    undermask.attr("allowTransparency", "true");
-                    undermask.attr("frameborder", "0");
-                    undermask.hide();
-                    undermask.appendTo(this.body());
-                }
-            }
-
-
             // ensure the mask is always right before the dropdown
             if (this.dropdown.prev()[0] !== mask[0]) {
                 this.dropdown.before(mask);
-            }
-
-            // ensure the undermask is always right before the mask
-            if (undermask && mask.prev()[0] !== undermask[0]) {
-                mask.before(undermask);
             }
 
             // move the global id to the correct dropdown
@@ -1281,8 +1260,6 @@ the specific language governing permissions and limitations under the Apache Lic
 
             // show the elements
             maskCss=_makeMaskCss();
-
-            if (undermask) { undermask.css(maskCss).show(); }
 
             mask.css(maskCss).show();
 
@@ -1297,7 +1274,6 @@ the specific language governing permissions and limitations under the Apache Lic
             this.container.parents().add(window).each(function () {
                 $(this).on(resize+" "+scroll+" "+orient, function (e) {
                     var maskCss=_makeMaskCss();
-                    $("#select2-drop-undermask").css(maskCss);
                     $("#select2-drop-mask").css(maskCss);
                     that.positionDropdown();
                 });
@@ -1325,7 +1301,6 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.clearDropdownAlignmentPreference();
 
-            $("#select2-drop-undermask").hide();
             $("#select2-drop-mask").hide();
             this.dropdown.removeAttr("id"); // only the active dropdown has the select2-drop id
             this.dropdown.hide();
