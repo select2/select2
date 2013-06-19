@@ -194,6 +194,15 @@ Version: @@ver@@ Timestamp: @@timestamp@@
             box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
 }
 
+.select2-drop-active {
+    border: 1px solid #5897fb;
+    border-top: none;
+}
+
+.select2-drop.select2-drop-above.select2-drop-active {
+    border-top: 1px solid #5897fb;
+}
+
 .select2-container .select2-choice div {
     display: inline-block;
     width: 18px;
