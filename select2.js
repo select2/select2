@@ -763,21 +763,24 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // abstract
         destroy: function () {
-            var select2 = this.opts.element.data("select2");
+            var element=this.opts.element, select2 = element.data("select2");
 
             if (this.propertyObserver) { delete this.propertyObserver; this.propertyObserver = null; }
 
             if (select2 !== undefined) {
-
                 select2.container.remove();
                 select2.dropdown.remove();
-                select2.opts.element
+                element
                     .removeClass("select2-offscreen")
                     .removeData("select2")
                     .off(".select2")
-                    .attr({"tabindex": this.elementTabIndex})
-                    .prop("autofocus", this.autofocus||false)
-                    .show();
+                    .prop("autofocus", this.autofocus || false);
+                if (this.elementTabIndex) {
+                    element.attr({tabindex: this.elementTabIndex});
+                } else {
+                    element.removeAttr("tabindex");
+                }
+                element.show();
             }
         },
 
