@@ -1909,6 +1909,9 @@ the specific language governing permissions and limitations under the Apache Lic
 
                 if (e.which == KEY.DOWN || e.which == KEY.UP
                     || (e.which == KEY.ENTER && this.opts.openOnEnter)) {
+
+                    if (e.altKey || e.ctrlKey || e.shiftKey || e.metaKey) return;
+                    
                     this.open();
                     killEvent(e);
                     return;
