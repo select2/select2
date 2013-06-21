@@ -86,7 +86,7 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     margin-right: 42px;
 }
 
-.select2-container .select2-choice span {
+.select2-container .select2-choice > span {
     margin-right: 26px;
     display: block;
     overflow: hidden;
