@@ -1617,7 +1617,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
                 postRender();
 
-                this.opts.element.trigger({ type: "select2-loaded", data:data });
+                this.opts.element.trigger({ type: "select2-loaded", items: data });
             })});
         },
 
