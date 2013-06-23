@@ -652,7 +652,7 @@ the specific language governing permissions and limitations under the Apache Lic
             // destroy if called on an existing component
             if (opts.element.data("select2") !== undefined &&
                 opts.element.data("select2") !== null) {
-                this.destroy();
+                opts.element.data("select2").destroy();
             }
 
             this.container = this.createContainer();
