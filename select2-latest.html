@@ -1195,6 +1195,7 @@ $(document).ready(function () {
                     <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
                     <tr><td>object</td><td>object</td><td>The selected result object returned from the <code>query</code> function</td></tr>
                     <tr><td>container</td><td>jQuery object</td><td>jQuery wrapper of the node to which the selection should be appended</td></tr>
+                    <tr><td>escapeMarkup</td><td>function</td><td>Function that can be used to escape html markup. This is the function defined in the <code>escapeMarkup</code>option, or the default.</td></tr>
                     <tr><td>&lt;returns&gt;</td><td>string (optional)</td><td>Html string, a DOM element, or a jQuery object that renders the selection</td></tr>
                 </table>
                 <p>The default implementation expects the object to have a <code>text</code> property that is returned.</p>
