@@ -1911,7 +1911,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     || (e.which == KEY.ENTER && this.opts.openOnEnter)) {
 
                     if (e.altKey || e.ctrlKey || e.shiftKey || e.metaKey) return;
-                    
+
                     this.open();
                     killEvent(e);
                     return;
@@ -2174,9 +2174,9 @@ the specific language governing permissions and limitations under the Apache Lic
             this.selection.data("select2-data", data);
 
             container.empty();
-            formatted=this.opts.formatSelection(data, container);
+            formatted=this.opts.formatSelection(data, container, this.opts.escapeMarkup);
             if (formatted !== undefined) {
-                container.append(this.opts.escapeMarkup(formatted));
+                container.append(formatted);
             }
             cssClass=this.opts.formatSelectionCssClass(data, container);
             if (cssClass !== undefined) {
@@ -2722,9 +2722,9 @@ the specific language governing permissions and limitations under the Apache Lic
                 formatted,
                 cssClass;
 
-            formatted=this.opts.formatSelection(data, choice.find("div"));
+            formatted=this.opts.formatSelection(data, choice.find("div"), this.opts.escapeMarkup);
             if (formatted != undefined) {
-                choice.find("div").replaceWith("<div>"+this.opts.escapeMarkup(formatted)+"</div>");
+                choice.find("div").replaceWith("<div>"+formatted+"</div>");
             }
             cssClass=this.opts.formatSelectionCssClass(data, choice.find("div"));
             if (cssClass != undefined) {
@@ -3085,8 +3085,8 @@ the specific language governing permissions and limitations under the Apache Lic
             markMatch(result.text, query.term, markup, escapeMarkup);
             return markup.join("");
         },
-        formatSelection: function (data, container) {
-            return data ? data.text : undefined;
+        formatSelection: function (data, container, escapeMarkup) {
+            return data ? escapeMarkup(data.text) : undefined;
         },
         sortResults: function (results, container, query) {
             return results;
