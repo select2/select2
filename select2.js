@@ -598,7 +598,7 @@ the specific language governing permissions and limitations under the Apache Lic
             input = input.substring(index + separator.length);
 
             if (token.length > 0) {
-                token = opts.createSearchChoice(token, selection);
+                token = opts.createSearchChoice.call(this, token, selection);
                 if (token !== undefined && token !== null && opts.id(token) !== undefined && opts.id(token) !== null) {
                     dupe = false;
                     for (i = 0, l = selection.length; i < l; i++) {
@@ -1586,7 +1586,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.context = (data.context===undefined) ? null : data.context;
                 // create a default choice and prepend it to the list
                 if (this.opts.createSearchChoice && search.val() !== "") {
-                    def = this.opts.createSearchChoice.call(null, search.val(), data.results);
+                    def = this.opts.createSearchChoice.call(self, search.val(), data.results);
                     if (def !== undefined && def !== null && self.id(def) !== undefined && self.id(def) !== null) {
                         if ($(data.results).filter(
                             function () {
@@ -2640,7 +2640,7 @@ the specific language governing permissions and limitations under the Apache Lic
         // multi
         tokenize: function() {
             var input = this.search.val();
-            input = this.opts.tokenizer(input, this.data(), this.bind(this.onSelect), this.opts);
+            input = this.opts.tokenizer.call(this, input, this.data(), this.bind(this.onSelect), this.opts);
             if (input != null && input != undefined) {
                 this.search.val(input);
                 if (input.length > 0) {
