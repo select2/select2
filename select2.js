@@ -793,7 +793,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     element: element.get(),
                     css: element.attr("class"),
                     disabled: element.prop("disabled"),
-                    locked: equal(element.attr("locked"), "locked")
+                    locked: equal(element.attr("locked"), "locked") || equal(element.data("locked"), true)
                 };
             } else if (element.is("optgroup")) {
                 return {
