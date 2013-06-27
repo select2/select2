@@ -132,8 +132,10 @@ the specific language governing permissions and limitations under the Apache Lic
         if (a === b) return true;
         if (a === undefined || b === undefined) return false;
         if (a === null || b === null) return false;
-        if (a.constructor === String) return a+'' === b+''; // IE requires a+'' instead of just a
-        if (b.constructor === String) return b+'' === a+''; // IE requires b+'' instead of just b
+        // Check whether 'a' or 'b' is a string (primitive or object).
+        // The concatenation of an empty string (+'') converts its argument to a string's primitive.
+        if (a.constructor === String) return a+'' === b+''; // a+'' - in case 'a' is a String object
+        if (b.constructor === String) return b+'' === a+''; // b+'' - in case 'b' is a String object
         return false;
     }
 
