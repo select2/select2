@@ -232,6 +232,7 @@ $("#e10_4").select2({
                   <li><a href="#matcher">Custom Matcher Function</a></li>
                   <li><a href="#sort_results">Sorting Displayed Results</a></li>
                   <li><a href="#responsive">Responsive Design</a></li>
+                  <li><a href="#diacritics">Diacritics Support</a></li>
               </ul>
             </li>
             <li><a href="#documentation">Documentation</a></li>
@@ -1018,6 +1019,33 @@ $(document).ready(function () {
         </pre>
           </div>
       </article>
+
+      <article class="row" id="diacritics">
+          <div class="span12">
+              <h3>Diacritics Support</h3>
+              <p>Select2's default matcher will ignore diacritics, making it easier for users to filter results in international selects. Type &quot;aero&quot; into the select below:</p>
+              <p>
+                  <select id="e30" multiple="multiple" style="width:300px;">
+                      <option>Aeróbics</option>
+                      <option>Aeróbics en Agua</option>
+                      <option>Aerografía</option>
+                      <option>Aeromodelaje</option>
+                      <option>Águilas</option>
+                      <option>Ajedrez</option>
+                      <option>Ala Delta</option>
+                      <option>Álbumes de Música</option>
+                      <option>Alusivos</option>
+                      <option>Análisis de Escritura a Mano</option>
+                  </select>
+                  <script>
+                      $(function() {
+                          $("#e30").select2();
+                      })
+                  </script>
+              </p>
+          </div>
+      </article>
+
 
       </section>
 
