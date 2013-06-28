@@ -446,13 +446,42 @@ disabled look for disabled choices in the results dropdown
     display: none;
 }
 
-.select2-more-results.select2-active {
+.select2-more-results.select2-active, .select2-pagination.select2-active {
     background: #f4f4f4 url('select2-spinner.gif') no-repeat 100%;
 }
 
-.select2-more-results {
+.select2-more-results, .select2-pagination {
     background: #f4f4f4;
     display: list-item;
+}
+
+.select2-pagination {
+    text-align: center;
+    line-height: 25px;
+    padding: 3px 20px 3px;
+}
+
+.select2-pagination-next, .select2-pagination-previous {
+    cursor: pointer;
+    line-height: 25px;
+    width: 25px;
+    display: inline-block;
+    
+    -webkit-border-radius: 3px;
+       -moz-border-radius: 3px;
+            border-radius: 3px;
+}
+.select2-pagination-next {
+    float: right;
+}
+
+.select2-pagination-previous {
+    float: left;
+}
+
+.select2-pagination-next:hover, .select2-pagination-previous:hover {
+    background: #3875d7;
+    color: #fff;
 }
 
 /* disabled styles */
@@ -656,6 +685,10 @@ disabled look for disabled choices in the results dropdown
 
 .select2-display-none {
     display: none;
+}
+
+.select2-visibility-hidden {
+    visibility: hidden;
 }
 
 .select2-measure-scrollbar {
