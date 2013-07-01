@@ -408,7 +408,6 @@ the specific language governing permissions and limitations under the Apache Lic
      */
     function ajax(options) {
         var timeout, // current scheduled but not yet executed request
-            requestSequence = 0, // sequence used to drop out-of-order responses
             handler = null,
             quietMillis = options.quietMillis || 100,
             ajaxUrl = options.url,
@@ -417,9 +416,7 @@ the specific language governing permissions and limitations under the Apache Lic
         return function (query) {
             window.clearTimeout(timeout);
             timeout = window.setTimeout(function () {
-                requestSequence += 1; // increment the sequence
-                var requestNumber = requestSequence, // this request's sequence number
-                    data = options.data, // ajax data function
+                var data = options.data, // ajax data function
                     url = ajaxUrl, // ajax url string or function
                     transport = options.transport || $.fn.select2.ajaxDefaults.transport,
                     // deprecated - to be removed in 4.0  - use params instead
@@ -449,9 +446,6 @@ the specific language governing permissions and limitations under the Apache Lic
                     dataType: options.dataType,
                     data: data,
                     success: function (data) {
-                        if (requestNumber < requestSequence) {
-                            return;
-                        }
                         // TODO - replace query.page with query so users have access to term, page, etc.
                         var results = options.results(data, query.page);
                         query.callback(results);
@@ -703,6 +697,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.results = results = this.container.find(resultsSelector);
             this.search = search = this.container.find("input.select2-input");
 
+            this.queryCount = 0;
             this.resultsPage = 0;
             this.context = null;
 
@@ -1428,7 +1423,7 @@ the specific language governing permissions and limitations under the Apache Lic
             if (index >= choices.length) index = choices.length - 1;
             if (index < 0) index = 0;
 
-            this.results.find(".select2-highlighted").removeClass("select2-highlighted");
+            this.removeHighlight();
 
             choice = $(choices[index]);
             choice.addClass("select2-highlighted");
@@ -1439,6 +1434,10 @@ the specific language governing permissions and limitations under the Apache Lic
             if (data) {
                 this.opts.element.trigger({ type: "select2-highlight", val: this.id(data), choice: data });
             }
+        },
+
+        removeHighlight: function() {
+            this.results.find(".select2-highlighted").removeClass("select2-highlighted");
         },
 
         // abstract
@@ -1453,8 +1452,8 @@ the specific language governing permissions and limitations under the Apache Lic
                 var choices = this.findHighlightableChoices();
                 this.highlight(choices.index(el));
             } else if (el.length == 0) {
-                // if we are over an unselectable item remove al highlights
-                this.results.find(".select2-highlighted").removeClass("select2-highlighted");
+                // if we are over an unselectable item remove all highlights
+                this.removeHighlight();
             }
         },
 
@@ -1521,7 +1520,9 @@ the specific language governing permissions and limitations under the Apache Lic
                 self = this,
                 input,
                 term = search.val(),
-                lastTerm=$.data(this.container, "select2-last-term");
+                lastTerm = $.data(this.container, "select2-last-term"),
+                // sequence number used to drop out-of-order responses
+                queryNumber;
 
             // prevent duplicate queries against the same term
             if (initial !== true && lastTerm && equal(term, lastTerm)) return;
@@ -1542,6 +1543,8 @@ the specific language governing permissions and limitations under the Apache Lic
                 results.html(html);
                 postRender();
             }
+
+            queryNumber = ++this.queryCount;
 
             var maxSelSize = this.getMaximumSelectionSize();
             if (maxSelSize >=1) {
@@ -1577,6 +1580,8 @@ the specific language governing permissions and limitations under the Apache Lic
 
             search.addClass("select2-active");
 
+            this.removeHighlight();
+
             // give the tokenizer a chance to pre-process the input
             input = this.tokenize();
             if (input != undefined && input != null) {
@@ -1593,6 +1598,11 @@ the specific language governing permissions and limitations under the Apache Lic
                     matcher: opts.matcher,
                     callback: this.bind(function (data) {
                 var def; // default choice
+
+                // ignore old responses
+                if (queryNumber != this.queryCount) {
+                  return;
+                }
 
                 // ignore a response if the select2 has been closed before it was received
                 if (!this.opened()) {
