@@ -392,7 +392,6 @@ the specific language governing permissions and limitations under the Apache Lic
      */
     function ajax(options) {
         var timeout, // current scheduled but not yet executed request
-            requestSequence = 0, // sequence used to drop out-of-order responses
             handler = null,
             quietMillis = options.quietMillis || 100,
             ajaxUrl = options.url,
@@ -401,9 +400,7 @@ the specific language governing permissions and limitations under the Apache Lic
         return function (query) {
             window.clearTimeout(timeout);
             timeout = window.setTimeout(function () {
-                requestSequence += 1; // increment the sequence
-                var requestNumber = requestSequence, // this request's sequence number
-                    data = options.data, // ajax data function
+                var data = options.data, // ajax data function
                     url = ajaxUrl, // ajax url string or function
                     transport = options.transport || $.fn.select2.ajaxDefaults.transport,
                     // deprecated - to be removed in 4.0  - use params instead
@@ -433,9 +430,6 @@ the specific language governing permissions and limitations under the Apache Lic
                     dataType: options.dataType,
                     data: data,
                     success: function (data) {
-                        if (requestNumber < requestSequence) {
-                            return;
-                        }
                         // TODO - replace query.page with query so users have access to term, page, etc.
                         var results = options.results(data, query.page);
                         query.callback(results);
@@ -1511,6 +1505,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 input,
                 term = search.val(),
                 lastTerm = $.data(this.container, "select2-last-term"),
+                // sequence number used to drop out-of-order responses
                 queryNumber;
 
             // prevent duplicate queries against the same term
