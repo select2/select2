@@ -1615,6 +1615,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 self.focusSearch();
                 // We've just loaded a new page, scroll to the top of the results list
                 results.scrollTop(0);
+                self.highlight(0);
             })});
         },
 
@@ -2047,6 +2048,11 @@ the specific language governing permissions and limitations under the Apache Lic
                 if (!this.isInterfaceEnabled()) return;
 
                 if (e.which === KEY.PAGE_UP || e.which === KEY.PAGE_DOWN) {
+                    if (e.shiftKey) {
+                        this.loadPage(e.which === KEY.PAGE_UP ? 0 : this.numPages);
+                    } else {
+                        this.loadPage(this.resultsPage + (e.which === KEY.PAGE_UP ? -1 : 1));
+                    }
                     // prevent the page from scrolling
                     killEvent(e);
                     return;
@@ -2691,6 +2697,11 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.open();
 
                 if (e.which === KEY.PAGE_UP || e.which === KEY.PAGE_DOWN) {
+                    if (e.shiftKey) {
+                        this.loadPage(e.which === KEY.PAGE_UP ? 0 : this.numPages);
+                    } else {
+                        this.loadPage(this.resultsPage + (e.which === KEY.PAGE_UP ? -1 : 1));
+                    }
                     // prevent the page from scrolling
                     killEvent(e);
                 }
