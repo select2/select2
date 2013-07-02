@@ -1498,6 +1498,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     self.positionDropdown();
                     self.resultsPage = page;
                     self.context = data.context;
+                    this.opts.element.trigger({ type: "select2-loaded", items: data });
                 })});
             }
         },
