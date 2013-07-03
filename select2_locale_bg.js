@@ -7,11 +7,11 @@
     "use strict";
 
     $.extend($.fn.select2.defaults, {
-        formatNoMatches: function () { return "Няма намерени съвпадения"; },
-        formatInputTooShort: function (input, min) { var n = min - input.length; return "Моля въведете още " + n + " символ" + (n == 1 ? "" : "а"); },
-        formatInputTooLong: function (input, max) { var n = input.length - max; return "Моля въведете с " + n + " по-малко символ" + (n == 1? "" : "а"); },
-        formatSelectionTooBig: function (limit) { return "Можете да направите " + limit + (limit == 1 ? "избор" : "избора"); },
-        formatLoadMore: function (pageNumber) { return "Зареждане на още задачи..."; },
-        formatSearching: function () { return "Търсене..."; }
+        formatNoMatches: function () { return "РќСЏРјР° РЅР°РјРµСЂРµРЅРё СЃСЉРІРїР°РґРµРЅРёСЏ"; },
+        formatInputTooShort: function (input, min) { var n = min - input.length; return "РњРѕР»СЏ РІСЉРІРµРґРµС‚Рµ РѕС‰Рµ " + n + " СЃРёРјРІРѕР»" + (n == 1 ? "" : "Р°"); },
+        formatInputTooLong: function (input, max) { var n = input.length - max; return "РњРѕР»СЏ РІСЉРІРµРґРµС‚Рµ СЃ " + n + " РїРѕ-РјР°Р»РєРѕ СЃРёРјРІРѕР»" + (n == 1? "" : "Р°"); },
+        formatSelectionTooBig: function (limit) { return "РњРѕР¶РµС‚Рµ РґР° РЅР°РїСЂР°РІРёС‚Рµ " + limit + (limit == 1 ? "РёР·Р±РѕСЂ" : "РёР·Р±РѕСЂР°"); },
+        formatLoadMore: function (pageNumber) { return "Р—Р°СЂРµР¶РґР°РЅРµ РЅР° РѕС‰Рµ Р·Р°РґР°С‡Рё..."; },
+        formatSearching: function () { return "РўСЉСЂСЃРµРЅРµ..."; }
     });
 })(jQuery);
