@@ -678,6 +678,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             syncCssClasses(this.container, this.opts.element, this.opts.adaptContainerCssClass);
 
+            this.container.attr("style", opts.element.attr("style"));
             this.container.css(evaluate(opts.containerCss));
             this.container.addClass(evaluate(opts.containerCssClass));
 
