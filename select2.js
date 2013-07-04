@@ -3041,7 +3041,8 @@ the specific language governing permissions and limitations under the Apache Lic
             select2,
             method, value, multiple,
             allowedMethods = ["val", "destroy", "opened", "open", "close", "focus", "isFocused", "container", "dropdown", "onSortStart", "onSortEnd", "enable", "readonly", "positionDropdown", "data", "search"],
-            valueMethods = ["val", "opened", "isFocused", "container", "data"],
+            valueMethods = ["opened", "isFocused", "container", "dropdown"],
+            propertyMethods = ["val", "data"],
             methodsMap = { search: "externalSearch" };
 
         this.each(function () {
@@ -3079,8 +3080,9 @@ the specific language governing permissions and limitations under the Apache Lic
 
                     value = select2[method].apply(select2, args.slice(1));
                 }
-                if (indexOf(args[0], valueMethods) >= 0) {
-                    return false;
+                if (indexOf(args[0], valueMethods) >= 0
+                    || (indexOf(args[0], propertyMethods) && args.length == 1)) {
+                    return false; // abort the iteration, ready to return first matched value
                 }
             } else {
                 throw "Invalid arguments to select2 plugin: " + args;
