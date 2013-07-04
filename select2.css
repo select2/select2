@@ -20,7 +20,7 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     container without overlap because of margin/padding.
 
     More Info : http://www.quirksmode.org/css/box.html
-  /*
+  */
   -webkit-box-sizing: border-box; /* webkit */
      -moz-box-sizing: border-box; /* firefox */
           box-sizing: border-box; /* css3 */
