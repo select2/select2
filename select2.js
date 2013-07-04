@@ -769,7 +769,7 @@ the specific language governing permissions and limitations under the Apache Lic
             // Calculate size of scrollbar
             scrollBarDimensions = scrollBarDimensions || measureScrollbar();
 
-            this.autofocus = opts.element.prop("autofocus")
+            this.autofocus = opts.element.prop("autofocus");
             opts.element.prop("autofocus", false);
             if (this.autofocus) this.focus();
         },
@@ -2403,7 +2403,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 //killEvent(e);
                 _this.search[0].focus();
                 _this.selectChoice($(this));
-            })
+            });
 
             // rewrite labels from original element to focusser
             this.search.attr("id", "s2id_autogen"+nextUid());
