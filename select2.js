@@ -696,7 +696,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.dropdown.data("select2", this);
 
             this.results = results = this.container.find(resultsSelector);
-            this.search = search = this.container.find("input.select2-input");
+            this.search = search = this.container.find("input.select2-input").attr('placeholder', this.opts.searchInputPlaceholder);
 
             this.queryCount = 0;
             this.resultsPage = 0;
@@ -3135,7 +3135,8 @@ the specific language governing permissions and limitations under the Apache Lic
         blurOnChange: false,
         selectOnBlur: false,
         adaptContainerCssClass: function(c) { return c; },
-        adaptDropdownCssClass: function(c) { return null; }
+        adaptDropdownCssClass: function(c) { return null; },
+        searchInputPlaceholder: ''
     };
 
     $.fn.select2.ajaxDefaults = {
