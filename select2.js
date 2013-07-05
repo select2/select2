@@ -1808,7 +1808,10 @@ the specific language governing permissions and limitations under the Apache Lic
                 // IE appends focusser.val() at the end of field :/ so we manually insert it at the beginning using a range
                 // all other browsers handle this just fine
 
-                this.search.val(this.focusser.val());
+                // this.search.val(this.focusser.val());
+                var text = this.selection.context.innerText;
+                text = text.replace(/[\r\n]/g, "");
+                this.search.val(text);
             }
             this.search.focus();
             // move the cursor to the end after focussing, otherwise it will be at the beginning and
