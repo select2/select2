@@ -1809,9 +1809,9 @@ the specific language governing permissions and limitations under the Apache Lic
                 // all other browsers handle this just fine
 
                 // this.search.val(this.focusser.val());
-                var text = this.selection.context.innerText;
-                text = text.replace(/[\r\n]/g, "");
-                this.search.val(text);
+                var data = this.selection.data("select2-data");
+                var formatted = this.opts.formatSelection(data, this.search, this.opts.escapeMarkup);
+                this.search.val(formatted);
             }
             this.search.focus();
             // move the cursor to the end after focussing, otherwise it will be at the beginning and
