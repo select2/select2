@@ -1808,7 +1808,21 @@ the specific language governing permissions and limitations under the Apache Lic
                 // IE appends focusser.val() at the end of field :/ so we manually insert it at the beginning using a range
                 // all other browsers handle this just fine
 
-                this.search.val(this.focusser.val());
+                // if required display the currently selected value.   
+                if(this.opts.showCurrentValue) {
+                    if(this.getPlaceholder()){
+                        // Avoid using the placeholder as the currently selected value.
+                        if(this.selection.find(".select2-chosen").html() != this.getPlaceholder())
+                            this.search.val(this.selection.find(".select2-chosen").html());
+                        else
+                            this.search.val(this.focusser.val());
+                    } else {
+                        // display currently selected value inside the searchbox
+                        this.search.val(this.selection.find(".select2-chosen").html());
+                    }
+                }
+                else
+                    this.search.val(this.focusser.val());
             }
             this.search.focus();
             // move the cursor to the end after focussing, otherwise it will be at the beginning and
@@ -2325,7 +2339,7 @@ the specific language governing permissions and limitations under the Apache Lic
             // TODO validate placeholder is a string if specified
 
             if (opts.element.get(0).tagName.toLowerCase() === "select") {
-                // install sthe selection initializer
+                // install the selection initializer
                 opts.initSelection = function (element, callback) {
 
                     var data = [];
