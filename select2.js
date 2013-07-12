@@ -562,11 +562,11 @@ the specific language governing permissions and limitations under the Apache Lic
         return $.isFunction(val) ? val() : val;
     }
 
-    function countResults(results) {
+    function countResults(results, childrenProperty) { //FIXME
         var count = 0;
         $.each(results, function(i, item) {
-            if (item.children) {
-                count += countResults(item.children);
+            if (item[childrenProperty]) {
+                count += countResults(item[childrenProperty], childrenProperty);
             } else {
                 count++;
             }
@@ -854,8 +854,8 @@ the specific language governing permissions and limitations under the Apache Lic
 
                             disabled = (result.disabled === true);
                             selectable = (!disabled) && (id(result) !== undefined);
-
-                            compound=result.children && result.children.length > 0;
+                            //FIXME
+                            compound=result[opts.childrenProperty] && result[opts.childrenProperty].length > 0;
 
                             node=$("<li></li>");
                             node.addClass("select2-results-dept-"+depth);
@@ -879,7 +879,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
                                 innerContainer=$("<ul></ul>");
                                 innerContainer.addClass("select2-result-sub");
-                                populate(result.children, innerContainer, depth+1);
+                                populate(result[opts.childrenProperty], innerContainer, depth+1);
                                 node.append(innerContainer);
                             }
 
@@ -895,6 +895,10 @@ the specific language governing permissions and limitations under the Apache Lic
             if (typeof(opts.id) !== "function") {
                 idKey = opts.id;
                 opts.id = function (e) { return e[idKey]; };
+            }
+
+            if (typeof(opts.childrenProperty) !== "string") {
+              opts.childrenProperty = "children";
             }
 
             if ($.isArray(opts.element.data("select2Tags"))) {
@@ -2156,7 +2160,7 @@ the specific language governing permissions and limitations under the Apache Lic
             if (initial === true) {
                 var min = this.opts.minimumResultsForSearch;
                 if (min >= 0) {
-                    this.showSearch(countResults(data.results) >= min);
+                    this.showSearch(countResults(data.results, this.opts.childrenProperty) >= min);
                 }
             }
         },
@@ -3013,7 +3017,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.triggerChange();
         },
 
-        // multi 
+        // multi
         data: function(values, triggerChange) {
             var self=this, ids, old;
             if (arguments.length === 0) {
