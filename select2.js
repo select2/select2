@@ -1810,18 +1810,13 @@ the specific language governing permissions and limitations under the Apache Lic
 
                 // if required display the currently selected value.   
                 if(this.opts.showCurrentValue) {
-                    if(this.getPlaceholder()){
-                        // Avoid using the placeholder as the currently selected value.
-                        if(this.selection.find(".select2-chosen").html() != this.getPlaceholder())
-                            this.search.val(this.selection.find(".select2-chosen").html());
-                        else
-                            this.search.val(this.focusser.val());
-                    } else {
-                        // display currently selected value inside the searchbox
-                        this.search.val(this.selection.find(".select2-chosen").html());
-                    }
+                    var data = this.selection.data("select2-data");
+                    if(data.text !== undefined)
+                        this.search.val(data.text);
+                    else 
+                        this.search.val(this.focusser.val());
                 }
-                else
+                else 
                     this.search.val(this.focusser.val());
             }
             this.search.focus();
