@@ -562,7 +562,7 @@ the specific language governing permissions and limitations under the Apache Lic
         return $.isFunction(val) ? val() : val;
     }
 
-    function countResults(results, childrenProperty) { //FIXME
+    function countResults(results, childrenProperty) {
         var count = 0;
         $.each(results, function(i, item) {
             if (item[childrenProperty]) {
@@ -854,7 +854,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
                             disabled = (result.disabled === true);
                             selectable = (!disabled) && (id(result) !== undefined);
-                            //FIXME
+
                             compound=result[opts.childrenProperty] && result[opts.childrenProperty].length > 0;
 
                             node=$("<li></li>");
