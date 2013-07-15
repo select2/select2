@@ -1087,12 +1087,16 @@ the specific language governing permissions and limitations under the Apache Lic
         // abstract
         enable: function(enabled) {
             if (enabled === undefined) enabled = true;
-            if (this._enabled === enabled) return false;
+            if (this._enabled === enabled) return;
             this._enabled = enabled;
 
             this.opts.element.prop("disabled", !enabled);
             this.enableInterface();
-            return true;
+        },
+
+        // abstract
+        disable: function() {
+            this.enable(false);
         },
 
         // abstract
@@ -3041,7 +3045,7 @@ the specific language governing permissions and limitations under the Apache Lic
             opts,
             select2,
             method, value, multiple,
-            allowedMethods = ["val", "destroy", "opened", "open", "close", "focus", "isFocused", "container", "dropdown", "onSortStart", "onSortEnd", "enable", "readonly", "positionDropdown", "data", "search"],
+            allowedMethods = ["val", "destroy", "opened", "open", "close", "focus", "isFocused", "container", "dropdown", "onSortStart", "onSortEnd", "enable", "disable", "readonly", "positionDropdown", "data", "search"],
             valueMethods = ["opened", "isFocused", "container", "dropdown"],
             propertyMethods = ["val", "data"],
             methodsMap = { search: "externalSearch" };
