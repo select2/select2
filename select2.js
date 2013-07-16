@@ -2044,7 +2044,7 @@ the specific language governing permissions and limitations under the Apache Lic
         initSelection: function () {
             var selected;
             if (this.isPlaceholderOptionSelected()) {
-                this.updateSelection([]);
+                this.updateSelection(null);
                 this.close();
                 this.setPlaceholder();
             } else {
