@@ -2206,7 +2206,9 @@ the specific language governing permissions and limitations under the Apache Lic
             this.selection.data("select2-data", data);
 
             container.empty();
-            formatted=this.opts.formatSelection(data, container, this.opts.escapeMarkup);
+            if (data !== null) {
+                formatted=this.opts.formatSelection(data, container, this.opts.escapeMarkup);
+            }
             if (formatted !== undefined) {
                 container.append(formatted);
             }
