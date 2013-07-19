@@ -605,16 +605,16 @@ disabled look for disabled choices in the results dropdown
 }
 
 .select2-offscreen, .select2-offscreen:focus {
-    clip: rect(0 0 0 0);
-    width: 1px;
-    height: 1px;
-    border: 0;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    position: absolute;
-    outline: 0;
-    left: 0px;
+    clip: rect(0 0 0 0) !important;
+    width: 1px !important;
+    height: 1px !important;
+    border: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    position: absolute !important;
+    outline: 0 !important;
+    left: 0px !important;
 }
 
 .select2-display-none {
