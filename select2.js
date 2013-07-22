@@ -67,6 +67,7 @@ the specific language governing permissions and limitations under the Apache Lic
         END: 35,
         BACKSPACE: 8,
         DELETE: 46,
+        COMMA: 188,
         isArrow: function (k) {
             k = k.which ? k.which : k;
             switch (k) {
@@ -2238,6 +2239,7 @@ the specific language governing permissions and limitations under the Apache Lic
                         return;
                     case KEY.ENTER:
                     case KEY.TAB:
+                    case KEY.COMMA:
                         this.selectHighlighted();
                         killEvent(e);
                         return;
