@@ -2293,8 +2293,8 @@ the specific language governing permissions and limitations under the Apache Lic
                 if (data == undefined) data = null;
                 return data;
             } else {
-                if (!value || value === "") {
-                    this.clear(triggerChange);
+                if (!value) {
+                    this.clear(!!triggerChange);
                 } else {
                     data = this.data();
                     this.opts.element.val(!value ? "" : this.id(value));
