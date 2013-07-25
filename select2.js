@@ -1941,7 +1941,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     return;
                 }
 
-                if (e.which == KEY.DOWN || e.which == KEY.UP
+                if ((e.which == KEY.DOWN && !this.opts.disableUpDown) || (e.which == KEY.UP && !this.opts.disableUpDown)
                     || (e.which == KEY.ENTER && this.opts.openOnEnter)) {
 
                     if (e.altKey || e.ctrlKey || e.shiftKey || e.metaKey) return;
