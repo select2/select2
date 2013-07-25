@@ -20,7 +20,7 @@ the specific language governing permissions and limitations under the Apache Lic
 */
 (function ($) {
     if(typeof $.fn.each2 == "undefined") {
-        $.fn.extend({
+        $.extend($.fn, {
             /*
             * 4-10 times faster .each replacement
             * use it carefully, as it overrides jQuery context of element on each iteration
