@@ -2285,16 +2285,20 @@ the specific language governing permissions and limitations under the Apache Lic
         },
 
         // single
-        data: function(value, triggerChange) {
-            var data;
+        data: function(value) {
+            var data,
+                triggerChange = false;
 
             if (arguments.length === 0) {
                 data = this.selection.data("select2-data");
                 if (data == undefined) data = null;
                 return data;
             } else {
+                if (arguments.length > 1) {
+                    triggerChange = arguments[1];
+                }
                 if (!value) {
-                    this.clear(!!triggerChange);
+                    this.clear(triggerChange);
                 } else {
                     data = this.data();
                     this.opts.element.val(!value ? "" : this.id(value));
