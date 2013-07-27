@@ -779,6 +779,8 @@ the specific language governing permissions and limitations under the Apache Lic
         destroy: function () {
             var element=this.opts.element, select2 = element.data("select2");
 
+            this.close();
+
             if (this.propertyObserver) { delete this.propertyObserver; this.propertyObserver = null; }
 
             if (select2 !== undefined) {
