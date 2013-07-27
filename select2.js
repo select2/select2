@@ -696,7 +696,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.dropdown.data("select2", this);
 
             this.results = results = this.container.find(resultsSelector);
-            this.search = search = this.container.find("input.select2-input");
+            this.search = search = this.container.find("input.select2-input").attr('placeholder', this.opts.searchInputPlaceholder);
 
             this.queryCount = 0;
             this.resultsPage = 0;
@@ -842,13 +842,14 @@ the specific language governing permissions and limitations under the Apache Lic
 
             opts = $.extend({}, {
                 populateResults: function(container, results, query) {
-                    var populate,  data, result, children, id=this.opts.id;
+                    var populate,  data, result, children, id=this.opts.id, nodes = [];
 
                     populate=function(results, container, depth) {
 
-                        var i, l, result, selectable, disabled, compound, node, label, innerContainer, formatted;
+                        var i, l, result, selectable, disabled, compound, nodes, node, label, innerContainer, formatted;
 
                         results = opts.sortResults(results, container, query);
+                        nodes = [];
 
                         for (i = 0, l = results.length; i < l; i = i + 1) {
 
@@ -859,35 +860,38 @@ the specific language governing permissions and limitations under the Apache Lic
 
                             compound=result.children && result.children.length > 0;
 
-                            node=$("<li></li>");
-                            node.addClass("select2-results-dept-"+depth);
-                            node.addClass("select2-result");
-                            node.addClass(selectable ? "select2-result-selectable" : "select2-result-unselectable");
-                            if (disabled) { node.addClass("select2-disabled"); }
-                            if (compound) { node.addClass("select2-result-with-children"); }
-                            node.addClass(self.opts.formatResultCssClass(result));
+                            node = document.createElement("li");
+                            node.className = "select2-results-dept-"+depth;
+                            node.className += " select2-result";
+                            node.className += (selectable ? " select2-result-selectable" : " select2-result-unselectable");
+                            if (disabled) { node.className += " select2-disabled"; }
+                            if (compound) { node.className += " select2-result-with-children"; }
+                            node.className += " " + self.opts.formatResultCssClass(result);
 
-                            label=$(document.createElement("div"));
-                            label.addClass("select2-result-label");
+                            label=document.createElement("div");
+                            label.className = "select2-result-label";
 
-                            formatted=opts.formatResult(result, label, query, self.opts.escapeMarkup);
+                            formatted=opts.formatResult(result, $(label), query, self.opts.escapeMarkup);
                             if (formatted!==undefined) {
-                                label.html(formatted);
+                                label.innerHTML = formatted;
                             }
 
-                            node.append(label);
+                            node.appendChild(label);
 
                             if (compound) {
 
-                                innerContainer=$("<ul></ul>");
-                                innerContainer.addClass("select2-result-sub");
-                                populate(result.children, innerContainer, depth+1);
-                                node.append(innerContainer);
+                                innerContainer=document.createElement("ul");
+                                innerContainer.className = "select2-result-sub";
+                                populate(result.children, $(innerContainer), depth+1);
+                                node.appendChild(innerContainer);
+
                             }
 
-                            node.data("select2-data", result);
-                            container.append(node);
+                            $(node).data("select2-data", result);
+                            nodes[nodes.length] = node;
                         }
+
+                        container.append(nodes);
                     };
 
                     populate(results, container, 0);
@@ -3150,7 +3154,8 @@ the specific language governing permissions and limitations under the Apache Lic
         blurOnChange: false,
         selectOnBlur: false,
         adaptContainerCssClass: function(c) { return c; },
-        adaptDropdownCssClass: function(c) { return null; }
+        adaptDropdownCssClass: function(c) { return null; },
+        searchInputPlaceholder: ''
     };
 
     $.fn.select2.ajaxDefaults = {
