@@ -615,6 +615,7 @@ disabled look for disabled choices in the results dropdown
     position: absolute !important;
     outline: 0 !important;
     left: 0px !important;
+    top: 0px !important;
 }
 
 .select2-display-none {
