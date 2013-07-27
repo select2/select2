@@ -641,12 +641,3 @@ disabled look for disabled choices in the results dropdown
       background-position: 100% -21px !important;
   }
 }
-2-arrow b {
-      background-image: url('select2x2.png') !important;
-      background-repeat: no-repeat !important;
-      background-size: 60px 40px !important;
-  }
-  .select2-search input {
-      background-position: 100% -21px !important;
-  }
-}
