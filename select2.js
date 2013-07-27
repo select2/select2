@@ -1865,6 +1865,13 @@ the specific language governing permissions and limitations under the Apache Lic
         },
 
         // single
+        destroy: function() {
+            $("label[for='" + this.focusser.attr('id') + "']")
+                .attr('for', this.opts.element.attr("id"));
+            this.parent.destroy.apply(this, arguments);
+        },
+
+        // single
         initContainer: function () {
 
             var selection,
@@ -2402,6 +2409,13 @@ the specific language governing permissions and limitations under the Apache Lic
                     this.opts.element.trigger("choice-selected", choice);
                 }
             }
+        },
+
+        // multi
+        destroy: function() {
+            $("label[for='" + this.search.attr('id') + "']")
+                .attr('for', this.opts.element.attr("id"));
+            this.parent.destroy.apply(this, arguments);
         },
 
         // multi
