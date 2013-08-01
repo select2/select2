@@ -1262,7 +1262,7 @@ the specific language governing permissions and limitations under the Apache Lic
                         if (self.opts.selectOnBlur) {
                             self.selectHighlighted({noFocus: true});
                         }
-                        self.close();
+                        self.close({focus:false});
                         e.preventDefault();
                         e.stopPropagation();
                     }
@@ -1279,9 +1279,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.dropdown.attr("id", "select2-drop");
 
             // show the elements
-            maskCss=_makeMaskCss();
-
-            mask.css(maskCss).show();
+            mask.show();
 
             this.dropdown.show();
             this.positionDropdown();
@@ -1293,18 +1291,11 @@ the specific language governing permissions and limitations under the Apache Lic
             var that = this;
             this.container.parents().add(window).each(function () {
                 $(this).on(resize+" "+scroll+" "+orient, function (e) {
-                    var maskCss=_makeMaskCss();
-                    $("#select2-drop-mask").css(maskCss);
                     that.positionDropdown();
                 });
             });
 
-            function _makeMaskCss() {
-                return {
-                    width  : Math.max(document.documentElement.scrollWidth,  $(window).width()),
-                    height : Math.max(document.documentElement.scrollHeight, $(window).height())
-                }
-            }
+
         },
 
         // abstract
@@ -1835,11 +1826,16 @@ the specific language governing permissions and limitations under the Apache Lic
         },
 
         // single
-        close: function () {
+        close: function (params) {
             if (!this.opened()) return;
             this.parent.close.apply(this, arguments);
+
+            params = params || {focus: true};
             this.focusser.removeAttr("disabled");
-            this.focusser.focus();
+
+            if (params.focus) {
+                this.focusser.focus();
+            }
         },
 
         // single
