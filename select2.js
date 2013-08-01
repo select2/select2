@@ -1281,6 +1281,7 @@ the specific language governing permissions and limitations under the Apache Lic
             // show the elements
             mask.show();
 
+            this.positionDropdown();
             this.dropdown.show();
             this.positionDropdown();
 
