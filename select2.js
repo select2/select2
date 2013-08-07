@@ -1808,7 +1808,14 @@ the specific language governing permissions and limitations under the Apache Lic
                 // IE appends focusser.val() at the end of field :/ so we manually insert it at the beginning using a range
                 // all other browsers handle this just fine
 
-                this.search.val(this.focusser.val());
+                var data = this.selection.data("select2-data");
+                var formatted = this.opts.formatSelection(data, this.search, this.opts.escapeMarkup);
+                if (formatted) {
+                    this.search.val(formatted);
+                }
+		else {
+                    this.search.val(this.focusser.val());
+                }
             }
             this.search.focus();
             // move the cursor to the end after focussing, otherwise it will be at the beginning and
@@ -1841,10 +1848,6 @@ the specific language governing permissions and limitations under the Apache Lic
             if (this.opened()) {
                 this.close();
             } else {
-                var data = this.selection.data("select2-data");
-                var formatted = this.opts.formatSelection(data, this.search, this.opts.escapeMarkup);
-                this.search.val(formatted);
-
                 this.focusser.removeAttr("disabled");
                 this.focusser.focus();
             }
