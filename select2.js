@@ -694,6 +694,8 @@ the specific language governing permissions and limitations under the Apache Lic
             this.dropdown = this.container.find(".select2-drop");
             this.dropdown.addClass(evaluate(opts.dropdownCssClass));
             this.dropdown.data("select2", this);
+			
+            syncCssClasses(this.dropdown, this.opts.element, this.opts.adaptDropdownCssClass);
 
             this.results = results = this.container.find(resultsSelector);
             this.search = search = this.container.find("input.select2-input");
