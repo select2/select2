@@ -1,4 +1,4 @@
-﻿/*
+﻿﻿/*
 Copyright 2012 Igor Vaynberg
 
 Version: @@ver@@ Timestamp: @@timestamp@@
@@ -694,7 +694,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.dropdown = this.container.find(".select2-drop");
             this.dropdown.addClass(evaluate(opts.dropdownCssClass));
             this.dropdown.data("select2", this);
-			
+
             syncCssClasses(this.dropdown, this.opts.element, this.opts.adaptDropdownCssClass);
 
             this.results = results = this.container.find(resultsSelector);
@@ -775,6 +775,8 @@ the specific language governing permissions and limitations under the Apache Lic
             this.autofocus = opts.element.prop("autofocus");
             opts.element.prop("autofocus", false);
             if (this.autofocus) this.focus();
+
+            this.nextSearchTerm = undefined;
         },
 
         // abstract
@@ -1823,6 +1825,12 @@ the specific language governing permissions and limitations under the Apache Lic
                 el.setSelectionRange(len, len);
             }
 
+            // initializes search's value with nextSearchTerm (if defined by user)
+            if(this.nextSearchTerm != undefined){
+                this.search.val(this.nextSearchTerm);
+                this.search.select();
+            }
+
             this.focusser.prop("disabled", true).val("");
             this.updateResults(true);
             this.opts.element.trigger($.Event("select2-open"));
@@ -2201,6 +2209,8 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.opts.element.trigger({ type: "select2-selected", val: this.id(data), choice: data });
 
+            this.nextSearchTerm=this.opts.nextSearchTerm(data, data.text)
+
             this.close();
 
             if (!options || !options.noFocus)
@@ -2346,7 +2356,7 @@ the specific language governing permissions and limitations under the Apache Lic
             // TODO validate placeholder is a string if specified
 
             if (opts.element.get(0).tagName.toLowerCase() === "select") {
-                // install sthe selection initializer
+                // install the selection initializer
                 opts.initSelection = function (element, callback) {
 
                     var data = [];
@@ -3167,7 +3177,8 @@ the specific language governing permissions and limitations under the Apache Lic
         blurOnChange: false,
         selectOnBlur: false,
         adaptContainerCssClass: function(c) { return c; },
-        adaptDropdownCssClass: function(c) { return null; }
+        adaptDropdownCssClass: function(c) { return null; },
+        nextSearchTerm: function(selectedObject, currentSearchTerm) {return undefined;},
     };
 
     $.fn.select2.ajaxDefaults = {
