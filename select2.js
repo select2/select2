@@ -775,7 +775,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.autofocus = opts.element.prop("autofocus");
             opts.element.prop("autofocus", false);
             if (this.autofocus) this.focus();
-            
+
             this.nextSearchTerm = undefined;
         },
 
@@ -1824,7 +1824,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 len = this.search.val().length;
                 el.setSelectionRange(len, len);
             }
-            
+
             // initializes search's value with nextSearchTerm (if defined by user)
             // ignore nextSearchTerm if the dropdown is opened by the user pressing a letter
             if(this.search.val() === "") {
@@ -1833,7 +1833,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     this.search.select();
                 }
             }
-            
+
             this.focusser.prop("disabled", true).val("");
             this.updateResults(true);
             this.opts.element.trigger($.Event("select2-open"));
@@ -2212,7 +2212,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.opts.element.trigger({ type: "select2-selected", val: this.id(data), choice: data });
 
-            this.nextSearchTerm=this.opts.nextSearchTerm(data, data.text);
+            this.nextSearchTerm = this.opts.nextSearchTerm(data, this.search.val());
             this.close();
 
             if (!options || !options.noFocus)
