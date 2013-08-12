@@ -1,13 +1,13 @@
 ---
 layout: main
-title: Select2
+title: Select2 3.4.2
 group: navigation
-version: 3.4.1
-milestone: 11
+version: 3.4.2
+milestone: 12
 ---
 
-<link href="select2-3.4.1/select2.css?ts={{ site.time | date_to_xmlschema | cgi_escape}}" rel="stylesheet"/>
-<script src="select2-3.4.1/select2.js?ts={{ site.time | date_to_xmlschema | cgi_escape}}"></script>
+<link href="select2-3.4.2/select2.css" rel="stylesheet"/>
+<script src="select2-3.4.2/select2.js"></script>
 
 <script id="script_e1">
 
@@ -220,6 +220,7 @@ milestone: 11
                     <li><a href="#matcher">Custom Matcher Function</a></li>
                     <li><a href="#sort_results">Sorting Displayed Results</a></li>
                     <li><a href="#responsive">Responsive Design</a></li>
+                    <li><a href="#diacritics">Diacritics Support</a></li>
                 </ul>
             </li>
             <li><a href="#documentation">Documentation</a></li>
@@ -1008,6 +1009,33 @@ function format(state) {
     </div>
 </article>
 
+<article class="row" id="diacritics">
+    <div class="span12">
+        <h3>Diacritics Support</h3>
+        <p>Select2's default matcher will ignore diacritics, making it easier for users to filter results in international selects. Type &quot;aero&quot; into the select below:</p>
+        <p>
+            <select id="e30" multiple="multiple" style="width:300px;">
+                <option>Aeróbics</option>
+                <option>Aeróbics en Agua</option>
+                <option>Aerografía</option>
+                <option>Aeromodelaje</option>
+                <option>Águilas</option>
+                <option>Ajedrez</option>
+                <option>Ala Delta</option>
+                <option>Álbumes de Música</option>
+                <option>Alusivos</option>
+                <option>Análisis de Escritura a Mano</option>
+            </select>
+            <script>
+                $(function() {
+                    $("#e30").select2();
+                })
+            </script>
+        </p>
+    </div>
+</article>
+
+
 </section>
 
 
@@ -1073,7 +1101,7 @@ function format(state) {
 </td></tr>
 <tr><td>placeholderOption</td><td>function/string</td><td>
     <p>When attached to a <code>select</code> resolves the <code>option</code> that should be used as the placeholder.
-        Can either be a function which given the <code>select</code> element should return the <code>optoin</code>
+        Can either be a function which given the <code>select</code> element should return the <code>option</code>
         element or a string <code>first</code> to indicate that the first option should be used.</p>
     <p>This option is useful when Select2's default of using the first option only if it has no value and no text is not suitable.</p>
 </td></tr>
