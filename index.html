@@ -183,7 +183,7 @@ milestone: 12
         });
 
         $("#e10_3").select2({
-            data:{ results: data, text: function(item) { console.log('called with', item); return item.tag; } },
+            data:{ results: data, text: function(item) { return item.tag; } },
             formatSelection: format,
             formatResult: format
         });
