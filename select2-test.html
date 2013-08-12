@@ -12,6 +12,15 @@
 <div style="padding: 10px; margin: 10px;">
     <br/><br/><br/>
 
+
+
+    <select id="tst">
+        <option value="" selected="selected">Should-be-active option</option>
+        <option value="1">Second option</option>
+    </select>
+    <script>$(function() { $("#tst").select2(); });</script>
+    <br/><br/><br/>
+
     <input type="text" value="tab!" autofocus>
     <input type="text" id="input">
     <input type="text" value="ooops! skipped selector">
