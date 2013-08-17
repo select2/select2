@@ -1,0 +1,33 @@
+{
+  "name": "select2",
+  "description": "Select2 is a jQuery based replacement for select boxes. It supports searching, remote data sets, and infinite scrolling of results.",
+  "version": "3.4.2",
+  "keywords": [
+    "select",
+    "autocomplete",
+    "typeahead",
+    "dropdown",
+    "multiselect",
+    "tag",
+    "tagging"
+  ],
+  "scripts": { "test": "grunt test" },
+  "licenses": [
+    {
+      "type": "Apache",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    },
+    {
+      "type": "GPL v2",
+      "url": "http://www.gnu.org/licenses/gpl-2.0.html"
+    }
+  ],
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-contrib-less": "~0.7.0",
+    "grunt-git": "~0.1.4",
+    "grunt-sed": "~0.1.1"
+  }
+}

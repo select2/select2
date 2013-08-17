@@ -5,7 +5,7 @@ echo -n "Enter the version for this release: "
 
 read ver
 
-if [ ! $ver ]; then 
+if [ ! $ver ]; then
 	echo "Invalid version."
 	exit
 fi
@@ -13,48 +13,44 @@ fi
 name="select2"
 js="$name.js"
 mini="$name.min.js"
+less="$name.less"
 css="$name.css"
+minicss="$name.min.css"
 release="$name-$ver"
 tag="$ver"
 branch="build-$ver"
 curbranch=`git branch | grep "*" | sed "s/* //"`
-timestamp=$(date)
-tokens="s/@@ver@@/$ver/g;s/\@@timestamp@@/$timestamp/g"
 remote="github"
 
 echo "Updating Version Identifiers"
 
-sed -E -e "s/\"version\": \"([0-9\.]+)\",/\"version\": \"$ver\",/g" -i "" bower.json select2.jquery.json
+sed -E -e "s/\"version\": \"([0-9\.]+)\",/\"version\": \"$ver\",/g" -i "" package.json
+grunt sed:descriptorversion
+git add package.json
 git add bower.json
 git add select2.jquery.json
 git commit -m "modified version identifiers in descriptors for release $ver"
-git push
- 
+#git push
+
 git branch "$branch"
 git checkout "$branch"
 
-echo "Tokenizing..."
-
-find . -name "$js" | xargs -I{} sed -e "$tokens" -i "" {} 
-find . -name "$css" | xargs -I{} sed -e "$tokens" -i "" {}
-sed -e "s/latest/$ver/g" -i "" bower.json
-
-git add "$js"
-git add "$css"
-
 echo "Minifying..."
 
-echo "/*" > "$mini"
-cat LICENSE | sed "$tokens" >> "$mini"
-echo "*/" >> "$mini"
+grunt uglify
+grunt less
 
-curl -s \
-	--data-urlencode "js_code@$js" \
-	http://marijnhaverbeke.nl/uglifyjs \
-	>> "$mini"
+echo "Tokenizing..."
 
+grunt sed:fileversion
+grunt sed:filetime
+
+git add "$js"
 git add "$mini"
-	
+git add "$less"
+git add "$css"
+git add "$minicss"
+
 git commit -m "release $ver"
 
 echo "Tagging..."
