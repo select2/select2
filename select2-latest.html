@@ -974,6 +974,41 @@ $("#e18,#e18_2").select2();
           </div>
       </article>
 
+      <article class="row" id="disabled-options">
+          <script id="script_e24">
+
+              $(document).ready(function () {
+                  $('#e24').select2({
+                      query: function (query){
+                          var data = {
+                              results: [
+                                  { id: 2, text: "I'm selectable" }
+                                  { id: 1, text: "I'm a disabled option", disabled: true },
+                                  { id: 2, text: "I'm selectable too!" }
+                              ]
+                          };
+
+                          query.callback(data);
+                      }
+                  });
+              });
+          </script>
+          <div class="span12">
+              <h3>Disabled options</h3>
+              <p>
+                  In case that you need to disable certain options so that they can't be selected by the select2 interface, you can now pass in <code>disabled: true</code> with your data. Please note: This also works for incoming values from ajax. When attached to a <code>&lt;select&gt;</code> element, Select2 will respect its <code>&lt;option&gt;</code> elements' <code>disabled</code> property.
+              </p>
+              <p>
+                  <input type="hidden" id="e24" style="width:300px;"/>
+              </p>
+          </div>
+          <div class="span12">
+              <h3>Example Code</h3>
+              <pre class="prettyprint linenums" id="code_e24">
+              </pre>
+          </div>
+      </article>
+
       <article class="row" id="locked-selections">
           <script id="script_e21">
 
@@ -1410,7 +1445,7 @@ $("#select").select2({
                             <td>Callback function that should be called with the <code>result</code> object. The result object:
                                 <table class="table table-bordered table-striped">
                                     <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-                                    <tr><td>result.results</td><td>[object]</td><td>Array of result objects. The default renderers expect objects with <code>id</code> and <code>text</code> keys</code>. The <code>id</code> attribute is required</code>, even if custom renderers are used. The object may also contain a <code>children</code>key if hierarchical data is displayed.</td></tr>
+                                    <tr><td>result.results</td><td>[object]</td><td>Array of result objects. The default renderers expect objects with <code>id</code> and <code>text</code> keys</code>. The <code>id</code> property is required</code>, even if custom renderers are used. The object may also contain a <code>children</code> key if hierarchical data is displayed. The object may also contain a <code>disabled</code> boolean property indicating whether this result can be selected.</td></tr>
                                     <tr><td>result.more</td><td>boolean</td><td><code>true</code>if more results are available for the current search term</td></tr>
                                     <tr><td>results.context</td><td>object</td><td>A user-defined object that should be made available as the <code>context</code> parameter to the <code>query</code> function on subsequent queries to load more result pages for the same search term. See the description of <a href="#doc-query-options-context">options.context</code></a> parameter.</td></tr>
                                 </table>
