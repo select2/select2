@@ -747,7 +747,7 @@ the specific language governing permissions and limitations under the Apache Lic
             // trap all mouse events from leaving the dropdown. sometimes there may be a modal that is listening
             // for mouse events outside of itself so it can close itself. since the dropdown is now outside the select2's
             // dom it will trigger the popup close, which is not what we want
-            this.dropdown.on("click mouseup mousedown", function (e) { e.stopPropagation(); });
+            this.dropdown.on("click mouseup", function (e) { e.stopPropagation(); });
 
             if ($.isFunction(this.opts.initSelection)) {
                 // initialize selection based on the current value of the source element
@@ -1260,7 +1260,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 mask.attr("id","select2-drop-mask").attr("class","select2-drop-mask");
                 mask.hide();
                 mask.appendTo(this.body());
-                mask.on("mousedown touchstart click", function (e) {
+                mask.on("mouseup touchstart click", function (e) {
                     var dropdown = $("#select2-drop"), self;
                     if (dropdown.length > 0) {
                         self=dropdown.data("select2");
@@ -1990,7 +1990,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
             }));
 
-            selection.on("mousedown", "abbr", this.bind(function (e) {
+            selection.on("mouseup", "abbr", this.bind(function (e) {
                 if (!this.isInterfaceEnabled()) return;
                 this.clear();
                 killEventImmediately(e);
@@ -1998,7 +1998,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.selection.focus();
             }));
 
-            selection.on("mousedown", this.bind(function (e) {
+            selection.on("mouseup", this.bind(function (e) {
 
                 if (!this.container.hasClass("select2-container-active")) {
                     this.opts.element.trigger($.Event("select2-focus"));
@@ -2013,7 +2013,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 killEvent(e);
             }));
 
-            dropdown.on("mousedown", this.bind(function() { this.search.focus(); }));
+            dropdown.on("mouseup", this.bind(function() { this.search.focus(); }));
 
             selection.on("focus", this.bind(function(e) {
                 killEvent(e);
@@ -2798,7 +2798,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             if(enableChoice){
               choice.find(".select2-search-choice-close")
-                  .on("mousedown", killEvent)
+                  .on("mouseup", killEvent)
                   .on("click dblclick", this.bind(function (e) {
                   if (!this.isInterfaceEnabled()) return;
 
