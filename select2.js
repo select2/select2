@@ -1267,7 +1267,7 @@ the specific language governing permissions and limitations under the Apache Lic
                         if (self.opts.selectOnBlur) {
                             self.selectHighlighted({noFocus: true});
                         }
-                        self.close({focus:false});
+                        self.close({focus:true});
                         e.preventDefault();
                         e.stopPropagation();
                     }
