@@ -694,7 +694,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.dropdown = this.container.find(".select2-drop");
 
             syncCssClasses(this.dropdown, this.opts.element, this.opts.adaptDropdownCssClass);
-            
+
             this.dropdown.addClass(evaluate(opts.dropdownCssClass));
             this.dropdown.data("select2", this);
 
@@ -2340,9 +2340,11 @@ the specific language governing permissions and limitations under the Apache Lic
                 "class": "select2-container select2-container-multi"
             }).html([
                 "<ul class='select2-choices'>",
-                "  <li class='select2-search-field'>",
-                "    <input type='text' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' class='select2-input'>",
-                "  </li>",
+                "  <div class='select2-choices-container'>",
+                "    <li class='select2-search-field'>",
+                "      <input type='text' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' class='select2-input'>",
+                "    </li>",
+                "  </div>
                 "</ul>",
                 "<div class='select2-drop select2-drop-multi select2-display-none'>",
                 "   <ul class='select2-results'>",
