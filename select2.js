@@ -2344,7 +2344,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 "    <li class='select2-search-field'>",
                 "      <input type='text' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' class='select2-input'>",
                 "    </li>",
-                "  </div>
+                "  </div>",
                 "</ul>",
                 "<div class='select2-drop select2-drop-multi select2-display-none'>",
                 "   <ul class='select2-results'>",
