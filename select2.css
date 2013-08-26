@@ -486,7 +486,7 @@ disabled look for disabled choices in the results dropdown
 }
 
 .select2-container-multi .select2-choices .select2-search-field input {
-    padding: 5px;
+    padding: 3px;
     margin: 1px 0;
 
     font-family: sans-serif;
@@ -509,7 +509,7 @@ disabled look for disabled choices in the results dropdown
 
 .select2-container-multi .select2-choices .select2-search-choice {
     padding: 3px 5px 3px 18px;
-    margin: 3px 0 3px 5px;
+    margin: 4px 0 3px 5px;
     position: relative;
 
     line-height: 13px;
