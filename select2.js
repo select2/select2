@@ -2143,7 +2143,7 @@ the specific language governing permissions and limitations under the Apache Lic
         setPlaceholder: function () {
             var placeholder = this.getPlaceholder();
 
-            if (this.isPlaceholderOptionSelected() && placeholder !== undefined) {
+            if (placeholder !== undefined) {
 
                 // check for a placeholder option if attached to a select
                 if (this.select && this.getPlaceholderOption() === undefined) return;
