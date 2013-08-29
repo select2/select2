@@ -364,7 +364,7 @@ milestone: 12
         <p>
             <select id="e1" class="populate" style="width:300px"></select>
         </p>
-        <p>with support for quick option filtering via a search box</p>
+        <p>with support for quick option filtering via a search box.</p>
     </div>
     <div class="span8">
         <h3>Example Code</h3>
@@ -424,7 +424,7 @@ milestone: 12
         <p>
             <select id="e2_2" multiple="multiple" style="width:300px" class="populate placeholder"></select><br/>
         </p>
-        <p>The placeholder can be declared via a <code>data-placeholder</code> attribute attached to the <code>select</code>, or via the <code>placeholder</code> configuration element as seen in the example code</p>
+        <p>The placeholder can be declared via a <code>data-placeholder</code> attribute attached to the <code>select</code>, or via the <code>placeholder</code> configuration element as seen in the example code.</p>
         <p>When placeholder is used for a non-multi-value select box, it requires that you include an empty <code>&lt;option&gt;&lt;/option&gt;</code> tag as your first option.</p>
         <p>Optionally, a clear button (visible once a selection is made) is available to reset the select box back to the placeholder value.</p>
 
@@ -557,7 +557,7 @@ function format(state) {
         <p class="alert alert-warning">If this example does not work it is probably because the Rotten Tomatoes API key usage of 10000 requests per day has been exhausted. Please try again tomorrow.</p>
         <h3>Example Code</h3>
         <pre class="prettyprint linenums" id="code_e6"></pre>
-        <p>Select2 uses jQuery's <code>$.ajax</code> function to execute the remote call by default. An alternative <code>transport</code> function can be specified in the ajax settings, or an entirely custom implementation can be built by providing a custom <code>query</code> function instead of using the <code>ajax</code> helper</p>
+        <p>Select2 uses jQuery's <code>$.ajax</code> function to execute the remote call by default. An alternative <code>transport</code> function can be specified in the ajax settings, or an entirely custom implementation can be built by providing a custom <code>query</code> function instead of using the <code>ajax</code> helper.</p>
     </div>
 </article>
 <article class="row" id="infinite">
@@ -600,7 +600,7 @@ function format(state) {
     </script>
     <div class="span4">
         <h3>Programmatic Access</h3>
-        <p>Select2 supports methods that allow programmatic control of the component</p>
+        <p>Select2 supports methods that allow programmatic control of the component:</p>
         <p>
             <input type="button" class="btn-primary" id="e8_get" value="Alert selected value"/>
             <input type="button" class="btn-info" id="e8_set" value="Set to California"/>
@@ -678,8 +678,8 @@ function format(state) {
         <h3>Events</h3>
 
         <p><code>change</code> event is triggered on the original element whenever its value is changed by
-            the user</p>
-        <p><code>open</code> event is triggered on the original element whenever the dropdown needs to be opened</p>
+            the user.</p>
+        <p><code>open</code> event is triggered on the original element whenever the dropdown needs to be opened:</p>
 
         <p><input type="hidden" id="e11" style="width:300px"/></p>
         <p><input type="hidden" id="e11_2" style="width:300px"/></p>
@@ -702,7 +702,7 @@ function format(state) {
     <div class="span4">
         <h3>Tagging Support</h3>
 
-        <p>Select2 can be used to quickly set up fields used for tagging</p>
+        <p>Select2 can be used to quickly set up fields used for tagging.</p>
 
         <p><input type="hidden" id="e12" style="width:300px" value="brown, red, green"/></p>
         <p>Note that when tagging is enabled the user can select from pre-existing tags or create a new tag by
@@ -750,10 +750,10 @@ function format(state) {
 
         <p>Select2 supports ability to add choices automatically as the user is typing into the search field.
             This is especially convenient in the tagging usecase where the user can quickly enter a number of tags
-            by separating them with a comma or a space. Try typing in the search field below and entering a space or a comma</p>
+            by separating them with a comma or a space. Try typing in the search field below and entering a space or a comma:</p>
 
         <p><input type="hidden" id="e20" style="width:300px" value="brown"/></p>
-        <p>Note that the separators are defined in the <a href="#doc-tokenSeparators">tokenSeparators</a> option</code></p>
+        <p>Note that the separators are defined in the <a href="#doc-tokenSeparators">tokenSeparators</a> option</code>.</p>
         <p>Note that this example uses the built in <a href="#doc-tokenizer">tokenizer</a> function, but a custom one can be provided in the options.</p>
     </div>
     <div class="span8">
@@ -890,9 +890,9 @@ function format(state) {
     </script>
     <div class="span4">
         <h3>Custom Matcher</h3>
-        <p>Unlike other dropdowns on this page, this one matches options only if the term appears in the beginning of the string as opposed to anywhere</p>
+        <p>Unlike other dropdowns on this page, this one matches options only if the term appears in the beginning of the string as opposed to anywhere:</p>
         <p><select id="e17" style="width:300px" class="populate"></select><br/></p>
-        <p>The dropdown below matches on custom attributes of the <code>option</code> tag. For example, the `blue` option can be matched by entering either `blue` or `cyan`.</p>
+        <p>The dropdown below matches on custom attributes of the <code>option</code> tag. For example, the `blue` option can be matched by entering either `blue` or `cyan`:</p>
         <p><select id="e17_2" style="width:300px"><option alt="pink">red</option><option alt="cyan">blue</option></select></p>
     </div>
     <div class="span8">
@@ -957,8 +957,8 @@ function format(state) {
     </div>
     <div class="span12">
         <h3>Example Code</h3>
-           <pre class="prettyprint linenums" id="code_e18">
-           </pre>
+   <pre class="prettyprint linenums" id="code_e18">
+   </pre>
     </div>
 </article>
 
@@ -1062,13 +1062,13 @@ function format(state) {
     <dl>
         <dt>off</dt><dd>No width attribute will be set. Keep in mind that the container div copies classes from the source element so setting the width attribute may not always be necessary.</dd>
         <dt>element</dt><dd>Uses javascript to calculate the width of the source element.</dd>
-        <dt>copy</dt><dd>Copies the value of the width style attribute set on the source element</dd>
-        <dt>resolve</dt><dd>First attempts to <u>copy</u> than falls back on <u>element</u></dd>
-        <dt>other values</dt><dd>if the width attribute contains a function it will be avaluated, otherwise the value is used verbatim</dd>
+        <dt>copy</dt><dd>Copies the value of the width style attribute set on the source element.</dd>
+        <dt>resolve</dt><dd>First attempts to <u>copy</u> than falls back on <u>element</u>.</dd>
+        <dt>other values</dt><dd>if the width attribute contains a function it will be avaluated, otherwise the value is used verbatim.</dd>
     </dl>
 </td></tr>
-<tr><td>minimumInputLength</td><td>int</td><td>Number of characters necessary to start a search</td></tr>
-<tr><td>maximumInputLength</td><td>int</td><td>Maximum number of characters that can be entered for an input</td></tr>
+<tr><td>minimumInputLength</td><td>int</td><td>Number of characters necessary to start a search.</td></tr>
+<tr><td>maximumInputLength</td><td>int</td><td>Maximum number of characters that can be entered for an input.</td></tr>
 <tr><td>minimumResultsForSearch</td><td>int</td><td>
     <p>
         The minimum number of results that must be initially (after opening the dropdown for the first time)
@@ -1076,7 +1076,7 @@ function format(state) {
         is useful for cases where local data is used with just a few results, in which case the search box
         is not very useful and wastes screen space.
     </p>
-    <p>The option can be set to a <code>negative value</code> to permanently hide the search field</p>
+    <p>The option can be set to a <code>negative value</code> to permanently hide the search field.</p>
     <p class="alert alert-info">Only applies to single-value select boxes</p>
 </td>
 </tr>
@@ -1085,7 +1085,7 @@ function format(state) {
         The maximum number of items that can be selected in a multi-select control. If this number is less than 1 selection is not limited.
     </p>
     <p>Once the number of selected items reaches the maximum specified the contents of the dropdown will be populated
-        by the <code>formatSelectionTooBig</code> function</p>
+        by the <code>formatSelectionTooBig</code> function.</p>
 </td>
 </tr>
 <tr><td>placeholder</td><td>string</td><td>
@@ -1122,7 +1122,7 @@ function format(state) {
             only
             available when the placeholder is specified.
         </p>
-        <p>This option only works when the placeholder is specified</p>
+        <p>This option only works when the placeholder is specified.</p>
         <p class="alert alert-warning">When attached to a <code>select</code> an <code>option</code> with an empty value must be provided.
             This is the option that will be selected when the button is pressed since a select box requires
             at least one selection <code>option</code>.</p>
@@ -1172,8 +1172,8 @@ function format(state) {
     <pre>id(object)</pre>
     <table class="table table-bordered table-striped">
         <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-        <tr><td>object</td><td>object</td><td>A choice object</td></tr>
-        <tr><td>&lt;returns&gt;</td><td>string</td><td>the id of the object</td></tr>
+        <tr><td>object</td><td>object</td><td>A choice object.</td></tr>
+        <tr><td>&lt;returns&gt;</td><td>string</td><td>the id of the object.</td></tr>
     </table>
     The default implementation expects the object to have a <code>id</code> property that is returned.
 </td></tr>
@@ -1183,12 +1183,12 @@ function format(state) {
     <pre>matcher(term, text, option)</pre>
     <table class="table table-bordered table-striped">
         <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-        <tr><td>term</td><td>string</td><td>search term</td></tr>
-        <tr><td>text</td><td>string</td><td>text of the option being matched</td></tr>
+        <tr><td>term</td><td>string</td><td>search term.</td></tr>
+        <tr><td>text</td><td>string</td><td>text of the option being matched.</td></tr>
         <tr><td>option</td><td>jquery object</td>
             <td>the <code>option</code> element we are trying to match. Only given when attached to <code>select</code>.
                 Can be used to match against custom attributes on the <code>option</code> tag in addition to matching on the <code>option</code>'s text.</code></td></tr>
-        <tr><td>&lt;returns&gt;</td><td>boolean</td><td><code>true</code> if search term matches the text, or <code>false</code> otherwise</td></tr>
+        <tr><td>&lt;returns&gt;</td><td>boolean</td><td><code>true</code> if search term matches the text, or <code>false</code> otherwise.</td></tr>
     </table>
     The default implementation is case insensitive and matches anywhere in the term:
     <code>function(term, text) { return text.toUpperCase().indexOf(term.toUpperCase())>=0; }</code>
@@ -1197,9 +1197,9 @@ function format(state) {
     Used to sort the results list for searching right before display. Useful for sorting matches by relevance to the user's search term.
     <pre>sortResults(results, container, query)</pre>
     <table class="table table-bordered table-striped">
-        <tr><td>object</td><td>object</td><td>One of the result objects returned from the <code>query</code> function</td></tr>
-        <tr><td>container</td><td>jQuery object</td><td>jQuery wrapper of the node that should contain the representation of the result</td></tr>
-        <tr><td>query</td><td>object</td><td>The query object used to request this set of results</td></tr>
+        <tr><td>object</td><td>object</td><td>One of the result objects returned from the <code>query</code> function.</td></tr>
+        <tr><td>container</td><td>jQuery object</td><td>jQuery wrapper of the node that should contain the representation of the result.</td></tr>
+        <tr><td>query</td><td>object</td><td>The query object used to request this set of results.</td></tr>
         <tr><td>&lt;returns&gt;</td><td>object</td><td>A results object.</td></tr>
     </table>
     Defaults to no sorting:
@@ -1210,22 +1210,22 @@ function format(state) {
     <pre>formatSelection(object, container)</pre>
     <table class="table table-bordered table-striped">
         <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-        <tr><td>object</td><td>object</td><td>The selected result object returned from the <code>query</code> function</td></tr>
-        <tr><td>container</td><td>jQuery object</td><td>jQuery wrapper of the node to which the selection should be appended</td></tr>
+        <tr><td>object</td><td>object</td><td>The selected result object returned from the <code>query</code> function.</td></tr>
+        <tr><td>container</td><td>jQuery object</td><td>jQuery wrapper of the node to which the selection should be appended.</td></tr>
         <tr><td>escapeMarkup</td><td>function</td><td>Function that can be used to escape html markup. This is the function defined in the <code>escapeMarkup</code>option, or the default.</td></tr>
-        <tr><td>&lt;returns&gt;</td><td>string (optional)</td><td>Html string, a DOM element, or a jQuery object that renders the selection</td></tr>
+        <tr><td>&lt;returns&gt;</td><td>string (optional)</td><td>Html string, a DOM element, or a jQuery object that renders the selection.</td></tr>
     </table>
     <p>The default implementation expects the object to have a <code>text</code> property that is returned.</p>
-    <p>The implementation may choose to append elements directly to the provided <code>container</code> object, or return a single value and have it automatically appended</p>
+    <p>The implementation may choose to append elements directly to the provided <code>container</code> object, or return a single value and have it automatically appended.</p>
     <br><br>
     <p>
         When attached to a <code>select</code> the original <code>&lt;option&gt;</code> (or &lt;optgroup&gt;) element is accessible inside the specified function through the property <code>item.element</code>:
-                <pre>
-                    format(item) {
-                        var originalOption = item.element;
-                        return item.text
-                    }
-                </pre>
+<pre>
+format(item) {
+    var originalOption = item.element;
+    return item.text
+}
+</pre>
     </p>
 </td></tr>
 <tr><td>formatResult</td><td>function</td><td>
@@ -1233,70 +1233,70 @@ function format(state) {
     <pre>formatResult(object, container, query)</pre>
     <table class="table table-bordered table-striped">
         <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-        <tr><td>object</td><td>object</td><td>One of the result objects returned from the <code>query</code> function</td></tr>
-        <tr><td>container</td><td>jQuery object</td><td>jQuery wrapper of the node that should contain the representation of the result</td></tr>
-        <tr><td>query</td><td>object</td><td>The query object used to request this set of results</td></tr>
+        <tr><td>object</td><td>object</td><td>One of the result objects returned from the <code>query</code> function.</td></tr>
+        <tr><td>container</td><td>jQuery object</td><td>jQuery wrapper of the node that should contain the representation of the result.</td></tr>
+        <tr><td>query</td><td>object</td><td>The query object used to request this set of results.</td></tr>
         <tr><td>escapeMarkup</td><td>function</td><td>Function used to escape markup in results. If you do not expect to render custom markup you should pass your text through this function to escape any markup that may have been accidentally returned. This function is configurable in options of select2.</td></tr>
-        <tr><td>&lt;returns&gt;</td><td>string (optional)</td><td>Html string, a DOM element, or a jQuery object that represents the result</td></tr>
+        <tr><td>&lt;returns&gt;</td><td>string (optional)</td><td>Html string, a DOM element, or a jQuery object that represents the result.</td></tr>
     </table>
     <p>The default implementation expects the object to have a <code>text</code> property that is returned.</p>
-    <p>The implementation may choose to append elements directly to the provided <code>container</code> object, or return a single value and have it automatically appended</p>
+    <p>The implementation may choose to append elements directly to the provided <code>container</code> object, or return a single value and have it automatically appended.</p>
     <br><br>
     <p>
         When attached to a <code>select</code> the original <code>&lt;option&gt;</code> (or &lt;optgroup&gt;) element is accessible inside the specified function through the property <code>item.element</code>:
-                <pre>
-                    format(item) {
-                        var originalOption = item.element;
-                        return item.text
-                    }
-                </pre>
+<pre>
+format(item) {
+    var originalOption = item.element;
+    return item.text
+}
+</pre>
     </p>
 </td></tr>
 <tr><td>formatResultCssClass</td><td>function</td><td>
-    Function used to add css classes to result elements
+    Function used to add css classes to result elements.
     <pre>formatResultCssClass(object)</pre>
     <table class="table table-bordered table-striped">
         <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-        <tr><td>object</td><td>object</td><td>One of the result objects returned from the <code>query</code> function</td></tr>
-        <tr><td>&lt;returns&gt;</td><td>string (optional)</td><td>String containing css class names separated by a space</td></tr>
+        <tr><td>object</td><td>object</td><td>One of the result objects returned from the <code>query</code> function.</td></tr>
+        <tr><td>&lt;returns&gt;</td><td>string (optional)</td><td>String containing css class names separated by a space.</td></tr>
     </table>
-    <p class="alert alert-info">By default when attached to a <code>select</code> css classes from <code>option</code>s will be automatically copied</p>
+    <p class="alert alert-info">By default when attached to a <code>select</code> css classes from <code>option</code>s will be automatically copied.</p>
 </td></tr>
 <tr><td>formatNoMatches</td><td>function</td><td>
     Function used to render the &quot;No matches&quot; message
     <pre>formatNoMatches(term)</pre>
     <table class="table table-bordered table-striped">
         <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-        <tr><td>term</td><td>string</td><td>Search string entered by user</td></tr>
-        <tr><td>&lt;returns&gt;</td><td>string</td><td>Message html</td></tr>
+        <tr><td>term</td><td>string</td><td>Search string entered by user.</td></tr>
+        <tr><td>&lt;returns&gt;</td><td>string</td><td>Message html.</td></tr>
     </table>
 </td></tr>
 <tr><td>formatSearching</td><td>function</td><td>
     Function used to render the &quot;Searching...&quot; message that is displayed while
-    search is in progress
+    search is in progress.
     <pre>formatSearching()</pre>
     <table class="table table-bordered table-striped">
         <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-        <tr><td>&lt;returns&gt;</td><td>string</td><td>Message html or <code>null</code>/<code>undefined</code> to disable the message</td></tr>
+        <tr><td>&lt;returns&gt;</td><td>string</td><td>Message html or <code>null</code>/<code>undefined</code> to disable the message.</td></tr>
     </table>
 </td></tr>
 <tr><td>formatInputTooShort</td><td>function</td><td>
-    Function used to render the &quot;Search input too short&quot; message
+    Function used to render the &quot;Search input too short&quot; message.
     <pre>formatInputTooShort(term, minLength)</pre>
     <table class="table table-bordered table-striped">
         <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-        <tr><td>term</td><td>string</td><td>Search string entered by user</td></tr>
-        <tr><td>minLength</td><td>int</td><td>Minimum required term length</td></tr>
-        <tr><td>&lt;returns&gt;</td><td>string</td><td>Message html</td></tr>
+        <tr><td>term</td><td>string</td><td>Search string entered by user.</td></tr>
+        <tr><td>minLength</td><td>int</td><td>Minimum required term length.</td></tr>
+        <tr><td>&lt;returns&gt;</td><td>string</td><td>Message html.</td></tr>
     </table>
 </td></tr>
 <tr><td>formatSelectionTooBig</td><td>function</td><td>
-    Function used to render the &quot;You cannot select any more choices&quot; message
+    Function used to render the &quot;You cannot select any more choices&quot; message.
     <pre>formatSelectionTooBig(maxSize)</pre>
     <table class="table table-bordered table-striped">
         <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-        <tr><td>maxSize</td><td>string</td><td>The maximum specified size of the selection</td></tr>
-        <tr><td>&lt;returns&gt;</td><td>string</td><td>Message html</td></tr>
+        <tr><td>maxSize</td><td>string</td><td>The maximum specified size of the selection.</td></tr>
+        <tr><td>&lt;returns&gt;</td><td>string</td><td>Message html.</td></tr>
     </table>
 </td></tr>
 <tr><td>createSearchChoice</td><td>function</td><td>
@@ -1305,7 +1305,7 @@ function format(state) {
     <pre>createSearchChoice(term)</pre>
     <table class="table table-bordered table-striped">
         <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-        <tr><td>term</td><td>string</td><td>Search string entered by user</td></tr>
+        <tr><td>term</td><td>string</td><td>Search string entered by user.</td></tr>
         <tr><td>&lt;returns&gt;</td><td>object (optional)</td><td>Object representing the new choice.
             Must at least contain an <code>id</code> attribute.</td></tr>
     </table>
@@ -1315,7 +1315,7 @@ function format(state) {
 
     <p class="alert alert-warning">When used in combination with <code>input[type=hidden]</code> tag care
         must be taken to sanitize the <code>id</code> attribute of the choice object, especially stripping
-        <code>,</code> as it is used as a value separator</p>
+        <code>,</code> as it is used as a value separator.</p>
 </td></tr>
 <tr><td>initSelection</td><td>function</td><td>
     Called when Select2 is created to allow the user to initialize the selection based on the value of the
@@ -1326,8 +1326,8 @@ function format(state) {
     <pre>initSelection(element, callback)</pre>
     <table class="table table-bordered table-striped">
         <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-        <tr><td>element</td><td>jQuery array</td><td>element Select2 is attached to</td></tr>
-        <tr><td>callback</td><td>function</td><td>callback function that should be called with the data which is either an object in case of a single select or an array of objects in case of multi-select</td></tr>
+        <tr><td>element</td><td>jQuery array</td><td>element Select2 is attached to.</td></tr>
+        <tr><td>callback</td><td>function</td><td>callback function that should be called with the data which is either an object in case of a single select or an array of objects in case of multi-select.</td></tr>
     </table>
     <p class="alert alert-info">This function will only be called when there is initial input to be processed.</p>
     Here is an example implementation used for tags. Tags are the simplest form of data where the id is also
@@ -1356,14 +1356,14 @@ $("#select").select2({
     A tokenizer function can process the input typed into the search field after every keystroke and extract
     and select choices. This is useful, for example, in tagging scenarios where the user can create tags quickly
     by separating them with a comma or a space instead of pressing enter.
-    <p class="alert alert-info">Tokenizer only applies to multi-selects</p>
+    <p class="alert alert-info">Tokenizer only applies to multi-selects.</p>
     <pre>tokenizer(input, selection, selectCallback, opts)</pre>
     <table class="table table-bordered table-striped">
         <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-        <tr><td>input</td><td>string</td><td>The text entered into the search field so far</td></tr>
+        <tr><td>input</td><td>string</td><td>The text entered into the search field so far.</td></tr>
         <tr><td>selection</td><td>array</td><td>Array of objects representing the current selection.
             Useful if tokenizer needs to filter out duplicates.</td></tr>
-        <tr><td>selectCallback</td><td>function</td><td>Callback that can be used to add objects to the selection</td></tr>
+        <tr><td>selectCallback</td><td>function</td><td>Callback that can be used to add objects to the selection.</td></tr>
         <tr><td>opts</td><td>object</td><td>Options with which Select2 was initialized. Useful if tokenizer needs to access some properties in the options.</td></tr>
         <tr><td>&lt;returns&gt;</td><td>string (optional)</td><td>Returns the string to which the input of
             the search field should be set to. Usually this is the remainder, of any, of the string after
@@ -1379,7 +1379,7 @@ $("#select").select2({
 <tr id="doc-tokenSeparators"><td>tokenSeparators</td><td>array</td><td>
     An array of strings that define token separators for the default <a href="doc-tokenizer">tokenizer</a>
     function. By default, this option is set to an empty array which means tokenization using the default
-    tokenizer is disabled. Usually it is sensible to set this option to a value similar to <code>[',', ' ']</code>
+    tokenizer is disabled. Usually it is sensible to set this option to a value similar to <code>[',', ' ']</code>.
 </td></tr>
 
 <tr id="doc-query">
@@ -1390,16 +1390,16 @@ $("#select").select2({
         <pre>query(options)</pre>
         <table class="table table-bordered table-striped">
             <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-            <tr><td>options.element</td><td>jquery object</td><td>The element Select2 is attached to</td></tr>
-            <tr><td>options.term</td><td>string</td><td>Search string entered by user</td></tr>
-            <tr><td>options.page</td><td>int</td><td>1-based page number tracked by Select2 for use with infinite scrolling of results</td></tr>
+            <tr><td>options.element</td><td>jquery object</td><td>The element Select2 is attached to.</td></tr>
+            <tr><td>options.term</td><td>string</td><td>Search string entered by user.</td></tr>
+            <tr><td>options.page</td><td>int</td><td>1-based page number tracked by Select2 for use with infinite scrolling of results.</td></tr>
             <tr><td>options.context</td><td>object</td><td>An object that persists across the lifecycle of queries for the same search term (the query to retrieve the initial results, and subsequent queries to retrieve more result pages for the same search term). When this function is first called for a new search term this object will be null. The user may choose to set any object in the <code>results.context</code> field - this object will then be used as the context parameter for all calls to the <code>query</code> method that will load more search results for the initial search term. The object will be reset back to null when a new search term is queried. This feature is useful when a page number is not easily mapped against the server side paging mechanism. For example, some server side paging mechanism may return a &quot;continuation token&quot; that needs to be passed back to them in order to retrieve the next page of search results.</td></tr>
             <tr id="doc-query-options-callback"><td>options.callback</td><td>function</td>
                 <td>Callback function that should be called with the <code>result</code> object. The result object:
                     <table class="table table-bordered table-striped">
                         <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
                         <tr><td>result.results</td><td>[object]</td><td>Array of result objects. The default renderers expect objects with <code>id</code> and <code>text</code> keys</code>. The <code>id</code> attribute is required</code>, even if custom renderers are used. The object may also contain a <code>children</code>key if hierarchical data is displayed.</td></tr>
-                        <tr><td>result.more</td><td>boolean</td><td><code>true</code>if more results are available for the current search term</td></tr>
+                        <tr><td>result.more</td><td>boolean</td><td><code>true</code>if more results are available for the current search term.</td></tr>
                         <tr><td>results.context</td><td>object</td><td>A user-defined object that should be made available as the <code>context</code> parameter to the <code>query</code> function on subsequent queries to load more result pages for the same search term. See the description of <a href="#doc-query-options-context">options.context</code></a> parameter.</td></tr>
                     </table>
                 </td></tr>
@@ -1444,19 +1444,19 @@ $("#select").select2({
         <tr><td>transport</td><td>function</td><td>Function that will be used to perform the ajax request. Must be parameter-compatible with <code>$.ajax</code>. Defaults to <code>$.ajax</code> if not specified.
             Allows the use of various ajax wrapper libraries such as: <a href="http://www.protofunc.com/scripts/jquery/ajaxManager/">AjaxManager</a>. </td></tr>
         <tr><td>url</td><td>string/function</td><td>String containing the ajax url or a function that returns such a string.</td></tr>
-        <tr><td>dataType</td><td>string</td><td>Data type for the request. <code>xml</code>, <code>json</code>, <code>jsonp</code>, other formats supported by jquery</td></tr>
-        <tr><td>quietMillis</td><td>int</td><td>Number of milliseconds to wait for the user to stop typing before issuing the ajax request</td></tr>
-        <tr><td>cache</td><td>boolean</td><td>If set to <code>false</code>, it will force requested pages not to be cached by the browser. Default is <code>false</code></td></tr>
+        <tr><td>dataType</td><td>string</td><td>Data type for the request. <code>xml</code>, <code>json</code>, <code>jsonp</code>, other formats supported by jquery.</td></tr>
+        <tr><td>quietMillis</td><td>int</td><td>Number of milliseconds to wait for the user to stop typing before issuing the ajax request.</td></tr>
+        <tr><td>cache</td><td>boolean</td><td>If set to <code>false</code>, it will force requested pages not to be cached by the browser. Default is <code>false</code>.</td></tr>
         <tr><td>jsonpCallback</td><td>string/function</td><td>The callback function name for a JSONP request. This value will be used instead of the random name automatically generated by jQuery. It is preferable to let jQuery generate a unique name as it'll make it easier to manage the requests and provide callbacks and error handling. You may want to specify the callback when you want to enable better browser caching of GET requests.</td></tr>
         <tr><td>data</td><td>function</td><td>
             Function to generate query parameters for the ajax request.
             <pre>data(term, page)</pre>
             <table class="table table-bordered table-striped">
                 <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-                <tr><td>term</td><td>string</td><td>Search term</td></tr>
-                <tr><td>page</td><td>int</td><td>1-based page number tracked by Select2 for use with infinite scrolling of results</td></tr>
+                <tr><td>term</td><td>string</td><td>Search term.</td></tr>
+                <tr><td>page</td><td>int</td><td>1-based page number tracked by Select2 for use with infinite scrolling of results.</td></tr>
                 <tr><td>context</td><td>object</td><td>See <a href="#doc-query-options-callback"><code>options.context</code></a> parameter to the <a href="#doc-query"><code>query</code></a> function above.</td></tr>
-                <tr><td>&lt;returns&gt;</td><td>object</td><td>Object containing url paramters</td></tr>
+                <tr><td>&lt;returns&gt;</td><td>object</td><td>Object containing url parameters.</td></tr>
             </table>
         </td></tr>
         <tr><td>results</td><td>function</td><td>
@@ -1464,8 +1464,8 @@ $("#select").select2({
             <pre>results(data, page)</pre>
             <table class="table table-bordered table-striped">
                 <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-                <tr><td>data</td><td>object</td><td>Retrieved data</td></tr>
-                <tr><td>page</td><td>int</td><td>Page number that was passed into the <code>data</code> function above</td></tr>
+                <tr><td>data</td><td>object</td><td>Retrieved data.</td></tr>
+                <tr><td>page</td><td>int</td><td>Page number that was passed into the <code>data</code> function above.</td></tr>
                 <tr><td>context</td><td>object</td><td>See <a href="#doc-query-options-callback"><code>options.context</code></a> parameter to the <a href="#doc-query"><code>query</code></a> function above.</td></tr>
                 <tr><td>&lt;returns&gt;</td><td>object</td><td>Results object. See &quot;options.callback&quot; in the &quot;query&quot; function for format.</td></tr>
             </table>
@@ -1474,12 +1474,12 @@ $("#select").select2({
 
     </table>
     <p class="alert alert-warning">In order for this function to work Select2 should be attached to a <code>input type='hidden'</code> tag instead of a <code>select</code>.</p>
-    <p class="alert alert-info">For documentation of the data format see the <a href="#doc-query">query</a> function</p>
+    <p class="alert alert-info">For documentation of the data format see the <a href="#doc-query">query</a> function.</p>
 </td></tr>
 <tr><td>data</td><td>array/object</td><td>
     Options for the built in query function that works with arrays.
-    <p>If this element contains an array, each element in the array must contain <code>id</code> and <code>text</code> keys</p>
-    <p>Alternatively, this element can be specified as an object in which <code>results</code> key must contain the data as an array and a <code>text</code> key can either be the name of the key in data items that contains text or a function that retrieves the text given a data element from the array</p>
+    <p>If this element contains an array, each element in the array must contain <code>id</code> and <code>text</code> keys.</p>
+    <p>Alternatively, this element can be specified as an object in which <code>results</code> key must contain the data as an array and a <code>text</code> key can either be the name of the key in data items that contains text or a function that retrieves the text given a data element from the array.</p>
 </td></tr>
 <tr><td>tags</td><td>array/function</td><td>
     Puts Select2 into 'tagging'mode where the user can add new choices and pre-existing tags are provided via
@@ -1492,13 +1492,13 @@ $("#select").select2({
     Inline css that will be added to select2's container. Either an object containing css property/value key pairs or a function that returns such an object.
 </td></tr>
 <tr><td>containerCssClass</td><td>function/string</td><td>
-    Css class that will be added to select2's container tag
+    Css class that will be added to select2's container tag.
 </td></tr>
 <tr><td>dropdownCss</td><td>function/object</td><td>
     Inline css that will be added to select2's dropdown container. Either an object containing css property/value key pairs or a function that returns such an object.
 </td></tr>
 <tr><td>dropdownCssClass</td><td>function/string</td><td>
-    Css class that will be added to select2's dropdown container
+    Css class that will be added to select2's dropdown container.
 </td></tr>
 <tr><td>dropdownAutoWidth</td><td>boolean</td><td>
     When set to <code>true</code> attempts to automatically size the width of the dropdown based on content inside.
@@ -1508,8 +1508,8 @@ $("#select").select2({
     <pre>adaptContainerCssClass(clazz)</pre>
     <table class="table table-bordered table-striped">
         <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-        <tr><td>clazz</td><td>string</td><td>Css class being copied</td></tr>
-        <tr><td>&lt;returns&gt;</td><td>string</td><td>Css class to be applied or <code>null/undefined/''</code> to not apply it</td></tr>
+        <tr><td>clazz</td><td>string</td><td>Css class being copied.</td></tr>
+        <tr><td>&lt;returns&gt;</td><td>string</td><td>Css class to be applied or <code>null/undefined/''</code> to not apply it.</td></tr>
     </table>
     The default implementation applies all classes without modification.
 </td></tr>
@@ -1518,8 +1518,8 @@ $("#select").select2({
     <pre>adaptDropdownCssClass(clazz)</pre>
     <table class="table table-bordered table-striped">
         <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-        <tr><td>clazz</td><td>string</td><td>Css class being copied</td></tr>
-        <tr><td>&lt;returns&gt;</td><td>string</td><td>Css class to be applied or <code>null/undefined/''</code> to not apply it</td></tr>
+        <tr><td>clazz</td><td>string</td><td>Css class being copied.</td></tr>
+        <tr><td>&lt;returns&gt;</td><td>string</td><td>Css class to be applied or <code>null/undefined/''</code> to not apply it.</td></tr>
     </table>
     The default implementation always returns <code>null</code> thereby filtering out all classes.
 </td></tr>
@@ -1528,12 +1528,35 @@ $("#select").select2({
     <p>Function used to post-process markup returned from formatter functions. By default this function escapes html entities to prevent javascript injection.</p>
 </td></tr>
 <tr><td>selectOnBlur</td><td>boolean</td><td>
-    <p>Set to <code>true</code> if you want Select2 to select the currently highlighted option when it is blurred</p>
+    <p>Set to <code>true</code> if you want Select2 to select the currently highlighted option when it is blurred.</p>
 </td></tr>
 <tr><td>loadMorePadding</td><td>integer</td><td>
     Defines how many pixels need to be below the fold before the next page is loaded. The default value is <code>0</code> which means the result list needs to be scrolled all the way to the bottom for the next page of results to be loaded. This option can be used to trigger the load sooner, possibly resulting in a smoother user experience.
 </td></tr>
+<tr><td>loadMorePadding</td><td>integer</td><td>
+    Defines how many pixels need to be below the fold before the next page is loaded. The default value is <code>0</code> which means the result list needs to be scrolled all the way to the bottom for the next page of results to be loaded. This option can be used to trigger the load sooner, possibly resulting in a smoother user experience.
+</td></tr>
+<tr><td>nextSearchTerm</td><td>function</td><td>
+    <p>Function used to determine what the next search term should be.</p>
+    <table class="table table-bordered table-striped">
+    <tbody>
+        <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+        <tr><td>data</td><td>object</td><td>Retrieved data.</td></tr>
+        <tr><td>this.search.val()</td><td>string</td><td>Search term that yielded the current result set.</td></tr>
+     </tbody>
+    </table>
+    <p>Here is an example implementation used to display the current search term when the dropdown is opened:</p>
+<pre class="prettyprint">
+function displayCurrentValue(selectedObject, currentSearchTerm) {
+    return currentSearchTerm;
+}
 
+$("#e1").select2({
+    nextSearchTerm: displayCurrentValue
+});
+</pre>
+<p class="alert alert-info">Only applies when the dropdown is configured in single-select mode.</p>
+</td></tr>                      
 </table>
 
 <div class="row">
@@ -1552,7 +1575,7 @@ $("#select").select2({
             </tr>
             <tr>
                 <th>Attached to <code>select</code></th>
-                <td>Value of the <code>value</code> attribute of the <code>option</code> that should be selected</td>
+                <td>Value of the <code>value</code> attribute of the <code>option</code> that should be selected.</td>
                 <td>Array of the <code>value</code> attributes of the <code>option</code>s that should be selected. <code>null</code> for empty.</td>
             </tr>
             <tr>
@@ -1565,7 +1588,7 @@ $("#select").select2({
     </td></tr>
     <tr><td>triggerChange (optional)</td><td>boolean</td><td>Whether or not a <code>change</code> event should be triggered. <code>false</code> by default.</code></td></tr>
 </table>
-<p><code>val</code> method invoked on a single-select with an unset value will return <code>""</code>, while a <code>val</code> method invoked on an empty multi-select will return <code>[]</code></p>
+<p><code>val</code> method invoked on a single-select with an unset value will return <code>""</code>, while a <code>val</code> method invoked on an empty multi-select will return <code>[]</code>.</p>
 
 Example: <pre class="prettyprint">alert("Selected value is: "+$("#e8").select2("val")); $("#e8").select2("val", "CA");</pre>
 <p class="alert alert-info">Notice that in order to use this method you must define the <code>initSelection</code> function in the options so Select2 knows how to transform the id of the object you pass in <code>val()</code> to the full object it needs to render selection. If you are attaching to a <code>select</code> element this function is already provided for you.</p>
@@ -1574,7 +1597,7 @@ Example: <pre class="prettyprint">alert("Selected value is: "+$("#e8").select2("
     <div class="span12"><h3>data</h3></div>
 </div>
 <p>Gets or sets the selection. Analogous to <code>val</code> method, but works with objects instead of ids.</p>
-<p><code>data</code> method invoked on a single-select with an unset value will return <code>null</code>, while a <code>data</code> method invoked on an empty multi-select will return <code>[]</code></p>
+<p><code>data</code> method invoked on a single-select with an unset value will return <code>null</code>, while a <code>data</code> method invoked on an empty multi-select will return <code>[]</code>.</p>
 
 
 <div class="row">
@@ -1585,11 +1608,11 @@ Example: <pre class="prettyprint">alert("Selected value is: "+$("#e8").select2("
 <div class="row">
     <div class="span12"><h3>open</h3></div>
 </div>
-<p>Opens the dropdown</p>
+<p>Opens the dropdown.</p>
 <div class="row">
     <div class="span12"><h3>close</h3></div>
 </div>
-<p>Closes the dropdown</p>
+<p>Closes the dropdown.</p>
 <div class="row">
     <div class="span12"><h3>enable(boolean)</h3></div>
 </div>
@@ -1627,9 +1650,9 @@ Example: <pre class="prettyprint">alert("Selected value is: "+$("#e8").select2("
         <p>Fired when selection is changed.</p>
         <p>The event object contains the following custom properties:
         <dl>
-            <dt>val</dt><dd>the current selection (taking into account the result of the change) - id or array of ids</dd>
-            <dt>added</dt><dd>the added element, if any - the full element object, not just the id</dd>
-            <dt>removed</dt><dd>the removed element, if any - the full element object, not just the id</dd>
+            <dt>val</dt><dd>The current selection (taking into account the result of the change) - id or array of ids.</dd>
+            <dt>added</dt><dd>The added element, if any - the full element object, not just the id.</dd>
+            <dt>removed</dt><dd>The removed element, if any - the full element object, not just the id.</dd>
         </dl>
         </p>
     </div>
@@ -1656,8 +1679,8 @@ Example: <pre class="prettyprint">alert("Selected value is: "+$("#e8").select2("
         </p>
         <p>The event object contains the following custom properties:
         <dl>
-            <dt>val</dt><dd>the id of the highlighted choice object</dd>
-            <dt>object</dt><dd>the highlighted choice object</dd>
+            <dt>val</dt><dd>The id of the highlighted choice object.</dd>
+            <dt>object</dt><dd>The highlighted choice object.</dd>
         </dl>
         </p>
     </div>
@@ -1670,8 +1693,8 @@ Example: <pre class="prettyprint">alert("Selected value is: "+$("#e8").select2("
         </p>
         <p>The event object contains the following custom properties:
         <dl>
-            <dt>val</dt><dd>the id of the highlighted choice object</dd>
-            <dt>object</dt><dd>the choice object about to be selected</dd>
+            <dt>val</dt><dd>The id of the highlighted choice object.</dd>
+            <dt>object</dt><dd>The choice object about to be selected.</dd>
         </dl>
         </p>
     </div>
@@ -1679,12 +1702,12 @@ Example: <pre class="prettyprint">alert("Selected value is: "+$("#e8").select2("
 <div class="row zebra">
     <div class="span12">
         <h3>select2-removed</h3>
-        <p>Fired when a choice is removed or cleared</p>
+        <p>Fired when a choice is removed or cleared.</p>
         </p>
         <p>The event object contains the following custom properties:
         <dl>
-            <dt>val</dt><dd>the id of the highlighted choice object</dd>
-            <dt>object</dt><dd>the highlighted choice object</dd>
+            <dt>val</dt><dd>The id of the highlighted choice object.</dd>
+            <dt>object</dt><dd>The highlighted choice object.</dd>
         </dl>
         </p>
     </div>
@@ -1696,7 +1719,7 @@ Example: <pre class="prettyprint">alert("Selected value is: "+$("#e8").select2("
         </p>
         <p>The event object contains the following custom properties:
         <dl>
-            <dt>items</dt><dd>data that was used to populate the results</dd>
+            <dt>items</dt><dd>Data that was used to populate the results.</dd>
         </dl>
         </p>
     </div>
@@ -1704,14 +1727,14 @@ Example: <pre class="prettyprint">alert("Selected value is: "+$("#e8").select2("
 <div class="row zebra">
     <div class="span12">
         <h3>select2-focus</h3>
-        <p>Fired when the control is focussed
+        <p>Fired when the control is focussed.
         </p>
     </div>
 </div>
 <div class="row">
     <div class="span12">
         <h3>select2-blur</h3>
-        <p>Fired when the control is blurred
+        <p>Fired when the control is blurred.
         </p>
     </div>
 </div>
@@ -1720,8 +1743,7 @@ Example: <pre class="prettyprint">alert("Selected value is: "+$("#e8").select2("
 <div class="row">
     <div class="span12">
         <h2>Configuring Defaults</h2>
-        Select2 exposes its default options via the <code>$.fn.select2.defaults</code> object. Properties changed in this object (same properties configurable through the constructor) will take effect for every instance created after the change
-
+        Select2 exposes its default options via the <code>$.fn.select2.defaults</code> object. Properties changed in this object (same properties configurable through the constructor) will take effect for every instance created after the change.
     </div>
 </div>
 
