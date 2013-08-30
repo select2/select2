@@ -2842,9 +2842,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 return;
             }
 
-            index = indexOf(this.id(data), val);
-
-            if (index >= 0) {
+            while((index = indexOf(this.id(data), val)) >= 0) {
                 val.splice(index, 1);
                 this.setVal(val);
                 if (this.select) this.postprocessResults();
