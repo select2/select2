@@ -1927,10 +1927,7 @@ the specific language governing permissions and limitations under the Apache Lic
                         killEvent(e);
                         return;
                     case KEY.TAB:
-                        // if selectOnBlur == true, select the currently highlighted option
-                        if (this.opts.selectOnBlur) {
-                            this.selectHighlighted({noFocus: true});
-                        }
+                        this.selectHighlighted({noFocus: true});
                         return;
                     case KEY.ESC:
                         this.cancel(e);
@@ -2522,10 +2519,7 @@ the specific language governing permissions and limitations under the Apache Lic
                         killEvent(e);
                         return;
                     case KEY.TAB:
-                        // if selectOnBlur == true, select the currently highlighted option
-                        if (this.opts.selectOnBlur) {
-                            this.selectHighlighted({noFocus:true});
-                        }
+                        this.selectHighlighted({noFocus:true});
                         this.close();
                         return;
                     case KEY.ESC:
