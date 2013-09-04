@@ -10,6 +10,6 @@
         formatInputTooLong: function (input, max) { var n = input.length - max; return "Vul " + n + " karakter" + (n == 1? "" : "s") + " minder in"; },
         formatSelectionTooBig: function (limit) { return "Maximaal " + limit + " item" + (limit == 1 ? "" : "s") + " toegestaan"; },
         formatLoadMore: function (pageNumber) { return "Meer resultaten laden..."; },
-        formatSearching: function () { return "Zoeken..."; },
+        formatSearching: function () { return "Zoeken..."; }
     });
 })(jQuery);
