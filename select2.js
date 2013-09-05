@@ -974,10 +974,11 @@ the specific language governing permissions and limitations under the Apache Lic
                             opts.initSelection = function (element, callback) {
                                 var data = [];
                                 $(splitVal(element.val(), opts.separator)).each(function () {
-                                    var id = this, text = this, tags=opts.tags;
+                                    var obj = { id: this, text: this },
+                                        tags = opts.tags;
                                     if ($.isFunction(tags)) tags=tags();
-                                    $(tags).each(function() { if (equal(this.id, id)) { text = this.text; return false; } });
-                                    data.push({id: id, text: text});
+                                    $(tags).each(function() { if (equal(this.id, obj.id)) { obj = this; return false; } });
+                                    data.push(obj);
                                 });
 
                                 callback(data);
