@@ -1,0 +1,27 @@
+.form-control .select2-choice {
+    border: 0;
+    border-radius: 2px;
+}
+
+.form-control .select2-choice .select2-arrow {
+    border-radius: 0 2px 2px 0;   
+}
+
+.form-control.select2-container {
+    height: auto !important;
+    padding: 0px;
+}
+
+.form-control.select2-container.select2-dropdown-open {
+    border-color: #5897FB;
+    border-radius: 3px 3px 0 0;
+}
+
+.form-control .select2-container.select2-dropdown-open .select2-choices {
+    border-radius: 3px 3px 0 0;
+}
+
+.form-control.select2-container .select2-choices {
+    border: 0 !important;
+    border-radius: 3px;
+}
