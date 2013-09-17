@@ -1708,7 +1708,7 @@ the specific language governing permissions and limitations under the Apache Lic
         // abstract
         getPlaceholderOption: function() {
             if (this.select) {
-                var firstOption = this.select.children().first();
+                var firstOption = this.select.children('option').first();
                 if (this.opts.placeholderOption !== undefined ) {
                     //Determine the placeholder option based on the specified placeholderOption setting
                     return (this.opts.placeholderOption === "first" && firstOption) ||
