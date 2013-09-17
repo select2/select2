@@ -1130,7 +1130,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // abstract
         positionDropdown: function() {
-            var $dropdown = this.dropdown,
+            var $dropdown = this.dropdown.hide(),
                 offset = this.container.offset(),
                 height = this.container.outerHeight(false),
                 width = this.container.outerWidth(false),
@@ -1148,6 +1148,8 @@ the specific language governing permissions and limitations under the Apache Lic
                 above,
                 css,
                 resultsListNode;
+
+            $dropdown.show();
 
             if (this.opts.dropdownAutoWidth) {
                 resultsListNode = $('.select2-results', $dropdown)[0];
