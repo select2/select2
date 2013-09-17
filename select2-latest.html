@@ -2,8 +2,8 @@
 layout: main
 title: Select2 Latest
 group: navigation
-version: 3.4.3
-milestone: 13
+version: 3.4.4
+milestone: 14
 ---
 
 <link href="select2-master/select2.css?ts={{ site.time | date_to_xmlschema | cgi_escape}}" rel="stylesheet"/>
@@ -1594,13 +1594,13 @@ $("#select").select2({
             function displayCurrentValue(selectedObject, currentSearchTerm) {
                 return currentSearchTerm;
             }
-             
+
             $("#e1").select2({
                 nextSearchTerm: displayCurrentValue
             });
             </pre>
             <p class="alert alert-info">Only applies when the dropdown is configured in single-select mode.</p>
-            </td></tr>    
+            </td></tr>
         </table>
 
       <div class="row">

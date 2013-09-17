@@ -1,13 +1,13 @@
 ---
 layout: main
-title: Select2 3.4.2
+title: Select2 3.4.3
 group: navigation
-version: 3.4.2
-milestone: 12
+version: 3.4.3
+milestone: 13
 ---
 
-<link href="select2-3.4.2/select2.css" rel="stylesheet"/>
-<script src="select2-3.4.2/select2.js"></script>
+<link href="select2-3.4.3/select2.css?ts={{ site.time | date_to_xmlschema | cgi_escape}}" rel="stylesheet"/>
+<script src="select2-3.4.3/select2.js?ts={{ site.time | date_to_xmlschema | cgi_escape}}"></script>
 
 <script id="script_e1">
 
@@ -195,6 +195,18 @@ milestone: 12
 
     });
 </script>
+
+<div class="row">
+    <div class="span12">
+        <div class="alert alert-block alert-error">
+            <h4 class="alert-heading">Warning!</h4>
+            This page refers to an unreleased <em>{{ page.version }}</em> version of Select2 which may be unstable. For the latest stable
+            and previous versions please see links at the top. The code for this version is only available in the <a
+                href="https://github.com/ivaynberg/select2">master branch.</a>
+        </div>
+    </div>
+</div>
+
 
 <header class="jumbotron subhead">
     <div class="subnav">
@@ -678,7 +690,7 @@ function format(state) {
         <h3>Events</h3>
 
         <p><code>change</code> event is triggered on the original element whenever its value is changed by
-            the user.</p>
+            the user</p>
         <p><code>open</code> event is triggered on the original element whenever the dropdown needs to be opened:</p>
 
         <p><input type="hidden" id="e11" style="width:300px"/></p>
@@ -750,10 +762,10 @@ function format(state) {
 
         <p>Select2 supports ability to add choices automatically as the user is typing into the search field.
             This is especially convenient in the tagging usecase where the user can quickly enter a number of tags
-            by separating them with a comma or a space. Try typing in the search field below and entering a space or a comma:</p>
+            by separating them with a comma or a space. Try typing in the search field below and entering a space or a comma.</p>
 
         <p><input type="hidden" id="e20" style="width:300px" value="brown"/></p>
-        <p>Note that the separators are defined in the <a href="#doc-tokenSeparators">tokenSeparators</a> option</code>.</p>
+        <p>Note that the separators are defined in the <a href="#doc-tokenSeparators">tokenSeparators</a> option.</code></p>
         <p>Note that this example uses the built in <a href="#doc-tokenizer">tokenizer</a> function, but a custom one can be provided in the options.</p>
     </div>
     <div class="span8">
@@ -897,8 +909,8 @@ function format(state) {
     </div>
     <div class="span8">
         <h3>Example Code</h3>
-           <pre class="prettyprint linenums" id="code_e17">
-           </pre>
+<pre class="prettyprint linenums" id="code_e17">
+</pre>
     </div>
 </article>
 
@@ -957,8 +969,8 @@ function format(state) {
     </div>
     <div class="span12">
         <h3>Example Code</h3>
-   <pre class="prettyprint linenums" id="code_e18">
-   </pre>
+           <pre class="prettyprint linenums" id="code_e18">
+           </pre>
     </div>
 </article>
 
@@ -1232,7 +1244,7 @@ function format(state) {
     Used to sort the results list for searching right before display. Useful for sorting matches by relevance to the user's search term.
     <pre>sortResults(results, container, query)</pre>
     <table class="table table-bordered table-striped">
-        <tr><td>object</td><td>object</td><td>One of the result objects returned from the <code>query</code> function.</td></tr>
+        <tr><td>object</td><td>object</td><td>One of the result objects returned from the <code>query</code> function</td>.</tr>
         <tr><td>container</td><td>jQuery object</td><td>jQuery wrapper of the node that should contain the representation of the result.</td></tr>
         <tr><td>query</td><td>object</td><td>The query object used to request this set of results.</td></tr>
         <tr><td>&lt;returns&gt;</td><td>object</td><td>A results object.</td></tr>
@@ -1568,30 +1580,27 @@ $("#select").select2({
 <tr><td>loadMorePadding</td><td>integer</td><td>
     Defines how many pixels need to be below the fold before the next page is loaded. The default value is <code>0</code> which means the result list needs to be scrolled all the way to the bottom for the next page of results to be loaded. This option can be used to trigger the load sooner, possibly resulting in a smoother user experience.
 </td></tr>
-<tr><td>loadMorePadding</td><td>integer</td><td>
-    Defines how many pixels need to be below the fold before the next page is loaded. The default value is <code>0</code> which means the result list needs to be scrolled all the way to the bottom for the next page of results to be loaded. This option can be used to trigger the load sooner, possibly resulting in a smoother user experience.
-</td></tr>
 <tr><td>nextSearchTerm</td><td>function</td><td>
     <p>Function used to determine what the next search term should be.</p>
     <table class="table table-bordered table-striped">
-    <tbody>
+        <tbody>
         <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
         <tr><td>data</td><td>object</td><td>Retrieved data.</td></tr>
         <tr><td>this.search.val()</td><td>string</td><td>Search term that yielded the current result set.</td></tr>
-     </tbody>
+        </tbody>
     </table>
     <p>Here is an example implementation used to display the current search term when the dropdown is opened:</p>
-<pre class="prettyprint">
-function displayCurrentValue(selectedObject, currentSearchTerm) {
-    return currentSearchTerm;
-}
+            <pre class="prettyprint">
+            function displayCurrentValue(selectedObject, currentSearchTerm) {
+                return currentSearchTerm;
+            }
 
-$("#e1").select2({
-    nextSearchTerm: displayCurrentValue
-});
-</pre>
-<p class="alert alert-info">Only applies when the dropdown is configured in single-select mode.</p>
-</td></tr>                      
+            $("#e1").select2({
+                nextSearchTerm: displayCurrentValue
+            });
+            </pre>
+    <p class="alert alert-info">Only applies when the dropdown is configured in single-select mode.</p>
+</td></tr>
 </table>
 
 <div class="row">
@@ -1734,6 +1743,15 @@ Example: <pre class="prettyprint">alert("Selected value is: "+$("#e8").select2("
         </p>
     </div>
 </div>
+<div class="row">
+    <div class="span12">
+        <h3>select2-clearing</h3>
+        <p>Fired when a choice is being cleared in the dropdown, but before any modification has been made to the selection.
+            This event is used to allow the user to reject the clear by calling <code>event.preventDefault()</code></p>
+        </p>
+        <p>For the clear button to be visible the <code>allowClear</code> option needs to be <code>true</code>.</p>
+    </div>
+</div>
 <div class="row zebra">
     <div class="span12">
         <h3>select2-removed</h3>
@@ -1754,7 +1772,7 @@ Example: <pre class="prettyprint">alert("Selected value is: "+$("#e8").select2("
         </p>
         <p>The event object contains the following custom properties:
         <dl>
-            <dt>items</dt><dd>Data that was used to populate the results.</dd>
+            <dt>items</dt><dd>data that was used to populate the results.</dd>
         </dl>
         </p>
     </div>
@@ -1779,6 +1797,7 @@ Example: <pre class="prettyprint">alert("Selected value is: "+$("#e8").select2("
     <div class="span12">
         <h2>Configuring Defaults</h2>
         Select2 exposes its default options via the <code>$.fn.select2.defaults</code> object. Properties changed in this object (same properties configurable through the constructor) will take effect for every instance created after the change.
+
     </div>
 </div>
 
