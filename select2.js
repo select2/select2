@@ -1633,7 +1633,11 @@ the specific language governing permissions and limitations under the Apache Lic
                             function () {
                                 return equal(self.id(this), self.id(def));
                             }).length === 0) {
-                            data.results.unshift(def);
+                            if (this.opts.createdSearchChoiceFirst) {
+                                data.results.unshift(def);
+                            } else {
+                                data.results.push(def);
+                            }
                         }
                     }
                 }
@@ -3186,7 +3190,8 @@ the specific language governing permissions and limitations under the Apache Lic
         selectOnBlur: false,
         adaptContainerCssClass: function(c) { return c; },
         adaptDropdownCssClass: function(c) { return null; },
-        nextSearchTerm: function(selectedObject, currentSearchTerm) { return undefined; }
+        nextSearchTerm: function(selectedObject, currentSearchTerm) { return undefined; },
+        createdSearchChoiceFirst: true
     };
 
     $.fn.select2.ajaxDefaults = {
