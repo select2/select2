@@ -140,6 +140,54 @@ the specific language governing permissions and limitations under the Apache Lic
     }
 
     /**
+     * Gets the outer height of $element without margin but including border
+     *
+     * Uses element.getBoundingClientRect if available
+     *     see: https://developer.mozilla.org/en-US/docs/Web/API/element.getBoundingClientRect
+     * If element.getBoundingClientRect is not available it uses jQuery.outerHeight()
+     * @param $element
+     */
+    function getOuterHeight($element) {
+        var element = $element && $element.get ? $element.get(0) : undefined,
+            rect;
+
+        if (element && typeof element.getBoundingClientRect !== typeof undefined) {
+            rect = element.getBoundingClientRect();
+            if (typeof rect.height === 'number') {
+                return rect.height;
+            } else {
+                return rect.bottom - rect.top;
+            }
+        }
+
+        return $element.outerHeight(false);
+    }
+
+    /**
+     * Gets the outer width of $element without margin but including border
+     *
+     * Uses element.getBoundingClientRect if available
+     *     see: https://developer.mozilla.org/en-US/docs/Web/API/element.getBoundingClientRect
+     * If element.getBoundingClientRect is not available it uses jQuery.outerWidth()
+     * @param $element
+     */
+    function getOuterWidth($element) {
+        var element = $element && $element.get ? $element.get(0) : undefined,
+            rect;
+
+        if (element && typeof element.getBoundingClientRect !== typeof undefined) {
+            rect = element.getBoundingClientRect();
+            if (typeof rect.width === 'number') {
+                return rect.width;
+            } else {
+                return rect.right - rect.left;
+            }
+        }
+
+        return $element.outerWidth(false);
+    }
+
+    /**
      * Compares equality of a and b
      * @param a
      * @param b
@@ -1132,16 +1180,16 @@ the specific language governing permissions and limitations under the Apache Lic
         positionDropdown: function() {
             var $dropdown = this.dropdown.hide(),
                 offset = this.container.offset(),
-                height = this.container.outerHeight(false),
-                width = this.container.outerWidth(false),
-                dropHeight = $dropdown.outerHeight(false),
+                height = getOuterHeight(this.container),
+                width = getOuterWidth(this.container),
+                dropHeight = getOuterHeight($dropdown),
                 viewPortRight = $(window).scrollLeft() + $(window).width(),
                 viewportBottom = $(window).scrollTop() + $(window).height(),
                 dropTop = offset.top + height,
                 dropLeft = offset.left,
                 enoughRoomBelow = dropTop + dropHeight <= viewportBottom,
                 enoughRoomAbove = (offset.top - dropHeight) >= this.body().scrollTop(),
-                dropWidth = $dropdown.outerWidth(false),
+                dropWidth = getOuterWidth($dropdown),
                 enoughRoomOnRight = dropLeft + dropWidth <= viewPortRight,
                 aboveNow = $dropdown.hasClass("select2-drop-above"),
                 bodyOffset,
@@ -1156,7 +1204,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 $dropdown.addClass('select2-drop-auto-width');
                 $dropdown.css('width', '');
                 // Add scrollbar width to dropdown if vertical scrollbar is present
-                dropWidth = $dropdown.outerWidth(false) + (resultsListNode.scrollHeight === resultsListNode.clientHeight ? 0 : scrollBarDimensions.width);
+                dropWidth = getOuterWidth($dropdown) + (resultsListNode.scrollHeight === resultsListNode.clientHeight ? 0 : scrollBarDimensions.width);
                 dropWidth > width ? width = dropWidth : dropWidth = width;
                 enoughRoomOnRight = dropLeft + dropWidth <= viewPortRight;
             }
