@@ -1182,7 +1182,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 offset = this.container.offset(),
                 height = getOuterHeight(this.container),
                 width = getOuterWidth(this.container),
-				dropHeight = getOuterHeight($dropdown),
+                dropHeight = getOuterHeight($dropdown),
                 viewPortRight = $(window).scrollLeft() + $(window).width(),
                 viewportBottom = $(window).scrollTop() + $(window).height(),
                 dropTop = offset.top + height,
