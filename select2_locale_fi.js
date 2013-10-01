@@ -9,11 +9,11 @@
         },
         formatInputTooShort: function (input, min) {
             var n = min - input.length;
-            return "Ole hyvä ja anna " + n + " merkkiä lisää.";
+            return "Ole hyvä ja anna " + n + " merkkiä lisää";
         },
         formatInputTooLong: function (input, max) {
             var n = input.length - max;
-            return "Ole hyvä ja annar " + n + " merkkiä vähemmän.";
+            return "Ole hyvä ja anna " + n + " merkkiä vähemmän";
         },
         formatSelectionTooBig: function (limit) {
             return "Voit valita ainoastaan " + limit + " kpl";
