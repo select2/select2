@@ -1282,9 +1282,9 @@ the specific language governing permissions and limitations under the Apache Lic
                 });
             }
 
-            // ensure the mask is always right before the dropdown
-            if (this.dropdown.prev()[0] !== mask[0]) {
-                this.dropdown.before(mask);
+            // ensure the mask is always the first element in the dropdown container
+            if (this.container.first()[0] !== mask[0]) {
+                this.container.prepend(mask);
             }
 
             // move the global id to the correct dropdown
