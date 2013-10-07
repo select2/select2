@@ -2857,7 +2857,7 @@ the specific language governing permissions and limitations under the Apache Lic
             }
             selected.remove();
 
-            this.opts.element.trigger({ type: "removed", val: this.id(data), choice: data });
+            this.opts.element.trigger({ type: "select2-removed", val: this.id(data), choice: data });
             this.triggerChange({ removed: data });
         },
 
