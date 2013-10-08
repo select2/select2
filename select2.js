@@ -1130,13 +1130,16 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // abstract
         positionDropdown: function() {
-            var $dropdown = this.dropdown.hide(),
+            var $dropdown = this.dropdown,
                 offset = this.container.offset(),
                 height = this.container.outerHeight(false),
                 width = this.container.outerWidth(false),
                 dropHeight = $dropdown.outerHeight(false),
-                viewPortRight = $(window).scrollLeft() + $(window).width(),
-                viewportBottom = $(window).scrollTop() + $(window).height(),
+                $window = $(window),
+                windowWidth = $window.width(),
+                windowHeight = $window.height(),
+                viewPortRight = $window.scrollLeft() + windowWidth,
+                viewportBottom = $window.scrollTop() + windowHeight,
                 dropTop = offset.top + height,
                 dropLeft = offset.left,
                 enoughRoomBelow = dropTop + dropHeight <= viewportBottom,
@@ -1146,10 +1149,40 @@ the specific language governing permissions and limitations under the Apache Lic
                 aboveNow = $dropdown.hasClass("select2-drop-above"),
                 bodyOffset,
                 above,
+                changeDirection,
                 css,
                 resultsListNode;
 
-            $dropdown.show();
+            // always prefer the current above/below alignment, unless there is not enough room
+            if (aboveNow) {
+                above = true;
+                if (!enoughRoomAbove && enoughRoomBelow) {
+                    changeDirection = true;
+                    above = false;
+                }
+            } else {
+                above = false;
+                if (!enoughRoomBelow && enoughRoomAbove) {
+                    changeDirection = true;
+                    above = true;
+                }
+            }
+
+            //if we are changing direction we need to get positions when dropdown is hidden;
+            if (changeDirection) {
+                $dropdown.hide();
+                offset = this.container.offset();
+                height = this.container.outerHeight(false);
+                width = this.container.outerWidth(false);
+                dropHeight = $dropdown.outerHeight(false);
+                viewPortRight = $window.scrollLeft() + windowWidth;
+                viewportBottom = $window.scrollTop() + windowHeight;
+                dropTop = offset.top + height;
+                dropLeft = offset.left;
+                dropWidth = $dropdown.outerWidth(false);
+                enoughRoomOnRight = dropLeft + dropWidth <= viewPortRight;
+                $dropdown.show();
+            }
 
             if (this.opts.dropdownAutoWidth) {
                 resultsListNode = $('.select2-results', $dropdown)[0];
@@ -1174,34 +1207,28 @@ the specific language governing permissions and limitations under the Apache Lic
                 dropLeft -= bodyOffset.left;
             }
 
-            // always prefer the current above/below alignment, unless there is not enough room
-            if (aboveNow) {
-                above = true;
-                if (!enoughRoomAbove && enoughRoomBelow) above = false;
-            } else {
-                above = false;
-                if (!enoughRoomBelow && enoughRoomAbove) above = true;
-            }
-
             if (!enoughRoomOnRight) {
                dropLeft = offset.left + width - dropWidth;
             }
 
+            css =  {
+                left: dropLeft,
+                width: width
+            };
+
             if (above) {
-                dropTop = offset.top - dropHeight;
+                css.bottom = windowHeight - offset.top;
+                css.top = 'auto';
                 this.container.addClass("select2-drop-above");
                 $dropdown.addClass("select2-drop-above");
             }
             else {
+                css.top = dropTop;
+                css.bottom = 'auto';
                 this.container.removeClass("select2-drop-above");
                 $dropdown.removeClass("select2-drop-above");
             }
-
-            css = $.extend({
-                top: dropTop,
-                left: dropLeft,
-                width: width
-            }, evaluate(this.opts.dropdownCss));
+            css = $.extend(css, evaluate(this.opts.dropdownCss));
 
             $dropdown.css(css);
         },
