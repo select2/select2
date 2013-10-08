@@ -308,8 +308,12 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     border-left: none;
     filter: none;
 }
-.select2-dropdown-open .select2-choice .select2-arrow b {
-    background-position: -18px 1px;
+
+.select2-dropdown-open .select2-choice .select2-arrow b span {
+    border-top: 0 dotted;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+    border-bottom: 4px solid #888;
 }
 
 /* results */
