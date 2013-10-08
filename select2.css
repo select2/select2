@@ -244,14 +244,10 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     border: 1px solid #aaa;
     border-radius: 0;
 
-    -webkit-box-shadow: none;
-            box-shadow: none;
+    -webkit-box-shadow: inset 0px 8px 26px -20px #444;
+            box-shadow: inset 0px 8px 26px -20px #444;
 
     background: #fff url('select2.png') no-repeat 100% -22px;
-    background: url('select2.png') no-repeat 100% -22px, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, #fff), color-stop(0.99, #eee));
-    background: url('select2.png') no-repeat 100% -22px, -webkit-linear-gradient(center bottom, #fff 85%, #eee 99%);
-    background: url('select2.png') no-repeat 100% -22px, -moz-linear-gradient(center bottom, #fff 85%, #eee 99%);
-    background: url('select2.png') no-repeat 100% -22px, linear-gradient(top, #fff 85%, #eee 99%);
 }
 
 .select2-drop.select2-drop-above .select2-search input {
