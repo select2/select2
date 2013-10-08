@@ -88,14 +88,17 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     width: 12px;
     height: 12px;
     position: absolute;
-    right: 24px;
+    right: 23px;
     top: 8px;
 
-    font-size: 1px;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 13px;
+    line-height: 9px;
+    color: #888;
     text-decoration: none;
 
     border: 0;
-    background: url('select2.png') right top no-repeat;
     cursor: pointer;
     outline: 0;
 }
@@ -105,7 +108,7 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 }
 
 .select2-container .select2-choice abbr:hover {
-    background-position: right -11px;
+    color: #444;
     cursor: pointer;
 }
 
@@ -535,7 +538,6 @@ disabled look for disabled choices in the results dropdown
 
     font-size: 1px;
     outline: none;
-    background: url('select2.png') right top no-repeat;
 }
 
 .select2-container-multi .select2-search-choice-close {

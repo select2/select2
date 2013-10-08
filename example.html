@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select2 without Images</title>
+    <link href="select2.css" rel="stylesheet">
+    <link href="select2-bootstrap.css" rel="stylesheet">
+    <style>
+        body {
+            font: 14px/1.4 'Helvetica', Arial, sans-serif;
+        }
+    </style>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="select2.js"></script>
+    <script>
+        
+    function movieFormatResult(movie) {
+        var markup = "<table class='movie-result'><tr>";
+        if (movie.posters !== undefined && movie.posters.thumbnail !== undefined) {
+            markup += "<td class='movie-image'><img src='" + movie.posters.thumbnail + "'/></td>";
+        }
+        markup += "<td class='movie-info'><div class='movie-title'>" + movie.title + "</div>";
+        if (movie.critics_consensus !== undefined) {
+            markup += "<div class='movie-synopsis'>" + movie.critics_consensus + "</div>";
+        }
+        else if (movie.synopsis !== undefined) {
+            markup += "<div class='movie-synopsis'>" + movie.synopsis + "</div>";
+        }
+        markup += "</td></tr></table>"
+        return markup;
+    }
+
+    function movieFormatSelection(movie) {
+        return movie.title;
+    }
+        $(document).ready(function() {
+            $("#select2").select2({
+                placeholder: "Search for a movie",
+                minimumInputLength: 3,
+                ajax: {
+                    url: "http://api.rottentomatoes.com/api/public/v1.0/movies.json",
+                    dataType: 'jsonp',
+                    quietMillis: 100,
+                    data: function (term, page) { // page is the one-based page number tracked by Select2
+                        return {
+                            q: term, //search term
+                            page_limit: 10, // page size
+                            page: page, // page number
+                            apikey: "ju6z9mjyajq2djue3gbvv26t" // please do not use so this example keeps working
+                        };
+                    },
+                    results: function (data, page) {
+                        var more = (page * 10) < data.total; // whether or not there are more results available
+     
+                        // notice we return the value of more so Select2 knows if more results can be loaded
+                        return {results: data.movies, more: more};
+                    }
+                },
+                formatResult: movieFormatResult, // omitted for brevity, see the source of this page
+                formatSelection: movieFormatSelection, // omitted for brevity, see the source of this page
+                dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
+                escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
+            });
+        });
+        
+    </script>
+</head>
+<body>
+    <div class="container" style="margin-top: 20px">
+        <input type="hidden" id="select2" data-placeholder="Select a body part band" style="width:500px">
+    </div>
+</body>
+</html>
