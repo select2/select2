@@ -1332,7 +1332,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
 
             this.clearSearch();
-            this.search.removeClass("select2-active");
+            this.search.removeClass("select2-active select2-background-spinner");
             this.opts.element.trigger($.Event("select2-close"));
         },
 
@@ -1482,7 +1482,7 @@ the specific language governing permissions and limitations under the Apache Lic
             below = more.offset().top - results.offset().top - results.height();
 
             if (below <= this.opts.loadMorePadding) {
-                more.addClass("select2-active");
+                more.addClass("select2-active select2-background-spinner");
                 this.opts.query({
                         element: this.opts.element,
                         term: term,
@@ -1546,7 +1546,7 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             function postRender() {
-                search.removeClass("select2-active");
+                search.removeClass("select2-active select2-background-spinner");
                 self.positionDropdown();
             }
 
@@ -1589,7 +1589,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 render("<li class='select2-searching'>" + opts.formatSearching() + "</li>");
             }
 
-            search.addClass("select2-active");
+            search.addClass("select2-active select2-background-spinner");
 
             this.removeHighlight();
 
@@ -1617,7 +1617,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
                 // ignore a response if the select2 has been closed before it was received
                 if (!this.opened()) {
-                    this.search.removeClass("select2-active");
+                    this.search.removeClass("select2-active select2-background-spinner");
                     return;
                 }
 

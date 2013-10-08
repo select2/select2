@@ -254,12 +254,16 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     margin-top: 4px;
 }
 
+.select2-background-spinner {
+    background-image: url(data:image/gif;base64,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) !important;
+    background-position: 100% 4px !importnat;
+    background-repeat: no-repeat !important;
+}
+
 .select2-search input.select2-active {
-    background: #fff url('select2-spinner.gif') no-repeat 100%;
-    background: url('select2-spinner.gif') no-repeat 100%, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, #fff), color-stop(0.99, #eee));
-    background: url('select2-spinner.gif') no-repeat 100%, -webkit-linear-gradient(center bottom, #fff 85%, #eee 99%);
-    background: url('select2-spinner.gif') no-repeat 100%, -moz-linear-gradient(center bottom, #fff 85%, #eee 99%);
-    background: url('select2-spinner.gif') no-repeat 100%, linear-gradient(top, #fff 85%, #eee 99%);
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: 100% 6px;
 }
 
 .select2-container-active .select2-choice,
@@ -403,7 +407,7 @@ disabled look for disabled choices in the results dropdown
 }
 
 .select2-more-results.select2-active {
-    background: #f4f4f4 url('select2-spinner.gif') no-repeat 100%;
+    background-color: #f4f4f4;
 }
 
 .select2-more-results {
@@ -491,7 +495,7 @@ disabled look for disabled choices in the results dropdown
 }
 
 .select2-container-multi .select2-choices .select2-search-field input.select2-active {
-    background: #fff url('select2-spinner.gif') no-repeat 100% !important;
+    background-color: #fff !important;
 }
 
 .select2-default {
@@ -543,7 +547,6 @@ disabled look for disabled choices in the results dropdown
     right: 3px;
     top: 4px;
 
-    font-size: 1px;
     outline: none;
 }
 
@@ -609,16 +612,4 @@ disabled look for disabled choices in the results dropdown
     width: 100px;
     height: 100px;
     overflow: scroll;
-}
-/* Retina-ize icons */
-
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-resolution: 144dpi)  {
-  .select2-search input, .select2-search-choice-close, .select2-container .select2-choice abbr, .select2-container .select2-choice .select2-arrow b {
-      background-image: url('select2x2.png') !important;
-      background-repeat: no-repeat !important;
-      background-size: 60px 40px !important;
-  }
-  .select2-search input {
-      background-position: 100% -21px !important;
-  }
 }
