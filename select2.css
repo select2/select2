@@ -202,7 +202,18 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     display: block;
     width: 100%;
     height: 100%;
-    background: url('select2.png') no-repeat 0 1px;
+}
+
+.select2-container .select2-choice .select2-arrow b span {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 4px;
+    vertical-align: middle;
+    border-top: 4px solid #888;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+    border-bottom: 0 dotted;
 }
 
 .select2-search {
