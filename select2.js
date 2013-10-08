@@ -2855,7 +2855,15 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.setVal(val);
                 if (this.select) this.postprocessResults();
             }
-            selected.remove();
+
+            var evt = $.Event("select2-removing");
+            evt.val = this.id(data);
+            evt.choice = data;
+            this.opts.element.trigger(evt);
+
+            if (evt.isDefaultPrevented()) {
+                return;
+            }
 
             this.opts.element.trigger({ type: "select2-removed", val: this.id(data), choice: data });
             this.triggerChange({ removed: data });
