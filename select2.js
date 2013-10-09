@@ -1758,7 +1758,7 @@ the specific language governing permissions and limitations under the Apache Lic
         // abstract
         initContainerWidth: function () {
             function resolveContainerWidth() {
-                var style, attrs, matches, i, l;
+                var style, attrs, matches, i, l, attr;
 
                 if (this.opts.width === "off") {
                     return null;
@@ -1770,8 +1770,9 @@ the specific language governing permissions and limitations under the Apache Lic
                     if (style !== undefined) {
                         attrs = style.split(';');
                         for (i = 0, l = attrs.length; i < l; i = i + 1) {
-                            matches = attrs[i].replace(/\s/g, '')
-                                .match(/[^-]width:(([-+]?([0-9]*\.)?[0-9]+)(px|em|ex|%|in|cm|mm|pt|pc))/i);
+                            attr = attrs[i].replace(/\s/g, '');
+                            attr = " " + attr; // need the style to start with a space because we match [^-]width which would not match width in the beginning
+                            matches = attr.match(/[^-]width:(([-+]?([0-9]*\.)?[0-9]+)(px|em|ex|%|in|cm|mm|pt|pc))/i);
                             if (matches !== null && matches.length >= 1)
                                 return matches[1];
                         }
