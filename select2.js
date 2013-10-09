@@ -1431,7 +1431,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // abstract
         findHighlightableChoices: function() {
-            return this.results.find(".select2-result-selectable:not(.select2-disabled)");
+            return this.results.find(".select2-result-selectable:not(.select2-disabled, .select2-selected)");
         },
 
         // abstract
