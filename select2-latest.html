@@ -669,6 +669,7 @@ $("#e11")
     .on("select2-close", function() { log("close"); })
     .on("select2-highlight", function(e) { log ("highlighted val="+ e.val+" choice="+ JSON.stringify(e.choice));})
     .on("select2-selecting", function(e) { log ("selecting val="+ e.val+" choice="+ JSON.stringify(e.choice));})
+    .on("select2-removing", function(e) { log ("removing val="+ e.val+" choice="+ JSON.stringify(e.choice));})
     .on("select2-removed", function(e) { log ("removed val="+ e.val+" choice="+ JSON.stringify(e.choice));})
     .on("select2-loaded", function(e) { log ("loaded (data property omitted for brevitiy)");})
     .on("select2-focus", function(e) { log ("focus");})
@@ -680,6 +681,7 @@ $("#e11_2")
     .on("select2-close", function() { log("close"); })
     .on("select2-highlight", function(e) { log ("highlighted val="+ e.val+" choice="+ JSON.stringify(e.choice));})
     .on("select2-selecting", function(e) { log ("selecting val="+ e.val+" choice="+ JSON.stringify(e.choice));})
+    .on("select2-removing", function(e) { log ("removing val="+ e.val+" choice="+ JSON.stringify(e.choice));})
     .on("select2-removed", function(e) { log ("removed val="+ e.val+" choice="+ JSON.stringify(e.choice));})
     .on("select2-loaded", function(e) { log ("loaded (data property omitted for brevitiy)");})
     .on("select2-focus", function(e) { log ("focus");})
@@ -1717,6 +1719,20 @@ $("#select").select2({
                 <p>For the clear button to be visible the <code>allowClear</code> option needs to be <code>true</code>.</p>
             </div>
         </div>
+        <div class="row zebra">
+            <div class="span12">
+                <h3>select2-removing</h3>
+                <p>Fired when a choice is about to be removed in the dropdown/input, but before any removal of the choice has been made.
+                    This event is used to allow the user to reject removal by calling <code>event.preventDefault()</code></p>
+                </p>
+                <p>The event object contains the following custom properties:
+                <dl>
+                    <dt>val</dt><dd>The id of the removing choice object.</dd>
+                    <dt>object</dt><dd>The choice object about to be removed.</dd>
+                </dl>
+                </p>
+            </div>
+        </div>        
         <div class="row zebra">
             <div class="span12">
                 <h3>select2-removed</h3>
