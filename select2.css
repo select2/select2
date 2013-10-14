@@ -261,6 +261,11 @@ Version: @@ver@@ Timestamp: @@timestamp@@
             box-shadow: 0 0 5px rgba(0, 0, 0, .3);
 }
 
+.using-zepto.select2-container-active .select2-choice,
+.using-zepto.select2-container-active .select2-choices {
+    z-index: 9999;
+}
+
 .select2-dropdown-open .select2-choice {
     border-bottom-color: transparent;
     -webkit-box-shadow: 0 1px 0 #fff inset;

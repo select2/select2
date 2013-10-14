@@ -36,7 +36,31 @@ the specific language governing permissions and limitations under the Apache Lic
             }
         });
     }
-})(jQuery);
+
+    if(typeof $.data == "undefined") {
+        $.extend($, {
+            data : function(elem, key, value){
+                return $(elem).data(key, value);
+            },
+            removeData : function(elem, key, value){
+                return $(elem).data(key, value);
+            },
+        });
+    }
+
+    if(typeof $.fn.scrollLeft == "undefined") {
+        $.extend($, {
+            scrollLeft : function(value){
+              if (!this.length) return
+              var hasScrollLeft = 'scrollLeft' in this[0]
+              if (value === undefined) return hasScrollLeft ? this[0].scrollLeft : this[0].pageXOffset
+              return this.each(hasScrollLeft ?
+                function(){ this.scrollLeft = value } :
+                function(){ this.scrollTo(value, this.scrollY) })
+            }
+        });
+    }
+})(window.jQuery || window.Zepto);
 
 (function ($, undefined) {
     "use strict";
@@ -121,6 +145,8 @@ the specific language governing permissions and limitations under the Apache Lic
     function indexOf(value, array) {
         var i = 0, l = array.length;
         for (; i < l; i = i + 1) {
+
+
             if (equal(value, array[i])) return i;
         }
         return -1;
@@ -680,7 +706,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.container.attr("style", opts.element.attr("style"));
             this.container.css(evaluate(opts.containerCss));
-            this.container.addClass(evaluate(opts.containerCssClass));
+            if(evaluate(opts.containerCssClass)) this.container.addClass(evaluate(opts.containerCssClass));
 
             this.elementTabIndex = this.opts.element.attr("tabindex");
 
@@ -697,7 +723,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             syncCssClasses(this.dropdown, this.opts.element, this.opts.adaptDropdownCssClass);
 
-            this.dropdown.addClass(evaluate(opts.dropdownCssClass));
+            if(evaluate(opts.dropdownCssClass)) this.dropdown.addClass(evaluate(opts.dropdownCssClass));
             this.dropdown.data("select2", this);
             this.dropdown.on("click", killEvent);
 
@@ -875,7 +901,7 @@ the specific language governing permissions and limitations under the Apache Lic
                             node.addClass(selectable ? "select2-result-selectable" : "select2-result-unselectable");
                             if (disabled) { node.addClass("select2-disabled"); }
                             if (compound) { node.addClass("select2-result-with-children"); }
-                            node.addClass(self.opts.formatResultCssClass(result));
+                            if( self.opts.formatResultCssClass(result) ) node.addClass(self.opts.formatResultCssClass(result));
 
                             label=$(document.createElement("div"));
                             label.addClass("select2-result-label");
@@ -1019,10 +1045,10 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.readonly(readonly);
 
                 syncCssClasses(this.container, this.opts.element, this.opts.adaptContainerCssClass);
-                this.container.addClass(evaluate(this.opts.containerCssClass));
+                if( evaluate(this.opts.containerCssClass)) this.container.addClass(evaluate(this.opts.containerCssClass));
 
                 syncCssClasses(this.dropdown, this.opts.element, this.opts.adaptDropdownCssClass);
-                this.dropdown.addClass(evaluate(this.opts.dropdownCssClass));
+                if( evaluate(this.opts.dropdownCssClass)) this.dropdown.addClass(evaluate(this.opts.dropdownCssClass));
 
             });
 
@@ -1130,9 +1156,9 @@ the specific language governing permissions and limitations under the Apache Lic
         positionDropdown: function() {
             var $dropdown = this.dropdown,
                 offset = this.container.offset(),
-                height = this.container.outerHeight(false),
-                width = this.container.outerWidth(false),
-                dropHeight = $dropdown.outerHeight(false),
+                height = (typeof this.container.outerHeight !== "undefined") ? this.container.outerHeight(false) : this.container.height(),
+                width = (typeof this.container.outerWidth!== "undefined") ?this.container.outerWidth(false) : this.container.width(),
+                dropHeight = (typeof $dropdown.outerHeight !== "undefined") ? $dropdown.outerHeight(false) : $dropdown.height(false),
                 $window = $(window),
                 windowWidth = $window.width(),
                 windowHeight = $window.height(),
@@ -1142,7 +1168,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 dropLeft = offset.left,
                 enoughRoomBelow = dropTop + dropHeight <= viewportBottom,
                 enoughRoomAbove = (offset.top - dropHeight) >= this.body().scrollTop(),
-                dropWidth = $dropdown.outerWidth(false),
+                dropWidth = (typeof $dropdown.outerWidth !== "undefined") ? $dropdown.outerWidth(false) : $dropdown.width(false),
                 enoughRoomOnRight = dropLeft + dropWidth <= viewPortRight,
                 aboveNow = $dropdown.hasClass("select2-drop-above"),
                 bodyOffset,
@@ -1170,14 +1196,14 @@ the specific language governing permissions and limitations under the Apache Lic
             if (changeDirection) {
                 $dropdown.hide();
                 offset = this.container.offset();
-                height = this.container.outerHeight(false);
-                width = this.container.outerWidth(false);
-                dropHeight = $dropdown.outerHeight(false);
-                viewPortRight = $window.scrollLeft() + windowWidth;
-                viewportBottom = $window.scrollTop() + windowHeight;
-                dropTop = offset.top + height;
-                dropLeft = offset.left;
-                dropWidth = $dropdown.outerWidth(false);
+                height = (typeof this.container.outerHeight !== "undefined") ? this.container.outerHeight(false) : this.container.height(),
+                width = (typeof this.container.outerWidth!== "undefined") ?this.container.outerWidth(false) : this.container.width(),
+                dropHeight = (typeof $dropdown.outerHeight !== "undefined") ? $dropdown.outerHeight(false) : $dropdown.height(false),
+                viewPortRight = $window.scrollLeft() + windowWidth,
+                viewportBottom = $window.scrollTop() + windowHeight,
+                dropTop = offset.top + height,
+                dropLeft = offset.left,
+                dropWidth = (typeof $dropdown.outerWidth !== "undefined") ? $dropdown.outerWidth(false) : $dropdown.width(false),
                 enoughRoomOnRight = dropLeft + dropWidth <= viewPortRight;
                 $dropdown.show();
             }
@@ -1187,7 +1213,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 $dropdown.addClass('select2-drop-auto-width');
                 $dropdown.css('width', '');
                 // Add scrollbar width to dropdown if vertical scrollbar is present
-                dropWidth = $dropdown.outerWidth(false) + (resultsListNode.scrollHeight === resultsListNode.clientHeight ? 0 : scrollBarDimensions.width);
+                dropWidth = (typeof $dropdown.outerWidth !== "undefined") ? $dropdown.outerWidth(false) : $dropdown.width(false), + (resultsListNode.scrollHeight === resultsListNode.clientHeight ? 0 : scrollBarDimensions.width);
                 dropWidth > width ? width = dropWidth : dropWidth = width;
                 enoughRoomOnRight = dropLeft + dropWidth <= viewPortRight;
             }
@@ -1279,6 +1305,9 @@ the specific language governing permissions and limitations under the Apache Lic
                 mask;
 
             this.container.addClass("select2-dropdown-open").addClass("select2-container-active");
+            if(!window.jQuery && window.Zepto){
+                this.container.addClass("using-zepto")
+            }
 
             this.clearDropdownAlignmentPreference();
 
@@ -1405,17 +1434,17 @@ the specific language governing permissions and limitations under the Apache Lic
 
             child = $(children[index]);
 
-            hb = child.offset().top + child.outerHeight(true);
+            hb = child.offset().top + ((typeof child.outerHeight !== "undefined") ? child.outerHeight(true) : child.height());
 
             // if this is the last child lets also make sure select2-more-results is visible
             if (index === children.length - 1) {
                 more = results.find("li.select2-more-results");
                 if (more.length > 0) {
-                    hb = more.offset().top + more.outerHeight(true);
+                    hb = more.offset().top + ((typeof more.outerHeight !== "undefined") ? more.outerHeight(true) : more.height());
                 }
             }
 
-            rb = results.offset().top + results.outerHeight(true);
+            rb = results.offset().top + ((typeof results.outerHeight !== "undefined") ? results.outerHeight(true) : results.height());
             if (hb > rb) {
                 results.scrollTop(results.scrollTop() + (hb - rb));
             }
@@ -1429,7 +1458,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // abstract
         findHighlightableChoices: function() {
-            return this.results.find(".select2-result-selectable:not(.select2-disabled, .select2-selected)");
+            return (window.Zepto && !window.jQuery) ? this.results.find(".select2-result-selectable").not('.select2-disabled, .select2-selected') : this.results.find(".select2-result-selectable:not(.select2-disabled, .select2-selected)");
         },
 
         // abstract
@@ -1764,8 +1793,8 @@ the specific language governing permissions and limitations under the Apache Lic
                 } else if (this.opts.width === "copy" || this.opts.width === "resolve") {
                     // check if there is inline style on the element that contains width
                     style = this.opts.element.attr('style');
-                    if (style !== undefined) {
-                        attrs = style.split(';');
+                    if (style !== undefined || (typeof style === "object" && style.length != 0)) {
+                        attrs = (typeof style.split !== "undefined") ? style.split(';') : style.cssText.split(';');
                         for (i = 0, l = attrs.length; i < l; i = i + 1) {
                             attr = attrs[i].replace(/\s/g, '');
                             matches = attr.match(/^width:(([-+]?([0-9]*\.)?[0-9]+)(px|em|ex|%|in|cm|mm|pt|pc))/i);
@@ -2271,7 +2300,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 container.append(formatted);
             }
             cssClass=this.opts.formatSelectionCssClass(data, container);
-            if (cssClass !== undefined) {
+            if (cssClass) {
                 container.addClass(cssClass);
             }
 
@@ -2823,7 +2852,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 choice.find("div").replaceWith("<div>"+formatted+"</div>");
             }
             cssClass=this.opts.formatSelectionCssClass(data, choice.find("div"));
-            if (cssClass != undefined) {
+            if (cssClass) {
                 choice.addClass(cssClass);
             }
 
@@ -3248,4 +3277,4 @@ the specific language governing permissions and limitations under the Apache Lic
         }
     };
 
-}(jQuery));
+}(window.jQuery || window.Zepto));
