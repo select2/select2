@@ -37,7 +37,7 @@ the specific language governing permissions and limitations under the Apache Lic
         });
     }
 
-    if(typeof $.data == "undefined") {
+    if(typeof $.data === "undefined") {
         $.extend($, {
             data : function(elem, key, value){
                 return $(elem).data(key, value);
@@ -48,8 +48,30 @@ the specific language governing permissions and limitations under the Apache Lic
         });
     }
 
-    if(typeof $.fn.scrollLeft == "undefined") {
-        $.extend($, {
+    if(typeof $.fn.outerWidth === "undefined"){
+        $.extend($.fn, {
+            outerWidth : function(value){
+                if(!value){
+                    return this.width();
+                }
+                return this.width(value);
+            },
+        });
+    }
+
+    if(typeof $.fn.outerHeight === "undefined"){
+        $.extend($.fn, {
+            outerHeight : function(value){
+                if(!value){
+                    return this.height();
+                }
+                return this.height(value);
+            },
+        });
+    }
+
+    if(typeof $.fn.scrollLeft === "undefined") {
+        $.extend($.fn, {
             scrollLeft : function(value){
               if (!this.length) return
               var hasScrollLeft = 'scrollLeft' in this[0]
@@ -1156,9 +1178,9 @@ the specific language governing permissions and limitations under the Apache Lic
         positionDropdown: function() {
             var $dropdown = this.dropdown,
                 offset = this.container.offset(),
-                height = (typeof this.container.outerHeight !== "undefined") ? this.container.outerHeight(false) : this.container.height(),
-                width = (typeof this.container.outerWidth!== "undefined") ?this.container.outerWidth(false) : this.container.width(),
-                dropHeight = (typeof $dropdown.outerHeight !== "undefined") ? $dropdown.outerHeight(false) : $dropdown.height(false),
+                height = this.container.outerHeight(false),
+                width = this.container.outerWidth(false),
+                dropHeight = $dropdown.outerHeight(false),
                 $window = $(window),
                 windowWidth = $window.width(),
                 windowHeight = $window.height(),
@@ -1168,7 +1190,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 dropLeft = offset.left,
                 enoughRoomBelow = dropTop + dropHeight <= viewportBottom,
                 enoughRoomAbove = (offset.top - dropHeight) >= this.body().scrollTop(),
-                dropWidth = (typeof $dropdown.outerWidth !== "undefined") ? $dropdown.outerWidth(false) : $dropdown.width(false),
+                dropWidth = $dropdown.outerWidth(false),
                 enoughRoomOnRight = dropLeft + dropWidth <= viewPortRight,
                 aboveNow = $dropdown.hasClass("select2-drop-above"),
                 bodyOffset,
@@ -1196,14 +1218,14 @@ the specific language governing permissions and limitations under the Apache Lic
             if (changeDirection) {
                 $dropdown.hide();
                 offset = this.container.offset();
-                height = (typeof this.container.outerHeight !== "undefined") ? this.container.outerHeight(false) : this.container.height(),
-                width = (typeof this.container.outerWidth!== "undefined") ?this.container.outerWidth(false) : this.container.width(),
-                dropHeight = (typeof $dropdown.outerHeight !== "undefined") ? $dropdown.outerHeight(false) : $dropdown.height(false),
-                viewPortRight = $window.scrollLeft() + windowWidth,
-                viewportBottom = $window.scrollTop() + windowHeight,
-                dropTop = offset.top + height,
-                dropLeft = offset.left,
-                dropWidth = (typeof $dropdown.outerWidth !== "undefined") ? $dropdown.outerWidth(false) : $dropdown.width(false),
+                height = this.container.outerHeight(false);
+                width = this.container.outerWidth(false);
+                dropHeight = $dropdown.outerHeight(false);
+                viewPortRight = $window.scrollLeft() + windowWidth;
+                viewportBottom = $window.scrollTop() + windowHeight;
+                dropTop = offset.top + height;
+                dropLeft = offset.left;
+                dropWidth = $dropdown.outerWidth(false);
                 enoughRoomOnRight = dropLeft + dropWidth <= viewPortRight;
                 $dropdown.show();
             }
@@ -1213,7 +1235,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 $dropdown.addClass('select2-drop-auto-width');
                 $dropdown.css('width', '');
                 // Add scrollbar width to dropdown if vertical scrollbar is present
-                dropWidth = (typeof $dropdown.outerWidth !== "undefined") ? $dropdown.outerWidth(false) : $dropdown.width(false), + (resultsListNode.scrollHeight === resultsListNode.clientHeight ? 0 : scrollBarDimensions.width);
+                dropWidth = $dropdown.outerWidth(false) + (resultsListNode.scrollHeight === resultsListNode.clientHeight ? 0 : scrollBarDimensions.width);
                 dropWidth > width ? width = dropWidth : dropWidth = width;
                 enoughRoomOnRight = dropLeft + dropWidth <= viewPortRight;
             }
