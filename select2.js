@@ -999,7 +999,7 @@ the specific language governing permissions and limitations under the Apache Lic
          */
         // abstract
         monitorSource: function () {
-            var el = this.opts.element, sync;
+            var el = this.opts.element, sync, observer;
 
             el.on("change.select2", this.bind(function (e) {
                 if (this.opts.element.data("select2-change-triggered") !== true) {
@@ -1026,9 +1026,8 @@ the specific language governing permissions and limitations under the Apache Lic
 
             });
 
-            // mozilla and IE
-            el.on("propertychange.select2 DOMAttrModified.select2", sync);
-
+            // IE8-10
+            el.on("propertychange.select2", sync);
 
             // hold onto a reference of the callback to work around a chromium bug
             if (this.mutationCallback === undefined) {
@@ -1037,10 +1036,11 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
             }
 
-            // safari and chrome
-            if (typeof WebKitMutationObserver !== "undefined") {
+            // safari, chrome, firefox, IE11
+            observer = window.MutationObserver || window.WebKitMutationObserver|| window.MozMutationObserver;
+            if (observer !== undefined) {
                 if (this.propertyObserver) { delete this.propertyObserver; this.propertyObserver = null; }
-                this.propertyObserver = new WebKitMutationObserver(this.mutationCallback);
+                this.propertyObserver = new observer(this.mutationCallback);
                 this.propertyObserver.observe(el.get(0), { attributes:true, subtree:false });
             }
         },
