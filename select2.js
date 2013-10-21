@@ -349,7 +349,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 if (this.indexOf("select2-") !== 0) {
                     adapted = adapter(this);
                     if (adapted) {
-                        replacements.push(this);
+                        replacements.push(adapted);
                     }
                 }
             });
