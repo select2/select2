@@ -2446,6 +2446,7 @@ the specific language governing permissions and limitations under the Apache Lic
             return opts;
         },
 
+        // multi
         selectChoice: function (choice) {
 
             var selected = this.container.find(".select2-search-choice-focus");
@@ -2862,7 +2863,6 @@ the specific language governing permissions and limitations under the Apache Lic
             var val = this.getVal(),
                 data,
                 index;
-
             selected = selected.closest(".select2-search-choice");
 
             if (selected.length === 0) {
@@ -2891,6 +2891,8 @@ the specific language governing permissions and limitations under the Apache Lic
             if (evt.isDefaultPrevented()) {
                 return;
             }
+
+            selected.remove();
 
             this.opts.element.trigger({ type: "select2-removed", val: this.id(data), choice: data });
             this.triggerChange({ removed: data });
