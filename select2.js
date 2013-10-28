@@ -1973,7 +1973,9 @@ the specific language governing permissions and limitations under the Apache Lic
                 // without this the search field loses focus which is annoying
                 if (document.activeElement === this.body().get(0)) {
                     window.setTimeout(this.bind(function() {
-                        this.search.focus();
+                        if (this.opened()) {
+                            this.search.focus();
+                        }
                     }), 0);
                 }
             }));
