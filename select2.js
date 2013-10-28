@@ -771,7 +771,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.dropdown.on('click', this.bind(function (event) {
                 if (this._touchEvent) {
                     this._touchEvent = false;
-                    this.selectHighlighted();
+                    this.selectHighlighted({event: event});
                 }
             }));
 
@@ -804,7 +804,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.dropdown.on("mouseup", resultsSelector, this.bind(function (e) {
                 if ($(e.target).closest(".select2-result-selectable").length > 0) {
                     this.highlightUnderEvent(e);
-                    this.selectHighlighted(e);
+                    this.selectHighlighted({event: e});
                 }
             }));
 
@@ -1411,7 +1411,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     if (dropdown.length > 0) {
                         self=dropdown.data("select2");
                         if (self.opts.selectOnBlur) {
-                            self.selectHighlighted({noFocus: true});
+                            self.selectHighlighted({event: e, noFocus: true});
                         }
                         self.close();
                         e.preventDefault();
@@ -2140,11 +2140,11 @@ the specific language governing permissions and limitations under the Apache Lic
                         killEvent(e);
                         return;
                     case KEY.ENTER:
-                        this.selectHighlighted();
+                        this.selectHighlighted({event: e});
                         killEvent(e);
                         return;
                     case KEY.TAB:
-                        this.selectHighlighted({noFocus: true});
+                        this.selectHighlighted({event: e, noFocus: true});
                         return;
                     case KEY.ESC:
                         this.cancel(e);
@@ -2449,7 +2449,11 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             if (!equal(old, this.id(data))) {
-                this.triggerChange({ added: data, removed: oldData });
+                this.triggerChange({
+                    originalEvent: (options && options.event) ? options.event : null,
+                    added: data,
+                    removed: oldData
+                });
             }
         },
 
@@ -2760,11 +2764,11 @@ the specific language governing permissions and limitations under the Apache Lic
                         killEvent(e);
                         return;
                     case KEY.ENTER:
-                        this.selectHighlighted();
+                        this.selectHighlighted({event: e});
                         killEvent(e);
                         return;
                     case KEY.TAB:
-                        this.selectHighlighted({noFocus:true});
+                        this.selectHighlighted({event: e, noFocus:true});
                         this.close();
                         return;
                     case KEY.ESC:
