@@ -669,8 +669,8 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.container = this.createContainer();
 
-            this.containerId="s2id_"+(opts.element.attr("id") || "autogen"+nextUid());
-            this.containerSelector="#"+this.containerId.replace(/([;&,\.\+\*\~':"\!\^#$%@\[\]\(\)=>\|])/g, '\\$1');
+            this.containerId="s2id_"+(opts.element.attr("id") || "autogen"+nextUid()).replace(/([;&,\-\.\+\*\~':"\!\^#$%@\[\]\(\)=>\|])/g, '\\$1');
+            this.containerSelector="#"+this.containerId;
             this.container.attr("id", this.containerId);
 
             // cache the body so future lookups are cheap
