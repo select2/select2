@@ -767,19 +767,19 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.search.attr("maxlength", opts.maximumInputLength);
             }
 
-            var disabled = opts.element.prop("disabled");
+            disabled = opts.element.attr("disabled");
             if (disabled === undefined) disabled = false;
             this.enable(!disabled);
 
-            var readonly = opts.element.prop("readonly");
+            readonly = opts.element.attr("readonly");
             if (readonly === undefined) readonly = false;
             this.readonly(readonly);
 
             // Calculate size of scrollbar
             scrollBarDimensions = scrollBarDimensions || measureScrollbar();
 
-            this.autofocus = opts.element.prop("autofocus");
-            opts.element.prop("autofocus", false);
+            this.autofocus = opts.element.attr("autofocus");
+            opts.element.removeAttr("autofocus");
             if (this.autofocus) this.focus();
 
             this.nextSearchTerm = undefined;
