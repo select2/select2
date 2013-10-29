@@ -767,11 +767,11 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.search.attr("maxlength", opts.maximumInputLength);
             }
 
-            disabled = opts.element.attr("disabled");
+            var disabled = opts.element.attr("disabled");
             if (disabled === undefined) disabled = false;
             this.enable(!disabled);
 
-            readonly = opts.element.attr("readonly");
+            var readonly = opts.element.attr("readonly");
             if (readonly === undefined) readonly = false;
             this.readonly(readonly);
 
