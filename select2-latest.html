@@ -1660,10 +1660,11 @@ $("#select").select2({
               <h3>change</h3>
               <p>Fired when selection is changed.</p>
               <p>The event object contains the following custom properties:
-              <dl>
-              <dt>val</dt><dd>The current selection (taking into account the result of the change) - id or array of ids.</dd>
-              <dt>added</dt><dd>The added element, if any - the full element object, not just the id.</dd>
-              <dt>removed</dt><dd>The removed element, if any - the full element object, not just the id.</dd>
+                <dl>
+                  <dt>val</dt><dd>The current selection (taking into account the result of the change) - id or array of ids.</dd>
+                  <dt>added</dt><dd>The added element, if any - the full element object, not just the id.</dd>
+                  <dt>removed</dt><dd>The removed element, if any - the full element object, not just the id.</dd>
+                  <dt>originalEvent</dt><dd>The original event that triggered the change.</dd>
                 </dl>
               </p>
           </div>
