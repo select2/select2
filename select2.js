@@ -14,7 +14,7 @@ You may obtain a copy of the Apache License and the GPL License at:
     http://www.gnu.org/licenses/gpl-2.0.html
 
 Unless required by applicable law or agreed to in writing, software distributed under the
-Apache License or the GPL Licesnse is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+Apache License or the GPL License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 CONDITIONS OF ANY KIND, either express or implied. See the Apache License and the GPL License for
 the specific language governing permissions and limitations under the Apache License and the GPL License.
 */
@@ -393,12 +393,12 @@ the specific language governing permissions and limitations under the Apache Lic
     /**
      * Produces an ajax-based query function
      *
-     * @param options object containing configuration paramters
+     * @param options object containing configuration parameters
      * @param options.params parameter map for the transport ajax call, can contain such options as cache, jsonpCallback, etc. see $.ajax
      * @param options.transport function that will be used to execute the ajax request. must be compatible with parameters supported by $.ajax
      * @param options.url url for the data
      * @param options.data a function(searchTerm, pageNumber, context) that should return an object containing query string parameters for the above url.
-     * @param options.dataType request data type: ajax, jsonp, other datatatypes supported by jQuery's $.ajax function or the transport function if specified
+     * @param options.dataType request data type: ajax, jsonp, other datatypes supported by jQuery's $.ajax function or the transport function if specified
      * @param options.quietMillis (optional) milliseconds to wait before making the ajaxRequest, helps debounce the ajax function if invoked too often
      * @param options.results a function(remoteData, pageNumber) that converts data returned form the remote request to the format expected by Select2.
      *      The expected format is an object containing the following keys:
@@ -1069,7 +1069,7 @@ the specific language governing permissions and limitations under the Apache Lic
             // so here we trigger the click event manually
             this.opts.element.click();
 
-            // ValidationEngine ignorea the change event and listens instead to blur
+            // ValidationEngine ignores the change event and listens instead to blur
             // so here we trigger the blur event manually if so desired
             if (this.opts.blurOnChange)
                 this.opts.element.blur();
@@ -1286,7 +1286,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.dropdown.detach().appendTo(this.body());
             }
 
-            // create the dropdown mask if doesnt already exist
+            // create the dropdown mask if doesn't already exist
             mask = $("#select2-drop-mask");
             if (mask.length == 0) {
                 mask = $(document.createElement("div"));
@@ -2393,7 +2393,7 @@ the specific language governing permissions and limitations under the Apache Lic
             // TODO validate placeholder is a string if specified
 
             if (opts.element.get(0).tagName.toLowerCase() === "select") {
-                // install sthe selection initializer
+                // install the selection initializer
                 opts.initSelection = function (element, callback) {
 
                     var data = [];
@@ -2912,7 +2912,7 @@ the specific language governing permissions and limitations under the Apache Lic
             });
 
             compound.each2(function(i, choice) {
-                // hide an optgroup if it doesnt have any selectable children
+                // hide an optgroup if it doesn't have any selectable children
                 if (!choice.is('.select2-result-selectable')
                     && choice.find(".select2-result-selectable:not(.select2-selected)").length === 0) {
                     choice.addClass("select2-selected");
@@ -2923,7 +2923,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 self.highlight(0);
             }
 
-            //If all results are chosen render formatNoMAtches
+            //If all results are chosen render formatNoMatches
             if(!this.opts.createSearchChoice && !choices.filter('.select2-result:not(.select2-selected)').length > 0){
                 if(!data || data && !data.more && this.results.find(".select2-no-results").length === 0) {
                     if (checkFormatter(self.opts.formatNoMatches, "formatNoMatches")) {
