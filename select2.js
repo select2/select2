@@ -3005,7 +3005,9 @@ the specific language governing permissions and limitations under the Apache Lic
                 for (var j = 0; j < old.length; j++) {
                     if (equal(this.opts.id(current[i]), this.opts.id(old[j]))) {
                         current.splice(i, 1);
-                        i--;
+                        if(i>0){
+                        	i--;
+                        }
                         old.splice(j, 1);
                         j--;
                     }
