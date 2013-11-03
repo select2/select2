@@ -1293,7 +1293,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 mask.attr("id","select2-drop-mask").attr("class","select2-drop-mask");
                 mask.hide();
                 mask.appendTo(this.body());
-                mask.on("mousedown touchstart click", function (e) {
+                mask.on("mouseup touchstart click", function (e) {
                     var dropdown = $("#select2-drop"), self;
                     if (dropdown.length > 0) {
                         self=dropdown.data("select2");
@@ -1301,9 +1301,9 @@ the specific language governing permissions and limitations under the Apache Lic
                             self.selectHighlighted({noFocus: true});
                         }
                         self.close({focus:true});
-                        e.preventDefault();
-                        e.stopPropagation();
                     }
+                    e.preventDefault();
+                    e.stopPropagation();
                 });
             }
 
@@ -2019,7 +2019,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
             }));
 
-            selection.on("mousedown", "abbr", this.bind(function (e) {
+            selection.on("mouseup", "abbr", this.bind(function (e) {
                 if (!this.isInterfaceEnabled()) return;
                 this.clear();
                 killEventImmediately(e);
@@ -2027,7 +2027,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.selection.focus();
             }));
 
-            selection.on("mousedown", this.bind(function (e) {
+            selection.on("mouseup", this.bind(function (e) {
 
                 if (!this.container.hasClass("select2-container-active")) {
                     this.opts.element.trigger($.Event("select2-focus"));
