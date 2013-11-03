@@ -79,7 +79,7 @@
 	width: 16px;
 	display: block;
 	background-image: url("../img/glyphicons-halflings.png") !important;
-	background-position: -264px 0 !important;
+	background-position: -313px -119px !important;
 	background-size: auto auto !important;
 	line-height: 14px;
 	margin-top: 1px;
@@ -89,6 +89,9 @@
 	text-align: center;
 	text-shadow: 0 1px 0 #FFFFFF;
 	white-space: nowrap;
+}
+.select2-container.select2-dropdown-open .select2-choice .select2-arrow b {
+	background-position: -288px -120px !important;
 }
 
 .select2-container .select2-default > span {
@@ -132,8 +135,8 @@
     background-color: #d9edf7;
 	color: #3a87ad;
 }
-.control-group.warn .select2-container .select2-choice > .select2-chosen,
-.control-group.warn .select2-container .select2-choice .select2-arrow{
+.control-group.warning .select2-container .select2-choice > .select2-chosen,
+.control-group.warning .select2-container .select2-choice .select2-arrow{
 	background-color: #fcf8e3;
 	color: #c09853;
 }
