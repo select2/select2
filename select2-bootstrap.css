@@ -16,7 +16,10 @@
 	margin-top: -1px;
 	margin-left: -1px;
 }
-.select2-choices {
+.select2-container .select2-choice {
+	filter: none;
+}
+.select2-container .select2-choices {
 	border-radius: 4px 4px 4px 4px;
 }
 .select2-dropdown-open .select2-choices {
@@ -73,6 +76,7 @@
 	white-space: nowrap;
 	vertical-align: top;
 	margin-left: -1px;
+	filter: none;
 }
 .select2-container .select2-choice .select2-arrow b {
 	height: 16px;
