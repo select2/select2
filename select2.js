@@ -1208,7 +1208,7 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             if (!enoughRoomOnRight) {
-               dropLeft = offset.left + width - dropWidth;
+               dropLeft -= (dropLeft + dropWidth) - viewPortRight;
             }
 
             css =  {
