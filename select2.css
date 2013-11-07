@@ -18,7 +18,6 @@ Version: @@ver@@ Timestamp: @@timestamp@@
   /*
     Force border-box so that % widths fit the parent
     container without overlap because of margin/padding.
-
     More Info : http://www.quirksmode.org/css/box.html
   */
   -webkit-box-sizing: border-box; /* webkit */
@@ -145,15 +144,6 @@ Version: @@ver@@ Timestamp: @@timestamp@@
             box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
 }
 
-.select2-drop-auto-width {
-    border-top: 1px solid #aaa;
-    width: auto;
-}
-
-.select2-drop-auto-width .select2-search {
-    padding-top: 4px;
-}
-
 .select2-drop.select2-drop-above {
     margin-top: 1px;
     border-top: 1px solid #aaa;
@@ -172,6 +162,15 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 
 .select2-drop.select2-drop-above.select2-drop-active {
     border-top: 1px solid #5897fb;
+}
+
+.select2-drop-auto-width {
+    border-top: 1px solid #aaa;
+    width: auto;
+}
+
+.select2-drop-auto-width .select2-search {
+    padding-top: 4px;
 }
 
 .select2-container .select2-choice .select2-arrow {
