@@ -22,6 +22,10 @@ timestamp=$(date)
 tokens="s/@@ver@@/$ver/g;s/\@@timestamp@@/$timestamp/g"
 remote="github"
 
+echo "Pulling from origin"
+
+git pull
+
 echo "Updating Version Identifiers"
 
 sed -E -e "s/\"version\": \"([0-9\.]+)\",/\"version\": \"$ver\",/g" -i "" bower.json select2.jquery.json

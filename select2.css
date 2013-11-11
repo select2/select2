@@ -18,7 +18,6 @@ Version: @@ver@@ Timestamp: @@timestamp@@
   /*
     Force border-box so that % widths fit the parent
     container without overlap because of margin/padding.
-
     More Info : http://www.quirksmode.org/css/box.html
   */
   -webkit-box-sizing: border-box; /* webkit */
@@ -145,15 +144,6 @@ Version: @@ver@@ Timestamp: @@timestamp@@
             box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
 }
 
-.select2-drop-auto-width {
-    border-top: 1px solid #aaa;
-    width: auto;
-}
-
-.select2-drop-auto-width .select2-search {
-    padding-top: 4px;
-}
-
 .select2-drop.select2-drop-above {
     margin-top: 1px;
     border-top: 1px solid #aaa;
@@ -172,6 +162,15 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 
 .select2-drop.select2-drop-above.select2-drop-active {
     border-top: 1px solid #5897fb;
+}
+
+.select2-drop-auto-width {
+    border-top: 1px solid #aaa;
+    width: auto;
+}
+
+.select2-drop-auto-width .select2-search {
+    padding-top: 4px;
 }
 
 .select2-container .select2-choice .select2-arrow {
@@ -460,6 +459,10 @@ disabled look for disabled choices in the results dropdown
     float: left;
     list-style: none;
 }
+html[dir="rtl"] .select2-container-multi .select2-choices li
+{
+    float: right;
+}
 .select2-container-multi .select2-choices .select2-search-field {
     margin: 0;
     padding: 0;
@@ -518,6 +521,11 @@ disabled look for disabled choices in the results dropdown
     background-image: -moz-linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eee 100%);
     background-image: linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eee 100%);
 }
+html[dir="rtl"] .select2-container-multi .select2-choices .select2-search-choice
+{
+    margin-left: 0;
+    margin-right: 5px;
+}
 .select2-container-multi .select2-choices .select2-search-choice .select2-chosen {
     cursor: default;
 }
@@ -536,6 +544,10 @@ disabled look for disabled choices in the results dropdown
     font-size: 1px;
     outline: none;
     background: url('select2.png') right top no-repeat;
+}
+html[dir="rtl"] .select2-search-choice-close {
+    right: auto;
+    left: 3px;
 }
 
 .select2-container-multi .select2-search-choice-close {
