@@ -558,6 +558,12 @@ $("#e19").select2({ maximumSelectionSize: 3 });
                <h3>Example Code</h3>
               <pre class="prettyprint linenums" id="code_e6"></pre>
               <p>Select2 uses jQuery's <code>$.ajax</code> function to execute the remote call by default. An alternative <code>transport</code> function can be specified in the ajax settings, or an entirely custom implementation can be built by providing a custom <code>query</code> function instead of using the <code>ajax</code> helper.</p>
+               <p>Select2 requires an id property to be set for items returned in the <code>results</code> parameter. If your result doesn't have an 'id' property then you can specify it in the <code>id</code> parameter of select2. For example: 
+                <code>
+                  id: function(object) {
+                    return object.text;
+                  }</code> will use the text property as the id.
+               </p>
            </div>
         </article>
         <article class="row" id="infinite">
