@@ -2841,7 +2841,11 @@ the specific language governing permissions and limitations under the Apache Lic
 
             formatted=this.opts.formatSelection(data, choice.find("div"), this.opts.escapeMarkup);
             if (formatted != undefined) {
+              if (typeof formatted === 'string') {
                 choice.find("div").replaceWith("<div>"+formatted+"</div>");
+              } else {
+                choice.find("div").replaceWith(formatted);
+              }
             }
             cssClass=this.opts.formatSelectionCssClass(data, choice.find("div"));
             if (cssClass != undefined) {
