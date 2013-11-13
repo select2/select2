@@ -2824,32 +2824,38 @@ the specific language governing permissions and limitations under the Apache Lic
 
         addSelectedChoice: function (data) {
             var enableChoice = !data.locked,
-                enabledItem = $(
-                    "<li class='select2-search-choice'>" +
-                    "    <div></div>" +
-                    "    <a href='#' onclick='return false;' class='select2-search-choice-close' tabindex='-1'></a>" +
-                    "</li>"),
-                disabledItem = $(
-                    "<li class='select2-search-choice select2-locked'>" +
-                    "<div></div>" +
-                    "</li>");
-            var choice = enableChoice ? enabledItem : disabledItem,
                 id = this.id(data),
                 val = this.getVal(),
-                formatted,
+                formatted, choice, enabledItem, disabledItem,
                 cssClass;
 
-            formatted=this.opts.formatSelection(data, choice.find("div"), this.opts.escapeMarkup);
-            if (formatted != undefined) {
-              if (typeof formatted === 'string') {
-                choice.find("div").replaceWith("<div>"+formatted+"</div>");
-              } else {
-                choice.find("div").replaceWith(formatted);
+            if (this.opts.renderSelection) {
+              choice=this.opts.renderSelection(data, enableChoice);
+            } else {
+              enabledItem = $(
+                  "<li class='select2-search-choice'>" +
+                  "    <div></div>" +
+                  "    <a href='#' onclick='return false;' class='select2-search-choice-close' tabindex='-1'></a>" +
+                  "</li>"),
+              disabledItem = $(
+                  "<li class='select2-search-choice select2-locked'>" +
+                  "<div></div>" +
+                  "</li>");
+
+              choice = enableChoice ? enabledItem : disabledItem
+
+              formatted=this.opts.formatSelection(data, choice.find("div"), this.opts.escapeMarkup);
+              if (formatted != undefined) {
+                if (typeof formatted === 'string') {
+                  choice.find("div").replaceWith("<div>"+formatted+"</div>");
+                } else {
+                  choice.find("div").replaceWith(formatted);
+                }
               }
-            }
-            cssClass=this.opts.formatSelectionCssClass(data, choice.find("div"));
-            if (cssClass != undefined) {
-                choice.addClass(cssClass);
+              cssClass=this.opts.formatSelectionCssClass(data, choice.find("div"));
+              if (cssClass != undefined) {
+                  choice.addClass(cssClass);
+              }
             }
 
             if(enableChoice){
