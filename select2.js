@@ -1381,10 +1381,10 @@ the specific language governing permissions and limitations under the Apache Lic
             this.dropdown.removeAttr("id"); // only the active dropdown has the select2-drop id
             this.dropdown.hide();
             this.container.removeClass("select2-dropdown-open").removeClass("select2-container-active");
-            this.results.empty();
-
-
-            this.clearSearch();
+            if(this.opts.keepSearchResults === false) {
+                this.results.empty();
+                this.clearSearch();
+            }
             this.search.removeClass("select2-active");
             this.opts.element.trigger($.Event("select2-close"));
         },
@@ -1618,8 +1618,6 @@ the specific language governing permissions and limitations under the Apache Lic
                 postRender();
             }
 
-            queryNumber = ++this.queryCount;
-
             var maxSelSize = this.getMaximumSelectionSize();
             if (maxSelSize >=1) {
                 data = this.data();
@@ -1648,76 +1646,80 @@ the specific language governing permissions and limitations under the Apache Lic
                 return;
             }
 
-            if (opts.formatSearching && this.findHighlightableChoices().length === 0) {
-                render("<li class='select2-searching'>" + opts.formatSearching() + "</li>");
-            }
+            if(opts.keepSearchResults === false || this.resultsPage === 0 || (initial !== true && !equal(term, lastTerm))) {
+                queryNumber = ++this.queryCount;
 
-            search.addClass("select2-active");
-
-            this.removeHighlight();
-
-            // give the tokenizer a chance to pre-process the input
-            input = this.tokenize();
-            if (input != undefined && input != null) {
-                search.val(input);
-            }
-
-            this.resultsPage = 1;
-
-            opts.query({
-                element: opts.element,
-                    term: search.val(),
-                    page: this.resultsPage,
-                    context: null,
-                    matcher: opts.matcher,
-                    callback: this.bind(function (data) {
-                var def; // default choice
-
-                // ignore old responses
-                if (queryNumber != this.queryCount) {
-                  return;
+                if (opts.formatSearching && this.findHighlightableChoices().length === 0) {
+                    render("<li class='select2-searching'>" + opts.formatSearching() + "</li>");
                 }
 
-                // ignore a response if the select2 has been closed before it was received
-                if (!this.opened()) {
-                    this.search.removeClass("select2-active");
-                    return;
+                search.addClass("select2-active");
+
+                this.removeHighlight();
+
+                // give the tokenizer a chance to pre-process the input
+                input = this.tokenize();
+                if (input != undefined && input != null) {
+                    search.val(input);
                 }
 
-                // save context, if any
-                this.context = (data.context===undefined) ? null : data.context;
-                // create a default choice and prepend it to the list
-                if (this.opts.createSearchChoice && search.val() !== "") {
-                    def = this.opts.createSearchChoice.call(self, search.val(), data.results);
-                    if (def !== undefined && def !== null && self.id(def) !== undefined && self.id(def) !== null) {
-                        if ($(data.results).filter(
-                            function () {
-                                return equal(self.id(this), self.id(def));
-                            }).length === 0) {
-                            data.results.unshift(def);
+                this.resultsPage = 1;
+
+                opts.query({
+                    element: opts.element,
+                        term: search.val(),
+                        page: this.resultsPage,
+                        context: null,
+                        matcher: opts.matcher,
+                        callback: this.bind(function (data) {
+                    var def; // default choice
+
+                    // ignore old responses
+                    if (queryNumber != this.queryCount) {
+                      return;
+                    }
+
+                    // ignore a response if the select2 has been closed before it was received
+                    if (!this.opened()) {
+                        this.search.removeClass("select2-active");
+                        return;
+                    }
+
+                    // save context, if any
+                    this.context = (data.context===undefined) ? null : data.context;
+                    // create a default choice and prepend it to the list
+                    if (this.opts.createSearchChoice && search.val() !== "") {
+                        def = this.opts.createSearchChoice.call(self, search.val(), data.results);
+                        if (def !== undefined && def !== null && self.id(def) !== undefined && self.id(def) !== null) {
+                            if ($(data.results).filter(
+                                function () {
+                                    return equal(self.id(this), self.id(def));
+                                }).length === 0) {
+                                data.results.unshift(def);
+                            }
                         }
                     }
-                }
 
-                if (data.results.length === 0 && checkFormatter(opts.formatNoMatches, "formatNoMatches")) {
-                    render("<li class='select2-no-results'>" + opts.formatNoMatches(search.val()) + "</li>");
-                    return;
-                }
+                    if (data.results.length === 0 && checkFormatter(opts.formatNoMatches, "formatNoMatches")) {
+                        render("<li class='select2-no-results'>" + opts.formatNoMatches(search.val()) + "</li>");
+                        return;
+                    }
 
-                results.empty();
-                self.opts.populateResults.call(this, results, data.results, {term: search.val(), page: this.resultsPage, context:null});
+                    results.empty();
+                    self.opts.populateResults.call(this, results, data.results, {term: search.val(), page: this.resultsPage, context:null});
 
-                if (data.more === true && checkFormatter(opts.formatLoadMore, "formatLoadMore")) {
-                    results.append("<li class='select2-more-results'>" + self.opts.escapeMarkup(opts.formatLoadMore(this.resultsPage)) + "</li>");
-                    window.setTimeout(function() { self.loadMoreIfNeeded(); }, 10);
-                }
+                    if (data.more === true && checkFormatter(opts.formatLoadMore, "formatLoadMore")) {
+                        results.append("<li class='select2-more-results'>" + self.opts.escapeMarkup(opts.formatLoadMore(this.resultsPage)) + "</li>");
+                        window.setTimeout(function() { self.loadMoreIfNeeded(); }, 10);
+                    }
 
-                this.postprocessResults(data, initial);
+                    this.postprocessResults(data, initial);
 
-                postRender();
+                    postRender();
 
-                this.opts.element.trigger({ type: "select2-loaded", items: data });
-            })});
+                    this.opts.element.trigger({ type: "select2-loaded", items: data });
+                })});
+            }
         },
 
         // abstract
@@ -1883,7 +1885,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 // IE appends focusser.val() at the end of field :/ so we manually insert it at the beginning using a range
                 // all other browsers handle this just fine
 
-                this.search.val(this.focusser.val());
+                //this.search.val(this.focusser.val()); // what is a purpose of this call??
             }
             this.search.focus();
             // move the cursor to the end after focussing, otherwise it will be at the beginning and
@@ -3111,7 +3113,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     if (equal(this.opts.id(current[i]), this.opts.id(old[j]))) {
                         current.splice(i, 1);
                         if(i>0){
-                        	i--;
+                            i--;
                         }
                         old.splice(j, 1);
                         j--;
@@ -3330,7 +3332,8 @@ the specific language governing permissions and limitations under the Apache Lic
         adaptDropdownCssClass: function(c) { return null; },
         nextSearchTerm: function(selectedObject, currentSearchTerm) { return undefined; },
         hideSelectionFromResult: function(selectedObject) { return undefined; },
-        searchInputPlaceholder: ''
+        searchInputPlaceholder: '',
+        keepSearchResults: false
     };
 
     $.fn.select2.ajaxDefaults = {
