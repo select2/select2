@@ -446,8 +446,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     dataType: options.dataType,
                     data: data,
                     success: function (data) {
-                        // TODO - replace query.page with query so users have access to term, page, etc.
-                        var results = options.results(data, query.page);
+                        var results = options.results(data, query);
                         query.callback(results);
                     }
                 });
