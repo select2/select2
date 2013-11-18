@@ -301,10 +301,16 @@ the specific language governing permissions and limitations under the Apache Lic
     function killEvent(event) {
         event.preventDefault();
         event.stopPropagation();
+        /* to prevent x-click bugs (undesired click events in IE), the XClick plugin may be used. More info here :
+            https://github.com/ivaynberg/select2/issues/1058 - https://github.com/louisameline/XClick
+            However the XClick plugin needs to know when mouse events occur, so we trigger this harmless silent event */
+        $(event.delegateTarget).trigger(event.type + "Silent");
     }
     function killEventImmediately(event) {
         event.preventDefault();
         event.stopImmediatePropagation();
+        // same as above
+		$(event.delegateTarget).trigger(event.type + "Silent");
     }
 
     function measureTextWidth(e) {
@@ -751,8 +757,8 @@ the specific language governing permissions and limitations under the Apache Lic
 
             // trap all mouse events from leaving the dropdown. sometimes there may be a modal that is listening
             // for mouse events outside of itself so it can close itself. since the dropdown is now outside the select2's
-            // dom it will trigger the popup close, which is not what we want
-            this.dropdown.on("click mouseup mousedown", function (e) { e.stopPropagation(); });
+            // dom it will trigger the popup close, which is not what we want. For the silent event : see the killEvent function
+            this.dropdown.on("click mouseup mousedown", function (e) { e.stopPropagation(); $(this).trigger(e.type + "Silent"); });
 
             if ($.isFunction(this.opts.initSelection)) {
                 // initialize selection based on the current value of the source element
@@ -1303,8 +1309,7 @@ the specific language governing permissions and limitations under the Apache Lic
                             self.selectHighlighted({noFocus: true});
                         }
                         self.close({focus:true});
-                        e.preventDefault();
-                        e.stopPropagation();
+                        killEvent(e);
                     }
                 });
             }
