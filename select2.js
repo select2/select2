@@ -310,7 +310,7 @@ the specific language governing permissions and limitations under the Apache Lic
         event.preventDefault();
         event.stopImmediatePropagation();
         // same as above
-		$(event.delegateTarget).trigger(event.type + "Silent");
+        $(event.delegateTarget).trigger(event.type + "Silent");
     }
 
     function measureTextWidth(e) {
