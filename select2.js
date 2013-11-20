@@ -105,6 +105,14 @@ the specific language governing permissions and limitations under the Apache Lic
     nextUid=(function() { var counter=1; return function() { return counter++; }; }());
 
 
+    function reinsertElement(element) {
+        var placeholder = $(document.createTextNode(''));
+
+        element.before(placeholder);
+        placeholder.before(element);
+        placeholder.remove();
+    }
+
     function stripDiacritics(str) {
         var ret, i, l, c;
 
@@ -1296,6 +1304,9 @@ the specific language governing permissions and limitations under the Apache Lic
                 mask.hide();
                 mask.appendTo(this.body());
                 mask.on("mousedown touchstart click", function (e) {
+                    // Prevent IE from generating a click event on the body
+                    reinsertElement(mask);
+
                     var dropdown = $("#select2-drop"), self;
                     if (dropdown.length > 0) {
                         self=dropdown.data("select2");
@@ -2048,6 +2059,8 @@ the specific language governing permissions and limitations under the Apache Lic
             }));
 
             selection.on("mousedown touchstart", this.bind(function (e) {
+                // Prevent IE from generating a click event on the body
+                reinsertElement(selection);
 
                 if (!this.container.hasClass("select2-container-active")) {
                     this.opts.element.trigger($.Event("select2-focus"));
@@ -2730,7 +2743,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     this.search.select();
                 }
             }
-            
+
             this.updateResults(true);
             this.search.focus();
             this.opts.element.trigger($.Event("select2-open"));
@@ -2797,7 +2810,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             // keep track of the search's value before it gets cleared
             this.nextSearchTerm = this.opts.nextSearchTerm(data, this.search.val());
-            
+
             this.clearSearch();
             this.updateResults();
 
