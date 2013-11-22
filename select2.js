@@ -3123,7 +3123,7 @@ the specific language governing permissions and limitations under the Apache Lic
             var self=this, ids, old;
             if (arguments.length === 0) {
                  return this.selection
-                     .find(".select2-search-choice")
+                     .find(".select2-search-choice:visible")
                      .map(function() { return $(this).data("select2-data"); })
                      .get();
             } else {
