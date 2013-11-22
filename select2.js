@@ -887,7 +887,7 @@ the specific language governing permissions and limitations under the Apache Lic
                             label += ">";
                             formatted=opts.formatResult(result, label, query, self.opts.escapeMarkup);
                             if (formatted!==undefined) {
-                              label += formatted;
+                                label += formatted;
                             }
                             label += "</div>";
 
