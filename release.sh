@@ -11,9 +11,9 @@ if [ ! $ver ]; then
 fi
 
 name="select2"
-js="$name.js"
-mini="$name.min.js"
-css="$name.css"
+js="js/$name.js"
+mini="js/$name.min.js"
+css="css/$name.css"
 release="$name-$ver"
 tag="$ver"
 branch="build-$ver"
