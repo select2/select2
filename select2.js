@@ -3233,7 +3233,7 @@ the specific language governing permissions and limitations under the Apache Lic
         minimumInputLength: 0,
         maximumInputLength: null,
         maximumSelectionSize: 0,
-        id: function (e) { return e.id; },
+        id: function (e) { return e == undefined ? null : e.id; },
         matcher: function(term, text) {
             return stripDiacritics(''+text).toUpperCase().indexOf(stripDiacritics(''+term).toUpperCase()) >= 0;
         },
