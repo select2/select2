@@ -2039,7 +2039,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
             }));
 
-            selection.on("mousedown", "abbr", this.bind(function (e) {
+            selection.on("mousedown touchstart", "abbr", this.bind(function (e) {
                 if (!this.isInterfaceEnabled()) return;
                 this.clear();
                 killEventImmediately(e);
@@ -2047,7 +2047,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.selection.focus();
             }));
 
-            selection.on("mousedown", this.bind(function (e) {
+            selection.on("mousedown touchstart", this.bind(function (e) {
 
                 if (!this.container.hasClass("select2-container-active")) {
                     this.opts.element.trigger($.Event("select2-focus"));
@@ -2062,7 +2062,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 killEvent(e);
             }));
 
-            dropdown.on("mousedown", this.bind(function() { this.search.focus(); }));
+            dropdown.on("mousedown touchstart", this.bind(function() { this.search.focus(); }));
 
             selection.on("focus", this.bind(function(e) {
                 killEvent(e);
