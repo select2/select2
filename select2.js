@@ -431,7 +431,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 data = data ? data.call(self, query.term, query.page, query.context) : null;
                 url = (typeof url === 'function') ? url.call(self, query.term, query.page, query.context) : url;
 
-                if (handler) { handler.abort(); }
+                if (handler && typeof handler.abort === "function") { handler.abort(); }
 
                 if (options.params) {
                     if ($.isFunction(options.params)) {
@@ -669,8 +669,8 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.container = this.createContainer();
 
-            this.containerId="s2id_"+(opts.element.attr("id") || "autogen"+nextUid());
-            this.containerSelector="#"+this.containerId.replace(/([;&,\.\+\*\~':"\!\^#$%@\[\]\(\)=>\|])/g, '\\$1');
+            this.containerId="s2id_"+(opts.element.attr("id") || "autogen"+nextUid()).replace(/([;&,\-\.\+\*\~':"\!\^#$%@\[\]\(\)=>\|])/g, '\\$1');
+            this.containerSelector="#"+this.containerId;
             this.container.attr("id", this.containerId);
 
             // cache the body so future lookups are cheap
@@ -1884,7 +1884,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.parent.close.apply(this, arguments);
 
             params = params || {focus: true};
-            this.focusser.removeAttr("disabled");
+            this.focusser.prop("disabled", false);
 
             if (params.focus) {
                 this.focusser.focus();
@@ -1896,7 +1896,7 @@ the specific language governing permissions and limitations under the Apache Lic
             if (this.opened()) {
                 this.close();
             } else {
-                this.focusser.removeAttr("disabled");
+                this.focusser.prop("disabled", false);
                 this.focusser.focus();
             }
         },
@@ -1909,7 +1909,7 @@ the specific language governing permissions and limitations under the Apache Lic
         // single
         cancel: function () {
             this.parent.cancel.apply(this, arguments);
-            this.focusser.removeAttr("disabled");
+            this.focusser.prop("disabled", false);
             this.focusser.focus();
         },
 
@@ -2039,7 +2039,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
             }));
 
-            selection.on("mousedown", "abbr", this.bind(function (e) {
+            selection.on("mousedown touchstart", "abbr", this.bind(function (e) {
                 if (!this.isInterfaceEnabled()) return;
                 this.clear();
                 killEventImmediately(e);
@@ -2047,7 +2047,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.selection.focus();
             }));
 
-            selection.on("mousedown", this.bind(function (e) {
+            selection.on("mousedown touchstart", this.bind(function (e) {
 
                 if (!this.container.hasClass("select2-container-active")) {
                     this.opts.element.trigger($.Event("select2-focus"));
@@ -2062,7 +2062,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 killEvent(e);
             }));
 
-            dropdown.on("mousedown", this.bind(function() { this.search.focus(); }));
+            dropdown.on("mousedown touchstart", this.bind(function() { this.search.focus(); }));
 
             selection.on("focus", this.bind(function(e) {
                 killEvent(e);
@@ -2786,6 +2786,9 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.opts.element.trigger({ type: "selected", val: this.id(data), choice: data });
 
+            this.clearSearch();
+            this.updateResults();
+
             if (this.select || !this.opts.closeOnSelect) this.postprocessResults(data, false, this.opts.closeOnSelect===true);
 
             if (this.opts.closeOnSelect) {
@@ -3123,7 +3126,7 @@ the specific language governing permissions and limitations under the Apache Lic
             var self=this, ids, old;
             if (arguments.length === 0) {
                  return this.selection
-                     .find(".select2-search-choice")
+                     .children(".select2-search-choice")
                      .map(function() { return $(this).data("select2-data"); })
                      .get();
             } else {
@@ -3230,7 +3233,7 @@ the specific language governing permissions and limitations under the Apache Lic
         minimumInputLength: 0,
         maximumInputLength: null,
         maximumSelectionSize: 0,
-        id: function (e) { return e.id; },
+        id: function (e) { return e == undefined ? null : e.id; },
         matcher: function(term, text) {
             return stripDiacritics(''+text).toUpperCase().indexOf(stripDiacritics(''+term).toUpperCase()) >= 0;
         },
