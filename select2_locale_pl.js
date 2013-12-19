@@ -6,9 +6,9 @@
 (function ($) {
     "use strict";
     
-    var pl_suffix = function(n) {
+    var pl_suffix = function(n, pluralSuffix) {
         if(n == 1) return "";
-        if((n%100 > 1 && n%100 < 5) || (n%100 > 20 && n%10 > 1 && n%10 < 5)) return "i";
+        if((n%100 > 1 && n%100 < 5) || (n%100 > 20 && n%10 > 1 && n%10 < 5)) return pluralSuffix;
         return "ów";
     };
 
@@ -18,14 +18,14 @@
         },
         formatInputTooShort: function (input, min) {
             var n = min - input.length;
-            return "Wpisz jeszcze " + n + " znak" + pl_suffix(n) + ".";
+            return "Wpisz jeszcze " + n + " znak" + pl_suffix(n,'i') + ".";
         },
         formatInputTooLong: function (input, max) {
             var n = input.length - max;
-            return "Wpisana fraza jest za długa o " + n + " znak" + pl_suffix(n) + ".";
+            return "Wpisana fraza jest za długa o " + n + " znak" + pl_suffix(n,'i') + ".";
         },
         formatSelectionTooBig: function (limit) {
-            return "Możesz zaznaczyć najwyżej " + limit + " element" + pl_suffix(limit) + ".";
+            return "Możesz zaznaczyć najwyżej " + limit + " element" + pl_suffix(limit,'y') + ".";
         },
         formatLoadMore: function (pageNumber) {
             return "Ładowanie wyników...";
