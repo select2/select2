@@ -1887,7 +1887,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.focusser.prop("disabled", false);
 
             if (params.focus) {
-                this.focusser.focus();
+                if (this.opts.autofocusInputOnOpen && this.opts.minimumResultsForSearch >= 0) this.focusser.focus();
             }
         },
 
@@ -1897,7 +1897,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.close();
             } else {
                 this.focusser.prop("disabled", false);
-                this.focusser.focus();
+                if (this.opts.autofocusInputOnOpen && this.opts.minimumResultsForSearch >= 0) this.focusser.focus();
             }
         },
 
@@ -1910,7 +1910,7 @@ the specific language governing permissions and limitations under the Apache Lic
         cancel: function () {
             this.parent.cancel.apply(this, arguments);
             this.focusser.prop("disabled", false);
-            this.focusser.focus();
+            if (this.opts.autofocusInputOnOpen && this.opts.minimumResultsForSearch >= 0) this.focusser.focus();
         },
 
         // single
@@ -2271,7 +2271,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.close();
 
             if (!options || !options.noFocus)
-                this.focusser.focus();
+                if (this.opts.autofocusInputOnOpen && this.opts.minimumResultsForSearch >= 0) this.focusser.focus();
 
             if (!equal(old, this.id(data))) { this.triggerChange({added:data,removed:oldData}); }
         },
@@ -3245,7 +3245,8 @@ the specific language governing permissions and limitations under the Apache Lic
         selectOnBlur: false,
         adaptContainerCssClass: function(c) { return c; },
         adaptDropdownCssClass: function(c) { return null; },
-        nextSearchTerm: function(selectedObject, currentSearchTerm) { return undefined; }
+        nextSearchTerm: function(selectedObject, currentSearchTerm) { return undefined; },
+        autofocusInputOnOpen: true,
     };
 
     $.fn.select2.ajaxDefaults = {
