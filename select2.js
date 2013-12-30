@@ -264,7 +264,8 @@ the specific language governing permissions and limitations under the Apache Lic
 
             /* make sure el received focus so we do not error out when trying to manipulate the caret.
                 sometimes modals or others listeners may steal it after its set */
-            if ($el.is(":visible") && el === document.activeElement) {
+            var isVisible = (el.offsetWidth > 0 || el.offsetHeight > 0);
+            if (isVisible && el === document.activeElement) {
 
                 /* after the focus is set move the caret to the end, necessary when we val()
                     just before setting focus */
@@ -1431,7 +1432,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // abstract
         findHighlightableChoices: function() {
-            return this.results.find(".select2-result-selectable:not(.select2-disabled, .select2-selected)");
+            return this.results.find(".select2-result-selectable:not(.select2-disabled):not(.select2-selected)");
         },
 
         // abstract
