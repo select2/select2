@@ -2722,6 +2722,15 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.focusSearch();
 
+            // initializes search's value with nextSearchTerm (if defined by user)
+            // ignore nextSearchTerm if the dropdown is opened by the user pressing a letter
+            if(this.search.val() === "") {
+                if(this.nextSearchTerm != undefined){
+                    this.search.val(this.nextSearchTerm);
+                    this.search.select();
+                }
+            }
+            
             this.updateResults(true);
             this.search.focus();
             this.opts.element.trigger($.Event("select2-open"));
@@ -2786,6 +2795,9 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.opts.element.trigger({ type: "selected", val: this.id(data), choice: data });
 
+            // keep track of the search's value before it gets cleared
+            this.nextSearchTerm = this.opts.nextSearchTerm(data, this.search.val());
+            
             this.clearSearch();
             this.updateResults();
 
@@ -2802,6 +2814,13 @@ the specific language governing permissions and limitations under the Apache Lic
                         // if we reached max selection size repaint the results so choices
                         // are replaced with the max selection reached message
                         this.updateResults(true);
+                    } else {
+                        // initializes search's value with nextSearchTerm and update search result
+                        if(this.nextSearchTerm != undefined){
+                            this.search.val(this.nextSearchTerm);
+                            this.updateResults();
+                            this.search.select();
+                        }
                     }
                     this.positionDropdown();
                 } else {
