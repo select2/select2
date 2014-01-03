@@ -33,6 +33,7 @@ Integrations
 * [AngularUI](http://angular-ui.github.com/#directives-select2) ([AngularJS](angularjs.org))
 * [Django](https://github.com/applegrew/django-select2)
 * [Symfony](https://github.com/19Gerhard85/sfSelect2WidgetsPlugin)
+* [Symfony2](https://github.com/avocode/FormExtensions)
 * [Bootstrap](https://github.com/t0m/select2-bootstrap-css) (CSS skin)
 * [Yii](https://github.com/tonybolzan/yii-select2)
 
