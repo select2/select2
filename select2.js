@@ -706,6 +706,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.queryCount = 0;
             this.resultsPage = 0;
+            this.numPages = 0;
             this.context = null;
 
             // initialize the container
@@ -718,6 +719,9 @@ the specific language governing permissions and limitations under the Apache Lic
 
             installDebouncedScroll(80, this.results);
             this.dropdown.on("scroll-debounced", resultsSelector, this.bind(this.loadMoreIfNeeded));
+            
+            this.dropdown.on("click", resultsSelector + " .select2-pagination-next", this.bind(this.loadNextPage));
+            this.dropdown.on("click", resultsSelector + " .select2-pagination-previous", this.bind(this.loadPreviousPage));
 
             // do not propagate change event from the search field out of the component
             $(this.container).on("change", ".select2-input", function(e) {e.stopPropagation();});
@@ -1537,10 +1541,68 @@ the specific language governing permissions and limitations under the Apache Lic
                     }
                     self.positionDropdown();
                     self.resultsPage = page;
+                    self.numPages = data.numPages;
                     self.context = data.context;
                     this.opts.element.trigger({ type: "select2-loaded", items: data });
                 })});
             }
+        },
+        
+        loadNextPage: function() {
+            this.loadPage(this.resultsPage + 1);
+        },
+        
+        loadPreviousPage: function() {
+            this.loadPage(this.resultsPage - 1);
+        },
+
+        loadPage: function (page) {
+            var results = this.results,
+                paginate = results.find("li.select2-pagination"),
+                self=this,
+                term=this.search.val(),
+                context=this.context;
+
+            if (paginate.length === 0) return;
+            if (page < 1) page = 1;
+            if (page > self.numPages) page = self.numPages;
+
+            paginate.addClass("select2-active");
+            this.opts.query({
+                    element: this.opts.element,
+                    term: term,
+                    page: page,
+                    context: context,
+                    matcher: this.opts.matcher,
+                    callback: this.bind(function (data) {
+
+                // ignore a response if the select2 has been closed before it was received
+                if (!self.opened()) return;
+
+                paginate.removeClass("select2-active").detach();
+                results.empty();
+                self.opts.populateResults.call(this, results, data.results, {term: term, page: page, context:context});
+                self.postprocessResults(data, false, false);
+                
+                if (!!data.numPages) {
+                    paginate.appendTo(results);
+                    paginate.find('.select2-pagination-info').html(self.opts.escapeMarkup(self.opts.formatPagination(page, data.numPages)));
+                    paginate.find('.select2-visibility-hidden').removeClass('select2-visibility-hidden');
+                    if (page <= 1 || data.numPages <= 1) paginate.find('.select2-pagination-previous').addClass('select2-visibility-hidden');
+                    if (page >= data.numPages) paginate.find('.select2-pagination-next').addClass('select2-visibility-hidden');
+                }
+                
+                self.positionDropdown();
+                self.resultsPage = page;
+                self.numPages = data.numPages;
+                self.context = data.context;
+
+                // Refocus the search box as clicking the pagination blurs it
+                self.focusSearch();
+                // We've just loaded a new page, scroll to the top of the results list
+                results.scrollTop(0);
+                self.highlight(0);
+            })});
         },
 
         /**
@@ -1673,10 +1735,21 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
 
                 results.empty();
-                self.opts.populateResults.call(this, results, data.results, {term: search.val(), page: this.resultsPage, context:null});
-
-                if (data.more === true && checkFormatter(opts.formatLoadMore, "formatLoadMore")) {
-                    results.append("<li class='select2-more-results'>" + self.opts.escapeMarkup(opts.formatLoadMore(this.resultsPage)) + "</li>");
+                self.opts.populateResults.call(this, results, data.results, {term: search.val(), page: self.resultsPage, context:null});
+                
+                self.numPages = data.numPages;
+                
+                if (!!data.numPages && checkFormatter(opts.formatPagination, "formatPagination") && checkFormatter(opts.formatPaginationPrevious, "formatPaginationPrevious") && checkFormatter(opts.formatPaginationNext, "formatPaginationNext")) {
+                    results.append("<li class='select2-pagination'>"
+                        + "<span class='select2-pagination-previous'>" + self.opts.escapeMarkup(opts.formatPaginationPrevious()) + "</span>"
+                        + "<span class='select2-pagination-info'>" + self.opts.escapeMarkup(self.opts.escapeMarkup(opts.formatPagination(self.resultsPage, data.numPages))) + "</span>"
+                        + "<span class='select2-pagination-next'>" + self.opts.escapeMarkup(opts.formatPaginationNext()) + "</span>"
+                        + "</li>");
+                    if (self.resultsPage <= 1 || data.numPages <= 1) results.find('.select2-pagination-previous').addClass('select2-visibility-hidden');
+                    if (self.resultsPage >= data.numPages) results.find('.select2-pagination-next').addClass('select2-visibility-hidden');
+                }
+                else if (data.more === true && checkFormatter(opts.formatLoadMore, "formatLoadMore")) {
+                    results.append("<li class='select2-more-results'>" + self.opts.escapeMarkup(opts.formatLoadMore(self.resultsPage)) + "</li>");
                     window.setTimeout(function() { self.loadMoreIfNeeded(); }, 10);
                 }
 
@@ -1961,6 +2034,11 @@ the specific language governing permissions and limitations under the Apache Lic
                 if (!this.isInterfaceEnabled()) return;
 
                 if (e.which === KEY.PAGE_UP || e.which === KEY.PAGE_DOWN) {
+                    if (e.shiftKey) {
+                        this.loadPage(e.which === KEY.PAGE_UP ? 0 : this.numPages);
+                    } else {
+                        this.loadPage(this.resultsPage + (e.which === KEY.PAGE_UP ? -1 : 1));
+                    }
                     // prevent the page from scrolling
                     killEvent(e);
                     return;
@@ -2603,6 +2681,11 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.open();
 
                 if (e.which === KEY.PAGE_UP || e.which === KEY.PAGE_DOWN) {
+                    if (e.shiftKey) {
+                        this.loadPage(e.which === KEY.PAGE_UP ? 0 : this.numPages);
+                    } else {
+                        this.loadPage(this.resultsPage + (e.which === KEY.PAGE_UP ? -1 : 1));
+                    }
                     // prevent the page from scrolling
                     killEvent(e);
                 }
@@ -3247,6 +3330,9 @@ the specific language governing permissions and limitations under the Apache Lic
         formatInputTooLong: function (input, max) { var n = input.length - max; return "Please delete " + n + " character" + (n == 1? "" : "s"); },
         formatSelectionTooBig: function (limit) { return "You can only select " + limit + " item" + (limit == 1 ? "" : "s"); },
         formatLoadMore: function (pageNumber) { return "Loading more results..."; },
+        formatPagination: function (pageNumber, numPages) { return "Page " + pageNumber + " of " + numPages; },
+        formatPaginationPrevious: function () { return "<"; },
+        formatPaginationNext: function () { return ">"; },
         formatSearching: function () { return "Searching..."; },
         minimumResultsForSearch: 0,
         minimumInputLength: 0,
