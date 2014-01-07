@@ -370,6 +370,7 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 .select2-results .select2-selection-limit {
     background: #f4f4f4;
     display: list-item;
+    padding-left: 5px;
 }
 
 /*
