@@ -34,10 +34,10 @@
             }
         },
         formatLoadMore: function (pageNumber) {
-            return "Cargando máis resultados...";
+            return "Cargando máis resultados…";
         },
         formatSearching: function () {
-            return "Buscando...";
+            return "Buscando…";
         }
     });
 })(jQuery);

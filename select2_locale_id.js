@@ -11,7 +11,7 @@
         formatInputTooShort: function (input, min) { var n = min - input.length; return "Masukkan " + n + " huruf lagi" + (n == 1 ? "" : "s"); },
         formatInputTooLong: function (input, max) { var n = input.length - max; return "Hapus " + n + " huruf" + (n == 1 ? "" : "s"); },
         formatSelectionTooBig: function (limit) { return "Anda hanya dapat memilih " + limit + " pilihan" + (limit == 1 ? "" : "s"); },
-        formatLoadMore: function (pageNumber) { return "Mengambil data..."; },
-        formatSearching: function () { return "Mencari..."; }
+        formatLoadMore: function (pageNumber) { return "Mengambil data…"; },
+        formatSearching: function () { return "Mencari…"; }
     });
 })(jQuery);

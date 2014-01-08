@@ -12,8 +12,8 @@
         formatInputTooShort: function (input, min) { return "Введіть буль ласка ще" + character(min - input.length, "символ"); },
         formatInputTooLong: function (input, max) { return "Введіть буль ласка на" + character(input.length - max, "символ") + " менше"; },
         formatSelectionTooBig: function (limit) { return "Ви можете вибрати лише" + character(limit, "елемент"); },
-        formatLoadMore: function (pageNumber) { return "Завантаження даних..."; },
-        formatSearching: function () { return "Пошук..."; }
+        formatLoadMore: function (pageNumber) { return "Завантаження даних…"; },
+        formatSearching: function () { return "Пошук…"; }
     });
 
     function character (n, word) {

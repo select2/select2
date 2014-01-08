@@ -11,7 +11,7 @@
         formatInputTooShort: function (input, min) { var n = min - input.length; return "Introduïu " + n + " caràcter" + (n == 1 ? "" : "s") + " més"; },
         formatInputTooLong: function (input, max) { var n = input.length - max; return "Introduïu " + n + " caràcter" + (n == 1? "" : "s") + "menys"; },
         formatSelectionTooBig: function (limit) { return "Només podeu seleccionar " + limit + " element" + (limit == 1 ? "" : "s"); },
-        formatLoadMore: function (pageNumber) { return "S'estan carregant més resultats..."; },
-        formatSearching: function () { return "S'està cercant..."; }
+        formatLoadMore: function (pageNumber) { return "S'estan carregant més resultats…"; },
+        formatSearching: function () { return "S'està cercant…"; }
     });
 })(jQuery);

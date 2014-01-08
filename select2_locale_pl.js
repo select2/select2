@@ -12,8 +12,8 @@
         formatInputTooShort: function (input, min) { return "Wpisz jeszcze" + character(min - input.length, "znak", "i"); },
         formatInputTooLong: function (input, max) { return "Wpisana fraza jest za długa o" + character(input.length - max, "znak", "i"); },
         formatSelectionTooBig: function (limit) { return "Możesz zaznaczyć najwyżej" + character(limit, "element", "y"); },
-        formatLoadMore: function (pageNumber) { return "Ładowanie wyników..."; },
-        formatSearching: function () { return "Szukanie..."; }
+        formatLoadMore: function (pageNumber) { return "Ładowanie wyników…"; },
+        formatSearching: function () { return "Szukanie…"; }
     });
 
     function character (n, word, pluralSuffix) {
