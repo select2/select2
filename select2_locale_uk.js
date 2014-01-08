@@ -1,17 +1,22 @@
 /**
- * Select2 <Language> translation.
+ * Select2 Ukrainian translation.
  * 
- * Author: bigmihail <bigmihail@bigmir.net>
+ * @author  bigmihail <bigmihail@bigmir.net>
+ * @author  Uriy Efremochkin <efremochkin@uriy.me>
  */
 (function ($) {
     "use strict";
 
     $.extend($.fn.select2.defaults, {
         formatNoMatches: function () { return "Нічого не знайдено"; },
-        formatInputTooShort: function (input, min) { var n = min - input.length, s = ["", "и", "ів"], p = [2,0,1,1,1,2]; return "Введіть буль ласка ще " + n + " символ" + s[ (n%100>4 && n%100<=20)? 2 : p[Math.min(n%10, 5)] ]; },
-        formatInputTooLong: function (input, max) { var n = input.length - max, s = ["", "и", "ів"], p = [2,0,1,1,1,2]; return "Введіть буль ласка на " + n + " символ" + s[ (n%100>4 && n%100<=20)? 2 : p[Math.min(n%10, 5)] ] + " менше"; },
-        formatSelectionTooBig: function (limit) {var s = ["", "и", "ів"], p = [2,0,1,1,1,2];  return "Ви можете вибрати лише " + limit + " елемент" + s[ (limit%100>4 && limit%100<=20)? 2 : p[Math.min(limit%10, 5)] ]; },
+        formatInputTooShort: function (input, min) { return "Введіть буль ласка ще" + character(min - input.length, "символ"); },
+        formatInputTooLong: function (input, max) { return "Введіть буль ласка на" + character(input.length - max, "символ") + " менше"; },
+        formatSelectionTooBig: function (limit) { return "Ви можете вибрати лише" + character(limit, "елемент"); },
         formatLoadMore: function (pageNumber) { return "Завантаження даних..."; },
         formatSearching: function () { return "Пошук..."; }
     });
+
+    function character (n, word) {
+        return " " + n + " " + word + (n%10 < 5 && n%10 > 0 && (n%100 < 5 || n%100 > 19) ? n%10 > 1 ? "и" : "" : "ів");
+    }
 })(jQuery);
