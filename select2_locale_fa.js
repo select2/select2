@@ -1,5 +1,5 @@
 /**
- * Select2 <fa> translation.
+ * Select2 Persian translation.
  * 
  * Author: Ali Choopan <choopan@arsh.co>
  */
