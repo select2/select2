@@ -11,7 +11,7 @@
         formatInputTooShort: function (input, min) { var n = min - input.length; return "En az " + n + " karakter daha girmelisiniz"; },
         formatInputTooLong: function (input, max) { var n = input.length - max; return n + " karakter azaltmalısınız"; },
         formatSelectionTooBig: function (limit) { return "Sadece " + limit + " seçim yapabilirsiniz"; },
-        formatLoadMore: function (pageNumber) { return "Daha fazla..."; },
-        formatSearching: function () { return "Aranıyor..."; }
+        formatLoadMore: function (pageNumber) { return "Daha fazla…"; },
+        formatSearching: function () { return "Aranıyor…"; }
     });
 })(jQuery);

@@ -11,7 +11,7 @@
         formatInputTooShort: function (input, min) { var n = min - input.length; return "נא להזין עוד " + n + " תווים נוספים"; },
         formatInputTooLong: function (input, max) { var n = input.length - max; return "נא להזין פחות " + n + " תווים"; },
         formatSelectionTooBig: function (limit) { return "ניתן לבחור " + limit + " פריטים"; },
-        formatLoadMore: function (pageNumber) { return "טוען תוצאות נוספות..."; },
-        formatSearching: function () { return "מחפש..."; }
+        formatLoadMore: function (pageNumber) { return "טוען תוצאות נוספות…"; },
+        formatSearching: function () { return "מחפש…"; }
     });
 })(jQuery);

@@ -19,10 +19,10 @@
             return "Voit valita ainoastaan " + limit + " kpl";
         },
         formatLoadMore: function (pageNumber) {
-            return "Ladataan lisää tuloksia...";
+            return "Ladataan lisää tuloksia…";
         },
         formatSearching: function () {
-            return "Etsitään...";
+            return "Etsitään…";
         }
     });
 })(jQuery);

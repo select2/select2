@@ -43,7 +43,7 @@
                 return "Můžete zvolit maximálně "+limit+" položek";
             }
         },
-        formatLoadMore: function (pageNumber) { return "Načítají se další výsledky..."; },
-        formatSearching: function () { return "Vyhledávání..."; }
+        formatLoadMore: function (pageNumber) { return "Načítají se další výsledky…"; },
+        formatSearching: function () { return "Vyhledávání…"; }
     });
 })(jQuery);

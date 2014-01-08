@@ -11,8 +11,8 @@
         formatInputTooShort: function (input, min) { var n = min - input.length; return "Vui lòng nhập nhiều hơn " + n + " ký tự" + (n == 1 ? "" : "s"); },
         formatInputTooLong: function (input, max) { var n = input.length - max; return "Vui lòng nhập ít hơn " + n + " ký tự" + (n == 1? "" : "s"); },
         formatSelectionTooBig: function (limit) { return "Chỉ có thể chọn được " + limit + " tùy chọn" + (limit == 1 ? "" : "s"); },
-        formatLoadMore: function (pageNumber) { return "Đang lấy thêm kết quả..."; },
-        formatSearching: function () { return "Đang tìm..."; }
+        formatLoadMore: function (pageNumber) { return "Đang lấy thêm kết quả…"; },
+        formatSearching: function () { return "Đang tìm…"; }
     });
 })(jQuery);
 

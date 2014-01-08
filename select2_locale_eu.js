@@ -34,10 +34,10 @@
           }
         },
         formatLoadMore: function (pageNumber) {
-          return "Emaitza gehiago kargatzen...";
+          return "Emaitza gehiago kargatzen…";
         },
         formatSearching: function () {
-          return "Bilatzen...";
+          return "Bilatzen…";
         }
     });
 })(jQuery);
