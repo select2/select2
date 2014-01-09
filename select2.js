@@ -2509,7 +2509,9 @@ the specific language governing permissions and limitations under the Apache Lic
             $("label[for='" + this.opts.element.attr("id") + "']")
                 .attr('for', this.search.attr('id'));
 
-            this.search.on("input paste", this.bind(function() {
+            // IE >= 10 incorrectly calls input events when a placeholder is
+            // set, so don't bind to it.
+            this.search.on((GG.IE >= 10 ? "paste" : "input paste"), this.bind(function() {
                 if (!this.isInterfaceEnabled()) return;
                 if (!this.opened()) {
                     this.open();
