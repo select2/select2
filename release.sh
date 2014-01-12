@@ -5,7 +5,7 @@ echo -n "Enter the version for this release: "
 
 read ver
 
-if [ ! $ver ]; then 
+if [ ! $ver ]; then
 	echo "Invalid version."
 	exit
 fi
@@ -28,11 +28,12 @@ git pull
 
 echo "Updating Version Identifiers"
 
-sed -E -e "s/\"version\": \"([0-9\.]+)\",/\"version\": \"$ver\",/g" -i "" bower.json select2.jquery.json component.json composer.json
+sed -E -e "s/\"version\": \"([0-9\.]+)\",/\"version\": \"$ver\",/g" -i "" bower.json select2.jquery.json component.json composer.json package.json
 git add bower.json
 git add select2.jquery.json
 git add component.json
 git add composer.json
+git add package.json
 git commit -m "modified version identifiers in descriptors for release $ver"
 git push
 
