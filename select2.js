@@ -2290,8 +2290,18 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // single
         updateSelection: function (data) {
+            var container = this.selection.find(".select2-chosen"), formatted, cssClass;
 
-            var container=this.selection.find(".select2-chosen"), formatted, cssClass;
+            if (this.select)
+            {
+                var el = this.opts.element;
+                var value = this.id(data);
+                el.val(value);
+                if (!equal(el.val(), value)) {
+                    el.append($('<option></option>').val(value).text(this.opts.formatSelection(data, container, this.opts.escapeMarkup)).prop('selected', true));
+                    el.val(value);
+                }
+            }
 
             this.selection.data("select2-data", data);
 
@@ -2904,6 +2914,14 @@ the specific language governing permissions and limitations under the Apache Lic
 
             choice.data("select2-data", data);
             choice.insertBefore(this.searchContainer);
+
+            if (this.select)
+            {
+                if (this.select.find("option").filter(function() { return this.value == id; }).size() == 0)
+                {
+                    this.select.append($('<option></option>').val(id).text(formatted));
+                }
+            }
 
             val.push(id);
             this.setVal(val);
