@@ -762,6 +762,8 @@ the specific language governing permissions and limitations under the Apache Lic
             // dom it will trigger the popup close, which is not what we want
             this.dropdown.on("click mouseup mousedown", function (e) { e.stopPropagation(); });
 
+            this.nextSearchTerm = undefined;
+			
             if ($.isFunction(this.opts.initSelection)) {
                 // initialize selection based on the current value of the source element
                 this.initSelection();
@@ -789,8 +791,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.autofocus = opts.element.prop("autofocus");
             opts.element.prop("autofocus", false);
             if (this.autofocus) this.focus();
-
-            this.nextSearchTerm = undefined;
+            
         },
 
         // abstract
@@ -2144,9 +2145,10 @@ the specific language governing permissions and limitations under the Apache Lic
                         self.updateSelection(selected);
                         self.close();
                         self.setPlaceholder();
+                        self.nextSearchTerm = self.opts.nextSearchTerm(selected, self.search.val());
                     }
                 });
-            }
+            }			
         },
 
         isPlaceholderOptionSelected: function() {
