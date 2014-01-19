@@ -2289,6 +2289,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.focusser.focus();
 
             if (!equal(old, this.id(data))) { this.triggerChange({added:data,removed:oldData}); }
+            else { this.opts.element.trigger('change'); }
         },
 
         // single
