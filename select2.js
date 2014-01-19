@@ -620,7 +620,6 @@ the specific language governing permissions and limitations under the Apache Lic
             if (token.length > 0) {
                 token = opts.createSearchChoice.call(this, token, selection);
                 if (token !== undefined && token !== null && opts.id(token) !== undefined && opts.id(token) !== null) {
-                    dupe = false;
                     for (i = 0, l = selection.length; i < l; i++) {
                         if (equal(opts.id(token), opts.id(selection[i]))) {
                             dupe = true; break;
@@ -1044,7 +1043,7 @@ the specific language governing permissions and limitations under the Apache Lic
             if (this.mutationCallback === undefined) {
                 this.mutationCallback = function (mutations) {
                     mutations.forEach(sync);
-                }
+                };
             }
 
             // safari, chrome, firefox, IE11
@@ -2227,7 +2226,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // single
         postprocessResults: function (data, initial, noHighlightUpdate) {
-            var selected = 0, self = this, showSearchInput = true;
+            var selected = 0, self = this;
 
             // find the selected element in the result list
 
@@ -2391,7 +2390,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     this.clear(triggerChange);
                 } else {
                     data = this.data();
-                    this.opts.element.val(!value ? "" : this.id(value));
+                    this.opts.element.val(this.id(value));
                     this.updateSelection(value);
                     if (triggerChange) {
                         this.triggerChange({added: value, removed:data});
