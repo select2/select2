@@ -2365,7 +2365,14 @@ the specific language governing permissions and limitations under the Apache Lic
                         self.triggerChange({added: data, removed:oldData});
                     }
                 });
+
+                // trigger removed event
+                if (triggerChange !== false){
+                    this.opts.element.trigger({ type: "select2-removed", val: this.id(data), choice: data });
+                    this.triggerChange({removed:data});
+                }
             }
+
         },
 
         // single
