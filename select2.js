@@ -1756,7 +1756,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 if (!!data.numPages && checkFormatter(opts.formatPagination, "formatPagination") && checkFormatter(opts.formatPaginationPrevious, "formatPaginationPrevious") && checkFormatter(opts.formatPaginationNext, "formatPaginationNext")) {
                     results.append("<li class='select2-pagination'>"
                         + "<span class='select2-pagination-previous'>" + self.opts.escapeMarkup(opts.formatPaginationPrevious()) + "</span>"
-                        + "<span class='select2-pagination-info'>" + self.opts.escapeMarkup(self.opts.escapeMarkup(opts.formatPagination(self.resultsPage, data.numPages))) + "</span>"
+                        + "<span class='select2-pagination-info'>" + self.opts.escapeMarkup(opts.formatPagination(self.resultsPage, data.numPages)) + "</span>"
                         + "<span class='select2-pagination-next'>" + self.opts.escapeMarkup(opts.formatPaginationNext()) + "</span>"
                         + "</li>");
                     if (self.resultsPage <= 1 || data.numPages <= 1) results.find('.select2-pagination-previous').addClass('select2-visibility-hidden');
