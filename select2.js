@@ -2276,7 +2276,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 if (initial === true && selected >= 0) {
                     // By default, the selected item is displayed inside the result list from a single select
                     // User can provide an implementation for 'hideSelectionFromResult' and hide it
-                    if(this.opts.hideSelectionFromResult !== undefined && selectedElm !== null) {
+                    if(selectedElm !== null) {
                         if(this.opts.hideSelectionFromResult(selectedElm))
                             selectedElm.addClass("select2-selected");
                     }
@@ -3008,7 +3008,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     // By default, the selected item is hidden from the result list inside a multi select
                     // User can provide an implementation for 'hideSelectionFromResult' and allow the same
                     // element to be selected multiple times.
-                    if(self.opts.hideSelectionFromResult === undefined || self.opts.hideSelectionFromResult(choice)) {
+                    if(self.opts.hideSelectionFromResult(choice) === undefined || self.opts.hideSelectionFromResult(choice)) {
                         choice.addClass("select2-selected");
                         // mark all children of the selected parent as selected
                         choice.find(".select2-result-selectable").addClass("select2-selected");
