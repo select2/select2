@@ -2275,7 +2275,7 @@ the specific language governing permissions and limitations under the Apache Lic
             if (noHighlightUpdate !== false) {
                 if (initial === true && selected >= 0) {
                     // By default, the selected item is displayed inside the result list from a single select
-                    // User can provide an implementation for 'hideSelectionFromResult' and hide it 
+                    // User can provide an implementation for 'hideSelectionFromResult' and hide it
                     if(this.opts.hideSelectionFromResult !== undefined && selectedElm !== null) {
                         if(this.opts.hideSelectionFromResult(selectedElm))
                             selectedElm.addClass("select2-selected");
@@ -3329,11 +3329,8 @@ the specific language governing permissions and limitations under the Apache Lic
         adaptContainerCssClass: function(c) { return c; },
         adaptDropdownCssClass: function(c) { return null; },
         nextSearchTerm: function(selectedObject, currentSearchTerm) { return undefined; },
-<<<<<<< HEAD
+        hideSelectionFromResult: function(selectedObject) { return undefined; },
         searchInputPlaceholder: ''
-=======
-        hideSelectionFromResult: function(selectedObject) { return undefined; }
->>>>>>> master
     };
 
     $.fn.select2.ajaxDefaults = {
