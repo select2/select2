@@ -236,7 +236,7 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     background: url('select2.png') no-repeat 100% -22px, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, #fff), color-stop(0.99, #eee));
     background: url('select2.png') no-repeat 100% -22px, -webkit-linear-gradient(center bottom, #fff 85%, #eee 99%);
     background: url('select2.png') no-repeat 100% -22px, -moz-linear-gradient(center bottom, #fff 85%, #eee 99%);
-    background: url('select2.png') no-repeat 100% -22px, linear-gradient(to bottom, #fff 85%, #eee 99%);
+    background: url('select2.png') no-repeat 100% -22px, linear-gradient(to bottom, #fff 85%, #eee 99%) 0 0;
 }
 
 .select2-drop.select2-drop-above .select2-search input {
@@ -248,7 +248,7 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     background: url('select2-spinner.gif') no-repeat 100%, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, #fff), color-stop(0.99, #eee));
     background: url('select2-spinner.gif') no-repeat 100%, -webkit-linear-gradient(center bottom, #fff 85%, #eee 99%);
     background: url('select2-spinner.gif') no-repeat 100%, -moz-linear-gradient(center bottom, #fff 85%, #eee 99%);
-    background: url('select2-spinner.gif') no-repeat 100%, linear-gradient(to bottom, #fff 85%, #eee 99%);
+    background: url('select2-spinner.gif') no-repeat 100%, linear-gradient(to bottom, #fff 85%, #eee 99%) 0 0;
 }
 
 .select2-container-active .select2-choice,
@@ -628,7 +628,7 @@ html[dir="rtl"] .select2-search-choice-close {
 
 /* Retina-ize icons */
 
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-resolution: 2ppx)  {
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-resolution: 2dppx)  {
     .select2-search input,
     .select2-search-choice-close,
     .select2-container .select2-choice abbr,

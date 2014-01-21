@@ -272,7 +272,8 @@ the specific language governing permissions and limitations under the Apache Lic
 
             /* make sure el received focus so we do not error out when trying to manipulate the caret.
                 sometimes modals or others listeners may steal it after its set */
-            if ($el.is(":visible") && el === document.activeElement) {
+            var isVisible = (el.offsetWidth > 0 || el.offsetHeight > 0);
+            if (isVisible && el === document.activeElement) {
 
                 /* after the focus is set move the caret to the end, necessary when we val()
                     just before setting focus */
@@ -1454,7 +1455,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // abstract
         findHighlightableChoices: function() {
-            return this.results.find(".select2-result-selectable:not(.select2-disabled, .select2-selected)");
+            return this.results.find(".select2-result-selectable:not(.select2-disabled):not(.select2-selected)");
         },
 
         // abstract
@@ -2258,13 +2259,14 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // single
         postprocessResults: function (data, initial, noHighlightUpdate) {
-            var selected = 0, self = this, showSearchInput = true;
+            var selected = 0, selectedElm = null, self = this, showSearchInput = true;
 
             // find the selected element in the result list
 
             this.findHighlightableChoices().each2(function (i, elm) {
                 if (equal(self.id(elm.data("select2-data")), self.opts.element.val())) {
                     selected = i;
+                    selectedElm = elm;
                     return false;
                 }
             });
@@ -2272,7 +2274,14 @@ the specific language governing permissions and limitations under the Apache Lic
             // and highlight it
             if (noHighlightUpdate !== false) {
                 if (initial === true && selected >= 0) {
-                    this.highlight(selected);
+                    // By default, the selected item is displayed inside the result list from a single select
+                    // User can provide an implementation for 'hideSelectionFromResult' and hide it 
+                    if(this.opts.hideSelectionFromResult !== undefined && selectedElm !== null) {
+                        if(this.opts.hideSelectionFromResult(selectedElm))
+                            selectedElm.addClass("select2-selected");
+                    }
+                    else
+                        this.highlight(selected);
                 } else {
                     this.highlight(0);
                 }
@@ -2996,9 +3005,14 @@ the specific language governing permissions and limitations under the Apache Lic
             choices.each2(function (i, choice) {
                 var id = self.id(choice.data("select2-data"));
                 if (indexOf(id, val) >= 0) {
-                    choice.addClass("select2-selected");
-                    // mark all children of the selected parent as selected
-                    choice.find(".select2-result-selectable").addClass("select2-selected");
+                    // By default, the selected item is hidden from the result list inside a multi select
+                    // User can provide an implementation for 'hideSelectionFromResult' and allow the same
+                    // element to be selected multiple times.
+                    if(self.opts.hideSelectionFromResult === undefined || self.opts.hideSelectionFromResult(choice)) {
+                        choice.addClass("select2-selected");
+                        // mark all children of the selected parent as selected
+                        choice.find(".select2-result-selectable").addClass("select2-selected");
+                    }
                 }
             });
 
@@ -3315,7 +3329,11 @@ the specific language governing permissions and limitations under the Apache Lic
         adaptContainerCssClass: function(c) { return c; },
         adaptDropdownCssClass: function(c) { return null; },
         nextSearchTerm: function(selectedObject, currentSearchTerm) { return undefined; },
+<<<<<<< HEAD
         searchInputPlaceholder: ''
+=======
+        hideSelectionFromResult: function(selectedObject) { return undefined; }
+>>>>>>> master
     };
 
     $.fn.select2.ajaxDefaults = {
