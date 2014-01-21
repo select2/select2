@@ -46,7 +46,7 @@ the specific language governing permissions and limitations under the Apache Lic
         return;
     }
 
-    var KEY, AbstractSelect2, SingleSelect2, MultiSelect2, nextUid, sizer,
+    var AbstractSelect2, SingleSelect2, MultiSelect2, nextUid, sizer,
         lastMousePosition={x:0,y:0}, $document, scrollBarDimensions,
 
     KEY = {
@@ -250,7 +250,7 @@ the specific language governing permissions and limitations under the Apache Lic
             if (evaluated === false) { value = formula(); evaluated = true; }
             return value;
         };
-    };
+    }
 
     function installDebouncedScroll(threshold, element) {
         var notify = debounce(threshold, function (e) { element.trigger("scroll-debounced", e);});
@@ -416,6 +416,7 @@ the specific language governing permissions and limitations under the Apache Lic
      *      Example: {results:[{id:1, text:'Red'},{id:2, text:'Blue'}], more:true}
      */
     function ajax(options) {
+        /*jshint validthis: true */
         var timeout, // current scheduled but not yet executed request
             handler = null,
             quietMillis = options.quietMillis || 100,
@@ -595,6 +596,7 @@ the specific language governing permissions and limitations under the Apache Lic
      * @return undefined/null to leave the current input unchanged, or a string to change the input to the returned value
      */
     function defaultTokenizer(input, selection, selectCallback, opts) {
+        /*jshint validthis: true */
         var original = input, // store the original so we can compare and know if we need to tell the search to update its text
             dupe = false, // check for whether a token we extracted represents a duplicate selected choice
             token, // token
@@ -644,7 +646,7 @@ the specific language governing permissions and limitations under the Apache Lic
      */
     function clazz(SuperClass, methods) {
         var constructor = function () {};
-        constructor.prototype = new SuperClass;
+        constructor.prototype = new SuperClass();
         constructor.prototype.constructor = constructor;
         constructor.prototype.parent = SuperClass.prototype;
         constructor.prototype = $.extend(constructor.prototype, methods);
@@ -1062,6 +1064,7 @@ the specific language governing permissions and limitations under the Apache Lic
             observer = window.MutationObserver || window.WebKitMutationObserver|| window.MozMutationObserver;
             if (observer !== undefined) {
                 if (this.propertyObserver) { delete this.propertyObserver; this.propertyObserver = null; }
+                /*jshint -W055 */
                 this.propertyObserver = new observer(this.mutationCallback);
                 this.propertyObserver.observe(el.get(0), { attributes:true, subtree:false });
             }
@@ -1310,7 +1313,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             // create the dropdown mask if doesn't already exist
             mask = $("#select2-drop-mask");
-            if (mask.length == 0) {
+            if (mask.length === 0) {
                 mask = $(document.createElement("div"));
                 mask.attr("id","select2-drop-mask").attr("class","select2-drop-mask");
                 mask.hide();
@@ -1416,7 +1419,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             if (index < 0) return;
 
-            if (index == 0) {
+            if (index === 0) {
 
                 // if the first element is highlighted scroll all the way to the top,
                 // that way any unselectable headers above it will also be scrolled
@@ -1518,7 +1521,7 @@ the specific language governing permissions and limitations under the Apache Lic
             if (el.length > 0 && !el.is(".select2-highlighted")) {
                 var choices = this.findHighlightableChoices();
                 this.highlight(choices.index(el));
-            } else if (el.length == 0) {
+            } else if (el.length === 0) {
                 // if we are over an unselectable item remove all highlights
                 this.removeHighlight();
             }
@@ -1657,7 +1660,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             // give the tokenizer a chance to pre-process the input
             input = this.tokenize();
-            if (input != undefined && input != null) {
+            if (input !== undefined && input != null) {
                 search.val(input);
             }
 
@@ -1791,6 +1794,7 @@ the specific language governing permissions and limitations under the Apache Lic
         // abstract
         initContainerWidth: function () {
             function resolveContainerWidth() {
+                /*jshint validthis: true */
                 var style, attrs, matches, i, l, attr;
 
                 if (this.opts.width === "off") {
@@ -1826,7 +1830,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 } else {
                     return this.opts.width;
                }
-            };
+            }
 
             var width = resolveContainerWidth.call(this);
             if (width !== null) {
@@ -1900,7 +1904,7 @@ the specific language governing permissions and limitations under the Apache Lic
             // initializes search's value with nextSearchTerm (if defined by user)
             // ignore nextSearchTerm if the dropdown is opened by the user pressing a letter
             if(this.search.val() === "") {
-                if(this.nextSearchTerm != undefined){
+                if(this.nextSearchTerm !== undefined){
                     this.search.val(this.nextSearchTerm);
                     this.search.select();
                 }
@@ -2420,7 +2424,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             if (arguments.length === 0) {
                 data = this.selection.data("select2-data");
-                if (data == undefined) data = null;
+                if (data === undefined) data = null;
                 return data;
             } else {
                 if (arguments.length > 1) {
@@ -2613,7 +2617,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     }
                     return;
                 } else if (((e.which === KEY.BACKSPACE && this.keydowns == 1)
-                    || e.which == KEY.LEFT) && (pos.offset == 0 && !pos.length)) {
+                    || e.which == KEY.LEFT) && (pos.offset === 0 && !pos.length)) {
 
                     this.selectChoice(selection.find(".select2-search-choice:not(.select2-locked)").last());
                     killEvent(e);
@@ -2834,7 +2838,7 @@ the specific language governing permissions and limitations under the Apache Lic
         tokenize: function() {
             var input = this.search.val();
             input = this.opts.tokenizer.call(this, input, this.data(), this.bind(this.onSelect), this.opts);
-            if (input != null && input != undefined) {
+            if (input != null && input !== undefined) {
                 this.search.val(input);
                 if (input.length > 0) {
                     this.open();
@@ -2919,11 +2923,11 @@ the specific language governing permissions and limitations under the Apache Lic
                 cssClass;
 
             formatted=this.opts.formatSelection(data, choice.find("div"), this.opts.escapeMarkup);
-            if (formatted != undefined) {
+            if (formatted !== undefined) {
                 choice.find("div").replaceWith("<div>"+formatted+"</div>");
             }
             cssClass=this.opts.formatSelectionCssClass(data, choice.find("div"));
-            if (cssClass != undefined) {
+            if (cssClass !== undefined) {
                 choice.addClass(cssClass);
             }
 
@@ -3028,7 +3032,7 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             //If all results are chosen render formatNoMatches
-            if(!this.opts.createSearchChoice && !choices.filter('.select2-result:not(.select2-selected)').length > 0){
+            if(!this.opts.createSearchChoice && choices.filter('.select2-result:not(.select2-selected)').length === 0){
                 if(!data || data && !data.more && this.results.find(".select2-no-results").length === 0) {
                     if (checkFormatter(self.opts.formatNoMatches, "formatNoMatches")) {
                         this.results.append("<li class='select2-no-results'>" + self.opts.formatNoMatches(self.search.val()) + "</li>");
@@ -3101,8 +3105,8 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // multi
         buildChangeDetails: function (old, current) {
-            var current = current.slice(0),
-                old = old.slice(0);
+            current = current.slice(0);
+            old = old.slice(0);
 
             // remove intersection from each array
             for (var i = 0; i < current.length; i++) {
@@ -3110,7 +3114,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     if (equal(this.opts.id(current[i]), this.opts.id(old[j]))) {
                         current.splice(i, 1);
                         if(i>0){
-                        	i--;
+                            i--;
                         }
                         old.splice(j, 1);
                         j--;
