@@ -1014,6 +1014,16 @@ the specific language governing permissions and limitations under the Apache Lic
                 throw "query function not defined for Select2 " + opts.element.attr("id");
             }
 
+            if (opts.createSearchChoicePosition === 'top') {
+                opts.createSearchChoicePosition = function(list, item) { list.unshift(item); };
+            }
+            else if (opts.createSearchChoicePosition === 'bottom') {
+                opts.createSearchChoicePosition = function(list, item) { list.push(item); };
+            }
+            else if (typeof(opts.createSearchChoicePosition) !== "function")  {
+                throw "invalid createSearchChoicePosition option must be 'top', 'bottom' or a custom function";
+            }
+
             return opts;
         },
 
@@ -1694,7 +1704,7 @@ the specific language governing permissions and limitations under the Apache Lic
                             function () {
                                 return equal(self.id(this), self.id(def));
                             }).length === 0) {
-                            data.results.unshift(def);
+                            this.opts.createSearchChoicePosition(data.results, def);
                         }
                     }
                 }
@@ -3330,7 +3340,8 @@ the specific language governing permissions and limitations under the Apache Lic
         adaptDropdownCssClass: function(c) { return null; },
         nextSearchTerm: function(selectedObject, currentSearchTerm) { return undefined; },
         hideSelectionFromResult: function(selectedObject) { return undefined; },
-        searchInputPlaceholder: ''
+        searchInputPlaceholder: '',
+        createSearchChoicePosition: 'top'
     };
 
     $.fn.select2.ajaxDefaults = {
