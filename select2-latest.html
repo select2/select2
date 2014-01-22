@@ -160,6 +160,38 @@ $("#e7").select2({
 });
 </script>
 
+<script id="script_e25">
+$(document).ready(function() {
+$("#e25").select2({
+    placeholder: "Search for a movie",
+    minimumInputLength: 3,
+    ajax: {
+        url: "http://api.rottentomatoes.com/api/public/v1.0/movies.json",
+        dataType: 'jsonp',
+        quietMillis: 100,
+        data: function (term, page) { // page is the one-based page number tracked by Select2
+            return {
+                q: term, //search term
+                page_limit: 10, // page size
+                page: page, // page number
+                apikey: "ju6z9mjyajq2djue3gbvv26t" // please do not use so this example keeps working
+            };
+        },
+        results: function (data, page) {
+            var numPages = Math.ceil(data.total / 10); // Get the total number of pages
+            
+            // Set the numPages value to use numbered pagination
+            return { results: data.movies, numPages: numPages };
+        }
+    },
+    formatResult: movieFormatResult, // omitted for brevity, see the source of this page
+    formatSelection: movieFormatSelection, // omitted for brevity, see the source of this page
+    dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
+    escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
+});
+});
+</script>
+
 <script id="script_e9">
 $(document).ready(function() {
 $("#e9").select2();
@@ -587,6 +619,21 @@ $("#e19").select2({ maximumSelectionSize: 3 });
                 <p class="alert alert-warning">If this example does not work it is probably because the Rotten Tomatoes API key usage of 10000 requests per day has been exhausted. Please try again tomorrow.</p>
                 <h3>Example Code</h3>
               <pre class="prettyprint linenums" id="code_e7"></pre>
+            </div>
+         </article>
+        <article class="row" id="numbered">
+            <div class="span12">
+              <h3>Numbered Pagination with Remote Data</h3>
+               <p>If the total number of pages in the result set is known, Select2 can also display numbered
+               pagination at the end of the result list. Like the infinite scroll example, the remote
+               service must have a paging mechanism and the query function must take advantage of it. In this example,
+               use the next and back buttons at the bottom of the results to navigate between pages:</p>
+               <p>
+                   <input type="hidden" class="bigdrop" id="e25" style="width:600px"/>
+               </p>
+                <p class="alert alert-warning">If this example does not work it is probably because the Rotten Tomatoes API key usage of 10000 requests per day has been exhausted. Please try again tomorrow.</p>
+                <h3>Example Code</h3>
+              <pre class="prettyprint linenums" id="code_e25"></pre>
             </div>
          </article>
 
@@ -1358,6 +1405,17 @@ format(item) {
                     <tr><td>&lt;returns&gt;</td><td>string</td><td>Message html or <code>null</code>/<code>undefined</code> to disable the message.</td></tr>
                 </table>
             </td></tr>
+            <tr><td>formatPagination</td><td>function</td><td>
+                Function used to render the &quot;Page <em>x</em> of <em>y</em>&quot; message that is displayed when
+                numbered pagination is active.
+                <pre>formatPagination(pageNumber, numPages)</pre>
+                <table class="table table-bordered table-striped">
+                    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                    <tr><td>pageNumber</td><td>int</td><td>The current page number.</td></tr>
+                    <tr><td>numPages</td><td>int</td><td>The total number of pages.</td></tr>
+                    <tr><td>&lt;returns&gt;</td><td>string</td><td>Message html.</td></tr>
+                </table>
+            </td></tr>
             <tr><td>formatInputTooShort</td><td>function</td><td>
                 Function used to render the &quot;Search input too short&quot; message.
                 <pre>formatInputTooShort(term, minLength)</pre>
@@ -1498,6 +1556,7 @@ $("#select").select2({
                                     <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
                                     <tr><td>result.results</td><td>[object]</td><td>Array of result objects. The default renderers expect objects with <code>id</code> and <code>text</code> keys. The <code>id</code> property is required, even if custom renderers are used. The object may also contain a <code>children</code> key if hierarchical data is displayed. The object may also contain a <code>disabled</code> boolean property indicating whether this result can be selected.</td></tr>
                                     <tr><td>result.more</td><td>boolean</td><td><code>true</code>if more results are available for the current search term.</td></tr>
+                                    <tr><td>result.numPages</td><td>int</td><td>If the total number of pages is known, this value can be set to the maximum page number to enable numbered pagination. If both <code>more</code> and <code>numPages</code> are set, numbered pagination will be used.</td></tr>
                                     <tr><td>results.context</td><td>object</td><td>A user-defined object that should be made available as the <code>context</code> parameter to the <code>query</code> function on subsequent queries to load more result pages for the same search term. See the description of <a href="#doc-query-options-context"><code>options.context</code></a> parameter.</td></tr>
                                 </table>
                             </td></tr>
