@@ -233,6 +233,7 @@ $("#e10_4").select2({
                   <li><a href="#sort_results">Sorting Displayed Results</a></li>
                   <li><a href="#responsive">Responsive Design</a></li>
                   <li><a href="#diacritics">Diacritics Support</a></li>
+                  <li><a href="#allow_duplicated_tags">Allow duplicated tags</a></li>
               </ul>
             </li>
             <li><a href="#documentation">Documentation</a></li>
@@ -979,21 +980,22 @@ $("#e18,#e18_2").select2();
       <article class="row" id="disabled-options">
           <script id="script_e24">
 
-              $(document).ready(function () {
-                  $('#e24').select2({
-                      query: function (query){
-                          var data = {
-                              results: [
-                                  { id: 1, text: "I'm selectable" },
-                                  { id: 2, text: "I'm a disabled option", disabled: true },
-                                  { id: 3, text: "I'm selectable too!" }
-                              ]
-                          };
+$(document).ready(function () {
+  $('#e24').select2({
+      query: function (query){
+          var data = {
+              results: [
+                  { id: 1, text: "I'm selectable" },
+                  { id: 2, text: "I'm a disabled option", disabled: true },
+                  { id: 3, text: "I'm selectable too!" }
+              ]
+          };
 
-                          query.callback(data);
-                      }
-                  });
-              });
+          query.callback(data);
+      }
+  });
+});
+
           </script>
           <div class="span12">
               <h3>Disabled options</h3>
@@ -1041,6 +1043,7 @@ $(document).ready(function () {
   });
   $('#e21').select2('data', preload_data )
 });
+
           </script>
           <div class="span12">
               <h3>Lock selections</h3>
@@ -1084,10 +1087,36 @@ $(document).ready(function () {
           </div>
       </article>
 
-
+      <article class="row" id="allow_duplicated_tags">
+          <div class="span12">
+              <h3>Allow duplicated tags</h3>
+              <p>In multiple mode, select2 doesn't allow the same tag to be selected more than once. This default behavior can be overridden by implementing the <code>hideSelectionFromResult</code> function:</p>
+              <p>
+                  <select id="e31" multiple="multiple" style="width:300px;">
+                      <option>Red</option>
+                      <option>Green</option>
+                      <option>Blue</option>
+                  </select>
+              </p>
+              <script id="script_e25">
+  
+  function hideSelection(selectedObject) {
+      return false;
+  };
+  $('#e31').select2({
+      hideSelectionFromResult: hideSelection
+  });
+  
+              </script>
+              <div class="span12">
+                  <h3>Example Code</h3>
+                  <pre class="prettyprint linenums" id="code_e25"></pre>
+              </div>
+          </div>
+      </article>
       </section>
 
-
+      
       <!--               -->
       <!-- DOCUMENTATION -->
       <!--               -->
@@ -1602,6 +1631,38 @@ $("#select").select2({
             });
             </pre>
             <p class="alert alert-info">Function can be used when the dropdown is configured in single and multi-select mode. It is triggered after selecting an item. In single mode it is also triggered after initSelection (when provided).</p>
+            </td></tr>
+            <tr><td>hideSelectionFromResult</td><td>function</td><td>
+            <p>Function that determines if the selected item should be displayed or hidden from the result list.</p>
+            <table class="table table-bordered table-striped">
+            <tbody>
+            <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+            <tr><td>data</td><td>object</td><td>Selected data.</td></tr>
+            </tbody>
+            </table>
+            <p>By default, the selected item is visible in the result list in single mode and hidden in multi-select mode.
+            This behavior can be overridden by implementing the <code>hideSelectionFromResult</code> function.</p>
+            <p>For instance, in the case of a single select box it can be used to hide the selected item from the result list:</p>
+            <pre class="prettyprint">
+function hideSelectedItem(selectedObject){
+    return true;
+}
+
+$("#e1").select2({
+    hideSelectionFromResult: hideSelectedItem
+})
+            </pre>
+            <p>More complex behavior can be achieved by reading the text of the selected item:</p>
+            <pre class="prettyprint">
+function hideAlaskaFromResult(selectedObject){
+    return selectedObject.data("select2-data").text == "Alaska" ? true : false;
+}
+
+$("#e1").select2({
+    hideSelectionFromResult: hideAlaskaFromResult
+})
+            </pre>
+            <p class="alert alert-info">The return value of <code>hideSelectionFromResult</code> is a boolean. It returns undefined if it is not implemented.</p>
             </td></tr>
         </table>
 
