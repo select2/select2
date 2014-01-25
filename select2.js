@@ -272,7 +272,8 @@ the specific language governing permissions and limitations under the Apache Lic
 
             /* make sure el received focus so we do not error out when trying to manipulate the caret.
                 sometimes modals or others listeners may steal it after its set */
-            if ($el.is(":visible") && el === document.activeElement) {
+            var isVisible = (el.offsetWidth > 0 || el.offsetHeight > 0);
+            if (isVisible && el === document.activeElement) {
 
                 /* after the focus is set move the caret to the end, necessary when we val()
                     just before setting focus */
@@ -799,6 +800,7 @@ the specific language governing permissions and limitations under the Apache Lic
             opts.element.prop("autofocus", false);
             if (this.autofocus) this.focus();
 
+            this.search.attr("placeholder", opts.searchInputPlaceholder);
         },
 
         // abstract
@@ -903,9 +905,9 @@ the specific language governing permissions and limitations under the Apache Lic
                             formatted=opts.formatResult(result, label, query, self.opts.escapeMarkup);
                             if (formatted!==undefined) {
                                 label.html(formatted);
+                                node.append(label);
                             }
 
-                            node.append(label);
 
                             if (compound) {
 
@@ -1010,6 +1012,16 @@ the specific language governing permissions and limitations under the Apache Lic
             }
             if (typeof(opts.query) !== "function") {
                 throw "query function not defined for Select2 " + opts.element.attr("id");
+            }
+
+            if (opts.createSearchChoicePosition === 'top') {
+                opts.createSearchChoicePosition = function(list, item) { list.unshift(item); };
+            }
+            else if (opts.createSearchChoicePosition === 'bottom') {
+                opts.createSearchChoicePosition = function(list, item) { list.push(item); };
+            }
+            else if (typeof(opts.createSearchChoicePosition) !== "function")  {
+                throw "invalid createSearchChoicePosition option must be 'top', 'bottom' or a custom function";
             }
 
             return opts;
@@ -1453,7 +1465,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // abstract
         findHighlightableChoices: function() {
-            return this.results.find(".select2-result-selectable:not(.select2-disabled, .select2-selected)");
+            return this.results.find(".select2-result-selectable:not(.select2-disabled):not(.select2-selected)");
         },
 
         // abstract
@@ -1692,7 +1704,7 @@ the specific language governing permissions and limitations under the Apache Lic
                             function () {
                                 return equal(self.id(this), self.id(def));
                             }).length === 0) {
-                            data.results.unshift(def);
+                            this.opts.createSearchChoicePosition(data.results, def);
                         }
                     }
                 }
@@ -2273,8 +2285,8 @@ the specific language governing permissions and limitations under the Apache Lic
             if (noHighlightUpdate !== false) {
                 if (initial === true && selected >= 0) {
                     // By default, the selected item is displayed inside the result list from a single select
-                    // User can provide an implementation for 'hideSelectionFromResult' and hide it 
-                    if(this.opts.hideSelectionFromResult !== undefined && selectedElm !== null) {
+                    // User can provide an implementation for 'hideSelectionFromResult' and hide it
+                    if(selectedElm !== null) {
                         if(this.opts.hideSelectionFromResult(selectedElm))
                             selectedElm.addClass("select2-selected");
                     }
@@ -3006,7 +3018,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     // By default, the selected item is hidden from the result list inside a multi select
                     // User can provide an implementation for 'hideSelectionFromResult' and allow the same
                     // element to be selected multiple times.
-                    if(self.opts.hideSelectionFromResult === undefined || self.opts.hideSelectionFromResult(choice)) {
+                    if(self.opts.hideSelectionFromResult(choice) === undefined || self.opts.hideSelectionFromResult(choice)) {
                         choice.addClass("select2-selected");
                         // mark all children of the selected parent as selected
                         choice.find(".select2-result-selectable").addClass("select2-selected");
@@ -3327,7 +3339,9 @@ the specific language governing permissions and limitations under the Apache Lic
         adaptContainerCssClass: function(c) { return c; },
         adaptDropdownCssClass: function(c) { return null; },
         nextSearchTerm: function(selectedObject, currentSearchTerm) { return undefined; },
-        hideSelectionFromResult: function(selectedObject) { return undefined; }
+        hideSelectionFromResult: function(selectedObject) { return undefined; },
+        searchInputPlaceholder: '',
+        createSearchChoicePosition: 'top'
     };
 
     $.fn.select2.ajaxDefaults = {
