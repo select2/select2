@@ -1366,6 +1366,26 @@ format(item) {
                 must be taken to sanitize the <code>id</code> attribute of the choice object, especially stripping
                 <code>,</code> as it is used as a value separator.</p>
             </td></tr>
+            <tr><td>createSearchChoicePosition</td><td>string|function</td><td>
+                Define the position where to insert element created by <code>createSearchChoice</code>. The following values are supported:
+                <dl>
+                    <dt>top</dt><dd>Insert in the top of the list</dd>
+                    <dt>bottom</dt><dd>Insert at the end of the list</dd>
+                    <dt>&lt;function&gt;</dt>
+                    <dd>
+                        <p>A custom function. For example if you want to insert the new item in the second position:</p>
+<pre class="prettyprint">
+$("#tags").select2({
+    ...
+    createSearchChoice: function(term) { ... },
+    createSearchChoicePosition: function(list, item) {
+        list.splice(1, 0, item);
+    }
+});
+</pre>
+                    </dd>
+                </dl>
+            </td></tr>
             <tr><td>initSelection</td><td>function</td><td>
                 Called when Select2 is created to allow the user to initialize the selection based on the value of the
                 element select2 is attached to.
