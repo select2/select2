@@ -754,7 +754,7 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             installKeyUpChangeEvent(search);
-            search.on("keyup-change input paste", this.bind(this.updateResults));
+            search.on("keyup-change input", this.bind(this.updateResults));
             search.on("focus", function () { search.addClass("select2-focused"); });
             search.on("blur", function () { search.removeClass("select2-focused");});
 
