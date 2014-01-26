@@ -66,7 +66,7 @@ version: 2.1
         else if (movie.synopsis !== undefined) {
             markup += "<div class='movie-synopsis'>" + movie.synopsis + "</div>";
         }
-        markup += "</td></tr></table>"
+        markup += "</td></tr></table>";
         return markup;
     }
 
@@ -146,7 +146,7 @@ version: 2.1
         });
 
         var data=[{id:0,tag:'enhancement'},{id:1,tag:'bug'},{id:2,tag:'duplicate'},{id:3,tag:'invalid'},{id:4,tag:'wontfix'}];
-        function format(item) { return item.tag; };
+        function format(item) { return item.tag; }
 
         $("#e10_2").select2({
             data:{ results: data, text: 'tag' },
