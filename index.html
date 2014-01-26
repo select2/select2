@@ -390,7 +390,7 @@ $("#e10_4").select2({
       <article class="row" id="multi">
         <div class="span4">
           <h3>Multi-Value Select Boxes</h3>
-           <p>Select2 also supports multi-value select boxes. The <code>select</code> below is declared with the <code>multiple</code> attribute. Select2 automatially picks up on this:</p>
+           <p>Select2 also supports multi-value select boxes. The <code>select</code> below is declared with the <code>multiple</code> attribute. Select2 automatically picks up on this:</p>
            <p>
                <select multiple name="e9" id="e9" style="width:300px" class="populate"></select>
            </p>
@@ -462,7 +462,7 @@ $("#e2_2").select2({
             <h3>Example Code</h3>
             <pre class="prettyprint linenums" id="code_e4"></pre>
             <p>
-                You can set <code>data-</code> attributes to <code>&lt;option&gt;</code> (or &lt;optgroup&gt;) and use them inside temptlating functions:
+                You can set <code>data-</code> attributes to <code>&lt;option&gt;</code> (or &lt;optgroup&gt;) and use them inside templating functions:
             </p>
             <pre class="prettyprint linenums">
 &lt;select&gt;
@@ -665,7 +665,7 @@ $("#e11")
     .on("select2-selecting", function(e) { log ("selecting val="+ e.val+" choice="+ JSON.stringify(e.choice));})
     .on("select2-removing", function(e) { log ("removing val="+ e.val+" choice="+ JSON.stringify(e.choice));})
     .on("select2-removed", function(e) { log ("removed val="+ e.val+" choice="+ JSON.stringify(e.choice));})
-    .on("select2-loaded", function(e) { log ("loaded (data property omitted for brevitiy)");})
+    .on("select2-loaded", function(e) { log ("loaded (data property omitted for brevity)");})
     .on("select2-focus", function(e) { log ("focus");})
     .on("select2-blur", function(e) { log ("blur");});
 $("#e11_2")
@@ -677,7 +677,7 @@ $("#e11_2")
     .on("select2-selecting", function(e) { log ("selecting val="+ e.val+" choice="+ JSON.stringify(e.choice));})
     .on("select2-removing", function(e) { log ("removing val="+ e.val+" choice="+ JSON.stringify(e.choice));})
     .on("select2-removed", function(e) { log ("removed val="+ e.val+" choice="+ JSON.stringify(e.choice));})
-    .on("select2-loaded", function(e) { log ("loaded (data property omitted for brevitiy)");})
+    .on("select2-loaded", function(e) { log ("loaded (data property omitted for brevity)");})
     .on("select2-focus", function(e) { log ("focus");})
     .on("select2-blur", function(e) { log ("blur");});
 });
@@ -1107,7 +1107,7 @@ $(document).ready(function () {
                     <dt>element</dt><dd>Uses javascript to calculate the width of the source element.</dd>
                     <dt>copy</dt><dd>Copies the value of the width style attribute set on the source element.</dd>
                     <dt>resolve</dt><dd>First attempts to <u>copy</u> than falls back on <u>element</u>.</dd>
-                    <dt>other values</dt><dd>if the width attribute contains a function it will be avaluated, otherwise the value is used verbatim.</dd>
+                    <dt>other values</dt><dd>if the width attribute contains a function it will be evaluated, otherwise the value is used verbatim.</dd>
                 </dl>
             </td></tr>
             <tr><td>minimumInputLength</td><td>int</td><td>Number of characters necessary to start a search.</td></tr>
@@ -1416,7 +1416,7 @@ $("#select").select2({
 
                 The default tokenizer will only be used if the <code>tokenSeparators</code> and <code>createSearchChoice</code>
                 options are specified. The default tokenizer will split the string using any separator in <code>tokenSeparators</code>
-                and will create and select choice objects using <code>createSearhChoice</code> option. It will also
+                and will create and select choice objects using <code>createSearchChoice</code> option. It will also
                 ignore duplicates, silently swallowing those tokens.
             </td></tr>
             <tr id="doc-tokenSeparators"><td>tokenSeparators</td><td>array</td><td>
@@ -1790,7 +1790,7 @@ $("#select").select2({
         <div class="row zebra">
             <div class="span12">
                 <h3>select2-focus</h3>
-                <p>Fired when the control is focussed.
+                <p>Fired when the control is focused.
                 </p>
             </div>
         </div>
