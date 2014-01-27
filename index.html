@@ -76,7 +76,7 @@ $("#e5").select2({
         else if (movie.synopsis !== undefined) {
             markup += "<div class='movie-synopsis'>" + movie.synopsis + "</div>";
         }
-        markup += "</td></tr></table>"
+        markup += "</td></tr></table>";
         return markup;
     }
 
@@ -174,7 +174,7 @@ $("#e10").select2({
 });
 
 var data=[{id:0,tag:'enhancement'},{id:1,tag:'bug'},{id:2,tag:'duplicate'},{id:3,tag:'invalid'},{id:4,tag:'wontfix'}];
-function format(item) { return item.tag; };
+function format(item) { return item.tag; }
 
 $("#e10_2").select2({
     data:{ results: data, text: 'tag' },
@@ -250,7 +250,7 @@ $("#e10_4").select2({
                                     var markup=template
                                             .replace(/\$url/g, this.html_url)
                                             .replace(/\$num/g, this.number)
-                                            .replace(/\$title/g, this.title.replace("<", "&lt;"))
+                                            .replace(/\$title/g, this.title.replace("<", "&lt;"));
                                     list.append(markup);
                                 });
 
@@ -390,7 +390,7 @@ $("#e10_4").select2({
       <article class="row" id="multi">
         <div class="span4">
           <h3>Multi-Value Select Boxes</h3>
-           <p>Select2 also supports multi-value select boxes. The <code>select</code> below is declared with the <code>multiple</code> attribute. Select2 automatially picks up on this:</p>
+           <p>Select2 also supports multi-value select boxes. The <code>select</code> below is declared with the <code>multiple</code> attribute. Select2 automatically picks up on this:</p>
            <p>
                <select multiple name="e9" id="e9" style="width:300px" class="populate"></select>
            </p>
@@ -462,7 +462,7 @@ $("#e2_2").select2({
             <h3>Example Code</h3>
             <pre class="prettyprint linenums" id="code_e4"></pre>
             <p>
-                You can set <code>data-</code> attributes to <code>&lt;option&gt;</code> (or &lt;optgroup&gt;) and use them inside temptlating functions:
+                You can set <code>data-</code> attributes to <code>&lt;option&gt;</code> (or &lt;optgroup&gt;) and use them inside templating functions:
             </p>
             <pre class="prettyprint linenums">
 &lt;select&gt;
@@ -487,7 +487,7 @@ function format(state) {
              <p>
                  <input type="hidden" id="e5" style="width:300px"/>
              </p>
-             <p>In order to take advantage of custom data loading Select2 should be attached to an <code>input type='hidden'</code> tag, otherwise data is parsed from <code>select</code>'s <code>option</code> tags.</code></p>
+             <p>In order to take advantage of custom data loading Select2 should be attached to an <code>input type='hidden'</code> tag, otherwise data is parsed from <code>select</code>'s <code>option</code> tags.</p>
           </div>
           <div class="span8">
             <h3>Example Code</h3>
@@ -665,7 +665,7 @@ $("#e11")
     .on("select2-selecting", function(e) { log ("selecting val="+ e.val+" choice="+ JSON.stringify(e.choice));})
     .on("select2-removing", function(e) { log ("removing val="+ e.val+" choice="+ JSON.stringify(e.choice));})
     .on("select2-removed", function(e) { log ("removed val="+ e.val+" choice="+ JSON.stringify(e.choice));})
-    .on("select2-loaded", function(e) { log ("loaded (data property omitted for brevitiy)");})
+    .on("select2-loaded", function(e) { log ("loaded (data property omitted for brevity)");})
     .on("select2-focus", function(e) { log ("focus");})
     .on("select2-blur", function(e) { log ("blur");});
 $("#e11_2")
@@ -677,7 +677,7 @@ $("#e11_2")
     .on("select2-selecting", function(e) { log ("selecting val="+ e.val+" choice="+ JSON.stringify(e.choice));})
     .on("select2-removing", function(e) { log ("removing val="+ e.val+" choice="+ JSON.stringify(e.choice));})
     .on("select2-removed", function(e) { log ("removed val="+ e.val+" choice="+ JSON.stringify(e.choice));})
-    .on("select2-loaded", function(e) { log ("loaded (data property omitted for brevitiy)");})
+    .on("select2-loaded", function(e) { log ("loaded (data property omitted for brevity)");})
     .on("select2-focus", function(e) { log ("focus");})
     .on("select2-blur", function(e) { log ("blur");});
 });
@@ -761,7 +761,7 @@ $("#e11_2")
               by separating them with a comma or a space. Try typing in the search field below and entering a space or a comma.</p>
 
               <p><input type="hidden" id="e20" style="width:300px" value="brown"/></p>
-              <p>Note that the separators are defined in the <a href="#doc-tokenSeparators">tokenSeparators</a> option.</code></p>
+              <p>Note that the separators are defined in the <a href="#doc-tokenSeparators">tokenSeparators</a> option.</p>
               <p>Note that this example uses the built in <a href="#doc-tokenizer">tokenizer</a> function, but a custom one can be provided in the options.</p>
           </div>
           <div class="span8">
@@ -822,7 +822,7 @@ $("#e14_destroy").click(function() { $("#e14").select2("destroy"); });
           </div>
       </article>
 
-      <article class="row" id="lifecycle">
+      <article class="row" id="drag_drop">
 <script id="script_e15">
 $(document).ready(function () {
 $("#e15").select2({tags:["red", "green", "blue", "orange", "white", "black", "purple", "cyan", "teal"]});
@@ -1107,7 +1107,7 @@ $(document).ready(function () {
                     <dt>element</dt><dd>Uses javascript to calculate the width of the source element.</dd>
                     <dt>copy</dt><dd>Copies the value of the width style attribute set on the source element.</dd>
                     <dt>resolve</dt><dd>First attempts to <u>copy</u> than falls back on <u>element</u>.</dd>
-                    <dt>other values</dt><dd>if the width attribute contains a function it will be avaluated, otherwise the value is used verbatim.</dd>
+                    <dt>other values</dt><dd>if the width attribute contains a function it will be evaluated, otherwise the value is used verbatim.</dd>
                 </dl>
             </td></tr>
             <tr><td>minimumInputLength</td><td>int</td><td>Number of characters necessary to start a search.</td></tr>
@@ -1230,7 +1230,7 @@ $(document).ready(function () {
                     <tr><td>text</td><td>string</td><td>text of the option being matched.</td></tr>
                     <tr><td>option</td><td>jquery object</td>
                         <td>the <code>option</code> element we are trying to match. Only given when attached to <code>select</code>.
-                            Can be used to match against custom attributes on the <code>option</code> tag in addition to matching on the <code>option</code>'s text.</code></td></tr>
+                            Can be used to match against custom attributes on the <code>option</code> tag in addition to matching on the <code>option</code>'s text.</td></tr>
                     <tr><td>&lt;returns&gt;</td><td>boolean</td><td><code>true</code> if search term matches the text, or <code>false</code> otherwise.</td></tr>
                 </table>
                 The default implementation is case insensitive and matches anywhere in the term:
@@ -1411,12 +1411,12 @@ $("#select").select2({
                     <tr><td>&lt;returns&gt;</td><td>string (optional)</td><td>Returns the string to which the input of
                         the search field should be set to. Usually this is the remainder, of any, of the string after
                         the tokens have been stripped. If <code>undefined</code> or <code>null</code> is returned the
-                        input of the search field is unchanged.</code></td></tr>
+                        input of the search field is unchanged.</td></tr>
                 </table>
 
                 The default tokenizer will only be used if the <code>tokenSeparators</code> and <code>createSearchChoice</code>
                 options are specified. The default tokenizer will split the string using any separator in <code>tokenSeparators</code>
-                and will create and select choice objects using <code>createSearhChoice</code> option. It will also
+                and will create and select choice objects using <code>createSearchChoice</code> option. It will also
                 ignore duplicates, silently swallowing those tokens.
             </td></tr>
             <tr id="doc-tokenSeparators"><td>tokenSeparators</td><td>array</td><td>
@@ -1441,9 +1441,9 @@ $("#select").select2({
                             <td>Callback function that should be called with the <code>result</code> object. The result object:
                                 <table class="table table-bordered table-striped">
                                     <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-                                    <tr><td>result.results</td><td>[object]</td><td>Array of result objects. The default renderers expect objects with <code>id</code> and <code>text</code> keys</code>. The <code>id</code> attribute is required</code>, even if custom renderers are used. The object may also contain a <code>children</code>key if hierarchical data is displayed. The object may also contain a <code>disabled</code> boolean property indicating whether this result can be selected.</td></tr>
+                                    <tr><td>result.results</td><td>[object]</td><td>Array of result objects. The default renderers expect objects with <code>id</code> and <code>text</code> keys. The <code>id</code> attribute is required, even if custom renderers are used. The object may also contain a <code>children</code>key if hierarchical data is displayed. The object may also contain a <code>disabled</code> boolean property indicating whether this result can be selected.</td></tr>
                                     <tr><td>result.more</td><td>boolean</td><td><code>true</code>if more results are available for the current search term.</td></tr>
-                                    <tr><td>results.context</td><td>object</td><td>A user-defined object that should be made available as the <code>context</code> parameter to the <code>query</code> function on subsequent queries to load more result pages for the same search term. See the description of <a href="#doc-query-options-context">options.context</code></a> parameter.</td></tr>
+                                    <tr><td>results.context</td><td>object</td><td>A user-defined object that should be made available as the <code>context</code> parameter to the <code>query</code> function on subsequent queries to load more result pages for the same search term. See the description of <a href="#doc-query-options-context"><code>options.context</code></a> parameter.</td></tr>
                                 </table>
                             </td></tr>
                     </table>
@@ -1602,7 +1602,7 @@ $("#select").select2({
       <div class="row">
           <div class="span12"><h3>val</h3></div>
       </div>
-      <p>Gets or sets the selection. If the <code>value</code> parameter is not specified, the <code>id</code> attribute of the currently selected element is returned. If the <code>value</code> parameter is specified it will become the current selection.</code></p>
+      <p>Gets or sets the selection. If the <code>value</code> parameter is not specified, the <code>id</code> attribute of the currently selected element is returned. If the <code>value</code> parameter is specified it will become the current selection.</p>
       <table class="table table-bordered table-striped">
           <tr>
               <th>Parameter</th><th>Type</th><th>Description</th>
@@ -1626,7 +1626,7 @@ $("#select").select2({
 
               </table>
           </td></tr>
-          <tr><td>triggerChange (optional)</td><td>boolean</td><td>Whether or not a <code>change</code> event should be triggered. <code>false</code> by default.</code></td></tr>
+          <tr><td>triggerChange (optional)</td><td>boolean</td><td>Whether or not a <code>change</code> event should be triggered. <code>false</code> by default.</td></tr>
       </table>
         <p><code>val</code> method invoked on a single-select with an unset value will return <code>""</code>, while a <code>val</code> method invoked on an empty multi-select will return <code>[]</code>.</p>
 
@@ -1694,7 +1694,6 @@ $("#select").select2({
               <dt>added</dt><dd>The added element, if any - the full element object, not just the id.</dd>
               <dt>removed</dt><dd>The removed element, if any - the full element object, not just the id.</dd>
                 </dl>
-              </p>
           </div>
       </div>
         <div class="row zebra">
@@ -1702,27 +1701,23 @@ $("#select").select2({
                 <h3>select2-opening</h3>
                 <p>Fired before the dropdown is shown.</p>
                 <p>The event listener can prevent the opening by calling <code>preventDefault()</code> on the supplied event object.</p>
-                </p>
             </div>
         </div>
         <div class="row">
             <div class="span12">
                 <h3>select2-open</h3>
                 <p>Fired after the dropdown is shown.</p>
-                </p>
             </div>
         </div>
         <div class="row zebra">
             <div class="span12">
                 <h3>select2-highlight</h3>
                 <p>Fired when a choice is highlighted in the dropdown.</p>
-                </p>
                 <p>The event object contains the following custom properties:
                 <dl>
                     <dt>val</dt><dd>The id of the highlighted choice object.</dd>
                     <dt>object</dt><dd>The highlighted choice object.</dd>
                 </dl>
-                </p>
             </div>
         </div>
         <div class="row">
@@ -1730,13 +1725,11 @@ $("#select").select2({
                 <h3>select2-selecting</h3>
                 <p>Fired when a choice is being selected in the dropdown, but before any modification has been made to the selection.
                     This event is used to allow the user to reject selection by calling <code>event.preventDefault()</code></p>
-                </p>
                 <p>The event object contains the following custom properties:
                 <dl>
                     <dt>val</dt><dd>The id of the highlighted choice object.</dd>
                     <dt>object</dt><dd>The choice object about to be selected.</dd>
                 </dl>
-                </p>
             </div>
         </div>
         <div class="row">
@@ -1744,7 +1737,6 @@ $("#select").select2({
                 <h3>select2-clearing</h3>
                 <p>Fired when a choice is being cleared in the dropdown, but before any modification has been made to the selection.
                     This event is used to allow the user to reject the clear by calling <code>event.preventDefault()</code></p>
-                </p>
                 <p>For the clear button to be visible the <code>allowClear</code> option needs to be <code>true</code>.</p>
             </div>
         </div>
@@ -1753,44 +1745,38 @@ $("#select").select2({
                 <h3>select2-removing</h3>
                 <p>Fired when a choice is about to be removed in the dropdown/input, but before any removal of the choice has been made.
                     This event is used to allow the user to reject removal by calling <code>event.preventDefault()</code></p>
-                </p>
                 <p>The event object contains the following custom properties:
                 <dl>
                     <dt>val</dt><dd>The id of the removing choice object.</dd>
                     <dt>object</dt><dd>The choice object about to be removed.</dd>
                 </dl>
-                </p>
             </div>
         </div>
         <div class="row zebra">
             <div class="span12">
                 <h3>select2-removed</h3>
                 <p>Fired when a choice is removed or cleared.</p>
-                </p>
                 <p>The event object contains the following custom properties:
                 <dl>
                     <dt>val</dt><dd>The id of the highlighted choice object.</dd>
                     <dt>object</dt><dd>The highlighted choice object.</dd>
                 </dl>
-                </p>
             </div>
         </div>
         <div class="row">
             <div class="span12">
                 <h3>select2-loaded</h3>
                 <p>Fired when query function is done loading the data and the results list has been updated</p>
-                </p>
                 <p>The event object contains the following custom properties:
                 <dl>
                     <dt>items</dt><dd>data that was used to populate the results.</dd>
                 </dl>
-                </p>
             </div>
         </div>
         <div class="row zebra">
             <div class="span12">
                 <h3>select2-focus</h3>
-                <p>Fired when the control is focussed.
+                <p>Fired when the control is focused.
                 </p>
             </div>
         </div>
