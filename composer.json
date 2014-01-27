@@ -13,16 +13,16 @@
   "extra": {
     "component": {
       "scripts": [
-        "select2.js"
+        "js/select2.js"
       ],
       "files": [
-        "select2.js",
-        "select2_locale_*.js",
-        "select2.css",
-        "select2-bootstrap.css",
-        "select2-spinner.gif",
-        "select2.png",
-        "select2x2.png"
+        "js/select2.js",
+        "js/i18n/*.js",
+        "css/select2.css",
+        "css/select2-bootstrap.css",
+        "images/select2-spinner.gif",
+        "images/select2.png",
+        "images/select2x2.png"
       ]
     }
   }
