@@ -3294,7 +3294,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
     // plugin defaults, accessible to users
     $.fn.select2.defaults = {
-        width: "copy",
+        width: "resolve",
         loadMorePadding: 0,
         closeOnSelect: true,
         openOnEnter: true,
