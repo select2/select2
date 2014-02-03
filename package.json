@@ -4,14 +4,14 @@
   "homepage": "http://ivaynberg.github.io/select2",
   "author": "Igor Vaynberg",
   "repository": {"type": "git", "url": "git://github.com/ivaynberg/select2.git"},
-  "main": "select2.js",
+  "main": "js/select2.js",
   "version": "3.4.5",
   "jspm": {
     "main": "select2",
-    "files": ["select2.js", "select2.png", "select2.css", "select2-spinner.gif"],
+    "files": ["js/select2.js", "images/select2.png", "css/select2.css", "images/select2-spinner.gif"],
     "shim": {
         "select2": {
-            "imports": ["jquery", "./select2.css!"],
+            "imports": ["jquery", "./css/select2.css!"],
             "exports": "$"
         }
     },
