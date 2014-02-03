@@ -715,6 +715,9 @@ the specific language governing permissions and limitations under the Apache Lic
 
             installFilteredMouseMove(this.results);
             this.dropdown.on("mousemove-filtered touchstart touchmove touchend", resultsSelector, this.bind(this.highlightUnderEvent));
+            this.dropdown.on("touchend", resultsSelector, this.bind(this.selectHighlighted));
+            this.dropdown.on("touchmove", resultsSelector, this.bind(this.touchMoved));
+            this.dropdown.on("touchstart touchend", resultsSelector, this.bind(this.clearTouchMoved));
 
             installDebouncedScroll(80, this.results);
             this.dropdown.on("scroll-debounced", resultsSelector, this.bind(this.loadMoreIfNeeded));
@@ -1483,6 +1486,14 @@ the specific language governing permissions and limitations under the Apache Lic
             this.results.find(".select2-highlighted").removeClass("select2-highlighted");
         },
 
+        touchMoved: function() {
+            this._touchMoved = true;
+        },
+
+        clearTouchMoved: function() {
+          this._touchMoved = false;
+        },
+
         // abstract
         countSelectableResults: function() {
             return this.findHighlightableChoices().length;
@@ -1715,6 +1726,10 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // abstract
         selectHighlighted: function (options) {
+            if (this._touchMoved) {
+              this.clearTouchMoved();
+              return;
+            }
             var index=this.highlight(),
                 highlighted=this.results.find(".select2-highlighted"),
                 data = highlighted.closest('.select2-result').data("select2-data");
