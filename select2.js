@@ -1146,12 +1146,11 @@ the specific language governing permissions and limitations under the Apache Lic
         // abstract
         readonly: function(enabled) {
             if (enabled === undefined) enabled = false;
-            if (this._readonly === enabled) return false;
+            if (this._readonly === enabled) return;
             this._readonly = enabled;
 
             this.opts.element.prop("readonly", enabled);
             this.enableInterface();
-            return true;
         },
 
         // abstract
