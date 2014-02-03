@@ -1340,8 +1340,9 @@ format(item) {
                 </table>
                 <p class="alert alert-info">By default when attached to a <code>select</code> css classes from <code>option</code>s will be automatically copied.</p>
             </td></tr>
-            <tr><td>formatNoMatches</td><td>function</td><td>
-                Function used to render the &quot;No matches&quot; message
+            <tr><td>formatNoMatches</td><td>string/function</td><td>
+                String containing &quot;No matches&quot; message, or<br />
+                Function used to render the message
                 <pre>formatNoMatches(term)</pre>
                 <table class="table table-bordered table-striped">
                     <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
@@ -1349,8 +1350,9 @@ format(item) {
                     <tr><td>&lt;returns&gt;</td><td>string</td><td>Message html.</td></tr>
                 </table>
             </td></tr>
-            <tr><td>formatSearching</td><td>function</td><td>
-                Function used to render the &quot;Searching...&quot; message that is displayed while
+            <tr><td>formatSearching</td><td>string/function</td><td>
+                String containing &quot;Searching...&quot; message, or<br />
+                Function used to render the message that is displayed while
                 search is in progress.
                 <pre>formatSearching()</pre>
                 <table class="table table-bordered table-striped">
@@ -1358,8 +1360,9 @@ format(item) {
                     <tr><td>&lt;returns&gt;</td><td>string</td><td>Message html or <code>null</code>/<code>undefined</code> to disable the message.</td></tr>
                 </table>
             </td></tr>
-            <tr><td>formatInputTooShort</td><td>function</td><td>
-                Function used to render the &quot;Search input too short&quot; message.
+            <tr><td>formatInputTooShort</td><td>string/function</td><td>
+                String containing &quot;Search input too short&quot; message, or<br />
+                Function used to render the message.
                 <pre>formatInputTooShort(term, minLength)</pre>
                 <table class="table table-bordered table-striped">
                     <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
@@ -1368,12 +1371,34 @@ format(item) {
                     <tr><td>&lt;returns&gt;</td><td>string</td><td>Message html.</td></tr>
                 </table>
             </td></tr>
-            <tr><td>formatSelectionTooBig</td><td>function</td><td>
-                Function used to render the &quot;You cannot select any more choices&quot; message.
+            <tr><td>formatInputTooLong</td><td>string/function</td><td>
+                String containing &quot;Search input too long&quot; message, or<br />
+                Function used to render the message.
+                <pre>formatInputTooLong(term, maxLength)</pre>
+                <table class="table table-bordered table-striped">
+                    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                    <tr><td>term</td><td>string</td><td>Search string entered by user.</td></tr>
+                    <tr><td>maxLength</td><td>int</td><td>Maximum required term length.</td></tr>
+                    <tr><td>&lt;returns&gt;</td><td>string</td><td>Message html.</td></tr>
+                </table>
+            </td></tr>
+            <tr><td>formatSelectionTooBig</td><td>string/function</td><td>
+                String containing &quot;You cannot select any more choices&quot; message, or<br />
+                Function used to render the message.
                 <pre>formatSelectionTooBig(maxSize)</pre>
                 <table class="table table-bordered table-striped">
                     <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
                     <tr><td>maxSize</td><td>string</td><td>The maximum specified size of the selection.</td></tr>
+                    <tr><td>&lt;returns&gt;</td><td>string</td><td>Message html.</td></tr>
+                </table>
+            </td></tr>
+            <tr><td>formatLoadMore</td><td>string/function</td><td>
+                String containing &quot;Loading more results…&quot; message, or<br />
+                Function used to render the message.
+                <pre>formatLoadMore(pageNumber)</pre>
+                <table class="table table-bordered table-striped">
+                    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                    <tr><td>pageNumber</td><td>string</td><td>The current page.</td></tr>
                     <tr><td>&lt;returns&gt;</td><td>string</td><td>Message html.</td></tr>
                 </table>
             </td></tr>
