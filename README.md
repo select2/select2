@@ -46,8 +46,8 @@ Integrations
 Internationalization (i18n)
 ---------------------------
 
-Select2 supports multiple languages by simply including the right
-language JS file (`select2_locale_it.js`, `select2_locale_nl.js`, etc.).
+Select2 supports multiple languages by simply including the right language JS
+file (`select2_locale_it.js`, `select2_locale_nl.js`, etc.) after `select2.js`.
 
 Missing a language? Just copy `select2_locale_en.js.template`, translate
 it, and make a pull request back to Select2 here on GitHub.
