@@ -1,0 +1,709 @@
+$color-accent: #5897fb;
+
+$color-background-default: #f4f4f4;
+$color-background-light: #feffde;
+$color-background-lighter: #ffffff;
+$color-background-dark: #eeeeee;
+$color-background-darker: #cccccc;
+$color-background-accent: $color-accent;
+$color-background-accent-light: #3875d7;
+
+$color-background-searchChoice-default: #e4e4e4;
+$color-background-searchChoice-light: #f0f0f0;
+$color-background-searchChoice-dark: #e8e8e8;
+$color-background-searchChoice-accent:#d4d4d4;
+
+$color-boxshadow-default: rgba(0, 0, 0, .3);
+$color-boxshadow-light: rgba(0, 0, 0, .15);
+$color-boxshadow-lighter: rgba(0, 0, 0, .05);
+
+$color-font-default: #000000;
+$color-font-light: #333333;
+$color-font-lighter: #666666;
+$color-font-lightest: #999999;
+$color-font-accent: #ffffff;
+
+$color-border-default: #aaaaaa;
+$color-border-disabled: #dddddd;
+$color-border-accent: $color-accent;
+
+$borderRadius-default: 4px;
+$borderRadius-searchChoice: 3px;
+
+$boxShadowBlur-default: 5px;
+$boxShadowBlur-small: 2px;
+$boxShadowOffset-left-default: 0 -4px;
+$boxShadowOffset-right-default: 0 4px;
+$boxShadowOffset-right-small: 0 4px;
+
+
+$lineHeight: 26px;
+$arrowWidth: $lineHeight / 1.45;
+
+/*
+Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
+*/
+.select2-container,
+.select2-drop,
+.select2-search,
+.select2-search input {
+  /*
+    Force border-box so that % widths fit the parent
+    container without overlap because of margin/padding.
+
+    More Info : http://www.quirksmode.org/css/box.html
+  */
+  -webkit-box-sizing: border-box; /* webkit */
+     -moz-box-sizing: border-box; /* firefox */
+          box-sizing: border-box; /* css3 */
+}
+
+
+.select2-container {
+    margin: 0;
+    position: relative;
+    display: inline-block;
+    /* inline-block for ie7 */
+    zoom: 1;
+    *display: inline;
+    vertical-align: middle;
+
+    .select2-choice {
+        display: block;
+        height: $lineHeight;
+        padding: 0 0 0 ($lineHeight / 3);
+        overflow: hidden;
+        position: relative;
+
+        border: 1px solid $color-border-default;
+        white-space: nowrap;
+        line-height: $lineHeight;
+        color: $color-font-default;
+        text-decoration: none;
+
+        border-radius: $borderRadius-default;
+
+        background-clip: padding-box;
+
+        -webkit-touch-callout: none;
+          -webkit-user-select: none;
+             -moz-user-select: none;
+              -ms-user-select: none;
+                  user-select: none;
+
+        background-color: $color-background-lighter;
+        background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, $color-background-dark), color-stop(0.5, $color-background-lighter));
+        background-image: -webkit-linear-gradient(center bottom, $color-background-dark 0%, $color-background-lighter 50%);
+        background-image: -moz-linear-gradient(center bottom, $color-background-dark 0%, $color-background-lighter 50%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = "#{$color-background-lighter}", endColorstr = '$color-background-dark', GradientType = 0);
+        background-image: linear-gradient(top, $color-background-lighter 0%, $color-background-dark 50%);
+
+        & > .select2-chosen {
+            margin-right: $lineHeight;
+            display: block;
+            overflow: hidden;
+
+            white-space: nowrap;
+
+            text-overflow: ellipsis;
+        }
+
+        abbr {
+            display: none;
+            width: ($lineHeight / 2);
+            height: ($lineHeight / 2);
+            position: absolute;
+            right: $lineHeight;
+            top: $lineHeight / 3;
+
+            font-size: 1px;
+            text-decoration: none;
+
+            border: 0;
+            background: url('select2.png') right top no-repeat;
+            cursor: pointer;
+            outline: 0;
+
+            &:hover {
+                background-position: right -($lineHeight / 2);
+                cursor: pointer;
+            }
+        }
+
+        .select2-arrow {
+            display: inline-block;
+            width: $arrowWidth;
+            height: 100%;
+            position: absolute;
+            right: 0;
+            top: 0;
+
+            border-left: 1px solid $color-border-default;
+            border-radius: 0 $borderRadius-default $borderRadius-default 0;
+
+            background-clip: padding-box;
+
+            background: $color-background-darker;
+            background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, $color-background-darker), color-stop(0.6, $color-background-dark));
+            background-image: -webkit-linear-gradient(center bottom, $color-background-darker 0%, $color-background-dark 60%);
+            background-image: -moz-linear-gradient(center bottom, $color-background-darker 0%, $color-background-dark 60%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = "#{$color-background-dark}", endColorstr = "#{$color-background-darker}", GradientType = 0);
+            background-image: linear-gradient(top, $color-background-darker 0%, $color-background-dark 60%);
+
+            b {
+                display: block;
+                width: 100%;
+                height: 100%;
+                background: url('select2.png') no-repeat 0 1px;
+            }
+        }
+    }
+
+    &.select2-drop-above .select2-choice {
+        border-bottom-color: $color-border-default;
+
+        border-radius: 0 0 $borderRadius-default $borderRadius-default;
+
+        background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, $color-background-dark), color-stop(0.9, $color-background-lighter));
+        background-image: -webkit-linear-gradient(center bottom, $color-background-dark 0%, $color-background-lighter 90%);
+        background-image: -moz-linear-gradient(center bottom, $color-background-dark 0%, $color-background-lighter 90%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#{$color-background-lighter}", endColorstr="#{$color-background-dark}", GradientType=0);
+        background-image: linear-gradient(top, $color-background-dark 0%, $color-background-lighter 90%);
+    }
+
+    &.select2-allowclear {
+        .select2-choice {
+            .select2-chosen {
+                margin-right: ($lineHeight * 1.6);
+            }
+
+            abbr {
+                display: inline-block;
+            }
+        }
+    }
+
+    .select2-container.select2-container-disabled {
+        .select2-choice {
+            background-color: $color-background-default;
+            background-image: none;
+            border: 1px solid $color-border-disabled;
+            cursor: default;
+
+            .select2-arrow {
+                background-color: $color-background-default;
+                background-image: none;
+                border-left: 0;
+            }
+
+            abbr {
+                display: none;
+            }
+        }
+    }
+}
+
+.select2-container-active {
+    .select2-choice,
+    .select2-choices {
+        border: 1px solid $color-border-accent;
+        outline: none;
+
+        -webkit-box-shadow: 0 0 $boxShadowBlur-default $color-boxshadow-default;
+                box-shadow: 0 0 $boxShadowBlur-default $color-boxshadow-default;
+    }
+}
+
+.select2-drop-mask {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    left: 0;
+    top: 0;
+    min-height: 100%;
+    min-width: 100%;
+    height: auto;
+    width: auto;
+    opacity: 0;
+    z-index: 9998;
+    /* styles required for IE to work */
+    background-color: $color-background-lighter;
+    filter: alpha(opacity=0);
+}
+
+.select2-drop {
+    width: 100%;
+    margin-top: -1px;
+    position: absolute;
+    z-index: 9999;
+    top: 100%;
+
+    background: $color-background-lighter;
+    color: $color-font-default;
+    border: 1px solid $color-border-default;
+    border-top: 0;
+
+    border-radius: 0 0 $borderRadius-default $borderRadius-default;
+
+    -webkit-box-shadow: $boxShadowOffset-right-default $boxShadowBlur-default $color-boxshadow-light;
+            box-shadow: $boxShadowOffset-right-default $boxShadowBlur-default $color-boxshadow-light;
+
+    &.select2-drop-above {
+        margin-top: 1px;
+        border-top: 1px solid $color-border-default;
+        border-bottom: 0;
+
+        border-radius: $borderRadius-default $borderRadius-default 0 0;
+
+        -webkit-box-shadow: $boxShadowOffset-left-default $boxShadowBlur-default $color-boxshadow-light;
+                box-shadow: $boxShadowOffset-left-default $boxShadowBlur-default $color-boxshadow-light;
+
+        &.select2-drop-active {
+            border-top: 1px solid $color-border-accent;
+        }
+
+        .select2-search input {
+            margin-top: ($lineHeight / 6.5);
+        }
+    }
+}
+
+.select2-drop-auto-width {
+    border-top: 1px solid $color-border-default;
+    width: auto;
+
+    .select2-search {
+        padding-top: ($lineHeight / 6.5);
+    }
+}
+
+.select2-drop-active {
+    border: 1px solid $color-border-accent;
+    border-top: none;
+}
+
+.select2-search {
+    display: inline-block;
+    width: 100%;
+    min-height: $lineHeight;
+    margin: 0;
+    padding-left: ($lineHeight / 6.5);
+    padding-right: ($lineHeight / 6.5);
+
+    position: relative;
+    z-index: 10000;
+
+    white-space: nowrap;
+
+    input {
+        width: 100%;
+        height: auto !important;
+        min-height: $lineHeight;
+        padding: ($lineHeight / 6.5) ($lineHeight / 1.3) ($lineHeight / 6.5) ($lineHeight / 5);
+        margin: 0;
+
+        outline: 0;
+        font-family: inherit;
+        font-size: 1em;
+
+        border: 1px solid $color-border-default;
+        border-radius: 0;
+
+        -webkit-box-shadow: none;
+                box-shadow: none;
+
+        background: $color-background-lighter url('select2.png') no-repeat 100% -22px;
+        background: url('select2.png') no-repeat 100% -22px, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, $color-background-lighter), color-stop(0.99, $color-background-dark));
+        background: url('select2.png') no-repeat 100% -22px, -webkit-linear-gradient(center bottom, $color-background-lighter 85%, $color-background-dark 99%);
+        background: url('select2.png') no-repeat 100% -22px, -moz-linear-gradient(center bottom, $color-background-lighter 85%, $color-background-dark 99%);
+        background: url('select2.png') no-repeat 100% -22px, linear-gradient(top, $color-background-lighter 85%, $color-background-dark 99%);
+
+        &.select2-active {
+            background: $color-background-lighter url('select2-spinner.gif') no-repeat 100%;
+            background: url('select2-spinner.gif') no-repeat 100%, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, $color-background-lighter), color-stop(0.99, $color-background-dark));
+            background: url('select2-spinner.gif') no-repeat 100%, -webkit-linear-gradient(center bottom, $color-background-lighter 85%, $color-background-dark 99%);
+            background: url('select2-spinner.gif') no-repeat 100%, -moz-linear-gradient(center bottom, $color-background-lighter 85%, $color-background-dark 99%);
+            background: url('select2-spinner.gif') no-repeat 100%, linear-gradient(top, $color-background-lighter 85%, $color-background-dark 99%);
+        }
+    }
+}
+
+.select2-dropdown-open {
+    .select2-choice {
+        border-bottom-color: transparent;
+        -webkit-box-shadow: $boxShadowOffset-right-small 0 $color-background-lighter inset;
+                box-shadow: $boxShadowOffset-right-small 0 $color-background-lighter inset;
+
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+
+        background-color: $color-background-dark;
+        background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, $color-background-lighter), color-stop(0.5, $color-background-dark));
+        background-image: -webkit-linear-gradient(center bottom, $color-background-lighter 0%, $color-background-dark 50%);
+        background-image: -moz-linear-gradient(center bottom, $color-background-lighter 0%, $color-background-dark 50%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#{$color-background-dark}", endColorstr="#{$color-background-lighter}", GradientType=0);
+        background-image: linear-gradient(top, $color-background-lighter 0%, $color-background-dark 50%);
+    }
+
+    .select2-drop-above .select2-choice,
+    .select2-drop-above .select2-choices {
+        border: 1px solid $color-border-accent;
+        border-top-color: transparent;
+
+        background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, $color-background-lighter), color-stop(0.5, $color-background-dark));
+        background-image: -webkit-linear-gradient(center top, $color-background-lighter 0%, $color-background-dark 50%);
+        background-image: -moz-linear-gradient(center top, $color-background-lighter 0%, $color-background-dark 50%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#{$color-background-dark}", endColorstr="#{$color-background-lighter}", GradientType=0);
+        background-image: linear-gradient(bottom, $color-background-lighter 0%, $color-background-dark 50%);
+    }
+
+    .select2-choice .select2-arrow {
+        background: transparent;
+        border-left: none;
+        filter: none;
+    }
+    .select2-choice .select2-arrow b {
+        background-position: -$arrowWidth 1px;
+    }
+}
+
+/* results */
+.select2-results {
+    max-height: 200px;
+    padding: 0 0 0 ($lineHeight / 6.5);
+    margin: ($lineHeight / 6.5) ($lineHeight / 6.5) ($lineHeight / 6.5) 0;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+    $b: ($lineHeight / 1.3);
+    ul.select2-result-sub {
+        margin: 0;
+        padding-left: ($b * 0);
+
+        & > li .select2-result-label {
+            padding-left: ($b * 1);
+        }
+
+        ul.select2-result-sub {
+            & > li .select2-result-label {
+                padding-left: ($b * 2);
+            }
+
+            ul.select2-result-sub {
+                & > li .select2-result-label {
+                    padding-left: ($b * 3);
+                }
+
+                ul.select2-result-sub {
+                    & > li .select2-result-label {
+                        padding-left: ($b * 4);
+                    }
+
+                    ul.select2-result-sub {
+                        & > li .select2-result-label {
+                            padding-left: ($b * 5);
+                        }
+
+                        ul.select2-result-sub {
+                            & > li .select2-result-label {
+                                padding-left: ($b * 5.5);
+                            }
+
+                            ul.select2-result-sub {
+                                & > li .select2-result-label {
+                                    padding-left: ($b * 6);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    li {
+        list-style: none;
+        display: list-item;
+        background-image: none;
+
+        &.select2-result-with-children > .select2-result-label {
+            font-weight: bold;
+        }
+
+        em {
+            background: $color-background-light;
+            font-style: normal;
+        }
+    }
+
+    .select2-highlighted {
+        background: $color-background-accent-light;
+        color: $color-font-accent;
+
+        em {
+            background: transparent;
+        }
+
+        ul {
+            background: $color-background-lighter;
+            color: $color-font-default;
+        }
+    }
+
+    .select2-result-label {
+        padding: ($lineHeight / 8) ($lineHeight / 4) ($lineHeight / 6.5);
+        margin: 0;
+        cursor: pointer;
+
+        min-height: 1em;
+
+        -webkit-touch-callout: none;
+          -webkit-user-select: none;
+             -moz-user-select: none;
+              -ms-user-select: none;
+                  user-select: none;
+    }
+
+    .select2-no-results,
+    .select2-searching,
+    .select2-selection-limit {
+        background: $color-background-default;
+        display: list-item;
+    }
+
+    .select2-results .select2-disabled {
+        background: $color-background-default;
+        display: list-item;
+        cursor: default;
+
+        &.select2-highlighted {
+            color: $color-font-lighter;
+            background: $color-background-default;
+            display: list-item;
+            cursor: default;
+        }
+    }
+
+    .select2-results .select2-selected {
+        display: none;
+    }
+}
+
+.select2-more-results {
+    background: $color-background-default;
+    display: list-item;
+
+    &.select2-active {
+        background: $color-background-default url('select2-spinner.gif') no-repeat 100%;
+    }
+}
+
+.select2-locked {
+  padding: ($lineHeight / 6.5) ($lineHeight / 5) ($lineHeight / 8.5) ($lineHeight / 5) !important;
+}
+
+.select2-container-multi {
+    &.select2-container-active {
+        .select2-choices {
+            border: 1px solid $color-border-accent;
+            outline: none;
+
+            -webkit-box-shadow: 0 0 $boxShadowBlur-default $color-boxshadow-default;
+                    box-shadow: 0 0 $boxShadowBlur-default $color-boxshadow-default;
+        }
+    }
+
+    .select2-choices {
+        height: auto !important;
+        height: 1%;
+        min-height: $lineHeight;
+        margin: 0;
+        padding: 0;
+        position: relative;
+
+        border: 1px solid $color-border-default;
+        cursor: text;
+        overflow: hidden;
+
+        background-color: $color-background-lighter;
+        background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(1%, $color-background-dark), color-stop(15%, $color-background-lighter));
+        background-image: -webkit-linear-gradient(top, $color-background-dark 1%, $color-background-lighter 15%);
+        background-image: -moz-linear-gradient(top, $color-background-dark 1%, $color-background-lighter 15%);
+        background-image: linear-gradient(top, $color-background-dark 1%, $color-background-lighter 15%);
+
+        li {
+            float: left;
+            list-style: none;
+        }
+
+        &, 
+        .select2-search-field {
+            margin: 0;
+            padding: 0;
+            white-space: nowrap;
+        }
+
+        .select2-search-choice {
+            padding: ($lineHeight / 8) ($lineHeight / 5) ($lineHeight / 8) $arrowWidth;
+            margin: ($lineHeight / 8) 0 ($lineHeight / 8) ($lineHeight / 5);
+            position: relative;
+
+            line-height: $lineHeight / 2;
+            color: $color-font-light;
+            cursor: default;
+            border: 1px solid $color-border-default;
+
+            border-radius: $borderRadius-searchChoice;
+
+            -webkit-box-shadow: 0 0 $boxShadowBlur-small $color-background-lighter inset, $boxShadowOffset-right-small 0 $color-boxshadow-lighter;
+                    box-shadow: 0 0 $boxShadowBlur-small $color-background-lighter inset, $boxShadowOffset-right-small 0 $color-boxshadow-lighter;
+
+            background-clip: padding-box;
+
+            -webkit-touch-callout: none;
+              -webkit-user-select: none;
+                 -moz-user-select: none;
+                  -ms-user-select: none;
+                      user-select: none;
+
+            background-color: $color-background-searchChoice-default;
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#{$color-background-dark}", endColorstr='$color-background-default', GradientType=0);
+            background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(20%, $color-background-default), color-stop(50%, $color-background-searchChoice-light), color-stop(52%, $color-background-searchChoice-dark), color-stop(100%, $color-background-dark));
+            background-image: -webkit-linear-gradient(top, $color-background-default 20%, $color-background-searchChoice-light 50%, $color-background-searchChoice-dark 52%, $color-background-dark 100%);
+            background-image: -moz-linear-gradient(top, $color-background-default 20%, $color-background-searchChoice-light 50%, $color-background-searchChoice-dark 52%, $color-background-dark 100%);
+            background-image: linear-gradient(top, $color-background-default 20%, $color-background-searchChoice-light 50%, $color-background-searchChoice-dark 52%, $color-background-dark 100%);
+
+            .select2-chosen {
+                cursor: default;
+            }
+
+            .select2-search-choice-close:hover {
+                background-position: right -11px;
+            }
+        }
+
+        .select2-search-choice-focus {
+            background: $color-background-searchChoice-accent;
+
+            .select2-search-choice-close {
+                background-position: right -11px;
+            }
+        }
+
+        .select2-search-field {
+            input {
+                padding: ($lineHeight / 5);
+                margin: 1px 0;
+
+                font-family: inherit;
+                font-size: 100%;
+                color: $color-font-lighter;
+                outline: 0;
+                border: 0;
+                -webkit-box-shadow: none;
+                        box-shadow: none;
+                background: transparent !important;
+
+                &.select2-active {
+                    background: $color-background-lighter url('select2-spinner.gif') no-repeat 100% !important;
+                }
+            }
+        }
+    }
+
+    .select2-search-choice-close {
+        left: ($lineHeight / 8);
+    }
+
+    &.select2-container-disabled {
+        .select2-choices {
+            background-color: $color-background-default;
+            background-image: none;
+            border: 1px solid $color-border-disabled;
+            cursor: default;
+
+            .select2-search-choice {
+                padding: ($lineHeight / 8) ($lineHeight / 5) ($lineHeight / 8) ($lineHeight / 5);
+                border: 1px solid $color-border-disabled;
+                background-image: none;
+                background-color: $color-background-default;
+
+                .select2-search-choice-close {
+                    display: none;
+                    background: none;
+                }
+            }
+        }
+    }
+}
+
+.select2-default {
+    color: $color-font-lightest !important;
+}
+
+.select2-search-choice-close {
+    display: block;
+    width: ($lineHeight / 2);
+    height: ($lineHeight / 2);
+    position: absolute;
+    right: ($lineHeight / 8);
+    top: ($lineHeight / 8);
+
+    font-size: 1px;
+    outline: none;
+    background: url('select2.png') right top no-repeat;
+}
+
+.select2-result-selectable .select2-match,
+.select2-result-unselectable .select2-match {
+    text-decoration: underline;
+}
+
+.select2-offscreen {
+    &,
+    &:focus {
+        clip: rect(0 0 0 0) !important;
+        width: 1px !important;
+        height: 1px !important;
+        border: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+        position: absolute !important;
+        outline: 0 !important;
+        left: 0px !important;
+        top: 0px !important;
+    }
+}
+
+.select2-display-none {
+    display: none;
+}
+
+.select2-measure-scrollbar {
+    position: absolute;
+    top: -10000px;
+    left: -10000px;
+    width: 100px;
+    height: 100px;
+    overflow: scroll;
+}
+
+/* Retina-ize icons */
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-resolution: 144dpi)  {
+  .select2-search input,
+  .select2-search-choice-close,
+  .select2-container .select2-choice abbr,
+  .select2-container .select2-choice .select2-arrow b {
+      background-image: url('select2x2.png') !important;
+      background-repeat: no-repeat !important;
+      background-size: 60px 40px !important;
+  }
+
+  .select2-search input {
+      background-position: 100% -21px !important;
+  }
+}
