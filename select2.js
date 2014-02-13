@@ -3245,7 +3245,7 @@ the specific language governing permissions and limitations under the Apache Lic
             opts,
             select2,
             method, value, multiple,
-            allowedMethods = ["val", "destroy", "opened", "open", "close", "focus", "isFocused", "container", "dropdown", "onSortStart", "onSortEnd", "enable", "disable", "readonly", "positionDropdown", "data", "search"],
+            allowedMethods = ["val", "destroy", "opened", "open", "close", "focus", "isFocused", "container", "dropdown", "onSortStart", "onSortEnd", "enable", "disable", "readonly", "positionDropdown", "data", "search", "isSelect2"],
             valueMethods = ["opened", "isFocused", "container", "dropdown"],
             propertyMethods = ["val", "data"],
             methodsMap = { search: "externalSearch" };
@@ -3272,9 +3272,15 @@ the specific language governing permissions and limitations under the Apache Lic
 
                 value = undefined;
                 select2 = $(this).data("select2");
-                if (select2 === undefined) return;
-
                 method=args[0];
+
+                // detect if element is select2
+                if (method === "isSelect2") {
+                    value = (select2 !== undefined);
+                    return;
+                }
+
+                if (select2 === undefined) return;
 
                 if (method === "container") {
                     value = select2.container;
