@@ -2872,7 +2872,7 @@ the specific language governing permissions and limitations under the Apache Lic
             id = this.id(data);
             if (indexOf(val, id) < 0) {
                 val.push(id);
-                self.setUniqueVal(val);
+                this.setUniqueVal(val);
             }
 
             this.opts.element.trigger({ type: "selected", val: this.id(data), choice: data });
