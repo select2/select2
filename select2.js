@@ -2832,7 +2832,6 @@ the specific language governing permissions and limitations under the Apache Lic
             // filter out duplicates
             $(data).each(function () {
                 if (indexOf(self.id(this), ids) < 0) {
-                    ids.push(self.id(this));
                     filtered.push(this);
                 }
             });
@@ -2841,9 +2840,9 @@ the specific language governing permissions and limitations under the Apache Lic
             this.selection.find(".select2-search-choice").remove();
             $(data).each(function () {
                 self.addSelectedChoice(this);
-                val.push(self.id(this));
+                ids.push(self.id(this));
             });
-            self.setUniqueVal(val);
+            self.setUniqueVal(ids);
             self.postprocessResults();
         },
 
