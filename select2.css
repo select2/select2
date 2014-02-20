@@ -243,6 +243,14 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     margin-top: 4px;
 }
 
+/*
+ * This style is added to get rid of 'X' button in input field in IE
+ */
+.select2-search input::-ms-clear {
+    width : 0;
+    height: 0;
+}
+
 .select2-search input.select2-active {
     background: #fff url('select2-spinner.gif') no-repeat 100%;
     background: url('select2-spinner.gif') no-repeat 100%, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, #fff), color-stop(0.99, #eee));
@@ -376,12 +384,18 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 }
 
 
-.select2-results .select2-no-results,
 .select2-results .select2-searching,
 .select2-results .select2-selection-limit {
     background: #f4f4f4;
     display: list-item;
     padding-left: 5px;
+}
+
+/*
+ * horizontal scrollbar should be hidden in IE and Chrome when no result found
+ */
+.select2-results .select2-no-results {
+    overflow-y: hidden;
 }
 
 /*
