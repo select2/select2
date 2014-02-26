@@ -80,6 +80,8 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     white-space: nowrap;
 
     text-overflow: ellipsis;
+    float: none;
+    width: auto;
 }
 
 .select2-container .select2-choice abbr {
