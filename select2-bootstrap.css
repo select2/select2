@@ -1,87 +1,191 @@
-.form-control .select2-choice {
-    border: 0;
-    border-radius: 2px;
+/**
+ * Bootstrap theme for Select2
+ */
+.select2-container {
+	width: 220px;
 }
 
-.form-control .select2-choice .select2-arrow {
-    border-radius: 0 2px 2px 0;   
+.select2-search input  {
+	margin-top: 4px;
 }
 
-.form-control.select2-container {
-    height: auto !important;
-    padding: 0px;
+.select2-drop {
+	margin-top: 0px;
+}
+.modal .select2-drop {
+	margin-top: -1px;
+	margin-left: -1px;
+}
+.select2-container .select2-choice {
+	filter: none;
+}
+.select2-container .select2-choices {
+	border-radius: 4px 4px 4px 4px;
+}
+.select2-dropdown-open .select2-choices {
+	border-radius: 4px 4px 0px 0px;
+}
+.select2-container-multi .select2-choices .select2-search-field input{
+	padding: 3px;
+}
+.select2-drop-active{
+  border-color: rgba(82, 168, 236, 0.8);
+  outline: 0;
+  outline: thin dotted \9;
+  /* IE6-9 */
+
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
 }
 
-.form-control.select2-container.select2-dropdown-open {
-    border-color: #5897FB;
-    border-radius: 3px 3px 0 0;
+.select2-container .select2-choice, .select2-container .select2-choices {
+	height: auto;
+	background-image: none;
+	border: 1px solid #CCCCCC;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+	transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+	padding: 0px;
+}
+.select2-container .select2-choice > span {
+	height: 20px;
+	line-height: 20px;
+	margin-bottom: 0;
+	padding: 4px 6px;
+	vertical-align: middle;
+	color: #555555;
+}
+.select2-container .select2-choice .select2-arrow {
+	width: 26px;
+	background: none;
+	background-color: #EEEEEE;
+	border-right: none;
+	border-top: none;
+	border-bottom: none;
+	border-left: 1px solid #CCCCCC;
+	display: inline-block;
+	font-size: 14px;
+	font-weight: normal;
+	height: 20px;
+	line-height: 20px;
+	min-width: 16px;
+	padding: 4px 5px;
+	text-align: center;
+	text-shadow: 0 1px 0 #FFFFFF;
+	width: auto;
+	white-space: nowrap;
+	vertical-align: top;
+	margin-left: -1px;
+	filter: none;
+}
+.select2-container .select2-choice .select2-arrow b {
+	height: 16px;
+	width: 16px;
+	display: block;
+	background-image: url("../img/glyphicons-halflings.png") !important;
+	background-position: -313px -119px !important;
+	background-size: auto auto !important;
+	line-height: 14px;
+	margin-top: 1px;
+	vertical-align: text-top;
+	font-size: 14px;
+	font-weight: normal;
+	text-align: center;
+	text-shadow: 0 1px 0 #FFFFFF;
+	white-space: nowrap;
+}
+.select2-container.select2-dropdown-open .select2-choice .select2-arrow b {
+	background-position: -288px -120px !important;
 }
 
-.form-control .select2-container.select2-dropdown-open .select2-choices {
-    border-radius: 3px 3px 0 0;
+.select2-container .select2-default > span {
+	color: #aaa;
 }
 
-.form-control.select2-container .select2-choices {
-    border: 0 !important;
-    border-radius: 3px;
-}
+.select2-container.select2-container-active .select2-choice,
+.select2-container.select2-container-active .select2-choices,
+.select2-container.select2-container-active .select2-arrow  {
+  border-color: rgba(82, 168, 236, 0.8);
+  outline: 0;
+  outline: thin dotted \9;
+  /* IE6-9 */
 
-.control-group.warning .select2-container .select2-choice,
-.control-group.warning .select2-container .select2-choices,
-.control-group.warning .select2-container-active .select2-choice,
-.control-group.warning .select2-container-active .select2-choices,
-.control-group.warning .select2-dropdown-open.select2-drop-above .select2-choice,
-.control-group.warning .select2-dropdown-open.select2-drop-above .select2-choices,
-.control-group.warning .select2-container-multi.select2-container-active .select2-choices {
-    border: 1px solid #C09853 !important;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);         
 }
-
-.control-group.warning .select2-container .select2-choice div {
-    border-left: 1px solid #C09853 !important;
-    background: #FCF8E3 !important;
+.select2-container.input-medium {
+	width : 164px;
 }
-
-.control-group.error .select2-container .select2-choice,
-.control-group.error .select2-container .select2-choices,
+.select2-container .select2-choice abbr {
+	right: 27px;
+}
+.select2-container.select2-allowclear .select2-choice .select2-chosen {
+	margin-right: 32px;
+}
+.control-group.error .select2-choice,
+.control-group.warning .select2-choice,
+.control-group.info .select2-choice,
+.control-group.sucess .select2-choice {
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
+.control-group.error .select2-container .select2-choice > .select2-chosen,
+.control-group.error .select2-container .select2-choice .select2-arrow  {
+    background-color: #f2dede;
+	color: #b94a48;
+}
+.control-group.info .select2-container .select2-choice > .select2-chosen,
+.control-group.info .select2-container .select2-choice .select2-arrow{
+    background-color: #d9edf7;
+	color: #3a87ad;
+}
+.control-group.warning .select2-container .select2-choice > .select2-chosen,
+.control-group.warning .select2-container .select2-choice .select2-arrow{
+	background-color: #fcf8e3;
+	color: #c09853;
+}
+.control-group.success .select2-container .select2-choice > .select2-chosen,
+.control-group.success .select2-container .select2-choice .select2-arrow{
+	background-color: #dff0d8;
+	color: #468847;
+}
+.control-group.error .select2-arrow, .control-group.error .select2-choice {
+	border-color: #b94a48;
+}
+.control-group.info .select2-arrow, .control-group.info .select2-choice {
+	border-color: #3a87ad;
+}
+.control-group.warning .select2-arrow, .control-group.warning .select2-choice {
+	border-color: #c09853;
+}
+.control-group.success .select2-arrow, .control-group.success .select2-choice {
+	border-color: #468847;
+}
 .control-group.error .select2-container-active .select2-choice,
-.control-group.error .select2-container-active .select2-choices,
-.control-group.error .select2-dropdown-open.select2-drop-above .select2-choice,
-.control-group.error .select2-dropdown-open.select2-drop-above .select2-choices,
-.control-group.error .select2-container-multi.select2-container-active .select2-choices {
-    border: 1px solid #B94A48 !important;
+.control-group.error .select2-container-active .select2-arrow {
+	border-color: #953b39;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392;
+	   -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392;
+	        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392;
 }
-
-.control-group.error .select2-container .select2-choice div {
-    border-left: 1px solid #B94A48 !important;
-    background: #F2DEDE !important;
-}
-
-.control-group.info .select2-container .select2-choice,
-.control-group.info .select2-container .select2-choices,
 .control-group.info .select2-container-active .select2-choice,
-.control-group.info .select2-container-active .select2-choices,
-.control-group.info .select2-dropdown-open.select2-drop-above .select2-choice,
-.control-group.info .select2-dropdown-open.select2-drop-above .select2-choices,
-.control-group.info .select2-container-multi.select2-container-active .select2-choices {
-    border: 1px solid #3A87AD !important;
+.control-group.info .select2-container-active .select2-arrow {
+	border-color: #2d6987;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7ab5d3;
+	   -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7ab5d3;
+	        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7ab5d3;
 }
-
-.control-group.info .select2-container .select2-choice div {
-    border-left: 1px solid #3A87AD !important;
-    background: #D9EDF7 !important;
+.control-group.warning .select2-container-active .select2-choice,
+.control-group.warning .select2-container-active .select2-arrow {
+	border-color: #a47e3c;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #dbc59e;
+	   -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #dbc59e;
+	        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #dbc59e;
 }
-
-.control-group.success .select2-container .select2-choice,
-.control-group.success .select2-container .select2-choices,
 .control-group.success .select2-container-active .select2-choice,
-.control-group.success .select2-container-active .select2-choices,
-.control-group.success .select2-dropdown-open.select2-drop-above .select2-choice,
-.control-group.success .select2-dropdown-open.select2-drop-above .select2-choices,
-.control-group.success .select2-container-multi.select2-container-active .select2-choices {
-    border: 1px solid #468847 !important;
-}
-
-.control-group.success .select2-container .select2-choice div {
-    border-left: 1px solid #468847 !important;
-    background: #DFF0D8 !important;
+.control-group.success .select2-container-active .select2-arrow {
+	border-color: #356635;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7aba7b;
+	   -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7aba7b;
+	        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7aba7b;
 }
