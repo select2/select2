@@ -9,7 +9,7 @@
 
 .form-control.select2-container {
     height: auto !important;
-    padding: 0px;
+    padding: 0;
 }
 
 .form-control.select2-container.select2-dropdown-open {
