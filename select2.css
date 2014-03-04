@@ -147,7 +147,8 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 }
 
 .select2-drop.select2-drop-above {
-    margin-top: 1px;
+    margin-top: 0;
+    margin-bottom: -1px;
     border-top: 1px solid #aaa;
     border-bottom: 0;
 
