@@ -2610,13 +2610,15 @@ the specific language governing permissions and limitations under the Apache Lic
                         selectedChoice = next.length ? next : null;
                     }
                     else if (e.which === KEY.BACKSPACE) {
-                        this.unselect(selected.first());
-                        this.search.width(10);
-                        selectedChoice = prev.length ? prev : next;
+                        if (this.unselect(selected.first())) {
+                            this.search.width(10);
+                            selectedChoice = prev.length ? prev : next;
+                        }
                     } else if (e.which == KEY.DELETE) {
-                        this.unselect(selected.first());
-                        this.search.width(10);
-                        selectedChoice = next.length ? next : null;
+                        if (this.unselect(selected.first())) {
+                            this.search.width(10);
+                            selectedChoice = next.length ? next : null;
+                        }
                     } else if (e.which == KEY.ENTER) {
                         selectedChoice = null;
                     }
@@ -2992,7 +2994,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.opts.element.trigger(evt);
 
             if (evt.isDefaultPrevented()) {
-                return;
+                return false;
             }
 
             while((index = indexOf(this.id(data), val)) >= 0) {
@@ -3005,6 +3007,8 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.opts.element.trigger({ type: "select2-removed", val: this.id(data), choice: data });
             this.triggerChange({ removed: data });
+
+            return true;
         },
 
         // multi
