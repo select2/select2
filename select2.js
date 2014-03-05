@@ -2948,13 +2948,11 @@ the specific language governing permissions and limitations under the Apache Lic
                   .on("click dblclick", this.bind(function (e) {
                   if (!this.isInterfaceEnabled()) return;
 
-                  $(e.target).closest(".select2-search-choice").fadeOut('fast', this.bind(function(){
-                      this.unselect($(e.target));
-                      this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
-                      this.close();
-                      this.focusSearch();
-                  })).dequeue();
+                  this.unselect($(e.target));
+                  this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
                   killEvent(e);
+                  this.close();
+                  this.focusSearch();
               })).on("focus", this.bind(function () {
                   if (!this.isInterfaceEnabled()) return;
                   this.container.addClass("select2-container-active");
