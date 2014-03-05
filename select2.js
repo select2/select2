@@ -2988,12 +2988,6 @@ the specific language governing permissions and limitations under the Apache Lic
                 return;
             }
 
-            while((index = indexOf(this.id(data), val)) >= 0) {
-                val.splice(index, 1);
-                this.setVal(val);
-                if (this.select) this.postprocessResults();
-            }
-
             var evt = $.Event("select2-removing");
             evt.val = this.id(data);
             evt.choice = data;
@@ -3001,6 +2995,12 @@ the specific language governing permissions and limitations under the Apache Lic
 
             if (evt.isDefaultPrevented()) {
                 return;
+            }
+
+            while((index = indexOf(this.id(data), val)) >= 0) {
+                val.splice(index, 1);
+                this.setVal(val);
+                if (this.select) this.postprocessResults();
             }
 
             selected.remove();
