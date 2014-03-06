@@ -1340,7 +1340,61 @@ the specific language governing permissions and limitations under the Apache Lic
                         if (self.opts.selectOnBlur) {
                             self.selectHighlighted({noFocus: true});
                         }
-                        self.close({focus:true});
+
+						////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        // When the drop down is opened there is an element which masks all DOM element (it is located on top of all the element and fills the entire body element)
+                        // As a result when clicking a control it does not receive the event -> the mask element will recieve the event
+                        // This function is the handler of `mousedown`, `click` and `touchstart` events on the mask element
+                        // The handler closes the dropdown, however:
+                        // The control laying behind the mask where the user clicked will not recieve the event and therefore will not be focused or activated
+                        // The solution is to pass the event to the element that would have recieved the event if it weren't for the mask element
+                        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+						// get the element which is located where the event occurred
+                        var elementFromPoint = $(document.elementFromPoint(e.clientX, e.clientY));
+
+                        // check whether the event occurred inside the select2 control (the control itself was clicked, for example) and therefore it should stay in focus
+                        // or outside of the select2 control (another control should now be activated)
+
+                        if ($.contains(self.container[0], elementFromPoint[0])) {
+                            // the event was on the current select2 control so just put it in focus
+                            // (we do not pass to the select2 control the actual event (e.g. `mousedown`) since that will cause the dropdown to open again
+                            self.close({focus:true});
+                        } else {
+                            self.close({focus:false});
+                            // the event was on a control outside of the select2 control
+
+                            // fire blur
+                            self.opts.element.trigger($.Event("select2-blur"));
+
+                            // get the element that should have gotten the focus
+                            // it is either the element itself (if its focusable) or the first ancestor which is focusable
+                            var elementToFocus = elementFromPoint.add(elementFromPoint.parents()).filter(':focusable');
+
+                            if (elementToFocus.length > 0) {
+                                elementToFocus[0].focus()
+                            }
+
+                            // create a new event according to the original event the mask element recieved
+                            if (event.type === 'touchstart') {
+                                var simulatedEvent = document.createEvent("UIEvent");
+                                simulatedEvent.initUIEvent('touchstart', true, true, e.view, e.originalEvent.detail, e.screenX, e.screenY, 0, 0, e.ctrlKey, e.altKey, e.shiftKey, e.metaKey, e.button, e.relatedTarget);
+
+                                // fire the event
+                                elementFromPoint[0].dispatchEvent(simulatedEvent);
+                            } else {
+                                // we create a `mousedown` since this handler only recieves `mousedown` events (the reason is the during the mousedown processing the mask is hidden and therefore cannot recieve click event)
+                                var mouseDownSimulatedEvent = document.createEvent("MouseEvents"),
+                                    clickSimulatedEvent = document.createEvent("MouseEvents");
+                                mouseDownSimulatedEvent.initMouseEvent("mousedown", true, true, e.view, e.originalEvent.detail, e.screenX, e.screenY, 0, 0, e.ctrlKey, e.altKey, e.shiftKey, e.metaKey, e.button, e.relatedTarget);
+                                clickSimulatedEvent.initMouseEvent("click", true, true, e.view, e.originalEvent.detail, e.screenX, e.screenY, 0, 0, e.ctrlKey, e.altKey, e.shiftKey, e.metaKey, e.button, e.relatedTarget);
+
+                                // fire the events
+                                elementFromPoint[0].dispatchEvent(mouseDownSimulatedEvent);
+                                elementFromPoint[0].dispatchEvent(clickSimulatedEvent);
+                            }
+                        }
+
                         e.preventDefault();
                         e.stopPropagation();
                     }
