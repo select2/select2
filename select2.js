@@ -2610,13 +2610,15 @@ the specific language governing permissions and limitations under the Apache Lic
                         selectedChoice = next.length ? next : null;
                     }
                     else if (e.which === KEY.BACKSPACE) {
-                        this.unselect(selected.first());
-                        this.search.width(10);
-                        selectedChoice = prev.length ? prev : next;
+                        if (this.unselect(selected.first())) {
+                            this.search.width(10);
+                            selectedChoice = prev.length ? prev : next;
+                        }
                     } else if (e.which == KEY.DELETE) {
-                        this.unselect(selected.first());
-                        this.search.width(10);
-                        selectedChoice = next.length ? next : null;
+                        if (this.unselect(selected.first())) {
+                            this.search.width(10);
+                            selectedChoice = next.length ? next : null;
+                        }
                     } else if (e.which == KEY.ENTER) {
                         selectedChoice = null;
                     }
@@ -2948,13 +2950,11 @@ the specific language governing permissions and limitations under the Apache Lic
                   .on("click dblclick", this.bind(function (e) {
                   if (!this.isInterfaceEnabled()) return;
 
-                  $(e.target).closest(".select2-search-choice").fadeOut('fast', this.bind(function(){
-                      this.unselect($(e.target));
-                      this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
-                      this.close();
-                      this.focusSearch();
-                  })).dequeue();
+                  this.unselect($(e.target));
+                  this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
                   killEvent(e);
+                  this.close();
+                  this.focusSearch();
               })).on("focus", this.bind(function () {
                   if (!this.isInterfaceEnabled()) return;
                   this.container.addClass("select2-container-active");
@@ -2988,25 +2988,27 @@ the specific language governing permissions and limitations under the Apache Lic
                 return;
             }
 
-            while((index = indexOf(this.id(data), val)) >= 0) {
-                val.splice(index, 1);
-                this.setVal(val);
-                if (this.select) this.postprocessResults();
-            }
-
             var evt = $.Event("select2-removing");
             evt.val = this.id(data);
             evt.choice = data;
             this.opts.element.trigger(evt);
 
             if (evt.isDefaultPrevented()) {
-                return;
+                return false;
+            }
+
+            while((index = indexOf(this.id(data), val)) >= 0) {
+                val.splice(index, 1);
+                this.setVal(val);
+                if (this.select) this.postprocessResults();
             }
 
             selected.remove();
 
             this.opts.element.trigger({ type: "select2-removed", val: this.id(data), choice: data });
             this.triggerChange({ removed: data });
+
+            return true;
         },
 
         // multi
