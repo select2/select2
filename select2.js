@@ -1709,13 +1709,13 @@ the specific language governing permissions and limitations under the Apache Lic
                                 function () {
                                     return equal(self.id(this), self.id(def));
                                 }).length === 0) {
-								this.opts.createSearchChoicePosition(data.results, def);
+                                this.opts.createSearchChoicePosition(data.results, def);
                             }
                         }
                     }
 
                     if (data.results.length === 0 && checkFormatter(opts.formatNoMatches, "formatNoMatches")) {
-                        render("<li class='select2-no-results'>" + opts.formatNoMatches(search.val()) + "</li>");
+                        render("<li class='select2-no-results'>" + evaluate(opts.formatNoMatches, search.val()) + "</li>");
                         return;
                     }
 
@@ -1723,7 +1723,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     self.opts.populateResults.call(this, results, data.results, {term: search.val(), page: this.resultsPage, context:null});
 
                     if (data.more === true && checkFormatter(opts.formatLoadMore, "formatLoadMore")) {
-                        results.append("<li class='select2-more-results'>" + self.opts.escapeMarkup(evaluate(opts.formatLoadMore(this.resultsPage))) + "</li>");
+                        results.append("<li class='select2-more-results'>" + self.opts.escapeMarkup(evaluate(opts.formatLoadMore, this.resultsPage)) + "</li>");
                         window.setTimeout(function() { self.loadMoreIfNeeded(); }, 10);
                     }
 
