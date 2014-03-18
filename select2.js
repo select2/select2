@@ -1664,7 +1664,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 queryNumber = ++this.queryCount;
 
                 if (opts.formatSearching && this.findHighlightableChoices().length === 0) {
-                    render("<li class='select2-searching'>" + opts.formatSearching() + "</li>");
+                    render("<li class='select2-searching'>" + evaluate(opts.formatSearching) + "</li>");
                 }
 
                 search.addClass("select2-active");
