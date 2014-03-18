@@ -1660,7 +1660,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 return;
             }
 
-            if(opts.keepSearchResults === false || this.resultsPage === 0 || (initial !== true && !equal(term, lastTerm))) {
+            if(opts.keepSearchResults === false || this.resultsPage === 0 || !equal(term, lastTerm)) {
                 queryNumber = ++this.queryCount;
 
                 if (opts.formatSearching && this.findHighlightableChoices().length === 0) {
@@ -1899,7 +1899,10 @@ the specific language governing permissions and limitations under the Apache Lic
                 // IE appends focusser.val() at the end of field :/ so we manually insert it at the beginning using a range
                 // all other browsers handle this just fine
 
-                //this.search.val(this.focusser.val()); // what is a purpose of this call??
+                var focusserValue = this.focusser.val();
+                if(focusserValue) {
+                    this.search.val(focusserValue);
+                }
             }
             this.search.focus();
             // move the cursor to the end after focussing, otherwise it will be at the beginning and
