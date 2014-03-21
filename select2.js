@@ -1179,7 +1179,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 dropTop = offset.top + height,
                 dropLeft = offset.left,
                 enoughRoomBelow = dropTop + dropHeight <= viewportBottom,
-                enoughRoomAbove = (offset.top - dropHeight) >= this.body().scrollTop(),
+                enoughRoomAbove = (offset.top - dropHeight) >= $window.scrollTop(),
                 dropWidth = $dropdown.outerWidth(false),
                 enoughRoomOnRight = dropLeft + dropWidth <= viewPortRight,
                 aboveNow = $dropdown.hasClass("select2-drop-above"),
