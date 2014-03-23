@@ -50,20 +50,20 @@ rm -f "$version.tar.gz"
 rm index.html
 cp select2-latest.html index.html
 
-sed -e "s/title: Select2 Latest/title: Select2 $versionregex/" -i bak index.html
-sed -e "s/select2-master\//select2-$versionregex\//" -i bak index.html
-sed -e "/<!-- unreleased -->/d" -i bak index.html
-sed -e "s/version: .*/version: $versionregex/" -i bak index.html
+sed -e "s/title: Select2 Latest/title: Select2 $versionregex/" -ibak index.html
+sed -e "s/select2-master\//select2-$versionregex\//" -ibak index.html
+sed -e "/<!-- unreleased -->/d" -ibak index.html
+sed -e "s/version: .*/version: $versionregex/" -ibak index.html
 
-sed -e "s/version: .*/version: $nextversionregex/" -i bak select2-latest.html
-sed -e "s/milestone: .*/milestone: $nextmilestone/" -i bak select2-latest.html
+sed -e "s/version: .*/version: $nextversionregex/" -ibak select2-latest.html
+sed -e "s/milestone: .*/milestone: $nextmilestone/" -ibak select2-latest.html
 rm index.htmlbak
 rm select2-latest.htmlbak
 
 git add .
 git commit -m "release $version"
 
-echo 
+echo
 echo
 echo DO NOT FORGET TO PUSH
 echo

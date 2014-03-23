@@ -1,13 +1,13 @@
 ---
 layout: main
-title: Select2 3.4.5
+title: Select2 3.4.6
 group: navigation
-version: 3.4.5
-milestone: 15
+version: 3.4.6
+milestone: 16
 ---
 
-<link href="select2-3.4.5/select2.css?ts={{ site.time | date_to_xmlschema | cgi_escape}}" rel="stylesheet"/>
-<script src="select2-3.4.5/select2.js?ts={{ site.time | date_to_xmlschema | cgi_escape}}"></script>
+<link href="select2-3.4.6/select2.css?ts={{ site.time | date_to_xmlschema | cgi_escape}}" rel="stylesheet"/>
+<script src="select2-3.4.6/select2.js?ts={{ site.time | date_to_xmlschema | cgi_escape}}"></script>
 
 <script id="script_e1">
 
@@ -196,6 +196,8 @@ $("#e10_4").select2({
 });
 </script>
 
+
+
       <header class="jumbotron subhead">
         <div class="subnav">
           <ul class="nav nav-pills">
@@ -221,6 +223,7 @@ $("#e10_4").select2({
                   <li><a href="#sort_results">Sorting Displayed Results</a></li>
                   <li><a href="#responsive">Responsive Design</a></li>
                   <li><a href="#diacritics">Diacritics Support</a></li>
+                  <li><a href="#allow_duplicated_tags">Allow duplicated tags</a></li>
               </ul>
             </li>
             <li><a href="#documentation">Documentation</a></li>
@@ -558,12 +561,6 @@ $("#e19").select2({ maximumSelectionSize: 3 });
                <h3>Example Code</h3>
               <pre class="prettyprint linenums" id="code_e6"></pre>
               <p>Select2 uses jQuery's <code>$.ajax</code> function to execute the remote call by default. An alternative <code>transport</code> function can be specified in the ajax settings, or an entirely custom implementation can be built by providing a custom <code>query</code> function instead of using the <code>ajax</code> helper.</p>
-               <p>Select2 requires an id property to be set for items returned in the <code>results</code> parameter. If your result doesn't have an 'id' property then you can specify it in the <code>id</code> parameter of select2. For example: 
-                <code>
-                  id: function(object) {
-                    return object.text;
-                  }</code> will use the text property as the id.
-               </p>
            </div>
         </article>
         <article class="row" id="infinite">
@@ -973,21 +970,22 @@ $("#e18,#e18_2").select2();
       <article class="row" id="disabled-options">
           <script id="script_e24">
 
-              $(document).ready(function () {
-                  $('#e24').select2({
-                      query: function (query){
-                          var data = {
-                              results: [
-                                  { id: 1, text: "I'm selectable" },
-                                  { id: 2, text: "I'm a disabled option", disabled: true },
-                                  { id: 3, text: "I'm selectable too!" }
-                              ]
-                          };
+$(document).ready(function () {
+  $('#e24').select2({
+      query: function (query){
+          var data = {
+              results: [
+                  { id: 1, text: "I'm selectable" },
+                  { id: 2, text: "I'm a disabled option", disabled: true },
+                  { id: 3, text: "I'm selectable too!" }
+              ]
+          };
 
-                          query.callback(data);
-                      }
-                  });
-              });
+          query.callback(data);
+      }
+  });
+});
+
           </script>
           <div class="span12">
               <h3>Disabled options</h3>
@@ -1035,6 +1033,7 @@ $(document).ready(function () {
   });
   $('#e21').select2('data', preload_data )
 });
+
           </script>
           <div class="span12">
               <h3>Lock selections</h3>
@@ -1078,10 +1077,36 @@ $(document).ready(function () {
           </div>
       </article>
 
-
+      <article class="row" id="allow_duplicated_tags">
+          <div class="span12">
+              <h3>Allow duplicated tags</h3>
+              <p>In multiple mode, select2 doesn't allow the same tag to be selected more than once. This default behavior can be overridden by implementing the <code>hideSelectionFromResult</code> function:</p>
+              <p>
+                  <select id="e31" multiple="multiple" style="width:300px;">
+                      <option>Red</option>
+                      <option>Green</option>
+                      <option>Blue</option>
+                  </select>
+              </p>
+              <script id="script_e25">
+  
+  function hideSelection(selectedObject) {
+      return false;
+  };
+  $('#e31').select2({
+      hideSelectionFromResult: hideSelection
+  });
+  
+              </script>
+              <div class="span12">
+                  <h3>Example Code</h3>
+                  <pre class="prettyprint linenums" id="code_e25"></pre>
+              </div>
+          </div>
+      </article>
       </section>
 
-
+      
       <!--               -->
       <!-- DOCUMENTATION -->
       <!--               -->
@@ -1305,8 +1330,9 @@ format(item) {
                 </table>
                 <p class="alert alert-info">By default when attached to a <code>select</code> css classes from <code>option</code>s will be automatically copied.</p>
             </td></tr>
-            <tr><td>formatNoMatches</td><td>function</td><td>
-                Function used to render the &quot;No matches&quot; message
+            <tr><td>formatNoMatches</td><td>string/function</td><td>
+                String containing &quot;No matches&quot; message, or<br />
+                Function used to render the message
                 <pre>formatNoMatches(term)</pre>
                 <table class="table table-bordered table-striped">
                     <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
@@ -1314,8 +1340,9 @@ format(item) {
                     <tr><td>&lt;returns&gt;</td><td>string</td><td>Message html.</td></tr>
                 </table>
             </td></tr>
-            <tr><td>formatSearching</td><td>function</td><td>
-                Function used to render the &quot;Searching...&quot; message that is displayed while
+            <tr><td>formatSearching</td><td>string/function</td><td>
+                String containing &quot;Searching...&quot; message, or<br />
+                Function used to render the message that is displayed while
                 search is in progress.
                 <pre>formatSearching()</pre>
                 <table class="table table-bordered table-striped">
@@ -1323,8 +1350,9 @@ format(item) {
                     <tr><td>&lt;returns&gt;</td><td>string</td><td>Message html or <code>null</code>/<code>undefined</code> to disable the message.</td></tr>
                 </table>
             </td></tr>
-            <tr><td>formatInputTooShort</td><td>function</td><td>
-                Function used to render the &quot;Search input too short&quot; message.
+            <tr><td>formatInputTooShort</td><td>string/function</td><td>
+                String containing &quot;Search input too short&quot; message, or<br />
+                Function used to render the message.
                 <pre>formatInputTooShort(term, minLength)</pre>
                 <table class="table table-bordered table-striped">
                     <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
@@ -1333,12 +1361,34 @@ format(item) {
                     <tr><td>&lt;returns&gt;</td><td>string</td><td>Message html.</td></tr>
                 </table>
             </td></tr>
-            <tr><td>formatSelectionTooBig</td><td>function</td><td>
-                Function used to render the &quot;You cannot select any more choices&quot; message.
+            <tr><td>formatInputTooLong</td><td>string/function</td><td>
+                String containing &quot;Search input too long&quot; message, or<br />
+                Function used to render the message.
+                <pre>formatInputTooLong(term, maxLength)</pre>
+                <table class="table table-bordered table-striped">
+                    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                    <tr><td>term</td><td>string</td><td>Search string entered by user.</td></tr>
+                    <tr><td>maxLength</td><td>int</td><td>Maximum required term length.</td></tr>
+                    <tr><td>&lt;returns&gt;</td><td>string</td><td>Message html.</td></tr>
+                </table>
+            </td></tr>
+            <tr><td>formatSelectionTooBig</td><td>string/function</td><td>
+                String containing &quot;You cannot select any more choices&quot; message, or<br />
+                Function used to render the message.
                 <pre>formatSelectionTooBig(maxSize)</pre>
                 <table class="table table-bordered table-striped">
                     <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
                     <tr><td>maxSize</td><td>string</td><td>The maximum specified size of the selection.</td></tr>
+                    <tr><td>&lt;returns&gt;</td><td>string</td><td>Message html.</td></tr>
+                </table>
+            </td></tr>
+            <tr><td>formatLoadMore</td><td>string/function</td><td>
+                String containing &quot;Loading more results…&quot; message, or<br />
+                Function used to render the message.
+                <pre>formatLoadMore(pageNumber)</pre>
+                <table class="table table-bordered table-striped">
+                    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                    <tr><td>pageNumber</td><td>string</td><td>The current page.</td></tr>
                     <tr><td>&lt;returns&gt;</td><td>string</td><td>Message html.</td></tr>
                 </table>
             </td></tr>
@@ -1359,6 +1409,26 @@ format(item) {
                 <p class="alert alert-warning">When used in combination with <code>input[type=hidden]</code> tag care
                 must be taken to sanitize the <code>id</code> attribute of the choice object, especially stripping
                 <code>,</code> as it is used as a value separator.</p>
+            </td></tr>
+            <tr><td>createSearchChoicePosition</td><td>string|function</td><td>
+                Define the position where to insert element created by <code>createSearchChoice</code>. The following values are supported:
+                <dl>
+                    <dt>top</dt><dd>Insert in the top of the list</dd>
+                    <dt>bottom</dt><dd>Insert at the end of the list</dd>
+                    <dt>&lt;function&gt;</dt>
+                    <dd>
+                        <p>A custom function. For example if you want to insert the new item in the second position:</p>
+<pre class="prettyprint">
+$("#tags").select2({
+    ...
+    createSearchChoice: function(term) { ... },
+    createSearchChoicePosition: function(list, item) {
+        list.splice(1, 0, item);
+    }
+});
+</pre>
+                    </dd>
+                </dl>
             </td></tr>
             <tr><td>initSelection</td><td>function</td><td>
                 Called when Select2 is created to allow the user to initialize the selection based on the value of the
@@ -1441,7 +1511,7 @@ $("#select").select2({
                             <td>Callback function that should be called with the <code>result</code> object. The result object:
                                 <table class="table table-bordered table-striped">
                                     <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-                                    <tr><td>result.results</td><td>[object]</td><td>Array of result objects. The default renderers expect objects with <code>id</code> and <code>text</code> keys. The <code>id</code> attribute is required, even if custom renderers are used. The object may also contain a <code>children</code>key if hierarchical data is displayed. The object may also contain a <code>disabled</code> boolean property indicating whether this result can be selected.</td></tr>
+                                    <tr><td>result.results</td><td>[object]</td><td>Array of result objects. The default renderers expect objects with <code>id</code> and <code>text</code> keys. The <code>id</code> property is required, even if custom renderers are used. The object may also contain a <code>children</code> key if hierarchical data is displayed. The object may also contain a <code>disabled</code> boolean property indicating whether this result can be selected.</td></tr>
                                     <tr><td>result.more</td><td>boolean</td><td><code>true</code>if more results are available for the current search term.</td></tr>
                                     <tr><td>results.context</td><td>object</td><td>A user-defined object that should be made available as the <code>context</code> parameter to the <code>query</code> function on subsequent queries to load more result pages for the same search term. See the description of <a href="#doc-query-options-context"><code>options.context</code></a> parameter.</td></tr>
                                 </table>
@@ -1595,7 +1665,39 @@ $("#select").select2({
                 nextSearchTerm: displayCurrentValue
             });
             </pre>
-            <p class="alert alert-info">Only applies when the dropdown is configured in single-select mode.</p>
+            <p class="alert alert-info">Function can be used when the dropdown is configured in single and multi-select mode. It is triggered after selecting an item. In single mode it is also triggered after initSelection (when provided).</p>
+            </td></tr>
+            <tr><td>hideSelectionFromResult</td><td>function</td><td>
+            <p>Function that determines if the selected item should be displayed or hidden from the result list.</p>
+            <table class="table table-bordered table-striped">
+            <tbody>
+            <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+            <tr><td>data</td><td>object</td><td>Selected data.</td></tr>
+            </tbody>
+            </table>
+            <p>By default, the selected item is visible in the result list in single mode and hidden in multi-select mode.
+            This behavior can be overridden by implementing the <code>hideSelectionFromResult</code> function.</p>
+            <p>For instance, in the case of a single select box it can be used to hide the selected item from the result list:</p>
+            <pre class="prettyprint">
+function hideSelectedItem(selectedObject){
+    return true;
+}
+
+$("#e1").select2({
+    hideSelectionFromResult: hideSelectedItem
+})
+            </pre>
+            <p>More complex behavior can be achieved by reading the text of the selected item:</p>
+            <pre class="prettyprint">
+function hideAlaskaFromResult(selectedObject){
+    return selectedObject.data("select2-data").text == "Alaska" ? true : false;
+}
+
+$("#e1").select2({
+    hideSelectionFromResult: hideAlaskaFromResult
+})
+            </pre>
+            <p class="alert alert-info">The return value of <code>hideSelectionFromResult</code> is a boolean. It returns undefined if it is not implemented.</p>
             </td></tr>
         </table>
 
@@ -1782,7 +1884,7 @@ $("#select").select2({
         <div class="row">
             <div class="span12">
                 <h3>select2-focus</h3>
-                <p>Fired when the control is focused.
+                <p>Fired when the control is focussed.
                 </p>
             </div>
         </div>
