@@ -2144,7 +2144,11 @@ the specific language governing permissions and limitations under the Apache Lic
                 killEvent(e);
             }));
 
-            dropdown.on("mousedown touchstart", this.bind(function() { this.search.focus(); }));
+            dropdown.on("mousedown touchstart", this.bind(function() {
+                if (this.opts.shouldFocusInput(this)) {
+                    this.search.focus();
+                }
+            }));
 
             selection.on("focus", this.bind(function(e) {
                 killEvent(e);
