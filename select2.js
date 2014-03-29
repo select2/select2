@@ -1806,7 +1806,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     //Determine the placeholder option based on the specified placeholderOption setting
                     return (this.opts.placeholderOption === "first" && firstOption) ||
                            (typeof this.opts.placeholderOption === "function" && this.opts.placeholderOption(this.select));
-                } else if (firstOption.text() === "" && firstOption.val() === "") {
+                } else if ($.trim(firstOption.text()) === "" && firstOption.val() === "") {
                     //No explicit placeholder option specified, use the first if it's blank
                     return firstOption;
                 }
