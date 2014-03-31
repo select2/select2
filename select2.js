@@ -2827,7 +2827,9 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             this.updateResults(true);
-            this.search.focus();
+            if (this.opts.shouldFocusInput(this)) {
+                this.search.focus();
+            }
             this.opts.element.trigger($.Event("select2-open"));
         },
 
