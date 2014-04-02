@@ -1914,26 +1914,27 @@ the specific language governing permissions and limitations under the Apache Lic
                 // all other browsers handle this just fine
 
                 this.search.val(this.focusser.val());
-            }
-            this.search.focus();
-            // move the cursor to the end after focussing, otherwise it will be at the beginning and
-            // new text will appear *before* focusser.val()
-            el = this.search.get(0);
-            if (el.createTextRange) {
-                range = el.createTextRange();
-                range.collapse(false);
-                range.select();
-            } else if (el.setSelectionRange) {
-                len = this.search.val().length;
-                el.setSelectionRange(len, len);
-            }
+                this.search.focus();
 
-            // initializes search's value with nextSearchTerm (if defined by user)
-            // ignore nextSearchTerm if the dropdown is opened by the user pressing a letter
-            if(this.search.val() === "") {
-                if(this.nextSearchTerm != undefined){
-                    this.search.val(this.nextSearchTerm);
-                    this.search.select();
+                // move the cursor to the end after focussing, otherwise it will be at the beginning and
+                // new text will appear *before* focusser.val()
+                el = this.search.get(0);
+                if (el.createTextRange) {
+                    range = el.createTextRange();
+                    range.collapse(false);
+                    range.select();
+                } else if (el.setSelectionRange) {
+                    len = this.search.val().length;
+                    el.setSelectionRange(len, len);
+                }
+
+                // initializes search's value with nextSearchTerm (if defined by user)
+                // ignore nextSearchTerm if the dropdown is opened by the user pressing a letter
+                if(this.search.val() === "") {
+                    if(this.nextSearchTerm != undefined){
+                        this.search.val(this.nextSearchTerm);
+                        this.search.select();
+                    }
                 }
             }
 
@@ -2142,7 +2143,11 @@ the specific language governing permissions and limitations under the Apache Lic
                 killEvent(e);
             }));
 
-            dropdown.on("mousedown touchstart", this.bind(function() { this.search.focus(); }));
+            dropdown.on("mousedown touchstart", this.bind(function() {
+                if (this.showSearchInput !== false) {
+                    this.search.focus();
+                }
+            }));
 
             selection.on("focus", this.bind(function(e) {
                 killEvent(e);
