@@ -1172,7 +1172,7 @@ the specific language governing permissions and limitations under the Apache Lic
             var $dropdown = this.dropdown,
                 offset = this.container.offset(),
                 height = this.container.outerHeight(false),
-                width = this.container.outerWidth(false),
+                width = this.container[0].getBoundingClientRect().width,
                 dropHeight = $dropdown.outerHeight(false),
                 $window = $(window),
                 windowWidth = $window.width(),
@@ -1212,7 +1212,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 $dropdown.hide();
                 offset = this.container.offset();
                 height = this.container.outerHeight(false);
-                width = this.container.outerWidth(false);
+                width = this.container[0].getBoundingClientRect().width;
                 dropHeight = $dropdown.outerHeight(false);
                 viewPortRight = $window.scrollLeft() + windowWidth;
                 viewportBottom = $window.scrollTop() + windowHeight;
