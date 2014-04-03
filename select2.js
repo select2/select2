@@ -1221,6 +1221,9 @@ the specific language governing permissions and limitations under the Apache Lic
                 dropWidth = $dropdown.outerWidth(false);
                 enoughRoomOnRight = dropLeft + dropWidth <= viewPortRight;
                 $dropdown.show();
+
+                // fix so the cursor does not move to the left within the search-textbox in IE
+                this.focusSearch();
             }
 
             if (this.opts.dropdownAutoWidth) {
