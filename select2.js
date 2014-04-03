@@ -1915,17 +1915,19 @@ the specific language governing permissions and limitations under the Apache Lic
 
                 this.search.val(this.focusser.val());
             }
-            this.search.focus();
-            // move the cursor to the end after focussing, otherwise it will be at the beginning and
-            // new text will appear *before* focusser.val()
-            el = this.search.get(0);
-            if (el.createTextRange) {
-                range = el.createTextRange();
-                range.collapse(false);
-                range.select();
-            } else if (el.setSelectionRange) {
-                len = this.search.val().length;
-                el.setSelectionRange(len, len);
+            if (this.opts.shouldFocusInput(this)) {
+                this.search.focus();
+                // move the cursor to the end after focussing, otherwise it will be at the beginning and
+                // new text will appear *before* focusser.val()
+                el = this.search.get(0);
+                if (el.createTextRange) {
+                    range = el.createTextRange();
+                    range.collapse(false);
+                    range.select();
+                } else if (el.setSelectionRange) {
+                    len = this.search.val().length;
+                    el.setSelectionRange(len, len);
+                }
             }
 
             // initializes search's value with nextSearchTerm (if defined by user)
@@ -2142,7 +2144,11 @@ the specific language governing permissions and limitations under the Apache Lic
                 killEvent(e);
             }));
 
-            dropdown.on("mousedown touchstart", this.bind(function() { this.search.focus(); }));
+            dropdown.on("mousedown touchstart", this.bind(function() {
+                if (this.opts.shouldFocusInput(this)) {
+                    this.search.focus();
+                }
+            }));
 
             selection.on("focus", this.bind(function(e) {
                 killEvent(e);
@@ -2821,7 +2827,9 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             this.updateResults(true);
-            this.search.focus();
+            if (this.opts.shouldFocusInput(this)) {
+                this.search.focus();
+            }
             this.opts.element.trigger($.Event("select2-open"));
         },
 
