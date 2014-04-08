@@ -1,0 +1,114 @@
+﻿@import "./select2Variables.less";
+@import "./select2-bs-variables.less";
+
+@import "./select2Container.less";
+@import "./select2Drop.less";
+@import "./select2Search.less";
+@import "./select2DropDown.less";
+@import "./select2Results.less";
+@import "./select2ContMulti.less";
+@import "./select2BaseEnd.less";
+
+
+.form-control .select2-choice {
+   border: 0;
+   border-radius: @select2-border-radius;
+}
+
+.form-control .select2-choice .select2-arrow {
+   border-radius: 0 @select2-border-radius @select2-border-radius 0;   
+}
+
+.form-control.select2-container {
+   height: auto !important;
+   padding: 0;
+}
+
+.form-control.select2-container.select2-dropdown-open {
+   border-color: @select2-border-color;
+   border-radius: @select2-border-radius @select2-border-radius 0 0;
+}
+
+.form-control .select2-container.select2-dropdown-open .select2-choices {
+   border-radius: @select2-border-radius @select2-border-radius 0 0;
+}
+
+.form-control.select2-container .select2-choices {
+   border: 0 !important;
+   border-radius: @select2-border-radius;
+}
+
+.form-group.warning .select2-container .select2-choice,
+.form-group.warning .select2-container .select2-choices,
+.form-group.warning .select2-container-active .select2-choice,
+.form-group.warning .select2-container-active .select2-choices,
+.form-group.warning .select2-dropdown-open.select2-drop-above .select2-choice,
+.form-group.warning .select2-dropdown-open.select2-drop-above .select2-choices,
+.form-group.warning .select2-container-multi.select2-container-active .select2-choices {
+    border: 1px solid @panel-warning-border !important;
+}
+
+.form-group.warning .select2-container .select2-choice div {
+    border-left: 1px solid @panel-warning-border !important;
+    background: @panel-warning-heading-bg !important;
+}
+
+.form-group.error .select2-container .select2-choice,
+.form-group.error .select2-container .select2-choices,
+.form-group.error .select2-container-active .select2-choice,
+.form-group.error .select2-container-active .select2-choices,
+.form-group.error .select2-dropdown-open.select2-drop-above .select2-choice,
+.form-group.error .select2-dropdown-open.select2-drop-above .select2-choices,
+.form-group.error .select2-container-multi.select2-container-active .select2-choices {
+    border: 1px solid @panel-danger-border !important;
+}
+
+.form-group.error .select2-container .select2-choice div {
+    border-left: 1px solid @panel-danger-border !important;
+    background: @panel-danger-heading-bg !important;
+}
+
+.form-group.danger .select2-container .select2-choice,
+.form-group.danger .select2-container .select2-choices,
+.form-group.danger .select2-container-active .select2-choice,
+.form-group.danger .select2-container-active .select2-choices,
+.form-group.danger .select2-dropdown-open.select2-drop-above .select2-choice,
+.form-group.danger .select2-dropdown-open.select2-drop-above .select2-choices,
+.form-group.danger .select2-container-multi.select2-container-active .select2-choices {
+    border: 1px solid @panel-danger-border !important;
+}
+
+.form-group.danger .select2-container .select2-choice div {
+    border-left: 1px solid @panel-danger-border !important;
+    background: @panel-danger-heading-bg !important;
+}
+
+.form-group.info .select2-container .select2-choice,
+.form-group.info .select2-container .select2-choices,
+.form-group.info .select2-container-active .select2-choice,
+.form-group.info .select2-container-active .select2-choices,
+.form-group.info .select2-dropdown-open.select2-drop-above .select2-choice,
+.form-group.info .select2-dropdown-open.select2-drop-above .select2-choices,
+.form-group.info .select2-container-multi.select2-container-active .select2-choices {
+    border: 1px solid @panel-info-border !important;
+}
+
+.form-group.info .select2-container .select2-choice div {
+    border-left: 1px solid @panel-info-border !important;
+    background: @panel-info-heading-bg !important;
+}
+
+.form-group.success .select2-container .select2-choice,
+.form-group.success .select2-container .select2-choices,
+.form-group.success .select2-container-active .select2-choice,
+.form-group.success .select2-container-active .select2-choices,
+.form-group.success .select2-dropdown-open.select2-drop-above .select2-choice,
+.form-group.success .select2-dropdown-open.select2-drop-above .select2-choices,
+.form-group.success .select2-container-multi.select2-container-active .select2-choices {
+    border: 1px solid @panel-success-border !important;
+}
+
+.form-group.success .select2-container .select2-choice div {
+    border-left: 1px solid @panel-success-border !important;
+    background: @panel-success-heading-bg !important;
+}

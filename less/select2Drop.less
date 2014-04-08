@@ -1,0 +1,65 @@
+﻿// Select 2 Styling for Drop
+
+.select2-drop-mask {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    left: 0;
+    top: 0;
+    min-height: 100%;
+    min-width: 100%;
+    height: auto;
+    width: auto;
+    opacity: 0;
+    z-index: 9998;
+    background-color: @select2-background-color;
+    filter: alpha(opacity=0);
+}
+
+.select2-drop {
+    width: 100%;
+    margin-top: -1px;
+    position: absolute;
+    z-index: 9999;
+    top: 100%;
+    background: @select2-drop-background-color;
+    color: @select2-drop-color;
+    border: @select2-border-width solid @select2-border-color;
+    border-top: 0;
+    border-radius: 0 0 @select2-border-radius @select2-border-radius;
+    -webkit-box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
+    box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
+}
+
+.select2-drop.select2-drop-above {
+    margin-top: 1px;
+    border-top: @select2-border-width solid @select2-border-color;
+    border-bottom: 0;
+    border-radius: @select2-border-radius @select2-border-radius 0 0;
+    -webkit-box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
+    box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
+    .select2-search {
+        input {
+            margin-top: 4px;
+        }
+    }
+}
+
+.select2-drop-active {
+    border: @select2-border-width solid @select2-border-color-active;
+    border-top: none;
+}
+
+.select2-drop.select2-drop-above.select2-drop-active {
+    border-top: @select2-border-width solid @select2-border-color-active;
+}
+
+.select2-drop-auto-width {
+    border-top: @select2-border-width solid @select2-border-color;
+    width: auto;
+    .select2-search {
+        padding-top: 4px;
+    }
+}
+
