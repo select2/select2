@@ -2241,7 +2241,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         isPlaceholderOptionSelected: function() {
             var placeholderOption;
-            if (!this.getPlaceholder()) return false; // no placeholder specified so no option should be considered
+            if (this.getPlaceholder() === undefined) return false; // no placeholder specified so no option should be considered
             return ((placeholderOption = this.getPlaceholderOption()) !== undefined && placeholderOption.prop("selected"))
                 || (this.opts.element.val() === "")
                 || (this.opts.element.val() === undefined)
