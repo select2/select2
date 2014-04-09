@@ -1,6 +1,7 @@
 .form-control .select2-choice {
     border: 0;
     border-radius: 2px;
+    height: 100%;
 }
 
 .form-control .select2-choice .select2-arrow {
@@ -8,7 +9,6 @@
 }
 
 .form-control.select2-container {
-    height: auto !important;
     padding: 0;
 }
 
@@ -24,6 +24,16 @@
 .form-control.select2-container .select2-choices {
     border: 0 !important;
     border-radius: 3px;
+}
+
+.form-control .select2-choice .select2-chosen {
+    height: 100%;
+    line-height: 230%;
+}
+
+.form-control .select2-choice .select2-arrow b {
+    position: relative;
+    top: 2px;
 }
 
 .control-group.warning .select2-container .select2-choice,
