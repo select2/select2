@@ -34,7 +34,8 @@ Integrations
 * [Django](https://github.com/applegrew/django-select2)
 * [Symfony](https://github.com/19Gerhard85/sfSelect2WidgetsPlugin)
 * [Symfony2](https://github.com/avocode/FormExtensions)
-* [Bootstrap](https://github.com/t0m/select2-bootstrap-css) (CSS skin)
+* [Bootstrap 2](https://github.com/t0m/select2-bootstrap-css) and [Bootstrap 3](https://github.com/t0m/select2-bootstrap-css/tree/bootstrap3) (CSS skins)
+* [Meteor](https://github.com/nate-strauser/meteor-select2) (modern reactive JavaScript framework; + [Bootstrap 3 skin](https://github.com/esperadomedia/meteor-select2-bootstrap3-css/))
 * [Yii](https://github.com/tonybolzan/yii-select2)
 
 Internationalization (i18n)
