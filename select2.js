@@ -2351,8 +2351,14 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.showSearchInput = showSearchInput;
 
-            this.dropdown.find(".select2-search").toggleClass("select2-search-hidden", !showSearchInput);
-            this.dropdown.find(".select2-search").toggleClass("select2-offscreen", !showSearchInput);
+            var el = this.dropdown.find(".select2-search");
+
+            if (el.length > 0) {
+                el.toggleClass("select2-search-hidden", !showSearchInput);
+                el.toggleClass("select2-offscreen", !showSearchInput);
+                el.find('input.select2-input').attr('readonly', !showSearchInput);
+            }
+            
             //add "select2-with-searchbox" to the container if search box is shown
             $(this.dropdown, this.container).toggleClass("select2-with-searchbox", showSearchInput);
         },
