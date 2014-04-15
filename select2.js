@@ -1100,7 +1100,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // abstract
         triggerSelect: function(data) {
-            var evt = $.Event("select2-selecting", { val: this.id(data), object: data });
+            var evt = $.Event("select2-selecting", { val: this.id(data), choice: data });
             this.opts.element.trigger(evt);
             return !evt.isDefaultPrevented();
         },
