@@ -2883,8 +2883,9 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.selection.find(".select2-search-choice").remove();
             $(data).each(function () {
-                self.addSelectedChoice(this);
+                self.addSelectedChoice(this,true);
             });
+            this.setVal(ids);
             self.postprocessResults();
         },
 
@@ -2959,7 +2960,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.focusSearch();
         },
 
-        addSelectedChoice: function (data) {
+        addSelectedChoice: function (data, isBulk) {
             var enableChoice = !data.locked,
                 enabledItem = $(
                     "<li class='select2-search-choice'>" +
@@ -3007,7 +3008,9 @@ the specific language governing permissions and limitations under the Apache Lic
             choice.insertBefore(this.searchContainer);
 
             val.push(id);
-            this.setVal(val);
+            if (isBulk != true) {
+                this.setVal(val);
+            }
         },
 
         // multi
@@ -3139,16 +3142,23 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // multi
         setVal: function (val) {
-            var unique;
+
             if (this.select) {
                 this.select.val(val);
             } else {
-                unique = [];
-                // filter out duplicates
-                $(val).each(function () {
-                    if (indexOf(this, unique) < 0) unique.push(this);
-                });
-                this.opts.element.val(unique.length === 0 ? "" : unique.join(this.opts.separator));
+
+                //filter out duplicates
+                var distinct = [];
+                var unique = {};
+                for (var i in val) {
+
+                    if (typeof (unique[val[i]]) == "undefined") {
+                        distinct.push(val[i]);
+                    }
+                    unique[val[i]] = 0;
+                }
+
+                this.opts.element.val(distinct.length === 0 ? "" : distinct.join(this.opts.separator));
             }
         },
 
