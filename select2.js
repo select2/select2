@@ -473,7 +473,7 @@ the specific language governing permissions and limitations under the Apache Lic
      *
      * If the array form is used it is assumed that it contains objects with 'id' and 'text' keys.
      *
-     * If the object form is used ti is assumed that it contains 'data' and 'text' keys. The 'data' key should contain
+     * If the object form is used it is assumed that it contains 'data' and 'text' keys. The 'data' key should contain
      * an array of objects that will be used as choices. These objects must contain at least an 'id' key. The 'text'
      * key can either be a String in which case it is expected that each element in the 'data' array has a key with the
      * value of 'text' which will be used to match choices. Alternatively, text can be a function(item) that can extract
