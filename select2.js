@@ -3141,6 +3141,11 @@ the specific language governing permissions and limitations under the Apache Lic
         setVal: function (val) {
             var unique;
             if (this.select) {
+                // WORKAROUND to fix Android 4.2.1 Chrome bug, when we remove a selected value,
+                // it puts a empty string value for the first index, if we don't use the workaround below;
+                // ( ex: We want to remove US -> before:["CA","US"] after:["","CA"] )
+                this.select.val([]);
+                // END workaround
                 this.select.val(val);
             } else {
                 unique = [];
