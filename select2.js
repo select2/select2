@@ -1079,9 +1079,13 @@ the specific language governing permissions and limitations under the Apache Lic
 
             });
 
-            // IE8-10
-            el.on("propertychange.select2", sync);
-
+            // IE8-10 (IE9/10 won't fire propertyChange via attachEventListener)
+            if (el.length && el[0].attachEvent) {
+                el.each(function() {
+                    this.attachEvent("onpropertychange", sync);
+                });
+            }
+            
             // hold onto a reference of the callback to work around a chromium bug
             if (this.mutationCallback === undefined) {
                 this.mutationCallback = function (mutations) {
