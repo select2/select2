@@ -1202,23 +1202,35 @@ the specific language governing permissions and limitations under the Apache Lic
                 enoughRoomOnRight = dropLeft + dropWidth <= viewPortRight,
                 aboveNow = $dropdown.hasClass("select2-drop-above"),
                 bodyOffset,
+                direction,
                 above,
                 changeDirection,
                 css,
                 resultsListNode;
 
-            // always prefer the current above/below alignment, unless there is not enough room
-            if (aboveNow) {
-                above = true;
-                if (!enoughRoomAbove && enoughRoomBelow) {
-                    changeDirection = true;
-                    above = false;
-                }
-            } else {
+            
+            // always show box below select element
+            if (this.opts.direction === 'below') {
                 above = false;
-                if (!enoughRoomBelow && enoughRoomAbove) {
-                    changeDirection = true;
+            }
+            // always show box above select element
+            else if (this.opts.direction === 'above') {
+                above = true;
+            }
+            // always prefer the current above/below alignment, unless there is not enough room
+            else {
+                if (aboveNow) {
                     above = true;
+                    if (!enoughRoomAbove && enoughRoomBelow) {
+                        changeDirection = true;
+                        above = false;
+                    }
+                } else {
+                    above = false;
+                    if (!enoughRoomBelow && enoughRoomAbove) {
+                        changeDirection = true;
+                        above = true;
+                    }
                 }
             }
 
