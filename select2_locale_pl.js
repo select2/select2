@@ -8,7 +8,7 @@
 (function ($) {
     "use strict";
 
-    $.extend($.fn.select2.defaults, {
+    $.fn.select2.locales['pl'] = {
         formatNoMatches: function () { return "Brak wyników"; },
         formatInputTooShort: function (input, min) { return "Wpisz co najmniej" + character(min - input.length, "znak", "i"); },
         formatInputTooLong: function (input, max) { return "Wpisana fraza jest za długa o" + character(input.length - max, "znak", "i"); },

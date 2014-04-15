@@ -6,7 +6,7 @@
 (function ($) {
     "use strict";
 
-    $.extend($.fn.select2.defaults, {
+    $.fn.select2.locales['tr'] = {
         formatNoMatches: function () { return "Sonuç bulunamadı"; },
         formatInputTooShort: function (input, min) { var n = min - input.length; return "En az " + n + " karakter daha girmelisiniz"; },
         formatInputTooLong: function (input, max) { var n = input.length - max; return n + " karakter azaltmalısınız"; },

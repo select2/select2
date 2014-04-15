@@ -6,7 +6,7 @@
 (function ($) {
     "use strict";
 
-    $.extend($.fn.select2.defaults, {
+    $.fn.select2.locales['ru'] = {
         formatNoMatches: function () { return "Совпадений не найдено"; },
         formatInputTooShort: function (input, min) { return "Пожалуйста, введите еще хотя бы" + character(min - input.length); },
         formatInputTooLong: function (input, max) { return "Пожалуйста, введите на" + character(input.length - max) + " меньше"; },
