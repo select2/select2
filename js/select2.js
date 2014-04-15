@@ -3421,16 +3421,6 @@ the specific language governing permissions and limitations under the Apache Lic
         },
         formatResultCssClass: function(data) {return data.css;},
         formatSelectionCssClass: function(data, container) {return undefined;},
-        formatMatches: function (matches) { return matches + " results are available, use up and down arrow keys to navigate."; },
-        formatNoMatches: function () { return "No matches found"; },
-        formatInputTooShort: function (input, min) { var n = min - input.length; return "Please enter " + n + " or more character" + (n == 1? "" : "s"); },
-        formatInputTooLong: function (input, max) { var n = input.length - max; return "Please delete " + n + " character" + (n == 1? "" : "s"); },
-        formatSelectionTooBig: function (limit) { return "You can only select " + limit + " item" + (limit == 1 ? "" : "s"); },
-        formatLoadMore: function (pageNumber) { return "Loading more results…"; },
-        formatSearching: function () { return "Searching…"; },
-        formatPagination: function (pageNumber, numPages) { return "Page " + pageNumber + " of " + numPages; },
-        formatPaginationPrevious: function () { return "<"; },
-        formatPaginationNext: function () { return ">"; },
         minimumResultsForSearch: 0,
         minimumInputLength: 0,
         maximumInputLength: null,
@@ -3460,6 +3450,23 @@ the specific language governing permissions and limitations under the Apache Lic
             return true;
         }
     };
+	
+    $.fn.select2.locales = [];
+
+    $.fn.select2.locales['en'] = {
+    	formatMatches: function (matches) { return matches + " results are available, use up and down arrow keys to navigate."; },
+    	formatNoMatches: function () { return "No matches found"; },
+    	formatInputTooShort: function (input, min) { var n = min - input.length; return "Please enter " + n + " or more character" + (n == 1 ? "" : "s"); },
+    	formatInputTooLong: function (input, max) { var n = input.length - max; return "Please delete " + n + " character" + (n == 1 ? "" : "s"); },
+    	formatSelectionTooBig: function (limit) { return "You can only select " + limit + " item" + (limit == 1 ? "" : "s"); },
+    	formatLoadMore: function (pageNumber) { return "Loading more results…"; },
+    	formatSearching: function () { return "Searching…"; },
+    	formatPagination: function (pageNumber, numPages) { return "Page " + pageNumber + " of " + numPages; },
+    	formatPaginationPrevious: function () { return "<"; },
+    	formatPaginationNext: function () { return ">"; },
+    };
+
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['en']);
 
     $.fn.select2.ajaxDefaults = {
         transport: $.ajax,

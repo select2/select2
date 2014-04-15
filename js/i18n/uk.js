@@ -7,7 +7,7 @@
 (function ($) {
     "use strict";
 
-    $.extend($.fn.select2.defaults, {
+    $.fn.select2.locales['uk'] = {
         formatNoMatches: function () { return "Нічого не знайдено"; },
         formatInputTooShort: function (input, min) { return "Введіть буль ласка ще" + character(min - input.length, "символ"); },
         formatInputTooLong: function (input, max) { return "Введіть буль ласка на" + character(input.length - max, "символ") + " менше"; },

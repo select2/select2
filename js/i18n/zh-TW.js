@@ -3,7 +3,7 @@
  */
 (function ($) {
     "use strict";
-    $.extend($.fn.select2.defaults, {
+    $.fn.select2.locales['zh-TW'] = {
         formatNoMatches: function () { return "沒有找到相符的項目"; },
         formatInputTooShort: function (input, min) { var n = min - input.length; return "請再輸入" + n + "個字元";},
         formatInputTooLong: function (input, max) { var n = input.length - max; return "請刪掉" + n + "個字元";},
