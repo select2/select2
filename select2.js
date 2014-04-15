@@ -694,6 +694,8 @@ the specific language governing permissions and limitations under the Apache Lic
             this.containerSelector="#"+this.containerId;
             this.container.attr("id", this.containerId);
 
+            this.container.attr("title", opts.element.attr("title"));
+
             // cache the body so future lookups are cheap
             this.body = thunk(function() { return opts.element.closest("body"); });
 
