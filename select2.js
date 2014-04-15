@@ -114,16 +114,12 @@ the specific language governing permissions and limitations under the Apache Lic
     }
 
     function stripDiacritics(str) {
-        var ret, i, l, c;
-
-        if (!str || str.length < 1) return str;
-
-        ret = "";
-        for (i = 0, l = str.length; i < l; i++) {
-            c = str.charAt(i);
-            ret += DIACRITICS[c] || c;
+        // Used 'uni range + named function' from http://jsperf.com/diacritics/18
+        function match(a) {
+            return DIACRITICS[a] || a;
         }
-        return ret;
+
+        return str.replace(/[^\u0000-\u007E]/g, match);
     }
 
     function indexOf(value, array) {
