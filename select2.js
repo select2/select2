@@ -1390,7 +1390,7 @@ the specific language governing permissions and limitations under the Apache Lic
             var that = this;
             this.container.parents().add(window).each(function () {
                 $(this).on(resize+" "+scroll+" "+orient, function (e) {
-                    if (!that.opened()) that.positionDropdown();
+                    if (that.opened()) that.positionDropdown();
                 });
             });
 
