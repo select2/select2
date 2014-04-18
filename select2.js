@@ -2058,16 +2058,34 @@ the specific language governing permissions and limitations under the Apache Lic
             this.search.on("keydown", this.bind(function (e) {
                 if (!this.isInterfaceEnabled()) return;
 
-                if (e.which === KEY.PAGE_UP || e.which === KEY.PAGE_DOWN) {
-                    // prevent the page from scrolling
-                    killEvent(e);
-                    return;
-                }
-
                 switch (e.which) {
                     case KEY.UP:
                     case KEY.DOWN:
                         this.moveHighlight((e.which === KEY.UP) ? -1 : 1);
+                        killEvent(e);
+                        return;
+                    case KEY.PAGE_UP:
+                    case KEY.PAGE_DOWN:
+                        killEvent(e);
+                        var pageSize = (this.opts.pageSize) ? this.opts.pageSize : 8;
+                        var index = this.highlight();
+                        var choices = this.findHighlightableChoices();
+                        if (e.which === KEY.PAGE_UP && index < pageSize) {
+                            pageSize = index;
+                        }
+                        if (e.which === KEY.PAGE_DOWN && index+pageSize > choices.length) {
+                            this.scrollToEnd();
+                        } else {
+                            this.moveHighlight((e.which === KEY.PAGE_UP) ? -pageSize : pageSize);
+                        }
+                        return;
+                    case KEY.HOME:
+                        killEvent(e);
+                        this.results.scrollTop(0);
+                        this.highlight(0);
+                        return;
+                    case KEY.END:
+                        this.scrollToEnd();
                         killEvent(e);
                         return;
                     case KEY.ENTER:
@@ -2404,7 +2422,7 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             this.selection.removeClass("select2-default");
-
+            console.log('clear', this.getPlaceholder());
             if (this.opts.allowClear && this.getPlaceholder() !== undefined) {
                 this.container.addClass("select2-allowclear");
             }
@@ -2491,6 +2509,13 @@ the specific language governing permissions and limitations under the Apache Lic
                     }
                 }
             }
+        },
+
+        scrollToEnd: function() {
+            var choices = this.findHighlightableChoices();
+            if (choices.length)
+                this.highlight(choices.length - 1);
+            this.results.scrollTop(this.results.get(0).scrollHeight - this.results.height());
         }
     });
 
@@ -2697,6 +2722,31 @@ the specific language governing permissions and limitations under the Apache Lic
                         this.cancel(e);
                         killEvent(e);
                         return;
+                    case KEY.PAGE_UP:
+                    case KEY.PAGE_DOWN:
+                        killEvent(e);
+                        var pageSize = (this.opts.pageSize) ? this.opts.pageSize : 8;
+                        var index = this.highlight();
+                        var choices = this.findHighlightableChoices();
+                        if (e.which === KEY.PAGE_UP && index < pageSize) {
+                            pageSize = index;
+                        }
+                        if (e.which === KEY.PAGE_DOWN && index+pageSize > choices.length) {
+                            this.scrollToEnd();
+                        } else {
+                            this.moveHighlight((e.which === KEY.PAGE_UP) ? -pageSize : pageSize);
+                        }
+                        return;
+                    case KEY.HOME:
+                        killEvent(e);
+                        this.results.scrollTop(0);
+                        this.highlight(0);
+                        return;
+                    case KEY.END:
+                        killEvent(e);
+                        this.scrollToEnd();
+                        
+                        return;    
                     }
                 }
 
@@ -3163,7 +3213,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     if (equal(this.opts.id(current[i]), this.opts.id(old[j]))) {
                         current.splice(i, 1);
                         if(i>0){
-                        	i--;
+                            i--;
                         }
                         old.splice(j, 1);
                         j--;
@@ -3274,6 +3324,13 @@ the specific language governing permissions and limitations under the Apache Lic
                     this.triggerChange(this.buildChangeDetails(old, this.data()));
                 }
             }
+        },
+
+        scrollToEnd: function() {
+            var choices = this.findHighlightableChoices();
+            if (choices.length)
+                this.highlight(choices.length - 1);
+            this.results.scrollTop(this.results.get(0).scrollHeight - this.results.height());
         }
     });
 
