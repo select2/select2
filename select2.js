@@ -2161,8 +2161,6 @@ the specific language governing permissions and limitations under the Apache Lic
                 } else if (this.isInterfaceEnabled()) {
                     this.open();
                 }
-
-                killEvent(e);
             }));
 
             dropdown.on("mousedown touchstart", this.bind(function() {
