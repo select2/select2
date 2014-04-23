@@ -24,6 +24,10 @@ Browser compatibility
 * Firefox 10+
 * Safari 3+
 * Opera 10.6+
+ 
+Usage
+-----
+You can source Select2 directly from a [CDN like JSDliver](http://www.jsdelivr.com/#!select2), [download it from this GitHub repo](https://github.com/ivaynberg/select2/tags), or use one of the integrations below.
 
 Integrations
 ------------
