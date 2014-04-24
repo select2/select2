@@ -234,20 +234,6 @@ the specific language governing permissions and limitations under the Apache Lic
         };
     }
 
-    /**
-     * A simple implementation of a thunk
-     * @param formula function used to lazily initialize the thunk
-     * @return {Function}
-     */
-    function thunk(formula) {
-        var evaluated = false,
-            value;
-        return function() {
-            if (evaluated === false) { value = formula(); evaluated = true; }
-            return value;
-        };
-    };
-
     function installDebouncedScroll(threshold, element) {
         var notify = debounce(threshold, function (e) { element.trigger("scroll-debounced", e);});
         element.on("scroll", function (e) {
@@ -640,6 +626,15 @@ the specific language governing permissions and limitations under the Apache Lic
         if (original!==input) return input;
     }
 
+    function cleanupJQueryElements() {
+        var self = this;
+
+        Array.prototype.forEach.call(arguments, function (element) {
+            self[element].remove();
+            self[element] = null;
+        });
+    }
+
     /**
      * Creates a new class
      *
@@ -695,8 +690,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.container.attr("title", opts.element.attr("title"));
 
-            // cache the body so future lookups are cheap
-            this.body = thunk(function() { return opts.element.closest("body"); });
+            this.body = $("body");
 
             syncCssClasses(this.container, this.opts.element, this.opts.adaptContainerCssClass);
 
@@ -832,7 +826,12 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.close();
 
-            if (this.propertyObserver) { delete this.propertyObserver; this.propertyObserver = null; }
+            if (this.propertyObserver) {
+                this.propertyObserver.disconnect();
+                this.propertyObserver = null;
+                
+                this.mutationCallback = null;
+            }
 
             if (select2 !== undefined) {
                 select2.container.remove();
@@ -850,6 +849,14 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
                 element.show();
             }
+
+            cleanupJQueryElements.call(this,
+                "container",
+                "liveRegion",
+                "dropdown",
+                "results",
+                "search"
+            );
         },
 
         // abstract
@@ -1258,11 +1265,11 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             //console.log("below/ droptop:", dropTop, "dropHeight", dropHeight, "sum", (dropTop+dropHeight)+" viewport bottom", viewportBottom, "enough?", enoughRoomBelow);
-            //console.log("above/ offset.top", offset.top, "dropHeight", dropHeight, "top", (offset.top-dropHeight), "scrollTop", this.body().scrollTop(), "enough?", enoughRoomAbove);
+            //console.log("above/ offset.top", offset.top, "dropHeight", dropHeight, "top", (offset.top-dropHeight), "scrollTop", this.body.scrollTop(), "enough?", enoughRoomAbove);
 
             // fix positioning when body has an offset and is not position: static
-            if (this.body().css('position') !== 'static') {
-                bodyOffset = this.body().offset();
+            if (this.body.css('position') !== 'static') {
+                bodyOffset = this.body.offset();
                 dropTop -= bodyOffset.top;
                 dropLeft -= bodyOffset.left;
             }
@@ -1344,8 +1351,8 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.clearDropdownAlignmentPreference();
 
-            if(this.dropdown[0] !== this.body().children().last()[0]) {
-                this.dropdown.detach().appendTo(this.body());
+            if(this.dropdown[0] !== this.body.children().last()[0]) {
+                this.dropdown.detach().appendTo(this.body);
             }
 
             // create the dropdown mask if doesn't already exist
@@ -1354,7 +1361,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 mask = $(document.createElement("div"));
                 mask.attr("id","select2-drop-mask").attr("class","select2-drop-mask");
                 mask.hide();
-                mask.appendTo(this.body());
+                mask.appendTo(this.body);
                 mask.on("mousedown touchstart click", function (e) {
                     // Prevent IE from generating a click event on the body
                     reinsertElement(mask);
@@ -2009,6 +2016,11 @@ the specific language governing permissions and limitations under the Apache Lic
             $("label[for='" + this.focusser.attr('id') + "']")
                 .attr('for', this.opts.element.attr("id"));
             this.parent.destroy.apply(this, arguments);
+
+            cleanupJQueryElements.call(this,
+                "selection",
+                "focusser"
+            );
         },
 
         // single
@@ -2090,7 +2102,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.search.on("blur", this.bind(function(e) {
                 // a workaround for chrome to keep the search field focussed when the scroll bar is used to scroll the dropdown.
                 // without this the search field loses focus which is annoying
-                if (document.activeElement === this.body().get(0)) {
+                if (document.activeElement === this.body.get(0)) {
                     window.setTimeout(this.bind(function() {
                         if (this.opened()) {
                             this.search.focus();
@@ -2599,6 +2611,11 @@ the specific language governing permissions and limitations under the Apache Lic
             $("label[for='" + this.search.attr('id') + "']")
                 .attr('for', this.opts.element.attr("id"));
             this.parent.destroy.apply(this, arguments);
+
+            cleanupJQueryElements.call(this,
+                "searchContainer",
+                "selection"
+            );
         },
 
         // multi
