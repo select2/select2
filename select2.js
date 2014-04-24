@@ -829,8 +829,6 @@ the specific language governing permissions and limitations under the Apache Lic
             if (this.propertyObserver) {
                 this.propertyObserver.disconnect();
                 this.propertyObserver = null;
-                
-                this.mutationCallback = null;
             }
 
             if (select2 !== undefined) {
@@ -1096,18 +1094,13 @@ the specific language governing permissions and limitations under the Apache Lic
                 });
             }
             
-            // hold onto a reference of the callback to work around a chromium bug
-            if (this.mutationCallback === undefined) {
-                this.mutationCallback = function (mutations) {
-                    mutations.forEach(sync);
-                }
-            }
-
             // safari, chrome, firefox, IE11
             observer = window.MutationObserver || window.WebKitMutationObserver|| window.MozMutationObserver;
             if (observer !== undefined) {
                 if (this.propertyObserver) { delete this.propertyObserver; this.propertyObserver = null; }
-                this.propertyObserver = new observer(this.mutationCallback);
+                this.propertyObserver = new observer(function (mutations) {
+                    mutations.forEach(sync);
+                });
                 this.propertyObserver.observe(el.get(0), { attributes:true, subtree:false });
             }
         },
