@@ -40,7 +40,8 @@ Integrations
 * [Symfony2](https://github.com/avocode/FormExtensions)
 * [Bootstrap 2](https://github.com/t0m/select2-bootstrap-css) and [Bootstrap 3](https://github.com/t0m/select2-bootstrap-css/tree/bootstrap3) (CSS skins)
 * [Meteor](https://github.com/nate-strauser/meteor-select2) (modern reactive JavaScript framework; + [Bootstrap 3 skin](https://github.com/esperadomedia/meteor-select2-bootstrap3-css/))
-* [Yii](https://github.com/tonybolzan/yii-select2)
+* [Yii 2.0](http://demos.krajee.com/widgets#select2)
+* [Yii 1.1](https://github.com/tonybolzan/yii-select2)
 
 Internationalization (i18n)
 ---------------------------
