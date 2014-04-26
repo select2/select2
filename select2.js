@@ -3387,6 +3387,15 @@ the specific language governing permissions and limitations under the Apache Lic
         searchInputPlaceholder: '',
         createSearchChoicePosition: 'top',
         shouldFocusInput: function (instance) {
+            // Attempt to detect touch devices
+            var supportsTouchEvents = (('ontouchstart' in window) ||
+                                       (navigator.msMaxTouchPoints > 0));
+
+            // Only devices which support touch events should be special cased
+            if (!supportsTouchEvents) {
+                return true;
+            }
+
             // Never focus the input if search is disabled
             if (instance.opts.minimumResultsForSearch < 0) {
                 return false;
