@@ -2637,7 +2637,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 .attr('for', this.search.attr('id'));
 
             this.search.on("input paste", this.bind(function() {
-                if (this.search.attr('placeholder') && !this.search.val()) return;
+                if (this.search.attr('placeholder') && this.search.val().length == 0) return;
                 if (!this.isInterfaceEnabled()) return;
                 if (!this.opened()) {
                     this.open();
