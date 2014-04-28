@@ -685,7 +685,9 @@ the specific language governing permissions and limitations under the Apache Lic
                 .appendTo(document.body);
 
             this.containerId="s2id_"+(opts.element.attr("id") || "autogen"+nextUid()).replace(/([;&,\-\.\+\*\~':"\!\^#$%@\[\]\(\)=>\|])/g, '\\$1');
-            this.containerSelector="#"+this.containerId;
+            this.containerEventName= "s2id_" + (opts.element.attr("id") || "autogen"+nextUid())
+                .replace(/([.])/g, '_')
+                .replace(/([;&,\-\.\+\*\~':"\!\^#$%@\[\]\(\)=>\|])/g, '\\$1');
             this.container.attr("id", this.containerId);
 
             this.container.attr("title", opts.element.attr("title"));
@@ -1335,7 +1337,7 @@ the specific language governing permissions and limitations under the Apache Lic
          */
         // abstract
         opening: function() {
-            var cid = this.containerId,
+            var cid = this.containerEventName,
                 scroll = "scroll." + cid,
                 resize = "resize."+cid,
                 orient = "orientationchange."+cid,
@@ -1407,7 +1409,7 @@ the specific language governing permissions and limitations under the Apache Lic
         close: function () {
             if (!this.opened()) return;
 
-            var cid = this.containerId,
+            var cid = this.containerEventName,
                 scroll = "scroll." + cid,
                 resize = "resize."+cid,
                 orient = "orientationchange."+cid;
