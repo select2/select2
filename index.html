@@ -1,13 +1,13 @@
 ---
 layout: main
-title: Select2 3.4.6
+title: Select2 3.4.7
 group: navigation
-version: 3.4.6
-milestone: 16
+version: 3.4.7
+milestone: 17
 ---
 
-<link href="select2-3.4.6/select2.css?ts={{ site.time | date_to_xmlschema | cgi_escape}}" rel="stylesheet"/>
-<script src="select2-3.4.6/select2.js?ts={{ site.time | date_to_xmlschema | cgi_escape}}"></script>
+<link href="select2-3.4.7/select2.css?ts={{ site.time | date_to_xmlschema | cgi_escape}}" rel="stylesheet"/>
+<script src="select2-3.4.7/select2.js?ts={{ site.time | date_to_xmlschema | cgi_escape}}"></script>
 
 <script id="script_e1">
 
@@ -969,22 +969,21 @@ $("#e18,#e18_2").select2();
       <article class="row" id="disabled-options">
           <script id="script_e24">
 
-$(document).ready(function () {
-  $('#e24').select2({
-      query: function (query){
-          var data = {
-              results: [
-                  { id: 1, text: "I'm selectable" },
-                  { id: 2, text: "I'm a disabled option", disabled: true },
-                  { id: 3, text: "I'm selectable too!" }
-              ]
-          };
+              $(document).ready(function () {
+                  $('#e24').select2({
+                      query: function (query){
+                          var data = {
+                              results: [
+                                  { id: 1, text: "I'm selectable" },
+                                  { id: 2, text: "I'm a disabled option", disabled: true },
+                                  { id: 3, text: "I'm selectable too!" }
+                              ]
+                          };
 
-          query.callback(data);
-      }
-  });
-});
-
+                          query.callback(data);
+                      }
+                  });
+              });
           </script>
           <div class="span12">
               <h3>Disabled options</h3>
@@ -1032,7 +1031,6 @@ $(document).ready(function () {
   });
   $('#e21').select2('data', preload_data )
 });
-
           </script>
           <div class="span12">
               <h3>Lock selections</h3>
@@ -1075,6 +1073,10 @@ $(document).ready(function () {
               </p>
           </div>
       </article>
+
+
+      </section>
+
 
       <!--               -->
       <!-- DOCUMENTATION -->
