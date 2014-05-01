@@ -1076,7 +1076,7 @@ the specific language governing permissions and limitations under the Apache Lic
          */
         // abstract
         monitorSource: function () {
-            var el = this.opts.element, observer;
+            var el = this.opts.element, observer, self = this;
 
             el.on("change.select2", this.bind(function (e) {
                 if (this.opts.element.data("select2-change-triggered") !== true) {
@@ -1106,7 +1106,7 @@ the specific language governing permissions and limitations under the Apache Lic
             // IE8-10 (IE9/10 won't fire propertyChange via attachEventListener)
             if (el.length && el[0].attachEvent) {
                 el.each(function() {
-                    this.attachEvent("onpropertychange", this._sync);
+                    this.attachEvent("onpropertychange", self._sync);
                 });
             }
             
@@ -1115,7 +1115,7 @@ the specific language governing permissions and limitations under the Apache Lic
             if (observer !== undefined) {
                 if (this.propertyObserver) { delete this.propertyObserver; this.propertyObserver = null; }
                 this.propertyObserver = new observer(function (mutations) {
-                    mutations.forEach(this._sync);
+                    mutations.forEach(self._sync);
                 });
                 this.propertyObserver.observe(el.get(0), { attributes:true, subtree:false });
             }
