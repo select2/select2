@@ -828,10 +828,16 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.close();
 
+            if (element.length && element[0].detachEvent) {
+                element.each(function () {
+                    this.detachEvent("onpropertychange", this._sync);
+                });
+            }
             if (this.propertyObserver) {
                 this.propertyObserver.disconnect();
                 this.propertyObserver = null;
             }
+            this._sync = null;
 
             if (select2 !== undefined) {
                 select2.container.remove();
@@ -1062,7 +1068,7 @@ the specific language governing permissions and limitations under the Apache Lic
          */
         // abstract
         monitorSource: function () {
-            var el = this.opts.element, sync, observer;
+            var el = this.opts.element, observer;
 
             el.on("change.select2", this.bind(function (e) {
                 if (this.opts.element.data("select2-change-triggered") !== true) {
@@ -1070,7 +1076,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
             }));
 
-            sync = this.bind(function () {
+            this._sync = this.bind(function () {
 
                 // sync enabled state
                 var disabled = el.prop("disabled");
@@ -1092,7 +1098,7 @@ the specific language governing permissions and limitations under the Apache Lic
             // IE8-10 (IE9/10 won't fire propertyChange via attachEventListener)
             if (el.length && el[0].attachEvent) {
                 el.each(function() {
-                    this.attachEvent("onpropertychange", sync);
+                    this.attachEvent("onpropertychange", this._sync);
                 });
             }
             
@@ -1101,7 +1107,7 @@ the specific language governing permissions and limitations under the Apache Lic
             if (observer !== undefined) {
                 if (this.propertyObserver) { delete this.propertyObserver; this.propertyObserver = null; }
                 this.propertyObserver = new observer(function (mutations) {
-                    mutations.forEach(sync);
+                    mutations.forEach(this._sync);
                 });
                 this.propertyObserver.observe(el.get(0), { attributes:true, subtree:false });
             }
