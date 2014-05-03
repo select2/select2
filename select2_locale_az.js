@@ -7,7 +7,7 @@
     "use strict";
 
     $.extend($.fn.select2.defaults, {
-        formatMatches: function (matches) { return matches + " nəticə mövcuddur, hərəkkət etdirmək üçün yuxarı və aşağı düymələrindən istifadə edin."; },
+        formatMatches: function (matches) { return matches + " nəticə mövcuddur, hərəkət etdirmək üçün yuxarı və aşağı düymələrindən istifadə edin."; },
         formatNoMatches: function () { return "Nəticə tapılmadı"; },
         formatInputTooShort: function (input, min) { var n = min - input.length; return n + " simvol daxil edin"; },
         formatInputTooLong: function (input, max) { var n = input.length - max; return n + " simvol silin"; },
