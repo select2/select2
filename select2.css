@@ -440,7 +440,7 @@ disabled look for disabled choices in the results dropdown
     height: auto !important;
     height: 1%;
     margin: 0;
-    padding: 0;
+    padding: 0 5px 0 0;
     position: relative;
 
     border: 1px solid #aaa;
