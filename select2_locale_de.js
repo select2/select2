@@ -10,6 +10,7 @@
         formatInputTooLong: function (input, max) { var n = input.length - max; return "Bitte " + n + " Zeichen weniger eingeben"; },
         formatSelectionTooBig: function (limit) { return "Sie können nur " + limit + " Eintr" + (limit === 1 ? "ag" : "äge") + " auswählen"; },
         formatLoadMore: function (pageNumber) { return "Lade mehr Ergebnisse…"; },
-        formatSearching: function () { return "Suche…"; }
+        formatSearching: function () { return "Suche…"; },
+        formatMatches: function (matches) { return matches + " Ergebnis " + (matches > 1 ? "se" : "") + " verfügbar, zum Navigieren die Hoch-/Runter-Pfeiltasten verwenden."; }
     });
 })(jQuery);
