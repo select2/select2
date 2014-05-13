@@ -919,46 +919,39 @@ the specific language governing permissions and limitations under the Apache Lic
 
                     populate=function(results, container, depth) {
 
-                        var i, l, result, selectable, disabled, compound, node, label, innerContainer, formatted, formattedClass;
+                        var i, l, result, selectable, disabled, compound, node, label, innerContainer, formatted;
 
                         results = opts.sortResults(results, container, query);
 
-                        // collect the created nodes for bulk append
-                        var nodes = [];
                         for (i = 0, l = results.length; i < l; i = i + 1) {
 
                             result=results[i];
+
                             disabled = (result.disabled === true);
                             selectable = (!disabled) && (id(result) !== undefined);
+
                             compound=result.children && result.children.length > 0;
 
-                            node ="<li class=\"";
-                            node += "select2-results-dept-" + depth;
-                            node += " select2-result";
-                            node+= selectable ? " select2-result-selectable" : " select2-result-unselectable";
-                            if (disabled)
-                                node += " select2-disabled";
-                            if (compound)
-                                node += " select2-result-with-children";
-                            formattedClass = self.opts.formatResultCssClass(result);
-                            if (formattedClass != undefined)
-                                node += " " + formattedClass;
-                            node += "\" role=\"presentation\">";
+                            node=$("<li></li>");
+                            node.addClass("select2-results-dept-"+depth);
+                            node.addClass("select2-result");
+                            node.addClass(selectable ? "select2-result-selectable" : "select2-result-unselectable");
+                            if (disabled) { node.addClass("select2-disabled"); }
+                            if (compound) { node.addClass("select2-result-with-children"); }
+                            node.addClass(self.opts.formatResultCssClass(result));
+                            node.attr("role", "presentation");
 
-                            label = "<div class=\"select2-result-label\"";
-                            label += " id=\"select2-result-label-" + nextUid() + "\"";
-                            label += " role=\"option\"";
-                            label += ">";
-                            formatted = opts.formatResult(result, label, query, self.opts.escapeMarkup);
-                            if (formatted !== undefined)
-                                label += formatted;
-                            label += "</div>";
+                            label=$(document.createElement("div"));
+                            label.addClass("select2-result-label");
+                            label.attr("id", "select2-result-label-" + nextUid());
+                            label.attr("role", "option");
 
-                            node += label;
-                            node += "</li>";
+                            formatted=opts.formatResult(result, label, query, self.opts.escapeMarkup);
+                            if (formatted!==undefined) {
+                                label.html(formatted);
+                                node.append(label);
+                            }
 
-                            // I still used jQuery wrapping for setting "data" below
-                            node = $(node);
 
                             if (compound) {
 
@@ -969,10 +962,9 @@ the specific language governing permissions and limitations under the Apache Lic
                             }
 
                             node.data("select2-data", result);
-                            nodes.push(node[0]);
+                            container.append(node);
                         }
-                        // bulk append the created nodes
-                        container.append(nodes);
+
                         liveRegion.text(opts.formatMatches(results.length));
                     };
 
