@@ -923,6 +923,8 @@ the specific language governing permissions and limitations under the Apache Lic
 
                         results = opts.sortResults(results, container, query);
 
+                        // collect the created nodes for bulk append
+                        var nodes = [];
                         for (i = 0, l = results.length; i < l; i = i + 1) {
 
                             result=results[i];
@@ -962,9 +964,11 @@ the specific language governing permissions and limitations under the Apache Lic
                             }
 
                             node.data("select2-data", result);
-                            container.append(node);
+                            nodes.push(node[0]);
                         }
 
+                        // bulk append the created nodes
+                        container.append(nodes);
                         liveRegion.text(opts.formatMatches(results.length));
                     };
 
