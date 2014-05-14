@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright 2012 Igor Vaynberg
 
 Version: @@ver@@ Timestamp: @@timestamp@@
@@ -734,6 +734,11 @@ the specific language governing permissions and limitations under the Apache Lic
             this.resultsPage = 0;
             this.context = null;
 
+            this.selection = this.container.find(".select2-choice");
+            this.selection.css(evaluate(opts.choiceCss, this.opts.element));
+            this.selection.addClass(evaluate(opts.choiceCssClass, this.opts.element));
+
+
             // initialize the container
             this.initContainer();
 
@@ -1100,6 +1105,9 @@ the specific language governing permissions and limitations under the Apache Lic
 
                 syncCssClasses(this.dropdown, this.opts.element, this.opts.adaptDropdownCssClass);
                 this.dropdown.addClass(evaluate(this.opts.dropdownCssClass, this.opts.element));
+
+                syncCssClasses(this.choice, this.opts.element, this.opts.adaptChoiceCssClass);
+                this.select.addClass(evaluate(this.opts.choiceCssClass, this.opts.element));
 
             });
 
@@ -3373,8 +3381,10 @@ the specific language governing permissions and limitations under the Apache Lic
         openOnEnter: true,
         containerCss: {},
         dropdownCss: {},
+        choiceCss: {},
         containerCssClass: "",
         dropdownCssClass: "",
+        choiceCssClass: "",
         formatResult: function(result, container, query, escapeMarkup) {
             var markup=[];
             markMatch(result.text, query.term, markup, escapeMarkup);
@@ -3411,6 +3421,7 @@ the specific language governing permissions and limitations under the Apache Lic
         selectOnBlur: false,
         adaptContainerCssClass: function(c) { return c; },
         adaptDropdownCssClass: function(c) { return null; },
+        adaptChoiceCssClass: function(c) { return null; },
         nextSearchTerm: function(selectedObject, currentSearchTerm) { return undefined; },
         searchInputPlaceholder: '',
         createSearchChoicePosition: 'top',
