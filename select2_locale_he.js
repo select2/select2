@@ -13,5 +13,8 @@
         formatSelectionTooBig: function (limit) { return "ניתן לבחור " + limit + " פריטים"; },
         formatLoadMore: function (pageNumber) { return "טוען תוצאות נוספות…"; },
         formatSearching: function () { return "מחפש…"; }
-    });
+    }
+
+	$.extend($.fn.select2.defaults, $.fn.select2.locales['he']);
+	);
 })(jQuery);

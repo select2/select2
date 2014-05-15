@@ -13,5 +13,8 @@
         formatSelectionTooBig: function (limit) { return "Jūs varat izvēlēties ne vairāk kā " + limit + " element" + (limit == 11 ? "us" : limit%10 == 1 ? "u" : "us"); },
         formatLoadMore: function (pageNumber) { return "Datu ielāde…"; },
         formatSearching: function () { return "Meklēšana…"; }
-    });
+    }
+
+	$.extend($.fn.select2.defaults, $.fn.select2.locales['lv']);
+	);
 })(jQuery);

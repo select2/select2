@@ -12,5 +12,8 @@
         formatLoadMore: function (pageNumber) { return "Lade mehr Ergebnisse…"; },
         formatSearching: function () { return "Suche…"; },
         formatMatches: function (matches) { return matches + " Ergebnis " + (matches > 1 ? "se" : "") + " verfügbar, zum Navigieren die Hoch-/Runter-Pfeiltasten verwenden."; }
-    });
+    }
+
+	$.extend($.fn.select2.defaults, $.fn.select2.locales['de']);
+	);
 })(jQuery);

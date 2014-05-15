@@ -14,5 +14,8 @@
         formatSelectionTooBig: function (limit) { return "Можете да направите до " + limit + (limit > 1 ? " избора" : " избор"); },
         formatLoadMore: function (pageNumber) { return "Зареждат се още…"; },
         formatSearching: function () { return "Търсене…"; }
-    });
+    }
+
+	$.extend($.fn.select2.defaults, $.fn.select2.locales['bg']);
+	);
 })(jQuery);

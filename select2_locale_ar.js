@@ -13,5 +13,8 @@
         formatSelectionTooBig: function (limit) { if (n == 1){ return "يمكنك أن تختار إختيار واحد فقط"; } return n == 2 ? "يمكنك أن تختار إختيارين فقط" : "يمكنك أن تختار " + n + " إختيارات فقط"; },
         formatLoadMore: function (pageNumber) { return "تحميل المزيد من النتائج…"; },
         formatSearching: function () { return "البحث…"; }
-    });
+    }
+
+	$.extend($.fn.select2.defaults, $.fn.select2.locales['ar']);
+	);
 })(jQuery);

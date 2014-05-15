@@ -11,5 +11,8 @@
         formatSelectionTooBig: function (limit) { return "Csak " + limit + " elemet lehet kiválasztani."; },
         formatLoadMore: function (pageNumber) { return "Töltés…"; },
         formatSearching: function () { return "Keresés…"; }
-    });
+    }
+
+	$.extend($.fn.select2.defaults, $.fn.select2.locales['hu']);
+	);
 })(jQuery);

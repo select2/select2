@@ -13,5 +13,8 @@
         formatSelectionTooBig: function (limit) { return "Saad vaid " + limit + " tulemus" + (limit == 1 ? "e" : "t") + " valida"; },
         formatLoadMore: function (pageNumber) { return "Laen tulemusi.."; },
         formatSearching: function () { return "Otsin.."; }
-    });
+    }
+
+	$.extend($.fn.select2.defaults, $.fn.select2.locales['et']);
+	);
 })(jQuery);

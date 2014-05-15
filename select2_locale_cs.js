@@ -45,5 +45,8 @@
         },
         formatLoadMore: function (pageNumber) { return "Načítají se další výsledky…"; },
         formatSearching: function () { return "Vyhledávání…"; }
-    });
+    }
+
+	$.extend($.fn.select2.defaults, $.fn.select2.locales['cs']);
+	);
 })(jQuery);

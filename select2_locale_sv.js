@@ -13,5 +13,8 @@
         formatSelectionTooBig: function (limit) { return "Du kan max välja " + limit + " element"; },
         formatLoadMore: function (pageNumber) { return "Laddar fler resultat…"; },
         formatSearching: function () { return "Söker…"; }
-    });
+    }
+
+	$.extend($.fn.select2.defaults, $.fn.select2.locales['sv']);
+	);
 })(jQuery);
