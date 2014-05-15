@@ -13,5 +13,8 @@
         formatSelectionTooBig: function (limit) { return "คุณสามารถเลือกได้ไม่เกิน " + limit + " รายการ"; },
         formatLoadMore: function (pageNumber) { return "กำลังค้นข้อมูลเพิ่ม…"; },
         formatSearching: function () { return "กำลังค้นข้อมูล…"; }
-    });
+    }
+	
+	$.extend($.fn.select2.defaults, $.fn.select2.locales['th']);
+	);
 })(jQuery);

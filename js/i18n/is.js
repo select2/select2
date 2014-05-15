@@ -11,5 +11,8 @@
         formatSelectionTooBig: function (limit) { return "Þú getur aðeins valið " + limit + " atriði"; },
         formatLoadMore: function (pageNumber) { return "Sæki fleiri niðurstöður…"; },
         formatSearching: function () { return "Leita…"; }
-    });
+    }
+	
+	$.extend($.fn.select2.defaults, $.fn.select2.locales['is']);
+	);
 })(jQuery);

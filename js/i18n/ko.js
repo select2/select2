@@ -13,5 +13,8 @@
         formatSelectionTooBig: function (limit) { return "최대 "+limit+"개까지만 선택하실 수 있습니다."; },
         formatLoadMore: function (pageNumber) { return "불러오는 중…"; },
         formatSearching: function () { return "검색 중…"; }
-    });
+    }
+	
+	$.extend($.fn.select2.defaults, $.fn.select2.locales['ko']);
+	);
 })(jQuery);
