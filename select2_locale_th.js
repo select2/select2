@@ -15,5 +15,5 @@
         formatSearching: function () { return "กำลังค้นข้อมูล…"; }
     };
 
-	$.extend($.fn.select2.defaults, $.fn.select2.locales['th']);
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['th']);
 })(jQuery);

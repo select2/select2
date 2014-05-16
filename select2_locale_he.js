@@ -15,6 +15,5 @@
         formatSearching: function () { return "מחפש…"; }
     }
 
-	$.extend($.fn.select2.defaults, $.fn.select2.locales['he']);
-	);
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['he']);
 })(jQuery);

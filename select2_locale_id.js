@@ -13,8 +13,7 @@
         formatSelectionTooBig: function (limit) { return "Anda hanya dapat memilih " + limit + " pilihan" + (limit == 1 ? "" : "s"); },
         formatLoadMore: function (pageNumber) { return "Mengambil data…"; },
         formatSearching: function () { return "Mencari…"; }
-    }
+    };
 
-	$.extend($.fn.select2.defaults, $.fn.select2.locales['id']);
-	);
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['id']);
 })(jQuery);

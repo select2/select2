@@ -15,5 +15,5 @@
         formatSearching: function () { return "Αναζήτηση…"; }
     };
 
-	$.extend($.fn.select2.defaults, $.fn.select2.locales['el']);
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['el']);
 })(jQuery);

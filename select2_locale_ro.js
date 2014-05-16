@@ -13,5 +13,5 @@
         formatSearching: function () { return "Căutare…"; }
     };
 
-	$.extend($.fn.select2.defaults, $.fn.select2.locales['ro']);
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['ro']);
 })(jQuery);

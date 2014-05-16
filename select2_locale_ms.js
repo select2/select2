@@ -15,5 +15,5 @@
         formatSearching: function () { return "Mencari…"; }
     };
 
-	$.extend($.fn.select2.defaults, $.fn.select2.locales['ms']);
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['ms']);
 })(jQuery);

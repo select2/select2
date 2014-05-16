@@ -15,5 +15,5 @@
         formatSearching: function () { return "Otsin.."; }
     };
 
-	$.extend($.fn.select2.defaults, $.fn.select2.locales['et']);
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['et']);
 })(jQuery);

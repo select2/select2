@@ -13,5 +13,5 @@
         formatSearching: function () { return "A pesquisar…"; }
     };
 
-	$.extend($.fn.select2.defaults, $.fn.select2.locales['pt-PT']);
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['pt-PT']);
 })(jQuery);

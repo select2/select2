@@ -15,5 +15,5 @@
         formatSearching: function () { return "검색 중…"; }
     };
 
-	$.extend($.fn.select2.defaults, $.fn.select2.locales['ko']);
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['ko']);
 })(jQuery);

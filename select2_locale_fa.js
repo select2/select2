@@ -17,6 +17,5 @@
         formatSearching: function () { return "در حال جستجو…"; }
     }
 
-	$.extend($.fn.select2.defaults, $.fn.select2.locales['fa']);
-	);
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['fa']);
 })(jQuery);

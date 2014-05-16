@@ -41,5 +41,5 @@
         }
     };
 
-	$.extend($.fn.select2.defaults, $.fn.select2.locales['eu']);
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['eu']);
 })(jQuery);

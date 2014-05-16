@@ -15,5 +15,5 @@
         formatSearching: function () { return "S'està cercant…"; }
     };
 
-	$.extend($.fn.select2.defaults, $.fn.select2.locales['ca']);
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['ca']);
 })(jQuery);

@@ -14,6 +14,5 @@
         formatSearching: function () { return "Recherche en cours…"; }
     }
 
-	$.extend($.fn.select2.defaults, $.fn.select2.locales['fr']);
-	);
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['fr']);
 })(jQuery);

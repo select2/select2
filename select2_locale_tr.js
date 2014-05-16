@@ -15,5 +15,5 @@
         formatSearching: function () { return "Aranıyor…"; }
     };
 
-	$.extend($.fn.select2.defaults, $.fn.select2.locales['tr']);
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['tr']);
 })(jQuery);
