@@ -11,8 +11,7 @@
         formatSelectionTooBig: function (limit) { return "Aveți voie să selectați cel mult " + limit + " element" + (limit == 1 ? "" : "e"); },
         formatLoadMore: function (pageNumber) { return "Se încarcă…"; },
         formatSearching: function () { return "Căutare…"; }
-    }
+    };
 
 	$.extend($.fn.select2.defaults, $.fn.select2.locales['ro']);
-	);
 })(jQuery);

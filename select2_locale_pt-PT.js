@@ -11,8 +11,7 @@
         formatSelectionTooBig: function (limit) { return "Só é possível selecionar " + limit + " elemento" + (limit == 1 ? "" : "s"); },
         formatLoadMore: function (pageNumber) { return "A carregar mais resultados…"; },
         formatSearching: function () { return "A pesquisar…"; }
-    }
+    };
 
 	$.extend($.fn.select2.defaults, $.fn.select2.locales['pt-PT']);
-	);
 })(jQuery);

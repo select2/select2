@@ -13,8 +13,7 @@
         formatSelectionTooBig: function (limit) { return "Només podeu seleccionar " + limit + " element" + (limit == 1 ? "" : "s"); },
         formatLoadMore: function (pageNumber) { return "S'estan carregant més resultats…"; },
         formatSearching: function () { return "S'està cercant…"; }
-    }
+    };
 
 	$.extend($.fn.select2.defaults, $.fn.select2.locales['ca']);
-	);
 })(jQuery);

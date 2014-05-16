@@ -11,8 +11,7 @@
         formatSelectionTooBig: function (limit) { return "Maximaal " + limit + " item" + (limit == 1 ? "" : "s") + " toegestaan"; },
         formatLoadMore: function (pageNumber) { return "Meer resultaten laden…"; },
         formatSearching: function () { return "Zoeken…"; }
-    }
+    };
 
 	$.extend($.fn.select2.defaults, $.fn.select2.locales['nl']);
-	);
 })(jQuery);

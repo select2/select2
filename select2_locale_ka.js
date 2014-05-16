@@ -13,8 +13,7 @@
         formatSelectionTooBig: function (limit) { return "თქვენ შეგიძლიათ მხოლოდ " + limit + " ჩანაწერის მონიშვნა"; },
         formatLoadMore: function (pageNumber) { return "შედეგის ჩატვირთვა…"; },
         formatSearching: function () { return "ძებნა…"; }
-    }
+    };
 
 	$.extend($.fn.select2.defaults, $.fn.select2.locales['ka']);
-	);
 })(jQuery);

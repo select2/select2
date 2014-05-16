@@ -13,8 +13,7 @@
         formatSelectionTooBig: function (limit) { return "Sadece " + limit + " seçim yapabilirsiniz"; },
         formatLoadMore: function (pageNumber) { return "Daha fazla…"; },
         formatSearching: function () { return "Aranıyor…"; }
-    }
+    };
 
 	$.extend($.fn.select2.defaults, $.fn.select2.locales['tr']);
-	);
 })(jQuery);
