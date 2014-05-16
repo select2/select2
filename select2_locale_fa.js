@@ -15,7 +15,7 @@
         formatSelectionTooBig: function (limit) { return "شما فقط می‌توانید " + limit + " مورد را انتخاب کنید"; },
         formatLoadMore: function (pageNumber) { return "در حال بارگیری موارد بیشتر…"; },
         formatSearching: function () { return "در حال جستجو…"; }
-    }
+    };
 
     $.extend($.fn.select2.defaults, $.fn.select2.locales['fa']);
 })(jQuery);

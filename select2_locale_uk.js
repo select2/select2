@@ -22,5 +22,4 @@
     function character (n, word) {
         return n + " " + word + (n%10 < 5 && n%10 > 0 && (n%100 < 5 || n%100 > 19) ? n%10 > 1 ? "и" : "" : "ів");
     }
-
 })(jQuery);
