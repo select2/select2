@@ -13,9 +13,8 @@
         formatSelectionTooBig: function (limit) { return "Chỉ có thể chọn được " + limit + " tùy chọn" + (limit == 1 ? "" : "s"); },
         formatLoadMore: function (pageNumber) { return "Đang lấy thêm kết quả…"; },
         formatSearching: function () { return "Đang tìm…"; }
-    }
+    };
 	
 	$.extend($.fn.select2.defaults, $.fn.select2.locales['vi']);
-	);
 })(jQuery);
 

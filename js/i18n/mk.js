@@ -13,8 +13,7 @@
         formatSelectionTooBig: function (limit) { return "Можете да изберете само " + limit + " ставк" + (limit == 1 ? "а" : "и"); },
         formatLoadMore: function (pageNumber) { return "Вчитување резултати…"; },
         formatSearching: function () { return "Пребарување…"; }
-    }
+    };
 	
 	$.extend($.fn.select2.defaults, $.fn.select2.locales['mk']);
-	);
 })(jQuery);

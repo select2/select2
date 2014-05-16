@@ -13,8 +13,7 @@
         formatSelectionTooBig: function (limit) { return "Μπορείτε να επιλέξετε μόνο " + limit + " αντικείμεν" + (limit > 1 ? "α" : "ο"); },
         formatLoadMore: function (pageNumber) { return "Φόρτωση περισσότερων…"; },
         formatSearching: function () { return "Αναζήτηση…"; }
-    }
+    };
 	
 	$.extend($.fn.select2.defaults, $.fn.select2.locales['el']);
-	);
 })(jQuery);

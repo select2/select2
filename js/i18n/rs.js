@@ -13,8 +13,7 @@
         formatSelectionTooBig: function (limit) { return "Možete izabrati samo " + limit + " stavk" + (limit % 10 == 1 && limit % 100 != 11	 ? "u" : (limit % 10 >= 2 && limit % 10 <= 4 && (limit % 100 < 12 || limit % 100 > 14)? "e" : "i")); },
         formatLoadMore: function (pageNumber) { return "Preuzimanje još rezultata…"; },
         formatSearching: function () { return "Pretraga…"; }
-    }
+    };
 	
 	$.extend($.fn.select2.defaults, $.fn.select2.locales['rs']);
-	);
 })(jQuery);

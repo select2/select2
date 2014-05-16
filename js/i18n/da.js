@@ -13,8 +13,7 @@
         formatSelectionTooBig: function (limit) { return "Du kan kun vælge " + limit + " emne" + (limit === 1 ? "" : "r"); },
         formatLoadMore: function (pageNumber) { return "Indlæser flere resultater…"; },
         formatSearching: function () { return "Søger…"; }
-    }
+    };
 	
 	$.extend($.fn.select2.defaults, $.fn.select2.locales['fi']);
-	);
 })(jQuery);

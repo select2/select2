@@ -11,8 +11,7 @@
         formatSelectionTooBig: function (limit) { return "Sie können nur " + limit + " Eintr" + (limit === 1 ? "ag" : "äge") + " auswählen"; },
         formatLoadMore: function (pageNumber) { return "Lade mehr Ergebnisse…"; },
         formatSearching: function () { return "Suche…"; }
-    }
+    };
 	
 	$.extend($.fn.select2.defaults, $.fn.select2.locales['de']);
-	);
 })(jQuery);
