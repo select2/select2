@@ -11,8 +11,7 @@
         formatSelectionTooBig: function (limit) { return "最多で" + limit + "項目までしか選択できません"; },
         formatLoadMore: function (pageNumber) { return "読込中･･･"; },
         formatSearching: function () { return "検索中･･･"; }
-    }
+    };
 	
-	$.extend($.fn.select2.defaults, $.fn.select2.locales['ja']);
-	);
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['ja']);
 })(jQuery);

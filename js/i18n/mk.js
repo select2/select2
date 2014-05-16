@@ -15,5 +15,5 @@
         formatSearching: function () { return "Пребарување…"; }
     };
 	
-	$.extend($.fn.select2.defaults, $.fn.select2.locales['mk']);
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['mk']);
 })(jQuery);

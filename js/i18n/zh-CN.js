@@ -12,5 +12,5 @@
         formatSearching: function () { return "搜索中…"; }
     };
 	
-	$.extend($.fn.select2.defaults, $.fn.select2.locales['zh-CN']);
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['zh-CN']);
 })(jQuery);

@@ -17,5 +17,5 @@
         formatPagination: function (pageNumber, numPages) { return "Page " + pageNumber + " of " + numPages; }
     };
 	
-	$.extend($.fn.select2.defaults, $.fn.select2.locales['en']);
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['en']);
 })(jQuery);

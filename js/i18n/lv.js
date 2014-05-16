@@ -15,5 +15,5 @@
         formatSearching: function () { return "Meklēšana…"; }
     };
 	
-	$.extend($.fn.select2.defaults, $.fn.select2.locales['lv']);
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['lv']);
 })(jQuery);

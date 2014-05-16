@@ -15,6 +15,6 @@
         formatSearching: function () { return "Đang tìm…"; }
     };
 	
-	$.extend($.fn.select2.defaults, $.fn.select2.locales['vi']);
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['vi']);
 })(jQuery);
 

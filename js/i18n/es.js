@@ -13,5 +13,5 @@
         formatSearching: function () { return "Buscando…"; }
     };
 	
-	$.extend($.fn.select2.defaults, $.fn.select2.locales['es']);
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['es']);
 })(jQuery);

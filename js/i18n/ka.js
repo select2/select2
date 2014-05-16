@@ -15,5 +15,5 @@
         formatSearching: function () { return "ძებნა…"; }
     };
 	
-	$.extend($.fn.select2.defaults, $.fn.select2.locales['ka']);
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['ka']);
 })(jQuery);

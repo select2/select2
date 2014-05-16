@@ -15,5 +15,5 @@
         formatSearching: function () { return "البحث…"; }
     };
 	
-	$.extend($.fn.select2.defaults, $.fn.select2.locales['ar']);
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['ar']);
 })(jQuery);

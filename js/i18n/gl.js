@@ -41,6 +41,5 @@
         }
     }
 	
-	$.extend($.fn.select2.defaults, $.fn.select2.locales['gl']);
-	);
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['gl']);
 })(jQuery);

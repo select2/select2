@@ -13,5 +13,5 @@
         formatSearching: function () { return "Zoeken…"; }
     };
 	
-	$.extend($.fn.select2.defaults, $.fn.select2.locales['nl']);
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['nl']);
 })(jQuery);
