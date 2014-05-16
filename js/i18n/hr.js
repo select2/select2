@@ -14,7 +14,7 @@
         formatSelectionTooBig: function (limit) { return "Maksimalan broj odabranih stavki je " + limit; },
         formatLoadMore: function (pageNumber) { return "Učitavanje rezultata…"; },
         formatSearching: function () { return "Pretraga…"; }
-    }
+    };
 	
     $.extend($.fn.select2.defaults, $.fn.select2.locales['hr']);
 
