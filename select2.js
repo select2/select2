@@ -193,10 +193,6 @@ the specific language governing permissions and limitations under the Apache Lic
         });
     }
 
-    $document.on("mousemove", function (e) {
-        lastMousePosition.x = e.pageX;
-        lastMousePosition.y = e.pageY;
-    });
 
     /**
      * filters mouse events so an event is fired only if the mouse moved.
@@ -1343,6 +1339,12 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.opening();
 
+            // Only bind the document mousemove when the dropdown is visible
+            $document.on("mousemove.select2Event", function (e) {
+                lastMousePosition.x = e.pageX;
+                lastMousePosition.y = e.pageY;
+            });
+            
             return true;
         },
 
@@ -1439,6 +1441,8 @@ the specific language governing permissions and limitations under the Apache Lic
             this.container.removeClass("select2-dropdown-open").removeClass("select2-container-active");
             this.results.empty();
 
+            // Now that the dropdown is closed, unbind the global document mousemove event
+            $document.off("mousemove.select2Event");
 
             this.clearSearch();
             this.search.removeClass("select2-active");
