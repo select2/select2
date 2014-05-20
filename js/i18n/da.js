@@ -15,5 +15,5 @@
         formatSearching: function () { return "Søger…"; }
     };
 	
-    $.extend($.fn.select2.defaults, $.fn.select2.locales['fi']);
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['da']);
 })(jQuery);
