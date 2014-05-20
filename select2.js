@@ -1194,7 +1194,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // abstract
         opened: function () {
-            return this.container.hasClass("select2-dropdown-open");
+            return (this.container) ? this.container.hasClass("select2-dropdown-open") : false;
         },
 
         // abstract
