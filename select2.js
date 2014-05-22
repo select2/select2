@@ -1715,6 +1715,16 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
                 return;
             }
+            
+            if (!search.val().match(opts.regex)) {
+                if (checkFormatter(opts.formatRegEx, "formatRegEx")) {
+                    render("<li class='select2-no-results'>" + evaluate(opts.formatRegEx, search.val()) + "</li>");
+                } else {
+                    render("");
+                }
+                if (initial && this.showSearch) this.showSearch(true);
+                return;
+            }
 
             if (opts.formatSearching && this.findHighlightableChoices().length === 0) {
                 render("<li class='select2-searching'>" + evaluate(opts.formatSearching, opts.element) + "</li>");
@@ -3399,10 +3409,12 @@ the specific language governing permissions and limitations under the Apache Lic
         formatSelectionTooBig: function (limit) { return "You can only select " + limit + " item" + (limit == 1 ? "" : "s"); },
         formatLoadMore: function (pageNumber) { return "Loading more results…"; },
         formatSearching: function () { return "Searching…"; },
+        formatRegEx: function(input) {return input + " is not a valid search format"; }, 
         minimumResultsForSearch: 0,
         minimumInputLength: 0,
         maximumInputLength: null,
         maximumSelectionSize: 0,
+        regex: new RegExp(".*"),
         id: function (e) { return e == undefined ? null : e.id; },
         matcher: function(term, text) {
             return stripDiacritics(''+text).toUpperCase().indexOf(stripDiacritics(''+term).toUpperCase()) >= 0;
