@@ -387,7 +387,7 @@ the specific language governing permissions and limitations under the Apache Lic
      * @param options.data a function(searchTerm, pageNumber, context) that should return an object containing query string parameters for the above url.
      * @param options.dataType request data type: ajax, jsonp, other datatypes supported by jQuery's $.ajax function or the transport function if specified
      * @param options.quietMillis (optional) milliseconds to wait before making the ajaxRequest, helps debounce the ajax function if invoked too often
-     * @param options.results a function(remoteData, pageNumber) that converts data returned form the remote request to the format expected by Select2.
+     * @param options.results a function(remoteData, pageNumber, query) that converts data returned form the remote request to the format expected by Select2.
      *      The expected format is an object containing the following keys:
      *      results array of objects that will be used as choices
      *      more (optional) boolean indicating whether there are more results available
@@ -434,7 +434,8 @@ the specific language governing permissions and limitations under the Apache Lic
                     data: data,
                     success: function (data) {
                         // TODO - replace query.page with query so users have access to term, page, etc.
-                        var results = options.results(data, query.page);
+                        // added query as third paramter to keep backwards compatibility
+                        var results = options.results(data, query.page, query);
                         query.callback(results);
                     }
                 });
