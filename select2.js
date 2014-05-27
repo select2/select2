@@ -633,7 +633,7 @@ the specific language governing permissions and limitations under the Apache Lic
     function cleanupJQueryElements() {
         var self = this;
 
-        Array.prototype.forEach.call(arguments, function (element) {
+        $.each(arguments, function (i, element) {
             self[element].remove();
             self[element] = null;
         });
@@ -1111,7 +1111,7 @@ the specific language governing permissions and limitations under the Apache Lic
             if (observer !== undefined) {
                 if (this.propertyObserver) { delete this.propertyObserver; this.propertyObserver = null; }
                 this.propertyObserver = new observer(function (mutations) {
-                    mutations.forEach(self._sync);
+                    $.each(mutations, self._sync);
                 });
                 this.propertyObserver.observe(el.get(0), { attributes:true, subtree:false });
             }
