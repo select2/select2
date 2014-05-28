@@ -459,7 +459,6 @@ the specific language governing permissions and limitations under the Apache Lic
      * the text.
      */
     function local(options) {
-
         var data = options, // data elements
             dataText,
             tmp,
