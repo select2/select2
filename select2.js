@@ -459,6 +459,7 @@ the specific language governing permissions and limitations under the Apache Lic
      * the text.
      */
     function local(options) {
+
         var data = options, // data elements
             dataText,
             tmp,
@@ -3386,11 +3387,11 @@ the specific language governing permissions and limitations under the Apache Lic
         dropdownCssClass: "",
         formatResult: function(result, container, query, escapeMarkup) {
             var markup=[];
-            markMatch(result.text, query.term, markup, escapeMarkup);
+            markMatch(this.text(result), query.term, markup, escapeMarkup);
             return markup.join("");
         },
         formatSelection: function (data, container, escapeMarkup) {
-            return data ? escapeMarkup(data.text) : undefined;
+            return data ? escapeMarkup(this.text(data)) : undefined;
         },
         sortResults: function (results, container, query) {
             return results;
@@ -3409,6 +3410,17 @@ the specific language governing permissions and limitations under the Apache Lic
         maximumInputLength: null,
         maximumSelectionSize: 0,
         id: function (e) { return e == undefined ? null : e.id; },
+        text: function (e) {
+          if (e && this.data && this.data.text) {
+            if ($.isFunction(this.data.text)) {
+              return this.data.text(e);
+            } else {
+              return e[this.data.text];
+            }
+          } else {
+            return e.text;
+          }
+        },
         matcher: function(term, text) {
             return stripDiacritics(''+text).toUpperCase().indexOf(stripDiacritics(''+term).toUpperCase()) >= 0;
         },
