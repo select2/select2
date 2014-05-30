@@ -1416,12 +1416,16 @@ the specific language governing permissions and limitations under the Apache Lic
 
             // attach listeners to events that can change the position of the container and thus require
             // the position of the dropdown to be updated as well so it does not come unglued from the container
-            var that = this;
-            this.container.parents().add(window).each(function () {
-                $(this).on(resize+" "+scroll+" "+orient, function (e) {
-                    if (that.opened()) that.positionDropdown();
+    
+            // Android virtual keyboard edit the window size, and trigger the close event!
+            if (!navigator.userAgent.match(/android/i)) {
+                var that = this;
+                this.container.parents().add(window).each(function () {
+                    $(this).on(resize+" "+scroll+" "+orient, function (e) {
+                        if (that.opened()) that.positionDropdown();
+                    });
                 });
-            });
+            }
 
 
         },
