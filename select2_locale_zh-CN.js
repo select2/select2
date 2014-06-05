@@ -9,6 +9,6 @@
         formatInputTooLong: function (input, max) { var n = input.length - max; return "请删掉" + n + "个字符";},
         formatSelectionTooBig: function (limit) { return "你只能选择最多" + limit + "项"; },
         formatLoadMore: function (pageNumber) { return "加载结果中…"; },
-        formatSearching: function () { return "搜索中…"; }
+        formatSearching: function () { return "正在检索…"; }
     });
 })(jQuery);
