@@ -18,7 +18,22 @@ Apache License or the GPL License is distributed on an "AS IS" BASIS, WITHOUT WA
 CONDITIONS OF ANY KIND, either express or implied. See the Apache License and the GPL License for
 the specific language governing permissions and limitations under the Apache License and the GPL License.
 */
-(function ($) {
+(function (factory) {
+    if ( typeof define === 'function' && define.amd ) {
+        // AMD. Register as an anonymous module.
+        define("select2", ['jquery'], factory);
+    } else if (typeof exports === 'object') {
+        // Node/CommonJS style for Browserify
+        module.exports = factory;
+    } else {
+        // Browser globals
+        this.Select2 = factory(jQuery);
+    }
+}(function ($) {
+    "use strict";
+
+    /*global document, window, jQuery, console */
+
     if(typeof $.fn.each2 == "undefined") {
         $.extend($.fn, {
             /*
@@ -35,15 +50,6 @@ the specific language governing permissions and limitations under the Apache Lic
                 return this;
             }
         });
-    }
-})(jQuery);
-
-(function ($, undefined) {
-    "use strict";
-    /*global document, window, jQuery, console */
-
-    if (window.Select2 !== undefined) {
-        return;
     }
 
     var KEY, AbstractSelect2, SingleSelect2, MultiSelect2, nextUid, sizer,
@@ -3203,7 +3209,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     if (equal(this.opts.id(current[i]), this.opts.id(old[j]))) {
                         current.splice(i, 1);
                         if(i>0){
-                        	i--;
+                            i--;
                         }
                         old.splice(j, 1);
                         j--;
@@ -3340,7 +3346,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     if ("tags" in opts) {opts.multiple = multiple = true;}
                 }
 
-                select2 = multiple ? new window.Select2["class"].multi() : new window.Select2["class"].single();
+                select2 = multiple ? new MultiSelect2() : new SingleSelect2();
                 select2.init(opts);
             } else if (typeof(args[0]) === "string") {
 
@@ -3452,7 +3458,7 @@ the specific language governing permissions and limitations under the Apache Lic
     };
 
     // exports
-    window.Select2 = {
+    return {
         query: {
             ajax: ajax,
             local: local,
@@ -3469,4 +3475,4 @@ the specific language governing permissions and limitations under the Apache Lic
         }
     };
 
-}(jQuery));
+}));
