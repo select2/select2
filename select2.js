@@ -1476,7 +1476,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // abstract
         ensureHighlightVisible: function () {
-            var results = this.results, children, index, child, hb, rb, y, more;
+            var results = this.results, children, index, child, hb, rb, y, more, topOffset;
 
             index = this.highlight();
 
@@ -1496,7 +1496,9 @@ the specific language governing permissions and limitations under the Apache Lic
 
             child = $(children[index]);
 
-            hb = child.offset().top + child.outerHeight(true);
+            topOffset = (child.offset() || {}).top || 0;
+
+            hb = topOffset + child.outerHeight(true);
 
             // if this is the last child lets also make sure select2-more-results is visible
             if (index === children.length - 1) {
@@ -1510,7 +1512,7 @@ the specific language governing permissions and limitations under the Apache Lic
             if (hb > rb) {
                 results.scrollTop(results.scrollTop() + (hb - rb));
             }
-            y = child.offset().top - results.offset().top;
+            y = topOffset - results.offset().top;
 
             // make sure the top of the element is visible
             if (y < 0 && child.css('display') != 'none' ) {
