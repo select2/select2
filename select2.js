@@ -1110,7 +1110,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     this.attachEvent("onpropertychange", self._sync);
                 });
             }
-            
+
             // safari, chrome, firefox, IE11
             observer = window.MutationObserver || window.WebKitMutationObserver|| window.MozMutationObserver;
             if (observer !== undefined) {
@@ -1349,7 +1349,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 lastMousePosition.x = e.pageX;
                 lastMousePosition.y = e.pageY;
             });
-            
+
             return true;
         },
 
@@ -3397,7 +3397,7 @@ the specific language governing permissions and limitations under the Apache Lic
         },
         formatResultCssClass: function(data) {return data.css;},
         formatSelectionCssClass: function(data, container) {return undefined;},
-        formatMatches: function (matches) { return matches + " results are available, use up and down arrow keys to navigate."; },
+        formatMatches: function (matches) { if (matches === 1) { return "One result is available, press enter to select it."; } return matches + " results are available, use up and down arrow keys to navigate."; },
         formatNoMatches: function () { return "No matches found"; },
         formatInputTooShort: function (input, min) { var n = min - input.length; return "Please enter " + n + " or more character" + (n == 1? "" : "s"); },
         formatInputTooLong: function (input, max) { var n = input.length - max; return "Please delete " + n + " character" + (n == 1? "" : "s"); },
