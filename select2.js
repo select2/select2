@@ -320,27 +320,34 @@ the specific language governing permissions and limitations under the Apache Lic
     function syncCssClasses(dest, src, adapter) {
         var classes, replacements = [], adapted;
 
-        classes = dest.attr("class");
+        classes = $.trim(dest.attr("class"));
+
         if (classes) {
             classes = '' + classes; // for IE which returns object
-            $(classes.split(" ")).each2(function() {
+
+            $(classes.split(/\s+/)).each2(function() {
                 if (this.indexOf("select2-") === 0) {
                     replacements.push(this);
                 }
             });
         }
-        classes = src.attr("class");
+
+        classes = $.trim(src.attr("class"));
+
         if (classes) {
             classes = '' + classes; // for IE which returns object
-            $(classes.split(" ")).each2(function() {
+
+            $(classes.split(/\s+/)).each2(function() {
                 if (this.indexOf("select2-") !== 0) {
                     adapted = adapter(this);
+
                     if (adapted) {
                         replacements.push(adapted);
                     }
                 }
             });
         }
+
         dest.attr("class", replacements.join(" "));
     }
 
