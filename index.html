@@ -1,13 +1,13 @@
 ---
 layout: main
-title: Select2 3.4.8
+title: Select2 3.5.0
 group: navigation
-version: 3.4.8
-milestone: 17
+version: 3.5.0
+milestone: 18
 ---
 
-<link href="select2-3.4.8/select2.css?ts={{ site.time | date_to_xmlschema | cgi_escape}}" rel="stylesheet"/>
-<script src="select2-3.4.8/select2.js?ts={{ site.time | date_to_xmlschema | cgi_escape}}"></script>
+<link href="select2-3.5.0/select2.css?ts={{ site.time | date_to_xmlschema | cgi_escape}}" rel="stylesheet"/>
+<script src="select2-3.5.0/select2.js?ts={{ site.time | date_to_xmlschema | cgi_escape}}"></script>
 
 <script id="script_e1">
 
@@ -1545,12 +1545,12 @@ $("#select").select2({
                     </td></tr>
                     <tr><td>results</td><td>function</td><td>
                         Function used to build the query results object from the ajax response
-                        <pre>results(data, page)</pre>
+                        <pre>results(data, page, query)</pre>
                         <table class="table table-bordered table-striped">
                             <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
                             <tr><td>data</td><td>object</td><td>Retrieved data.</td></tr>
                             <tr><td>page</td><td>int</td><td>Page number that was passed into the <code>data</code> function above.</td></tr>
-                            <tr><td>context</td><td>object</td><td>See <a href="#doc-query-options-callback"><code>options.context</code></a> parameter to the <a href="#doc-query"><code>query</code></a> function above.</td></tr>
+                            <tr><td>query</td><td>object</td><td>The query object used to request this set of results.</td></tr>
                             <tr><td>&lt;returns&gt;</td><td>object</td><td>Results object. See &quot;options.callback&quot; in the &quot;query&quot; function for format.</td></tr>
                         </table>
                     </td></tr>
@@ -1763,7 +1763,7 @@ $("#select").select2({
                 <p>The event object contains the following custom properties:
                 <dl>
                     <dt>val</dt><dd>The id of the highlighted choice object.</dd>
-                    <dt>object</dt><dd>The highlighted choice object.</dd>
+                    <dt>choice</dt><dd>The highlighted choice object.</dd>
                 </dl>
             </div>
         </div>
@@ -1775,7 +1775,7 @@ $("#select").select2({
                 <p>The event object contains the following custom properties:
                 <dl>
                     <dt>val</dt><dd>The id of the highlighted choice object.</dd>
-                    <dt>object</dt><dd>The choice object about to be selected.</dd>
+                    <dt>choice</dt><dd>The choice object about to be selected.</dd>
                 </dl>
             </div>
         </div>
@@ -1795,7 +1795,7 @@ $("#select").select2({
                 <p>The event object contains the following custom properties:
                 <dl>
                     <dt>val</dt><dd>The id of the removing choice object.</dd>
-                    <dt>object</dt><dd>The choice object about to be removed.</dd>
+                    <dt>choice</dt><dd>The choice object about to be removed.</dd>
                 </dl>
             </div>
         </div>
@@ -1806,7 +1806,7 @@ $("#select").select2({
                 <p>The event object contains the following custom properties:
                 <dl>
                     <dt>val</dt><dd>The id of the highlighted choice object.</dd>
-                    <dt>object</dt><dd>The highlighted choice object.</dd>
+                    <dt>choice</dt><dd>The highlighted choice object.</dd>
                 </dl>
             </div>
         </div>
