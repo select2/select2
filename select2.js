@@ -836,13 +836,13 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // abstract
         destroy: function () {
-            var element=this.opts.element, select2 = element.data("select2");
+            var element=this.opts.element, select2 = element.data("select2"), self = this;
 
             this.close();
 
             if (element.length && element[0].detachEvent) {
                 element.each(function () {
-                    this.detachEvent("onpropertychange", this._sync);
+                    this.detachEvent("onpropertychange", self._sync);
                 });
             }
             if (this.propertyObserver) {
