@@ -1027,7 +1027,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
                     query.callback(data);
                 });
-                // this is needed because inside val() we construct choices from options and there id is hardcoded
+                // this is needed because inside val() we construct choices from options and their id is hardcoded
                 opts.id=function(e) { return e.id; };
             } else {
                 if (!("query" in opts)) {
