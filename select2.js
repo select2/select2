@@ -2101,6 +2101,9 @@ the specific language governing permissions and limitations under the Apache Lic
             this.search.on("keydown", this.bind(function (e) {
                 if (!this.isInterfaceEnabled()) return;
 
+                // filter 229 keyCodes (input method editor is processing key input)
+                if (229 == e.keyCode) return;
+
                 if (e.which === KEY.PAGE_UP || e.which === KEY.PAGE_DOWN) {
                     // prevent the page from scrolling
                     killEvent(e);
