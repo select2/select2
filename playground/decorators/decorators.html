@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>QUnit Example</title>
+    <link rel="stylesheet" href="qunit-1.14.0.css">
+    <script src="jquery-2.1.0.js" type="text/javascript"></script>
+    <script src="jquery.sortable.js" type="text/javascript"></script>
+    <script src="decorators.js"></script>
+
+
+    <script>
+
+
+        $(function () {
+
+            var Selection = clazz(Object, {
+                construct: function () {
+                    this.data = ["value1", "value2"]
+                },
+                render: function () {
+
+                    var markup = "<ul>";
+                    for (var i = 0; i < this.data.length; i++) {
+                        markup += "<li>" + this.renderItem(this.data[i]) + "</li>";
+                    }
+                    markup += "</ul>";
+                    return markup;
+                },
+                renderItem: function (item) {
+                    return item;
+                },
+                bind: function (container) {
+                    $(container).on("click", "li", function () {
+                        alert("clicked: " + $(this).text());
+                    })
+                }
+            });
+
+            var ClearExtension = clazz(Object, {
+                construct: function (opts) {
+                    this.opts = opts;
+                },
+
+                renderItem: function (item) {
+                    var markup = this.decorated(item);
+
+                    if (this.opts.position === "right") {
+                        markup += " <a href='#' class='clear'>x</a>";
+                    } else {
+                        markup = " <a href='#' class='clear'>x</a>" + markup;
+                    }
+                    return markup;
+                },
+                bind: function (container) {
+                    this.decorated(container);
+                    container.on("click", "a.clear", function (e) {
+                        alert("clear: " + $(this).parents("li").text());
+                        e.stopPropagation();
+                    });
+                }
+            });
+
+            var SortableExtension = clazz(Object, {
+                bind: function (container) {
+                    this.decorated(container);
+                    $(container).find("ul").sortable().bind('sortupdate', function () {
+                        alert("sorted");
+                    });
+                }
+            });
+
+
+            var selection = new Selection();
+
+            selection
+                    .decorateWith(new ClearExtension({position: "right"}))
+                    .decorateWith(new SortableExtension());
+
+            var markup = selection.render();
+            $("#container").html(markup);
+            selection.bind($("#container"));
+
+        });
+
+    </script>
+
+
+</head>
+<body>
+
+
+<div id="container"></div>
+
+
+</body>
+</html>
+
+
