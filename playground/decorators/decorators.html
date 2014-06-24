@@ -70,12 +70,18 @@
                 }
             });
 
+            var FooterExtension=clazz(Object, {
+                render: function() {
+                    return this.decorated()+"<div>I am a footer</div>";
+                }
+            });
 
             var selection = new Selection();
 
             selection
                     .decorateWith(new ClearExtension({position: "right"}))
-                    .decorateWith(new SortableExtension());
+                    .decorateWith(new SortableExtension())
+                    .decorateWith(new FooterExtension());
 
             var markup = selection.render();
             $("#container").html(markup);
