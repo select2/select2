@@ -444,6 +444,16 @@ the specific language governing permissions and limitations under the Apache Lic
                         // added query as third paramter to keep backwards compatibility
                         var results = options.results(data, query.page, query);
                         query.callback(results);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown){
+                        var results = {
+                            hasError: true,
+                            jqXHR: jqXHR,
+                            textStatus: textStatus,
+                            errorThrown: errorThrown,
+                        };
+
+                        query.callback(results);
                     }
                 });
                 handler = transport.call(self, params);
@@ -1763,6 +1773,12 @@ the specific language governing permissions and limitations under the Apache Lic
                 // ignore a response if the select2 has been closed before it was received
                 if (!this.opened()) {
                     this.search.removeClass("select2-active");
+                    return;
+                }
+
+                // handle ajax error
+                if(data.hasError !== undefined && checkFormatter(opts.formatAjaxError, "formatAjaxError")) {
+                    render("<li class='select2-ajax-error'>" + evaluate(opts.formatAjaxError, opts.element, data.jqXHR, data.textStatus, data.errorThrown) + "</li>");
                     return;
                 }
 
@@ -3408,6 +3424,7 @@ the specific language governing permissions and limitations under the Apache Lic
         formatSelectionCssClass: function(data, container) {return undefined;},
         formatMatches: function (matches) { if (matches === 1) { return "One result is available, press enter to select it."; } return matches + " results are available, use up and down arrow keys to navigate."; },
         formatNoMatches: function () { return "No matches found"; },
+        formatAjaxError: function (jqXHR, textStatus, errorThrown) { return "Loading failed"; },
         formatInputTooShort: function (input, min) { var n = min - input.length; return "Please enter " + n + " or more character" + (n == 1? "" : "s"); },
         formatInputTooLong: function (input, max) { var n = input.length - max; return "Please delete " + n + " character" + (n == 1? "" : "s"); },
         formatSelectionTooBig: function (limit) { return "You can only select " + limit + " item" + (limit == 1 ? "" : "s"); },

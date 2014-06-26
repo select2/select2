@@ -422,9 +422,9 @@ html[dir="rtl"] .select2-results {
     color: #000;
 }
 
-
 .select2-results .select2-no-results,
 .select2-results .select2-searching,
+.select2-results .select2-ajax-error,
 .select2-results .select2-selection-limit {
     background: #f4f4f4;
     display: list-item;
@@ -452,6 +452,10 @@ disabled look for disabled choices in the results dropdown
 
 .select2-more-results.select2-active {
     background: #f4f4f4 url('select2-spinner.gif') no-repeat 100%;
+}
+
+.select2-results .select2-ajax-error {
+    background: rgba(255, 50, 50, .2);
 }
 
 .select2-more-results {
