@@ -1331,6 +1331,21 @@ format(item) {
                     <tr><td>&lt;returns&gt;</td><td>string</td><td>Message html or <code>null</code>/<code>undefined</code> to disable the message.</td></tr>
                 </table>
             </td></tr>
+            </td></tr>
+            <tr><td>formatAjaxError</td><td>string/function</td><td>
+                String containing &quot;Loading Failed&quot; message, or<br />
+                Function used to render the message
+                <pre>formatAjaxError(jqXHR, textStatus, errorThrown)</pre>
+                <table class="table table-bordered table-striped">
+                    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                    <tr><td>jqXHR</td><td>object</td><td>The XMLHttpRequest object.</td></tr>
+                    <tr><td>textStatus</td><td>string</td><td>Ajax request status text.</td></tr>
+                    <tr><td>errorThrown</td><td>string</td><td>Server response status text.</td></tr>
+                    <tr><td>&lt;returns&gt;</td><td>string</td><td>Message html.</td></tr>
+                </table>
+                <p class="alert alert-info">For more info on the parameters, refer to the <a href="http://api.jquery.com/jquery.ajax/">JQuery API Documentation</a>.
+                </p>
+            </td></tr>
             <tr><td>formatInputTooShort</td><td>string/function</td><td>
                 String containing &quot;Search input too short&quot; message, or<br />
                 Function used to render the message.
