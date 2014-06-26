@@ -1,8 +1,16 @@
 {
-    "name": "select2",
-    "version": "3.5.0",
-    "main": ["select2.js", "select2.css", "select2.png", "select2x2.png", "select2-spinner.gif"],
-    "dependencies": {
-        "jquery": ">= 1.7.1"
-    }
+  "name": "select2-tmp-d032ef250f29",
+  "version": "3.5.1",
+  "authors": [
+    "Vitor Oliveira <vitormil@gmail.com>"
+  ],
+  "description": "test",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
 }
