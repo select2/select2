@@ -852,7 +852,9 @@ the specific language governing permissions and limitations under the Apache Lic
 
             if (element.length && element[0].detachEvent) {
                 element.each(function () {
-                    this.detachEvent("onpropertychange", self._sync);
+                    if (self._sync) {
+                        this.detachEvent("onpropertychange", self._sync);
+                    }
                 });
             }
             if (this.propertyObserver) {
@@ -1113,11 +1115,15 @@ the specific language governing permissions and limitations under the Apache Lic
                 if (readonly === undefined) readonly = false;
                 this.readonly(readonly);
 
-                syncCssClasses(this.container, this.opts.element, this.opts.adaptContainerCssClass);
-                this.container.addClass(evaluate(this.opts.containerCssClass, this.opts.element));
+                if (this.container) {
+                    syncCssClasses(this.container, this.opts.element, this.opts.adaptContainerCssClass);
+                    this.container.addClass(evaluate(this.opts.containerCssClass, this.opts.element));
+                }
 
-                syncCssClasses(this.dropdown, this.opts.element, this.opts.adaptDropdownCssClass);
-                this.dropdown.addClass(evaluate(this.opts.dropdownCssClass, this.opts.element));
+                if (this.dropdown) {
+                    syncCssClasses(this.dropdown, this.opts.element, this.opts.adaptDropdownCssClass);
+                    this.dropdown.addClass(evaluate(this.opts.dropdownCssClass, this.opts.element));
+                }
 
             });
 
