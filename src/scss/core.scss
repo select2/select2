@@ -1,0 +1,96 @@
+.s2-container {
+  margin: 0;
+  position: relative;
+  zoom: 1;
+  vertical-align: middle;
+
+  &.s2-active {
+    border: 1px solid #5897fb;
+    border-top: bottom;
+  }
+
+  .s2-single-select {
+    display: block;
+    height: 26px;
+    padding: 0 0 0 8px;
+    overflow: hidden;
+    position: relative;
+
+    border: 1px solid #aaa;
+    white-space: nowrap;
+    line-height: 26px;
+    color: #444;
+    text-decoration: none;
+
+    border-radius: 4px;
+
+    background-clip: padding-box;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    background-color: #fff;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eee), color-stop(0.5, #fff));
+    background-image: -webkit-linear-gradient(center bottom, #eee 0%, #fff 50%);
+    background-image: -moz-linear-gradient(center bottom, #eee 0%, #fff 50%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#ffffff', endColorstr = '#eeeeee', GradientType = 0);
+    background-image: linear-gradient(to top, #eee 0%, #fff 50%);
+
+    .s2-selection {
+      margin-right: 26px;
+      display: block;
+      overflow: hidden;
+
+      white-space: nowrap;
+
+      text-overflow: ellipsis;
+    }
+  }
+
+  .s2-open {
+    .select2-container-active .select2-choice,
+    .select2-container-active .select2-choices {
+      border: 1px solid #5897fb;
+      outline: none;
+
+      -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+      box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+    }
+  }
+
+}
+
+.s2-search {
+  input {
+    -webkit-box-sizing: border-box; /* webkit */
+    -moz-box-sizing: border-box; /* firefox */
+    box-sizing: border-box; /* css3 */
+  }
+}
+
+
+.s2-dropdown {
+  width: 100%;
+  margin-top: -1px;
+  position: absolute;
+  z-index: 9999;
+  overflow: scroll;
+
+  background: #fff;
+  color: #000;
+  border: 1px solid #5897fb;
+  border-top: none;
+
+  border-radius: 0 0 4px 4px;
+
+  -webkit-box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
+  box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
+}
+
+
+.s2-hidden {
+  display: none;
+}

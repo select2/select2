@@ -1,0 +1,158 @@
+<html>
+<head>
+
+    <meta2s name="viewport" content="width=device-width">
+
+        <style>
+
+
+            .dropdown {
+                background-color: green;
+                border: 3px solid red;
+                position: fixed;
+                padding: 10px;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+            }
+
+            .search input {
+                width: 100%;
+            }
+
+            .results {
+                overflow: scroll;
+                border: 1px solid blue;
+            }
+
+            .results ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            .results li {
+                border: 1px solid red;
+                height: 10vh;
+                height: 40px;
+                margin: 3px;
+                padding: 0;
+            }
+
+
+        </style>
+
+        <script src="jquery-2.1.0.js"></script>
+        <script>
+            $(function () {
+
+                function adjust() {
+                    var height = $(".dropdown").height();
+                    var searchHeight = $(".search").height();
+                    var needed = height - searchHeight;
+                    console.log(height, searchHeight, needed);
+                    $(".results").css({maxHeight: needed});
+                }
+
+
+                $(".dropdown")
+                        .on("scroll", function (e) {
+                            e.preventDefault();
+                            return false;
+                        });
+
+                $(".search input").on("blur", function() {
+                    $(".dropdown").hide();
+                })
+
+
+                //window.setInterval(adjust, 100);
+
+                $("#trigger").on("focus", function(e) {
+                    $(".dropdown").show();
+                    $(".search input").focus();
+                    $("head").append('<meta name = "viewport" content = "user-scalable=no, width=device-width, initial-scale=1.0, maximium-scale=1.0, minimum-scale=1.0"/>');
+                    adjust();
+                });
+
+                $("#resize").on("click", adjust);
+
+                var a = 0;
+                $(window).on("resize", function () {
+                    adjust();
+                });
+
+
+
+
+            });
+
+        </script>
+
+</head>
+<body>
+
+<form>
+    <p>
+    <input type="text"/>
+    </p>
+    <p>
+        <input type="text"/>
+    </p>
+    <p>
+        <input type="text" id="trigger"/>
+    </p>
+    <p>
+        <input type="text"/>
+    </p>
+</form>
+
+<div class="dropdown" style="display:none">
+
+    <div class="result-list">
+        <div class="search">
+            <a href="#">reload</a><span id="message"></span><a href="#" id="resize">resize</a>
+            <input type="text"/>
+        </div>
+        <div class="results">
+            <ul>
+                <li>Result 1</li>
+                <li>Result 2</li>
+                <li>Result 3</li>
+                <li>Result 4</li>
+                <li>Result 5</li>
+                <li>Result 6</li>
+                <li>Result 7</li>
+                <li>Result 8</li>
+                <li>Result 9</li>
+                <li>Result 10</li>
+                <li>Result 11</li>
+                <li>Result 12</li>
+                <li>Result 13</li>
+                <li>Result 14</li>
+                <li>Result 15</li>
+                <li>Result 16</li>
+                <li>Result 17</li>
+                <li>Result 18</li>
+                <li>Result 19</li>
+                <li>Result 20</li>
+                <li>Result 21</li>
+                <li>Result 22</li>
+                <li>Result 23</li>
+                <li>Result 24</li>
+                <li>Result 25</li>
+                <li>Result 26</li>
+                <li>Result 27</li>
+                <li>Result 28</li>
+            </ul>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+</body>
+</html>
