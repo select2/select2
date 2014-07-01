@@ -1311,6 +1311,11 @@ the specific language governing permissions and limitations under the Apache Lic
                 width: width
             };
 
+            // Only open the flyout on north or south, if defined
+            if (this.opts.dropdownOpenDirection) {
+              above = this.opts.dropdownOpenDirection === 'north';
+            }
+
             if (above) {
                 css.top = offset.top - dropHeight;
                 css.bottom = 'auto';
