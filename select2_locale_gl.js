@@ -6,7 +6,7 @@
 (function ($) {
     "use strict";
 
-    $.extend($.fn.select2.defaults, {
+    $.fn.select2.locales['gl'] = {
         formatNoMatches: function () {
             return "Non se atoparon resultados";
         },
@@ -39,5 +39,7 @@
         formatSearching: function () {
             return "Buscando…";
         }
-    });
+    };
+
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['gl']);
 })(jQuery);

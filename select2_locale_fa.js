@@ -7,7 +7,7 @@
 (function ($) {
     "use strict";
 
-    $.extend($.fn.select2.defaults, {
+    $.fn.select2.locales['fa'] = {
         formatMatches: function (matches) { return matches + " نتیجه موجود است، کلیدهای جهت بالا و پایین را برای گشتن استفاده کنید."; },
         formatNoMatches: function () { return "نتیجه‌ای یافت نشد."; },
         formatInputTooShort: function (input, min) { var n = min - input.length; return "لطفاً " + n + " نویسه بیشتر وارد نمایید"; },
@@ -15,5 +15,7 @@
         formatSelectionTooBig: function (limit) { return "شما فقط می‌توانید " + limit + " مورد را انتخاب کنید"; },
         formatLoadMore: function (pageNumber) { return "در حال بارگیری موارد بیشتر…"; },
         formatSearching: function () { return "در حال جستجو…"; }
-    });
+    };
+
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['fa']);
 })(jQuery);

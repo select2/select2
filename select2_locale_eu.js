@@ -6,7 +6,7 @@
 (function ($) {
     "use strict";
 
-    $.extend($.fn.select2.defaults, {
+    $.fn.select2.locales['eu'] = {
         formatNoMatches: function () {
           return "Ez da bat datorrenik aurkitu";
         },
@@ -39,5 +39,7 @@
         formatSearching: function () {
           return "Bilatzen…";
         }
-    });
+    };
+
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['eu']);
 })(jQuery);
