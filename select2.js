@@ -2974,6 +2974,8 @@ the specific language governing permissions and limitations under the Apache Lic
 
             if (!this.triggerSelect(data) || data.text === "") { return; }
 
+            this.addedFromSelection = true;
+
             this.addSelectedChoice(data);
 
             this.opts.element.trigger({ type: "selected", val: this.id(data), choice: data });
@@ -3074,7 +3076,7 @@ the specific language governing permissions and limitations under the Apache Lic
             choice.data("select2-data", data);
             choice.insertBefore(this.searchContainer);
 
-            val.push(id);
+            if (this.addedFromSelection) val.push(id);
             this.setVal(val);
         },
 
@@ -3406,6 +3408,7 @@ the specific language governing permissions and limitations under the Apache Lic
     $.fn.select2.defaults = {
         width: "copy",
         loadMorePadding: 0,
+        addedFromSelection: false,
         closeOnSelect: true,
         openOnEnter: true,
         containerCss: {},
