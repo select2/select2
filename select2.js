@@ -3108,7 +3108,14 @@ the specific language governing permissions and limitations under the Apache Lic
                 return false;
             }
 
-            while((index = indexOf(this.id(data), val)) >= 0) {
+            if (!this.opts.allowDuplicates) {
+                while((index = indexOf(this.id(data), val)) >= 0) {
+                    val.splice(index, 1);
+                    this.setVal(val);
+                    if (this.select) this.postprocessResults();
+                }
+            }else{
+                index = selected.index(); 
                 val.splice(index, 1);
                 this.setVal(val);
                 if (this.select) this.postprocessResults();
@@ -3213,12 +3220,16 @@ the specific language governing permissions and limitations under the Apache Lic
             if (this.select) {
                 this.select.val(val);
             } else {
-                unique = [];
-                // filter out duplicates
-                $(val).each(function () {
-                    if (indexOf(this, unique) < 0) unique.push(this);
-                });
-                this.opts.element.val(unique.length === 0 ? "" : unique.join(this.opts.separator));
+                if (!this.opts.allowDuplicates) {
+                    unique = [];
+                    // filter out duplicates
+                    $(val).each(function () {
+                        if (indexOf(this, unique) < 0) unique.push(this);
+                    });
+                    this.opts.element.val(unique.length === 0 ? "" : unique.join(this.opts.separator));
+                } else {
+                    this.opts.element.val(val.length === 0 ? "" : val.join(this.opts.separator));
+                }
             }
         },
 
