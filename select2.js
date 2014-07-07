@@ -2129,7 +2129,9 @@ the specific language governing permissions and limitations under the Apache Lic
                 switch (e.which) {
                     case KEY.UP:
                     case KEY.DOWN:
-                        this.moveHighlight((e.which === KEY.UP) ? -1 : 1);
+                    case KEY.LEFT:
+                    case KEY.RIGHT:
+                        this.moveHighlight((e.which === KEY.UP || e.which === KEY.LEFT) ? -1 : 1);
                         killEvent(e);
                         return;
                     case KEY.ENTER:
@@ -2750,7 +2752,9 @@ the specific language governing permissions and limitations under the Apache Lic
                     switch (e.which) {
                     case KEY.UP:
                     case KEY.DOWN:
-                        this.moveHighlight((e.which === KEY.UP) ? -1 : 1);
+                    case KEY.LEFT:
+                    case KEY.RIGHT:
+                        this.moveHighlight((e.which === KEY.UP || e.which === KEY.LEFT) ? -1 : 1);
                         killEvent(e);
                         return;
                     case KEY.ENTER:
