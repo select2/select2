@@ -1105,7 +1105,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             // Set the CSS classes unless passed from the initializer; use 'native' by default
             if (!opts.classes) {
-                opts.theme || (opts.theme = "native");
+                opts.theme || (opts.theme = opts.theme_default);
                 opts.classes = opts["classes_" + opts.theme];
                 if (!opts.classes) {
                     throw new Error("Missing option classes_" + opts.theme);
@@ -3594,6 +3594,8 @@ the specific language governing permissions and limitations under the Apache Lic
         "search": "select2-search-native",
         "search-choice-close": "select2-search-choice-close-native"
     };
+
+    $.fn.select2.theme_default = "native";
 
     $.fn.select2.locales = [];
 
