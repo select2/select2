@@ -3595,7 +3595,7 @@ the specific language governing permissions and limitations under the Apache Lic
         "search-choice-close": "select2-search-choice-close-native"
     };
 
-    $.fn.select2.theme_default = "native";
+    $.fn.select2.defaults.theme_default = "native";
 
     $.fn.select2.locales = [];
 
