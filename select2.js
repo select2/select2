@@ -2709,6 +2709,30 @@ the specific language governing permissions and limitations under the Apache Lic
                 var next = selected.next(".select2-search-choice:not(.select2-locked)");
                 var pos = getCursorInfo(this.search);
 
+                if (this.opened()) {
+                    switch (e.which) {
+                    case KEY.UP:
+                    case KEY.DOWN:
+                    case KEY.LEFT:
+                    case KEY.RIGHT:
+                        this.moveHighlight((e.which === KEY.UP || e.which === KEY.LEFT) ? -1 : 1);
+                        killEvent(e);
+                        return;
+                    case KEY.ENTER:
+                        this.selectHighlighted();
+                        killEvent(e);
+                        return;
+                    case KEY.TAB:
+                        this.selectHighlighted({noFocus:true});
+                        this.close();
+                        return;
+                    case KEY.ESC:
+                        this.cancel(e);
+                        killEvent(e);
+                        return;
+                    }
+                }
+
                 if (selected.length &&
                     (e.which == KEY.LEFT || e.which == KEY.RIGHT || e.which == KEY.BACKSPACE || e.which == KEY.DELETE || e.which == KEY.ENTER)) {
                     var selectedChoice = selected;
@@ -2746,30 +2770,6 @@ the specific language governing permissions and limitations under the Apache Lic
                     return;
                 } else {
                     this.selectChoice(null);
-                }
-
-                if (this.opened()) {
-                    switch (e.which) {
-                    case KEY.UP:
-                    case KEY.DOWN:
-                    case KEY.LEFT:
-                    case KEY.RIGHT:
-                        this.moveHighlight((e.which === KEY.UP || e.which === KEY.LEFT) ? -1 : 1);
-                        killEvent(e);
-                        return;
-                    case KEY.ENTER:
-                        this.selectHighlighted();
-                        killEvent(e);
-                        return;
-                    case KEY.TAB:
-                        this.selectHighlighted({noFocus:true});
-                        this.close();
-                        return;
-                    case KEY.ESC:
-                        this.cancel(e);
-                        killEvent(e);
-                        return;
-                    }
                 }
 
                 if (e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e)
