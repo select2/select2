@@ -14,6 +14,6 @@
         "dropdown-open": $.fn.select2.defaults.classes_native["dropdown-open"] + " select2-dropdown-open-bootstrap"
     });
 
-    $.fn.select2.theme_default = "bootstrap";
+    $.fn.select2.defaults.theme_default = "bootstrap";
 
 }(jQuery));
