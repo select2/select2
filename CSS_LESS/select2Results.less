@@ -1,0 +1,194 @@
+﻿// Select2 Styling for results
+
+.select2-hidden-accessible {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+.select2-results {
+    max-height: 200px;
+    padding: 0 0 0 4px;
+    margin: 4px 4px 4px 0;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+    ul.select2-result-sub {
+        margin: 0;
+        padding-left: 0;
+
+
+        & > li {
+            .select2-result-label {
+                padding-left: 20px;
+            }
+        }
+        ul.select2-result-sub {
+            & > li {
+                .select2-result-label {
+                    padding-left: 40px;
+                }
+            }
+            ul.select2-result-sub {
+                & > li {
+                    .select2-result-label {
+                        padding-left: 60px;
+                    }
+                }
+                ul.select2-result-sub {
+                    & > li {
+                        .select2-result-label {
+                            padding-left: 80px;
+                        }
+                    }
+                    ul.select2-result-sub {
+                        & > li {
+                            .select2-result-label {
+                                padding-left: 100px;
+                            }
+                        }
+                        ul.select2-result-sub {
+                            & > li {
+                                .select2-result-label {
+                                    padding-left: 110px;
+                                }
+                            }
+                            ul.select2-result-sub {
+                                & > li {
+                                    .select2-result-label {
+                                        padding-left: 120px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    li {
+        list-style: none;
+        display: list-item;
+        background-image: none;
+        em {
+            background: @select2-resultsItem-background-emColor;
+            font-style: normal;
+        }
+    }
+
+    li.select2-result-with-children {
+        & > .select2-result-label {
+            font-weight: bold;
+        }
+    }
+
+    .select2-result-label {
+        padding: 3px 7px 4px;
+        margin: 0;
+        cursor: pointer;
+        min-height: @select2-font-size;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .select2-highlighted {
+        background: @select2-results-background-hiColor;
+        color: @select2-results-hiColor;
+        em {
+            background: transparent;
+        }
+        ul {
+            background: @select2-resultsItem-background-hiColor;
+            color: @select2-resultsItem-hiColor;
+        }
+    }
+
+    .select2-disabled {
+        background: @select2-background-color-disabled;
+        display: list-item;
+        cursor: default;
+    }
+
+    .select2-disabled.select2-highlighted {
+        color: @select2-color-disabledHighlighted;
+        background: @select2-background-color-disabled;
+        display: list-item;
+        cursor: default;
+    }
+
+    .select2-selected {
+        display: none;
+    }
+}
+
+html[dir="rtl"] .select2-results {
+   padding: 0 4px 0 0;
+   margin: 4px 0 4px 4px;
+}
+
+.select2-results-dept-1 .select2-result-label { 
+   padding-left: 20px; 
+}
+
+.select2-results-dept-2 .select2-result-label { 
+   padding-left: 40px; 
+}
+
+.select2-results-dept-3 .select2-result-label { 
+   padding-left: 60px; 
+}
+
+.select2-results-dept-4 .select2-result-label { 
+   padding-left: 80px; 
+}
+
+.select2-results-dept-5 .select2-result-label { 
+   padding-left: 100px; 
+}
+
+.select2-results-dept-6 .select2-result-label { 
+   padding-left: 110px; 
+}
+
+.select2-results-dept-7 .select2-result-label { 
+   padding-left: 120px; 
+}
+
+.select2-results .select2-no-results,
+.select2-results .select2-searching,
+.select2-results .select2-ajax-error,
+.select2-results .select2-selection-limit {
+    background: @select2-background-color-disabled;
+    display: list-item;
+    padding-left: 5px;
+}
+
+.select2-more-results.select2-active {
+    background: @select2-background-color-disabled url('@{select2-image-path}select2-spinner.gif') no-repeat 100%;
+}
+
+.select2-results .select2-ajax-error {
+    background: @select2-background-color-ajaxError;
+}
+
+.select2-more-results {
+    background: @select2-background-color-disabled;
+    display: list-item;
+}
+
+.select2-result-selectable .select2-match,
+.select2-result-unselectable .select2-match {
+    text-decoration: underline;
+}
+
