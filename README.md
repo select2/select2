@@ -24,6 +24,10 @@ Browser compatibility
 * Firefox 10+
 * Safari 3+
 * Opera 10.6+
+ 
+Usage
+-----
+You can source Select2 directly from a [CDN like JSDliver](http://www.jsdelivr.com/#!select2), [download it from this GitHub repo](https://github.com/ivaynberg/select2/tags), or use one of the integrations below.
 
 Integrations
 ------------
@@ -34,14 +38,25 @@ Integrations
 * [Django](https://github.com/applegrew/django-select2)
 * [Symfony](https://github.com/19Gerhard85/sfSelect2WidgetsPlugin)
 * [Symfony2](https://github.com/avocode/FormExtensions)
-* [Bootstrap](https://github.com/t0m/select2-bootstrap-css) (CSS skin)
-* [Yii](https://github.com/tonybolzan/yii-select2)
+* [Bootstrap 2](https://github.com/t0m/select2-bootstrap-css) and [Bootstrap 3](https://github.com/t0m/select2-bootstrap-css/tree/bootstrap3) (CSS skins)
+* [Meteor](https://github.com/nate-strauser/meteor-select2) (modern reactive JavaScript framework; + [Bootstrap 3 skin](https://github.com/esperadomedia/meteor-select2-bootstrap3-css/))
+* [Meteor](https://jquery-select2.meteor.com)
+* [Yii 2.x](http://demos.krajee.com/widgets#select2)
+* [Yii 1.x](https://github.com/tonybolzan/yii-select2)
+* [AtmosphereJS](https://atmospherejs.com/package/jquery-select2)
+
+### Example Integrations
+
+* [Knockout.js](https://github.com/ivaynberg/select2/wiki/Knockout.js-Integration)
+* [Socket.IO](https://github.com/ivaynberg/select2/wiki/Socket.IO-Integration)
+* [PHP](https://github.com/ivaynberg/select2/wiki/PHP-Example)
+* [.Net MVC] (https://github.com/ivaynberg/select2/wiki/.Net-MVC-Example)
 
 Internationalization (i18n)
 ---------------------------
 
-Select2 supports multiple languages by simply including the right
-language JS file (`select2_locale_it.js`, `select2_locale_nl.js`, etc.).
+Select2 supports multiple languages by simply including the right language JS
+file (`select2_locale_it.js`, `select2_locale_nl.js`, etc.) after `select2.js`.
 
 Missing a language? Just copy `select2_locale_en.js.template`, translate
 it, and make a pull request back to Select2 here on GitHub.

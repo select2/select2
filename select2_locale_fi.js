@@ -3,7 +3,7 @@
  */
 (function ($) {
     "use strict";
-    $.extend($.fn.select2.defaults, {
+    $.fn.select2.locales['fi'] = {
         formatNoMatches: function () {
             return "Ei tuloksia";
         },
@@ -24,5 +24,7 @@
         formatSearching: function () {
             return "Etsitään…";
         }
-    });
+    };
+
+    $.extend($.fn.select2.defaults, $.fn.select2.locales['fi']);
 })(jQuery);

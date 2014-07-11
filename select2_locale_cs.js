@@ -12,7 +12,7 @@
         3: function() { return "tři"; },
         4: function() { return "čtyři"; }
     }
-    $.extend($.fn.select2.defaults, {
+    $.fn.select2.locales['cs'] = {
         formatNoMatches: function () { return "Nenalezeny žádné položky"; },
         formatInputTooShort: function (input, min) {
             var n = min - input.length;
@@ -45,5 +45,7 @@
         },
         formatLoadMore: function (pageNumber) { return "Načítají se další výsledky…"; },
         formatSearching: function () { return "Vyhledávání…"; }
-    });
+    };
+
+	$.extend($.fn.select2.defaults, $.fn.select2.locales['cs']);
 })(jQuery);
