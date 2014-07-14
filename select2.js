@@ -1960,7 +1960,12 @@ the specific language governing permissions and limitations under the Apache Lic
                 "   </div>",
                 "   <ul class='select2-results' role='listbox'>",
                 "   </ul>",
+                "   <div class='select2-mask-bottom-text'></div>"
                 "</div>"].join(""));
+                if(this.opts.maskBottomText.length){
+                   container.find('.select2-mask-bottom-text').html(this.opts.maskBottomText);
+                }
+            }
             return container;
         },
 
