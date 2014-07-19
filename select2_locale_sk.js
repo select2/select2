@@ -16,21 +16,21 @@
         formatInputTooShort: function (input, min) {
             var n = min - input.length;
             if (n == 1) {
-                return "Prosím zadajte ešte jeden znak";
+                return "Prosím, zadajte ešte jeden znak";
             } else if (n <= 4) {
-                return "Prosím zadajte ešte ďalšie "+smallNumbers[n](true)+" znaky";
+                return "Prosím, zadajte ešte ďalšie "+smallNumbers[n](true)+" znaky";
             } else {
-                return "Prosím zadajte ešte ďalších "+n+" znakov";
+                return "Prosím, zadajte ešte ďalších "+n+" znakov";
             }
         },
         formatInputTooLong: function (input, max) {
             var n = input.length - max;
             if (n == 1) {
-                return "Prosím zadajte o jeden znak menej";
+                return "Prosím, zadajte o jeden znak menej";
             } else if (n <= 4) {
-                return "Prosím zadajte o "+smallNumbers[n](true)+" znaky menej";
+                return "Prosím, zadajte o "+smallNumbers[n](true)+" znaky menej";
             } else {
-                return "Prosím zadajte o "+n+" znakov menej";
+                return "Prosím, zadajte o "+n+" znakov menej";
             }
         },
         formatSelectionTooBig: function (limit) {
