@@ -741,6 +741,9 @@ the specific language governing permissions and limitations under the Apache Lic
             this.dropdown.data("select2", this);
             this.dropdown.on("click", killEvent);
 
+            this.arrow = this.container.find(".select2-arrow");
+            this.arrow.addClass(evaluate(opts.arrowCssClass, this.opts.element));
+
             this.results = results = this.container.find(resultsSelector);
             this.search = search = this.container.find("input.select2-input");
 
@@ -3412,6 +3415,7 @@ the specific language governing permissions and limitations under the Apache Lic
         dropdownCss: {},
         containerCssClass: "",
         dropdownCssClass: "",
+        arrowCssClass: "",
         formatResult: function(result, container, query, escapeMarkup) {
             var markup=[];
             markMatch(result.text, query.term, markup, escapeMarkup);
