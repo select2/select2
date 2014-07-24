@@ -303,7 +303,8 @@ $("#e10_4").select2({
       <article class="row" id="basics">
         <div class="span4">
           <h3>The Basics</h3>
-           <p>Select2 can take a regular select box like this:</p>
+           <label for="source">Select2 can take a regular select box like this:</label>
+
            <p><select style="width:300px" id="source">
                <optgroup label="Alaskan/Hawaiian Time Zone">
                    <option value="AK">Alaska</option>
@@ -362,7 +363,7 @@ $("#e10_4").select2({
                </optgroup>
               </select>
          </p>
-           <p>and turns it into:</p>
+           <label for="e1">and turns it into:</label>
            <p>
                <select id="e1" class="populate" style="width:300px"></select>
            </p>
@@ -392,7 +393,9 @@ $("#e10_4").select2({
       <article class="row" id="multi">
         <div class="span4">
           <h3>Multi-Value Select Boxes</h3>
-           <p>Select2 also supports multi-value select boxes. The <code>select</code> below is declared with the <code>multiple</code> attribute. Select2 automatically picks up on this:</p>
+           <p>Select2 also supports multi-value select boxes. The <code>select</code> below is declared with the <code>multiple</code> attribute. </p>
+           <label for="e9">Select2 automatically picks up on this:</label>
+
            <p>
                <select multiple name="e9" id="e9" style="width:300px" class="populate"></select>
            </p>
@@ -418,12 +421,12 @@ $("#e2_2").select2({
             });
           </script>
           <div class="span4">
-            <h3>Placeholders</h3>
+            <h3><label for="e2">Placeholders</label></h3>
              <p>A placeholder value can be defined and will be displayed until a selection is made:</p>
              <p>
                  <select id="e2" style="width:300px" class="populate placeholder"></select><br/>
              </p>
-              <p>
+              <p><label for="e2_2">Multiple select types</label>
                   <select id="e2_2" multiple="multiple" style="width:300px" class="populate placeholder"></select><br/>
               </p>
              <p>The placeholder can be declared via a <code>data-placeholder</code> attribute attached to the <code>select</code>, or via the <code>placeholder</code> configuration element as seen in the example code.</p>
@@ -440,9 +443,10 @@ $("#e2_2").select2({
 
         <article class="row" id="minimum">
           <div class="span4">
-            <h3>Minimum Input</h3>
+            <h3><label for="e3">Minimum Input</label></h3>
              <p>Select2 supports a minimum input setting which is useful for large remote datasets where short search terms are not very useful:</p>
              <p>
+
                  <select id="e3" style="width:300px" class="populate"></select><br/>
              </p>
           </div>
@@ -454,7 +458,7 @@ $("#e2_2").select2({
 
         <article class="row" id="templating">
           <div class="span4">
-            <h3>Templating</h3>
+            <h3><label for="e4">Templating</label></h3>
              <p>Various display options of the Select2 component can be changed:</p>
              <p>
                  <select id="e4" style="width:300px" class="populate"></select><br/>
@@ -506,9 +510,10 @@ $("#e19").select2({ maximumSelectionSize: 3 });
 </script>
       <article class="row" id="maximumSelectionSize">
           <div class="span4">
-              <h3>Maximum Selection Size</h3>
+              <h3><label for="e19">Maximum Selection Size</label></h3>
               <p>Select2 allows the developer to limit the number of items that can be selected in a multi-select control.
               In the example below only 3 or less items can be selected.</p>
+
               <p>
                   <select multiple class="populate" id="e19" style="width:300px"></select>
               </p>
@@ -601,8 +606,9 @@ $("#e8_2_close").click(function () { $("#e8_2").select2("close"); });
 });
 </script>
             <div class="span4">
-            <h3>Programmatic Access</h3>
+            <h3><label for="e8">Programmatic Access</label></h3>
              <p>Select2 supports methods that allow programmatic control of the component:</p>
+
                 <p>
                   <input type="button" class="btn-primary" id="e8_get" value="Alert selected value"/>
                   <input type="button" class="btn-info" id="e8_set" value="Set to California"/>
@@ -624,6 +630,8 @@ $("#e8_2_close").click(function () { $("#e8_2").select2("close"); });
                     <input type="button" class="btn-warning" id="e8_2_open" value="Open"/>
                   <input type="button" class="btn-warning" id="e8_2_close" value="Close"/>
                 </p>
+             <label for="e8_2">Populate</label>
+
               <p>
                   <select id="e8_2" multiple style="width:300px" class="populate"><option></option></select><br/>
               </p>
@@ -775,11 +783,12 @@ $("#e13_ak_co").click(function() { $("#e13").val(["AK","CO"]).trigger("change");
 });
 </script>
           <div class="span4">
-              <h3>Reacting to external value changes</h3>
+              <h3><label for="e13">Reacting to external value changes</label></h3>
 
               <p>Select2 can react to external value changes and keep its selection in-sync. This feature allows
                   Select2 to work seamlessly with front-end frameworks that use data binding between ui components
                   and model values.</p>
+
               <p><select id="e13" multiple style="width:300px" class="populate"></select><br/></p>
               <p><input type="button" id="e13_ca" class="btn btn-primary" value="Select California"/> <input type="button" id="e13_ak_co"  class="btn btn-primary"value="Select Alaska and Colorado"/></p>
               <p class="alert alert-alert">This feature is only available when initSelection() function is provided in
@@ -803,7 +812,7 @@ $("#e14_destroy").click(function() { $("#e14").select2("destroy"); });
 });
 </script>
           <div class="span4">
-              <h3>Select2 Lifecycle</h3>
+              <h3><label for="e14">Select2 Lifecycle</label></h3>
 
               <p>
 
@@ -861,8 +870,11 @@ $("#e16_writable").click(function() { $("#e16,#e16_2").select2("readonly", false
               });
           </script>
           <div class="span4">
-              <h3>Select2 Disabled Mode</h3>
+              <h3><label for="e16">Select2 Disabled Mode</label></h3>
+
               <p><select disabled="disabled" id="e16" style="width:300px" class="populate"></select><br/></p>
+          <label for="e16_2">Disabled</label>
+
               <p><select disabled="disabled" id="e16_2" multiple style="width:300px" class="populate"></select><br/></p>
               <p><input type="button" id="e16_enable" class="btn btn-primary" value="Enable"/> <input type="button" id="e16_disable" class="btn btn-warning"value="Disable"/></p>
               <p><input type="button" id="e16_writable" class="btn btn-primary" value="Writable"/> <input type="button" id="e16_readonly" class="btn btn-warning"value="Readonly"/></p>
@@ -893,10 +905,13 @@ $("#e17_2").select2({
               });
           </script>
           <div class="span4">
-              <h3>Custom Matcher</h3>
+              <h3><label for="e17">Custom Matcher</label></h3>
                <p>Unlike other dropdowns on this page, this one matches options only if the term appears in the beginning of the string as opposed to anywhere:</p>
+
               <p><select id="e17" style="width:300px" class="populate"></select><br/></p>
-              <p>The dropdown below matches on custom attributes of the <code>option</code> tag. For example, the `blue` option can be matched by entering either `blue` or `cyan`:</p>
+              <p>The dropdown below matches on custom attributes of the <code>option</code> tag. </p>
+          <label for="e17_2">For example, the `blue` option can be matched by entering either `blue` or `cyan`:</label>
+
               <p><select id="e17_2" style="width:300px"><option alt="pink">red</option><option alt="cyan">blue</option></select></p>
           </div>
           <div class="span8">
@@ -929,7 +944,7 @@ $('#e22').select2({
 });
         </script>
         <div class="span4">
-            <h3>Sorting Displayed Results</h3>
+            <h3><label for="e22">Sorting Displayed Results</label></h3>
                 <p>Unlike other dropdowns on this page, this one filters results by query string normally, but returns the matched results sorted from shortest to longest by string length. Try typing 'e' and seeing how the results are sorted. This function is useful for sorting results by relevance to a user's query.</p>
                 <p>
                     <select id="e22" style="width:300px">
@@ -953,9 +968,12 @@ $("#e18,#e18_2").select2();
               });
           </script>
           <div class="span12">
-              <h3>Responsive Design - Percent Width</h3>
+              <h3><label for="e18">Responsive Design - Percent Width</label></h3>
               <p>Select2's width can be set to a percentage of its parent to support responsive design. The two Select2 boxes below are styled to 50% and 75% width respectively.</p>
+
               <p><select id="e18" style="width:50%" class="populate"></select><br/></p>
+          <label for="e18_2">Multiple</label>
+
               <p><select multiple="multiple" id="e18_2" style="width:75%" placeholder="Select a state" class="populate placeholder"></select><br/></p>
               <p class="alert alert-warning">Select2 will do its best to resolve the percent width specified via a css class, but it is not always possible. The best way to ensure that Select2 is using a percent based width is to inline the style declaration into the tag.</p>
           </div>
@@ -1050,8 +1068,9 @@ $(document).ready(function () {
 
       <article class="row" id="diacritics">
           <div class="span12">
-              <h3>Diacritics Support</h3>
+              <h3><label for="e30">Diacritics Support</label></h3>
               <p>Select2's default matcher will ignore diacritics, making it easier for users to filter results in international selects. Type &quot;aero&quot; into the select below:</p>
+
               <p>
                   <select id="e30" multiple="multiple" style="width:300px;">
                       <option>Aeróbics</option>
