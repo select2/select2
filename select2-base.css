@@ -437,7 +437,7 @@ html[dir="rtl"] .select2-container-multi .select2-choices .select2-search-choice
 }
 html[dir="rtl"] .select2-search-choice-close {
     right: auto;
-    left: 3px;
+    left: 24px;
 }
 
 .select2-container-multi .select2-search-choice-close {
