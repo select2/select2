@@ -1,0 +1,61 @@
+.select2-container.ui-widget.select2-dropdown-open {
+    border-bottom: 0;
+    padding-bottom: 1px;
+}
+
+.select2-drop.ui-widget {
+    border-top: 0;
+    padding-top: 1px;
+}
+
+.select2-container.ui-widget .select2-choice .select2-arrow b {
+    margin-top: 5px;
+    margin-left: -1px;
+}
+
+.select2-arrow.ui-widget-content {
+    border: 0;
+}
+
+.select2-drop.ui-widget .select2-search {
+    padding-top: 4px;
+}
+
+.select2-drop.ui-widget .select2-result {
+    border: 0;
+}
+
+.select2-container.ui-widget .select2-search-choice {
+    padding-left: 5px;
+    padding-right: 18px;
+}
+
+html[dir="rtl"] .select2-container.ui-widget .select2-search-choice {
+    padding-left: 18px;
+    padding-right: 8px;
+}
+
+.select2-container.ui-widget .select2-search-choice-close {
+    margin-top: -3px;
+    margin-left: -3px;
+    left: initial;
+    right: 24px;
+}
+
+.select2-container.select2-container-multi.ui-widget .select2-search-choice-close {
+    right: 4px;
+}
+
+html[dir="rtl"] .select2-container.ui-widget .select2-search-choice-close {
+    margin-left: initial;
+    left: 20px;
+    right: initial;
+}
+
+html[dir="rtl"] .select2-container.select2-container-multi.ui-widget .select2-search-choice-close {
+    left: 0;
+}
+
+.select2-container.ui-widget .select2-choices .select2-input {
+    border: 0;
+}
