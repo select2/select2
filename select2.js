@@ -104,7 +104,27 @@ the specific language governing permissions and limitations under the Apache Lic
 
     nextUid=(function() { var counter=1; return function() { return counter++; }; }());
 
-
+    function createMask() {
+        var mask = $(document.createElement("div"));
+        mask.attr("id","select2-drop-mask").attr("class","select2-drop-mask");
+        mask.hide();
+        mask.appendTo($('body'));
+        mask.on("mousedown touchstart click", function (e) {
+          var dropdown = $("#select2-drop"), self;
+          if (dropdown.length > 0) {
+            self=dropdown.data("select2");
+            if (self.opts.selectOnBlur) {
+              self.selectHighlighted({noFocus: true});
+            }
+            self.close({focus:false});
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        });
+ 
+        return mask;
+    }
+    
     function reinsertElement(element) {
         var placeholder = $(document.createTextNode(''));
 
@@ -1392,25 +1412,7 @@ the specific language governing permissions and limitations under the Apache Lic
             // create the dropdown mask if doesn't already exist
             mask = $("#select2-drop-mask");
             if (mask.length == 0) {
-                mask = $(document.createElement("div"));
-                mask.attr("id","select2-drop-mask").attr("class","select2-drop-mask");
-                mask.hide();
-                mask.appendTo(this.body);
-                mask.on("mousedown touchstart click", function (e) {
-                    // Prevent IE from generating a click event on the body
-                    reinsertElement(mask);
-
-                    var dropdown = $("#select2-drop"), self;
-                    if (dropdown.length > 0) {
-                        self=dropdown.data("select2");
-                        if (self.opts.selectOnBlur) {
-                            self.selectHighlighted({noFocus: true});
-                        }
-                        self.close();
-                        e.preventDefault();
-                        e.stopPropagation();
-                    }
-                });
+                mask = createMask();
             }
 
             // ensure the mask is always right before the dropdown
