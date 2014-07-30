@@ -2210,22 +2210,42 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.selection.focus();
             }));
 
-            selection.on("mousedown touchstart", this.bind(function (e) {
-                // Prevent IE from generating a click event on the body
-                reinsertElement(selection);
+            if(this.supportsTouchEvents)
+            {
+                selection.on("click", this.bind(function (e) {
+                    // Prevent IE from generating a click event on the body
+                    reinsertElement(selection);
 
-                if (!this.container.hasClass("select2-container-active")) {
-                    this.opts.element.trigger($.Event("select2-focus"));
-                }
+                    if (!this.container.hasClass("select2-container-active")) {
+                        this.opts.element.trigger($.Event("select2-focus"));
+                    }
 
-                if (this.opened()) {
-                    this.close();
-                } else if (this.isInterfaceEnabled()) {
-                    this.open();
-                }
+                    if (this.opened()) {
+                        this.close();
+                    } else if (this.isInterfaceEnabled()) {
+                        this.open();
+                    }
 
-                killEvent(e);
-            }));
+                    killEvent(e);
+                }));
+            } else {
+                selection.on("mousedown", this.bind(function (e) {
+                    // Prevent IE from generating a click event on the body
+                    reinsertElement(selection);
+
+                    if (!this.container.hasClass("select2-container-active")) {
+                        this.opts.element.trigger($.Event("select2-focus"));
+                    }
+
+                    if (this.opened()) {
+                        this.close();
+                    } else if (this.isInterfaceEnabled()) {
+                        this.open();
+                    }
+
+                    killEvent(e);
+                }));
+            }
 
             dropdown.on("mousedown touchstart", this.bind(function() {
                 if (this.opts.shouldFocusInput(this)) {
