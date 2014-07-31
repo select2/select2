@@ -2916,6 +2916,14 @@ the specific language governing permissions and limitations under the Apache Lic
         isFocused: function () {
             return this.search.hasClass("select2-focused");
         },
+        
+        chunk: function  (array, size) {
+            var i,j,chunked=[];
+                for (i=0,j=array.length; i<j; i+=size) {
+                    chunked.push(array.slice(i,i+size));
+                };
+            return chunked;
+        },
 
         // multi
         updateSelection: function (data) {
@@ -2930,9 +2938,15 @@ the specific language governing permissions and limitations under the Apache Lic
             });
             data = filtered;
 
+            var chunked = self.chunk(data, 100);
+
             this.selection.find(".select2-search-choice").remove();
-            $(data).each(function () {
-                self.addSelectedChoice(this);
+            $(chunked).each(function (index, chunk) {
+                $(chunk).each(function() {
+                    setTimeout(function() {
+                        self.addSelectedChoice(this);
+                    }.bind(this),0);
+                });
             });
             self.postprocessResults();
         },
@@ -3010,8 +3024,14 @@ the specific language governing permissions and limitations under the Apache Lic
 
         addSelectedChoice: function (data) {
             var enableChoice = !data.locked,
+                invalidChoice = data.invalid,
                 enabledItem = $(
                     "<li class='select2-search-choice'>" +
+                    "    <div></div>" +
+                    "    <a href='#' class='select2-search-choice-close' tabindex='-1'></a>" +
+                    "</li>"),
+                invalidItem = $(
+                    "<li class='select2-search-choice select2-invalid'>" +
                     "    <div></div>" +
                     "    <a href='#' class='select2-search-choice-close' tabindex='-1'></a>" +
                     "</li>"),
@@ -3024,7 +3044,8 @@ the specific language governing permissions and limitations under the Apache Lic
                 val = this.getVal(),
                 formatted,
                 cssClass;
-
+            choice = invalidChoice ? invalidItem : choice;
+            
             formatted=this.opts.formatSelection(data, choice.find("div"), this.opts.escapeMarkup);
             if (formatted != undefined) {
                 choice.find("div").replaceWith("<div>"+formatted+"</div>");
