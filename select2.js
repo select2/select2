@@ -1630,7 +1630,8 @@ the specific language governing permissions and limitations under the Apache Lic
             if (more.length === 0) return;
             below = more.offset().top - results.offset().top - results.height();
 
-            if (below <= this.opts.loadMorePadding) {
+            if (below <= this.opts.loadMorePadding && !this.opts.loading) {
+                this.opts.loading = true;
                 more.addClass("select2-active");
                 this.opts.query({
                         element: this.opts.element,
@@ -1639,7 +1640,7 @@ the specific language governing permissions and limitations under the Apache Lic
                         context: context,
                         matcher: this.opts.matcher,
                         callback: this.bind(function (data) {
-
+                    this.opts.loading = false;
                     // ignore a response if the select2 has been closed before it was received
                     if (!self.opened()) return;
 
@@ -3406,6 +3407,7 @@ the specific language governing permissions and limitations under the Apache Lic
     $.fn.select2.defaults = {
         width: "copy",
         loadMorePadding: 0,
+        loading: false,
         closeOnSelect: true,
         openOnEnter: true,
         containerCss: {},
