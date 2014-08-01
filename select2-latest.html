@@ -63,65 +63,63 @@ $("#e5").select2({
 </script>
 
 <script>
+   function repoFormatResult(repo) {
+      var markup = '<div class="row-fluid">' +
+         '<div class="span2"><img src="' + repo.owner.avatar_url + '" /></div>' +
+         '<div class="span10">' +
+            '<div class="row-fluid">' +
+               '<div class="span6">' + repo.full_name + '</div>' +
+               '<div class="span3"><i class="fa fa-code-fork"></i> ' + repo.forks_count + '</div>' +
+               '<div class="span3"><i class="fa fa-star"></i> ' + repo.stargazers_count + '</div>' +
+            '</div>';
 
-    function movieFormatResult(movie) {
-        var markup = "<table class='movie-result'><tr>";
-        if (movie.posters !== undefined && movie.posters.thumbnail !== undefined) {
-            markup += "<td class='movie-image'><img src='" + movie.posters.thumbnail + "'/></td>";
-        }
-        markup += "<td class='movie-info'><div class='movie-title'>" + movie.title + "</div>";
-        if (movie.critics_consensus !== undefined) {
-            markup += "<div class='movie-synopsis'>" + movie.critics_consensus + "</div>";
-        }
-        else if (movie.synopsis !== undefined) {
-            markup += "<div class='movie-synopsis'>" + movie.synopsis + "</div>";
-        }
-        markup += "</td></tr></table>";
-        return markup;
-    }
+      if (repo.description) {
+         markup += '<div>' + repo.description + '</div>';
+      }
 
-    function movieFormatSelection(movie) {
-        return movie.title;
-    }
+      markup += '</div></div>';
 
+      return markup;
+   }
+
+   function repoFormatSelection(repo) {
+      return repo.full_name;
+   }
 </script>
 
 <script id="script_e6">
 $(document).ready(function() {
 $("#e6").select2({
-    placeholder: "Search for a movie",
+    placeholder: "Search for a repository",
     minimumInputLength: 1,
     ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
-        url: "http://api.rottentomatoes.com/api/public/v1.0/movies.json",
-        dataType: 'jsonp',
+        url: "https://api.github.com/search/repositories",
+        dataType: 'json',
+        quietMillis: 250,
         data: function (term, page) {
             return {
                 q: term, // search term
-                page_limit: 10,
-                apikey: "ju6z9mjyajq2djue3gbvv26t" // please do not use so this example keeps working
             };
         },
         results: function (data, page) { // parse the results into the format expected by Select2.
-            // since we are using custom formatting functions we do not need to alter remote JSON data
-            return {results: data.movies};
-        }
+            // since we are using custom formatting functions we do not need to alter the remote JSON data
+            return { results: data.items };
+        },
+        cache: true
     },
     initSelection: function(element, callback) {
-        // the input tag has a value attribute preloaded that points to a preselected movie's id
+        // the input tag has a value attribute preloaded that points to a preselected repository's id
         // this function resolves that id attribute to an object that select2 can render
-        // using its formatResult renderer - that way the movie name is shown preselected
-        var id=$(element).val();
-        if (id!=="") {
-            $.ajax("http://api.rottentomatoes.com/api/public/v1.0/movies/"+id+".json", {
-                data: {
-                    apikey: "ju6z9mjyajq2djue3gbvv26t"
-                },
-                dataType: "jsonp"
+        // using its formatResult renderer - that way the repository name is shown preselected
+        var id = $(element).val();
+        if (id !== "") {
+            $.ajax("https://api.github.com/repositories/" + id, {
+                dataType: "json"
             }).done(function(data) { callback(data); });
         }
     },
-    formatResult: movieFormatResult, // omitted for brevity, see the source of this page
-    formatSelection: movieFormatSelection,  // omitted for brevity, see the source of this page
+    formatResult: repoFormatResult, // omitted for brevity, see the source of this page
+    formatSelection: repoFormatSelection,  // omitted for brevity, see the source of this page
     dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
     escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
 });
@@ -131,29 +129,27 @@ $("#e6").select2({
 <script id="script_e7">
 $(document).ready(function() {
 $("#e7").select2({
-    placeholder: "Search for a movie",
+    placeholder: "Search for a repository",
     minimumInputLength: 3,
     ajax: {
-        url: "http://api.rottentomatoes.com/api/public/v1.0/movies.json",
-        dataType: 'jsonp',
-        quietMillis: 100,
+        url: "https://api.github.com/search/repositories",
+        dataType: 'json',
+        quietMillis: 250,
         data: function (term, page) { // page is the one-based page number tracked by Select2
             return {
                 q: term, //search term
-                page_limit: 10, // page size
-                page: page, // page number
-                apikey: "ju6z9mjyajq2djue3gbvv26t" // please do not use so this example keeps working
+                page: page // page number
             };
         },
         results: function (data, page) {
-            var more = (page * 10) < data.total; // whether or not there are more results available
+            var more = (page * 30) < data.total_count; // whether or not there are more results available
 
             // notice we return the value of more so Select2 knows if more results can be loaded
-            return {results: data.movies, more: more};
+            return { results: data.items, more: more };
         }
     },
-    formatResult: movieFormatResult, // omitted for brevity, see the source of this page
-    formatSelection: movieFormatSelection, // omitted for brevity, see the source of this page
+    formatResult: repoFormatResult, // omitted for brevity, see the source of this page
+    formatSelection: repoFormatSelection, // omitted for brevity, see the source of this page
     dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
     escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
 });
@@ -571,9 +567,9 @@ $("#e19").select2({ maximumSelectionSize: 3 });
              <h3>Loading Remote Data</h3>
               <p>Select2 comes with AJAX/JSONP support built in. In this example we will search for a movie using Rotten Tomatoes API:</p>
               <p>
-                  <input type="hidden" class="bigdrop" id="e6" style="width:600px" value="16340"/>
+                  <input type="hidden" class="bigdrop" id="e6" style="width:600px" value="3620194" />
               </p>
-               <p class="alert alert-warning">If this example does not work it is probably because the Rotten Tomatoes API key usage of 10000 requests per day has been exhausted. Please try again tomorrow.</p>
+               <p class="alert alert-warning">If this example stops working, you have most likely reached the usage limit for the GitHub Search API of 5 requests per minute.  Please wait a few minutes and try again.</p>
                <h3>Example Code</h3>
               <pre class="prettyprint linenums" id="code_e6"></pre>
               <p>Select2 uses jQuery's <code>$.ajax</code> function to execute the remote call by default. An alternative <code>transport</code> function can be specified in the ajax settings, or an entirely custom implementation can be built by providing a custom <code>query</code> function instead of using the <code>ajax</code> helper.</p>
@@ -590,8 +586,8 @@ $("#e19").select2({ maximumSelectionSize: 3 });
                <p>
                    <input type="hidden" class="bigdrop" id="e7" style="width:600px"/>
                </p>
-                <p class="alert alert-warning">If this example does not work it is probably because the Rotten Tomatoes API key usage of 10000 requests per day has been exhausted. Please try again tomorrow.</p>
-                <h3>Example Code</h3>
+               <p class="alert alert-warning">If this example stops working, you have most likely reached the usage limit for the GitHub Search API of 5 requests per minute.  Please wait a few minutes and try again.</p>
+               <h3>Example Code</h3>
               <pre class="prettyprint linenums" id="code_e7"></pre>
             </div>
          </article>
