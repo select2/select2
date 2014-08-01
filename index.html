@@ -196,7 +196,12 @@ $("#e10_4").select2({
 });
 </script>
 
-
+<style type="text/css">
+h3 > label {
+   font-size: inherit;
+   font-weight: inherit;
+}
+</style>
 
       <header class="jumbotron subhead">
         <div class="subnav">
@@ -426,7 +431,7 @@ $("#e2_2").select2({
              <p>
                  <select id="e2" style="width:300px" class="populate placeholder"></select><br/>
              </p>
-              <p><label for="e2_2">Multiple select types</label>
+              <p><label for="e2_2">Multiple select boxes</label>
                   <select id="e2_2" multiple="multiple" style="width:300px" class="populate placeholder"></select><br/>
               </p>
              <p>The placeholder can be declared via a <code>data-placeholder</code> attribute attached to the <code>select</code>, or via the <code>placeholder</code> configuration element as seen in the example code.</p>
