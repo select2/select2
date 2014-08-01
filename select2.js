@@ -2918,6 +2918,15 @@ the specific language governing permissions and limitations under the Apache Lic
         },
 
         // multi
+         chunk: function  (array, size) {
+             var i,j,chunked=[];
+                 for (i=0,j=array.length; i<j; i+=size) {
+                     chunked.push(array.slice(i,i+size));
+                 };
+             return chunked;
+         },
+
+        // multi
         updateSelection: function (data) {
             var ids = [], filtered = [], self = this;
 
@@ -2929,10 +2938,16 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
             });
             data = filtered;
-
+            
+            var chunked = self.chunk(data, 100);
+            
             this.selection.find(".select2-search-choice").remove();
-            $(data).each(function () {
-                self.addSelectedChoice(this);
+            $(chunked).each(function (index, chunk) {
+                 $(chunk).each(function() {
+                     setTimeout(function() {
+                         self.addSelectedChoice(this);
+                     }.bind(this),0);
+                 });
             });
             self.postprocessResults();
         },
