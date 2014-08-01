@@ -3024,14 +3024,8 @@ the specific language governing permissions and limitations under the Apache Lic
 
         addSelectedChoice: function (data) {
             var enableChoice = !data.locked,
-                invalidChoice = data.invalid,
                 enabledItem = $(
                     "<li class='select2-search-choice'>" +
-                    "    <div></div>" +
-                    "    <a href='#' class='select2-search-choice-close' tabindex='-1'></a>" +
-                    "</li>"),
-                invalidItem = $(
-                    "<li class='select2-search-choice select2-invalid'>" +
                     "    <div></div>" +
                     "    <a href='#' class='select2-search-choice-close' tabindex='-1'></a>" +
                     "</li>"),
@@ -3044,8 +3038,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 val = this.getVal(),
                 formatted,
                 cssClass;
-            choice = invalidChoice ? invalidItem : choice;
-            
+
             formatted=this.opts.formatSelection(data, choice.find("div"), this.opts.escapeMarkup);
             if (formatted != undefined) {
                 choice.find("div").replaceWith("<div>"+formatted+"</div>");
