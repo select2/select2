@@ -850,7 +850,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.close();
 
-            if (element.length && element[0].detachEvent) {
+            if (element.length && element[0].detachEvent && self._sync) {
                 element.each(function () {
                     this.detachEvent("onpropertychange", self._sync);
                 });
