@@ -24,7 +24,7 @@ Browser compatibility
 * Firefox 10+
 * Safari 3+
 * Opera 10.6+
- 
+
 Usage
 -----
 You can source Select2 directly from a [CDN like JSDliver](http://www.jsdelivr.com/#!select2), [download it from this GitHub repo](https://github.com/ivaynberg/select2/tags), or use one of the integrations below.
@@ -60,6 +60,11 @@ file (`select2_locale_it.js`, `select2_locale_nl.js`, etc.) after `select2.js`.
 
 Missing a language? Just copy `select2_locale_en.js.template`, translate
 it, and make a pull request back to Select2 here on GitHub.
+
+Documentation
+-------------
+
+The documentation for Select2 is available [through GitHub Pages](https://ivaynberg.github.io/select2/) and is located within this repository in the [`gh-pages` branch](https://github.com/ivaynberg/select2/tree/gh-pages).
 
 Bug tracker
 -----------
