@@ -1222,9 +1222,10 @@ the specific language governing permissions and limitations under the Apache Lic
         // abstract
         positionDropdown: function() {
             var $dropdown = this.dropdown,
-                offset = this.container.offset(),
-                height = this.container.outerHeight(false),
-                width = this.container.outerWidth(false),
+                container = this.container,
+                offset = container.offset(),
+                height = container.outerHeight(false),
+                width = container.outerWidth(false),
                 dropHeight = $dropdown.outerHeight(false),
                 $window = $(window),
                 windowWidth = $window.width(),
@@ -1236,7 +1237,12 @@ the specific language governing permissions and limitations under the Apache Lic
                 enoughRoomBelow = dropTop + dropHeight <= viewportBottom,
                 enoughRoomAbove = (offset.top - dropHeight) >= $window.scrollTop(),
                 dropWidth = $dropdown.outerWidth(false),
-                enoughRoomOnRight = dropLeft + dropWidth <= viewPortRight,
+                enoughRoomOnRight = function() {
+                    return dropLeft + dropWidth <= viewPortRight;
+                },
+                enoughRoomOnLeft = function() {
+                    return offset.left + viewPortLeft + container.outerWidth(false)  > dropWidth;
+                },
                 aboveNow = $dropdown.hasClass("select2-drop-above"),
                 bodyOffset,
                 above,
@@ -1271,7 +1277,6 @@ the specific language governing permissions and limitations under the Apache Lic
                 dropTop = offset.top + height;
                 dropLeft = offset.left;
                 dropWidth = $dropdown.outerWidth(false);
-                enoughRoomOnRight = dropLeft + dropWidth <= viewPortRight;
                 $dropdown.show();
 
                 // fix so the cursor does not move to the left within the search-textbox in IE
@@ -1286,7 +1291,6 @@ the specific language governing permissions and limitations under the Apache Lic
                 dropWidth = $dropdown.outerWidth(false) + (resultsListNode.scrollHeight === resultsListNode.clientHeight ? 0 : scrollBarDimensions.width);
                 dropWidth > width ? width = dropWidth : dropWidth = width;
                 dropHeight = $dropdown.outerHeight(false);
-                enoughRoomOnRight = dropLeft + dropWidth <= viewPortRight;
             }
             else {
                 this.container.removeClass('select2-drop-auto-width');
@@ -1302,7 +1306,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 dropLeft -= bodyOffset.left;
             }
 
-            if (!enoughRoomOnRight) {
+            if (!enoughRoomOnRight() && enoughRoomOnLeft()) {
                 dropLeft = offset.left + this.container.outerWidth(false) - dropWidth;
             }
 
