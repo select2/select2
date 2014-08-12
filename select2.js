@@ -1244,16 +1244,16 @@ the specific language governing permissions and limitations under the Apache Lic
                 css,
                 resultsListNode;
 
-            // always prefer the current above/below alignment, unless there is not enough room
+            // always prefer the current above/below alignment, unless there is not enough room or the other direction is forced
             if (aboveNow) {
                 above = true;
-                if (!enoughRoomAbove && enoughRoomBelow) {
+                if ((!enoughRoomAbove && enoughRoomBelow && !this.opts.forceOpenAbove) || this.opts.forceOpenBelow) {
                     changeDirection = true;
                     above = false;
                 }
             } else {
                 above = false;
-                if (!enoughRoomBelow && enoughRoomAbove) {
+                if ((!enoughRoomBelow && enoughRoomAbove && !this.opts.forceOpenBelow) || this.opts.forceOpenAbove) {
                     changeDirection = true;
                     above = true;
                 }
@@ -3412,6 +3412,8 @@ the specific language governing permissions and limitations under the Apache Lic
         dropdownCss: {},
         containerCssClass: "",
         dropdownCssClass: "",
+        forceOpenAbove: false,
+        forceOpenBelow: false,
         formatResult: function(result, container, query, escapeMarkup) {
             var markup=[];
             markMatch(result.text, query.term, markup, escapeMarkup);
