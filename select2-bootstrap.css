@@ -85,3 +85,12 @@
     border-left: 1px solid #468847 !important;
     background: #DFF0D8 !important;
 }
+
+.select2-search-choice-close {
+    background: inherit !important;
+    font-size: 10px;
+    color: #666;
+}
+.select2-search-choice-close .glyphicon {
+    display: inline-block;
+}
