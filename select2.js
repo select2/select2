@@ -1721,7 +1721,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
             }
 
-            if (search.val().length < opts.minimumInputLength) {
+            if ((opts.minimumInputLength > 0 && initial) && search.val().length < opts.minimumInputLength) {
                 if (checkFormatter(opts.formatInputTooShort, "formatInputTooShort")) {
                     render("<li class='select2-no-results'>" + evaluate(opts.formatInputTooShort, opts.element, search.val(), opts.minimumInputLength) + "</li>");
                 } else {
