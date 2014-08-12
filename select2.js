@@ -732,7 +732,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.dropdown.on("click", killEvent);
 
             this.results = results = this.container.find(resultsSelector);
-            this.search = search = this.container.find("input.select2-input");
+            this.search = search = this.container.find(".select2-input");
 
             this.queryCount = 0;
             this.resultsPage = 0;
@@ -2541,13 +2541,16 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // multi
         createContainer: function () {
-            var container = $(document.createElement("div")).attr({
+            var containerType = (this.opts && this.opts.containerType) ? this.opts.containerType : 'input',
+                beginTag = (containerType === 'input') ? "input type='text' " : containerType,
+                endTag = (containerType === 'input') ? "/" : "></ " + containerType,
+                container = $(document.createElement("div")).attr({
                 "class": "select2-container select2-container-multi"
             }).html([
                 "<ul class='select2-choices'>",
                 "  <li class='select2-search-field'>",
                 "    <label for='' class='select2-offscreen'></label>",
-                "    <input type='text' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' class='select2-input'>",
+                "    <"+ beginTag + " autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' class='select2-input' " + endTag + ">",
                 "  </li>",
                 "</ul>",
                 "<div class='select2-drop select2-drop-multi select2-display-none'>",
