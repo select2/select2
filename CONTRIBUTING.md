@@ -98,10 +98,10 @@ project.
 
 [community]: https://github.com/ivaynberg/select2#community
 [reporting-bugs]: #reporting-bugs-with-select2
-[requesting-features]: #requesting-features-in-Select2
+[requesting-features]: #requesting-features-in-select2
 [issue-tracker]: https://github.com/ivaynberg/select2/issues
 [mailing-list]: https://github.com/ivaynberg/select2#mailing-list
-[irc-channel]: https://github.com/ivaynberg/select2#irc
+[irc-channel]: https://github.com/ivaynberg/select2#irc-channel
 [issue-search]: https://github.com/ivaynberg/select2/search?q=&type=Issues
 [isolated-case]: http://css-tricks.com/6263-reduced-test-cases/
 [licensing]: https://github.com/ivaynberg/select2#copyright-and-license
