@@ -66,15 +66,16 @@ Documentation
 
 The documentation for Select2 is available [through GitHub Pages](https://ivaynberg.github.io/select2/) and is located within this repository in the [`gh-pages` branch](https://github.com/ivaynberg/select2/tree/gh-pages).
 
-Bug tracker
------------
+Community
+---------
+
+### Bug tracker
 
 Have a bug? Please create an issue here on GitHub!
 
 https://github.com/ivaynberg/select2/issues
 
-Mailing list
-------------
+### Mailing list
 
 Have a question? Ask on our mailing list!
 
@@ -82,6 +83,15 @@ select2@googlegroups.com
 
 https://groups.google.com/d/forum/select2
 
+### IRC channel
+
+Need help implementing Select2 in your project? Ask in our IRC channel!
+
+**Network:** [Freenode](https://freenode.net/) (`chat.freenode.net`)
+
+**Channel:** `#select2`
+
+**Web access:** https://webchat.freenode.net/?channels=select2
 
 Copyright and license
 ---------------------
