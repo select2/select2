@@ -42,10 +42,6 @@ the specific language governing permissions and limitations under the Apache Lic
     "use strict";
     /*global document, window, jQuery, console */
 
-    if (window.Select2 !== undefined) {
-        return;
-    }
-
     var KEY, AbstractSelect2, SingleSelect2, MultiSelect2, nextUid, sizer,
         lastMousePosition={x:0,y:0}, $document, scrollBarDimensions,
 
@@ -3490,21 +3486,23 @@ the specific language governing permissions and limitations under the Apache Lic
     };
 
     // exports
-    window.Select2 = {
-        query: {
-            ajax: ajax,
-            local: local,
-            tags: tags
-        }, util: {
-            debounce: debounce,
-            markMatch: markMatch,
-            escapeMarkup: defaultEscapeMarkup,
-            stripDiacritics: stripDiacritics
-        }, "class": {
-            "abstract": AbstractSelect2,
-            "single": SingleSelect2,
-            "multi": MultiSelect2
-        }
-    };
+    if (window.Select2 !== undefined) {
+        window.Select2 = {
+            query: {
+                ajax: ajax,
+                local: local,
+                tags: tags
+            }, util: {
+                debounce: debounce,
+                markMatch: markMatch,
+                escapeMarkup: defaultEscapeMarkup,
+                stripDiacritics: stripDiacritics
+            }, "class": {
+                "abstract": AbstractSelect2,
+                "single": SingleSelect2,
+                "multi": MultiSelect2
+            }
+        };
+    }
 
 }(jQuery));
