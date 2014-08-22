@@ -2153,17 +2153,19 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
             }));
 
-            this.search.on("blur", this.bind(function(e) {
-                // a workaround for chrome to keep the search field focussed when the scroll bar is used to scroll the dropdown.
-                // without this the search field loses focus which is annoying
-                if (document.activeElement === this.body.get(0)) {
-                    window.setTimeout(this.bind(function() {
-                        if (this.opened()) {
-                            this.search.focus();
-                        }
-                    }), 0);
-                }
-            }));
+            if (this.opts.shouldFocusInput(this)) {
+                this.search.on("blur", this.bind(function(e) {
+                    // a workaround for chrome to keep the search field focussed when the scroll bar is used to scroll the dropdown.
+                    // without this the search field loses focus which is annoying
+                    if (document.activeElement === this.body.get(0)) {
+                        window.setTimeout(this.bind(function() {
+                            if (this.opened()) {
+                                this.search.focus();
+                            }
+                        }), 0);
+                    }
+                }));
+            }
 
             this.focusser.on("keydown", this.bind(function (e) {
                 if (!this.isInterfaceEnabled()) return;
