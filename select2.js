@@ -2761,7 +2761,7 @@ the specific language governing permissions and limitations under the Apache Lic
                         return;
                     case KEY.TAB:
                         this.selectHighlighted({noFocus:true});
-                        this.close();
+                        killEvent(e);
                         return;
                     case KEY.ESC:
                         this.cancel(e);
