@@ -3,28 +3,12 @@
 <head>
     <meta charset="utf-8">
     <title>QUnit Example</title>
-    <link href="../../src/scss/core.css" rel="stylesheet"/>
-    <link href="../../src/scss/theme/default/layout.css" rel="stylesheet"/>
+    <link href="../../dist/css/select2.css" rel="stylesheet"/>
 
+    <script src="../../vendor/almond-0.2.9.js" type="text/javascript"></script>
     <script src="../../vendor/jquery-2.1.0.js" type="text/javascript"></script>
-    <script src="../../src/js/util.js"></script>
-    <script src="../../src/js/data.js"></script>
-    <script src="../../src/js/selection.js"></script>
-    <script src="../../src/js/results.js"></script>
-    <script src="../../src/js/core.js"></script>
 
-    <script>
-        $(function () {
-            $("#source").on("change", function () {
-                console.log("onchange");
-            });
-            new s2.Select($("#source"), {
-
-            });
-        });
-    </script>
-
-
+    <script src="../../dist/js/select2.js"></script>
 </head>
 <body>
 
@@ -82,7 +66,7 @@
     <option value="VA">Virginia</option>
     <option value="WV">West Virginia</option>
 </select><br/>
-<input type="text" style="width:300px"/><br/>
+<input type="text" style="width:300px" /><br/>
 <select style="width:300px">
     <option value="AK">Alaska</option>
     <option value="HI">Hawaii</option>
@@ -137,7 +121,6 @@
 </select>
 
 <div style="width: 300px; height: 300px; border: 1px solid black" tabindex="10" id="outer">
-
     <div style="width:100px; height: 100px; border: 1px solid blue" id="inner"></div>
 </div>
 
@@ -160,8 +143,11 @@
     });
 </script>
 
+<script>
+require(["select2/core"], function (Select2) {
+    var s2 = new Select2($("#source"));
+});
+</script>
 
 </body>
 </html>
-
-

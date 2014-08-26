@@ -1,0 +1,45 @@
+{
+  "name": "Select2",
+  "description": "Select2 is a jQuery based replacement for select boxes. It supports searching, remote data sets, and infinite scrolling of results.",
+  "homepage": "http://ivaynberg.github.io/select2",
+  "author": "Igor Vaynberg",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ivaynberg/select2.git"
+  },
+  "main": "dist/js/select2.js",
+  "version": "3.4.8",
+  "jspm": {
+    "main": "select2",
+    "files": [
+      "select2.js",
+      "select2.png",
+      "select2.css",
+      "select2-spinner.gif"
+    ],
+    "shim": {
+      "select2": {
+        "imports": [
+          "jquery",
+          "./select2.css!"
+        ],
+        "exports": "$"
+      }
+    },
+    "buildConfig": {
+      "uglify": true
+    }
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-concat": "^0.4.0",
+    "grunt-contrib-nodeunit": "~0.3.3",
+    "grunt-contrib-qunit": "~0.4.0",
+    "grunt-contrib-requirejs": "^0.4.4",
+    "grunt-contrib-uglify": "~0.4.0",
+    "grunt-contrib-watch": "~0.6.0",
+    "grunt-sass": "~0.12.0",
+    "node-sass": "~0.8.6"
+  }
+}
