@@ -1460,7 +1460,7 @@ the specific language governing permissions and limitations under the Apache Lic
             // ensure dropdown has been open long enough
             // solves android browser immediately closing dropdown
             var closeTime = new Date().getTime();
-            if (closeTime - this.openTime < 250) return;
+            if (closeTime - this.openTime < this.opts.minimumTimeOpen) return;
 
             var cid = this.containerEventName,
                 scroll = "scroll." + cid,
@@ -3485,7 +3485,8 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             return true;
-        }
+        },
+        minimumTimeOpen: 250 // milliseconds the menu must remain open before closing
     };
 
     $.fn.select2.locales = [];
