@@ -1377,6 +1377,9 @@ the specific language governing permissions and limitations under the Apache Lic
             return true;
         },
 
+        // tracks when the menu was first opened
+        openTime: 0,
+
         /**
          * Performs the opening of the dropdown
          */
@@ -1447,12 +1450,17 @@ the specific language governing permissions and limitations under the Apache Lic
                 });
             });
 
-
+            this.openTime = new Date().getTime();
         },
 
         // abstract
         close: function () {
             if (!this.opened()) return;
+
+            // ensure dropdown has been open long enough
+            // solves android browser immediately closing dropdown
+            var closeTime = new Date().getTime();
+            if (closeTime - this.openTime < 250) return;
 
             var cid = this.containerEventName,
                 scroll = "scroll." + cid,
