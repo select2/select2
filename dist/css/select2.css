@@ -1,3 +1,25 @@
+.select2-container {
+  box-sizing: border-box;
+  display: inline-block;
+  margin: 0;
+  position: relative;
+  vertical-align: middle; }
+
+.select2-container .selection .single-select {
+  background-color: #eee;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: block;
+  height: 28px; }
+  .select2-container .selection .single-select .rendered-selection {
+    color: #444;
+    display: block;
+    line-height: 28px;
+    overflow: hidden;
+    text-overflow: ellipsis; }
+
 .s2-container {
   margin: 0;
   position: relative;

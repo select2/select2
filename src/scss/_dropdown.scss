@@ -1,0 +1,10 @@
+.select2-container {
+  .dropdown {
+    background-color: white;
+    border: 1px solid #aaa;
+  }
+
+  &.open .dropdown {
+    //
+  }
+}

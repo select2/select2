@@ -462,8 +462,10 @@ define('select2/utils',[], function () {
   };
 
   Observable.prototype.trigger = function (event) {
+    var slice = Array.prototype.slice;
+
     if (event in this.listeners) {
-      this.invoke(this.listeners[event], util.shift(arguments));
+      this.invoke(this.listeners[event], slice.call(arguments, 1));
     }
 
     if ("*" in this.listeners) {
@@ -491,7 +493,7 @@ define('select2/data/select',[
 
   Utils.Extend(SelectAdapter, Utils.Observable);
 
-  SelectAdapter.prototype.current = function () {
+  SelectAdapter.prototype.current = function (callback) {
     var data = [];
     var self = this;
 
@@ -503,7 +505,24 @@ define('select2/data/select',[
       data.push(option);
     });
 
-    return data;
+    callback(data);
+  };
+
+  SelectAdapter.prototype.query = function (params, callback) {
+    var data = [];
+    var self = this;
+
+    this.$element.find("option").each(function () {
+      var $option = $(this);
+
+      var option = self.item($option);
+
+      if (self.matches(params, option)) {
+        data.push(option);
+      }
+    });
+
+    callback(data);
   };
 
   SelectAdapter.prototype.item = function ($option) {
@@ -514,6 +533,14 @@ define('select2/data/select',[
 
     return data;
   };
+
+  SelectAdapter.prototype.matches = function (params, data) {
+    if (data.text.indexOf(params.term) > -1) {
+      return true;
+    }
+
+    return false;
+  }
 
   return SelectAdapter;
 });
@@ -550,9 +577,9 @@ define('select2/dropdown',[
 
   Dropdown.prototype.render = function () {
     var $dropdown = $(
-      '<div class="select2 select2-dropdown">' +
-        '<div class="results"></div>' +
-      '</div>'
+      '<span class="">' +
+        '<span class="results"></span>' +
+      '</span>'
     );
 
     return $dropdown;
@@ -567,15 +594,17 @@ define('select2/selection',[
   function Selection ($element, options) {
     this.$element = $element;
     this.options = options;
+
+    Selection.__super__.constructor.call(this);
   }
 
   Utils.Extend(Selection, Utils.Observable);
 
   Selection.prototype.render = function () {
     var $selection = $(
-      '<div class="single-select">' +
-        '<div class="rendered-selection"></div>' +
-      '</div>'
+      '<span class="single-select">' +
+        '<span class="rendered-selection"></span>' +
+      '</span>'
     );
 
     this.$selection = $selection;
@@ -586,7 +615,7 @@ define('select2/selection',[
   Selection.prototype.bind = function ($container) {
     var self = this;
 
-    $container.on('click', function (evt) {
+    this.$selection.on('click', function (evt) {
       self.trigger("toggle", {
         originalEvent: evt
       });
@@ -644,6 +673,8 @@ define('select2/core',[
     this.$element = $element;
     this.options = new Options(options);
 
+    Select2.__super__.constructor.call(this);
+
     // Set up containers and adapters
 
     this.data = new this.options.dataAdapter($element, options);
@@ -651,6 +682,8 @@ define('select2/core',[
     var $container = this.render();
 
     $container.insertAfter(this.$element);
+
+    $container.width($element.width());
 
     this.selection = new this.options.selectionAdapter($element, options);
 
@@ -661,9 +694,10 @@ define('select2/core',[
 
     this.dropdown = new this.options.dropdownAdapter($element, options);
 
+    var $dropdownContainer = $container.find(".dropdown");
     var $dropdown = this.dropdown.render();
 
-    $dropdown.insertAfter($container);
+    $dropdownContainer.append($dropdown);
 
     this.results = new this.options.resultsAdapter($element, options);
 
@@ -672,26 +706,37 @@ define('select2/core',[
 
     $resultsContainer.append($results);
 
+    // Bind events
+
+    this.selection.bind($container);
+
     // Set the initial state
-
-    var initialData = this.data.current();
-
-    this.selection.update(initialData);
 
     var self = this;
 
+    this.data.current(function (initialData) {
+      self.selection.update(initialData);
+    });
+
     this.$element.on("change", function () {
-      self.selection.update(self.data.current());
-    })
+      self.data.current(function (data) {
+        self.selection.update(data);
+      });
+    });
+
+    this.selection.on("toggle", function () {
+      $container.toggleClass("open");
+    });
   };
 
   Utils.Extend(Select2, Utils.Observable);
 
   Select2.prototype.render = function () {
     var $container = $(
-      '<div class="select2 select2-container">' +
-        '<div class="selection"></div>' +
-      '</div>'
+      '<span class="select2 select2-container">' +
+        '<span class="selection"></span>' +
+        '<span class="dropdown"></span>' +
+      '</span>'
     );
 
     return $container;

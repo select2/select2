@@ -1,3 +1,14 @@
+.select2-container {
+  box-sizing: border-box;
+
+  display: inline-block;
+  margin: 0;
+  position: relative;
+  vertical-align: middle;
+}
+
+@import "single";
+
 .s2-container {
   margin: 0;
   position: relative;

@@ -7,7 +7,7 @@ define([
 
   Utils.Extend(SelectAdapter, Utils.Observable);
 
-  SelectAdapter.prototype.current = function () {
+  SelectAdapter.prototype.current = function (callback) {
     var data = [];
     var self = this;
 
@@ -19,7 +19,24 @@ define([
       data.push(option);
     });
 
-    return data;
+    callback(data);
+  };
+
+  SelectAdapter.prototype.query = function (params, callback) {
+    var data = [];
+    var self = this;
+
+    this.$element.find("option").each(function () {
+      var $option = $(this);
+
+      var option = self.item($option);
+
+      if (self.matches(params, option)) {
+        data.push(option);
+      }
+    });
+
+    callback(data);
   };
 
   SelectAdapter.prototype.item = function ($option) {
@@ -30,6 +47,14 @@ define([
 
     return data;
   };
+
+  SelectAdapter.prototype.matches = function (params, data) {
+    if (data.text.indexOf(params.term) > -1) {
+      return true;
+    }
+
+    return false;
+  }
 
   return SelectAdapter;
 });

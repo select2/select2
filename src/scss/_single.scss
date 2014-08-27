@@ -1,0 +1,21 @@
+.select2-container {
+  .selection .single-select {
+    background-color: #eee;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    box-sizing: border-box;
+
+    cursor: pointer;
+    display: block;
+
+    height: 28px;
+
+    .rendered-selection {
+      color: #444;
+      display: block;
+      line-height: 28px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}

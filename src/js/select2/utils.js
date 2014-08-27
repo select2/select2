@@ -34,8 +34,10 @@ define([], function () {
   };
 
   Observable.prototype.trigger = function (event) {
+    var slice = Array.prototype.slice;
+
     if (event in this.listeners) {
-      this.invoke(this.listeners[event], util.shift(arguments));
+      this.invoke(this.listeners[event], slice.call(arguments, 1));
     }
 
     if ("*" in this.listeners) {

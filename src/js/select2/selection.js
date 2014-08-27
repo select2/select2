@@ -4,15 +4,17 @@ define([
   function Selection ($element, options) {
     this.$element = $element;
     this.options = options;
+
+    Selection.__super__.constructor.call(this);
   }
 
   Utils.Extend(Selection, Utils.Observable);
 
   Selection.prototype.render = function () {
     var $selection = $(
-      '<div class="single-select">' +
-        '<div class="rendered-selection"></div>' +
-      '</div>'
+      '<span class="single-select">' +
+        '<span class="rendered-selection"></span>' +
+      '</span>'
     );
 
     this.$selection = $selection;
@@ -23,7 +25,7 @@ define([
   Selection.prototype.bind = function ($container) {
     var self = this;
 
-    $container.on('click', function (evt) {
+    this.$selection.on('click', function (evt) {
       self.trigger("toggle", {
         originalEvent: evt
       });
