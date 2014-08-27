@@ -1,10 +1,16 @@
 define([
-  "./adapters/select"
-], function (SelectAdapter) {
+  './data/select',
+  './results',
+  './dropdown',
+  './selection'
+], function (SelectData, ResultsList, Dropdown, Selection) {
   function Options (options) {
     this.options = options;
 
-    this.DataAdapter = SelectAdapter;
+    this.dataAdapter = SelectData;
+    this.resultsAdapter = ResultsList;
+    this.dropdownAdapter = Dropdown;
+    this.selectionAdapter = Selection;
   }
 
   return Options;
