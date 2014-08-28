@@ -21,6 +21,81 @@ define('select2/utils',[], function () {
     return ChildClass;
   };
 
+  function getMethods (theClass) {
+    var proto = theClass.prototype;
+
+    var methods = [];
+
+    for (var methodName in proto) {
+      var m = proto[methodName];
+
+      if (typeof m !== "function") {
+        continue;
+      }
+
+      methods.push(methodName);
+    }
+
+    return methods;
+  }
+
+  Utils.Decorate = function (SuperClass, DecoratorClass) {
+    var decoratedMethods = getMethods(DecoratorClass);
+    var superMethods = getMethods(SuperClass);
+
+    function DecoratedClass () {
+      var unshift = Array.prototype.unshift;
+
+      unshift.call(arguments, SuperClass.prototype.constructor);
+
+      var argCount = DecoratorClass.prototype.constructor.length;
+
+      var calledConstructor = SuperClass.prototype.constructor;
+
+      if (argCount > 0) {
+        calledConstructor = DecoratorClass.prototype.constructor;
+      }
+
+      calledConstructor.apply(this, arguments);
+    }
+
+    function ctr () {
+      this.constructor = DecoratedClass;
+    }
+
+    DecoratedClass.prototype = new ctr();
+
+    for (var m = 0; m < superMethods.length; m++) {
+        var methodName = superMethods[m];
+
+        DecoratedClass.prototype[methodName] = SuperClass.prototype[methodName];
+    }
+
+    for (var m = 0; m < decoratedMethods.length; m++) {
+      var methodName = decoratedMethods[m];
+
+      var originalMethod = function () {};
+
+      if (methodName in DecoratedClass.prototype) {
+        originalMethod = DecoratedClass.prototype[methodName];
+      }
+
+      var decoratedMethod = DecoratorClass.prototype[methodName];
+
+      function calledMethod () {
+        var unshift = Array.prototype.unshift;
+
+        unshift.call(arguments, originalMethod);
+
+        return decoratedMethod.apply(this, arguments);
+      }
+
+      DecoratedClass.prototype[methodName] = calledMethod;
+    }
+
+    return DecoratedClass;
+  }
+
   var Observable = function () {
     this.listeners = {};
   };
@@ -251,12 +326,12 @@ define('select2/results',[
     });
 
     this.$results.on("mouseenter", ".option", function (evt) {
-      self.$results.find(".option.hovered").removeClass("hovered");
-      $(this).addClass("hovered");
+      self.$results.find(".option.highlighted").removeClass("highlighted");
+      $(this).addClass("highlighted");
     });
 
     this.$results.on("mouseleave", ".option", function (evt) {
-      $(this).removeClass("hovered");
+      $(this).removeClass("highlighted");
     });
   };
 
@@ -440,7 +515,7 @@ define('select2/core',[
 
   Select2.prototype.render = function () {
     var $container = $(
-      '<span class="select2 select2-container">' +
+      '<span class="select2 select2-container select2-theme-default">' +
         '<span class="selection"></span>' +
         '<span class="dropdown"></span>' +
       '</span>'

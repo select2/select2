@@ -9,9 +9,6 @@
 
     display: block;
 
-    max-height: 200px;
-    overflow-y: scroll;
-
     position: absolute;
     left: -100000px;
     top: -100000px;
@@ -19,6 +16,8 @@
     width: 100%;
 
     .results {
+      display: block;
+
       .options {
         list-style: none;
         margin: 0;
@@ -28,14 +27,8 @@
           cursor: pointer;
           padding: 6px;
 
-          &.selected {
-            background-color: #ddd;
-          }
-
-          &.hovered {
-            background-color: darkblue;
-            color: white;
-          }
+          user-select: none;
+          -webkit-user-select: none;
         }
       }
     }

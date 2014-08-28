@@ -77,7 +77,7 @@ define([
 
   Select2.prototype.render = function () {
     var $container = $(
-      '<span class="select2 select2-container">' +
+      '<span class="select2 select2-container select2-theme-default">' +
         '<span class="selection"></span>' +
         '<span class="dropdown"></span>' +
       '</span>'

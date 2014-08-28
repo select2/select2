@@ -99,12 +99,12 @@ define([
     });
 
     this.$results.on("mouseenter", ".option", function (evt) {
-      self.$results.find(".option.hovered").removeClass("hovered");
-      $(this).addClass("hovered");
+      self.$results.find(".option.highlighted").removeClass("highlighted");
+      $(this).addClass("highlighted");
     });
 
     this.$results.on("mouseleave", ".option", function (evt) {
-      $(this).removeClass("hovered");
+      $(this).removeClass("highlighted");
     });
   };
 

@@ -1,8 +1,5 @@
 .select2-container {
   .selection .single-select {
-    background-color: #eee;
-    border: 1px solid #aaa;
-    border-radius: 4px;
     box-sizing: border-box;
 
     cursor: pointer;
@@ -10,20 +7,14 @@
 
     height: 28px;
 
-    .rendered-selection {
-      color: #444;
-      display: block;
-      line-height: 28px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-  }
+    user-select: none;
+    -webkit-user-select: none;
 
-  &.open {
-    .selection .single-select {
-      border-bottom: none;
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
+    .rendered-selection {
+      display: block;
+      overflow: hidden;
+      padding-left: 8px;
+      text-overflow: ellipsis;
     }
   }
 }

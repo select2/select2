@@ -125,7 +125,8 @@ module.exports = function (grunt) {
     watch: {
       js: {
         files: [
-          "src/js/**/*.js"
+          "src/js/select2/**/*.js",
+          "tests/**/*.js",
         ],
         tasks: [
           "compile",
