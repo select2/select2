@@ -2679,6 +2679,10 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.searchContainer = this.container.find(".select2-search-field");
             this.selection = selection = this.container.find(selector);
+            
+            this.selection.css(this.opts.choicesContainerCss);
+            this.selection.addClass(this.opts.choicesContainerCssClass);
+
 
             var _this = this;
             this.selection.on("click", ".select2-container:not(.select2-container-disabled) .select2-search-choice:not(.select2-locked)", function (e) {
@@ -3416,8 +3420,10 @@ the specific language governing permissions and limitations under the Apache Lic
         openOnEnter: true,
         containerCss: {},
         dropdownCss: {},
+        choicesContainerCss: "",
         containerCssClass: "",
         dropdownCssClass: "",
+        choicesContainerCssCLass: "",
         formatResult: function(result, container, query, escapeMarkup) {
             var markup=[];
             markMatch(this.text(result), query.term, markup, escapeMarkup);
