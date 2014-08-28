@@ -27,6 +27,15 @@
         .option {
           cursor: pointer;
           padding: 6px;
+
+          &.selected {
+            background-color: #ddd;
+          }
+
+          &.hovered {
+            background-color: darkblue;
+            color: white;
+          }
         }
       }
     }

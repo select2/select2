@@ -1,7 +1,7 @@
 define([
   './utils'
 ], function (Utils) {
-  function Results ($element, dataAdapter) {
+  function Results ($element, options, dataAdapter) {
     this.$element = $element;
     this.data = dataAdapter;
 
@@ -38,6 +38,29 @@ define([
     this.$results.append($options);
   };
 
+  Results.prototype.setClasses = function () {
+    var self = this;
+
+    this.data.current(function (selected) {
+      selected = $.map(selected, function (s) { return s.id; });
+
+      self.$results.find(".option.selected").removeClass("selected");
+
+      var $options = self.$results.find(".option");
+
+      console.log($options);
+
+      $options.each(function () {
+        var $option = $(this);
+        var item = $option.data("data");
+
+        if (selected.indexOf(item.id) > -1) {
+          $option.addClass("selected");
+        }
+      });
+    });
+  };
+
   Results.prototype.option = function (data) {
     var $option = $(
       '<li class="option"></li>'
@@ -55,10 +78,13 @@ define([
     this.on("results:all", function (data) {
       self.clear();
       self.append(data);
+      self.setClasses();
     });
 
     this.on("results:append", function (data) {
       self.append(data);
+
+      self.setClasses();
     })
 
     this.$results.on("click", ".option", function (evt) {
@@ -67,7 +93,18 @@ define([
       self.trigger("selected", {
         originalEvent: evt,
         data: data
-      })
+      });
+
+      self.setClasses();
+    });
+
+    this.$results.on("mouseenter", ".option", function (evt) {
+      self.$results.find(".option.hovered").removeClass("hovered");
+      $(this).addClass("hovered");
+    });
+
+    this.$results.on("mouseleave", ".option", function (evt) {
+      $(this).removeClass("hovered");
     });
   };
 

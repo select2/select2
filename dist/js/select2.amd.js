@@ -153,7 +153,7 @@ define('select2/data/select',[
 define('select2/results',[
   './utils'
 ], function (Utils) {
-  function Results ($element, dataAdapter) {
+  function Results ($element, options, dataAdapter) {
     this.$element = $element;
     this.data = dataAdapter;
 
@@ -190,6 +190,29 @@ define('select2/results',[
     this.$results.append($options);
   };
 
+  Results.prototype.setClasses = function () {
+    var self = this;
+
+    this.data.current(function (selected) {
+      selected = $.map(selected, function (s) { return s.id; });
+
+      self.$results.find(".option.selected").removeClass("selected");
+
+      var $options = self.$results.find(".option");
+
+      console.log($options);
+
+      $options.each(function () {
+        var $option = $(this);
+        var item = $option.data("data");
+
+        if (selected.indexOf(item.id) > -1) {
+          $option.addClass("selected");
+        }
+      });
+    });
+  };
+
   Results.prototype.option = function (data) {
     var $option = $(
       '<li class="option"></li>'
@@ -207,10 +230,13 @@ define('select2/results',[
     this.on("results:all", function (data) {
       self.clear();
       self.append(data);
+      self.setClasses();
     });
 
     this.on("results:append", function (data) {
       self.append(data);
+
+      self.setClasses();
     })
 
     this.$results.on("click", ".option", function (evt) {
@@ -219,7 +245,18 @@ define('select2/results',[
       self.trigger("selected", {
         originalEvent: evt,
         data: data
-      })
+      });
+
+      self.setClasses();
+    });
+
+    this.$results.on("mouseenter", ".option", function (evt) {
+      self.$results.find(".option.hovered").removeClass("hovered");
+      $(this).addClass("hovered");
+    });
+
+    this.$results.on("mouseleave", ".option", function (evt) {
+      $(this).removeClass("hovered");
     });
   };
 
@@ -337,7 +374,7 @@ define('select2/core',[
 
     // Set up containers and adapters
 
-    this.data = new this.options.dataAdapter($element, options);
+    this.data = new this.options.dataAdapter($element, this.options);
 
     var $container = this.render();
 
@@ -345,21 +382,21 @@ define('select2/core',[
 
     $container.width($element.width());
 
-    this.selection = new this.options.selectionAdapter($element, options);
+    this.selection = new this.options.selectionAdapter($element, this.options);
 
     var $selectionContainer = $container.find(".selection");
     var $selection = this.selection.render();
 
     $selectionContainer.append($selection);
 
-    this.dropdown = new this.options.dropdownAdapter($element, options);
+    this.dropdown = new this.options.dropdownAdapter($element, this.options);
 
     var $dropdownContainer = $container.find(".dropdown");
     var $dropdown = this.dropdown.render();
 
     $dropdownContainer.append($dropdown);
 
-    this.results = new this.options.resultsAdapter($element, options);
+    this.results = new this.options.resultsAdapter($element, this.options, this.data);
 
     var $resultsContainer = $dropdown.find(".results");
     var $results = this.results.render();

@@ -43,6 +43,11 @@
     .select2-container .dropdown .results .options .option {
       cursor: pointer;
       padding: 6px; }
+      .select2-container .dropdown .results .options .option.selected {
+        background-color: #ddd; }
+      .select2-container .dropdown .results .options .option.hovered {
+        background-color: darkblue;
+        color: white; }
 .select2-container.open .dropdown {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
