@@ -42,15 +42,10 @@ define([
 
     // Bind events
 
-    this.selection.bind($container);
-
-    // Set the initial state
-
     var self = this;
 
-    this.data.current(function (initialData) {
-      self.selection.update(initialData);
-    });
+    this.selection.bind($container);
+    this.results.bind($container);
 
     this.$element.on("change", function () {
       self.data.current(function (data) {
@@ -60,6 +55,21 @@ define([
 
     this.selection.on("toggle", function () {
       $container.toggleClass("open");
+    });
+
+    this.results.on("selected", function (params) {
+      self.data.select(params.data);
+      $container.removeClass("open");
+    });
+
+    // Set the initial state
+
+    this.data.current(function (initialData) {
+      self.selection.update(initialData);
+    });
+
+    this.data.query({}, function (data) {
+      self.results.trigger("results:all", data);
     });
   };
 

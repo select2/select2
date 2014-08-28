@@ -1,8 +1,11 @@
 define([
-  '../utils'
-], function (Utils) {
+  '../utils',
+  'jquery'
+], function (Utils, $) {
   function SelectAdapter ($element, options) {
     this.$element = $element;
+
+    SelectAdapter.__super__.constructor.call(this);
   }
 
   Utils.Extend(SelectAdapter, Utils.Observable);
@@ -21,6 +24,32 @@ define([
 
     callback(data);
   };
+
+  SelectAdapter.prototype.select = function (data) {
+    var val;
+
+    if (this.$element.prop("multiple")) {
+      var currentData = this.current();
+
+      data = [data];
+      data.push(currentData);
+
+      val = [];
+
+      for (var d = 0; d < data.length; d++) {
+        id = data[d].id;
+
+        if (ids.indexOf(id) === -1) {
+          val.push(id);
+        }
+      }
+    } else {
+      val = data.id;
+    }
+
+    this.$element.val(val);
+    this.$element.trigger("change");
+  }
 
   SelectAdapter.prototype.query = function (params, callback) {
     var data = [];
@@ -49,6 +78,10 @@ define([
   };
 
   SelectAdapter.prototype.matches = function (params, data) {
+    if ($.trim(params.term) == "") {
+      return true;
+    }
+
     if (data.text.indexOf(params.term) > -1) {
       return true;
     }
