@@ -12,9 +12,7 @@
 </head>
 <body>
 
-
-<input type="text" style="width:300px" autofocus/><br/>
-<select style="width:300px" id="source">
+<select style="width:300px" id="single">
     <option value="AK">Alaska</option>
     <option value="HI">Hawaii</option>
     <option value="CA">California</option>
@@ -66,11 +64,10 @@
     <option value="VA">Virginia</option>
     <option value="WV">West Virginia</option>
 </select><br/>
-<input type="text" style="width:300px" /><br/>
-<select style="width:300px">
+<select style="width:300px" id="multiple" multiple="multiple">
     <option value="AK">Alaska</option>
     <option value="HI">Hawaii</option>
-    <option value="CA">California</option>
+    <option value="CA" selected="selected">California</option>
     <option value="NV">Nevada</option>
     <option value="OR">Oregon</option>
     <option value="WA">Washington</option>
@@ -122,7 +119,8 @@
 
 <script>
 require(["select2/core"], function (Select2) {
-    var s2 = new Select2($("#source"));
+    var single = new Select2($("#single"));
+    var multiple = new Select2($("#multiple"));
 });
 </script>
 

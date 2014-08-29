@@ -1,16 +1,16 @@
 define([
-  './utils'
+  '../utils'
 ], function (Utils) {
-  function Selection ($element, options) {
+  function SingleSelection ($element, options) {
     this.$element = $element;
     this.options = options;
 
-    Selection.__super__.constructor.call(this);
+    SingleSelection.__super__.constructor.call(this);
   }
 
-  Utils.Extend(Selection, Utils.Observable);
+  Utils.Extend(SingleSelection, Utils.Observable);
 
-  Selection.prototype.render = function () {
+  SingleSelection.prototype.render = function () {
     var $selection = $(
       '<span class="single-select">' +
         '<span class="rendered-selection"></span>' +
@@ -22,7 +22,7 @@ define([
     return $selection;
   }
 
-  Selection.prototype.bind = function ($container) {
+  SingleSelection.prototype.bind = function ($container) {
     var self = this;
 
     this.$selection.on('click', function (evt) {
@@ -32,15 +32,15 @@ define([
     });
   }
 
-  Selection.prototype.clear = function () {
-    this.$selection.find(".rendered-selection").text("");
+  SingleSelection.prototype.clear = function () {
+    this.$selection.find(".rendered-selection").empty();
   }
 
-  Selection.prototype.display = function (data) {
+  SingleSelection.prototype.display = function (data) {
     return data.text;
   }
 
-  Selection.prototype.update = function (data) {
+  SingleSelection.prototype.update = function (data) {
     if (data.length == 0) {
       this.clear();
       return;
@@ -53,5 +53,5 @@ define([
     this.$selection.find(".rendered-selection").html(formatted);
   }
 
-  return Selection;
+  return SingleSelection;
 });

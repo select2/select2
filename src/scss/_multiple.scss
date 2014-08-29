@@ -1,0 +1,20 @@
+.select2-container {
+  .selection .multiple-select {
+    box-sizing: border-box;
+
+    cursor: pointer;
+    display: block;
+
+    min-height: 32px;
+
+    user-select: none;
+    -webkit-user-select: none;
+
+    .rendered-selection {
+      display: block;
+      overflow: hidden;
+      padding-left: 8px;
+      text-overflow: ellipsis;
+    }
+  }
+}

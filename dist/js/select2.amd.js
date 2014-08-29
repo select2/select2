@@ -59,6 +59,8 @@ define('select2/utils',[], function () {
       calledConstructor.apply(this, arguments);
     }
 
+    DecoratorClass.displayName = SuperClass.displayName;
+
     function ctr () {
       this.constructor = DecoratedClass;
     }
@@ -162,29 +164,32 @@ define('select2/data/select',[
   };
 
   SelectAdapter.prototype.select = function (data) {
-    var val;
+    var self = this;
 
     if (this.$element.prop("multiple")) {
-      var currentData = this.current();
+      this.current(function (currentData) {
+        var val = [];
 
-      data = [data];
-      data.push(currentData);
+        data = [data];
+        data.push.apply(data, currentData);
 
-      val = [];
+        for (var d = 0; d < data.length; d++) {
+          id = data[d].id;
 
-      for (var d = 0; d < data.length; d++) {
-        id = data[d].id;
-
-        if (ids.indexOf(id) === -1) {
-          val.push(id);
+          if (val.indexOf(id) === -1) {
+            val.push(id);
+          }
         }
-      }
-    } else {
-      val = data.id;
-    }
 
-    this.$element.val(val);
-    this.$element.trigger("change");
+        self.$element.val(val);
+        self.$element.trigger("change");
+      });
+    } else {
+      var val = data.id;
+
+      this.$element.val(val);
+      this.$element.trigger("change");
+    }
   }
 
   SelectAdapter.prototype.query = function (params, callback) {
@@ -361,19 +366,19 @@ define('select2/dropdown',[
   return Dropdown;
 })
 ;
-define('select2/selection',[
-  './utils'
+define('select2/selection/single',[
+  '../utils'
 ], function (Utils) {
-  function Selection ($element, options) {
+  function SingleSelection ($element, options) {
     this.$element = $element;
     this.options = options;
 
-    Selection.__super__.constructor.call(this);
+    SingleSelection.__super__.constructor.call(this);
   }
 
-  Utils.Extend(Selection, Utils.Observable);
+  Utils.Extend(SingleSelection, Utils.Observable);
 
-  Selection.prototype.render = function () {
+  SingleSelection.prototype.render = function () {
     var $selection = $(
       '<span class="single-select">' +
         '<span class="rendered-selection"></span>' +
@@ -385,7 +390,7 @@ define('select2/selection',[
     return $selection;
   }
 
-  Selection.prototype.bind = function ($container) {
+  SingleSelection.prototype.bind = function ($container) {
     var self = this;
 
     this.$selection.on('click', function (evt) {
@@ -395,15 +400,15 @@ define('select2/selection',[
     });
   }
 
-  Selection.prototype.clear = function () {
-    this.$selection.find(".rendered-selection").text("");
+  SingleSelection.prototype.clear = function () {
+    this.$selection.find(".rendered-selection").empty();
   }
 
-  Selection.prototype.display = function (data) {
+  SingleSelection.prototype.display = function (data) {
     return data.text;
   }
 
-  Selection.prototype.update = function (data) {
+  SingleSelection.prototype.update = function (data) {
     if (data.length == 0) {
       this.clear();
       return;
@@ -416,22 +421,102 @@ define('select2/selection',[
     this.$selection.find(".rendered-selection").html(formatted);
   }
 
-  return Selection;
+  return SingleSelection;
+});
+
+define('select2/selection/multiple',[
+  '../utils'
+], function (Utils) {
+  function MultipleSelection ($element, options) {
+    this.$element = $element;
+    this.options = options;
+
+    MultipleSelection.__super__.constructor.call(this);
+  }
+
+  Utils.Extend(MultipleSelection, Utils.Observable);
+
+  MultipleSelection.prototype.render = function () {
+    var $selection = $(
+      '<span class="multiple-select">' +
+        '<ul class="rendered-selection"></ul>' +
+      '</span>'
+    );
+
+    this.$selection = $selection;
+
+    return $selection;
+  }
+
+  MultipleSelection.prototype.bind = function ($container) {
+    var self = this;
+
+    this.$selection.on('click', function (evt) {
+      self.trigger("toggle", {
+        originalEvent: evt
+      });
+    });
+  }
+
+  MultipleSelection.prototype.clear = function () {
+    this.$selection.find(".rendered-selection").empty();
+  }
+
+  MultipleSelection.prototype.display = function (data) {
+    return data.text;
+  }
+
+  MultipleSelection.prototype.update = function (data) {
+    this.clear();
+
+    if (data.length == 0) {
+      return;
+    }
+
+    var $selections = [];
+
+    for (var d = 0; d < data.length; d++) {
+      var selection = data[d];
+
+      var formatted = this.display(selection);
+
+      var $selection = $('<ul class="choice"></ul>');
+
+      $selection.text(formatted);
+      $selection.data("data", data);
+
+      $selections.push($selection);
+    }
+
+    this.$selection.find(".rendered-selection").append($selections);
+  }
+
+  return MultipleSelection;
 });
 
 define('select2/options',[
   './data/select',
   './results',
   './dropdown',
-  './selection'
-], function (SelectData, ResultsList, Dropdown, Selection) {
+  './selection/single',
+  './selection/multiple'
+], function (SelectData, ResultsList, Dropdown, SingleSelection,
+             MultipleSelection) {
   function Options (options) {
     this.options = options;
 
     this.dataAdapter = SelectData;
     this.resultsAdapter = ResultsList;
     this.dropdownAdapter = Dropdown;
-    this.selectionAdapter = options.selectionAdapter || Selection;
+    this.selectionAdapter = options.selectionAdapter;
+
+    if (this.selectionAdapter == null) {
+      if (this.options.multiple) {
+        this.selectionAdapter = MultipleSelection;
+      } else {
+        this.selectionAdapter = SingleSelection;
+      }
+    }
   }
 
   return Options;
@@ -444,6 +529,11 @@ define('select2/core',[
 ], function ($, Options, Utils) {
   var Select2 = function ($element, options) {
     this.$element = $element;
+
+    options = options || {};
+
+    options.multiple = options.multiple || $element.prop("multiple");
+
     this.options = new Options(options);
 
     Select2.__super__.constructor.call(this);

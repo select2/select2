@@ -11,9 +11,10 @@
 
     position: absolute;
     left: -100000px;
-    top: -100000px;
 
     width: 100%;
+
+    z-index: 100;
 
     .results {
       display: block;
@@ -35,10 +36,10 @@
   }
 
   &.open .dropdown {
+    border-top: none;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 
     left: 0;
-    top: 28px;
   }
 }

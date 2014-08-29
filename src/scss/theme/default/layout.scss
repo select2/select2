@@ -1,20 +1,50 @@
 .select2-container.select2-theme-default {
-  .selection .single-select {
-    background-color: #eee;
-    border: 1px solid #aaa;
-    border-radius: 4px;
+  .selection {
+    .single-select {
+      background-color: #eee;
+      border: 1px solid #aaa;
+      border-radius: 4px;
 
-    .rendered-selection {
-      color: #444;
-      line-height: 28px;
+      .rendered-selection {
+        color: #444;
+        line-height: 28px;
+      }
+    }
+
+    .multiple-select {
+      background-color: white;
+      border: 1px solid #aaa;
+      border-radius: 4px;
+
+      .rendered-selection {
+        list-style: none;
+        margin: 0;
+        padding: 5px;
+        padding-bottom: 0;
+
+        .choice {
+          background-color: #e4e4e4;
+
+          border: 1px solid #aaa;
+          border-radius: 4px;
+
+          float: left;
+
+          margin-right: 5px;
+          margin-bottom: 5px;
+          padding: 0 5px;
+        }
+      }
     }
   }
 
   &.open {
-    .selection .single-select {
-      border-bottom: none;
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
+    .selection {
+      .single-select,
+      .multiple-select {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
     }
   }
 

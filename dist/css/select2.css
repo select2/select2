@@ -18,6 +18,19 @@
     padding-left: 8px;
     text-overflow: ellipsis; }
 
+.select2-container .selection .multiple-select {
+  box-sizing: border-box;
+  cursor: pointer;
+  display: block;
+  min-height: 32px;
+  user-select: none;
+  -webkit-user-select: none; }
+  .select2-container .selection .multiple-select .rendered-selection {
+    display: block;
+    overflow: hidden;
+    padding-left: 8px;
+    text-overflow: ellipsis; }
+
 .select2-container .dropdown {
   background-color: white;
   border: 1px solid #aaa;
@@ -26,8 +39,8 @@
   display: block;
   position: absolute;
   left: -100000px;
-  top: -100000px;
-  width: 100%; }
+  width: 100%;
+  z-index: 100; }
   .select2-container .dropdown .results {
     display: block; }
     .select2-container .dropdown .results .options {
@@ -40,10 +53,10 @@
         user-select: none;
         -webkit-user-select: none; }
 .select2-container.open .dropdown {
+  border-top: none;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-  left: 0;
-  top: 28px; }
+  left: 0; }
 
 .select2-container.select2-theme-default .selection .single-select {
   background-color: #eee;
@@ -52,8 +65,24 @@
   .select2-container.select2-theme-default .selection .single-select .rendered-selection {
     color: #444;
     line-height: 28px; }
-.select2-container.select2-theme-default.open .selection .single-select {
-  border-bottom: none;
+.select2-container.select2-theme-default .selection .multiple-select {
+  background-color: white;
+  border: 1px solid #aaa;
+  border-radius: 4px; }
+  .select2-container.select2-theme-default .selection .multiple-select .rendered-selection {
+    list-style: none;
+    margin: 0;
+    padding: 5px;
+    padding-bottom: 0; }
+    .select2-container.select2-theme-default .selection .multiple-select .rendered-selection .choice {
+      background-color: #e4e4e4;
+      border: 1px solid #aaa;
+      border-radius: 4px;
+      float: left;
+      margin-right: 5px;
+      margin-bottom: 5px;
+      padding: 0 5px; }
+.select2-container.select2-theme-default.open .selection .single-select, .select2-container.select2-theme-default.open .selection .multiple-select {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0; }
 .select2-container.select2-theme-default .dropdown .results {

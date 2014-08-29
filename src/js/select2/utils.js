@@ -59,6 +59,8 @@ define([], function () {
       calledConstructor.apply(this, arguments);
     }
 
+    DecoratorClass.displayName = SuperClass.displayName;
+
     function ctr () {
       this.constructor = DecoratedClass;
     }

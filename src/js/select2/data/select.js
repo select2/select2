@@ -26,29 +26,32 @@ define([
   };
 
   SelectAdapter.prototype.select = function (data) {
-    var val;
+    var self = this;
 
     if (this.$element.prop("multiple")) {
-      var currentData = this.current();
+      this.current(function (currentData) {
+        var val = [];
 
-      data = [data];
-      data.push(currentData);
+        data = [data];
+        data.push.apply(data, currentData);
 
-      val = [];
+        for (var d = 0; d < data.length; d++) {
+          id = data[d].id;
 
-      for (var d = 0; d < data.length; d++) {
-        id = data[d].id;
-
-        if (ids.indexOf(id) === -1) {
-          val.push(id);
+          if (val.indexOf(id) === -1) {
+            val.push(id);
+          }
         }
-      }
-    } else {
-      val = data.id;
-    }
 
-    this.$element.val(val);
-    this.$element.trigger("change");
+        self.$element.val(val);
+        self.$element.trigger("change");
+      });
+    } else {
+      var val = data.id;
+
+      this.$element.val(val);
+      this.$element.trigger("change");
+    }
   }
 
   SelectAdapter.prototype.query = function (params, callback) {

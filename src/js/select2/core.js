@@ -5,6 +5,11 @@ define([
 ], function ($, Options, Utils) {
   var Select2 = function ($element, options) {
     this.$element = $element;
+
+    options = options || {};
+
+    options.multiple = options.multiple || $element.prop("multiple");
+
     this.options = new Options(options);
 
     Select2.__super__.constructor.call(this);
