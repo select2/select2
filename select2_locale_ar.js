@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Select2 Arabic translation.
  *
  * Author: Adel KEDJOUR <adel@kedjour.com>
