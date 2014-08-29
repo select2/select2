@@ -48,8 +48,6 @@ define([
 
       var $options = self.$results.find(".option");
 
-      console.log($options);
-
       $options.each(function () {
         var $option = $(this);
         var item = $option.data("data");

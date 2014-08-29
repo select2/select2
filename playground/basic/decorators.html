@@ -120,9 +120,94 @@
     <option value="WV">West Virginia</option>
 </select>
 
+<style>
+.clear {
+    background-color: transparent;
+    border: none;
+    box-sizing: border-box;
+    color: #666;
+    cursor: pointer;
+    display: none;
+    font-size: 15px;
+    font-weight: bold;
+    height: 26px;
+    outline: 0;
+    position: absolute;
+    top: 1px;
+    right: 4px;
+    width: 26px;
+}
+
+.clear:hover {
+    color: #000;
+}
+
+.clearable {
+    padding-right: 31px;
+}
+
+.clearable .clear {
+    display: inline;
+}
+</style>
+
 <script>
-require(["select2/core"], function (Select2) {
-    var s2 = new Select2($("#source"));
+require(["select2/core", "select2/utils", "select2/selection"], function (Select2, Utils, Selection) {
+    function ClearSelection () { }
+
+    ClearSelection.prototype.render = function (decorated) {
+        var $selection = decorated.call(this);
+
+        var $clear = $(
+            '<button class="clear">&times;</button>'
+        )
+
+        $selection.append($clear);
+        $selection.addClass("clearable");
+
+        this.$clear = $clear;
+
+        return $selection;
+    };
+
+    ClearSelection.prototype.bind = function (decorated, $container) {
+        var self = this;
+
+        decorated.call(this, $container);
+
+        this.$container = $container;
+
+        this.$clear.on("click", function (evt) {
+            evt.stopPropagation();
+
+            var $first = $container.find("li").first();
+            $first.click();
+        });
+    };
+
+    ClearSelection.prototype.update = function (decorated, data) {
+        decorated.call(this, data);
+
+        if (data.length == 0 || this.$container.find("li").length == 0) {
+            this.$selection.removeClass("clearable");
+            return;
+        }
+
+        var firstOption = this.$container.find("li").first().data("data");
+        var firstData = data[0];
+
+        if (firstOption.id == firstData.id) {
+            this.$selection.removeClass("clearable");
+        } else {
+            this.$selection.addClass("clearable");
+        }
+    };
+
+    var CustomSelection = Utils.Decorate(Selection, ClearSelection);
+
+    var s2 = new Select2($("#source"), {
+        selectionAdapter: CustomSelection
+    });
 });
 </script>
 

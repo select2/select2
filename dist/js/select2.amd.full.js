@@ -46,13 +46,13 @@ define('select2/utils',[], function () {
     function DecoratedClass () {
       var unshift = Array.prototype.unshift;
 
-      unshift.call(arguments, SuperClass.prototype.constructor);
-
       var argCount = DecoratorClass.prototype.constructor.length;
 
       var calledConstructor = SuperClass.prototype.constructor;
 
       if (argCount > 0) {
+        unshift.call(arguments, SuperClass.prototype.constructor);
+
         calledConstructor = DecoratorClass.prototype.constructor;
       }
 
@@ -74,23 +74,26 @@ define('select2/utils',[], function () {
     for (var m = 0; m < decoratedMethods.length; m++) {
       var methodName = decoratedMethods[m];
 
-      var originalMethod = function () {};
+      function calledMethod (methodName) {
+        // Stub out the original method if it's not decorating an actual method
+        var originalMethod = function () {};
 
-      if (methodName in DecoratedClass.prototype) {
-        originalMethod = DecoratedClass.prototype[methodName];
+        if (methodName in DecoratedClass.prototype) {
+          originalMethod = DecoratedClass.prototype[methodName];
+        }
+
+        var decoratedMethod = DecoratorClass.prototype[methodName];
+
+        return function () {
+          var unshift = Array.prototype.unshift;
+
+          unshift.call(arguments, originalMethod);
+
+          return decoratedMethod.apply(this, arguments);
+        }
       }
 
-      var decoratedMethod = DecoratorClass.prototype[methodName];
-
-      function calledMethod () {
-        var unshift = Array.prototype.unshift;
-
-        unshift.call(arguments, originalMethod);
-
-        return decoratedMethod.apply(this, arguments);
-      }
-
-      DecoratedClass.prototype[methodName] = calledMethod;
+      DecoratedClass.prototype[methodName] = calledMethod(methodName);
     }
 
     return DecoratedClass;
@@ -275,8 +278,6 @@ define('select2/results',[
 
       var $options = self.$results.find(".option");
 
-      console.log($options);
-
       $options.each(function () {
         var $option = $(this);
         var item = $option.data("data");
@@ -430,7 +431,7 @@ define('select2/options',[
     this.dataAdapter = SelectData;
     this.resultsAdapter = ResultsList;
     this.dropdownAdapter = Dropdown;
-    this.selectionAdapter = Selection;
+    this.selectionAdapter = options.selectionAdapter || Selection;
   }
 
   return Options;

@@ -10,7 +10,7 @@ define([
     this.dataAdapter = SelectData;
     this.resultsAdapter = ResultsList;
     this.dropdownAdapter = Dropdown;
-    this.selectionAdapter = Selection;
+    this.selectionAdapter = options.selectionAdapter || Selection;
   }
 
   return Options;
