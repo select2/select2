@@ -45,7 +45,8 @@ the specific language governing permissions and limitations under the Apache Lic
     if (window.Select2 !== undefined) {
         return;
     }
-
+    
+    var _update;
     var KEY, AbstractSelect2, SingleSelect2, MultiSelect2, nextUid, sizer,
         lastMousePosition={x:0,y:0}, $document, scrollBarDimensions,
 
@@ -680,6 +681,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.opts = opts = this.prepareOpts(opts);
 
             this.id=opts.id;
+            this.selectCallback = (this.opts.selectCallbackMultiTokens) ? this.onSelectMulti : this.onSelect;
 
             // destroy if called on an existing component
             if (opts.element.data("select2") !== undefined &&
@@ -732,7 +734,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.dropdown.on("click", killEvent);
 
             this.results = results = this.container.find(resultsSelector);
-            this.search = search = this.container.find(".select2-input");
+            this.search = search = this.container.find((opts && opts.containerType) ? ".select2-input" : "input.select2-input");
 
             this.queryCount = 0;
             this.resultsPage = 0;
@@ -2542,15 +2544,13 @@ the specific language governing permissions and limitations under the Apache Lic
         // multi
         createContainer: function () {
             var containerType = (this.opts && this.opts.containerType) ? this.opts.containerType : 'input',
-                beginTag = (containerType === 'input') ? "input type='text' " : containerType,
-                endTag = (containerType === 'input') ? "/" : "></ " + containerType,
                 container = $(document.createElement("div")).attr({
                 "class": "select2-container select2-container-multi"
             }).html([
                 "<ul class='select2-choices'>",
                 "  <li class='select2-search-field'>",
                 "    <label for='' class='select2-offscreen'></label>",
-                "    <"+ beginTag + " autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' class='select2-input' " + endTag + ">",
+                "    <"+ containerType + " type='text' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' class='select2-input'/>",
                 "  </li>",
                 "</ul>",
                 "<div class='select2-drop select2-drop-multi select2-display-none'>",
@@ -2933,7 +2933,15 @@ the specific language governing permissions and limitations under the Apache Lic
             });
             data = filtered;
 
-            this.selection.find(".select2-search-choice").remove();
+            if(!_update) {
+                this.selection.find(".select2-search-choice").remove();
+            } else {
+                _update = false;
+                //remove element search flag if exists
+                if(this.selection.find(".select2-search-choice:last div").html() ===  data[0].text)
+                    this.selection.find(".select2-search-choice:last").remove();
+            }
+
             $(data).each(function() {
                 self.addSelectedChoice(this);
             });
@@ -2943,7 +2951,7 @@ the specific language governing permissions and limitations under the Apache Lic
         // multi
         tokenize: function() {
             var input = this.search.val();
-            input = this.opts.tokenizer.call(this, input, this.data(), this.bind(this.onSelect), this.opts);
+            input = this.opts.tokenizer.call(this, input, this.data(), this.bind(this.selectCallback), this.opts);
             if (input != null && input != undefined) {
                 this.search.val(input);
                 if (input.length > 0) {
@@ -2952,7 +2960,46 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
         },
+        onSelectMulti: function (data, options) {
+            var self = this;
 
+            self.clearSearch();
+            self.updateResults();
+
+            if (this.opts.closeOnSelect) {
+                this.close();
+                this.search.width(10);
+            } else {
+                if (this.countSelectableResults()>0) {
+                    this.search.width(10);
+                    this.resizeSearch();
+                    if (this.getMaximumSelectionSize() > 0 && this.val().length >= this.getMaximumSelectionSize()) {
+                        // if we reached max selection size repaint the results so choices
+                        // are replaced with the max selection reached message
+                        this.updateResults(true);
+                    } else {
+                        // initializes search's value with nextSearchTerm and update search result
+                        if(this.nextSearchTerm != undefined){
+                            this.search.val(this.nextSearchTerm);
+                            this.updateResults();
+                            this.search.select();
+                        }
+                    }
+                    this.positionDropdown();
+                } else {
+                    // if nothing left to select close
+                    this.close();
+                    this.search.width(10);
+                }
+            }
+
+            // since its not possible to select an element that has already been
+            // added we do not need to check if this is a new element before firing change
+            self.triggerChange({ added: data });
+            
+            if (!options || !options.noFocus)
+                this.focusSearch();
+        },
         // multi
         onSelect: function (data, options) {
 
@@ -2964,8 +3011,9 @@ the specific language governing permissions and limitations under the Apache Lic
 
             // keep track of the search's value before it gets cleared
             this.nextSearchTerm = this.opts.nextSearchTerm(data, this.search.val());
-
-            this.clearSearch();
+            // yjin
+            //this.clearSearch();
+            // end yjin
             this.updateResults();
 
             if (this.select || !this.opts.closeOnSelect) this.postprocessResults(data, false, this.opts.closeOnSelect===true);
@@ -3242,7 +3290,9 @@ the specific language governing permissions and limitations under the Apache Lic
             if (!val && val !== 0) {
                 this.opts.element.val("");
                 this.updateSelection([]);
-                this.clearSearch();
+                // yjin
+                //this.clearSearch();
+                // end yjin
                 if (triggerChange) {
                     this.triggerChange({added: this.data(), removed: oldData});
                 }
@@ -3272,7 +3322,9 @@ the specific language governing permissions and limitations under the Apache Lic
                     }
                 });
             }
-            this.clearSearch();
+            // yjin
+            //this.clearSearch();
+            // end yjin
         },
 
         // multi
@@ -3321,7 +3373,9 @@ the specific language governing permissions and limitations under the Apache Lic
                 ids = $.map(values, function(e) { return self.opts.id(e); });
                 this.setVal(ids);
                 this.updateSelection(values);
-                this.clearSearch();
+                // yjin
+                //this.clearSearch();
+                // end yjin
                 if (triggerChange) {
                     this.triggerChange(this.buildChangeDetails(old, this.data()));
                 }
@@ -3339,6 +3393,7 @@ the specific language governing permissions and limitations under the Apache Lic
             valueMethods = ["opened", "isFocused", "container", "dropdown"],
             propertyMethods = ["val", "data"],
             methodsMap = { search: "externalSearch" };
+        _update = args[2] === 'update' ? true : false;
 
         this.each(function () {
             if (args.length === 0 || typeof(args[0]) === "object") {
@@ -3414,8 +3469,8 @@ the specific language governing permissions and limitations under the Apache Lic
         formatInputTooShort: function (input, min) { var n = min - input.length; return "Please enter " + n + " or more character" + (n == 1? "" : "s"); },
         formatInputTooLong: function (input, max) { var n = input.length - max; return "Please delete " + n + " character" + (n == 1? "" : "s"); },
         formatSelectionTooBig: function (limit) { return "You can only select " + limit + " item" + (limit == 1 ? "" : "s"); },
-        formatLoadMore: function (pageNumber) { return "Loading more results…"; },
-        formatSearching: function () { return "Searching…"; },
+        formatLoadMore: function (pageNumber) { return "Loading more resultsâ€¦"; },
+        formatSearching: function () { return "Searchingâ€¦"; },
         minimumResultsForSearch: 0,
         minimumInputLength: 0,
         maximumInputLength: null,
