@@ -71,6 +71,12 @@ define([
       $container.removeClass("open");
     });
 
+    this.results.on("unselected", function (params) {
+      self.trigger("unselect", params);
+
+      $container.removeClass("open");
+    });
+
     // Set the initial state
 
     this.data.current(function (initialData) {

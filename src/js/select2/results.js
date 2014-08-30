@@ -76,6 +76,7 @@ define([
     this.on("results:all", function (data) {
       self.clear();
       self.append(data);
+
       self.setClasses();
     });
 
@@ -86,7 +87,19 @@ define([
     })
 
     this.$results.on("click", ".option", function (evt) {
-      var data = $(this).data("data");
+      var $this = $(this);
+
+      var data = $this.data("data");
+      if ($this.hasClass("selected")) {
+        self.trigger("unselected", {
+          originalEvent: evt,
+          data: data
+        })
+
+        self.setClasses();
+
+        return;
+      }
 
       self.trigger("selected", {
         originalEvent: evt,

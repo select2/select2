@@ -52,17 +52,40 @@ define([
       this.$element.val(val);
       this.$element.trigger("change");
     }
+  };
+
+  SelectAdapter.prototype.unselect = function (data) {
+    var self = this;
+
+    if (!this.$element.prop("multiple")) {
+      return;
+    }
+
+    this.current(function (currentData) {
+      var val = [];
+
+      for (var d = 0; d < currentData.length; d++) {
+        id = currentData[d].id;
+
+        if (id !== data.id && val.indexOf(id) === -1) {
+          val.push(id);
+        }
+      }
+
+      self.$element.val(val);
+      self.$element.trigger("change");
+    });
   }
 
   SelectAdapter.prototype.bind = function (container, $container) {
     var self = this;
 
     container.on("select", function (params) {
-      var current = self.current(function (data) {
-        //
-      });
-
       self.select(params.data);
+    });
+
+    container.on("unselect", function (params) {
+      self.unselect(params.data);
     });
   }
 

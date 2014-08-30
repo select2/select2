@@ -9727,17 +9727,40 @@ define('select2/data/select',[
       this.$element.val(val);
       this.$element.trigger("change");
     }
+  };
+
+  SelectAdapter.prototype.unselect = function (data) {
+    var self = this;
+
+    if (!this.$element.prop("multiple")) {
+      return;
+    }
+
+    this.current(function (currentData) {
+      var val = [];
+
+      for (var d = 0; d < currentData.length; d++) {
+        id = currentData[d].id;
+
+        if (id !== data.id && val.indexOf(id) === -1) {
+          val.push(id);
+        }
+      }
+
+      self.$element.val(val);
+      self.$element.trigger("change");
+    });
   }
 
   SelectAdapter.prototype.bind = function (container, $container) {
     var self = this;
 
     container.on("select", function (params) {
-      var current = self.current(function (data) {
-        //
-      });
-
       self.select(params.data);
+    });
+
+    container.on("unselect", function (params) {
+      self.unselect(params.data);
     });
   }
 
@@ -9860,6 +9883,7 @@ define('select2/results',[
     this.on("results:all", function (data) {
       self.clear();
       self.append(data);
+
       self.setClasses();
     });
 
@@ -9870,7 +9894,19 @@ define('select2/results',[
     })
 
     this.$results.on("click", ".option", function (evt) {
-      var data = $(this).data("data");
+      var $this = $(this);
+
+      var data = $this.data("data");
+      if ($this.hasClass("selected")) {
+        self.trigger("unselected", {
+          originalEvent: evt,
+          data: data
+        })
+
+        self.setClasses();
+
+        return;
+      }
 
       self.trigger("selected", {
         originalEvent: evt,
@@ -10148,6 +10184,12 @@ define('select2/core',[
 
     this.results.on("selected", function (params) {
       self.trigger("select", params);
+
+      $container.removeClass("open");
+    });
+
+    this.results.on("unselected", function (params) {
+      self.trigger("unselect", params);
 
       $container.removeClass("open");
     });
