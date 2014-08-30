@@ -107,10 +107,17 @@ define([
   };
 
   SelectAdapter.prototype.item = function ($option) {
-    var data = {
-      id: $option.val(),
-      text: $option.html()
-    };
+    var data = $option.data("data");
+
+    // If the data has already be generated, use it
+    if (data == null) {
+      data = {
+        id: $option.val(),
+        text: $option.html()
+      };
+
+      $option.data("data", data);
+    }
 
     return data;
   };

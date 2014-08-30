@@ -673,10 +673,17 @@ define('select2/data/select',[
   };
 
   SelectAdapter.prototype.item = function ($option) {
-    var data = {
-      id: $option.val(),
-      text: $option.html()
-    };
+    var data = $option.data("data");
+
+    // If the data has already be generated, use it
+    if (data == null) {
+      data = {
+        id: $option.val(),
+        text: $option.html()
+      };
+
+      $option.data("data", data);
+    }
 
     return data;
   };
@@ -784,7 +791,7 @@ define('select2/results',[
       self.setClasses();
     })
 
-    this.$results.on("click", ".option", function (evt) {
+    this.$results.on("mouseup", ".option", function (evt) {
       var $this = $(this);
 
       var data = $this.data("data");
@@ -869,7 +876,7 @@ define('select2/selection/single',[
   SingleSelection.prototype.bind = function (container, $container) {
     var self = this;
 
-    this.$selection.on('click', function (evt) {
+    this.$selection.on('mousedown', function (evt) {
       self.trigger("toggle", {
         originalEvent: evt
       });
@@ -989,7 +996,7 @@ define('select2/options',[
   function Options (options) {
     this.options = options;
 
-    this.dataAdapter = SelectData;
+    this.dataAdapter = options.dataAdapter || SelectData;
     this.resultsAdapter = ResultsList;
     this.dropdownAdapter = options.dropdownAdapter || Dropdown;
     this.selectionAdapter = options.selectionAdapter;
@@ -1088,12 +1095,18 @@ define('select2/core',[
     // Set the initial state
 
     this.data.current(function (initialData) {
-      self.selection.update(initialData);
+      self.trigger("selection:update", {
+        data: initialData
+      });
     });
 
     this.data.query({}, function (data) {
       self.results.trigger("results:all", data);
     });
+
+    // Hide the original select
+
+    $element.hide();
   };
 
   Utils.Extend(Select2, Utils.Observable);

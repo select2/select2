@@ -80,12 +80,18 @@ define([
     // Set the initial state
 
     this.data.current(function (initialData) {
-      self.selection.update(initialData);
+      self.trigger("selection:update", {
+        data: initialData
+      });
     });
 
     this.data.query({}, function (data) {
       self.results.trigger("results:all", data);
     });
+
+    // Hide the original select
+
+    $element.hide();
   };
 
   Utils.Extend(Select2, Utils.Observable);

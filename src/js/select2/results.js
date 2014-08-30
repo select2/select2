@@ -86,7 +86,7 @@ define([
       self.setClasses();
     })
 
-    this.$results.on("click", ".option", function (evt) {
+    this.$results.on("mouseup", ".option", function (evt) {
       var $this = $(this);
 
       var data = $this.data("data");

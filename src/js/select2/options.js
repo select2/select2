@@ -9,7 +9,7 @@ define([
   function Options (options) {
     this.options = options;
 
-    this.dataAdapter = SelectData;
+    this.dataAdapter = options.dataAdapter || SelectData;
     this.resultsAdapter = ResultsList;
     this.dropdownAdapter = options.dropdownAdapter || Dropdown;
     this.selectionAdapter = options.selectionAdapter;

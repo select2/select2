@@ -25,7 +25,7 @@ define([
   SingleSelection.prototype.bind = function (container, $container) {
     var self = this;
 
-    this.$selection.on('click', function (evt) {
+    this.$selection.on('mousedown', function (evt) {
       self.trigger("toggle", {
         originalEvent: evt
       });
