@@ -152,7 +152,8 @@
 </style>
 
 <script>
-require(["select2/core", "select2/utils", "select2/selection"], function (Select2, Utils, Selection) {
+require(["select2/core", "select2/utils", "select2/selection/single",
+         "select2/dropdown"], function (Select2, Utils, Selection, Dropdown) {
     function ClearSelection () { }
 
     ClearSelection.prototype.render = function (decorated) {
@@ -203,10 +204,36 @@ require(["select2/core", "select2/utils", "select2/selection"], function (Select
         }
     };
 
-    var CustomSelection = Utils.Decorate(Selection, ClearSelection);
+    function DropdownFooter () { }
+
+    DropdownFooter.prototype.render = function (decorated) {
+        var $dropdown = decorated.call(this);
+
+        $dropdown.append('<div class="footer">My custom footer</div>');
+
+        return $dropdown;
+    }
+
+    function DropdownHeader () { }
+
+    DropdownHeader.prototype.render = function (decorated) {
+        var $dropdown = decorated.call(this);
+
+        $dropdown.prepend('<div class="header">Some custom header</div>');
+
+        return $dropdown;
+    }
+
+    var CustomSelection = Utils.Decorate(Selection, ClearSelection)
+
+    var CustomDropdown = Utils.Decorate(
+        Utils.Decorate(Dropdown, DropdownHeader),
+        DropdownFooter
+    );
 
     var s2 = new Select2($("#source"), {
-        selectionAdapter: CustomSelection
+        selectionAdapter: CustomSelection,
+        dropdownAdapter: CustomDropdown
     });
 });
 </script>

@@ -507,7 +507,7 @@ define('select2/options',[
 
     this.dataAdapter = SelectData;
     this.resultsAdapter = ResultsList;
-    this.dropdownAdapter = Dropdown;
+    this.dropdownAdapter = options.dropdownAdapter || Dropdown;
     this.selectionAdapter = options.selectionAdapter;
 
     if (this.selectionAdapter == null) {
