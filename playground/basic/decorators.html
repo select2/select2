@@ -171,10 +171,10 @@ require(["select2/core", "select2/utils", "select2/selection/single",
         return $selection;
     };
 
-    ClearSelection.prototype.bind = function (decorated, $container) {
+    ClearSelection.prototype.bind = function (decorated, container, $container) {
         var self = this;
 
-        decorated.call(this, $container);
+        decorated.call(this, container, $container);
 
         this.$container = $container;
 

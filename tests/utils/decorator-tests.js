@@ -2,7 +2,7 @@ module("Decorators")
 
 var Utils = require("select2/utils");
 
-test("overridden", function (assert) {
+test("overridden - method", function (assert) {
     function BaseClass () {};
 
     BaseClass.prototype.hello = function () {
@@ -47,7 +47,7 @@ test("overridden - constructor", function (assert) {
     assert.ok(!inst.inherited);
 });
 
-test("not overridden", function (assert) {
+test("not overridden - method", function (assert) {
     function BaseClass () {};
 
     BaseClass.prototype.hello = function () {
@@ -89,20 +89,14 @@ test("not overridden - constructor", function (assert) {
     assert.ok(inst.called);
 });
 
-test("inherited", function (assert) {
-    function BaseClass () {
-        this.inherited = true;
-    };
+test("inherited - method", function (assert) {
+    function BaseClass () { };
 
     BaseClass.prototype.hello = function () {
         return "A";
     }
 
-    function DecoratorClass (decorated) {
-        this.called = true;
-
-        decorated.call(this);
-    };
+    function DecoratorClass (decorated) { };
 
     DecoratorClass.prototype.hello = function (decorated) {
         return "B" + decorated.call(this) + "C";

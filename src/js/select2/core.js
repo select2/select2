@@ -49,12 +49,15 @@ define([
 
     var self = this;
 
-    this.selection.bind($container);
-    this.results.bind($container);
+    this.data.bind(this, $container);
+    this.selection.bind(this, $container);
+    this.results.bind(this, $container);
 
     this.$element.on("change", function () {
       self.data.current(function (data) {
-        self.selection.update(data);
+        self.trigger("selection:update", {
+          data: data
+        });
       });
     });
 
@@ -63,7 +66,8 @@ define([
     });
 
     this.results.on("selected", function (params) {
-      self.data.select(params.data);
+      self.trigger("select", params);
+
       $container.removeClass("open");
     });
 

@@ -22,13 +22,17 @@ define([
     return $selection;
   }
 
-  MultipleSelection.prototype.bind = function ($container) {
+  MultipleSelection.prototype.bind = function (container, $container) {
     var self = this;
 
     this.$selection.on('click', function (evt) {
       self.trigger("toggle", {
         originalEvent: evt
       });
+    });
+
+    container.on("selection:update", function (params) {
+      self.update(params.data);
     });
   }
 

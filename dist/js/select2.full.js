@@ -9729,6 +9729,18 @@ define('select2/data/select',[
     }
   }
 
+  SelectAdapter.prototype.bind = function (container, $container) {
+    var self = this;
+
+    container.on("select", function (params) {
+      var current = self.current(function (data) {
+        //
+      });
+
+      self.select(params.data);
+    });
+  }
+
   SelectAdapter.prototype.query = function (params, callback) {
     var data = [];
     var self = this;
@@ -9842,7 +9854,7 @@ define('select2/results',[
     return $option;
   }
 
-  Results.prototype.bind = function ($container) {
+  Results.prototype.bind = function (container, $container) {
     var self = this;
 
     this.on("results:all", function (data) {
@@ -9927,7 +9939,7 @@ define('select2/selection/single',[
     return $selection;
   }
 
-  SingleSelection.prototype.bind = function ($container) {
+  SingleSelection.prototype.bind = function (container, $container) {
     var self = this;
 
     this.$selection.on('click', function (evt) {
@@ -9935,6 +9947,10 @@ define('select2/selection/single',[
         originalEvent: evt
       });
     });
+
+    container.on("selection:update", function (params) {
+      self.update(params.data);
+    })
   }
 
   SingleSelection.prototype.clear = function () {
@@ -9985,13 +10001,17 @@ define('select2/selection/multiple',[
     return $selection;
   }
 
-  MultipleSelection.prototype.bind = function ($container) {
+  MultipleSelection.prototype.bind = function (container, $container) {
     var self = this;
 
     this.$selection.on('click', function (evt) {
       self.trigger("toggle", {
         originalEvent: evt
       });
+    });
+
+    container.on("selection:update", function (params) {
+      self.update(params.data);
     });
   }
 
@@ -10110,12 +10130,15 @@ define('select2/core',[
 
     var self = this;
 
-    this.selection.bind($container);
-    this.results.bind($container);
+    this.data.bind(this, $container);
+    this.selection.bind(this, $container);
+    this.results.bind(this, $container);
 
     this.$element.on("change", function () {
       self.data.current(function (data) {
-        self.selection.update(data);
+        self.trigger("selection:update", {
+          data: data
+        });
       });
     });
 
@@ -10124,7 +10147,8 @@ define('select2/core',[
     });
 
     this.results.on("selected", function (params) {
-      self.data.select(params.data);
+      self.trigger("select", params);
+
       $container.removeClass("open");
     });
 

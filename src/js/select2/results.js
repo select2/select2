@@ -70,7 +70,7 @@ define([
     return $option;
   }
 
-  Results.prototype.bind = function ($container) {
+  Results.prototype.bind = function (container, $container) {
     var self = this;
 
     this.on("results:all", function (data) {

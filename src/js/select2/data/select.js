@@ -54,6 +54,18 @@ define([
     }
   }
 
+  SelectAdapter.prototype.bind = function (container, $container) {
+    var self = this;
+
+    container.on("select", function (params) {
+      var current = self.current(function (data) {
+        //
+      });
+
+      self.select(params.data);
+    });
+  }
+
   SelectAdapter.prototype.query = function (params, callback) {
     var data = [];
     var self = this;

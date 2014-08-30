@@ -22,7 +22,7 @@ define([
     return $selection;
   }
 
-  SingleSelection.prototype.bind = function ($container) {
+  SingleSelection.prototype.bind = function (container, $container) {
     var self = this;
 
     this.$selection.on('click', function (evt) {
@@ -30,6 +30,10 @@ define([
         originalEvent: evt
       });
     });
+
+    container.on("selection:update", function (params) {
+      self.update(params.data);
+    })
   }
 
   SingleSelection.prototype.clear = function () {
