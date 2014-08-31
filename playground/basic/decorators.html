@@ -178,11 +178,11 @@ require(["select2/core", "select2/utils", "select2/selection/single",
 
         this.$container = $container;
 
-        this.$clear.on("click", function (evt) {
+        this.$clear.on("mousedown", function (evt) {
             evt.stopPropagation();
 
             var $first = $container.find("li").first();
-            $first.click();
+            $first.mouseup();
         });
     };
 

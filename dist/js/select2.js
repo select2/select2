@@ -877,6 +877,11 @@ define('select2/selection/single',[
     var self = this;
 
     this.$selection.on('mousedown', function (evt) {
+      // Only respond to left clicks
+      if (evt.which !== 1) {
+        return;
+      }
+
       self.trigger("toggle", {
         originalEvent: evt
       });
@@ -985,12 +990,74 @@ define('select2/selection/multiple',[
   return MultipleSelection;
 });
 
+define('select2/data/array',[
+  "./select",
+  "../utils"
+], function (SelectAdapter, Utils) {
+  function ArrayAdapter ($element, options) {
+    this.data = options.options.data;
+    this.selection = [];
+
+    ArrayAdapter.__super__.constructor.call(this, $element, options);
+  }
+
+  Utils.Extend(ArrayAdapter, SelectAdapter);
+
+  ArrayAdapter.prototype.select = function (data) {
+    var self = this;
+
+    this.$element.find("option").each(function () {
+      var $option = $(this);
+      var option = self.item($option);
+
+      if (option.id == data.id) {
+        $option.remove();
+      }
+    });
+
+    var $option = this.option(data);
+
+    this.$element.append($option);
+
+    ArrayAdapter.__super__.select.call(this, data);
+  }
+
+  ArrayAdapter.prototype.option = function (data) {
+    var $option = $("<option></option>");
+
+    $option.text(data.text);
+    $option.val(data.id);
+    $option.data("data", data);
+
+    return $option;
+  }
+
+  ArrayAdapter.prototype.query = function (params, callback) {
+    var matches = [];
+    var self = this;
+
+    $.each(this.data, function () {
+      var option = this;
+
+      if (self.matches(params, option)) {
+        matches.push(option);
+      }
+    });
+
+    callback(matches);
+  }
+
+  return ArrayAdapter;
+});
+
 define('select2/options',[
   './data/select',
   './results',
   './dropdown',
   './selection/single',
-  './selection/multiple'
+  './selection/multiple',
+
+  './data/array'
 ], function (SelectData, ResultsList, Dropdown, SingleSelection,
              MultipleSelection) {
   function Options (options) {

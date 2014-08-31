@@ -26,6 +26,11 @@ define([
     var self = this;
 
     this.$selection.on('mousedown', function (evt) {
+      // Only respond to left clicks
+      if (evt.which !== 1) {
+        return;
+      }
+
       self.trigger("toggle", {
         originalEvent: evt
       });

@@ -3,7 +3,9 @@ define([
   './results',
   './dropdown',
   './selection/single',
-  './selection/multiple'
+  './selection/multiple',
+
+  './data/array'
 ], function (SelectData, ResultsList, Dropdown, SingleSelection,
              MultipleSelection) {
   function Options (options) {
