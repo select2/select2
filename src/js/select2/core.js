@@ -19,6 +19,7 @@ define([
     this.data = new this.options.dataAdapter($element, this.options);
 
     var $container = this.render();
+    this.$container = $container;
 
     $container.insertAfter(this.$element);
 
@@ -62,18 +63,26 @@ define([
     });
 
     this.selection.on("toggle", function () {
-      $container.toggleClass("open");
+      self.toggleDropdown();
     });
 
     this.results.on("selected", function (params) {
       self.trigger("select", params);
 
-      $container.removeClass("open");
+      self.trigger("close");
     });
 
     this.results.on("unselected", function (params) {
       self.trigger("unselect", params);
 
+      self.trigger("close");
+    });
+
+    this.on("open", function () {
+      $container.addClass("open");
+    });
+
+    this.on("close", function () {
       $container.removeClass("open");
     });
 
@@ -95,6 +104,14 @@ define([
   };
 
   Utils.Extend(Select2, Utils.Observable);
+
+  Select2.prototype.toggleDropdown = function () {
+    if (this.$container.hasClass("open")) {
+      this.trigger("close");
+    } else {
+      this.trigger("open");
+    }
+  }
 
   Select2.prototype.render = function () {
     var $container = $(
