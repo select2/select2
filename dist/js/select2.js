@@ -996,7 +996,6 @@ define('select2/data/array',[
 ], function (SelectAdapter, Utils) {
   function ArrayAdapter ($element, options) {
     this.data = options.options.data;
-    this.selection = [];
 
     ArrayAdapter.__super__.constructor.call(this, $element, options);
   }
@@ -1050,6 +1049,54 @@ define('select2/data/array',[
   return ArrayAdapter;
 });
 
+define('select2/data/ajax',[
+  "./array",
+  "../utils",
+  "jquery"
+], function (ArrayAdapter, Utils, $) {
+  function AjaxAdapter ($element, options) {
+    this.ajaxOptions = options.options.ajax;
+
+    this.processResults = this.ajaxOptions.processResults ||
+      function (results) {
+        return results
+      };
+
+    ArrayAdapter.__super__.constructor.call(this, $element, options);
+  }
+
+  Utils.Extend(AjaxAdapter, ArrayAdapter);
+
+  AjaxAdapter.prototype.query = function (params, callback) {
+    var matches = [];
+    var self = this;
+
+    var options = $.extend({
+      type: "GET",
+    }, this.ajaxOptions);
+
+    if (typeof options.url === "function") {
+      options.url = options.url(params);
+    }
+
+    if (typeof options.data === "function") {
+      options.data = options.data(params);
+    }
+
+    var $request = $.ajax(options);
+
+    $request.success(function (data) {
+      var results = self.processResults(data);
+
+      console.log(results)
+
+      callback(results);
+    });
+  };
+
+  return AjaxAdapter;
+});
+
 define('select2/options',[
   './data/select',
   './results',
@@ -1057,7 +1104,8 @@ define('select2/options',[
   './selection/single',
   './selection/multiple',
 
-  './data/array'
+  './data/array',
+  './data/ajax'
 ], function (SelectData, ResultsList, Dropdown, SingleSelection,
              MultipleSelection) {
   function Options (options) {

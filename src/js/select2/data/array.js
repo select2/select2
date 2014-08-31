@@ -4,7 +4,6 @@ define([
 ], function (SelectAdapter, Utils) {
   function ArrayAdapter ($element, options) {
     this.data = options.options.data;
-    this.selection = [];
 
     ArrayAdapter.__super__.constructor.call(this, $element, options);
   }

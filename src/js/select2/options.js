@@ -5,7 +5,8 @@ define([
   './selection/single',
   './selection/multiple',
 
-  './data/array'
+  './data/array',
+  './data/ajax'
 ], function (SelectData, ResultsList, Dropdown, SingleSelection,
              MultipleSelection) {
   function Options (options) {
