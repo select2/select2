@@ -27,7 +27,7 @@
             var n = input.length - max;
             if (n == 1) {
                 return "Prosím, zadajte o jeden znak menej";
-            } else if (n <= 4) {
+            } else if (n >= 2 && n <= 4) {
                 return "Prosím, zadajte o "+smallNumbers[n](true)+" znaky menej";
             } else {
                 return "Prosím, zadajte o "+n+" znakov menej";
@@ -36,7 +36,7 @@
         formatSelectionTooBig: function (limit) {
             if (limit == 1) {
                 return "Môžete zvoliť len jednu položku";
-            } else if (limit <= 4) {
+            } else if (limit >= 2 && limit <= 4) {
                 return "Môžete zvoliť najviac "+smallNumbers[limit](false)+" položky";
             } else {
                 return "Môžete zvoliť najviac "+limit+" položiek";
