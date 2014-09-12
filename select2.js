@@ -464,8 +464,8 @@ the specific language governing permissions and limitations under the Apache Lic
     /**
      * Produces a query function that works with a local array
      *
-     * @param options object containing configuration parameters. The options parameter can either be an array or an
-     * object.
+     * @param options object containing configuration parameters.
+     * @param options.data {object|array|function}
      *
      * If the array form is used it is assumed that it contains objects with 'id' and 'text' keys.
      *
@@ -476,7 +476,7 @@ the specific language governing permissions and limitations under the Apache Lic
      * the text.
      */
     function local(options) {
-        var data = options, // data elements
+        var data = options.data, // data elements
             dataText,
             tmp,
             text = function (item) { return ""+item.text; }; // function used to retrieve the text portion of a data item that is matched against the search
@@ -516,8 +516,14 @@ the specific language governing permissions and limitations under the Apache Lic
                     for (attr in datum) {
                         if (datum.hasOwnProperty(attr)) group[attr]=datum[attr];
                     }
-                    group.children=[];
-                    $(datum.children).each2(function(i, childDatum) { process(childDatum, group.children); });
+                    if (options.includeChildrenInSearch && query.matcher(t, text(group), datum)) {
+                        group.children = datum.children;
+                    } else {
+                        group.children = [];
+                        $(datum.children).each2(function (i, childDatum) {
+                            process(childDatum, group.children);
+                        });
+                    }
                     if (group.children.length || query.matcher(t, text(group), datum)) {
                         collection.push(group);
                     }
@@ -1052,7 +1058,7 @@ the specific language governing permissions and limitations under the Apache Lic
                         }
                         opts.query = ajax.call(opts.element, opts.ajax);
                     } else if ("data" in opts) {
-                        opts.query = local(opts.data);
+                        opts.query = local(opts);
                     } else if ("tags" in opts) {
                         opts.query = tags(opts.tags);
                         if (opts.createSearchChoice === undefined) {
@@ -3456,6 +3462,7 @@ the specific language governing permissions and limitations under the Apache Lic
         escapeMarkup: defaultEscapeMarkup,
         blurOnChange: false,
         selectOnBlur: false,
+        includeChildrenInSearch: false,
         adaptContainerCssClass: function(c) { return c; },
         adaptDropdownCssClass: function(c) { return null; },
         nextSearchTerm: function(selectedObject, currentSearchTerm) { return undefined; },
