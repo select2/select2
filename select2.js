@@ -2462,7 +2462,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             container.empty();
             if (data !== null) {
-                formatted=this.opts.formatSelection(data, container, this.opts.escapeMarkup);
+                formatted=this.opts.formatSelection(data, container, this.opts.escapeMarkup, this.opts.element);
             }
             if (formatted !== undefined) {
                 container.append(formatted);
@@ -3050,7 +3050,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 formatted,
                 cssClass;
 
-            formatted=this.opts.formatSelection(data, choice.find("div"), this.opts.escapeMarkup);
+            formatted=this.opts.formatSelection(data, choice.find("div"), this.opts.escapeMarkup, this.opts.element);
             if (formatted != undefined) {
                 choice.find("div").replaceWith("<div>"+formatted+"</div>");
             }
@@ -3423,7 +3423,7 @@ the specific language governing permissions and limitations under the Apache Lic
             markMatch(this.text(result), query.term, markup, escapeMarkup);
             return markup.join("");
         },
-        formatSelection: function (data, container, escapeMarkup) {
+        formatSelection: function (data, container, escapeMarkup, element) {
             return data ? escapeMarkup(this.text(data)) : undefined;
         },
         sortResults: function (results, container, query) {
