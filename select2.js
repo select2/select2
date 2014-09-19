@@ -965,7 +965,7 @@ the specific language governing permissions and limitations under the Apache Lic
                             label.attr("id", "select2-result-label-" + nextUid());
                             label.attr("role", "option");
 
-                            formatted=opts.formatResult(result, label, query, self.opts.escapeMarkup);
+                            formatted=opts.formatResult(result, label, query, self.opts.escapeMarkup, opts.element);
                             if (formatted!==undefined) {
                                 label.html(formatted);
                                 node.append(label);
@@ -1793,7 +1793,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.context = (data.context===undefined) ? null : data.context;
                 // create a default choice and prepend it to the list
                 if (this.opts.createSearchChoice && search.val() !== "") {
-                    def = this.opts.createSearchChoice.call(self, search.val(), data.results);
+                    def = this.opts.createSearchChoice.call(self, search.val(), data.results, opts.element);
                     if (def !== undefined && def !== null && self.id(def) !== undefined && self.id(def) !== null) {
                         if ($(data.results).filter(
                             function () {
@@ -3418,7 +3418,7 @@ the specific language governing permissions and limitations under the Apache Lic
         dropdownCss: {},
         containerCssClass: "",
         dropdownCssClass: "",
-        formatResult: function(result, container, query, escapeMarkup) {
+        formatResult: function(result, container, query, escapeMarkup, element) {
             var markup=[];
             markMatch(this.text(result), query.term, markup, escapeMarkup);
             return markup.join("");
