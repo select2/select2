@@ -27,4 +27,4 @@ define([
   }
 
   return Options;
-})
+});

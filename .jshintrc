@@ -1,5 +1,6 @@
 {
   "bitwise": true,
+  "eqnull": true,
   "globals": {
     "define": true
   },

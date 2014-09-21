@@ -44,16 +44,16 @@ define([
     this.data.current(function (selected) {
       selected = $.map(selected, function (s) { return s.id; });
 
-      self.$results.find(".option.selected").removeClass("selected");
+      self.$results.find('.option.selected').removeClass('selected');
 
-      var $options = self.$results.find(".option");
+      var $options = self.$results.find('.option');
 
       $options.each(function () {
         var $option = $(this);
-        var item = $option.data("data");
+        var item = $option.data('data');
 
         if (selected.indexOf(item.id) > -1) {
-          $option.addClass("selected");
+          $option.addClass('selected');
         }
       });
     });
@@ -65,43 +65,43 @@ define([
     );
 
     $option.html(data.text);
-    $option.data("data", data);
+    $option.data('data', data);
 
     return $option;
-  }
+  };
 
   Results.prototype.bind = function (container, $container) {
     var self = this;
 
-    this.on("results:all", function (data) {
+    this.on('results:all', function (data) {
       self.clear();
       self.append(data);
 
       self.setClasses();
     });
 
-    this.on("results:append", function (data) {
+    this.on('results:append', function (data) {
       self.append(data);
 
       self.setClasses();
-    })
+    });
 
-    this.$results.on("mouseup", ".option", function (evt) {
+    this.$results.on('mouseup', '.option', function (evt) {
       var $this = $(this);
 
-      var data = $this.data("data");
-      if ($this.hasClass("selected")) {
-        self.trigger("unselected", {
+      var data = $this.data('data');
+      if ($this.hasClass('selected')) {
+        self.trigger('unselected', {
           originalEvent: evt,
           data: data
-        })
+        });
 
         self.setClasses();
 
         return;
       }
 
-      self.trigger("selected", {
+      self.trigger('selected', {
         originalEvent: evt,
         data: data
       });
@@ -109,15 +109,15 @@ define([
       self.setClasses();
     });
 
-    this.$results.on("mouseenter", ".option", function (evt) {
-      self.$results.find(".option.highlighted").removeClass("highlighted");
-      $(this).addClass("highlighted");
+    this.$results.on('mouseenter', '.option', function (evt) {
+      self.$results.find('.option.highlighted').removeClass('highlighted');
+      $(this).addClass('highlighted');
     });
 
-    this.$results.on("mouseleave", ".option", function (evt) {
-      $(this).removeClass("highlighted");
+    this.$results.on('mouseleave', '.option', function (evt) {
+      $(this).removeClass('highlighted');
     });
   };
 
   return Results;
-})
+});

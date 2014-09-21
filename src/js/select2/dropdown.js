@@ -15,7 +15,7 @@ define([
     );
 
     return $dropdown;
-  }
+  };
 
   return Dropdown;
-})
+});
