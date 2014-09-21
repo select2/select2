@@ -2,7 +2,7 @@ define([], function () {
   var Utils = {};
 
   Utils.Extend = function (ChildClass, SuperClass) {
-    var __hasProp = {}.hasOwnProperty
+    var __hasProp = {}.hasOwnProperty;
 
     function BaseConstructor () {
       this.constructor = ChildClass;
@@ -29,7 +29,7 @@ define([], function () {
     for (var methodName in proto) {
       var m = proto[methodName];
 
-      if (typeof m !== "function") {
+      if (typeof m !== 'function') {
         continue;
       }
 
@@ -68,38 +68,39 @@ define([], function () {
     DecoratedClass.prototype = new ctr();
 
     for (var m = 0; m < superMethods.length; m++) {
-        var methodName = superMethods[m];
+        var superMethod = superMethods[m];
 
-        DecoratedClass.prototype[methodName] = SuperClass.prototype[methodName];
+        DecoratedClass.prototype[superMethod] =
+          SuperClass.prototype[methodName];
     }
 
-    for (var m = 0; m < decoratedMethods.length; m++) {
-      var methodName = decoratedMethods[m];
+    var calledMethod = function (methodName) {
+      // Stub out the original method if it's not decorating an actual method
+      var originalMethod = function () {};
 
-      function calledMethod (methodName) {
-        // Stub out the original method if it's not decorating an actual method
-        var originalMethod = function () {};
-
-        if (methodName in DecoratedClass.prototype) {
-          originalMethod = DecoratedClass.prototype[methodName];
-        }
-
-        var decoratedMethod = DecoratorClass.prototype[methodName];
-
-        return function () {
-          var unshift = Array.prototype.unshift;
-
-          unshift.call(arguments, originalMethod);
-
-          return decoratedMethod.apply(this, arguments);
-        }
+      if (methodName in DecoratedClass.prototype) {
+        originalMethod = DecoratedClass.prototype[methodName];
       }
 
-      DecoratedClass.prototype[methodName] = calledMethod(methodName);
+      var decoratedMethod = DecoratorClass.prototype[methodName];
+
+      return function () {
+        var unshift = Array.prototype.unshift;
+
+        unshift.call(arguments, originalMethod);
+
+        return decoratedMethod.apply(this, arguments);
+      };
+    };
+
+    for (var d = 0; d < decoratedMethods.length; d++) {
+      var decoratedMethod = decoratedMethods[d];
+
+      DecoratedClass.prototype[decoratedMethod] = calledMethod(decoratedMethod);
     }
 
     return DecoratedClass;
-  }
+  };
 
   var Observable = function () {
     this.listeners = {};
@@ -120,8 +121,8 @@ define([], function () {
       this.invoke(this.listeners[event], slice.call(arguments, 1));
     }
 
-    if ("*" in this.listeners) {
-      this.invoke(this.listeners["*"], arguments);
+    if ('*' in this.listeners) {
+      this.invoke(this.listeners['*'], arguments);
     }
   };
 

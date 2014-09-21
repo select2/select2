@@ -1,5 +1,9 @@
 {
   "bitwise": true,
+  "globals": {
+    "define": true
+  },
   "indent": 2,
+  "maxlen": 80,
   "quotmark": "single"
 }
