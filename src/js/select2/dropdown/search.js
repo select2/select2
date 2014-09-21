@@ -1,15 +1,15 @@
 define([
-  "../utils"
+  '../utils'
 ], function (Utils) {
-  function Search (decorated, arguments) {
-    decorated.call(this, arguments);
+  function Search (decorated, args) {
+    decorated.call(this, args);
   }
 
   Utils.Extend(Search, Utils.Observable);
 
-  Search.prototype.bind = function (decorated, arguments) {
+  Search.prototype.bind = function (decorated, args) {
     this.$container = $container;
-  }
+  };
 
   return Search;
 });

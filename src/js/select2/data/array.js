@@ -1,6 +1,6 @@
 define([
-  "./select",
-  "../utils"
+  './select',
+  '../utils'
 ], function (SelectAdapter, Utils) {
   function ArrayAdapter ($element, options) {
     this.data = options.options.data;
@@ -13,7 +13,7 @@ define([
   ArrayAdapter.prototype.select = function (data) {
     var self = this;
 
-    this.$element.find("option").each(function () {
+    this.$element.find('option').each(function () {
       var $option = $(this);
       var option = self.item($option);
 
@@ -27,17 +27,17 @@ define([
     this.$element.append($option);
 
     ArrayAdapter.__super__.select.call(this, data);
-  }
+  };
 
   ArrayAdapter.prototype.option = function (data) {
-    var $option = $("<option></option>");
+    var $option = $('<option></option>');
 
     $option.text(data.text);
     $option.val(data.id);
-    $option.data("data", data);
+    $option.data('data', data);
 
     return $option;
-  }
+  };
 
   ArrayAdapter.prototype.query = function (params, callback) {
     var matches = [];
@@ -52,7 +52,7 @@ define([
     });
 
     callback(matches);
-  }
+  };
 
   return ArrayAdapter;
 });

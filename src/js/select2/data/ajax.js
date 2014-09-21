@@ -1,14 +1,14 @@
 define([
-  "./array",
-  "../utils",
-  "jquery"
+  './array',
+  '../utils',
+  'jquery'
 ], function (ArrayAdapter, Utils, $) {
   function AjaxAdapter ($element, options) {
     this.ajaxOptions = options.options.ajax;
 
     this.processResults = this.ajaxOptions.processResults ||
       function (results) {
-        return results
+        return results;
       };
 
     ArrayAdapter.__super__.constructor.call(this, $element, options);
@@ -21,14 +21,14 @@ define([
     var self = this;
 
     var options = $.extend({
-      type: "GET",
+      type: 'GET',
     }, this.ajaxOptions);
 
-    if (typeof options.url === "function") {
+    if (typeof options.url === 'function') {
       options.url = options.url(params);
     }
 
-    if (typeof options.data === "function") {
+    if (typeof options.data === 'function') {
       options.data = options.data(params);
     }
 
@@ -36,8 +36,6 @@ define([
 
     $request.success(function (data) {
       var results = self.processResults(data);
-
-      console.log(results)
 
       callback(results);
     });
