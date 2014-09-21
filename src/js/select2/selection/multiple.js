@@ -20,34 +20,34 @@ define([
     this.$selection = $selection;
 
     return $selection;
-  }
+  };
 
   MultipleSelection.prototype.bind = function (container, $container) {
     var self = this;
 
     this.$selection.on('click', function (evt) {
-      self.trigger("toggle", {
+      self.trigger('toggle', {
         originalEvent: evt
       });
     });
 
-    container.on("selection:update", function (params) {
+    container.on('selection:update', function (params) {
       self.update(params.data);
     });
-  }
+  };
 
   MultipleSelection.prototype.clear = function () {
-    this.$selection.find(".rendered-selection").empty();
-  }
+    this.$selection.find('.rendered-selection').empty();
+  };
 
   MultipleSelection.prototype.display = function (data) {
     return data.text;
-  }
+  };
 
   MultipleSelection.prototype.update = function (data) {
     this.clear();
 
-    if (data.length == 0) {
+    if (data.length === 0) {
       return;
     }
 
@@ -61,13 +61,13 @@ define([
       var $selection = $('<ul class="choice"></ul>');
 
       $selection.text(formatted);
-      $selection.data("data", data);
+      $selection.data('data', data);
 
       $selections.push($selection);
     }
 
-    this.$selection.find(".rendered-selection").append($selections);
-  }
+    this.$selection.find('.rendered-selection').append($selections);
+  };
 
   return MultipleSelection;
 });

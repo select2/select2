@@ -20,7 +20,7 @@ define([
     this.$selection = $selection;
 
     return $selection;
-  }
+  };
 
   SingleSelection.prototype.bind = function (container, $container) {
     var self = this;
@@ -31,26 +31,26 @@ define([
         return;
       }
 
-      self.trigger("toggle", {
+      self.trigger('toggle', {
         originalEvent: evt
       });
     });
 
-    container.on("selection:update", function (params) {
+    container.on('selection:update', function (params) {
       self.update(params.data);
-    })
-  }
+    });
+  };
 
   SingleSelection.prototype.clear = function () {
-    this.$selection.find(".rendered-selection").empty();
-  }
+    this.$selection.find('.rendered-selection').empty();
+  };
 
   SingleSelection.prototype.display = function (data) {
     return data.text;
-  }
+  };
 
   SingleSelection.prototype.update = function (data) {
-    if (data.length == 0) {
+    if (data.length === 0) {
       this.clear();
       return;
     }
@@ -59,8 +59,8 @@ define([
 
     var formatted = this.display(selection);
 
-    this.$selection.find(".rendered-selection").html(formatted);
-  }
+    this.$selection.find('.rendered-selection').html(formatted);
+  };
 
   return SingleSelection;
 });
