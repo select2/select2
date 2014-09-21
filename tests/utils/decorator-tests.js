@@ -1,43 +1,43 @@
-module("Decorators")
+module('Decorators');
 
-var Utils = require("select2/utils");
+var Utils = require('select2/utils');
 
-test("overridden - method", function (assert) {
-  function BaseClass () {};
+test('overridden - method', function (assert) {
+  function BaseClass () {}
 
   BaseClass.prototype.hello = function () {
-    return "A";
-  }
+    return 'A';
+  };
 
-  function DecoratorClass () {};
+  function DecoratorClass () {}
 
   DecoratorClass.prototype.hello = function () {
-    return "B";
-  }
+    return 'B';
+  };
 
   var DecoratedClass = Utils.Decorate(BaseClass, DecoratorClass);
 
   var inst = new DecoratedClass();
 
-  assert.strictEqual(inst.hello(), "B");
+  assert.strictEqual(inst.hello(), 'B');
 });
 
-test("overridden - constructor", function (assert) {
+test('overridden - constructor', function (assert) {
   function BaseClass () {
     this.inherited = true;
-  };
+  }
 
   BaseClass.prototype.hello = function () {
-    return "A";
-  }
+    return 'A';
+  };
 
   function DecoratorClass (decorated) {
     this.called = true;
-  };
+  }
 
   DecoratorClass.prototype.other = function () {
-    return "B";
-  }
+    return 'B';
+  };
 
   var DecoratedClass = Utils.Decorate(BaseClass, DecoratorClass);
 
@@ -47,40 +47,40 @@ test("overridden - constructor", function (assert) {
   assert.ok(!inst.inherited);
 });
 
-test("not overridden - method", function (assert) {
-  function BaseClass () {};
+test('not overridden - method', function (assert) {
+  function BaseClass () {}
 
   BaseClass.prototype.hello = function () {
-    return "A";
-  }
+    return 'A';
+  };
 
-  function DecoratorClass () {};
+  function DecoratorClass () {}
 
   DecoratorClass.prototype.other = function () {
-    return "B";
-  }
+    return 'B';
+  };
 
   var DecoratedClass = Utils.Decorate(BaseClass, DecoratorClass);
 
   var inst = new DecoratedClass();
 
-  assert.strictEqual(inst.hello(), "A");
+  assert.strictEqual(inst.hello(), 'A');
 });
 
-test("not overridden - constructor", function (assert) {
+test('not overridden - constructor', function (assert) {
   function BaseClass () {
     this.called = true;
-  };
+  }
 
   BaseClass.prototype.hello = function () {
-    return "A";
-  }
+    return 'A';
+  };
 
-  function DecoratorClass () {};
+  function DecoratorClass () {}
 
   DecoratorClass.prototype.other = function () {
-    return "B";
-  }
+    return 'B';
+  };
 
   var DecoratedClass = Utils.Decorate(BaseClass, DecoratorClass);
 
@@ -89,44 +89,44 @@ test("not overridden - constructor", function (assert) {
   assert.ok(inst.called);
 });
 
-test("inherited - method", function (assert) {
-  function BaseClass () { };
+test('inherited - method', function (assert) {
+  function BaseClass () {}
 
   BaseClass.prototype.hello = function () {
-    return "A";
-  }
+    return 'A';
+  };
 
-  function DecoratorClass (decorated) { };
+  function DecoratorClass (decorated) {}
 
   DecoratorClass.prototype.hello = function (decorated) {
-    return "B" + decorated.call(this) + "C";
-  }
+    return 'B' + decorated.call(this) + 'C';
+  };
 
   var DecoratedClass = Utils.Decorate(BaseClass, DecoratorClass);
 
   var inst = new DecoratedClass();
 
-  assert.strictEqual(inst.hello(), "BAC");
+  assert.strictEqual(inst.hello(), 'BAC');
 });
 
-test("inherited - constructor", function (assert) {
+test('inherited - constructor', function (assert) {
   function BaseClass () {
     this.inherited = true;
-  };
+  }
 
   BaseClass.prototype.hello = function () {
-    return "A";
-  }
+    return 'A';
+  };
 
   function DecoratorClass (decorated) {
     this.called = true;
 
     decorated.call(this);
-  };
+  }
 
   DecoratorClass.prototype.other = function () {
-    return "B";
-  }
+    return 'B';
+  };
 
   var DecoratedClass = Utils.Decorate(BaseClass, DecoratorClass);
 
