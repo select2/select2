@@ -9539,7 +9539,7 @@ define('select2/utils',[], function () {
   var Utils = {};
 
   Utils.Extend = function (ChildClass, SuperClass) {
-    var __hasProp = {}.hasOwnProperty
+    var __hasProp = {}.hasOwnProperty;
 
     function BaseConstructor () {
       this.constructor = ChildClass;
@@ -9566,7 +9566,7 @@ define('select2/utils',[], function () {
     for (var methodName in proto) {
       var m = proto[methodName];
 
-      if (typeof m !== "function") {
+      if (typeof m !== 'function') {
         continue;
       }
 
@@ -9605,38 +9605,39 @@ define('select2/utils',[], function () {
     DecoratedClass.prototype = new ctr();
 
     for (var m = 0; m < superMethods.length; m++) {
-        var methodName = superMethods[m];
+        var superMethod = superMethods[m];
 
-        DecoratedClass.prototype[methodName] = SuperClass.prototype[methodName];
+        DecoratedClass.prototype[superMethod] =
+          SuperClass.prototype[superMethod];
     }
 
-    for (var m = 0; m < decoratedMethods.length; m++) {
-      var methodName = decoratedMethods[m];
+    var calledMethod = function (methodName) {
+      // Stub out the original method if it's not decorating an actual method
+      var originalMethod = function () {};
 
-      function calledMethod (methodName) {
-        // Stub out the original method if it's not decorating an actual method
-        var originalMethod = function () {};
-
-        if (methodName in DecoratedClass.prototype) {
-          originalMethod = DecoratedClass.prototype[methodName];
-        }
-
-        var decoratedMethod = DecoratorClass.prototype[methodName];
-
-        return function () {
-          var unshift = Array.prototype.unshift;
-
-          unshift.call(arguments, originalMethod);
-
-          return decoratedMethod.apply(this, arguments);
-        }
+      if (methodName in DecoratedClass.prototype) {
+        originalMethod = DecoratedClass.prototype[methodName];
       }
 
-      DecoratedClass.prototype[methodName] = calledMethod(methodName);
+      var decoratedMethod = DecoratorClass.prototype[methodName];
+
+      return function () {
+        var unshift = Array.prototype.unshift;
+
+        unshift.call(arguments, originalMethod);
+
+        return decoratedMethod.apply(this, arguments);
+      };
+    };
+
+    for (var d = 0; d < decoratedMethods.length; d++) {
+      var decoratedMethod = decoratedMethods[d];
+
+      DecoratedClass.prototype[decoratedMethod] = calledMethod(decoratedMethod);
     }
 
     return DecoratedClass;
-  }
+  };
 
   var Observable = function () {
     this.listeners = {};
@@ -9657,8 +9658,8 @@ define('select2/utils',[], function () {
       this.invoke(this.listeners[event], slice.call(arguments, 1));
     }
 
-    if ("*" in this.listeners) {
-      this.invoke(this.listeners["*"], arguments);
+    if ('*' in this.listeners) {
+      this.invoke(this.listeners['*'], arguments);
     }
   };
 
@@ -9683,12 +9684,12 @@ define('select2/data/base',[
   Utils.Extend(BaseAdapter, Utils.Observable);
 
   BaseAdapter.prototype.current = function (callback) {
-    throw new Error("The `current` method must be defined in child classes.");
-  }
+    throw new Error('The `current` method must be defined in child classes.');
+  };
 
   BaseAdapter.prototype.query = function (params, callback) {
-    throw new Error("The `query` method must be defined in child classes.");
-  }
+    throw new Error('The `query` method must be defined in child classes.');
+  };
 
   return BaseAdapter;
 });
@@ -9710,7 +9711,7 @@ define('select2/data/select',[
     var data = [];
     var self = this;
 
-    this.$element.find(":selected").each(function () {
+    this.$element.find(':selected').each(function () {
       var $option = $(this);
 
       var option = self.item($option);
@@ -9724,7 +9725,7 @@ define('select2/data/select',[
   SelectAdapter.prototype.select = function (data) {
     var self = this;
 
-    if (this.$element.prop("multiple")) {
+    if (this.$element.prop('multiple')) {
       this.current(function (currentData) {
         var val = [];
 
@@ -9740,20 +9741,20 @@ define('select2/data/select',[
         }
 
         self.$element.val(val);
-        self.$element.trigger("change");
+        self.$element.trigger('change');
       });
     } else {
       var val = data.id;
 
       this.$element.val(val);
-      this.$element.trigger("change");
+      this.$element.trigger('change');
     }
   };
 
   SelectAdapter.prototype.unselect = function (data) {
     var self = this;
 
-    if (!this.$element.prop("multiple")) {
+    if (!this.$element.prop('multiple')) {
       return;
     }
 
@@ -9769,27 +9770,27 @@ define('select2/data/select',[
       }
 
       self.$element.val(val);
-      self.$element.trigger("change");
+      self.$element.trigger('change');
     });
-  }
+  };
 
   SelectAdapter.prototype.bind = function (container, $container) {
     var self = this;
 
-    container.on("select", function (params) {
+    container.on('select', function (params) {
       self.select(params.data);
     });
 
-    container.on("unselect", function (params) {
+    container.on('unselect', function (params) {
       self.unselect(params.data);
     });
-  }
+  };
 
   SelectAdapter.prototype.query = function (params, callback) {
     var data = [];
     var self = this;
 
-    this.$element.find("option").each(function () {
+    this.$element.find('option').each(function () {
       var $option = $(this);
 
       var option = self.item($option);
@@ -9803,7 +9804,7 @@ define('select2/data/select',[
   };
 
   SelectAdapter.prototype.item = function ($option) {
-    var data = $option.data("data");
+    var data = $option.data('data');
 
     // If the data has already be generated, use it
     if (data == null) {
@@ -9812,14 +9813,14 @@ define('select2/data/select',[
         text: $option.html()
       };
 
-      $option.data("data", data);
+      $option.data('data', data);
     }
 
     return data;
   };
 
   SelectAdapter.prototype.matches = function (params, data) {
-    if ($.trim(params.term) == "") {
+    if ($.trim(params.term) === '') {
       return true;
     }
 
@@ -9828,7 +9829,7 @@ define('select2/data/select',[
     }
 
     return false;
-  }
+  };
 
   return SelectAdapter;
 });
@@ -9879,16 +9880,16 @@ define('select2/results',[
     this.data.current(function (selected) {
       selected = $.map(selected, function (s) { return s.id; });
 
-      self.$results.find(".option.selected").removeClass("selected");
+      self.$results.find('.option.selected').removeClass('selected');
 
-      var $options = self.$results.find(".option");
+      var $options = self.$results.find('.option');
 
       $options.each(function () {
         var $option = $(this);
-        var item = $option.data("data");
+        var item = $option.data('data');
 
         if (selected.indexOf(item.id) > -1) {
-          $option.addClass("selected");
+          $option.addClass('selected');
         }
       });
     });
@@ -9900,43 +9901,43 @@ define('select2/results',[
     );
 
     $option.html(data.text);
-    $option.data("data", data);
+    $option.data('data', data);
 
     return $option;
-  }
+  };
 
   Results.prototype.bind = function (container, $container) {
     var self = this;
 
-    this.on("results:all", function (data) {
+    this.on('results:all', function (data) {
       self.clear();
       self.append(data);
 
       self.setClasses();
     });
 
-    this.on("results:append", function (data) {
+    this.on('results:append', function (data) {
       self.append(data);
 
       self.setClasses();
-    })
+    });
 
-    this.$results.on("mouseup", ".option", function (evt) {
+    this.$results.on('mouseup', '.option', function (evt) {
       var $this = $(this);
 
-      var data = $this.data("data");
-      if ($this.hasClass("selected")) {
-        self.trigger("unselected", {
+      var data = $this.data('data');
+      if ($this.hasClass('selected')) {
+        self.trigger('unselected', {
           originalEvent: evt,
           data: data
-        })
+        });
 
         self.setClasses();
 
         return;
       }
 
-      self.trigger("selected", {
+      self.trigger('selected', {
         originalEvent: evt,
         data: data
       });
@@ -9944,19 +9945,19 @@ define('select2/results',[
       self.setClasses();
     });
 
-    this.$results.on("mouseenter", ".option", function (evt) {
-      self.$results.find(".option.highlighted").removeClass("highlighted");
-      $(this).addClass("highlighted");
+    this.$results.on('mouseenter', '.option', function (evt) {
+      self.$results.find('.option.highlighted').removeClass('highlighted');
+      $(this).addClass('highlighted');
     });
 
-    this.$results.on("mouseleave", ".option", function (evt) {
-      $(this).removeClass("highlighted");
+    this.$results.on('mouseleave', '.option', function (evt) {
+      $(this).removeClass('highlighted');
     });
   };
 
   return Results;
-})
-;
+});
+
 define('select2/dropdown',[
   './utils'
 ], function (Utils) {
@@ -9974,11 +9975,11 @@ define('select2/dropdown',[
     );
 
     return $dropdown;
-  }
+  };
 
   return Dropdown;
-})
-;
+});
+
 define('select2/selection/single',[
   '../utils'
 ], function (Utils) {
@@ -10001,7 +10002,7 @@ define('select2/selection/single',[
     this.$selection = $selection;
 
     return $selection;
-  }
+  };
 
   SingleSelection.prototype.bind = function (container, $container) {
     var self = this;
@@ -10012,26 +10013,26 @@ define('select2/selection/single',[
         return;
       }
 
-      self.trigger("toggle", {
+      self.trigger('toggle', {
         originalEvent: evt
       });
     });
 
-    container.on("selection:update", function (params) {
+    container.on('selection:update', function (params) {
       self.update(params.data);
-    })
-  }
+    });
+  };
 
   SingleSelection.prototype.clear = function () {
-    this.$selection.find(".rendered-selection").empty();
-  }
+    this.$selection.find('.rendered-selection').empty();
+  };
 
   SingleSelection.prototype.display = function (data) {
     return data.text;
-  }
+  };
 
   SingleSelection.prototype.update = function (data) {
-    if (data.length == 0) {
+    if (data.length === 0) {
       this.clear();
       return;
     }
@@ -10040,8 +10041,8 @@ define('select2/selection/single',[
 
     var formatted = this.display(selection);
 
-    this.$selection.find(".rendered-selection").html(formatted);
-  }
+    this.$selection.find('.rendered-selection').html(formatted);
+  };
 
   return SingleSelection;
 });
@@ -10068,34 +10069,34 @@ define('select2/selection/multiple',[
     this.$selection = $selection;
 
     return $selection;
-  }
+  };
 
   MultipleSelection.prototype.bind = function (container, $container) {
     var self = this;
 
     this.$selection.on('click', function (evt) {
-      self.trigger("toggle", {
+      self.trigger('toggle', {
         originalEvent: evt
       });
     });
 
-    container.on("selection:update", function (params) {
+    container.on('selection:update', function (params) {
       self.update(params.data);
     });
-  }
+  };
 
   MultipleSelection.prototype.clear = function () {
-    this.$selection.find(".rendered-selection").empty();
-  }
+    this.$selection.find('.rendered-selection').empty();
+  };
 
   MultipleSelection.prototype.display = function (data) {
     return data.text;
-  }
+  };
 
   MultipleSelection.prototype.update = function (data) {
     this.clear();
 
-    if (data.length == 0) {
+    if (data.length === 0) {
       return;
     }
 
@@ -10109,20 +10110,20 @@ define('select2/selection/multiple',[
       var $selection = $('<ul class="choice"></ul>');
 
       $selection.text(formatted);
-      $selection.data("data", data);
+      $selection.data('data', data);
 
       $selections.push($selection);
     }
 
-    this.$selection.find(".rendered-selection").append($selections);
-  }
+    this.$selection.find('.rendered-selection').append($selections);
+  };
 
   return MultipleSelection;
 });
 
 define('select2/data/array',[
-  "./select",
-  "../utils"
+  './select',
+  '../utils'
 ], function (SelectAdapter, Utils) {
   function ArrayAdapter ($element, options) {
     this.data = options.options.data;
@@ -10135,7 +10136,7 @@ define('select2/data/array',[
   ArrayAdapter.prototype.select = function (data) {
     var self = this;
 
-    this.$element.find("option").each(function () {
+    this.$element.find('option').each(function () {
       var $option = $(this);
       var option = self.item($option);
 
@@ -10149,17 +10150,17 @@ define('select2/data/array',[
     this.$element.append($option);
 
     ArrayAdapter.__super__.select.call(this, data);
-  }
+  };
 
   ArrayAdapter.prototype.option = function (data) {
-    var $option = $("<option></option>");
+    var $option = $('<option></option>');
 
     $option.text(data.text);
     $option.val(data.id);
-    $option.data("data", data);
+    $option.data('data', data);
 
     return $option;
-  }
+  };
 
   ArrayAdapter.prototype.query = function (params, callback) {
     var matches = [];
@@ -10174,22 +10175,22 @@ define('select2/data/array',[
     });
 
     callback(matches);
-  }
+  };
 
   return ArrayAdapter;
 });
 
 define('select2/data/ajax',[
-  "./array",
-  "../utils",
-  "jquery"
+  './array',
+  '../utils',
+  'jquery'
 ], function (ArrayAdapter, Utils, $) {
   function AjaxAdapter ($element, options) {
     this.ajaxOptions = options.options.ajax;
 
     this.processResults = this.ajaxOptions.processResults ||
       function (results) {
-        return results
+        return results;
       };
 
     ArrayAdapter.__super__.constructor.call(this, $element, options);
@@ -10202,14 +10203,14 @@ define('select2/data/ajax',[
     var self = this;
 
     var options = $.extend({
-      type: "GET",
+      type: 'GET',
     }, this.ajaxOptions);
 
-    if (typeof options.url === "function") {
+    if (typeof options.url === 'function') {
       options.url = options.url(params);
     }
 
-    if (typeof options.data === "function") {
+    if (typeof options.data === 'function') {
       options.data = options.data(params);
     }
 
@@ -10217,8 +10218,6 @@ define('select2/data/ajax',[
 
     $request.success(function (data) {
       var results = self.processResults(data);
-
-      console.log(results)
 
       callback(results);
     });
@@ -10256,8 +10255,8 @@ define('select2/options',[
   }
 
   return Options;
-})
-;
+});
+
 define('select2/core',[
   'jquery',
   './options',
@@ -10268,7 +10267,7 @@ define('select2/core',[
 
     options = options || {};
 
-    options.multiple = options.multiple || $element.prop("multiple");
+    options.multiple = options.multiple || $element.prop('multiple');
 
     this.options = new Options(options);
 
@@ -10287,21 +10286,22 @@ define('select2/core',[
 
     this.selection = new this.options.selectionAdapter($element, this.options);
 
-    var $selectionContainer = $container.find(".selection");
+    var $selectionContainer = $container.find('.selection');
     var $selection = this.selection.render();
 
     $selectionContainer.append($selection);
 
     this.dropdown = new this.options.dropdownAdapter($element, this.options);
 
-    var $dropdownContainer = $container.find(".dropdown");
+    var $dropdownContainer = $container.find('.dropdown');
     var $dropdown = this.dropdown.render();
 
     $dropdownContainer.append($dropdown);
 
-    this.results = new this.options.resultsAdapter($element, this.options, this.data);
+    this.results = new this.options.resultsAdapter(
+      $element, this.options, this.data);
 
-    var $resultsContainer = $dropdown.find(".results");
+    var $resultsContainer = $dropdown.find('.results');
     var $results = this.results.render();
 
     $resultsContainer.append($results);
@@ -10314,48 +10314,48 @@ define('select2/core',[
     this.selection.bind(this, $container);
     this.results.bind(this, $container);
 
-    this.$element.on("change", function () {
+    this.$element.on('change', function () {
       self.data.current(function (data) {
-        self.trigger("selection:update", {
+        self.trigger('selection:update', {
           data: data
         });
       });
     });
 
-    this.selection.on("toggle", function () {
+    this.selection.on('toggle', function () {
       self.toggleDropdown();
     });
 
-    this.results.on("selected", function (params) {
-      self.trigger("select", params);
+    this.results.on('selected', function (params) {
+      self.trigger('select', params);
 
-      self.trigger("close");
+      self.trigger('close');
     });
 
-    this.results.on("unselected", function (params) {
-      self.trigger("unselect", params);
+    this.results.on('unselected', function (params) {
+      self.trigger('unselect', params);
 
-      self.trigger("close");
+      self.trigger('close');
     });
 
-    this.on("open", function () {
-      $container.addClass("open");
+    this.on('open', function () {
+      $container.addClass('open');
     });
 
-    this.on("close", function () {
-      $container.removeClass("open");
+    this.on('close', function () {
+      $container.removeClass('open');
     });
 
     // Set the initial state
 
     this.data.current(function (initialData) {
-      self.trigger("selection:update", {
+      self.trigger('selection:update', {
         data: initialData
       });
     });
 
     this.data.query({}, function (data) {
-      self.results.trigger("results:all", data);
+      self.results.trigger('results:all', data);
     });
 
     // Hide the original select
@@ -10366,12 +10366,12 @@ define('select2/core',[
   Utils.Extend(Select2, Utils.Observable);
 
   Select2.prototype.toggleDropdown = function () {
-    if (this.$container.hasClass("open")) {
-      this.trigger("close");
+    if (this.$container.hasClass('open')) {
+      this.trigger('close');
     } else {
-      this.trigger("open");
+      this.trigger('open');
     }
-  }
+  };
 
   Select2.prototype.render = function () {
     var $container = $(

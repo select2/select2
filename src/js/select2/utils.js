@@ -71,7 +71,7 @@ define([], function () {
         var superMethod = superMethods[m];
 
         DecoratedClass.prototype[superMethod] =
-          SuperClass.prototype[methodName];
+          SuperClass.prototype[superMethod];
     }
 
     var calledMethod = function (methodName) {
