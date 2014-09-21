@@ -1,10 +1,16 @@
 {
   "bitwise": true,
+  "camelcase": true,
+  "curly": true,
+  "es3": true,
   "eqnull": true,
+  "freeze": true,
   "globals": {
     "define": true
   },
   "indent": 2,
   "maxlen": 80,
+  "noarg": true,
+  "nonew": true,
   "quotmark": "single"
 }

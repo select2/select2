@@ -10203,7 +10203,7 @@ define('select2/data/ajax',[
     var self = this;
 
     var options = $.extend({
-      type: 'GET',
+      type: 'GET'
     }, this.ajaxOptions);
 
     if (typeof options.url === 'function') {
