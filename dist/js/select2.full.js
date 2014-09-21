@@ -9673,17 +9673,38 @@ define('select2/utils',[], function () {
   return Utils;
 });
 
+define('select2/data/base',[
+  '../utils'
+], function (Utils) {
+  function BaseAdapter ($element, options) {
+    BaseAdapter.__super__.constructor.call(this);
+  }
+
+  Utils.Extend(BaseAdapter, Utils.Observable);
+
+  BaseAdapter.prototype.current = function (callback) {
+    throw new Error("The `current` method must be defined in child classes.");
+  }
+
+  BaseAdapter.prototype.query = function (params, callback) {
+    throw new Error("The `query` method must be defined in child classes.");
+  }
+
+  return BaseAdapter;
+});
+
 define('select2/data/select',[
+  './base',
   '../utils',
   'jquery'
-], function (Utils, $) {
+], function (BaseAdapter, Utils, $) {
   function SelectAdapter ($element, options) {
     this.$element = $element;
 
     SelectAdapter.__super__.constructor.call(this);
   }
 
-  Utils.Extend(SelectAdapter, Utils.Observable);
+  Utils.Extend(SelectAdapter, BaseAdapter);
 
   SelectAdapter.prototype.current = function (callback) {
     var data = [];

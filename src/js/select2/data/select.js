@@ -1,14 +1,15 @@
 define([
+  './base',
   '../utils',
   'jquery'
-], function (Utils, $) {
+], function (BaseAdapter, Utils, $) {
   function SelectAdapter ($element, options) {
     this.$element = $element;
 
     SelectAdapter.__super__.constructor.call(this);
   }
 
-  Utils.Extend(SelectAdapter, Utils.Observable);
+  Utils.Extend(SelectAdapter, BaseAdapter);
 
   SelectAdapter.prototype.current = function (callback) {
     var data = [];
