@@ -1314,8 +1314,8 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             css =  {
-                left: dropLeft,
-                width: width
+                left: dropLeft > 0 ? dropLeft : 0,
+                width: dropLeft > 0 ? width : width + dropLeft
             };
 
             if (above) {
