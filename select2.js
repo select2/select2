@@ -2980,7 +2980,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             if (!this.triggerSelect(data) || data.text === "") { return; }
 
-            this.addSelectedChoice(data);
+            this.addSelectedChoice(data, true);
 
             this.opts.element.trigger({ type: "selected", val: this.id(data), choice: data });
 
@@ -3033,7 +3033,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.focusSearch();
         },
 
-        addSelectedChoice: function (data) {
+        addSelectedChoice: function (data, isManual) {
             var enableChoice = !data.locked,
                 enabledItem = $(
                     "<li class='select2-search-choice'>" +
@@ -3080,8 +3080,10 @@ the specific language governing permissions and limitations under the Apache Lic
             choice.data("select2-data", data);
             choice.insertBefore(this.searchContainer);
 
-            val.push(id);
-            this.setVal(val);
+            if(isManual) {
+            	val.push(id);
+            	this.setVal(val);
+            }
         },
 
         // multi
