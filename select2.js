@@ -1544,9 +1544,28 @@ the specific language governing permissions and limitations under the Apache Lic
             }
         },
 
+        // private
+        // abstract
+        _findHighlightableChoicesRecursive: function(elm) {
+            var children = elm.children(".select2-result-selectable:not(.select2-disabled):not(.select2-selected)");
+            var choices = $();
+            for (var i = 0, len = children.length; i < len; i++) {
+                var child = $(children.get(i));
+                choices = choices.add(child);
+
+                var subChoicesList = child.hasClass('select2-result-with-children') ? child.children('.select2-result-sub') : null;
+                if (subChoicesList && subChoicesList.length > 0) {
+                    var subChoices = this._findHighlightableChoices(subChoicesList);
+                    choices = choices.add(subChoices);
+                }
+            }
+            return choices;
+        },
+
         // abstract
         findHighlightableChoices: function() {
-            return this.results.find(".select2-result-selectable:not(.select2-disabled):not(.select2-selected)");
+            var choices = this._findHighlightableChoicesRecursive(this.results);
+            return choices;
         },
 
         // abstract
