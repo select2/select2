@@ -1473,7 +1473,14 @@ the specific language governing permissions and limitations under the Apache Lic
             // Now that the dropdown is closed, unbind the global document mousemove event
             $document.off("mousemove.select2Event");
 
-            this.clearSearch();
+            // If the current input must be selected, add it. Else, erase the input
+            if (this.opts.selectLastCurrentInput){
+                var token = this.opts.createSearchChoice.call(this, this.search.val(), this.data());
+                this.onSelect(token);
+            }else{
+                this.clearSearch();
+            }
+
             this.search.removeClass("select2-active");
             this.opts.element.trigger($.Event("select2-close"));
         },
@@ -2811,7 +2818,10 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.container.removeClass("select2-container-active");
                 this.search.removeClass("select2-focused");
                 this.selectChoice(null);
-                if (!this.opened()) this.clearSearch();
+                // ELH - If the current input is not be selected, erase the input field
+                if (!this.opts.selectLastCurrentInput){
+                    if (!this.opened()) this.clearSearch();
+                }
                 e.stopImmediatePropagation();
                 this.opts.element.trigger($.Event("select2-blur"));
             }));
@@ -3461,6 +3471,7 @@ the specific language governing permissions and limitations under the Apache Lic
         nextSearchTerm: function(selectedObject, currentSearchTerm) { return undefined; },
         searchInputPlaceholder: '',
         createSearchChoicePosition: 'top',
+        selectLastCurrentInput: false,
         shouldFocusInput: function (instance) {
             // Attempt to detect touch devices
             var supportsTouchEvents = (('ontouchstart' in window) ||
