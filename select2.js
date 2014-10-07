@@ -3212,8 +3212,21 @@ the specific language governing permissions and limitations under the Apache Lic
                 val = this.select.val();
                 return val === null ? [] : val;
             } else {
-                val = this.opts.element.val();
-                return splitVal(val, this.opts.separator);
+
+                if (this.opts.initSelection === undefined) {
+                    val = this.opts.element.val();
+                    return splitVal(val, this.opts.separator);
+                }
+                else {
+                    val = [];
+                    var self = this;
+                    this.opts.initSelection(this.opts.element, function (data) {
+                        $(data).each(function () {
+                            val.push(self.opts.id(this));
+                        });
+                    });
+                    return val;
+                }
             }
         },
 
