@@ -2895,7 +2895,9 @@ the specific language governing permissions and limitations under the Apache Lic
                 // we could call this.resizeSearch(), but we do not because that requires a sizer and we do not want to create one so early because of a firefox bug, see #944
                 this.search.width(maxWidth > 0 ? maxWidth : this.container.css("width"));
             } else {
-                this.search.val("").width(10);
+                if(this.clearFilterMultiple){
+                    this.search.val("").width(10);
+                }
             }
         },
 
@@ -3424,6 +3426,7 @@ the specific language governing permissions and limitations under the Apache Lic
         dropdownCss: {},
         containerCssClass: "",
         dropdownCssClass: "",
+        clearFilterMultiple:true,
         formatResult: function(result, container, query, escapeMarkup) {
             var markup=[];
             markMatch(this.text(result), query.term, markup, escapeMarkup);
