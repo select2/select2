@@ -1090,6 +1090,8 @@ the specific language governing permissions and limitations under the Apache Lic
             else if (typeof(opts.createSearchChoicePosition) !== "function")  {
                 throw "invalid createSearchChoicePosition option must be 'top', 'bottom' or a custom function";
             }
+            
+            opts.emptySearchText = opts.emptySearchText || element.data("search-text");
 
             return opts;
         },
@@ -1735,7 +1737,10 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             if (search.val().length < opts.minimumInputLength) {
-                if (checkFormatter(opts.formatInputTooShort, "formatInputTooShort")) {
+                if (search.val().length === 0 && opts.emptySearchText) {
+                    render("<li class='select2-no-results'>" + evaluate(opts.emptySearchText, opts.element, opts.minimumInputLength) + "</li>");
+                }
+                else if (checkFormatter(opts.formatInputTooShort, "formatInputTooShort")) {
                     render("<li class='select2-no-results'>" + evaluate(opts.formatInputTooShort, opts.element, search.val(), opts.minimumInputLength) + "</li>");
                 } else {
                     render("");
