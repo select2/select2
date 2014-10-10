@@ -967,7 +967,7 @@ the specific language governing permissions and limitations under the Apache Lic
                             label.attr("id", "select2-result-label-" + nextUid());
                             label.attr("role", "option");
 
-                            formatted=opts.formatResult(result, label, query, self.opts.escapeMarkup);
+                            formatted=opts.formatResult(result, label, query, self.opts.escapeMarkup, opts.element);
                             if (formatted!==undefined) {
                                 label.html(formatted);
                                 node.append(label);
@@ -1799,7 +1799,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.context = (data.context===undefined) ? null : data.context;
                 // create a default choice and prepend it to the list
                 if (this.opts.createSearchChoice && search.val() !== "") {
-                    def = this.opts.createSearchChoice.call(self, search.val(), data.results);
+                    def = this.opts.createSearchChoice.call(self, search.val(), data.results, opts.element);
                     if (def !== undefined && def !== null && self.id(def) !== undefined && self.id(def) !== null) {
                         if ($(data.results).filter(
                             function () {
@@ -2442,8 +2442,8 @@ the specific language governing permissions and limitations under the Apache Lic
             var old = this.opts.element.val(),
                 oldData = this.data();
 
-            this.opts.element.val(this.id(data));
             this.updateSelection(data);
+            this.opts.element.val(this.id(data));
 
             this.opts.element.trigger({ type: "select2-selected", val: this.id(data), choice: data });
 
@@ -2468,7 +2468,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             container.empty();
             if (data !== null) {
-                formatted=this.opts.formatSelection(data, container, this.opts.escapeMarkup);
+                formatted=this.opts.formatSelection(data, container, this.opts.escapeMarkup, this.opts.element);
             }
             if (formatted !== undefined) {
                 container.append(formatted);
@@ -3056,7 +3056,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 formatted,
                 cssClass;
 
-            formatted=this.opts.formatSelection(data, choice.find("div"), this.opts.escapeMarkup);
+            formatted=this.opts.formatSelection(data, choice.find("div"), this.opts.escapeMarkup, this.opts.element);
             if (formatted != undefined) {
                 choice.find("div").replaceWith($("<div></div>").html(formatted));
             }
@@ -3424,12 +3424,12 @@ the specific language governing permissions and limitations under the Apache Lic
         dropdownCss: {},
         containerCssClass: "",
         dropdownCssClass: "",
-        formatResult: function(result, container, query, escapeMarkup) {
+        formatResult: function(result, container, query, escapeMarkup, element) {
             var markup=[];
             markMatch(this.text(result), query.term, markup, escapeMarkup);
             return markup.join("");
         },
-        formatSelection: function (data, container, escapeMarkup) {
+        formatSelection: function (data, container, escapeMarkup, element) {
             return data ? escapeMarkup(this.text(data)) : undefined;
         },
         sortResults: function (results, container, query) {
