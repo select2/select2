@@ -9,7 +9,7 @@ define([
 
   Dropdown.prototype.render = function () {
     var $dropdown = $(
-      '<span class="">' +
+      '<span class="dropdown">' +
         '<span class="results"></span>' +
       '</span>'
     );

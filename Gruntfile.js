@@ -142,7 +142,8 @@ module.exports = function (grunt) {
         ],
         tasks: [
           "compile",
-          "test"
+          "test",
+          'minify'
         ]
       },
       css: {
@@ -150,7 +151,8 @@ module.exports = function (grunt) {
           "src/scss/**/*.scss"
         ],
         tasks: [
-          "compile"
+          "compile",
+          'minify'
         ]
       }
     }

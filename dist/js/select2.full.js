@@ -9969,7 +9969,7 @@ define('select2/dropdown',[
 
   Dropdown.prototype.render = function () {
     var $dropdown = $(
-      '<span class="">' +
+      '<span class="dropdown">' +
         '<span class="results"></span>' +
       '</span>'
     );
@@ -10229,7 +10229,9 @@ define('select2/data/ajax',[
 define('select2/options',[
   './data/select',
   './results',
+
   './dropdown',
+
   './selection/single',
   './selection/multiple',
 
@@ -10293,7 +10295,7 @@ define('select2/core',[
 
     this.dropdown = new this.options.dropdownAdapter($element, this.options);
 
-    var $dropdownContainer = $container.find('.dropdown');
+    var $dropdownContainer = $container.find('.dropdown-wrapper');
     var $dropdown = this.dropdown.render();
 
     $dropdownContainer.append($dropdown);
@@ -10377,7 +10379,7 @@ define('select2/core',[
     var $container = $(
       '<span class="select2 select2-container select2-theme-default">' +
         '<span class="selection"></span>' +
-        '<span class="dropdown"></span>' +
+        '<span class="dropdown-wrapper"></span>' +
       '</span>'
     );
 

@@ -34,7 +34,7 @@ define([
 
     this.dropdown = new this.options.dropdownAdapter($element, this.options);
 
-    var $dropdownContainer = $container.find('.dropdown');
+    var $dropdownContainer = $container.find('.dropdown-wrapper');
     var $dropdown = this.dropdown.render();
 
     $dropdownContainer.append($dropdown);
@@ -118,7 +118,7 @@ define([
     var $container = $(
       '<span class="select2 select2-container select2-theme-default">' +
         '<span class="selection"></span>' +
-        '<span class="dropdown"></span>' +
+        '<span class="dropdown-wrapper"></span>' +
       '</span>'
     );
 
