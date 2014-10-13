@@ -2993,12 +2993,14 @@ the specific language governing permissions and limitations under the Apache Lic
             // keep track of the search's value before it gets cleared
             this.nextSearchTerm = this.opts.nextSearchTerm(data, this.search.val());
 
+            var closeOnSelect = this.opts.closeOnSelect && ! options.ctrlKey;
+
             this.clearSearch();
             this.updateResults();
 
-            if (this.select || !this.opts.closeOnSelect) this.postprocessResults(data, false, this.opts.closeOnSelect===true);
+            if (this.select || ! closeOnSelect) this.postprocessResults(data, false, closeOnSelect === true);
 
-            if (this.opts.closeOnSelect) {
+            if (closeOnSelect) {
                 this.close();
                 this.search.width(10);
             } else {
@@ -3156,7 +3158,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
             });
 
-            if (this.highlight() == -1 && noHighlightUpdate !== false){
+            if (noHighlightUpdate !== false && this.highlight() == -1) {
                 self.highlight(0);
             }
 
