@@ -845,6 +845,11 @@ the specific language governing permissions and limitations under the Apache Lic
             if (this.autofocus) this.focus();
 
             this.search.attr("placeholder", opts.searchInputPlaceholder);
+
+            // Make sure any labels that referenced the original element now reference the search instead
+            if (opts.element.attr("id")) {
+                $("label[for=" + opts.element.attr("id") + "]").attr("for", search.attr("id"));
+            }
         },
 
         // abstract
