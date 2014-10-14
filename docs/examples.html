@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Select2</title>
-</head>
-<body>
+---
+layout: default
+title: Examples - Select2
+slug: examples
+---
 
 <select class="js-source-states" style="display: none;">
     <option value="AK">Alaska</option>
@@ -61,13 +60,6 @@
 <select class="js-example-basic-single js-states"></select>
 <select class="js-example-basic-multiple js-states" multiple="multiple"></select>
 
-<link href="../dist/css/select2.css" rel="stylesheet"/>
-
-<script src="../vendor/almond-0.2.9.js" type="text/javascript"></script>
-<script src="../vendor/jquery-2.1.0.js" type="text/javascript"></script>
-
-<script src="../dist/js/select2.js" type="text/javascript"></script>
-
 <script type="text/javascript">
 
 var $states = $(".js-source-states");
@@ -76,14 +68,27 @@ $states.remove();
 
 $(".js-states").html(statesOptions);
 
-require(["select2/core"], function (Select2) {
+require(["select2/core", "select2/dropdown", "select2/utils"], function (Select2, Dropdown, Utils) {
     var $basicSingle = $(".js-example-basic-single");
     var $basicMultiple = $(".js-example-basic-multiple");
 
-    new Select2($basicSingle);
+    //new Select2($basicSingle);
     new Select2($basicMultiple);
+
+    function AttachToBody () { }
+
+    AttachToBody.prototype.render = function (decorated) {
+        var $dropdown = decorated.call(this);
+
+
+
+        return $dropdown;
+    }
+
+    var BodyDropdown = Utils.Decorate(Dropdown, AttachToBody);
+
+    new Select2($basicSingle, {
+        dropdownAdapter: BodyDropdown
+    });
 });
 </script>
-
-</body>
-</html>

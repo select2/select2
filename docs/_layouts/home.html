@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+    <head>
+        {% include head.html %}
+
+        <style type="text/css">
+          .navbar { margin-bottom: 0; }
+          .jumbotron-side { padding-top: 2em; }
+        </style>
+    </head>
+    <body>
+        {% include navigation.html %}
+
+        {{ content }}
+
+        {% include footer.html %}
+    </body>
+</html>
