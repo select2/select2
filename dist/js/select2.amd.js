@@ -200,10 +200,39 @@ define('select2/results',[
 
   Results.prototype.option = function (data) {
     var $option = $(
-      '<li class="option"></li>'
+      '<li class="option highlightable selectable"></li>'
     );
 
-    $option.html(data.text);
+    if (data.children && data.children.length > 0) {
+      $option.addClass('group').removeClass('highlightable selectable');
+
+      var $label = $('<strong class="group-label"></strong>');
+      $label.html(data.text);
+
+      var $children = [];
+
+      for (var c = 0; c < data.children.length; c++) {
+        var child = data.children[c];
+
+        var $child = this.option(child);
+
+        $children.push($child);
+      }
+
+      var $childrenContainer = $('<ul class="options nested-options"></ul>');
+
+      $childrenContainer.append($children);
+
+      $option.append($label);
+      $option.append($childrenContainer);
+    } else {
+      $option.html(data.text);
+    }
+
+    if (data.disabled) {
+      $option.removeClass('selectable').addClass('disabled');
+    }
+
     $option.data('data', data);
 
     return $option;
@@ -225,7 +254,7 @@ define('select2/results',[
       self.setClasses();
     });
 
-    this.$results.on('mouseup', '.option', function (evt) {
+    this.$results.on('mouseup', '.option.selectable', function (evt) {
       var $this = $(this);
 
       var data = $this.data('data');
@@ -248,7 +277,7 @@ define('select2/results',[
       self.setClasses();
     });
 
-    this.$results.on('mouseenter', '.option', function (evt) {
+    this.$results.on('mouseenter', '.option.highlightable', function (evt) {
       self.$results.find('.option.highlighted').removeClass('highlighted');
       $(this).addClass('highlighted');
     });
@@ -540,13 +569,21 @@ define('select2/data/select',[
     var data = [];
     var self = this;
 
-    this.$element.find('option').each(function () {
+    var $options = this.$element.children();
+
+    $options.each(function () {
       var $option = $(this);
+
+      if (!$option.is('option') && !$option.is('optgroup')) {
+        return;
+      }
 
       var option = self.item($option);
 
-      if (self.matches(params, option)) {
-        data.push(option);
+      var matches = self.matches(params, option);
+
+      if (matches !== null) {
+        data.push(matches);
       }
     });
 
@@ -558,10 +595,32 @@ define('select2/data/select',[
 
     // If the data has already be generated, use it
     if (data == null) {
-      data = {
-        id: $option.val(),
-        text: $option.html()
-      };
+      if ($option.is('option')) {
+        data = {
+          id: $option.val(),
+          text: $option.html(),
+          disabled: $option.prop('disabled')
+        };
+      } else if ($option.is('optgroup')) {
+        data = {
+          id: -1,
+          text: $option.attr('label'),
+          children: []
+        };
+
+        var $children = $option.children('option');
+        var children = [];
+
+        for (var c = 0; c < $children.length; c++) {
+          var $child = $($children[c]);
+
+          var child = this.item($child);
+
+          children.push(child);
+        }
+
+        data.children = children;
+      }
 
       $option.data('data', data);
     }
@@ -570,15 +629,34 @@ define('select2/data/select',[
   };
 
   SelectAdapter.prototype.matches = function (params, data) {
+    var match = $.extend(true, {}, data);
+
+    if (data.children) {
+      for (var c = data.children.length - 1; c >= 0; c--) {
+        var child = data.children[c];
+
+        var matches = this.matches(params, child);
+
+        // If there wasn't a match, remove the object in the array
+        if (matches === null) {
+          match.children.splice(c, 1);
+        }
+      }
+
+      if (match.children.length > 0) {
+        return match;
+      }
+    }
+
     if ($.trim(params.term) === '') {
-      return true;
+      return match;
     }
 
     if (data.text.indexOf(params.term) > -1) {
-      return true;
+      return match;
     }
 
-    return false;
+    return null;
   };
 
   return SelectAdapter;

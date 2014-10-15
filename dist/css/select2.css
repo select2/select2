@@ -88,9 +88,15 @@
 .select2-container.select2-theme-default .dropdown .results {
   max-height: 200px;
   overflow-y: scroll; }
+  .select2-container.select2-theme-default .dropdown .results .options .option.group {
+    padding: 0; }
+    .select2-container.select2-theme-default .dropdown .results .options .option.group .group-label {
+      cursor: default;
+      display: block;
+      padding: 6px; }
   .select2-container.select2-theme-default .dropdown .results .options .option.selected {
     background-color: #ddd; }
-  .select2-container.select2-theme-default .dropdown .results .options .option.highlighted {
+  .select2-container.select2-theme-default .dropdown .results .options .option.highlightable.highlighted {
     background-color: #5897fb;
     color: white; }
 

@@ -61,10 +61,39 @@ define([
 
   Results.prototype.option = function (data) {
     var $option = $(
-      '<li class="option"></li>'
+      '<li class="option highlightable selectable"></li>'
     );
 
-    $option.html(data.text);
+    if (data.children && data.children.length > 0) {
+      $option.addClass('group').removeClass('highlightable selectable');
+
+      var $label = $('<strong class="group-label"></strong>');
+      $label.html(data.text);
+
+      var $children = [];
+
+      for (var c = 0; c < data.children.length; c++) {
+        var child = data.children[c];
+
+        var $child = this.option(child);
+
+        $children.push($child);
+      }
+
+      var $childrenContainer = $('<ul class="options nested-options"></ul>');
+
+      $childrenContainer.append($children);
+
+      $option.append($label);
+      $option.append($childrenContainer);
+    } else {
+      $option.html(data.text);
+    }
+
+    if (data.disabled) {
+      $option.removeClass('selectable').addClass('disabled');
+    }
+
     $option.data('data', data);
 
     return $option;
@@ -86,7 +115,7 @@ define([
       self.setClasses();
     });
 
-    this.$results.on('mouseup', '.option', function (evt) {
+    this.$results.on('mouseup', '.option.selectable', function (evt) {
       var $this = $(this);
 
       var data = $this.data('data');
@@ -109,7 +138,7 @@ define([
       self.setClasses();
     });
 
-    this.$results.on('mouseenter', '.option', function (evt) {
+    this.$results.on('mouseenter', '.option.highlightable', function (evt) {
       self.$results.find('.option.highlighted').removeClass('highlighted');
       $(this).addClass('highlighted');
     });

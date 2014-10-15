@@ -55,11 +55,21 @@
 
       .options {
         .option {
+          &.group {
+            padding: 0;
+
+            .group-label {
+              cursor: default;
+              display: block;
+              padding: 6px;
+            }
+          }
+
           &.selected {
             background-color: #ddd;
           }
 
-          &.highlighted {
+          &.highlightable.highlighted {
             background-color: #5897fb;
             color: white;
           }

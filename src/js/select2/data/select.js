@@ -94,13 +94,21 @@ define([
     var data = [];
     var self = this;
 
-    this.$element.find('option').each(function () {
+    var $options = this.$element.children();
+
+    $options.each(function () {
       var $option = $(this);
+
+      if (!$option.is('option') && !$option.is('optgroup')) {
+        return;
+      }
 
       var option = self.item($option);
 
-      if (self.matches(params, option)) {
-        data.push(option);
+      var matches = self.matches(params, option);
+
+      if (matches !== null) {
+        data.push(matches);
       }
     });
 
@@ -112,10 +120,32 @@ define([
 
     // If the data has already be generated, use it
     if (data == null) {
-      data = {
-        id: $option.val(),
-        text: $option.html()
-      };
+      if ($option.is('option')) {
+        data = {
+          id: $option.val(),
+          text: $option.html(),
+          disabled: $option.prop('disabled')
+        };
+      } else if ($option.is('optgroup')) {
+        data = {
+          id: -1,
+          text: $option.attr('label'),
+          children: []
+        };
+
+        var $children = $option.children('option');
+        var children = [];
+
+        for (var c = 0; c < $children.length; c++) {
+          var $child = $($children[c]);
+
+          var child = this.item($child);
+
+          children.push(child);
+        }
+
+        data.children = children;
+      }
 
       $option.data('data', data);
     }
@@ -124,15 +154,34 @@ define([
   };
 
   SelectAdapter.prototype.matches = function (params, data) {
+    var match = $.extend(true, {}, data);
+
+    if (data.children) {
+      for (var c = data.children.length - 1; c >= 0; c--) {
+        var child = data.children[c];
+
+        var matches = this.matches(params, child);
+
+        // If there wasn't a match, remove the object in the array
+        if (matches === null) {
+          match.children.splice(c, 1);
+        }
+      }
+
+      if (match.children.length > 0) {
+        return match;
+      }
+    }
+
     if ($.trim(params.term) === '') {
-      return true;
+      return match;
     }
 
     if (data.text.indexOf(params.term) > -1) {
-      return true;
+      return match;
     }
 
-    return false;
+    return null;
   };
 
   return SelectAdapter;
