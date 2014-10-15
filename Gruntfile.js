@@ -100,6 +100,7 @@ module.exports = function (grunt) {
           optimize: "none",
           name: "select2/core",
           out: "dist/js/select2.amd.js",
+          include: includes,
           paths: {
             jquery: "empty:"
           }

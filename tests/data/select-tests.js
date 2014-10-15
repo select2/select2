@@ -16,7 +16,8 @@ test('current gets default for single', function (assert) {
       val,
       [{
         id: 'default',
-        text: 'Default'
+        text: 'Default',
+        disabled: false
       }],
       'The first option should be selected by default (by the browser).'
     );
@@ -49,7 +50,8 @@ test('current gets options with explicit value', function (assert) {
       val,
       [{
         id: '1',
-        text: 'One'
+        text: 'One',
+        disabled: false
       }],
       'The text and id should match the value and text for the option tag.'
     );
@@ -68,7 +70,8 @@ test('current gets options with implicit value', function (assert) {
       val,
       [{
         id: '2',
-        text: '2'
+        text: '2',
+        disabled: false
       }],
       'The text and id should match the text within the option tag.'
     );

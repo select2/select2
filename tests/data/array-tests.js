@@ -61,7 +61,8 @@ test('current works with existing selections', function (assert) {
       val,
       [{
         id: '3',
-        text: 'Three'
+        text: 'Three',
+        disabled: false
       }],
       'The text and id should match the value and text for the option tag.'
     );

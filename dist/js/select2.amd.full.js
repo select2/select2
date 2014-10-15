@@ -181,7 +181,9 @@ define('select2/results',[
     var self = this;
 
     this.data.current(function (selected) {
-      selected = $.map(selected, function (s) { return s.id; });
+      var selectedIds = $.map(selected, function (s) {
+        return s.id.toString();
+      });
 
       self.$results.find('.option.selected').removeClass('selected');
 
@@ -191,7 +193,7 @@ define('select2/results',[
         var $option = $(this);
         var item = $option.data('data');
 
-        if (selected.indexOf(item.id.toString()) > -1) {
+        if (selectedIds.indexOf(item.id.toString()) > -1) {
           $option.addClass('selected');
         }
       });
