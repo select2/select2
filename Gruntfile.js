@@ -1,20 +1,24 @@
 module.exports = function (grunt) {
   // Full list of files that must be included by RequireJS
-  amd_includes = [
-    "almond"
-  ]
+  includes = [
+    'jquery.select2'
+  ];
 
-  full_includes = [
-    "jquery"
-  ]
+  amdIncludes = [
+    'almond'
+  ];
+
+  fullIncludes = [
+    'jquery'
+  ].concat(includes);
 
   grunt.initConfig({
     uglify: {
-      "dist": {
+      'dist': {
         src: 'dist/js/select2.js',
         dest: 'dist/js/select2.min.js'
       },
-      "dist.full": {
+      'dist.full': {
         src: 'dist/js/select2.full.js',
         dest: 'dist/js/select2.full.min.js'
       }
@@ -22,7 +26,7 @@ module.exports = function (grunt) {
 
     qunit: {
       all: [
-        "tests/**/*.html"
+        'tests/**/*.html'
       ]
     },
 
@@ -70,7 +74,7 @@ module.exports = function (grunt) {
           optimize: "none",
           name: "select2/core",
           out: "dist/js/select2.js",
-          include: amd_includes,
+          include: amdIncludes.concat(includes),
           paths: {
             almond: "../../vendor/almond-0.2.9",
             jquery: "jquery.shim"
@@ -83,7 +87,7 @@ module.exports = function (grunt) {
           optimize: "none",
           name: "select2/core",
           out: "dist/js/select2.full.js",
-          include: amd_includes.concat(full_includes),
+          include: amdIncludes.concat(fullIncludes),
           paths: {
             almond: "../../vendor/almond-0.2.9",
             jquery: "../../vendor/jquery-2.1.0"
@@ -107,7 +111,7 @@ module.exports = function (grunt) {
           optimize: "none",
           name: "select2/core",
           out: "dist/js/select2.amd.full.js",
-          include: full_includes,
+          include: fullIncludes,
           paths: {
             jquery: "empty:"
           }
@@ -118,17 +122,17 @@ module.exports = function (grunt) {
     concat: {
       "dist": {
         src: [
-          "src/coffee/start.js",
+          "src/js/start.js",
           "dist/js/select2.js",
-          "src/coffee/end.js"
+          "src/js/end.js"
         ],
         dest: "dist/js/select2.js"
       },
       "dist.full": {
         src: [
-          "src/coffee/start.js",
+          "src/js/start.js",
           "dist/js/select2.full.js",
-          "src/coffee/end.js"
+          "src/js/end.js"
         ],
         dest: "dist/js/select2.full.js"
       }

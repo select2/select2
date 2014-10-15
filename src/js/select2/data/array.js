@@ -17,7 +17,7 @@ define([
       var $option = $(this);
       var option = self.item($option);
 
-      if (option.id == data.id) {
+      if (option.id == data.id.toString()) {
         $option.remove();
       }
     });

@@ -4,6 +4,159 @@ title: Examples - Select2
 slug: examples
 ---
 
+<div class="container">
+  <section id="basic" class="row">
+    <div class="col-md-4">
+      <h1>The basics</h1>
+
+      <p>
+        Select2 can take a regular select box like this...
+      </p>
+
+      <p>
+        <select class="js-states form-control"></select>
+      </p>
+
+      <p>
+        and turn it into this...
+      </p>
+
+      <p>
+        <select class="js-example-basic-single js-states form-control"></select>
+      </p>
+    </div>
+    <div class="col-md-8">
+      <h2>Example code</h2>
+
+      <pre class="code" data-fill-from=".js-code-basic"></pre>
+
+<script type="text/x-example-code" class="js-code-basic">
+$(document).ready(function() {
+  $(".js-example-basic-single").select2();
+});
+
+<select class="js-example-basic-single">
+  <option value="AL">Alabama</option>
+    ...
+  <option value="WY">Wyoming</option>
+</select>
+</script>
+    </div>
+  </section>
+
+  <section id="multiple" class="row">
+    <div class="col-md-4">
+      <h1>Multiple select boxes</h1>
+
+      <p>
+        Select2 also supports multi-value select boxes. The select below is declared with the <code>multiple</code> attribute.
+      </p>
+
+      <p>
+        <select class="js-example-basic-multiple js-states form-control" multiple="multiple"></select>
+      </p>
+    </div>
+    <div class="col-md-8">
+      <h2>Example code</h2>
+
+      <pre data-fill-from=".js-code-multiple"></pre>
+
+<script type="text/x-example-code" class="js-code-multiple">
+$(".js-example-basic-multiple").select2();
+</script>
+    </div>
+  </section>
+
+  <section id="placeholders" class="row">
+    <div class="col-md-4">
+      <h1>Placeholders</h1>
+
+      <p>
+        A placeholder value can be defined and will be displayed until a selection is made.
+      </p>
+
+      <p>
+        <select class="js-example-placeholder-single js-states form-control"></select>
+      </p>
+
+      <p>
+        This works for multiple select boxes as well.
+      </p>
+
+      <p>
+        <select class="js-example-placeholder-multiple js-states form-control" multiple="multiple"></select>
+      </p>
+    </div>
+  </section>
+
+  <seection id="data-array" class="row">
+    <div class="col-md-4">
+      <h1>Loading array data</h1>
+
+      <p>
+        Select2 provides a way to load the data from a local array.
+      </p>
+
+      <p>
+        <select class="js-example-data-array form-control"></select>
+      </p>
+
+      <p>
+        You can provide initial selections with array data by providing the
+        option tag for the selected values, similar to how it would be done for
+        a standard select.
+      </p>
+
+      <p>
+        <select class="js-example-data-array-selected form-control">
+          <option value="2" selected="selected">duplicate</option>
+        </select>
+      </p>
+    </div>
+    <div class="col-md-8">
+      <h2>Example code</h2>
+
+      <pre data-fill-from=".js-code-data-array"></pre>
+
+<script type="text/x-example-code" class="js-code-data-array">
+var data = [{ id: 0, text: 'enhancement' }, { id: 1, text: 'bug' }, { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, { id: 4, text: 'wontfix' }];
+
+$(".js-example-data-array").select2({
+  data: data
+})
+
+$(".js-example-data-array-selected").select2({
+  data: data
+})
+
+<select class="js-example-data-array-selected"></select>
+
+<select class="js-example-data-array-selected">
+  <option value="2" selected="selected">duplicate</option>
+</select>
+</script>
+    </div>
+  </section>
+
+  <section id="data-ajax">
+    <h1>Loading remote data</h1>
+
+    <p>
+      Select2 comes with AJAX support built in, using jQuery's AJAX methods.
+    </p>
+
+    <p>
+      <select class="js-example-data-ajax form-control"></select>
+    </p>
+
+    <pre data-fill-from=".js-code-data-ajax"></pre>
+
+<script type="text/x-example-code" class="js-code-data-ajax">
+
+</script>
+  </section>
+</div>
+
 <select class="js-source-states" style="display: none;">
     <option value="AK">Alaska</option>
     <option value="HI">Hawaii</option>
@@ -57,9 +210,6 @@ slug: examples
     <option value="WV">West Virginia</option>
 </select>
 
-<select class="js-example-basic-single js-states"></select>
-<select class="js-example-basic-multiple js-states" multiple="multiple"></select>
-
 <script type="text/javascript">
 
 var $states = $(".js-source-states");
@@ -68,27 +218,49 @@ $states.remove();
 
 $(".js-states").html(statesOptions);
 
+$("[data-fill-from]").each(function () {
+  var $this = $(this);
+
+  var codeContainer = $this.data("fill-from");
+  var $container = $(codeContainer);
+
+  var code = $.trim($container.html());
+
+  $this.text(code);
+  $this.addClass("prettyprint linenums");
+});
+
+prettyPrint();
+
 require(["select2/core", "select2/dropdown", "select2/utils"], function (Select2, Dropdown, Utils) {
     var $basicSingle = $(".js-example-basic-single");
     var $basicMultiple = $(".js-example-basic-multiple");
 
-    //new Select2($basicSingle);
-    new Select2($basicMultiple);
+    var $placeholderSingle = $(".js-example-placeholder-single");
+    var $placeholderMultiple = $(".js-example-placeholder-multiple");
 
-    function AttachToBody () { }
+    var $dataArray = $(".js-example-data-array");
+    var $dataArraySelected = $(".js-example-data-array-selected");
 
-    AttachToBody.prototype.render = function (decorated) {
-        var $dropdown = decorated.call(this);
+    var data = [{ id: 0, text: 'enhancement' }, { id: 1, text: 'bug' }, { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, { id: 4, text: 'wontfix' }];
 
+    $basicSingle.select2();
+    $basicMultiple.select2()
 
+    $placeholderSingle.select2({
+      placeholder: "Select a state"
+    });
 
-        return $dropdown;
-    }
+    $placeholderMultiple.select2({
+      placeholder: "Select a state"
+    });
 
-    var BodyDropdown = Utils.Decorate(Dropdown, AttachToBody);
+    $dataArray.select2({
+      data: data
+    });
 
-    new Select2($basicSingle, {
-        dropdownAdapter: BodyDropdown
+    $dataArraySelected.select2({
+      data: data
     });
 });
 </script>

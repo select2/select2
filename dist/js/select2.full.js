@@ -1,3 +1,4 @@
+
 /**
  * @license almond 0.2.9 Copyright (c) 2011-2014, The Dojo Foundation All Rights Reserved.
  * Available via the MIT or new BSD license.
@@ -9674,166 +9675,6 @@ define('select2/utils',[], function () {
   return Utils;
 });
 
-define('select2/data/base',[
-  '../utils'
-], function (Utils) {
-  function BaseAdapter ($element, options) {
-    BaseAdapter.__super__.constructor.call(this);
-  }
-
-  Utils.Extend(BaseAdapter, Utils.Observable);
-
-  BaseAdapter.prototype.current = function (callback) {
-    throw new Error('The `current` method must be defined in child classes.');
-  };
-
-  BaseAdapter.prototype.query = function (params, callback) {
-    throw new Error('The `query` method must be defined in child classes.');
-  };
-
-  return BaseAdapter;
-});
-
-define('select2/data/select',[
-  './base',
-  '../utils',
-  'jquery'
-], function (BaseAdapter, Utils, $) {
-  function SelectAdapter ($element, options) {
-    this.$element = $element;
-
-    SelectAdapter.__super__.constructor.call(this);
-  }
-
-  Utils.Extend(SelectAdapter, BaseAdapter);
-
-  SelectAdapter.prototype.current = function (callback) {
-    var data = [];
-    var self = this;
-
-    this.$element.find(':selected').each(function () {
-      var $option = $(this);
-
-      var option = self.item($option);
-
-      data.push(option);
-    });
-
-    callback(data);
-  };
-
-  SelectAdapter.prototype.select = function (data) {
-    var self = this;
-
-    if (this.$element.prop('multiple')) {
-      this.current(function (currentData) {
-        var val = [];
-
-        data = [data];
-        data.push.apply(data, currentData);
-
-        for (var d = 0; d < data.length; d++) {
-          id = data[d].id;
-
-          if (val.indexOf(id) === -1) {
-            val.push(id);
-          }
-        }
-
-        self.$element.val(val);
-        self.$element.trigger('change');
-      });
-    } else {
-      var val = data.id;
-
-      this.$element.val(val);
-      this.$element.trigger('change');
-    }
-  };
-
-  SelectAdapter.prototype.unselect = function (data) {
-    var self = this;
-
-    if (!this.$element.prop('multiple')) {
-      return;
-    }
-
-    this.current(function (currentData) {
-      var val = [];
-
-      for (var d = 0; d < currentData.length; d++) {
-        id = currentData[d].id;
-
-        if (id !== data.id && val.indexOf(id) === -1) {
-          val.push(id);
-        }
-      }
-
-      self.$element.val(val);
-      self.$element.trigger('change');
-    });
-  };
-
-  SelectAdapter.prototype.bind = function (container, $container) {
-    var self = this;
-
-    container.on('select', function (params) {
-      self.select(params.data);
-    });
-
-    container.on('unselect', function (params) {
-      self.unselect(params.data);
-    });
-  };
-
-  SelectAdapter.prototype.query = function (params, callback) {
-    var data = [];
-    var self = this;
-
-    this.$element.find('option').each(function () {
-      var $option = $(this);
-
-      var option = self.item($option);
-
-      if (self.matches(params, option)) {
-        data.push(option);
-      }
-    });
-
-    callback(data);
-  };
-
-  SelectAdapter.prototype.item = function ($option) {
-    var data = $option.data('data');
-
-    // If the data has already be generated, use it
-    if (data == null) {
-      data = {
-        id: $option.val(),
-        text: $option.html()
-      };
-
-      $option.data('data', data);
-    }
-
-    return data;
-  };
-
-  SelectAdapter.prototype.matches = function (params, data) {
-    if ($.trim(params.term) === '') {
-      return true;
-    }
-
-    if (data.text.indexOf(params.term) > -1) {
-      return true;
-    }
-
-    return false;
-  };
-
-  return SelectAdapter;
-});
-
 define('select2/results',[
   './utils'
 ], function (Utils) {
@@ -9888,7 +9729,7 @@ define('select2/results',[
         var $option = $(this);
         var item = $option.data('data');
 
-        if (selected.indexOf(item.id) > -1) {
+        if (selected.indexOf(item.id.toString()) > -1) {
           $option.addClass('selected');
         }
       });
@@ -10121,6 +9962,166 @@ define('select2/selection/multiple',[
   return MultipleSelection;
 });
 
+define('select2/data/base',[
+  '../utils'
+], function (Utils) {
+  function BaseAdapter ($element, options) {
+    BaseAdapter.__super__.constructor.call(this);
+  }
+
+  Utils.Extend(BaseAdapter, Utils.Observable);
+
+  BaseAdapter.prototype.current = function (callback) {
+    throw new Error('The `current` method must be defined in child classes.');
+  };
+
+  BaseAdapter.prototype.query = function (params, callback) {
+    throw new Error('The `query` method must be defined in child classes.');
+  };
+
+  return BaseAdapter;
+});
+
+define('select2/data/select',[
+  './base',
+  '../utils',
+  'jquery'
+], function (BaseAdapter, Utils, $) {
+  function SelectAdapter ($element, options) {
+    this.$element = $element;
+
+    SelectAdapter.__super__.constructor.call(this);
+  }
+
+  Utils.Extend(SelectAdapter, BaseAdapter);
+
+  SelectAdapter.prototype.current = function (callback) {
+    var data = [];
+    var self = this;
+
+    this.$element.find(':selected').each(function () {
+      var $option = $(this);
+
+      var option = self.item($option);
+
+      data.push(option);
+    });
+
+    callback(data);
+  };
+
+  SelectAdapter.prototype.select = function (data) {
+    var self = this;
+
+    if (this.$element.prop('multiple')) {
+      this.current(function (currentData) {
+        var val = [];
+
+        data = [data];
+        data.push.apply(data, currentData);
+
+        for (var d = 0; d < data.length; d++) {
+          id = data[d].id;
+
+          if (val.indexOf(id) === -1) {
+            val.push(id);
+          }
+        }
+
+        self.$element.val(val);
+        self.$element.trigger('change');
+      });
+    } else {
+      var val = data.id;
+
+      this.$element.val(val);
+      this.$element.trigger('change');
+    }
+  };
+
+  SelectAdapter.prototype.unselect = function (data) {
+    var self = this;
+
+    if (!this.$element.prop('multiple')) {
+      return;
+    }
+
+    this.current(function (currentData) {
+      var val = [];
+
+      for (var d = 0; d < currentData.length; d++) {
+        id = currentData[d].id;
+
+        if (id !== data.id && val.indexOf(id) === -1) {
+          val.push(id);
+        }
+      }
+
+      self.$element.val(val);
+      self.$element.trigger('change');
+    });
+  };
+
+  SelectAdapter.prototype.bind = function (container, $container) {
+    var self = this;
+
+    container.on('select', function (params) {
+      self.select(params.data);
+    });
+
+    container.on('unselect', function (params) {
+      self.unselect(params.data);
+    });
+  };
+
+  SelectAdapter.prototype.query = function (params, callback) {
+    var data = [];
+    var self = this;
+
+    this.$element.find('option').each(function () {
+      var $option = $(this);
+
+      var option = self.item($option);
+
+      if (self.matches(params, option)) {
+        data.push(option);
+      }
+    });
+
+    callback(data);
+  };
+
+  SelectAdapter.prototype.item = function ($option) {
+    var data = $option.data('data');
+
+    // If the data has already be generated, use it
+    if (data == null) {
+      data = {
+        id: $option.val(),
+        text: $option.html()
+      };
+
+      $option.data('data', data);
+    }
+
+    return data;
+  };
+
+  SelectAdapter.prototype.matches = function (params, data) {
+    if ($.trim(params.term) === '') {
+      return true;
+    }
+
+    if (data.text.indexOf(params.term) > -1) {
+      return true;
+    }
+
+    return false;
+  };
+
+  return SelectAdapter;
+});
+
 define('select2/data/array',[
   './select',
   '../utils'
@@ -10140,7 +10141,7 @@ define('select2/data/array',[
       var $option = $(this);
       var option = self.item($option);
 
-      if (option.id == data.id) {
+      if (option.id == data.id.toString()) {
         $option.remove();
       }
     });
@@ -10227,7 +10228,6 @@ define('select2/data/ajax',[
 });
 
 define('select2/options',[
-  './data/select',
   './results',
 
   './dropdown',
@@ -10235,14 +10235,22 @@ define('select2/options',[
   './selection/single',
   './selection/multiple',
 
+  './data/select',
   './data/array',
   './data/ajax'
-], function (SelectData, ResultsList, Dropdown, SingleSelection,
-             MultipleSelection) {
+], function (ResultsList, Dropdown, SingleSelection, MultipleSelection,
+             SelectData, ArrayData, AjaxData) {
   function Options (options) {
     this.options = options;
 
-    this.dataAdapter = options.dataAdapter || SelectData;
+    if (options.ajax) {
+      this.dataAdapter = this.dataAdapter || AjaxData;
+    } else if (options.data) {
+      this.dataAdapter = this.dataAdapter || ArrayData;
+    } else {
+      this.dataAdapter = this.dataAdapter || SelectData;
+    }
+
     this.resultsAdapter = ResultsList;
     this.dropdownAdapter = options.dropdownAdapter || Dropdown;
     this.selectionAdapter = options.selectionAdapter;
@@ -10389,3 +10397,30 @@ define('select2/core',[
   return Select2;
 });
 
+define('jquery.select2',[
+  'jquery',
+  'select2/core'
+], function ($, Select2) {
+  if ($.fn.select2 == null) {
+    $.fn.select2 = function (options) {
+      options = options || {};
+
+      if (typeof options === 'object') {
+        this.each(function () {
+          var instance = new Select2($(this), options);
+        });
+      } else if (typeof options === 'string') {
+        var instance = this.data('select2');
+
+        instance[options](arguments.slice(1));
+      } else {
+        throw new Error('Invalid arguments for Select2: ' + options);
+      }
+    };
+  }
+
+  return Select2;
+});
+
+
+require('jquery.select2');

@@ -52,7 +52,7 @@ define([
         var $option = $(this);
         var item = $option.data('data');
 
-        if (selected.indexOf(item.id) > -1) {
+        if (selected.indexOf(item.id.toString()) > -1) {
           $option.addClass('selected');
         }
       });
