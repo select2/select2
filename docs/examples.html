@@ -180,21 +180,27 @@ $(".js-example-data-array-selected").select2({
 </div>
 
 <select class="js-source-states" style="display: none;">
+  <optgroup label="Alaskan/Hawaiian Time Zone">
     <option value="AK">Alaska</option>
     <option value="HI">Hawaii</option>
+  </optgroup>
+  <optgroup label="Pacific Time Zone">
     <option value="CA">California</option>
     <option value="NV">Nevada</option>
     <option value="OR">Oregon</option>
     <option value="WA">Washington</option>
+  </optgroup>
+  <optgroup label="Mountain Time Zone">
     <option value="AZ">Arizona</option>
     <option value="CO">Colorado</option>
     <option value="ID">Idaho</option>
-    <option value="MT">Montana</option>
-    <option value="NE">Nebraska</option>
+    <option value="MT">Montana</option><option value="NE">Nebraska</option>
     <option value="NM">New Mexico</option>
     <option value="ND">North Dakota</option>
     <option value="UT">Utah</option>
     <option value="WY">Wyoming</option>
+  </optgroup>
+  <optgroup label="Central Time Zone">
     <option value="AL">Alabama</option>
     <option value="AR">Arkansas</option>
     <option value="IL">Illinois</option>
@@ -210,6 +216,8 @@ $(".js-example-data-array-selected").select2({
     <option value="TX">Texas</option>
     <option value="TN">Tennessee</option>
     <option value="WI">Wisconsin</option>
+  </optgroup>
+  <optgroup label="Eastern Time Zone">
     <option value="CT">Connecticut</option>
     <option value="DE">Delaware</option>
     <option value="FL">Florida</option>
@@ -219,21 +227,17 @@ $(".js-example-data-array-selected").select2({
     <option value="MD">Maryland</option>
     <option value="MA">Massachusetts</option>
     <option value="MI">Michigan</option>
-    <option value="NH">New Hampshire</option>
-    <option value="NJ">New Jersey</option>
+    <option value="NH">New Hampshire</option><option value="NJ">New Jersey</option>
     <option value="NY">New York</option>
     <option value="NC">North Carolina</option>
     <option value="OH">Ohio</option>
-    <option value="PA">Pennsylvania</option>
-    <option value="RI">Rhode Island</option>
-    <option value="SC">South Carolina</option>
-    <option value="VT">Vermont</option>
-    <option value="VA">Virginia</option>
+    <option value="PA">Pennsylvania</option><option value="RI">Rhode Island</option><option value="SC">South Carolina</option>
+    <option value="VT">Vermont</option><option value="VA">Virginia</option>
     <option value="WV">West Virginia</option>
+  </optgroup>
 </select>
 
 <script type="text/javascript">
-
 var $states = $(".js-source-states");
 var statesOptions = $states.html();
 $states.remove();
@@ -255,34 +259,34 @@ $("[data-fill-from]").each(function () {
 prettyPrint();
 
 require(["select2/core", "select2/dropdown", "select2/utils"], function (Select2, Dropdown, Utils) {
-    var $basicSingle = $(".js-example-basic-single");
-    var $basicMultiple = $(".js-example-basic-multiple");
+  var $basicSingle = $(".js-example-basic-single");
+  var $basicMultiple = $(".js-example-basic-multiple");
 
-    var $placeholderSingle = $(".js-example-placeholder-single");
-    var $placeholderMultiple = $(".js-example-placeholder-multiple");
+  var $placeholderSingle = $(".js-example-placeholder-single");
+  var $placeholderMultiple = $(".js-example-placeholder-multiple");
 
-    var $dataArray = $(".js-example-data-array");
-    var $dataArraySelected = $(".js-example-data-array-selected");
+  var $dataArray = $(".js-example-data-array");
+  var $dataArraySelected = $(".js-example-data-array-selected");
 
-    var data = [{ id: 0, text: 'enhancement' }, { id: 1, text: 'bug' }, { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, { id: 4, text: 'wontfix' }];
+  var data = [{ id: 0, text: 'enhancement' }, { id: 1, text: 'bug' }, { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, { id: 4, text: 'wontfix' }];
 
-    $basicSingle.select2();
-    $basicMultiple.select2()
+  $basicSingle.select2();
+  $basicMultiple.select2()
 
-    $placeholderSingle.select2({
-      placeholder: "Select a state"
-    });
+  $placeholderSingle.select2({
+    placeholder: "Select a state"
+  });
 
-    $placeholderMultiple.select2({
-      placeholder: "Select a state"
-    });
+  $placeholderMultiple.select2({
+    placeholder: "Select a state"
+  });
 
-    $dataArray.select2({
-      data: data
-    });
+  $dataArray.select2({
+    data: data
+  });
 
-    $dataArraySelected.select2({
-      data: data
-    });
+  $dataArraySelected.select2({
+    data: data
+  });
 });
 </script>
