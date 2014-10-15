@@ -23,7 +23,7 @@ define([
 
     $container.insertAfter(this.$element);
 
-    $container.width($element.width());
+    $container.width($element.outerWidth(false));
 
     this.selection = new this.options.selectionAdapter($element, this.options);
 
