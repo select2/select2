@@ -65,6 +65,10 @@
             }
           }
 
+          &.disabled {
+            color: #666;
+          }
+
           &.selected {
             background-color: #ddd;
           }

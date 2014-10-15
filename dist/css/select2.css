@@ -94,6 +94,8 @@
       cursor: default;
       display: block;
       padding: 6px; }
+  .select2-container.select2-theme-default .dropdown .results .options .option.disabled {
+    color: #666; }
   .select2-container.select2-theme-default .dropdown .results .options .option.selected {
     background-color: #ddd; }
   .select2-container.select2-theme-default .dropdown .results .options .option.highlightable.highlighted {

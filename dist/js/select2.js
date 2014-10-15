@@ -659,7 +659,7 @@ define('select2/results',[
     }
 
     if (data.disabled) {
-      $option.removeClass('selectable').addClass('disabled');
+      $option.removeClass('selectable highlightable').addClass('disabled');
     }
 
     $option.data('data', data);

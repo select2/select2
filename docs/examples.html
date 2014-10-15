@@ -153,7 +153,7 @@ $(".js-example-data-array-selected").select2({
     </div>
   </section>
 
-  <section id="data-ajax row">
+  <section id="data-ajax" class="row">
     <div class="col-md-12">
       <h1>Loading remote data</h1>
 
@@ -173,6 +173,37 @@ $(".js-example-data-array-selected").select2({
       </p>
 
 <script type="text/x-example-code" class="js-code-data-ajax">
+
+</script>
+    </div>
+  </section>
+
+  <section id="disabled-results" class="row">
+    <div class="col-md-4">
+      <h1>Disabled results</h1>
+
+      <p>
+        Select2 will correctly handled disabled results, both with data coming
+        from a standard select (when the <code>disabled</code> attribute is set)
+        and from remote sources, where the object has
+        <code>disabled: true</code> set.
+      </p>
+
+      <p>
+        <select class="js-example-disabled-results form-control">
+          <option value="one">First</option>
+          <option value="two" disabled="disabled">Second (disabled)</option>
+          <option value="three">Third</option>
+        </select>
+      </p>
+
+    </div>
+    <div class="col-md-8">
+      <h2>Example code</h2>
+
+      <pre data-fill-from=".js-code-disabled-results"></pre>
+
+<script type="text/x-example-code" class="js-code-data-disabled">
 
 </script>
     </div>
@@ -270,6 +301,8 @@ require(["select2/core", "select2/dropdown", "select2/utils"], function (Select2
 
   var data = [{ id: 0, text: 'enhancement' }, { id: 1, text: 'bug' }, { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, { id: 4, text: 'wontfix' }];
 
+  var $disabledResults = $(".js-example-disabled-results");
+
   $basicSingle.select2();
   $basicMultiple.select2()
 
@@ -288,5 +321,7 @@ require(["select2/core", "select2/dropdown", "select2/utils"], function (Select2
   $dataArraySelected.select2({
     data: data
   });
+
+  $disabledResults.select2();
 });
 </script>
