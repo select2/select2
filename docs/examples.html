@@ -87,6 +87,21 @@ $(".js-example-basic-multiple").select2();
         <select class="js-example-placeholder-multiple js-states form-control" multiple="multiple"></select>
       </p>
     </div>
+    <div class="col-md-8">
+      <h2>Example code</h2>
+
+      <pre data-fill-from=".js-code-placeholder"></pre>
+
+<script type="text/x-example-code" class="js-code-placeholder">
+$(".js-example-placeholder-single").select2({
+  placeholder: "Select a state"
+});
+
+$(".js-example-placeholder-multiple").select2({
+  placeholder: "Select a state"
+});
+</script>
+    </div>
   </section>
 
   <seection id="data-array" class="row">
@@ -138,22 +153,29 @@ $(".js-example-data-array-selected").select2({
     </div>
   </section>
 
-  <section id="data-ajax">
-    <h1>Loading remote data</h1>
+  <section id="data-ajax row">
+    <div class="col-md-12">
+      <h1>Loading remote data</h1>
 
-    <p>
-      Select2 comes with AJAX support built in, using jQuery's AJAX methods.
-    </p>
+      <p>
+        Select2 comes with AJAX support built in, using jQuery's AJAX methods.
+      </p>
 
-    <p>
-      <select class="js-example-data-ajax form-control"></select>
-    </p>
+      <p>
+        <select class="js-example-data-ajax form-control"></select>
+      </p>
 
-    <pre data-fill-from=".js-code-data-ajax"></pre>
+      <pre data-fill-from=".js-code-data-ajax"></pre>
+
+      <p>
+        Select2 will pass any options in the <code>ajax</code> object to
+        jQuery's <code>$.ajax</code> function.
+      </p>
 
 <script type="text/x-example-code" class="js-code-data-ajax">
 
 </script>
+    </div>
   </section>
 </div>
 
