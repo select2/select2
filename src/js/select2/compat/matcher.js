@@ -21,7 +21,7 @@ define([
 
         // Check if the child object matches
         // The old matcher returned a boolean true or false
-        var doesMatch = this.matcher(params.term, child.text);
+        var doesMatch = this.matcher(params.term, child.text, child);
 
         // If the child didn't match, pop it off
         if (!doesMatch) {
@@ -38,7 +38,7 @@ define([
       return match;
     }
 
-    if (this.matcher(params.term, data.text)) {
+    if (this.matcher(params.term, data.text, data)) {
       return match;
     }
 

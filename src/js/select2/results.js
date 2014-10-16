@@ -27,6 +27,8 @@ define([
   Results.prototype.append = function (data) {
     var $options = [];
 
+    data = this.sort(data);
+
     for (var d = 0; d < data.length; d++) {
       var item = data[d];
 
@@ -36,6 +38,10 @@ define([
     }
 
     this.$results.append($options);
+  };
+
+  Results.prototype.sort = function (data) {
+    return data;
   };
 
   Results.prototype.setClasses = function () {
