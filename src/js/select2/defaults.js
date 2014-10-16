@@ -3,6 +3,7 @@ define([
 
   './selection/single',
   './selection/multiple',
+  './selection/placeholder',
 
   './utils',
 
@@ -12,7 +13,9 @@ define([
 
   './dropdown',
   './dropdown/search'
-], function (ResultsList, SingleSelection, MultipleSelection, Utils,
+], function (ResultsList,
+             SingleSelection, MultipleSelection, Placeholder,
+             Utils,
              SelectData, ArrayData, AjaxData,
              Dropdown, Search) {
   function Defaults () {
@@ -47,6 +50,14 @@ define([
         options.selectionAdapter = MultipleSelection;
       } else {
         options.selectionAdapter = SingleSelection;
+      }
+
+      // Add the placeholder mixin if a placeholder was specified
+      if (options.placeholder != null) {
+        options.selectionAdapter = Utils.Decorate(
+          options.selectionAdapter,
+          Placeholder
+        );
       }
     }
 

@@ -353,6 +353,10 @@ define('select2/selection/single',[
     return data.text;
   };
 
+  SingleSelection.prototype.selectionContainer = function () {
+    return $('<span></span>');
+  };
+
   SingleSelection.prototype.update = function (data) {
     if (data.length === 0) {
       this.clear();
@@ -415,6 +419,10 @@ define('select2/selection/multiple',[
     return data.text;
   };
 
+  MultipleSelection.prototype.selectionContainer = function () {
+    return $('<li class="choice"></li>');
+  };
+
   MultipleSelection.prototype.update = function (data) {
     this.clear();
 
@@ -429,7 +437,7 @@ define('select2/selection/multiple',[
 
       var formatted = this.display(selection);
 
-      var $selection = $('<ul class="choice"></ul>');
+      var $selection = this.selectionContainer();
 
       $selection.text(formatted);
       $selection.data('data', data);
@@ -441,6 +449,49 @@ define('select2/selection/multiple',[
   };
 
   return MultipleSelection;
+});
+
+define('select2/selection/placeholder',[
+  '../utils'
+], function (Utils) {
+  function Placeholder (decorated, $element, options) {
+    this.placeholder = this.normalizePlaceholder(options.get('placeholder'));
+
+    decorated.call(this, $element, options);
+  }
+
+  Placeholder.prototype.normalizePlaceholder = function (_, placeholder) {
+    if (typeof placeholder === 'string') {
+      placeholder = {
+        id: '',
+        text: placeholder
+      };
+    }
+
+    return placeholder;
+  };
+
+  Placeholder.prototype.update = function (decorated, data) {
+    var singlePlaceholder = (
+      data.length == 1 && data[0].id != this.placeholder.id
+    );
+    var multipleSelections = data.length > 1;
+
+    if (multipleSelections || singlePlaceholder) {
+      return decorated.call(this, data);
+    }
+
+    this.clear();
+
+    var $placeholder = this.selectionContainer();
+
+    $placeholder.html(this.display(this.placeholder));
+    $placeholder.addClass('placeholder').removeClass('choice');
+
+    this.$selection.find('.rendered-selection').append($placeholder);
+  };
+
+  return Placeholder;
 });
 
 define('select2/data/base',[
@@ -840,6 +891,7 @@ define('select2/defaults',[
 
   './selection/single',
   './selection/multiple',
+  './selection/placeholder',
 
   './utils',
 
@@ -849,7 +901,9 @@ define('select2/defaults',[
 
   './dropdown',
   './dropdown/search'
-], function (ResultsList, SingleSelection, MultipleSelection, Utils,
+], function (ResultsList,
+             SingleSelection, MultipleSelection, Placeholder,
+             Utils,
              SelectData, ArrayData, AjaxData,
              Dropdown, Search) {
   function Defaults () {
@@ -884,6 +938,14 @@ define('select2/defaults',[
         options.selectionAdapter = MultipleSelection;
       } else {
         options.selectionAdapter = SingleSelection;
+      }
+
+      // Add the placeholder mixin if a placeholder was specified
+      if (options.placeholder != null) {
+        options.selectionAdapter = Utils.Decorate(
+          options.selectionAdapter,
+          Placeholder
+        );
       }
     }
 

@@ -44,6 +44,10 @@ define([
     return data.text;
   };
 
+  MultipleSelection.prototype.selectionContainer = function () {
+    return $('<li class="choice"></li>');
+  };
+
   MultipleSelection.prototype.update = function (data) {
     this.clear();
 
@@ -58,7 +62,7 @@ define([
 
       var formatted = this.display(selection);
 
-      var $selection = $('<ul class="choice"></ul>');
+      var $selection = this.selectionContainer();
 
       $selection.text(formatted);
       $selection.data('data', data);

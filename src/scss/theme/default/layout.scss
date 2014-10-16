@@ -1,13 +1,17 @@
 .select2-container.select2-theme-default {
   .selection {
     .single-select {
-      background-color: #eee;
+      background-color: #fff;
       border: 1px solid #aaa;
       border-radius: 4px;
 
       .rendered-selection {
         color: #444;
         line-height: 28px;
+
+        .placeholder {
+          color: #999;
+        }
       }
     }
 
@@ -21,6 +25,12 @@
         margin: 0;
         padding: 5px;
         padding-bottom: 0;
+
+        .placeholder {
+          color: #999;
+
+          float: left;
+        }
 
         .choice {
           background-color: #e4e4e4;

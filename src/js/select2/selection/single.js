@@ -49,6 +49,10 @@ define([
     return data.text;
   };
 
+  SingleSelection.prototype.selectionContainer = function () {
+    return $('<span></span>');
+  };
+
   SingleSelection.prototype.update = function (data) {
     if (data.length === 0) {
       this.clear();

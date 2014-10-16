@@ -76,7 +76,9 @@ $(".js-example-basic-multiple").select2();
       </p>
 
       <p>
-        <select class="js-example-placeholder-single js-states form-control"></select>
+        <select class="js-example-placeholder-single js-states form-control">
+          <option></option>
+        </select>
       </p>
 
       <p>
@@ -273,7 +275,7 @@ var $states = $(".js-source-states");
 var statesOptions = $states.html();
 $states.remove();
 
-$(".js-states").html(statesOptions);
+$(".js-states").append(statesOptions);
 
 $("[data-fill-from]").each(function () {
   var $this = $(this);
