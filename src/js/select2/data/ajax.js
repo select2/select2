@@ -4,7 +4,7 @@ define([
   'jquery'
 ], function (ArrayAdapter, Utils, $) {
   function AjaxAdapter ($element, options) {
-    this.ajaxOptions = options.options.ajax;
+    this.ajaxOptions = options.get('ajax');
 
     this.processResults = this.ajaxOptions.processResults ||
       function (results) {

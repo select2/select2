@@ -10248,7 +10248,7 @@ define('select2/data/ajax',[
   'jquery'
 ], function (ArrayAdapter, Utils, $) {
   function AjaxAdapter ($element, options) {
-    this.ajaxOptions = options.options.ajax;
+    this.ajaxOptions = options.get('ajax');
 
     this.processResults = this.ajaxOptions.processResults ||
       function (results) {
@@ -10348,7 +10348,7 @@ define('select2/dropdown/search',[
   return Search;
 });
 
-define('select2/options',[
+define('select2/defaults',[
   './results',
 
   './selection/single',
@@ -10365,31 +10365,71 @@ define('select2/options',[
 ], function (ResultsList, SingleSelection, MultipleSelection, Utils,
              SelectData, ArrayData, AjaxData,
              Dropdown, Search) {
-  function Options (options) {
-    this.options = options;
+  function Defaults () {
+    this.reset();
+  }
 
-    if (options.ajax) {
-      this.dataAdapter = this.dataAdapter || AjaxData;
-    } else if (options.data) {
-      this.dataAdapter = this.dataAdapter || ArrayData;
-    } else {
-      this.dataAdapter = this.dataAdapter || SelectData;
-    }
+  Defaults.prototype.apply = function (options) {
+    options = $.extend({}, options, this.defaults);
 
-    var SearchableDropdown = Utils.Decorate(Dropdown, Search);
-
-    this.resultsAdapter = ResultsList;
-    this.dropdownAdapter = options.dropdownAdapter || SearchableDropdown;
-    this.selectionAdapter = options.selectionAdapter;
-
-    if (this.selectionAdapter == null) {
-      if (this.options.multiple) {
-        this.selectionAdapter = MultipleSelection;
+    if (options.dataAdapter == null) {
+      if (options.ajax) {
+        options.dataAdapter = AjaxData;
+      } else if (options.data) {
+        options.dataAdapter = ArrayData;
       } else {
-        this.selectionAdapter = SingleSelection;
+        options.dataAdapter = SelectData;
       }
     }
+
+    if (options.resultsAdapter == null) {
+      options.resultsAdapter = ResultsList;
+    }
+
+    if (options.dropdownAdapter == null) {
+      var SearchableDropdown = Utils.Decorate(Dropdown, Search);
+
+      options.dropdownAdapter = SearchableDropdown;
+    }
+
+    if (options.selectionAdapter == null) {
+      if (options.multiple) {
+        options.selectionAdapter = MultipleSelection;
+      } else {
+        options.selectionAdapter = SingleSelection;
+      }
+    }
+
+    return options;
+  };
+
+  Defaults.prototype.reset = function () {
+    this.defaults = { };
+  };
+
+  var defaults = new Defaults();
+
+  return defaults;
+});
+
+define('select2/options',[
+  './defaults'
+], function (Defaults) {
+  function Options (options) {
+    this.options = Defaults.apply(options);
   }
+
+  Options.prototype.fromElement = function ($e) {
+    return this;
+  };
+
+  Options.prototype.get = function (key) {
+    return this.options[key];
+  };
+
+  Options.prototype.set = function (key, val) {
+    this.options[key] = val;
+  };
 
   return Options;
 });
@@ -10412,7 +10452,8 @@ define('select2/core',[
 
     // Set up containers and adapters
 
-    this.data = new this.options.dataAdapter($element, this.options);
+    var DataAdapter = this.options.get('dataAdapter');
+    this.data = new DataAdapter($element, this.options);
 
     var $container = this.render();
     this.$container = $container;
@@ -10421,22 +10462,24 @@ define('select2/core',[
 
     $container.width($element.outerWidth(false));
 
-    this.selection = new this.options.selectionAdapter($element, this.options);
+    var SelectionAdapter = this.options.get('selectionAdapter');
+    this.selection = new SelectionAdapter($element, this.options);
 
     var $selectionContainer = $container.find('.selection');
     var $selection = this.selection.render();
 
     $selectionContainer.append($selection);
 
-    this.dropdown = new this.options.dropdownAdapter($element, this.options);
+    var DropdownAdapter = this.options.get('dropdownAdapter');
+    this.dropdown = new DropdownAdapter($element, this.options);
 
     var $dropdownContainer = $container.find('.dropdown-wrapper');
     var $dropdown = this.dropdown.render();
 
     $dropdownContainer.append($dropdown);
 
-    this.results = new this.options.resultsAdapter(
-      $element, this.options, this.data);
+    var ResultsAdapter = this.options.get('resultsAdapter');
+    this.results = new ResultsAdapter($element, this.options, this.data);
 
     var $resultsContainer = $dropdown.find('.results');
     var $results = this.results.render();

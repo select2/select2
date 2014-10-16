@@ -16,7 +16,8 @@ define([
 
     // Set up containers and adapters
 
-    this.data = new this.options.dataAdapter($element, this.options);
+    var DataAdapter = this.options.get('dataAdapter');
+    this.data = new DataAdapter($element, this.options);
 
     var $container = this.render();
     this.$container = $container;
@@ -25,22 +26,24 @@ define([
 
     $container.width($element.outerWidth(false));
 
-    this.selection = new this.options.selectionAdapter($element, this.options);
+    var SelectionAdapter = this.options.get('selectionAdapter');
+    this.selection = new SelectionAdapter($element, this.options);
 
     var $selectionContainer = $container.find('.selection');
     var $selection = this.selection.render();
 
     $selectionContainer.append($selection);
 
-    this.dropdown = new this.options.dropdownAdapter($element, this.options);
+    var DropdownAdapter = this.options.get('dropdownAdapter');
+    this.dropdown = new DropdownAdapter($element, this.options);
 
     var $dropdownContainer = $container.find('.dropdown-wrapper');
     var $dropdown = this.dropdown.render();
 
     $dropdownContainer.append($dropdown);
 
-    this.results = new this.options.resultsAdapter(
-      $element, this.options, this.data);
+    var ResultsAdapter = this.options.get('resultsAdapter');
+    this.results = new ResultsAdapter($element, this.options, this.data);
 
     var $resultsContainer = $dropdown.find('.results');
     var $results = this.results.render();
