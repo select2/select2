@@ -128,7 +128,6 @@ define([
         };
       } else if ($option.is('optgroup')) {
         data = {
-          id: -1,
           text: $option.attr('label'),
           children: []
         };
@@ -177,7 +176,7 @@ define([
       return match;
     }
 
-    if (data.text.indexOf(params.term) > -1) {
+    if (data.text.toUpperCase().indexOf(params.term.toUpperCase()) > -1) {
       return match;
     }
 

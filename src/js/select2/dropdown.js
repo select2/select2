@@ -17,5 +17,9 @@ define([
     return $dropdown;
   };
 
+  Dropdown.prototype.bind = function (container, $container) {
+    // Can be implemented in subclasses
+  };
+
   return Dropdown;
 });

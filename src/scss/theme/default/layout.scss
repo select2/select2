@@ -49,6 +49,12 @@
   }
 
   .dropdown {
+    .search {
+      input {
+        border: 1px solid #aaa;
+      }
+    }
+
     .results {
       max-height: 200px;
       overflow-y: scroll;

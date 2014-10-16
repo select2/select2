@@ -193,7 +193,7 @@ define('select2/results',[
         var $option = $(this);
         var item = $option.data('data');
 
-        if (selectedIds.indexOf(item.id.toString()) > -1) {
+        if (item.id != null && selectedIds.indexOf(item.id.toString()) > -1) {
           $option.addClass('selected');
         }
       });
@@ -205,7 +205,7 @@ define('select2/results',[
       '<li class="option highlightable selectable"></li>'
     );
 
-    if (data.children && data.children.length > 0) {
+    if (data.children) {
       $option.addClass('group').removeClass('highlightable selectable');
 
       var $label = $('<strong class="group-label"></strong>');
@@ -233,6 +233,10 @@ define('select2/results',[
 
     if (data.disabled) {
       $option.removeClass('selectable highlightable').addClass('disabled');
+    }
+
+    if (data.id == null) {
+      $option.removeClass('selectable highlightable');
     }
 
     $option.data('data', data);
@@ -290,28 +294,6 @@ define('select2/results',[
   };
 
   return Results;
-});
-
-define('select2/dropdown',[
-  './utils'
-], function (Utils) {
-  function Dropdown ($element, options) {
-    this.$element = $element;
-  }
-
-  Utils.Extend(Dropdown, Utils.Observable);
-
-  Dropdown.prototype.render = function () {
-    var $dropdown = $(
-      '<span class="dropdown">' +
-        '<span class="results"></span>' +
-      '</span>'
-    );
-
-    return $dropdown;
-  };
-
-  return Dropdown;
 });
 
 define('select2/selection/single',[
@@ -605,7 +587,6 @@ define('select2/data/select',[
         };
       } else if ($option.is('optgroup')) {
         data = {
-          id: -1,
           text: $option.attr('label'),
           children: []
         };
@@ -654,7 +635,7 @@ define('select2/data/select',[
       return match;
     }
 
-    if (data.text.indexOf(params.term) > -1) {
+    if (data.text.toUpperCase().indexOf(params.term.toUpperCase()) > -1) {
       return match;
     }
 
@@ -769,19 +750,83 @@ define('select2/data/ajax',[
   return AjaxAdapter;
 });
 
+define('select2/dropdown',[
+  './utils'
+], function (Utils) {
+  function Dropdown ($element, options) {
+    this.$element = $element;
+  }
+
+  Utils.Extend(Dropdown, Utils.Observable);
+
+  Dropdown.prototype.render = function () {
+    var $dropdown = $(
+      '<span class="dropdown">' +
+        '<span class="results"></span>' +
+      '</span>'
+    );
+
+    return $dropdown;
+  };
+
+  Dropdown.prototype.bind = function (container, $container) {
+    // Can be implemented in subclasses
+  };
+
+  return Dropdown;
+});
+
+define('select2/dropdown/search',[
+
+], function () {
+  function Search () { }
+
+  Search.prototype.render = function (decorated) {
+    var $rendered = decorated.call(this);
+
+    var $search = $(
+      '<span class="search">' +
+        '<input type="search" name="search" />' +
+      '</span>'
+    );
+
+    this.$search = $search.find('input');
+
+    $rendered.prepend($search);
+
+    return $rendered;
+  };
+
+  Search.prototype.bind = function (decorated, container, $container) {
+    decorated.call(this, container, $container);
+
+    this.$search.on('keyup', function () {
+      container.trigger('query', {
+        term: $(this).val()
+      });
+    });
+  };
+
+  return Search;
+});
+
 define('select2/options',[
   './results',
-
-  './dropdown',
 
   './selection/single',
   './selection/multiple',
 
+  './utils',
+
   './data/select',
   './data/array',
-  './data/ajax'
-], function (ResultsList, Dropdown, SingleSelection, MultipleSelection,
-             SelectData, ArrayData, AjaxData) {
+  './data/ajax',
+
+  './dropdown',
+  './dropdown/search'
+], function (ResultsList, SingleSelection, MultipleSelection, Utils,
+             SelectData, ArrayData, AjaxData,
+             Dropdown, Search) {
   function Options (options) {
     this.options = options;
 
@@ -793,8 +838,10 @@ define('select2/options',[
       this.dataAdapter = this.dataAdapter || SelectData;
     }
 
+    var SearchableDropdown = Utils.Decorate(Dropdown, Search);
+
     this.resultsAdapter = ResultsList;
-    this.dropdownAdapter = options.dropdownAdapter || Dropdown;
+    this.dropdownAdapter = options.dropdownAdapter || SearchableDropdown;
     this.selectionAdapter = options.selectionAdapter;
 
     if (this.selectionAdapter == null) {
@@ -864,6 +911,8 @@ define('select2/core',[
 
     this.data.bind(this, $container);
     this.selection.bind(this, $container);
+
+    this.dropdown.bind(this, $container);
     this.results.bind(this, $container);
 
     this.$element.on('change', function () {
@@ -906,9 +955,13 @@ define('select2/core',[
       });
     });
 
-    this.data.query({}, function (data) {
-      self.results.trigger('results:all', data);
+    this.on('query', function (params) {
+      this.data.query(params, function (data) {
+        self.results.trigger('results:all', data);
+      });
     });
+
+    this.trigger('query', {});
 
     // Hide the original select
 

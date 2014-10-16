@@ -53,6 +53,8 @@ define([
 
     this.data.bind(this, $container);
     this.selection.bind(this, $container);
+
+    this.dropdown.bind(this, $container);
     this.results.bind(this, $container);
 
     this.$element.on('change', function () {
@@ -95,9 +97,13 @@ define([
       });
     });
 
-    this.data.query({}, function (data) {
-      self.results.trigger('results:all', data);
+    this.on('query', function (params) {
+      this.data.query(params, function (data) {
+        self.results.trigger('results:all', data);
+      });
     });
+
+    this.trigger('query', {});
 
     // Hide the original select
 

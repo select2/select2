@@ -1,16 +1,20 @@
 define([
   './results',
 
-  './dropdown',
-
   './selection/single',
   './selection/multiple',
 
+  './utils',
+
   './data/select',
   './data/array',
-  './data/ajax'
-], function (ResultsList, Dropdown, SingleSelection, MultipleSelection,
-             SelectData, ArrayData, AjaxData) {
+  './data/ajax',
+
+  './dropdown',
+  './dropdown/search'
+], function (ResultsList, SingleSelection, MultipleSelection, Utils,
+             SelectData, ArrayData, AjaxData,
+             Dropdown, Search) {
   function Options (options) {
     this.options = options;
 
@@ -22,8 +26,10 @@ define([
       this.dataAdapter = this.dataAdapter || SelectData;
     }
 
+    var SearchableDropdown = Utils.Decorate(Dropdown, Search);
+
     this.resultsAdapter = ResultsList;
-    this.dropdownAdapter = options.dropdownAdapter || Dropdown;
+    this.dropdownAdapter = options.dropdownAdapter || SearchableDropdown;
     this.selectionAdapter = options.selectionAdapter;
 
     if (this.selectionAdapter == null) {

@@ -54,7 +54,7 @@ define([
         var $option = $(this);
         var item = $option.data('data');
 
-        if (selectedIds.indexOf(item.id.toString()) > -1) {
+        if (item.id != null && selectedIds.indexOf(item.id.toString()) > -1) {
           $option.addClass('selected');
         }
       });
@@ -66,7 +66,7 @@ define([
       '<li class="option highlightable selectable"></li>'
     );
 
-    if (data.children && data.children.length > 0) {
+    if (data.children) {
       $option.addClass('group').removeClass('highlightable selectable');
 
       var $label = $('<strong class="group-label"></strong>');
@@ -94,6 +94,10 @@ define([
 
     if (data.disabled) {
       $option.removeClass('selectable highlightable').addClass('disabled');
+    }
+
+    if (data.id == null) {
+      $option.removeClass('selectable highlightable');
     }
 
     $option.data('data', data);
