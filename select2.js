@@ -46,7 +46,7 @@ the specific language governing permissions and limitations under the Apache Lic
         return;
     }
 
-    var KEY, AbstractSelect2, SingleSelect2, MultiSelect2, nextUid, sizer,
+    var AbstractSelect2, SingleSelect2, MultiSelect2, nextUid, sizer,
         lastMousePosition={x:0,y:0}, $document, scrollBarDimensions,
 
     KEY = {
@@ -1404,7 +1404,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             // create the dropdown mask if doesn't already exist
             mask = $("#select2-drop-mask");
-            if (mask.length == 0) {
+            if (mask.length === 0) {
                 mask = $(document.createElement("div"));
                 mask.attr("id","select2-drop-mask").attr("class","select2-drop-mask");
                 mask.hide();
