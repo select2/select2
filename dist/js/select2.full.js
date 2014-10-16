@@ -9791,15 +9791,15 @@ define('select2/results',[
   Results.prototype.bind = function (container, $container) {
     var self = this;
 
-    this.on('results:all', function (data) {
+    container.on('results:all', function (params) {
       self.clear();
-      self.append(data);
+      self.append(params.data);
 
       self.setClasses();
     });
 
-    this.on('results:append', function (data) {
-      self.append(data);
+    container.on('results:append', function (params) {
+      self.append(params.data);
 
       self.setClasses();
     });
@@ -10334,6 +10334,7 @@ define('select2/dropdown/search',[
       '</span>'
     );
 
+    this.$searchContainer = $search;
     this.$search = $search.find('input');
 
     $rendered.prepend($search);
@@ -10342,6 +10343,8 @@ define('select2/dropdown/search',[
   };
 
   Search.prototype.bind = function (decorated, container, $container) {
+    var self = this;
+
     decorated.call(this, container, $container);
 
     this.$search.on('keyup', function () {
@@ -10349,6 +10352,22 @@ define('select2/dropdown/search',[
         term: $(this).val()
       });
     });
+
+    container.on('results:all', function (params) {
+      if (params.query.term == null || params.query.term === '') {
+        var showSearch = self.showSearch(params);
+
+        if (showSearch) {
+          self.$searchContainer.show();
+        } else {
+          self.$searchContainer.hide();
+        }
+      }
+    });
+  };
+
+  Search.prototype.showSearch = function (params) {
+    return true;
   };
 
   return Search;
@@ -10544,7 +10563,10 @@ define('select2/core',[
 
     this.on('query', function (params) {
       this.data.query(params, function (data) {
-        self.results.trigger('results:all', data);
+        self.trigger('results:all', {
+          data: data,
+          query: params
+        });
       });
     });
 

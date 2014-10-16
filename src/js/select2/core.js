@@ -102,7 +102,10 @@ define([
 
     this.on('query', function (params) {
       this.data.query(params, function (data) {
-        self.results.trigger('results:all', data);
+        self.trigger('results:all', {
+          data: data,
+          query: params
+        });
       });
     });
 

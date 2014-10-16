@@ -114,15 +114,15 @@ define([
   Results.prototype.bind = function (container, $container) {
     var self = this;
 
-    this.on('results:all', function (data) {
+    container.on('results:all', function (params) {
       self.clear();
-      self.append(data);
+      self.append(params.data);
 
       self.setClasses();
     });
 
-    this.on('results:append', function (data) {
-      self.append(data);
+    container.on('results:append', function (params) {
+      self.append(params.data);
 
       self.setClasses();
     });
