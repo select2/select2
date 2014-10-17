@@ -31,6 +31,18 @@ define([
       });
     });
 
+    this.$selection.on('click', '.remove', function (evt) {
+      var $remove = $(this);
+      var $selection = $remove.parent();
+
+      var data = $selection.data('data');
+
+      self.trigger('unselected', {
+        originalEvent: evt,
+        data: data
+      });
+    });
+
     container.on('selection:update', function (params) {
       self.update(params.data);
     });
@@ -45,7 +57,13 @@ define([
   };
 
   MultipleSelection.prototype.selectionContainer = function () {
-    return $('<li class="choice"></li>');
+    var $container = $(
+      '<li class="choice">' +
+        '<span class="remove">&times;</span>' +
+      '</li>'
+    );
+
+    return $container;
   };
 
   MultipleSelection.prototype.update = function (data) {
@@ -61,11 +79,10 @@ define([
       var selection = data[d];
 
       var formatted = this.display(selection);
-
       var $selection = this.selectionContainer();
 
-      $selection.text(formatted);
-      $selection.data('data', data);
+      $selection.append(formatted);
+      $selection.data('data', selection);
 
       $selections.push($selection);
     }

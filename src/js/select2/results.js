@@ -127,6 +127,14 @@ define([
       self.setClasses();
     });
 
+    container.on('select', function () {
+      self.setClasses();
+    });
+
+    container.on('unselect', function () {
+      self.setClasses();
+    });
+
     this.$results.on('mouseup', '.option.selectable', function (evt) {
       var $this = $(this);
 
@@ -137,8 +145,6 @@ define([
           data: data
         });
 
-        self.setClasses();
-
         return;
       }
 
@@ -146,8 +152,6 @@ define([
         originalEvent: evt,
         data: data
       });
-
-      self.setClasses();
     });
 
     this.$results.on('mouseenter', '.option.highlightable', function (evt) {

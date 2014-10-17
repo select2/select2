@@ -72,6 +72,12 @@ define([
       self.toggleDropdown();
     });
 
+    this.selection.on('unselected', function (params) {
+      self.trigger('unselect', params);
+
+      self.trigger('close');
+    });
+
     this.results.on('selected', function (params) {
       self.trigger('select', params);
 

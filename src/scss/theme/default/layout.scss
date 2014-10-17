@@ -43,6 +43,18 @@
           margin-right: 5px;
           margin-bottom: 5px;
           padding: 0 5px;
+
+          .remove {
+            color: #999;
+            display: inline-block;
+            font-weight: bold;
+
+            margin-right: 2px;
+
+            &:hover {
+              color: #333;
+            }
+          }
         }
       }
     }

@@ -94,6 +94,13 @@
       margin-right: 5px;
       margin-bottom: 5px;
       padding: 0 5px; }
+      .select2-container.select2-theme-default .selection .multiple-select .rendered-selection .choice .remove {
+        color: #999;
+        display: inline-block;
+        font-weight: bold;
+        margin-right: 2px; }
+        .select2-container.select2-theme-default .selection .multiple-select .rendered-selection .choice .remove:hover {
+          color: #333; }
 .select2-container.select2-theme-default.open .selection .single-select, .select2-container.select2-theme-default.open .selection .multiple-select {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0; }

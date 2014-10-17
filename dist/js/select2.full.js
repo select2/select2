@@ -9804,6 +9804,14 @@ define('select2/results',[
       self.setClasses();
     });
 
+    container.on('select', function () {
+      self.setClasses();
+    });
+
+    container.on('unselect', function () {
+      self.setClasses();
+    });
+
     this.$results.on('mouseup', '.option.selectable', function (evt) {
       var $this = $(this);
 
@@ -9814,8 +9822,6 @@ define('select2/results',[
           data: data
         });
 
-        self.setClasses();
-
         return;
       }
 
@@ -9823,8 +9829,6 @@ define('select2/results',[
         originalEvent: evt,
         data: data
       });
-
-      self.setClasses();
     });
 
     this.$results.on('mouseenter', '.option.highlightable', function (evt) {
@@ -9944,6 +9948,18 @@ define('select2/selection/multiple',[
       });
     });
 
+    this.$selection.on('click', '.remove', function (evt) {
+      var $remove = $(this);
+      var $selection = $remove.parent();
+
+      var data = $selection.data('data');
+
+      self.trigger('unselected', {
+        originalEvent: evt,
+        data: data
+      });
+    });
+
     container.on('selection:update', function (params) {
       self.update(params.data);
     });
@@ -9958,7 +9974,13 @@ define('select2/selection/multiple',[
   };
 
   MultipleSelection.prototype.selectionContainer = function () {
-    return $('<li class="choice"></li>');
+    var $container = $(
+      '<li class="choice">' +
+        '<span class="remove">&times;</span>' +
+      '</li>'
+    );
+
+    return $container;
   };
 
   MultipleSelection.prototype.update = function (data) {
@@ -9974,11 +9996,10 @@ define('select2/selection/multiple',[
       var selection = data[d];
 
       var formatted = this.display(selection);
-
       var $selection = this.selectionContainer();
 
-      $selection.text(formatted);
-      $selection.data('data', data);
+      $selection.append(formatted);
+      $selection.data('data', selection);
 
       $selections.push($selection);
     }
@@ -10593,6 +10614,12 @@ define('select2/core',[
 
     this.selection.on('toggle', function () {
       self.toggleDropdown();
+    });
+
+    this.selection.on('unselected', function (params) {
+      self.trigger('unselect', params);
+
+      self.trigger('close');
     });
 
     this.results.on('selected', function (params) {
