@@ -81,6 +81,12 @@ define([
     this.selection.on('results:select', function () {
       self.trigger('results:select');
     });
+    this.selection.on('results:previous', function () {
+      self.trigger('results:previous');
+    });
+    this.selection.on('results:next', function () {
+      self.trigger('results:next');
+    });
 
     this.selection.on('unselected', function (params) {
       self.trigger('unselect', params);

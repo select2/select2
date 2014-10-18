@@ -305,6 +305,10 @@ define('select2/results',[
     container.on('results:select', function () {
       var $highlighted = self.$results.find('.highlighted');
 
+      if ($highlighted.length === 0) {
+        return;
+      }
+
       var data = $highlighted.data('data');
 
       if ($highlighted.attr('aria-selected') == 'true') {
@@ -316,6 +320,49 @@ define('select2/results',[
           data: data
         });
       }
+    });
+
+    container.on('results:previous', function () {
+      var $highlighted = self.$results.find('.highlighted');
+
+      var $options = self.$results.find('[aria-selected]');
+
+      var currentIndex = $options.index($highlighted);
+
+      // If we are already at te top, don't move further
+      if (currentIndex === 0) {
+        return;
+      }
+
+      var nextIndex = currentIndex - 1;
+
+      // If none are highlighted, highlight the first
+      if ($highlighted.length === 0) {
+        nextIndex = 0;
+      }
+
+      var $next = $options.eq(nextIndex);
+
+      $next.trigger('mouseenter');
+    });
+
+    container.on('results:next', function () {
+      var $highlighted = self.$results.find('.highlighted');
+
+      var $options = self.$results.find('[aria-selected]');
+
+      var currentIndex = $options.index($highlighted);
+
+      var nextIndex = currentIndex + 1;
+
+      // If we are at the last option, stay there
+      if (nextIndex >= $options.length) {
+        return;
+      }
+
+      var $next = $options.eq(nextIndex);
+
+      $next.trigger('mouseenter');
     });
 
     this.$results.on('mouseup', '.option[aria-selected]', function (evt) {
@@ -477,6 +524,10 @@ define('select2/selection/single',[
       if (container.isOpen()) {
         if (key == KEYS.ENTER) {
           self.trigger('results:select');
+        } else if (key == KEYS.UP) {
+          self.trigger('results:previous');
+        } else if (key == KEYS.DOWN) {
+          self.trigger('results:next');
         }
       } else {
         if (key == KEYS.ENTER || key == KEYS.SPACE) {
@@ -1238,6 +1289,12 @@ define('select2/core',[
 
     this.selection.on('results:select', function () {
       self.trigger('results:select');
+    });
+    this.selection.on('results:previous', function () {
+      self.trigger('results:previous');
+    });
+    this.selection.on('results:next', function () {
+      self.trigger('results:next');
     });
 
     this.selection.on('unselected', function (params) {

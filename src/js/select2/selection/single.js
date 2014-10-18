@@ -53,6 +53,10 @@ define([
       if (container.isOpen()) {
         if (key == KEYS.ENTER) {
           self.trigger('results:select');
+        } else if (key == KEYS.UP) {
+          self.trigger('results:previous');
+        } else if (key == KEYS.DOWN) {
+          self.trigger('results:next');
         }
       } else {
         if (key == KEYS.ENTER || key == KEYS.SPACE) {
