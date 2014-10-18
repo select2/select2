@@ -306,17 +306,46 @@ define('select2/results',[
   return Results;
 });
 
-define('select2/selection/single',[
+define('select2/selection/base',[
   '../utils'
 ], function (Utils) {
-  function SingleSelection ($element, options) {
+  function BaseSelection ($element, options) {
     this.$element = $element;
     this.options = options;
 
-    SingleSelection.__super__.constructor.call(this);
+    BaseSelection.__super__.constructor.call(this);
   }
 
-  Utils.Extend(SingleSelection, Utils.Observable);
+  Utils.Extend(BaseSelection, Utils.Observable);
+
+  BaseSelection.prototype.render = function () {
+    throw new Error('The `render` method must be defined in child classes.');
+  };
+
+  BaseSelection.prototype.bind = function (container, $container) {
+    var self = this;
+
+    container.on('selection:update', function (params) {
+      self.update(params.data);
+    });
+  };
+
+  BaseSelection.prototype.update = function (data) {
+    throw new Error('The `update` method must be defined in child classes.');
+  };
+
+  return BaseSelection;
+});
+
+define('select2/selection/single',[
+  './base',
+  '../utils'
+], function (BaseSelection, Utils) {
+  function SingleSelection () {
+    SingleSelection.__super__.constructor.apply(this, arguments);
+  }
+
+  Utils.Extend(SingleSelection, BaseSelection);
 
   SingleSelection.prototype.render = function () {
     var $selection = $(
@@ -332,6 +361,8 @@ define('select2/selection/single',[
 
   SingleSelection.prototype.bind = function (container, $container) {
     var self = this;
+
+    SingleSelection.__super__.bind.apply(this, arguments);
 
     this.$selection.on('mousedown', function (evt) {
       // Only respond to left clicks
@@ -378,8 +409,9 @@ define('select2/selection/single',[
 });
 
 define('select2/selection/multiple',[
+  './base',
   '../utils'
-], function (Utils) {
+], function (BaseSelection, Utils) {
   function MultipleSelection ($element, options) {
     this.$element = $element;
     this.options = options;
@@ -387,7 +419,7 @@ define('select2/selection/multiple',[
     MultipleSelection.__super__.constructor.call(this);
   }
 
-  Utils.Extend(MultipleSelection, Utils.Observable);
+  Utils.Extend(MultipleSelection, BaseSelection);
 
   MultipleSelection.prototype.render = function () {
     var $selection = $(
@@ -403,6 +435,8 @@ define('select2/selection/multiple',[
 
   MultipleSelection.prototype.bind = function (container, $container) {
     var self = this;
+
+    MultipleSelection.__super__.bind.apply(this, arguments);
 
     this.$selection.on('click', function (evt) {
       self.trigger('toggle', {
@@ -420,10 +454,6 @@ define('select2/selection/multiple',[
         originalEvent: evt,
         data: data
       });
-    });
-
-    container.on('selection:update', function (params) {
-      self.update(params.data);
     });
   };
 
@@ -530,6 +560,10 @@ define('select2/data/base',[
 
   BaseAdapter.prototype.query = function (params, callback) {
     throw new Error('The `query` method must be defined in child classes.');
+  };
+
+  BaseAdapter.prototype.bind = function (container, $container) {
+    // Can be implemented in subclasses
   };
 
   return BaseAdapter;

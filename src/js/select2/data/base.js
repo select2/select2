@@ -15,5 +15,9 @@ define([
     throw new Error('The `query` method must be defined in child classes.');
   };
 
+  BaseAdapter.prototype.bind = function (container, $container) {
+    // Can be implemented in subclasses
+  };
+
   return BaseAdapter;
 });

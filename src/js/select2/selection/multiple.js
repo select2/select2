@@ -1,6 +1,7 @@
 define([
+  './base',
   '../utils'
-], function (Utils) {
+], function (BaseSelection, Utils) {
   function MultipleSelection ($element, options) {
     this.$element = $element;
     this.options = options;
@@ -8,7 +9,7 @@ define([
     MultipleSelection.__super__.constructor.call(this);
   }
 
-  Utils.Extend(MultipleSelection, Utils.Observable);
+  Utils.Extend(MultipleSelection, BaseSelection);
 
   MultipleSelection.prototype.render = function () {
     var $selection = $(
@@ -24,6 +25,8 @@ define([
 
   MultipleSelection.prototype.bind = function (container, $container) {
     var self = this;
+
+    MultipleSelection.__super__.bind.apply(this, arguments);
 
     this.$selection.on('click', function (evt) {
       self.trigger('toggle', {
@@ -41,10 +44,6 @@ define([
         originalEvent: evt,
         data: data
       });
-    });
-
-    container.on('selection:update', function (params) {
-      self.update(params.data);
     });
   };
 

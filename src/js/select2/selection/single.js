@@ -1,14 +1,12 @@
 define([
+  './base',
   '../utils'
-], function (Utils) {
-  function SingleSelection ($element, options) {
-    this.$element = $element;
-    this.options = options;
-
-    SingleSelection.__super__.constructor.call(this);
+], function (BaseSelection, Utils) {
+  function SingleSelection () {
+    SingleSelection.__super__.constructor.apply(this, arguments);
   }
 
-  Utils.Extend(SingleSelection, Utils.Observable);
+  Utils.Extend(SingleSelection, BaseSelection);
 
   SingleSelection.prototype.render = function () {
     var $selection = $(
@@ -24,6 +22,8 @@ define([
 
   SingleSelection.prototype.bind = function (container, $container) {
     var self = this;
+
+    SingleSelection.__super__.bind.apply(this, arguments);
 
     this.$selection.on('mousedown', function (evt) {
       // Only respond to left clicks
