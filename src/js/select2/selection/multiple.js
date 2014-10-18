@@ -58,7 +58,7 @@ define([
   MultipleSelection.prototype.selectionContainer = function () {
     var $container = $(
       '<li class="choice">' +
-        '<span class="remove">&times;</span>' +
+        '<span class="remove" role="presentation">&times;</span>' +
       '</li>'
     );
 

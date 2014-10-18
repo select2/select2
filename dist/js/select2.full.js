@@ -9689,7 +9689,7 @@ define('select2/results',[
 
   Results.prototype.render = function () {
     var $results = $(
-      '<ul class="options"></ul>'
+      '<ul class="options" role="listbox"></ul>'
     );
 
     this.$results = $results;
@@ -9729,28 +9729,42 @@ define('select2/results',[
         return s.id.toString();
       });
 
-      self.$results.find('.option.selected').removeClass('selected');
-
-      var $options = self.$results.find('.option');
+      var $options = self.$results.find('.option[aria-selected]');
 
       $options.each(function () {
         var $option = $(this);
         var item = $option.data('data');
 
         if (item.id != null && selectedIds.indexOf(item.id.toString()) > -1) {
-          $option.addClass('selected');
+          $option.attr('aria-selected', 'true');
+        } else {
+          $option.attr('aria-selected', 'false');
         }
       });
+
+      var $selected = $options.filter('[aria-selected=true]');
+
+      // Check if there are any selected options
+      if ($selected.length > 0) {
+        // If there are selected options, highlight the first
+        $selected.first().trigger('mouseenter');
+      } else {
+        // If there are no selected options, highlight the first option
+        // in the dropdown
+        $options.first().trigger('mouseenter');
+      }
     });
   };
 
   Results.prototype.option = function (data) {
     var $option = $(
-      '<li class="option highlightable selectable"></li>'
+      '<li class="option" role="option" aria-selected="false"></li>'
     );
 
     if (data.children) {
-      $option.addClass('group').removeClass('highlightable selectable');
+      $option
+        .addClass('group')
+        .removeAttr('aria-selected');
 
       var $label = $('<strong class="group-label"></strong>');
       $label.html(data.text);
@@ -9776,11 +9790,13 @@ define('select2/results',[
     }
 
     if (data.disabled) {
-      $option.removeClass('selectable highlightable').addClass('disabled');
+      $option
+        .removeAttr('aria-selected')
+        .attr('aria-disabled', 'true');
     }
 
     if (data.id == null) {
-      $option.removeClass('selectable highlightable');
+      $option.removeClass('aria-selected');
     }
 
     $option.data('data', data);
@@ -9812,11 +9828,40 @@ define('select2/results',[
       self.setClasses();
     });
 
-    this.$results.on('mouseup', '.option.selectable', function (evt) {
+    container.on('open', function () {
+      // When the dropdown is open, aria-expended="true"
+      self.$results.attr('aria-expanded', 'true');
+
+      self.setClasses();
+    });
+
+    container.on('close', function () {
+      // When the dropdown is closed, aria-expended="false"
+      self.$results.attr('aria-expanded', 'false');
+    });
+
+    container.on('results:select', function () {
+      var $highlighted = self.$results.find('.highlighted');
+
+      var data = $highlighted.data('data');
+
+      if ($highlighted.attr('aria-selected') == 'true') {
+        self.trigger('unselected', {
+          data: data
+        });
+      } else {
+        self.trigger('selected', {
+          data: data
+        });
+      }
+    });
+
+    this.$results.on('mouseup', '.option[aria-selected]', function (evt) {
       var $this = $(this);
 
       var data = $this.data('data');
-      if ($this.hasClass('selected')) {
+
+      if ($this.attr('aria-selected') === 'true') {
         self.trigger('unselected', {
           originalEvent: evt,
           data: data
@@ -9831,7 +9876,7 @@ define('select2/results',[
       });
     });
 
-    this.$results.on('mouseenter', '.option.highlightable', function (evt) {
+    this.$results.on('mouseenter', '.option[aria-selected]', function (evt) {
       self.$results.find('.option.highlighted').removeClass('highlighted');
       $(this).addClass('highlighted');
     });
@@ -9875,10 +9920,51 @@ define('select2/selection/base',[
   return BaseSelection;
 });
 
+define('select2/keys',[
+
+], function () {
+  var KEYS = {
+    BACKSPACE: 8,
+    TAB: 9,
+    ENTER: 13,
+    SHIFT: 16,
+    CTRL: 17,
+    ALT: 18,
+    ESC: 27,
+    SPACE: 32,
+    PAGE_UP: 33,
+    PAGE_DOWN: 34,
+    END: 35,
+    HOME: 36,
+    LEFT: 37,
+    UP: 38,
+    RIGHT: 39,
+    DOWN: 40,
+    DELETE: 46,
+
+    isArrow: function (k) {
+        k = k.which ? k.which : k;
+
+        switch (k) {
+        case KEY.LEFT:
+        case KEY.RIGHT:
+        case KEY.UP:
+        case KEY.DOWN:
+            return true;
+        }
+
+        return false;
+    }
+  };
+
+  return KEYS;
+});
+
 define('select2/selection/single',[
   './base',
-  '../utils'
-], function (BaseSelection, Utils) {
+  '../utils',
+  '../keys'
+], function (BaseSelection, Utils, KEYS) {
   function SingleSelection () {
     SingleSelection.__super__.constructor.apply(this, arguments);
   }
@@ -9887,10 +9973,12 @@ define('select2/selection/single',[
 
   SingleSelection.prototype.render = function () {
     var $selection = $(
-      '<span class="single-select">' +
+      '<span class="single-select" tabindex="0">' +
         '<span class="rendered-selection"></span>' +
       '</span>'
     );
+
+    $selection.attr('title', this.$element.attr('title'));
 
     this.$selection = $selection;
 
@@ -9911,6 +9999,28 @@ define('select2/selection/single',[
       self.trigger('toggle', {
         originalEvent: evt
       });
+    });
+
+    this.$selection.on('focus', function (evt) {
+      // User focuses on the container
+    });
+
+    this.$selection.on('blur', function (evt) {
+      // User exits the container
+    });
+
+    this.$selection.on('keyup', function (evt) {
+      var key = evt.which;
+
+      if (container.isOpen()) {
+        if (key == KEYS.ENTER) {
+          self.trigger('results:select');
+        }
+      } else {
+        if (key == KEYS.ENTER || key == KEYS.SPACE) {
+          self.trigger('open');
+        }
+      }
     });
 
     container.on('selection:update', function (params) {
@@ -10006,7 +10116,7 @@ define('select2/selection/multiple',[
   MultipleSelection.prototype.selectionContainer = function () {
     var $container = $(
       '<li class="choice">' +
-        '<span class="remove">&times;</span>' +
+        '<span class="remove" role="presentation">&times;</span>' +
       '</li>'
     );
 
@@ -10436,7 +10546,7 @@ define('select2/dropdown/search',[
 
     var $search = $(
       '<span class="search">' +
-        '<input type="search" name="search" />' +
+        '<input type="search" name="search" tabindex="-1" role="textbox" />' +
       '</span>'
     );
 
@@ -10457,6 +10567,14 @@ define('select2/dropdown/search',[
       container.trigger('query', {
         term: $(this).val()
       });
+    });
+
+    container.on('open', function () {
+      self.$search.attr('tabindex', 0);
+    });
+
+    container.on('close', function () {
+      self.$search.attr('tabindex', -1);
     });
 
     container.on('results:all', function (params) {
@@ -10646,8 +10764,18 @@ define('select2/core',[
       });
     });
 
+    this.selection.on('open', function () {
+      self.trigger('open');
+    });
+    this.selection.on('close', function () {
+      self.trigger('close');
+    });
     this.selection.on('toggle', function () {
       self.toggleDropdown();
+    });
+
+    this.selection.on('results:select', function () {
+      self.trigger('results:select');
     });
 
     this.selection.on('unselected', function (params) {
@@ -10698,16 +10826,21 @@ define('select2/core',[
     // Hide the original select
 
     $element.hide();
+    $element.attr('tabindex', '-1');
   };
 
   Utils.Extend(Select2, Utils.Observable);
 
   Select2.prototype.toggleDropdown = function () {
-    if (this.$container.hasClass('open')) {
+    if (this.isOpen()) {
       this.trigger('close');
     } else {
       this.trigger('open');
     }
+  };
+
+  Select2.prototype.isOpen = function () {
+    return this.$container.hasClass('open');
   };
 
   Select2.prototype.render = function () {

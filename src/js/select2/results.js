@@ -12,7 +12,7 @@ define([
 
   Results.prototype.render = function () {
     var $results = $(
-      '<ul class="options"></ul>'
+      '<ul class="options" role="listbox"></ul>'
     );
 
     this.$results = $results;
@@ -52,28 +52,42 @@ define([
         return s.id.toString();
       });
 
-      self.$results.find('.option.selected').removeClass('selected');
-
-      var $options = self.$results.find('.option');
+      var $options = self.$results.find('.option[aria-selected]');
 
       $options.each(function () {
         var $option = $(this);
         var item = $option.data('data');
 
         if (item.id != null && selectedIds.indexOf(item.id.toString()) > -1) {
-          $option.addClass('selected');
+          $option.attr('aria-selected', 'true');
+        } else {
+          $option.attr('aria-selected', 'false');
         }
       });
+
+      var $selected = $options.filter('[aria-selected=true]');
+
+      // Check if there are any selected options
+      if ($selected.length > 0) {
+        // If there are selected options, highlight the first
+        $selected.first().trigger('mouseenter');
+      } else {
+        // If there are no selected options, highlight the first option
+        // in the dropdown
+        $options.first().trigger('mouseenter');
+      }
     });
   };
 
   Results.prototype.option = function (data) {
     var $option = $(
-      '<li class="option highlightable selectable"></li>'
+      '<li class="option" role="option" aria-selected="false"></li>'
     );
 
     if (data.children) {
-      $option.addClass('group').removeClass('highlightable selectable');
+      $option
+        .addClass('group')
+        .removeAttr('aria-selected');
 
       var $label = $('<strong class="group-label"></strong>');
       $label.html(data.text);
@@ -99,11 +113,13 @@ define([
     }
 
     if (data.disabled) {
-      $option.removeClass('selectable highlightable').addClass('disabled');
+      $option
+        .removeAttr('aria-selected')
+        .attr('aria-disabled', 'true');
     }
 
     if (data.id == null) {
-      $option.removeClass('selectable highlightable');
+      $option.removeClass('aria-selected');
     }
 
     $option.data('data', data);
@@ -135,11 +151,40 @@ define([
       self.setClasses();
     });
 
-    this.$results.on('mouseup', '.option.selectable', function (evt) {
+    container.on('open', function () {
+      // When the dropdown is open, aria-expended="true"
+      self.$results.attr('aria-expanded', 'true');
+
+      self.setClasses();
+    });
+
+    container.on('close', function () {
+      // When the dropdown is closed, aria-expended="false"
+      self.$results.attr('aria-expanded', 'false');
+    });
+
+    container.on('results:select', function () {
+      var $highlighted = self.$results.find('.highlighted');
+
+      var data = $highlighted.data('data');
+
+      if ($highlighted.attr('aria-selected') == 'true') {
+        self.trigger('unselected', {
+          data: data
+        });
+      } else {
+        self.trigger('selected', {
+          data: data
+        });
+      }
+    });
+
+    this.$results.on('mouseup', '.option[aria-selected]', function (evt) {
       var $this = $(this);
 
       var data = $this.data('data');
-      if ($this.hasClass('selected')) {
+
+      if ($this.attr('aria-selected') === 'true') {
         self.trigger('unselected', {
           originalEvent: evt,
           data: data
@@ -154,7 +199,7 @@ define([
       });
     });
 
-    this.$results.on('mouseenter', '.option.highlightable', function (evt) {
+    this.$results.on('mouseenter', '.option[aria-selected]', function (evt) {
       self.$results.find('.option.highlighted').removeClass('highlighted');
       $(this).addClass('highlighted');
     });

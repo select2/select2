@@ -68,8 +68,18 @@ define([
       });
     });
 
+    this.selection.on('open', function () {
+      self.trigger('open');
+    });
+    this.selection.on('close', function () {
+      self.trigger('close');
+    });
     this.selection.on('toggle', function () {
       self.toggleDropdown();
+    });
+
+    this.selection.on('results:select', function () {
+      self.trigger('results:select');
     });
 
     this.selection.on('unselected', function (params) {
@@ -120,16 +130,21 @@ define([
     // Hide the original select
 
     $element.hide();
+    $element.attr('tabindex', '-1');
   };
 
   Utils.Extend(Select2, Utils.Observable);
 
   Select2.prototype.toggleDropdown = function () {
-    if (this.$container.hasClass('open')) {
+    if (this.isOpen()) {
       this.trigger('close');
     } else {
       this.trigger('open');
     }
+  };
+
+  Select2.prototype.isOpen = function () {
+    return this.$container.hasClass('open');
   };
 
   Select2.prototype.render = function () {

@@ -93,15 +93,15 @@
             }
           }
 
-          &.disabled {
+          &[aria-disabled=true] {
             color: #666;
           }
 
-          &.selected {
+          &[aria-selected=true] {
             background-color: #ddd;
           }
 
-          &.highlightable.highlighted {
+          &[aria-selected].highlighted {
             background-color: #5897fb;
             color: white;
           }

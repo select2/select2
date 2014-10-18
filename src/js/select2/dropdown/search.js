@@ -8,7 +8,7 @@ define([
 
     var $search = $(
       '<span class="search">' +
-        '<input type="search" name="search" />' +
+        '<input type="search" name="search" tabindex="-1" role="textbox" />' +
       '</span>'
     );
 
@@ -29,6 +29,14 @@ define([
       container.trigger('query', {
         term: $(this).val()
       });
+    });
+
+    container.on('open', function () {
+      self.$search.attr('tabindex', 0);
+    });
+
+    container.on('close', function () {
+      self.$search.attr('tabindex', -1);
     });
 
     container.on('results:all', function (params) {

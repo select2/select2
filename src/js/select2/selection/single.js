@@ -1,7 +1,8 @@
 define([
   './base',
-  '../utils'
-], function (BaseSelection, Utils) {
+  '../utils',
+  '../keys'
+], function (BaseSelection, Utils, KEYS) {
   function SingleSelection () {
     SingleSelection.__super__.constructor.apply(this, arguments);
   }
@@ -10,10 +11,12 @@ define([
 
   SingleSelection.prototype.render = function () {
     var $selection = $(
-      '<span class="single-select">' +
+      '<span class="single-select" tabindex="0">' +
         '<span class="rendered-selection"></span>' +
       '</span>'
     );
+
+    $selection.attr('title', this.$element.attr('title'));
 
     this.$selection = $selection;
 
@@ -34,6 +37,28 @@ define([
       self.trigger('toggle', {
         originalEvent: evt
       });
+    });
+
+    this.$selection.on('focus', function (evt) {
+      // User focuses on the container
+    });
+
+    this.$selection.on('blur', function (evt) {
+      // User exits the container
+    });
+
+    this.$selection.on('keyup', function (evt) {
+      var key = evt.which;
+
+      if (container.isOpen()) {
+        if (key == KEYS.ENTER) {
+          self.trigger('results:select');
+        }
+      } else {
+        if (key == KEYS.ENTER || key == KEYS.SPACE) {
+          self.trigger('open');
+        }
+      }
     });
 
     container.on('selection:update', function (params) {

@@ -36,11 +36,14 @@
         padding: 0;
 
         .option {
-          cursor: pointer;
           padding: 6px;
 
           user-select: none;
           -webkit-user-select: none;
+
+          &[aria-selected] {
+              cursor: pointer;
+          }
         }
       }
     }
