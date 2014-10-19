@@ -258,7 +258,11 @@ define('select2/results',[
     }
 
     if (data.id == null) {
-      $option.removeClass('aria-selected');
+      $option.removeAttr('aria-selected');
+    }
+
+    if (data._resultId != null) {
+      $option.attr('id', data._resultId);
     }
 
     $option.data('data', data);
@@ -363,6 +367,8 @@ define('select2/results',[
       var $next = $options.eq(nextIndex);
 
       $next.trigger('mouseenter');
+      console.log($next.offset().top, self.$results.parent().scrollTop());
+      //self.$results.parents().scrollTop($next.offset().top);
     });
 
     this.$results.on('mouseup', '.option[aria-selected]', function (evt) {
@@ -482,12 +488,23 @@ define('select2/selection/single',[
 
   SingleSelection.prototype.render = function () {
     var $selection = $(
-      '<span class="single-select" tabindex="0">' +
+      '<span class="single-select" tabindex="0" role="combobox" ' +
+        'aria-autocomplete="list" aria-haspopup="true" aria-expanded="false">' +
         '<span class="rendered-selection"></span>' +
       '</span>'
     );
 
     $selection.attr('title', this.$element.attr('title'));
+
+    var id = 'select2-container-';
+
+    for (var i = 0; i < 4; i++) {
+      var r = Math.floor(Math.random() * 16);
+      id += r.toString(16);
+    }
+
+    $selection.find('.rendered-selection').attr('id', id);
+    $selection.attr('aria-labelledby', id);
 
     this.$selection = $selection;
 
@@ -508,6 +525,16 @@ define('select2/selection/single',[
       self.trigger('toggle', {
         originalEvent: evt
       });
+    });
+
+    container.on('open', function () {
+      // When the dropdown is open, aria-expended="true"
+      self.$selection.attr('aria-expanded', 'true');
+    });
+
+    container.on('close', function () {
+      // When the dropdown is closed, aria-expended="false"
+      self.$selection.attr('aria-expanded', 'false');
     });
 
     this.$selection.on('focus', function (evt) {
@@ -564,6 +591,10 @@ define('select2/selection/single',[
     var formatted = this.display(selection);
 
     this.$selection.find('.rendered-selection').html(formatted);
+
+    if (data[0]._resultId != null) {
+      this.$selection.attr('aria-activedescendent', data[0]._resultId);
+    }
   };
 
   return SingleSelection;
@@ -727,6 +758,25 @@ define('select2/data/base',[
     // Can be implemented in subclasses
   };
 
+  BaseAdapter.prototype.generateResultId = function (data) {
+    var id = '';
+
+    for (var i = 0; i < 4; i++) {
+      var r = Math.floor(Math.random() * 16);
+      id += r.toString(16);
+    }
+
+    if (data.id != null) {
+      id += '-' + data.id.toString();
+    } else {
+      for (var s = 0; s < 4; s++) {
+        var idChar = Math.floor(Math.random() * 16);
+        id += idChar.toString(16);
+      }
+    }
+    return id;
+  };
+
   return BaseAdapter;
 });
 
@@ -876,6 +926,10 @@ define('select2/data/select',[
         }
 
         data.children = children;
+      }
+
+      if (data.id) {
+        data._resultId = this.generateResultId(data);
       }
 
       $option.data('data', data);

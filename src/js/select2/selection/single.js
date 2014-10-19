@@ -11,12 +11,23 @@ define([
 
   SingleSelection.prototype.render = function () {
     var $selection = $(
-      '<span class="single-select" tabindex="0">' +
+      '<span class="single-select" tabindex="0" role="combobox" ' +
+        'aria-autocomplete="list" aria-haspopup="true" aria-expanded="false">' +
         '<span class="rendered-selection"></span>' +
       '</span>'
     );
 
     $selection.attr('title', this.$element.attr('title'));
+
+    var id = 'select2-container-';
+
+    for (var i = 0; i < 4; i++) {
+      var r = Math.floor(Math.random() * 16);
+      id += r.toString(16);
+    }
+
+    $selection.find('.rendered-selection').attr('id', id);
+    $selection.attr('aria-labelledby', id);
 
     this.$selection = $selection;
 
@@ -37,6 +48,16 @@ define([
       self.trigger('toggle', {
         originalEvent: evt
       });
+    });
+
+    container.on('open', function () {
+      // When the dropdown is open, aria-expended="true"
+      self.$selection.attr('aria-expanded', 'true');
+    });
+
+    container.on('close', function () {
+      // When the dropdown is closed, aria-expended="false"
+      self.$selection.attr('aria-expanded', 'false');
     });
 
     this.$selection.on('focus', function (evt) {
@@ -93,6 +114,10 @@ define([
     var formatted = this.display(selection);
 
     this.$selection.find('.rendered-selection').html(formatted);
+
+    if (data[0]._resultId != null) {
+      this.$selection.attr('aria-activedescendent', data[0]._resultId);
+    }
   };
 
   return SingleSelection;

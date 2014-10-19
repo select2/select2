@@ -19,5 +19,24 @@ define([
     // Can be implemented in subclasses
   };
 
+  BaseAdapter.prototype.generateResultId = function (data) {
+    var id = '';
+
+    for (var i = 0; i < 4; i++) {
+      var r = Math.floor(Math.random() * 16);
+      id += r.toString(16);
+    }
+
+    if (data.id != null) {
+      id += '-' + data.id.toString();
+    } else {
+      for (var s = 0; s < 4; s++) {
+        var idChar = Math.floor(Math.random() * 16);
+        id += idChar.toString(16);
+      }
+    }
+    return id;
+  };
+
   return BaseAdapter;
 });

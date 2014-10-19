@@ -146,6 +146,10 @@ define([
         data.children = children;
       }
 
+      if (data.id) {
+        data._resultId = this.generateResultId(data);
+      }
+
       $option.data('data', data);
     }
 

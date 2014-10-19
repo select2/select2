@@ -119,7 +119,11 @@ define([
     }
 
     if (data.id == null) {
-      $option.removeClass('aria-selected');
+      $option.removeAttr('aria-selected');
+    }
+
+    if (data._resultId != null) {
+      $option.attr('id', data._resultId);
     }
 
     $option.data('data', data);
@@ -224,6 +228,8 @@ define([
       var $next = $options.eq(nextIndex);
 
       $next.trigger('mouseenter');
+      console.log($next.offset().top, self.$results.parent().scrollTop());
+      //self.$results.parents().scrollTop($next.offset().top);
     });
 
     this.$results.on('mouseup', '.option[aria-selected]', function (evt) {
