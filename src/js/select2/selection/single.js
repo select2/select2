@@ -19,16 +19,6 @@ define([
 
     $selection.attr('title', this.$element.attr('title'));
 
-    var id = 'select2-container-';
-
-    for (var i = 0; i < 4; i++) {
-      var r = Math.floor(Math.random() * 16);
-      id += r.toString(16);
-    }
-
-    $selection.find('.rendered-selection').attr('id', id);
-    $selection.attr('aria-labelledby', id);
-
     this.$selection = $selection;
 
     return $selection;
@@ -38,6 +28,11 @@ define([
     var self = this;
 
     SingleSelection.__super__.bind.apply(this, arguments);
+
+    var id = container.id + '-container';
+
+    this.$selection.find('.rendered-selection').attr('id', id);
+    this.$selection.attr('aria-labelledby', id);
 
     this.$selection.on('mousedown', function (evt) {
       // Only respond to left clicks

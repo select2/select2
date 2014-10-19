@@ -6,6 +6,16 @@ define([
   var Select2 = function ($element, options) {
     this.$element = $element;
 
+    if ($element.attr('id') != null) {
+      this.id = $element.attr('id');
+    } else if ($element.attr('name') != null) {
+      this.id = $element.attr('name') + '-' + Utils.generateChars(2);
+    } else {
+      this.id = Utils.generateChars(4);
+    }
+
+    this.id = 'select2-' + this.id;
+
     options = options || {};
 
     options.multiple = options.multiple || $element.prop('multiple');

@@ -81,6 +81,8 @@ define([
   SelectAdapter.prototype.bind = function (container, $container) {
     var self = this;
 
+    this.container = container;
+
     container.on('select', function (params) {
       self.select(params.data);
     });
@@ -147,7 +149,7 @@ define([
       }
 
       if (data.id) {
-        data._resultId = this.generateResultId(data);
+        data._resultId = this.generateResultId(this.container, data);
       }
 
       $option.data('data', data);

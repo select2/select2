@@ -134,5 +134,16 @@ define([], function () {
 
   Utils.Observable = Observable;
 
+  Utils.generateChars = function (length) {
+    var chars = '';
+
+    for (var i = 0; i < length; i++) {
+      var randomChar = Math.floor(Math.random() * 36);
+      chars += randomChar.toString(36);
+    }
+
+    return chars;
+  };
+
   return Utils;
 });

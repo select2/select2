@@ -563,6 +563,17 @@ define('select2/utils',[], function () {
 
   Utils.Observable = Observable;
 
+  Utils.generateChars = function (length) {
+    var chars = '';
+
+    for (var i = 0; i < length; i++) {
+      var randomChar = Math.floor(Math.random() * 36);
+      chars += randomChar.toString(36);
+    }
+
+    return chars;
+  };
+
   return Utils;
 });
 
@@ -944,16 +955,6 @@ define('select2/selection/single',[
 
     $selection.attr('title', this.$element.attr('title'));
 
-    var id = 'select2-container-';
-
-    for (var i = 0; i < 4; i++) {
-      var r = Math.floor(Math.random() * 16);
-      id += r.toString(16);
-    }
-
-    $selection.find('.rendered-selection').attr('id', id);
-    $selection.attr('aria-labelledby', id);
-
     this.$selection = $selection;
 
     return $selection;
@@ -963,6 +964,11 @@ define('select2/selection/single',[
     var self = this;
 
     SingleSelection.__super__.bind.apply(this, arguments);
+
+    var id = container.id + '-container';
+
+    this.$selection.find('.rendered-selection').attr('id', id);
+    this.$selection.attr('aria-labelledby', id);
 
     this.$selection.on('mousedown', function (evt) {
       // Only respond to left clicks
@@ -1210,21 +1216,15 @@ define('select2/data/base',[
     // Can be implemented in subclasses
   };
 
-  BaseAdapter.prototype.generateResultId = function (data) {
-    var id = 'select2-result-';
+  BaseAdapter.prototype.generateResultId = function (container, data) {
+    var id = container.id + '-result-';
 
-    for (var i = 0; i < 4; i++) {
-      var r = Math.floor(Math.random() * 16);
-      id += r.toString(16);
-    }
+    id += Utils.generateChars(4);
 
     if (data.id != null) {
       id += '-' + data.id.toString();
     } else {
-      for (var s = 0; s < 4; s++) {
-        var idChar = Math.floor(Math.random() * 16);
-        id += idChar.toString(16);
-      }
+      id += '-' + Utils.generateChars(4);
     }
     return id;
   };
@@ -1315,6 +1315,8 @@ define('select2/data/select',[
   SelectAdapter.prototype.bind = function (container, $container) {
     var self = this;
 
+    this.container = container;
+
     container.on('select', function (params) {
       self.select(params.data);
     });
@@ -1381,7 +1383,7 @@ define('select2/data/select',[
       }
 
       if (data.id) {
-        data._resultId = this.generateResultId(data);
+        data._resultId = this.generateResultId(this.container, data);
       }
 
       $option.data('data', data);
@@ -1720,6 +1722,16 @@ define('select2/core',[
 ], function ($, Options, Utils) {
   var Select2 = function ($element, options) {
     this.$element = $element;
+
+    if ($element.attr('id') != null) {
+      this.id = $element.attr('id');
+    } else if ($element.attr('name') != null) {
+      this.id = $element.attr('name') + '-' + Utils.generateChars(2);
+    } else {
+      this.id = Utils.generateChars(4);
+    }
+
+    this.id = 'select2-' + this.id;
 
     options = options || {};
 

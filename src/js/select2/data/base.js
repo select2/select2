@@ -19,21 +19,15 @@ define([
     // Can be implemented in subclasses
   };
 
-  BaseAdapter.prototype.generateResultId = function (data) {
-    var id = 'select2-result-';
+  BaseAdapter.prototype.generateResultId = function (container, data) {
+    var id = container.id + '-result-';
 
-    for (var i = 0; i < 4; i++) {
-      var r = Math.floor(Math.random() * 16);
-      id += r.toString(16);
-    }
+    id += Utils.generateChars(4);
 
     if (data.id != null) {
       id += '-' + data.id.toString();
     } else {
-      for (var s = 0; s < 4; s++) {
-        var idChar = Math.floor(Math.random() * 16);
-        id += idChar.toString(16);
-      }
+      id += '-' + Utils.generateChars(4);
     }
     return id;
   };
