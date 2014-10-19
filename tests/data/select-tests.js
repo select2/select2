@@ -12,14 +12,24 @@ test('current gets default for single', function (assert) {
   var data = new SelectData($select, options);
 
   data.current(function (val) {
-    assert.deepEqual(
-      val,
-      [{
-        id: 'default',
-        text: 'Default',
-        disabled: false
-      }],
-      'The first option should be selected by default (by the browser).'
+    assert.equal(
+      val.length,
+      1,
+      'There should only be one selected option'
+    );
+
+    var option = val[0];
+
+    assert.equal(
+      option.id,
+      'default',
+      'The value of the option tag should be the id'
+    );
+
+    assert.equal(
+      option.text,
+      'Default',
+      'The text within the option tag should be the text'
     );
   });
 });
@@ -30,9 +40,9 @@ test('current gets default for multiple', function (assert) {
   var data = new SelectData($select, options);
 
   data.current(function (val) {
-    assert.deepEqual(
-      val,
-      [],
+    assert.equal(
+      val.length,
+      0,
       'Multiple selects have no default selection.'
     );
   });
@@ -46,14 +56,24 @@ test('current gets options with explicit value', function (assert) {
   $select.val('1');
 
   data.current(function (val) {
-    assert.deepEqual(
-      val,
-      [{
-        id: '1',
-        text: 'One',
-        disabled: false
-      }],
-      'The text and id should match the value and text for the option tag.'
+    assert.equal(
+      val.length,
+      1,
+      'There should be one selected option'
+    );
+
+    var option = val[0];
+
+    assert.equal(
+      option.id,
+      '1',
+      'The option value should be the selected id'
+    );
+
+    assert.equal(
+      option.text,
+      'One',
+      'The text should match the text for the option tag'
     );
   });
 });
@@ -66,14 +86,24 @@ test('current gets options with implicit value', function (assert) {
   $select.val('2');
 
   data.current(function (val) {
-    assert.deepEqual(
-      val,
-      [{
-        id: '2',
-        text: '2',
-        disabled: false
-      }],
-      'The text and id should match the text within the option tag.'
+    assert.equal(
+      val.length,
+      1,
+      'There should only be one selected value'
+    );
+
+    var option = val[0];
+
+    assert.equal(
+      option.id,
+      '2',
+      'The id should be the same as the option text'
+    );
+
+    assert.equal(
+      option.text,
+      '2',
+      'The text should be the same as the option text'
     );
   });
 });

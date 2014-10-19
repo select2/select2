@@ -27,9 +27,9 @@ test('current gets default for single', function (assert) {
   var data = new ArrayData($select, options);
 
   data.current(function (val) {
-    assert.deepEqual(
-      val,
-      [],
+    assert.equal(
+      val.length,
+      0,
       'There should be no default selection.'
     );
   });
@@ -41,9 +41,9 @@ test('current gets default for multiple', function (assert) {
   var data = new ArrayData($select, options);
 
   data.current(function (val) {
-    assert.deepEqual(
-      val,
-      [],
+    assert.equal(
+      val.length,
+      0,
       'There should be no default selection.'
     );
   });
@@ -57,14 +57,24 @@ test('current works with existing selections', function (assert) {
   $select.val(['3']);
 
   data.current(function (val) {
-    assert.deepEqual(
-      val,
-      [{
-        id: '3',
-        text: 'Three',
-        disabled: false
-      }],
-      'The text and id should match the value and text for the option tag.'
+    assert.equal(
+      val.length,
+      1,
+      'There should only be one existing selection'
+    );
+
+    var option = val[0];
+
+    assert.equal(
+      option.id,
+      '3',
+      'The id should be equal to the value of the option tag'
+    );
+
+    assert.equal(
+      option.text,
+      'Three',
+      'The text should be equal to the text of the option tag'
     );
   });
 });
