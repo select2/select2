@@ -30,9 +30,11 @@ define([
     SingleSelection.__super__.bind.apply(this, arguments);
 
     var id = container.id + '-container';
+    var resultsId = container.id + '-results';
 
     this.$selection.find('.rendered-selection').attr('id', id);
     this.$selection.attr('aria-labelledby', id);
+    this.$selection.attr('aria-owns', resultsId);
 
     this.$selection.on('mousedown', function (evt) {
       // Only respond to left clicks
@@ -69,6 +71,8 @@ define([
       if (container.isOpen()) {
         if (key == KEYS.ENTER) {
           self.trigger('results:select');
+
+          evt.preventDefault();
         } else if (key == KEYS.UP) {
           self.trigger('results:previous');
 
@@ -81,8 +85,14 @@ define([
       } else {
         if (key == KEYS.ENTER || key == KEYS.SPACE) {
           self.trigger('open');
+
+          evt.preventDefault();
         }
       }
+    });
+
+    container.on('results:focus', function (params) {
+      self.$selection.attr('aria-activedescendant', params.data._resultId);
     });
 
     container.on('selection:update', function (params) {
@@ -115,7 +125,7 @@ define([
     this.$selection.find('.rendered-selection').html(formatted);
 
     if (data[0]._resultId != null) {
-      this.$selection.attr('aria-activedescendent', data[0]._resultId);
+      this.$selection.attr('aria-activedescendant', data[0]._resultId);
     }
   };
 

@@ -116,6 +116,10 @@ define([
       self.trigger('close');
     });
 
+    this.results.on('results:focus', function (params) {
+      self.trigger('results:focus', params);
+    });
+
     this.on('open', function () {
       $container.addClass('open');
     });
@@ -167,7 +171,7 @@ define([
     var $container = $(
       '<span class="select2 select2-container select2-theme-default">' +
         '<span class="selection"></span>' +
-        '<span class="dropdown-wrapper"></span>' +
+        '<span class="dropdown-wrapper" aria-hidden="true"></span>' +
       '</span>'
     );
 

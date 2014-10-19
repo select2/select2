@@ -9692,6 +9692,7 @@ define('select2/results',[
   function Results ($element, options, dataAdapter) {
     this.$element = $element;
     this.data = dataAdapter;
+    this.options = options;
 
     Results.__super__.constructor.call(this);
   }
@@ -9702,6 +9703,10 @@ define('select2/results',[
     var $results = $(
       '<ul class="options" role="listbox"></ul>'
     );
+
+    if (this.options.get('multiple')) {
+      $results.attr('aria-multiselectable', 'true');
+    }
 
     this.$results = $results;
 
@@ -9822,6 +9827,10 @@ define('select2/results',[
   Results.prototype.bind = function (container, $container) {
     var self = this;
 
+    var id = container.id + '-results';
+
+    this.$results.attr('id', id);
+
     container.on('results:all', function (params) {
       self.clear();
       self.append(params.data);
@@ -9846,6 +9855,7 @@ define('select2/results',[
     container.on('open', function () {
       // When the dropdown is open, aria-expended="true"
       self.$results.attr('aria-expanded', 'true');
+      self.$results.attr('aria-hidden', 'false');
 
       self.setClasses();
     });
@@ -9853,6 +9863,8 @@ define('select2/results',[
     container.on('close', function () {
       // When the dropdown is closed, aria-expended="false"
       self.$results.attr('aria-expanded', 'false');
+      self.$results.attr('aria-hidden', 'true');
+      self.$results.removeAttr('aria-activedescendant');
     });
 
     container.on('results:select', function () {
@@ -9939,6 +9951,10 @@ define('select2/results',[
       }
     });
 
+    container.on('results:focus', function (params) {
+      params.element.addClass('highlighted');
+    });
+
     this.$results.on('mouseup', '.option[aria-selected]', function (evt) {
       var $this = $(this);
 
@@ -9960,12 +9976,21 @@ define('select2/results',[
     });
 
     this.$results.on('mouseenter', '.option[aria-selected]', function (evt) {
+      var data = $(this).data('data');
+
       self.$results.find('.option.highlighted').removeClass('highlighted');
-      $(this).addClass('highlighted');
+
+      self.trigger('results:focus', {
+        data: data,
+        element: $(this)
+      });
     });
 
     this.$results.on('mouseleave', '.option', function (evt) {
-      $(this).removeClass('highlighted');
+      if ($(this).hasClass('highlighted')) {
+        $(this).removeClass('highlighted');
+        self.$results.removeAttr('aria-activedescendant');
+      }
     });
   };
 
@@ -10075,9 +10100,11 @@ define('select2/selection/single',[
     SingleSelection.__super__.bind.apply(this, arguments);
 
     var id = container.id + '-container';
+    var resultsId = container.id + '-results';
 
     this.$selection.find('.rendered-selection').attr('id', id);
     this.$selection.attr('aria-labelledby', id);
+    this.$selection.attr('aria-owns', resultsId);
 
     this.$selection.on('mousedown', function (evt) {
       // Only respond to left clicks
@@ -10114,6 +10141,8 @@ define('select2/selection/single',[
       if (container.isOpen()) {
         if (key == KEYS.ENTER) {
           self.trigger('results:select');
+
+          evt.preventDefault();
         } else if (key == KEYS.UP) {
           self.trigger('results:previous');
 
@@ -10126,8 +10155,14 @@ define('select2/selection/single',[
       } else {
         if (key == KEYS.ENTER || key == KEYS.SPACE) {
           self.trigger('open');
+
+          evt.preventDefault();
         }
       }
+    });
+
+    container.on('results:focus', function (params) {
+      self.$selection.attr('aria-activedescendant', params.data._resultId);
     });
 
     container.on('selection:update', function (params) {
@@ -10160,7 +10195,7 @@ define('select2/selection/single',[
     this.$selection.find('.rendered-selection').html(formatted);
 
     if (data[0]._resultId != null) {
-      this.$selection.attr('aria-activedescendent', data[0]._resultId);
+      this.$selection.attr('aria-activedescendant', data[0]._resultId);
     }
   };
 
@@ -10942,6 +10977,10 @@ define('select2/core',[
       self.trigger('close');
     });
 
+    this.results.on('results:focus', function (params) {
+      self.trigger('results:focus', params);
+    });
+
     this.on('open', function () {
       $container.addClass('open');
     });
@@ -10993,7 +11032,7 @@ define('select2/core',[
     var $container = $(
       '<span class="select2 select2-container select2-theme-default">' +
         '<span class="selection"></span>' +
-        '<span class="dropdown-wrapper"></span>' +
+        '<span class="dropdown-wrapper" aria-hidden="true"></span>' +
       '</span>'
     );
 

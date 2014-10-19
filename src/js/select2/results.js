@@ -4,6 +4,7 @@ define([
   function Results ($element, options, dataAdapter) {
     this.$element = $element;
     this.data = dataAdapter;
+    this.options = options;
 
     Results.__super__.constructor.call(this);
   }
@@ -14,6 +15,10 @@ define([
     var $results = $(
       '<ul class="options" role="listbox"></ul>'
     );
+
+    if (this.options.get('multiple')) {
+      $results.attr('aria-multiselectable', 'true');
+    }
 
     this.$results = $results;
 
@@ -134,6 +139,10 @@ define([
   Results.prototype.bind = function (container, $container) {
     var self = this;
 
+    var id = container.id + '-results';
+
+    this.$results.attr('id', id);
+
     container.on('results:all', function (params) {
       self.clear();
       self.append(params.data);
@@ -158,6 +167,7 @@ define([
     container.on('open', function () {
       // When the dropdown is open, aria-expended="true"
       self.$results.attr('aria-expanded', 'true');
+      self.$results.attr('aria-hidden', 'false');
 
       self.setClasses();
     });
@@ -165,6 +175,8 @@ define([
     container.on('close', function () {
       // When the dropdown is closed, aria-expended="false"
       self.$results.attr('aria-expanded', 'false');
+      self.$results.attr('aria-hidden', 'true');
+      self.$results.removeAttr('aria-activedescendant');
     });
 
     container.on('results:select', function () {
@@ -251,6 +263,10 @@ define([
       }
     });
 
+    container.on('results:focus', function (params) {
+      params.element.addClass('highlighted');
+    });
+
     this.$results.on('mouseup', '.option[aria-selected]', function (evt) {
       var $this = $(this);
 
@@ -272,12 +288,21 @@ define([
     });
 
     this.$results.on('mouseenter', '.option[aria-selected]', function (evt) {
+      var data = $(this).data('data');
+
       self.$results.find('.option.highlighted').removeClass('highlighted');
-      $(this).addClass('highlighted');
+
+      self.trigger('results:focus', {
+        data: data,
+        element: $(this)
+      });
     });
 
     this.$results.on('mouseleave', '.option', function (evt) {
-      $(this).removeClass('highlighted');
+      if ($(this).hasClass('highlighted')) {
+        $(this).removeClass('highlighted');
+        self.$results.removeAttr('aria-activedescendant');
+      }
     });
   };
 

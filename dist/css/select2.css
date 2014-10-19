@@ -117,7 +117,7 @@
     display: block;
     padding: 6px; }
 .select2-container.select2-theme-default .dropdown .results .options .option[aria-disabled=true] {
-  color: #666; }
+  color: #999; }
 .select2-container.select2-theme-default .dropdown .results .options .option[aria-selected=true] {
   background-color: #ddd; }
 .select2-container.select2-theme-default .dropdown .results .options .option[aria-selected].highlighted {
