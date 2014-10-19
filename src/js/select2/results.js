@@ -209,6 +209,16 @@ define([
       var $next = $options.eq(nextIndex);
 
       $next.trigger('mouseenter');
+
+      var currentOffset = self.$results.offset().top;
+      var nextTop = $next.offset().top;
+      var nextOffset = self.$results.scrollTop() + (nextTop - currentOffset);
+
+      if (nextIndex === 0) {
+        self.$results.scrollTop(0);
+      } else if (nextTop - currentOffset < 0) {
+        self.$results.scrollTop(nextOffset);
+      }
     });
 
     container.on('results:next', function () {
@@ -228,8 +238,17 @@ define([
       var $next = $options.eq(nextIndex);
 
       $next.trigger('mouseenter');
-      console.log($next.offset().top, self.$results.parent().scrollTop());
-      //self.$results.parents().scrollTop($next.offset().top);
+
+      var currentOffset = self.$results.offset().top +
+        self.$results.outerHeight(false);
+      var nextBottom = $next.offset().top + $next.outerHeight(false);
+      var nextOffset = self.$results.scrollTop() + nextBottom - currentOffset;
+
+      if (nextIndex === 0) {
+        self.$results.scrollTop(0);
+      } else if (nextBottom > currentOffset) {
+        self.$results.scrollTop(nextOffset);
+      }
     });
 
     this.$results.on('mouseup', '.option[aria-selected]', function (evt) {

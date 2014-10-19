@@ -20,7 +20,7 @@ define([
   };
 
   BaseAdapter.prototype.generateResultId = function (data) {
-    var id = '';
+    var id = 'select2-result-';
 
     for (var i = 0; i < 4; i++) {
       var r = Math.floor(Math.random() * 16);

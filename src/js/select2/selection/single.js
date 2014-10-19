@@ -68,7 +68,7 @@ define([
       // User exits the container
     });
 
-    this.$selection.on('keyup', function (evt) {
+    this.$selection.on('keydown', function (evt) {
       var key = evt.which;
 
       if (container.isOpen()) {
@@ -76,8 +76,12 @@ define([
           self.trigger('results:select');
         } else if (key == KEYS.UP) {
           self.trigger('results:previous');
+
+          evt.preventDefault();
         } else if (key == KEYS.DOWN) {
           self.trigger('results:next');
+
+          evt.preventDefault();
         }
       } else {
         if (key == KEYS.ENTER || key == KEYS.SPACE) {
