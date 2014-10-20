@@ -9871,6 +9871,7 @@ define('select2/results',[
       self.$results.attr('aria-hidden', 'false');
 
       self.setClasses();
+      self.ensureHighlightVisible();
     });
 
     container.on('close', function () {
@@ -10005,6 +10006,31 @@ define('select2/results',[
         self.$results.removeAttr('aria-activedescendant');
       }
     });
+  };
+
+  Results.prototype.ensureHighlightVisible = function () {
+    var $highlighted = this.$results.find('.highlighted');
+
+    if ($highlighted.length === 0) {
+      return;
+    }
+
+    var $options = this.$results.find('[aria-selected]');
+
+    var currentIndex = $options.index($highlighted);
+
+    var currentOffset = this.$results.offset().top;
+    var nextTop = $highlighted.offset().top;
+    var nextOffset = this.$results.scrollTop() + (nextTop - currentOffset);
+
+    var offsetDelta = nextTop - currentOffset;
+    nextOffset -= $highlighted.outerHeight(false) * 2;
+
+    if (currentIndex <= 2) {
+      this.$results.scrollTop(0);
+    } else if (offsetDelta > this.$results.outerHeight() || offsetDelta < 0) {
+      this.$results.scrollTop(nextOffset);
+    }
   };
 
   return Results;
