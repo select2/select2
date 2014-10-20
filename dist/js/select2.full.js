@@ -10582,10 +10582,11 @@ define('select2/data/select',[
 
 define('select2/data/array',[
   './select',
-  '../utils'
-], function (SelectAdapter, Utils) {
+  '../utils',
+  'jquery'
+], function (SelectAdapter, Utils, $) {
   function ArrayAdapter ($element, options) {
-    this.data = options.options.data;
+    this.data = options.get('data');
 
     ArrayAdapter.__super__.constructor.call(this, $element, options);
   }
@@ -10616,7 +10617,16 @@ define('select2/data/array',[
 
     $option.text(data.text);
     $option.val(data.id);
-    $option.data('data', data);
+    $option.prop('disabled', data.disabled || false);
+
+    // Get any automatically generated data values
+    var detectedData = this.item($option);
+
+    // Merge it with the already present data
+    var combinedData = $.extend({}, data, detectedData);
+
+    // Override the option's data with the combined data
+    $option.data('data', combinedData);
 
     return $option;
   };

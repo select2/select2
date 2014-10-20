@@ -60,7 +60,7 @@ test('current works with existing selections', function (assert) {
     assert.equal(
       val.length,
       1,
-      'There should only be one existing selection'
+      'There should only be one existing selection.'
     );
 
     var option = val[0];
@@ -68,13 +68,13 @@ test('current works with existing selections', function (assert) {
     assert.equal(
       option.id,
       '3',
-      'The id should be equal to the value of the option tag'
+      'The id should be equal to the value of the option tag.'
     );
 
     assert.equal(
       option.text,
       'Three',
-      'The text should be equal to the text of the option tag'
+      'The text should be equal to the text of the option tag.'
     );
   });
 });
@@ -90,13 +90,24 @@ test('current works with selected data', function (assert) {
   });
 
   data.current(function (val) {
-    assert.deepEqual(
-      val,
-      [{
-        id: '2',
-        text: '2'
-      }],
-      'The text and id should match the selected array data.'
+    assert.equal(
+      val.length,
+      1,
+      'There should only be one option selected.'
+    );
+
+    var option = val[0];
+
+    assert.equal(
+      option.id,
+      '2',
+      'The id should match the original id from the array.'
+    );
+
+    assert.equal(
+      option.text,
+      '2',
+      'The text should match the original text from the array.'
     );
   });
 });
