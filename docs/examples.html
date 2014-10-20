@@ -230,14 +230,22 @@ $(".js-example-data-array-selected").select2({
         </select>
       </p>
 
+      <p>
+        Note that when tagging is enabled the user can select from pre-existing
+        options or create a new tag by picking the first choice, which is what
+        the user has typed into the search box so far.
+      </p>
+
     </div>
     <div class="col-md-8">
       <h2>Example code</h2>
 
-      <pre data-fill-from=".js-code-disabled-results"></pre>
+      <pre data-fill-from=".js-code-tags"></pre>
 
-<script type="text/x-example-code" class="js-code-data-disabled">
-
+<script type="text/x-example-code" class="js-code-tags">
+$(".js-example-tags").select2({
+  tags: true
+})
 </script>
     </div>
   </section>
