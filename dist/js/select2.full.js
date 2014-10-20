@@ -10536,7 +10536,7 @@ define('select2/data/select',[
         data.children = children;
       }
 
-      if (data.id) {
+      if (data.id && this.container != null) {
         data._resultId = this.generateResultId(this.container, data);
       }
 
