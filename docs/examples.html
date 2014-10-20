@@ -214,6 +214,33 @@ $(".js-example-data-array-selected").select2({
 </script>
     </div>
   </section>
+
+  <section id="tagss" class="row">
+    <div class="col-md-4">
+      <h1>Tagging support</h1>
+
+      <p>
+        Select2 can be used to quickly set up fields used for tagging.
+      </p>
+
+      <p>
+        <select class="js-example-tags form-control">
+          <option value="one">First</option>
+          <option value="other">Other</option>
+        </select>
+      </p>
+
+    </div>
+    <div class="col-md-8">
+      <h2>Example code</h2>
+
+      <pre data-fill-from=".js-code-disabled-results"></pre>
+
+<script type="text/x-example-code" class="js-code-data-disabled">
+
+</script>
+    </div>
+  </section>
 </div>
 
 <select class="js-source-states" style="display: none;">
@@ -309,6 +336,8 @@ require(["select2/core", "select2/utils"], function (Select2, Utils) {
 
   var $disabledResults = $(".js-example-disabled-results");
 
+  var $tags = $(".js-example-tags");
+
   $basicSingle.select2();
   $basicMultiple.select2()
 
@@ -329,5 +358,9 @@ require(["select2/core", "select2/utils"], function (Select2, Utils) {
   });
 
   $disabledResults.select2();
+
+  $tags.select2({
+    tags: true
+  });
 });
 </script>

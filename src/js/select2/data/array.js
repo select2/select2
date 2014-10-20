@@ -30,25 +30,6 @@ define([
     ArrayAdapter.__super__.select.call(this, data);
   };
 
-  ArrayAdapter.prototype.option = function (data) {
-    var $option = $('<option></option>');
-
-    $option.text(data.text);
-    $option.val(data.id);
-    $option.prop('disabled', data.disabled || false);
-
-    // Get any automatically generated data values
-    var detectedData = this.item($option);
-
-    // Merge it with the already present data
-    var combinedData = $.extend({}, data, detectedData);
-
-    // Override the option's data with the combined data
-    $option.data('data', combinedData);
-
-    return $option;
-  };
-
   ArrayAdapter.prototype.query = function (params, callback) {
     var matches = [];
     var self = this;

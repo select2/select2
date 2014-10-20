@@ -10,13 +10,14 @@ define([
   './data/select',
   './data/array',
   './data/ajax',
+  './data/tags',
 
   './dropdown',
   './dropdown/search'
 ], function (ResultsList,
              SingleSelection, MultipleSelection, Placeholder,
              Utils,
-             SelectData, ArrayData, AjaxData,
+             SelectData, ArrayData, AjaxData, Tags,
              Dropdown, Search) {
   function Defaults () {
     this.reset();
@@ -33,6 +34,10 @@ define([
       } else {
         options.dataAdapter = SelectData;
       }
+    }
+
+    if (options.tags != null) {
+      options.dataAdapter = Utils.Decorate(options.dataAdapter, Tags);
     }
 
     if (options.resultsAdapter == null) {

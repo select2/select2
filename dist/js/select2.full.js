@@ -10417,6 +10417,16 @@ define('select2/data/select',[
   SelectAdapter.prototype.select = function (data) {
     var self = this;
 
+    // Create items marked as tags
+    if (data._tag === true) {
+      // Clear the tag flag from it
+      delete data._tag;
+
+      // Create and add the option
+      var $option = this.option(data);
+      this.$element.append($option);
+    }
+
     if (this.$element.prop('multiple')) {
       this.current(function (currentData) {
         var val = [];
@@ -10439,6 +10449,7 @@ define('select2/data/select',[
       var val = data.id;
 
       this.$element.val(val);
+
       this.$element.trigger('change');
     }
   };
@@ -10462,6 +10473,7 @@ define('select2/data/select',[
       }
 
       self.$element.val(val);
+
       self.$element.trigger('change');
     });
   };
@@ -10503,6 +10515,25 @@ define('select2/data/select',[
     });
 
     callback(data);
+  };
+
+  SelectAdapter.prototype.option = function (data) {
+    var $option = $('<option></option>');
+
+    $option.text(data.text);
+    $option.val(data.id);
+    $option.prop('disabled', data.disabled || false);
+
+    // Get any automatically generated data values
+    var detectedData = this.item($option);
+
+    // Merge it with the already present data
+    var combinedData = $.extend({}, data, detectedData);
+
+    // Override the option's data with the combined data
+    $option.data('data', combinedData);
+
+    return $option;
   };
 
   SelectAdapter.prototype.item = function ($option) {
@@ -10612,25 +10643,6 @@ define('select2/data/array',[
     ArrayAdapter.__super__.select.call(this, data);
   };
 
-  ArrayAdapter.prototype.option = function (data) {
-    var $option = $('<option></option>');
-
-    $option.text(data.text);
-    $option.val(data.id);
-    $option.prop('disabled', data.disabled || false);
-
-    // Get any automatically generated data values
-    var detectedData = this.item($option);
-
-    // Merge it with the already present data
-    var combinedData = $.extend({}, data, detectedData);
-
-    // Override the option's data with the combined data
-    $option.data('data', combinedData);
-
-    return $option;
-  };
-
   ArrayAdapter.prototype.query = function (params, callback) {
     var matches = [];
     var self = this;
@@ -10693,6 +10705,69 @@ define('select2/data/ajax',[
   };
 
   return AjaxAdapter;
+});
+
+define('select2/data/tags',[
+
+], function () {
+  function Tags (decorated, $element, options) {
+    var tags = options.get('tags');
+
+    decorated.call(this, $element, options);
+  }
+
+  Tags.prototype.query = function (decorated, params, callback) {
+    var self = this;
+
+    if (params.term == null || params.term === '' || params.page != null) {
+      decorated.call(this, params, callback);
+      return;
+    }
+
+    function wrapper (data, child) {
+      for (var i = 0; i < data.length; i++) {
+        var option = data[i];
+
+        var checkChildren = (
+          option.children != null && !wrapper(option.children, true)
+        );
+
+        var checkText = option.text === params.term;
+
+        if (checkText || checkChildren) {
+          if (child) {
+            return false;
+          }
+
+          callback(data);
+
+          return;
+        }
+      }
+
+      if (child) {
+        return true;
+      }
+
+      var tag = self.createTag(params);
+      tag._tag = true;
+
+      data.unshift(tag);
+
+      callback(data);
+    }
+
+    decorated.call(this, params, wrapper);
+  };
+
+  Tags.prototype.createTag = function (decorated, params) {
+    return {
+      id: params.term,
+      text: params.term
+    };
+  };
+
+  return Tags;
 });
 
 define('select2/dropdown',[
@@ -10794,13 +10869,14 @@ define('select2/defaults',[
   './data/select',
   './data/array',
   './data/ajax',
+  './data/tags',
 
   './dropdown',
   './dropdown/search'
 ], function (ResultsList,
              SingleSelection, MultipleSelection, Placeholder,
              Utils,
-             SelectData, ArrayData, AjaxData,
+             SelectData, ArrayData, AjaxData, Tags,
              Dropdown, Search) {
   function Defaults () {
     this.reset();
@@ -10817,6 +10893,10 @@ define('select2/defaults',[
       } else {
         options.dataAdapter = SelectData;
       }
+    }
+
+    if (options.tags != null) {
+      options.dataAdapter = Utils.Decorate(options.dataAdapter, Tags);
     }
 
     if (options.resultsAdapter == null) {

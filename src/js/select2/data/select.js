@@ -29,6 +29,16 @@ define([
   SelectAdapter.prototype.select = function (data) {
     var self = this;
 
+    // Create items marked as tags
+    if (data._tag === true) {
+      // Clear the tag flag from it
+      delete data._tag;
+
+      // Create and add the option
+      var $option = this.option(data);
+      this.$element.append($option);
+    }
+
     if (this.$element.prop('multiple')) {
       this.current(function (currentData) {
         var val = [];
@@ -51,6 +61,7 @@ define([
       var val = data.id;
 
       this.$element.val(val);
+
       this.$element.trigger('change');
     }
   };
@@ -74,6 +85,7 @@ define([
       }
 
       self.$element.val(val);
+
       self.$element.trigger('change');
     });
   };
@@ -115,6 +127,25 @@ define([
     });
 
     callback(data);
+  };
+
+  SelectAdapter.prototype.option = function (data) {
+    var $option = $('<option></option>');
+
+    $option.text(data.text);
+    $option.val(data.id);
+    $option.prop('disabled', data.disabled || false);
+
+    // Get any automatically generated data values
+    var detectedData = this.item($option);
+
+    // Merge it with the already present data
+    var combinedData = $.extend({}, data, detectedData);
+
+    // Override the option's data with the combined data
+    $option.data('data', combinedData);
+
+    return $option;
   };
 
   SelectAdapter.prototype.item = function ($option) {
