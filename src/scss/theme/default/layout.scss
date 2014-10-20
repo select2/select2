@@ -85,7 +85,7 @@
 
       .options {
         .option {
-          &.group {
+          &[role=group] {
             padding: 0;
 
             .group-label {

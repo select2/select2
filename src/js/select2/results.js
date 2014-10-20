@@ -13,7 +13,7 @@ define([
 
   Results.prototype.render = function () {
     var $results = $(
-      '<ul class="options" role="listbox"></ul>'
+      '<ul class="options" role="tree"></ul>'
     );
 
     if (this.options.get('multiple')) {
@@ -86,12 +86,13 @@ define([
 
   Results.prototype.option = function (data) {
     var $option = $(
-      '<li class="option" role="option" aria-selected="false"></li>'
+      '<li class="option" role="treeitem" aria-selected="false"></li>'
     );
 
     if (data.children) {
       $option
-        .addClass('group')
+        .attr('role', 'group')
+        .attr('aria-label', data.text)
         .removeAttr('aria-selected');
 
       var $label = $('<strong class="group-label"></strong>');
@@ -147,20 +148,32 @@ define([
       self.clear();
       self.append(params.data);
 
-      self.setClasses();
+      if (container.isOpen()) {
+        self.setClasses();
+      }
     });
 
     container.on('results:append', function (params) {
       self.append(params.data);
 
-      self.setClasses();
+      if (container.isOpen()) {
+        self.setClasses();
+      }
     });
 
     container.on('select', function () {
+      if (!container.isOpen()) {
+        return;
+      }
+
       self.setClasses();
     });
 
     container.on('unselect', function () {
+      if (!container.isOpen()) {
+        return;
+      }
+
       self.setClasses();
     });
 

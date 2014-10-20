@@ -48,13 +48,14 @@ define([
     });
 
     container.on('open', function () {
-      // When the dropdown is open, aria-expended="true"
+      // When the dropdown is open, aria-expanded="true"
       self.$selection.attr('aria-expanded', 'true');
     });
 
     container.on('close', function () {
-      // When the dropdown is closed, aria-expended="false"
+      // When the dropdown is closed, aria-expanded="false"
       self.$selection.attr('aria-expanded', 'false');
+      self.$selection.removeAttr('aria-activedescendant');
     });
 
     this.$selection.on('focus', function (evt) {
@@ -123,10 +124,6 @@ define([
     var formatted = this.display(selection);
 
     this.$selection.find('.rendered-selection').html(formatted);
-
-    if (data[0]._resultId != null) {
-      this.$selection.attr('aria-activedescendant', data[0]._resultId);
-    }
   };
 
   return SingleSelection;

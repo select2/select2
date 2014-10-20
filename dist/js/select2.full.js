@@ -9701,7 +9701,7 @@ define('select2/results',[
 
   Results.prototype.render = function () {
     var $results = $(
-      '<ul class="options" role="listbox"></ul>'
+      '<ul class="options" role="tree"></ul>'
     );
 
     if (this.options.get('multiple')) {
@@ -9774,12 +9774,13 @@ define('select2/results',[
 
   Results.prototype.option = function (data) {
     var $option = $(
-      '<li class="option" role="option" aria-selected="false"></li>'
+      '<li class="option" role="treeitem" aria-selected="false"></li>'
     );
 
     if (data.children) {
       $option
-        .addClass('group')
+        .attr('role', 'group')
+        .attr('aria-label', data.text)
         .removeAttr('aria-selected');
 
       var $label = $('<strong class="group-label"></strong>');
@@ -9835,20 +9836,32 @@ define('select2/results',[
       self.clear();
       self.append(params.data);
 
-      self.setClasses();
+      if (container.isOpen()) {
+        self.setClasses();
+      }
     });
 
     container.on('results:append', function (params) {
       self.append(params.data);
 
-      self.setClasses();
+      if (container.isOpen()) {
+        self.setClasses();
+      }
     });
 
     container.on('select', function () {
+      if (!container.isOpen()) {
+        return;
+      }
+
       self.setClasses();
     });
 
     container.on('unselect', function () {
+      if (!container.isOpen()) {
+        return;
+      }
+
       self.setClasses();
     });
 
@@ -10118,13 +10131,14 @@ define('select2/selection/single',[
     });
 
     container.on('open', function () {
-      // When the dropdown is open, aria-expended="true"
+      // When the dropdown is open, aria-expanded="true"
       self.$selection.attr('aria-expanded', 'true');
     });
 
     container.on('close', function () {
-      // When the dropdown is closed, aria-expended="false"
+      // When the dropdown is closed, aria-expanded="false"
       self.$selection.attr('aria-expanded', 'false');
+      self.$selection.removeAttr('aria-activedescendant');
     });
 
     this.$selection.on('focus', function (evt) {
@@ -10193,10 +10207,6 @@ define('select2/selection/single',[
     var formatted = this.display(selection);
 
     this.$selection.find('.rendered-selection').html(formatted);
-
-    if (data[0]._resultId != null) {
-      this.$selection.attr('aria-activedescendant', data[0]._resultId);
-    }
   };
 
   return SingleSelection;

@@ -110,9 +110,9 @@
 .select2-container.select2-theme-default .dropdown .results > .options {
   max-height: 200px;
   overflow-y: auto; }
-.select2-container.select2-theme-default .dropdown .results .options .option.group {
+.select2-container.select2-theme-default .dropdown .results .options .option[role=group] {
   padding: 0; }
-  .select2-container.select2-theme-default .dropdown .results .options .option.group .group-label {
+  .select2-container.select2-theme-default .dropdown .results .options .option[role=group] .group-label {
     cursor: default;
     display: block;
     padding: 6px; }
