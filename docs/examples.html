@@ -217,6 +217,44 @@ $(".js-example-data-array-selected").select2({
 
   <section id="tagss" class="row">
     <div class="col-md-4">
+      <h1>Programmatic access</h1>
+
+      <p>
+        Select2 supports methods that allow programmatic control of the
+        component.
+      </p>
+
+      <p>
+        <button class="js-programmatic-open btn btn-success">
+          Open
+        </button>
+
+        <button class="js-programmatic-close btn btn-success">
+          Close
+        </button>
+      </p>
+
+      <p>
+        <select class="js-example-programmatic js-states form-control"></select>
+      </p>
+
+    </div>
+    <div class="col-md-8">
+      <h2>Example code</h2>
+
+      <pre data-fill-from=".js-code-programmatic"></pre>
+
+<script type="text/javascript" class="js-code-programmatic">
+var $example = $(".js-example-programmatic");
+
+$(".js-programmatic-open").on("click", function () { $example.select2("open"); });
+$(".js-programmatic-close").on("click", function () { $example.select2("close"); });
+</script>
+    </div>
+  </section>
+
+  <section id="tagss" class="row">
+    <div class="col-md-4">
       <h1>Tagging support</h1>
 
       <p>
@@ -366,6 +404,8 @@ require(["select2/core", "select2/utils"], function (Select2, Utils) {
   });
 
   $disabledResults.select2();
+
+  $(".js-example-programmatic").select2();
 
   $tags.select2({
     tags: true

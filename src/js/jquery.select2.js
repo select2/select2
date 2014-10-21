@@ -12,8 +12,9 @@ define([
         });
       } else if (typeof options === 'string') {
         var instance = this.data('select2');
+        var args = Array.prototype.slice.call(arguments, 1);
 
-        instance[options](arguments.slice(1));
+        instance[options](args);
       } else {
         throw new Error('Invalid arguments for Select2: ' + options);
       }

@@ -1957,10 +1957,10 @@ define('select2/core',[
     });
 
     this.selection.on('open', function () {
-      self.trigger('open');
+      self.open();
     });
     this.selection.on('close', function () {
-      self.trigger('close');
+      self.close();
     });
     this.selection.on('toggle', function () {
       self.toggleDropdown();
@@ -1979,19 +1979,19 @@ define('select2/core',[
     this.selection.on('unselected', function (params) {
       self.trigger('unselect', params);
 
-      self.trigger('close');
+      self.close();
     });
 
     this.results.on('selected', function (params) {
       self.trigger('select', params);
 
-      self.trigger('close');
+      self.close();
     });
 
     this.results.on('unselected', function (params) {
       self.trigger('unselect', params);
 
-      self.trigger('close');
+      self.close();
     });
 
     this.results.on('results:focus', function (params) {
@@ -2029,16 +2029,34 @@ define('select2/core',[
 
     $element.hide();
     $element.attr('tabindex', '-1');
+
+    $element.data('select2', this);
   };
 
   Utils.Extend(Select2, Utils.Observable);
 
   Select2.prototype.toggleDropdown = function () {
     if (this.isOpen()) {
-      this.trigger('close');
+      this.close();
     } else {
-      this.trigger('open');
+      this.open();
     }
+  };
+
+  Select2.prototype.open = function () {
+    if (this.isOpen()) {
+      return;
+    }
+
+    this.trigger('open');
+  };
+
+  Select2.prototype.close = function () {
+    if (!this.isOpen()) {
+      return;
+    }
+
+    this.trigger('close');
   };
 
   Select2.prototype.isOpen = function () {
@@ -2073,8 +2091,9 @@ define('jquery.select2',[
         });
       } else if (typeof options === 'string') {
         var instance = this.data('select2');
+        var args = Array.prototype.slice.call(arguments, 1);
 
-        instance[options](arguments.slice(1));
+        instance[options](args);
       } else {
         throw new Error('Invalid arguments for Select2: ' + options);
       }

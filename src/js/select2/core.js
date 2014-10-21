@@ -79,10 +79,10 @@ define([
     });
 
     this.selection.on('open', function () {
-      self.trigger('open');
+      self.open();
     });
     this.selection.on('close', function () {
-      self.trigger('close');
+      self.close();
     });
     this.selection.on('toggle', function () {
       self.toggleDropdown();
@@ -101,19 +101,19 @@ define([
     this.selection.on('unselected', function (params) {
       self.trigger('unselect', params);
 
-      self.trigger('close');
+      self.close();
     });
 
     this.results.on('selected', function (params) {
       self.trigger('select', params);
 
-      self.trigger('close');
+      self.close();
     });
 
     this.results.on('unselected', function (params) {
       self.trigger('unselect', params);
 
-      self.trigger('close');
+      self.close();
     });
 
     this.results.on('results:focus', function (params) {
@@ -151,16 +151,34 @@ define([
 
     $element.hide();
     $element.attr('tabindex', '-1');
+
+    $element.data('select2', this);
   };
 
   Utils.Extend(Select2, Utils.Observable);
 
   Select2.prototype.toggleDropdown = function () {
     if (this.isOpen()) {
-      this.trigger('close');
+      this.close();
     } else {
-      this.trigger('open');
+      this.open();
     }
+  };
+
+  Select2.prototype.open = function () {
+    if (this.isOpen()) {
+      return;
+    }
+
+    this.trigger('open');
+  };
+
+  Select2.prototype.close = function () {
+    if (!this.isOpen()) {
+      return;
+    }
+
+    this.trigger('close');
   };
 
   Select2.prototype.isOpen = function () {
