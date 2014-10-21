@@ -1491,7 +1491,7 @@ the specific language governing permissions and limitations under the Apache Lic
         externalSearch: function (term) {
             this.open();
             this.search.val(term);
-            this.updateResults(false);
+            this.updateResults(true);
         },
 
         // abstract
