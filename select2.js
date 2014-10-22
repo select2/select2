@@ -814,6 +814,8 @@ the specific language governing permissions and limitations under the Apache Lic
             // focusin can cause focus wars between modals and select2 since the dropdown is outside the modal.
             this.dropdown.on("click mouseup mousedown touchstart touchend focusin", function (e) { e.stopPropagation(); });
 
+            this.lastSearchTerm = undefined;
+
             if ($.isFunction(this.opts.initSelection)) {
                 // initialize selection based on the current value of the source element
                 this.initSelection();
@@ -1507,7 +1509,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 return;
             }
 
-            var nextSearchTerm = this.opts.nextSearchTerm(this.data(), this.search.val());
+            var nextSearchTerm = this.opts.nextSearchTerm(this.data(), this.lastSearchTerm);
             if(nextSearchTerm != undefined){
                 this.search.val(nextSearchTerm);
                 this.search.select();
@@ -2318,6 +2320,7 @@ the specific language governing permissions and limitations under the Apache Lic
                         self.updateSelection(selected);
                         self.close();
                         self.setPlaceholder();
+                        self.lastSearchTerm = self.search.val();
                     }
                 });
             }
@@ -2454,6 +2457,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.opts.element.trigger({ type: "select2-selected", val: this.id(data), choice: data });
 
+            this.lastSearchTerm = this.search.val();
             this.close();
 
             if ((!options || !options.noFocus) && this.opts.shouldFocusInput(this)) {
@@ -2987,6 +2991,9 @@ the specific language governing permissions and limitations under the Apache Lic
             this.addSelectedChoice(data);
 
             this.opts.element.trigger({ type: "selected", val: this.id(data), choice: data });
+
+            // keep track of the search's value before it gets cleared
+            this.lastSearchTerm = this.search.val();
 
             this.clearSearch();
             this.updateResults();
