@@ -1500,20 +1500,24 @@ the specific language governing permissions and limitations under the Apache Lic
         },
 
         /**
+         * @return {Boolean} Whether or not search value was changed.
          * @private
          */
         prefillNextSearchTerm: function () {
             // initializes search's value with nextSearchTerm (if defined by user)
             // ignore nextSearchTerm if the dropdown is opened by the user pressing a letter
             if(this.search.val() !== "") {
-                return;
+                return false;
             }
 
             var nextSearchTerm = this.opts.nextSearchTerm(this.data(), this.lastSearchTerm);
-            if(nextSearchTerm != undefined){
+            if(nextSearchTerm !== undefined){
                 this.search.val(nextSearchTerm);
                 this.search.select();
+                return true;
             }
+
+            return false;
         },
 
         //abstract
@@ -3013,8 +3017,9 @@ the specific language governing permissions and limitations under the Apache Lic
                         this.updateResults(true);
                     } else {
                         // initializes search's value with nextSearchTerm and update search result
-                        this.prefillNextSearchTerm();
-                        this.updateResults();
+                        if (this.prefillNextSearchTerm()) {
+                            this.updateResults();
+                        }
                     }
                     this.positionDropdown();
                 } else {
