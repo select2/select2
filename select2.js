@@ -2086,7 +2086,7 @@ the specific language governing permissions and limitations under the Apache Lic
             var selection,
                 container = this.container,
                 dropdown = this.dropdown,
-                idSuffix = nextUid(),
+                idSuffix = this.opts.idSuffixGenerator(this.opts.element),
                 elementLabel;
 
             if (this.opts.minimumResultsForSearch < 0) {
@@ -3455,6 +3455,9 @@ the specific language governing permissions and limitations under the Apache Lic
         },
         matcher: function(term, text) {
             return stripDiacritics(''+text).toUpperCase().indexOf(stripDiacritics(''+term).toUpperCase()) >= 0;
+        },
+        idSuffixGenerator: function(element) {
+            return nextUid();
         },
         separator: ",",
         tokenSeparators: [],
