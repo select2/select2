@@ -34,7 +34,7 @@ Integrations
 
 * [Wicket-Select2](https://github.com/ivaynberg/wicket-select2) (Java / [Apache Wicket](http://wicket.apache.org))
 * [select2-rails](https://github.com/argerim/select2-rails) (Ruby on Rails)
-* [AngularUI](http://angular-ui.github.com/#directives-select2) ([AngularJS](http://angularjs.org))
+* [AngularUI](http://angular-ui.github.io/#ui-select) ([AngularJS](https://angularjs.org/))
 * [Django](https://github.com/applegrew/django-select2)
 * [Symfony](https://github.com/19Gerhard85/sfSelect2WidgetsPlugin)
 * [Symfony2](https://github.com/avocode/FormExtensions)
