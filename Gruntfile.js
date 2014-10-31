@@ -35,146 +35,146 @@ module.exports = function (grunt) {
         jshintrc: true
       },
       code: {
-        src: ["src/js/**/*.js"]
+        src: ['src/js/**/*.js']
       },
       tests: {
-        src: ["tests/**/*.js"]
+        src: ['tests/**/*.js']
       }
     },
 
     sass: {
       dist: {
         options: {
-          outputStyle: "compressed"
+          outputStyle: 'compressed'
         },
         files: {
-          "dist/css/select2.min.css": [
-            "src/scss/core.scss",
-            "src/scss/theme/default/layout.css"
+          'dist/css/select2.min.css': [
+            'src/scss/core.scss',
+            'src/scss/theme/default/layout.css'
           ]
         }
       },
       dev: {
         options: {
-          outputStyle: "nested"
+          outputStyle: 'nested'
         },
         files: {
-          "dist/css/select2.css": [
-            "src/scss/core.scss",
-            "src/scss/theme/default/layout.css"
+          'dist/css/select2.css': [
+            'src/scss/core.scss',
+            'src/scss/theme/default/layout.css'
           ]
         }
       }
     },
 
     requirejs: {
-      "dist": {
+      'dist': {
         options: {
-          baseUrl: "src/js",
-          optimize: "none",
-          name: "select2/core",
-          out: "dist/js/select2.js",
+          baseUrl: 'src/js',
+          optimize: 'none',
+          name: 'select2/core',
+          out: 'dist/js/select2.js',
           include: amdIncludes.concat(includes),
           paths: {
-            almond: "../../vendor/almond-0.2.9",
-            jquery: "jquery.shim"
+            almond: '../../vendor/almond-0.2.9',
+            jquery: 'jquery.shim'
           }
         }
       },
-      "dist.full": {
+      'dist.full': {
         options: {
-          baseUrl: "src/js",
-          optimize: "none",
-          name: "select2/core",
-          out: "dist/js/select2.full.js",
+          baseUrl: 'src/js',
+          optimize: 'none',
+          name: 'select2/core',
+          out: 'dist/js/select2.full.js',
           include: amdIncludes.concat(fullIncludes),
           paths: {
-            almond: "../../vendor/almond-0.2.9",
-            jquery: "../../vendor/jquery-2.1.0"
+            almond: '../../vendor/almond-0.2.9',
+            jquery: '../../vendor/jquery-2.1.0'
           }
         }
       },
-      "amd": {
+      'amd': {
         options: {
-          baseUrl: "src/js",
-          optimize: "none",
-          name: "select2/core",
-          out: "dist/js/select2.amd.js",
+          baseUrl: 'src/js',
+          optimize: 'none',
+          name: 'select2/core',
+          out: 'dist/js/select2.amd.js',
           include: includes,
           paths: {
-            jquery: "empty:"
+            jquery: 'empty:'
           }
         }
       },
-      "amd.full": {
+      'amd.full': {
         options: {
-          baseUrl: "src/js",
-          optimize: "none",
-          name: "select2/core",
-          out: "dist/js/select2.amd.full.js",
+          baseUrl: 'src/js',
+          optimize: 'none',
+          name: 'select2/core',
+          out: 'dist/js/select2.amd.full.js',
           include: fullIncludes,
           paths: {
-            jquery: "empty:"
+            jquery: 'empty:'
           }
         }
       }
     },
 
     concat: {
-      "dist": {
+      'dist': {
         src: [
-          "src/js/start.js",
-          "dist/js/select2.js",
-          "src/js/end.js"
+          'src/js/start.js',
+          'dist/js/select2.js',
+          'src/js/end.js'
         ],
-        dest: "dist/js/select2.js"
+        dest: 'dist/js/select2.js'
       },
-      "dist.full": {
+      'dist.full': {
         src: [
-          "src/js/start.js",
-          "dist/js/select2.full.js",
-          "src/js/end.js"
+          'src/js/start.js',
+          'dist/js/select2.full.js',
+          'src/js/end.js'
         ],
-        dest: "dist/js/select2.full.js"
+        dest: 'dist/js/select2.full.js'
       }
     },
 
     watch: {
       js: {
         files: [
-          "src/js/select2/**/*.js",
-          "tests/**/*.js",
+          'src/js/select2/**/*.js',
+          'tests/**/*.js'
         ],
         tasks: [
-          "compile",
-          "test",
+          'compile',
+          'test',
           'minify'
         ]
       },
       css: {
         files: [
-          "src/scss/**/*.scss"
+          'src/scss/**/*.scss'
         ],
         tasks: [
-          "compile",
+          'compile',
           'minify'
         ]
       }
     }
   });
 
-  grunt.loadNpmTasks("grunt-contrib-concat")
-  grunt.loadNpmTasks("grunt-contrib-jshint")
-  grunt.loadNpmTasks("grunt-contrib-qunit")
-  grunt.loadNpmTasks("grunt-contrib-requirejs")
-  grunt.loadNpmTasks("grunt-contrib-uglify")
-  grunt.loadNpmTasks("grunt-contrib-watch")
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-qunit');
+  grunt.loadNpmTasks('grunt-contrib-requirejs');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
-  grunt.loadNpmTasks("grunt-sass")
+  grunt.loadNpmTasks('grunt-sass');
 
-  grunt.registerTask("default", ["compile", "test", "minify"])
+  grunt.registerTask('default', ['compile', 'test', 'minify']);
 
-  grunt.registerTask("compile", ["requirejs", "sass:dev", "concat"])
-  grunt.registerTask("minify", ["uglify", "sass:dist"])
-  grunt.registerTask("test", ["qunit", "jshint"])
-}
+  grunt.registerTask('compile', ['requirejs', 'sass:dev', 'concat']);
+  grunt.registerTask('minify', ['uglify', 'sass:dist']);
+  grunt.registerTask('test', ['qunit', 'jshint']);
+};

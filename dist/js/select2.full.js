@@ -9534,8 +9534,6 @@ define("almond", function(){});
     return jQuery;
 
 }));
-define("jquery", function(){});
-
 define('select2/utils',[], function () {
   var Utils = {};
 
