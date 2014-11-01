@@ -257,7 +257,7 @@ $(".js-programmatic-close").on("click", function () { $example.select2("close");
     </div>
   </section>
 
-  <section id="tagss" class="row">
+  <section id="tags" class="row">
     <div class="col-md-4">
       <h1>Tagging support</h1>
 
@@ -287,6 +287,40 @@ $(".js-programmatic-close").on("click", function () { $example.select2("close");
 <script type="text/x-example-code" class="js-code-tags">
 $(".js-example-tags").select2({
   tags: true
+})
+</script>
+    </div>
+  </section>
+
+  <section id="language" class="row">
+    <div class="col-md-4">
+      <h1>Multiple languages</h1>
+
+      <p>
+        Select2 supports displaying the messages in different languages, as well
+        as provding your own custom messages that can be displayed.
+      </p>
+
+      <p>
+        <select class="js-example-language js-states form-control">
+        </select>
+      </p>
+
+      <p>
+        Note that when tagging is enabled the user can select from pre-existing
+        options or create a new tag by picking the first choice, which is what
+        the user has typed into the search box so far.
+      </p>
+
+    </div>
+    <div class="col-md-8">
+      <h2>Example code</h2>
+
+      <pre data-fill-from=".js-code-language"></pre>
+
+<script type="text/x-example-code" class="js-code-language">
+$(".js-example-language").select2({
+  language: "es"
 })
 </script>
     </div>
@@ -388,6 +422,8 @@ $.fn.select2.amd.require(["select2/core", "select2/utils"], function (Select2, U
 
   var $tags = $(".js-example-tags");
 
+  var $language = $(".js-example-language");
+
   $basicSingle.select2();
   $basicMultiple.select2()
 
@@ -413,6 +449,10 @@ $.fn.select2.amd.require(["select2/core", "select2/utils"], function (Select2, U
 
   $tags.select2({
     tags: true
+  });
+
+  $language.select2({
+    language: "en"
   });
 });
 </script>

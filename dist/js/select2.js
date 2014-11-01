@@ -1,4 +1,4 @@
-(function() { if ($ && $.fn && $.fn.select2 && $.fn.select2.amd) { define = $.fn.select2.amd.define; require = $.fn.select2.amd.require; }/**
+window.$ = window.$ || {};(function() { if ($ && $.fn && $.fn.select2 && $.fn.select2.amd) { define = $.fn.select2.amd.define; require = $.fn.select2.amd.require; }/**
  * @license almond 0.2.9 Copyright (c) 2011-2014, The Dojo Foundation All Rights Reserved.
  * Available via the MIT or new BSD license.
  * see: http://github.com/jrburke/almond for details
@@ -1265,6 +1265,42 @@ define('select2/selection/placeholder',[
   return Placeholder;
 });
 
+define('select2/translation',[
+
+], function () {
+  function Translation (dict) {
+    this.dict = dict || {};
+  }
+
+  Translation.prototype.all = function () {
+    return this.dict;
+  };
+
+  Translation.prototype.get = function (key) {
+    return this.dict[key];
+  };
+
+  Translation.prototype.extend = function (translation) {
+    this.dict = $.extend({}, translation.all(), this.dict);
+  };
+
+  // Static functions
+
+  Translation._cache = {};
+
+  Translation.loadPath = function (path) {
+    if (!(path in Translation._cache)) {
+      var translations = require(path);
+
+      Translation._cache[path] = translations;
+    }
+
+    return new Translation(Translation._cache[path]);
+  };
+
+  return Translation;
+});
+
 define('select2/data/base',[
   '../utils'
 ], function (Utils) {
@@ -1773,7 +1809,16 @@ define('select2/dropdown/search',[
   return Search;
 });
 
+define('select2/i18n/en',[],function () {
+  return {
+    'no_results': function () {
+      return 'No results found';
+    }
+  };
+});
+
 define('select2/defaults',[
+  'jquery',
   './results',
 
   './selection/single',
@@ -1781,6 +1826,7 @@ define('select2/defaults',[
   './selection/placeholder',
 
   './utils',
+  './translation',
 
   './data/select',
   './data/array',
@@ -1788,18 +1834,20 @@ define('select2/defaults',[
   './data/tags',
 
   './dropdown',
-  './dropdown/search'
-], function (ResultsList,
+  './dropdown/search',
+
+  './i18n/en'
+], function ($, ResultsList,
              SingleSelection, MultipleSelection, Placeholder,
-             Utils,
+             Utils, Translation,
              SelectData, ArrayData, AjaxData, Tags,
-             Dropdown, Search) {
+             Dropdown, Search, EnglishTranslation) {
   function Defaults () {
     this.reset();
   }
 
   Defaults.prototype.apply = function (options) {
-    options = $.extend({}, options, this.defaults);
+    options = $.extend({}, this.defaults, options);
 
     if (options.dataAdapter == null) {
       if (options.ajax) {
@@ -1841,11 +1889,42 @@ define('select2/defaults',[
       }
     }
 
+    if (typeof options.language === 'string') {
+      options.language = [options.language];
+    }
+
+    if ($.isArray(options.language)) {
+      var languages = new Translation();
+      var languageNames = options.language.concat(this.defaults.language);
+
+      for (var l = 0; l < languageNames.length; l++) {
+        var name = languageNames[l];
+        var language = {};
+
+        try {
+          // Try to load it with the original name
+          language = Translation.loadPath(name);
+        } catch (e) {
+          // If we couldn't load it, check if it wasn't the full path
+          name = 'select2/i18n/' + name;
+          language = Translation.loadPath(name);
+        }
+
+        languages.extend(language);
+      }
+
+      options.translations = languages;
+    } else {
+      options.translations = new Translations(options.language);
+    }
+
     return options;
   };
 
   Defaults.prototype.reset = function () {
-    this.defaults = { };
+    this.defaults = {
+      language: ['select2/i18n/en']
+    };
   };
 
   var defaults = new Defaults();

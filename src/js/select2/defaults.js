@@ -1,4 +1,5 @@
 define([
+  'jquery',
   './results',
 
   './selection/single',
@@ -6,6 +7,7 @@ define([
   './selection/placeholder',
 
   './utils',
+  './translation',
 
   './data/select',
   './data/array',
@@ -13,18 +15,20 @@ define([
   './data/tags',
 
   './dropdown',
-  './dropdown/search'
-], function (ResultsList,
+  './dropdown/search',
+
+  './i18n/en'
+], function ($, ResultsList,
              SingleSelection, MultipleSelection, Placeholder,
-             Utils,
+             Utils, Translation,
              SelectData, ArrayData, AjaxData, Tags,
-             Dropdown, Search) {
+             Dropdown, Search, EnglishTranslation) {
   function Defaults () {
     this.reset();
   }
 
   Defaults.prototype.apply = function (options) {
-    options = $.extend({}, options, this.defaults);
+    options = $.extend({}, this.defaults, options);
 
     if (options.dataAdapter == null) {
       if (options.ajax) {
@@ -66,11 +70,42 @@ define([
       }
     }
 
+    if (typeof options.language === 'string') {
+      options.language = [options.language];
+    }
+
+    if ($.isArray(options.language)) {
+      var languages = new Translation();
+      var languageNames = options.language.concat(this.defaults.language);
+
+      for (var l = 0; l < languageNames.length; l++) {
+        var name = languageNames[l];
+        var language = {};
+
+        try {
+          // Try to load it with the original name
+          language = Translation.loadPath(name);
+        } catch (e) {
+          // If we couldn't load it, check if it wasn't the full path
+          name = 'select2/i18n/' + name;
+          language = Translation.loadPath(name);
+        }
+
+        languages.extend(language);
+      }
+
+      options.translations = languages;
+    } else {
+      options.translations = new Translations(options.language);
+    }
+
     return options;
   };
 
   Defaults.prototype.reset = function () {
-    this.defaults = { };
+    this.defaults = {
+      language: ['select2/i18n/en']
+    };
   };
 
   var defaults = new Defaults();
