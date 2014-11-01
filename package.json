@@ -5,7 +5,7 @@
   "author": "Igor Vaynberg",
   "repository": {"type": "git", "url": "git://github.com/ivaynberg/select2.git"},
   "main": "select2.js",
-  "version": "3.5.1",
+  "version": "3.5.2",
   "jspm": {
     "main": "select2",
     "files": ["select2.js", "select2.png", "select2.css", "select2-spinner.gif"],
