@@ -11201,84 +11201,22 @@ define('select2/core',[
 
     var self = this;
 
-    this.data.bind(this, $container);
-    this.selection.bind(this, $container);
+    // Bind the container to all of the adapters
+    this._bindAdapters();
 
-    this.dropdown.bind(this, $container);
-    this.results.bind(this, $container);
+    // Register any DOM event handler
+    this._registerDomEvents();
 
-    this.$element.on('change', function () {
-      self.data.current(function (data) {
-        self.trigger('selection:update', {
-          data: data
-        });
-      });
-    });
-
-    this.selection.on('open', function () {
-      self.open();
-    });
-    this.selection.on('close', function () {
-      self.close();
-    });
-    this.selection.on('toggle', function () {
-      self.toggleDropdown();
-    });
-
-    this.selection.on('results:select', function () {
-      self.trigger('results:select');
-    });
-    this.selection.on('results:previous', function () {
-      self.trigger('results:previous');
-    });
-    this.selection.on('results:next', function () {
-      self.trigger('results:next');
-    });
-
-    this.selection.on('unselected', function (params) {
-      self.trigger('unselect', params);
-
-      self.close();
-    });
-
-    this.results.on('selected', function (params) {
-      self.trigger('select', params);
-
-      self.close();
-    });
-
-    this.results.on('unselected', function (params) {
-      self.trigger('unselect', params);
-
-      self.close();
-    });
-
-    this.results.on('results:focus', function (params) {
-      self.trigger('results:focus', params);
-    });
-
-    this.on('open', function () {
-      $container.addClass('open');
-    });
-
-    this.on('close', function () {
-      $container.removeClass('open');
-    });
+    // Register any internal event handlers
+    this._registerSelectionEvents();
+    this._registerResultsEvents();
+    this._registerEvents();
 
     // Set the initial state
 
     this.data.current(function (initialData) {
       self.trigger('selection:update', {
         data: initialData
-      });
-    });
-
-    this.on('query', function (params) {
-      this.data.query(params, function (data) {
-        self.trigger('results:all', {
-          data: data,
-          query: params
-        });
       });
     });
 
@@ -11330,6 +11268,97 @@ define('select2/core',[
   Select2.prototype._placeResults = function ($results) {
     var $resultsContainer = this.$dropdown.find('.results');
     $resultsContainer.append($results);
+  };
+
+  Select2.prototype._bindAdapters = function () {
+    this.data.bind(this, this.$container);
+    this.selection.bind(this, this.$container);
+
+    this.dropdown.bind(this, this.$container);
+    this.results.bind(this, this.$container);
+  };
+
+  Select2.prototype._registerDomEvents = function () {
+    var self = this;
+
+    this.$element.on('change', function () {
+      self.data.current(function (data) {
+        self.trigger('selection:update', {
+          data: data
+        });
+      });
+    });
+  };
+
+  Select2.prototype._registerSelectionEvents = function () {
+    var self = this;
+
+    this.selection.on('open', function () {
+      self.open();
+    });
+    this.selection.on('close', function () {
+      self.close();
+    });
+    this.selection.on('toggle', function () {
+      self.toggleDropdown();
+    });
+
+    this.selection.on('results:select', function () {
+      self.trigger('results:select');
+    });
+    this.selection.on('results:previous', function () {
+      self.trigger('results:previous');
+    });
+    this.selection.on('results:next', function () {
+      self.trigger('results:next');
+    });
+
+    this.selection.on('unselected', function (params) {
+      self.trigger('unselect', params);
+
+      self.close();
+    });
+  };
+
+  Select2.prototype._registerResultsEvents = function () {
+    var self = this;
+
+    this.results.on('selected', function (params) {
+      self.trigger('select', params);
+
+      self.close();
+    });
+
+    this.results.on('unselected', function (params) {
+      self.trigger('unselect', params);
+
+      self.close();
+    });
+
+    this.results.on('results:focus', function (params) {
+      self.trigger('results:focus', params);
+    });
+  };
+
+  Select2.prototype._registerEvents = function () {
+    var self = this;
+
+    this.on('open', function () {
+      self.$container.addClass('open');
+    });
+
+    this.on('close', function () {
+      self.$container.removeClass('open');
+    });
+
+    this.on('query', function (params) {
+      this.data.query(params, function (data) {
+        self.trigger('results:all', {
+          data: data,
+          query: params
+        });
+      });
+    });
   };
 
   Select2.prototype.toggleDropdown = function () {
