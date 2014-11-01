@@ -29,16 +29,6 @@ define([
   SelectAdapter.prototype.select = function (data) {
     var self = this;
 
-    // Create items marked as tags
-    if (data._tag === true) {
-      // Clear the tag flag from it
-      delete data._tag;
-
-      // Create and add the option
-      var $option = this.option(data);
-      this.$element.append($option);
-    }
-
     if (this.$element.prop('multiple')) {
       this.current(function (currentData) {
         var val = [];

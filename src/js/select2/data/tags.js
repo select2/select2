@@ -10,6 +10,8 @@ define([
   Tags.prototype.query = function (decorated, params, callback) {
     var self = this;
 
+    this._removeOldTags();
+
     if (params.term == null || params.term === '' || params.page != null) {
       decorated.call(this, params, callback);
       return;
@@ -41,7 +43,11 @@ define([
       }
 
       var tag = self.createTag(params);
-      tag._tag = true;
+
+      var $option = self.option(tag);
+      $option.attr('data-select2-tag', true);
+
+      self.$element.append($option);
 
       data.unshift(tag);
 
@@ -56,6 +62,20 @@ define([
       id: params.term,
       text: params.term
     };
+  };
+
+  Tags.prototype._removeOldTags = function (_) {
+    var tag = this._lastTag;
+
+    var $options = this.$element.find('option[data-select2-tag]');
+
+    $options.each(function () {
+      if (this.selected) {
+        return;
+      }
+
+      $(this).remove();
+    });
   };
 
   return Tags;

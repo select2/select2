@@ -10490,16 +10490,6 @@ define('select2/data/select',[
   SelectAdapter.prototype.select = function (data) {
     var self = this;
 
-    // Create items marked as tags
-    if (data._tag === true) {
-      // Clear the tag flag from it
-      delete data._tag;
-
-      // Create and add the option
-      var $option = this.option(data);
-      this.$element.append($option);
-    }
-
     if (this.$element.prop('multiple')) {
       this.current(function (currentData) {
         var val = [];
@@ -10792,6 +10782,8 @@ define('select2/data/tags',[
   Tags.prototype.query = function (decorated, params, callback) {
     var self = this;
 
+    this._removeOldTags();
+
     if (params.term == null || params.term === '' || params.page != null) {
       decorated.call(this, params, callback);
       return;
@@ -10823,7 +10815,11 @@ define('select2/data/tags',[
       }
 
       var tag = self.createTag(params);
-      tag._tag = true;
+
+      var $option = self.option(tag);
+      $option.attr('data-select2-tag', true);
+
+      self.$element.append($option);
 
       data.unshift(tag);
 
@@ -10838,6 +10834,20 @@ define('select2/data/tags',[
       id: params.term,
       text: params.term
     };
+  };
+
+  Tags.prototype._removeOldTags = function (_) {
+    var tag = this._lastTag;
+
+    var $options = this.$element.find('option[data-select2-tag]');
+
+    $options.each(function () {
+      if (this.selected) {
+        return;
+      }
+
+      $(this).remove();
+    });
   };
 
   return Tags;
