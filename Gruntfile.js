@@ -12,6 +12,24 @@ module.exports = function (grunt) {
     'jquery'
   ].concat(includes);
 
+  var i18nModules = [];
+  var i18nPaths = {};
+
+  var i18nFiles = grunt.file.expand({
+    cwd: 'src/js'
+  }, 'select2/i18n/*.js');
+
+  for (var i = 0; i < i18nFiles.length; i++) {
+    var file = i18nFiles[i];
+    var name = file.split('.')[0];
+
+    i18nModules.push({
+      name: name
+    });
+
+    i18nPaths[name] = '../../' + name;
+  }
+
   grunt.initConfig({
     uglify: {
       'dist': {
@@ -119,6 +137,15 @@ module.exports = function (grunt) {
           paths: {
             jquery: 'empty:'
           },
+          wrap: grunt.file.readJSON('src/js/banner.json')
+        }
+      },
+      'i18n': {
+        options: {
+          baseUrl: 'src/js/select2/i18n',
+          dir: 'dist/js/i18n',
+          paths: i18nPaths,
+          modules: i18nModules,
           wrap: grunt.file.readJSON('src/js/banner.json')
         }
       }

@@ -1,0 +1,1 @@
+(function(){$&&$.fn&&$.fn.select2&&$.fn.select2.amd&&(define=$.fn.select2.amd.define,require=$.fn.select2.amd.require),define("select2/i18n/en",[],function(){return{no_results:function(){return"No results found"}}}),require("jquery.select2"),$.fn.select2.amd={define:define,require:require}})();
