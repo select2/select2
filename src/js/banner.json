@@ -1,0 +1,4 @@
+{
+  "start": "(function() {",
+  "end": "require('jquery.select2'); $.Select2 = $.Select2 || {}; $.Select2.amd = { define: define, require: require };}());"
+}

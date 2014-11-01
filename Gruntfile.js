@@ -78,7 +78,8 @@ module.exports = function (grunt) {
           paths: {
             almond: '../../vendor/almond-0.2.9',
             jquery: 'jquery.shim'
-          }
+          },
+          wrap: grunt.file.readJSON('src/js/banner.json')
         }
       },
       'dist.full': {
@@ -91,7 +92,8 @@ module.exports = function (grunt) {
           paths: {
             almond: '../../vendor/almond-0.2.9',
             jquery: '../../vendor/jquery-2.1.0'
-          }
+          },
+          wrap: grunt.file.readJSON('src/js/banner.json')
         }
       },
       'amd': {
@@ -103,7 +105,8 @@ module.exports = function (grunt) {
           include: includes,
           paths: {
             jquery: 'empty:'
-          }
+          },
+          wrap: grunt.file.readJSON('src/js/banner.json')
         }
       },
       'amd.full': {
@@ -115,27 +118,9 @@ module.exports = function (grunt) {
           include: fullIncludes,
           paths: {
             jquery: 'empty:'
-          }
+          },
+          wrap: grunt.file.readJSON('src/js/banner.json')
         }
-      }
-    },
-
-    concat: {
-      'dist': {
-        src: [
-          'src/js/start.js',
-          'dist/js/select2.js',
-          'src/js/end.js'
-        ],
-        dest: 'dist/js/select2.js'
-      },
-      'dist.full': {
-        src: [
-          'src/js/start.js',
-          'dist/js/select2.full.js',
-          'src/js/end.js'
-        ],
-        dest: 'dist/js/select2.full.js'
       }
     },
 
@@ -174,7 +159,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', ['compile', 'test', 'minify']);
 
-  grunt.registerTask('compile', ['requirejs', 'sass:dev', 'concat']);
+  grunt.registerTask('compile', ['requirejs', 'sass:dev']);
   grunt.registerTask('minify', ['uglify', 'sass:dist']);
   grunt.registerTask('test', ['qunit', 'jshint']);
 };
