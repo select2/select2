@@ -1,11 +1,21 @@
 define([
   './defaults'
 ], function (Defaults) {
-  function Options (options) {
-    this.options = Defaults.apply(options);
+  function Options (options, $element) {
+    this.options = options;
+
+    if ($element != null) {
+      this.fromElement($element);
+    }
+
+    this.options = Defaults.apply(this.options);
   }
 
   Options.prototype.fromElement = function ($e) {
+    if (this.options.multiple == null) {
+      this.options.multiple = $e.prop('multiple');
+    }
+
     return this;
   };
 

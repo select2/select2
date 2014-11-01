@@ -6,21 +6,11 @@ define([
   var Select2 = function ($element, options) {
     this.$element = $element;
 
-    if ($element.attr('id') != null) {
-      this.id = $element.attr('id');
-    } else if ($element.attr('name') != null) {
-      this.id = $element.attr('name') + '-' + Utils.generateChars(2);
-    } else {
-      this.id = Utils.generateChars(4);
-    }
-
-    this.id = 'select2-' + this.id;
+    this.id = this._generateId($element);
 
     options = options || {};
 
-    options.multiple = options.multiple || $element.prop('multiple');
-
-    this.options = new Options(options);
+    this.options = new Options(options, $element);
 
     Select2.__super__.constructor.call(this);
 
@@ -30,35 +20,29 @@ define([
     this.data = new DataAdapter($element, this.options);
 
     var $container = this.render();
-    this.$container = $container;
 
-    $container.insertAfter(this.$element);
-
-    $container.width($element.outerWidth(false));
+    this._placeContainer($container);
 
     var SelectionAdapter = this.options.get('selectionAdapter');
     this.selection = new SelectionAdapter($element, this.options);
 
-    var $selectionContainer = $container.find('.selection');
     var $selection = this.selection.render();
 
-    $selectionContainer.append($selection);
+    this._placeSelection($selection);
 
     var DropdownAdapter = this.options.get('dropdownAdapter');
     this.dropdown = new DropdownAdapter($element, this.options);
 
-    var $dropdownContainer = $container.find('.dropdown-wrapper');
     var $dropdown = this.dropdown.render();
 
-    $dropdownContainer.append($dropdown);
+    this._placeDropdown($dropdown);
 
     var ResultsAdapter = this.options.get('resultsAdapter');
     this.results = new ResultsAdapter($element, this.options, this.data);
 
-    var $resultsContainer = $dropdown.find('.results');
     var $results = this.results.render();
 
-    $resultsContainer.append($results);
+    this._placeResults($results);
 
     // Bind events
 
@@ -157,6 +141,44 @@ define([
 
   Utils.Extend(Select2, Utils.Observable);
 
+  Select2.prototype._generateId = function ($element) {
+    var id = '';
+
+    if ($element.attr('id') != null) {
+      id = $element.attr('id');
+    } else if ($element.attr('name') != null) {
+      id = $element.attr('name') + '-' + Utils.generateChars(2);
+    } else {
+      id = Utils.generateChars(4);
+    }
+
+    id = 'select2-' + id;
+
+    return id;
+  };
+
+  Select2.prototype._placeContainer = function ($container) {
+    $container.insertAfter(this.$element);
+    $container.width(this.$element.outerWidth(false));
+  };
+
+  Select2.prototype._placeSelection = function ($selection) {
+    var $selectionContainer = this.$container.find('.selection');
+    $selectionContainer.append($selection);
+  };
+
+  Select2.prototype._placeDropdown = function ($dropdown) {
+    this.$dropdown = $dropdown;
+
+    var $dropdownContainer = this.$container.find('.dropdown-wrapper');
+    $dropdownContainer.append($dropdown);
+  };
+
+  Select2.prototype._placeResults = function ($results) {
+    var $resultsContainer = this.$dropdown.find('.results');
+    $resultsContainer.append($results);
+  };
+
   Select2.prototype.toggleDropdown = function () {
     if (this.isOpen()) {
       this.close();
@@ -192,6 +214,8 @@ define([
         '<span class="dropdown-wrapper" aria-hidden="true"></span>' +
       '</span>'
     );
+
+    this.$container = $container;
 
     return $container;
   };
