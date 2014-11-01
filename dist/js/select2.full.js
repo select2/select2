@@ -10069,6 +10069,32 @@ define('select2/selection/base',[
     container.on('selection:update', function (params) {
       self.update(params.data);
     });
+
+    container.on('open', function () {
+      $(document.body).on('mousedown.select2.' + container.id, function (e) {
+        var $target = $(e.target);
+
+        var $select = $target.closest('.select2');
+
+        var $all = $('.select2.open');
+
+        $all.each(function () {
+          var $this = $(this);
+
+          if (this == $select[0]) {
+            return;
+          }
+
+          var $element = $this.data('element');
+
+          $element.select2('close');
+        });
+      });
+
+      container.on('close', function () {
+        $(document.body).off('mousedown.select2.' + container.id);
+      });
+    });
   };
 
   BaseSelection.prototype.update = function (data) {
@@ -11280,26 +11306,6 @@ define('select2/core',[
 
   Select2.prototype._registerDomEvents = function () {
     var self = this;
-
-    $(document.body).on('mousedown', function (e) {
-      var $target = $(e.target);
-
-      var $select = $target.closest('.select2');
-
-      var $all = $('.select2.open');
-
-      $all.each(function () {
-        var $this = $(this);
-
-        if (this == $select[0]) {
-          return;
-        }
-
-        var $element = $this.data('element');
-
-        $element.select2('close');
-      });
-    });
 
     this.$element.on('change', function () {
       self.data.current(function (data) {
