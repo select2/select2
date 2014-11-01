@@ -1,4 +1,4 @@
-(function() {define('select2/utils',[], function () {
+(function() { if ($ && $.fn && $.fn.select2 && $.fn.select2.amd) { define = $.fn.select2.amd.define; require = $.fn.select2.amd.require; }define('select2/utils',[], function () {
   var Utils = {};
 
   Utils.Extend = function (ChildClass, SuperClass) {
@@ -1674,4 +1674,4 @@ define('jquery.select2',[
   return Select2;
 });
 
-require('jquery.select2'); $.Select2 = $.Select2 || {}; $.Select2.amd = { define: define };}());
+require('jquery.select2'); $.fn.select2.amd = { define: define, require: require };}());

@@ -372,7 +372,7 @@ $("[data-fill-from]").each(function () {
 
 prettyPrint();
 
-require(["select2/core", "select2/utils"], function (Select2, Utils) {
+$.fn.select2.amd.require(["select2/core", "select2/utils"], function (Select2, Utils) {
   var $basicSingle = $(".js-example-basic-single");
   var $basicMultiple = $(".js-example-basic-multiple");
 

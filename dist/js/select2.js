@@ -1,4 +1,4 @@
-(function() {/**
+(function() { if ($ && $.fn && $.fn.select2 && $.fn.select2.amd) { define = $.fn.select2.amd.define; require = $.fn.select2.amd.require; }/**
  * @license almond 0.2.9 Copyright (c) 2011-2014, The Dojo Foundation All Rights Reserved.
  * Available via the MIT or new BSD license.
  * see: http://github.com/jrburke/almond for details
@@ -2102,4 +2102,4 @@ define('jquery.select2',[
   return Select2;
 });
 
-require('jquery.select2'); $.Select2 = $.Select2 || {}; $.Select2.amd = { define: define };}());
+require('jquery.select2'); $.fn.select2.amd = { define: define, require: require };}());
