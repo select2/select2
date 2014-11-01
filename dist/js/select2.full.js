@@ -10821,7 +10821,7 @@ define('select2/data/tags',[
 
       self.$element.append($option);
 
-      data.unshift(tag);
+      self.insertTag(data, tag);
 
       callback(data);
     }
@@ -10834,6 +10834,10 @@ define('select2/data/tags',[
       id: params.term,
       text: params.term
     };
+  };
+
+  Tags.prototype.insertTag = function (_, data, tag) {
+    data.unshift(tag);
   };
 
   Tags.prototype._removeOldTags = function (_) {
