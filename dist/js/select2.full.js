@@ -10930,6 +10930,49 @@ define('select2/dropdown/search',[
   return Search;
 });
 
+define('select2/dropdown/hidePlaceholder',[
+
+], function () {
+  function HidePlaceholder (decorated, $element, options, dataAdapter) {
+    this.placeholder = this.normalizePlaceholder(options.get('placeholder'));
+
+    decorated.call(this, $element, options, dataAdapter);
+  }
+
+  HidePlaceholder.prototype.append = function (decorated, data) {
+    data = this.removePlaceholder(data);
+
+    decorated.call(this, data);
+  };
+
+  HidePlaceholder.prototype.normalizePlaceholder = function (_, placeholder) {
+    if (typeof placeholder === 'string') {
+      placeholder = {
+        id: '',
+        text: placeholder
+      };
+    }
+
+    return placeholder;
+  };
+
+  HidePlaceholder.prototype.removePlaceholder = function (_, data) {
+    var modifiedData = data.slice(0);
+
+    for (var d = data.length - 1; d >= 0; d--) {
+      var item = data[d];
+
+      if (this.placeholder.id === item.id) {
+        modifiedData.splice(d, 1);
+      }
+    }
+
+    return modifiedData;
+  };
+
+  return HidePlaceholder;
+});
+
 define('select2/i18n/en',[],function () {
   return {
     noResults: function () {
@@ -10956,13 +10999,15 @@ define('select2/defaults',[
 
   './dropdown',
   './dropdown/search',
+  './dropdown/hidePlaceholder',
 
   './i18n/en'
 ], function ($, ResultsList,
              SingleSelection, MultipleSelection, Placeholder,
              Utils, Translation,
              SelectData, ArrayData, AjaxData, Tags,
-             Dropdown, Search, EnglishTranslation) {
+             Dropdown, Search, HidePlaceholder,
+             EnglishTranslation) {
   function Defaults () {
     this.reset();
   }
@@ -11006,6 +11051,11 @@ define('select2/defaults',[
         options.selectionAdapter = Utils.Decorate(
           options.selectionAdapter,
           Placeholder
+        );
+
+        options.resultsAdapter = Utils.Decorate(
+          options.resultsAdapter,
+          HidePlaceholder
         );
       }
     }

@@ -16,13 +16,15 @@ define([
 
   './dropdown',
   './dropdown/search',
+  './dropdown/hidePlaceholder',
 
   './i18n/en'
 ], function ($, ResultsList,
              SingleSelection, MultipleSelection, Placeholder,
              Utils, Translation,
              SelectData, ArrayData, AjaxData, Tags,
-             Dropdown, Search, EnglishTranslation) {
+             Dropdown, Search, HidePlaceholder,
+             EnglishTranslation) {
   function Defaults () {
     this.reset();
   }
@@ -66,6 +68,11 @@ define([
         options.selectionAdapter = Utils.Decorate(
           options.selectionAdapter,
           Placeholder
+        );
+
+        options.resultsAdapter = Utils.Decorate(
+          options.resultsAdapter,
+          HidePlaceholder
         );
       }
     }
