@@ -29,8 +29,22 @@ define([
     this.$results.empty();
   };
 
+  Results.prototype.empty = function () {
+    var $empty = $('<li role="treeitem" class="option"></li>');
+
+    $empty.text(this.options.get('translations').get('noResults'));
+
+    this.$results.append($empty);
+  };
+
   Results.prototype.append = function (data) {
     var $options = [];
+
+    if (data.length === 0) {
+      this.empty();
+
+      return;
+    }
 
     data = this.sort(data);
 

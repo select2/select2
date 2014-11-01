@@ -1,6 +1,6 @@
 define(function () {
   return {
-    'no_results': function () {
+    noResults: function () {
       return 'No results found';
     }
   };
