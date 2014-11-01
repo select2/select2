@@ -1,13 +1,13 @@
 ---
 layout: main
-title: Select2 3.5.1
+title: Select2 3.5.2
 group: navigation
-version: 3.5.1
-milestone: 19
+version: 3.5.2
+milestone: 20
 ---
 
-<link href="select2-3.5.1/select2.css?ts={{ site.time | date_to_xmlschema | cgi_escape}}" rel="stylesheet"/>
-<script src="select2-3.5.1/select2.js?ts={{ site.time | date_to_xmlschema | cgi_escape}}"></script>
+<link href="select2-3.5.2/select2.css?ts={{ site.time | date_to_xmlschema | cgi_escape}}" rel="stylesheet"/>
+<script src="select2-3.5.2/select2.js?ts={{ site.time | date_to_xmlschema | cgi_escape}}"></script>
 
 <script id="script_e1">
 
@@ -63,65 +63,63 @@ $("#e5").select2({
 </script>
 
 <script>
+   function repoFormatResult(repo) {
+      var markup = '<div class="row-fluid">' +
+         '<div class="span2"><img src="' + repo.owner.avatar_url + '" /></div>' +
+         '<div class="span10">' +
+            '<div class="row-fluid">' +
+               '<div class="span6">' + repo.full_name + '</div>' +
+               '<div class="span3"><i class="fa fa-code-fork"></i> ' + repo.forks_count + '</div>' +
+               '<div class="span3"><i class="fa fa-star"></i> ' + repo.stargazers_count + '</div>' +
+            '</div>';
 
-    function movieFormatResult(movie) {
-        var markup = "<table class='movie-result'><tr>";
-        if (movie.posters !== undefined && movie.posters.thumbnail !== undefined) {
-            markup += "<td class='movie-image'><img src='" + movie.posters.thumbnail + "'/></td>";
-        }
-        markup += "<td class='movie-info'><div class='movie-title'>" + movie.title + "</div>";
-        if (movie.critics_consensus !== undefined) {
-            markup += "<div class='movie-synopsis'>" + movie.critics_consensus + "</div>";
-        }
-        else if (movie.synopsis !== undefined) {
-            markup += "<div class='movie-synopsis'>" + movie.synopsis + "</div>";
-        }
-        markup += "</td></tr></table>";
-        return markup;
-    }
+      if (repo.description) {
+         markup += '<div>' + repo.description + '</div>';
+      }
 
-    function movieFormatSelection(movie) {
-        return movie.title;
-    }
+      markup += '</div></div>';
 
+      return markup;
+   }
+
+   function repoFormatSelection(repo) {
+      return repo.full_name;
+   }
 </script>
 
 <script id="script_e6">
 $(document).ready(function() {
 $("#e6").select2({
-    placeholder: "Search for a movie",
+    placeholder: "Search for a repository",
     minimumInputLength: 1,
     ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
-        url: "http://api.rottentomatoes.com/api/public/v1.0/movies.json",
-        dataType: 'jsonp',
+        url: "https://api.github.com/search/repositories",
+        dataType: 'json',
+        quietMillis: 250,
         data: function (term, page) {
             return {
                 q: term, // search term
-                page_limit: 10,
-                apikey: "ju6z9mjyajq2djue3gbvv26t" // please do not use so this example keeps working
             };
         },
         results: function (data, page) { // parse the results into the format expected by Select2.
-            // since we are using custom formatting functions we do not need to alter remote JSON data
-            return {results: data.movies};
-        }
+            // since we are using custom formatting functions we do not need to alter the remote JSON data
+            return { results: data.items };
+        },
+        cache: true
     },
     initSelection: function(element, callback) {
-        // the input tag has a value attribute preloaded that points to a preselected movie's id
+        // the input tag has a value attribute preloaded that points to a preselected repository's id
         // this function resolves that id attribute to an object that select2 can render
-        // using its formatResult renderer - that way the movie name is shown preselected
-        var id=$(element).val();
-        if (id!=="") {
-            $.ajax("http://api.rottentomatoes.com/api/public/v1.0/movies/"+id+".json", {
-                data: {
-                    apikey: "ju6z9mjyajq2djue3gbvv26t"
-                },
-                dataType: "jsonp"
+        // using its formatResult renderer - that way the repository name is shown preselected
+        var id = $(element).val();
+        if (id !== "") {
+            $.ajax("https://api.github.com/repositories/" + id, {
+                dataType: "json"
             }).done(function(data) { callback(data); });
         }
     },
-    formatResult: movieFormatResult, // omitted for brevity, see the source of this page
-    formatSelection: movieFormatSelection,  // omitted for brevity, see the source of this page
+    formatResult: repoFormatResult, // omitted for brevity, see the source of this page
+    formatSelection: repoFormatSelection,  // omitted for brevity, see the source of this page
     dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
     escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
 });
@@ -131,29 +129,27 @@ $("#e6").select2({
 <script id="script_e7">
 $(document).ready(function() {
 $("#e7").select2({
-    placeholder: "Search for a movie",
+    placeholder: "Search for a repository",
     minimumInputLength: 3,
     ajax: {
-        url: "http://api.rottentomatoes.com/api/public/v1.0/movies.json",
-        dataType: 'jsonp',
-        quietMillis: 100,
+        url: "https://api.github.com/search/repositories",
+        dataType: 'json',
+        quietMillis: 250,
         data: function (term, page) { // page is the one-based page number tracked by Select2
             return {
                 q: term, //search term
-                page_limit: 10, // page size
-                page: page, // page number
-                apikey: "ju6z9mjyajq2djue3gbvv26t" // please do not use so this example keeps working
+                page: page // page number
             };
         },
         results: function (data, page) {
-            var more = (page * 10) < data.total; // whether or not there are more results available
+            var more = (page * 30) < data.total_count; // whether or not there are more results available
 
             // notice we return the value of more so Select2 knows if more results can be loaded
-            return {results: data.movies, more: more};
+            return { results: data.items, more: more };
         }
     },
-    formatResult: movieFormatResult, // omitted for brevity, see the source of this page
-    formatSelection: movieFormatSelection, // omitted for brevity, see the source of this page
+    formatResult: repoFormatResult, // omitted for brevity, see the source of this page
+    formatSelection: repoFormatSelection, // omitted for brevity, see the source of this page
     dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
     escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
 });
@@ -202,6 +198,8 @@ h3 > label {
    font-weight: inherit;
 }
 </style>
+
+
 
       <header class="jumbotron subhead">
         <div class="subnav">
@@ -308,8 +306,7 @@ h3 > label {
       <article class="row" id="basics">
         <div class="span4">
           <h3>The Basics</h3>
-           <label for="source">Select2 can take a regular select box like this:</label>
-
+           <p>Select2 can take a regular select box like this:</p>
            <p><select style="width:300px" id="source">
                <optgroup label="Alaskan/Hawaiian Time Zone">
                    <option value="AK">Alaska</option>
@@ -368,7 +365,7 @@ h3 > label {
                </optgroup>
               </select>
          </p>
-           <label for="e1">and turns it into:</label>
+           <p>and turns it into:</p>
            <p>
                <select id="e1" class="populate" style="width:300px"></select>
            </p>
@@ -398,9 +395,7 @@ h3 > label {
       <article class="row" id="multi">
         <div class="span4">
           <h3>Multi-Value Select Boxes</h3>
-           <p>Select2 also supports multi-value select boxes. The <code>select</code> below is declared with the <code>multiple</code> attribute. </p>
-           <label for="e9">Select2 automatically picks up on this:</label>
-
+           <p>Select2 also supports multi-value select boxes. The <code>select</code> below is declared with the <code>multiple</code> attribute. Select2 automatically picks up on this:</p>
            <p>
                <select multiple name="e9" id="e9" style="width:300px" class="populate"></select>
            </p>
@@ -426,12 +421,12 @@ $("#e2_2").select2({
             });
           </script>
           <div class="span4">
-            <h3><label for="e2">Placeholders</label></h3>
+            <h3>Placeholders</h3>
              <p>A placeholder value can be defined and will be displayed until a selection is made:</p>
              <p>
                  <select id="e2" style="width:300px" class="populate placeholder"></select><br/>
              </p>
-              <p><label for="e2_2">Multiple select boxes</label>
+              <p>
                   <select id="e2_2" multiple="multiple" style="width:300px" class="populate placeholder"></select><br/>
               </p>
              <p>The placeholder can be declared via a <code>data-placeholder</code> attribute attached to the <code>select</code>, or via the <code>placeholder</code> configuration element as seen in the example code.</p>
@@ -448,10 +443,9 @@ $("#e2_2").select2({
 
         <article class="row" id="minimum">
           <div class="span4">
-            <h3><label for="e3">Minimum Input</label></h3>
+            <h3>Minimum Input</h3>
              <p>Select2 supports a minimum input setting which is useful for large remote datasets where short search terms are not very useful:</p>
              <p>
-
                  <select id="e3" style="width:300px" class="populate"></select><br/>
              </p>
           </div>
@@ -463,7 +457,7 @@ $("#e2_2").select2({
 
         <article class="row" id="templating">
           <div class="span4">
-            <h3><label for="e4">Templating</label></h3>
+            <h3>Templating</h3>
              <p>Various display options of the Select2 component can be changed:</p>
              <p>
                  <select id="e4" style="width:300px" class="populate"></select><br/>
@@ -515,10 +509,9 @@ $("#e19").select2({ maximumSelectionSize: 3 });
 </script>
       <article class="row" id="maximumSelectionSize">
           <div class="span4">
-              <h3><label for="e19">Maximum Selection Size</label></h3>
+              <h3>Maximum Selection Size</h3>
               <p>Select2 allows the developer to limit the number of items that can be selected in a multi-select control.
               In the example below only 3 or less items can be selected.</p>
-
               <p>
                   <select multiple class="populate" id="e19" style="width:300px"></select>
               </p>
@@ -564,9 +557,9 @@ $("#e19").select2({ maximumSelectionSize: 3 });
              <h3>Loading Remote Data</h3>
               <p>Select2 comes with AJAX/JSONP support built in. In this example we will search for a movie using Rotten Tomatoes API:</p>
               <p>
-                  <input type="hidden" class="bigdrop" id="e6" style="width:600px" value="16340"/>
+                  <input type="hidden" class="bigdrop" id="e6" style="width:600px" value="3620194" />
               </p>
-               <p class="alert alert-warning">If this example does not work it is probably because the Rotten Tomatoes API key usage of 10000 requests per day has been exhausted. Please try again tomorrow.</p>
+               <p class="alert alert-warning">If this example stops working, you have most likely reached the usage limit for the GitHub Search API of 5 requests per minute.  Please wait a few minutes and try again.</p>
                <h3>Example Code</h3>
               <pre class="prettyprint linenums" id="code_e6"></pre>
               <p>Select2 uses jQuery's <code>$.ajax</code> function to execute the remote call by default. An alternative <code>transport</code> function can be specified in the ajax settings, or an entirely custom implementation can be built by providing a custom <code>query</code> function instead of using the <code>ajax</code> helper.</p>
@@ -583,8 +576,8 @@ $("#e19").select2({ maximumSelectionSize: 3 });
                <p>
                    <input type="hidden" class="bigdrop" id="e7" style="width:600px"/>
                </p>
-                <p class="alert alert-warning">If this example does not work it is probably because the Rotten Tomatoes API key usage of 10000 requests per day has been exhausted. Please try again tomorrow.</p>
-                <h3>Example Code</h3>
+               <p class="alert alert-warning">If this example stops working, you have most likely reached the usage limit for the GitHub Search API of 5 requests per minute.  Please wait a few minutes and try again.</p>
+               <h3>Example Code</h3>
               <pre class="prettyprint linenums" id="code_e7"></pre>
             </div>
          </article>
@@ -611,9 +604,8 @@ $("#e8_2_close").click(function () { $("#e8_2").select2("close"); });
 });
 </script>
             <div class="span4">
-            <h3><label for="e8">Programmatic Access</label></h3>
+            <h3>Programmatic Access</h3>
              <p>Select2 supports methods that allow programmatic control of the component:</p>
-
                 <p>
                   <input type="button" class="btn-primary" id="e8_get" value="Alert selected value"/>
                   <input type="button" class="btn-info" id="e8_set" value="Set to California"/>
@@ -635,8 +627,6 @@ $("#e8_2_close").click(function () { $("#e8_2").select2("close"); });
                     <input type="button" class="btn-warning" id="e8_2_open" value="Open"/>
                   <input type="button" class="btn-warning" id="e8_2_close" value="Close"/>
                 </p>
-             <label for="e8_2">Populate</label>
-
               <p>
                   <select id="e8_2" multiple style="width:300px" class="populate"><option></option></select><br/>
               </p>
@@ -788,12 +778,11 @@ $("#e13_ak_co").click(function() { $("#e13").val(["AK","CO"]).trigger("change");
 });
 </script>
           <div class="span4">
-              <h3><label for="e13">Reacting to external value changes</label></h3>
+              <h3>Reacting to external value changes</h3>
 
               <p>Select2 can react to external value changes and keep its selection in-sync. This feature allows
                   Select2 to work seamlessly with front-end frameworks that use data binding between ui components
                   and model values.</p>
-
               <p><select id="e13" multiple style="width:300px" class="populate"></select><br/></p>
               <p><input type="button" id="e13_ca" class="btn btn-primary" value="Select California"/> <input type="button" id="e13_ak_co"  class="btn btn-primary"value="Select Alaska and Colorado"/></p>
               <p class="alert alert-alert">This feature is only available when initSelection() function is provided in
@@ -817,7 +806,7 @@ $("#e14_destroy").click(function() { $("#e14").select2("destroy"); });
 });
 </script>
           <div class="span4">
-              <h3><label for="e14">Select2 Lifecycle</label></h3>
+              <h3>Select2 Lifecycle</h3>
 
               <p>
 
@@ -875,11 +864,8 @@ $("#e16_writable").click(function() { $("#e16,#e16_2").select2("readonly", false
               });
           </script>
           <div class="span4">
-              <h3><label for="e16">Select2 Disabled Mode</label></h3>
-
+              <h3>Select2 Disabled Mode</h3>
               <p><select disabled="disabled" id="e16" style="width:300px" class="populate"></select><br/></p>
-          <label for="e16_2">Disabled</label>
-
               <p><select disabled="disabled" id="e16_2" multiple style="width:300px" class="populate"></select><br/></p>
               <p><input type="button" id="e16_enable" class="btn btn-primary" value="Enable"/> <input type="button" id="e16_disable" class="btn btn-warning"value="Disable"/></p>
               <p><input type="button" id="e16_writable" class="btn btn-primary" value="Writable"/> <input type="button" id="e16_readonly" class="btn btn-warning"value="Readonly"/></p>
@@ -910,13 +896,10 @@ $("#e17_2").select2({
               });
           </script>
           <div class="span4">
-              <h3><label for="e17">Custom Matcher</label></h3>
+              <h3>Custom Matcher</h3>
                <p>Unlike other dropdowns on this page, this one matches options only if the term appears in the beginning of the string as opposed to anywhere:</p>
-
               <p><select id="e17" style="width:300px" class="populate"></select><br/></p>
-              <p>The dropdown below matches on custom attributes of the <code>option</code> tag. </p>
-          <label for="e17_2">For example, the `blue` option can be matched by entering either `blue` or `cyan`:</label>
-
+              <p>The dropdown below matches on custom attributes of the <code>option</code> tag. For example, the `blue` option can be matched by entering either `blue` or `cyan`:</p>
               <p><select id="e17_2" style="width:300px"><option alt="pink">red</option><option alt="cyan">blue</option></select></p>
           </div>
           <div class="span8">
@@ -949,7 +932,7 @@ $('#e22').select2({
 });
         </script>
         <div class="span4">
-            <h3><label for="e22">Sorting Displayed Results</label></h3>
+            <h3>Sorting Displayed Results</h3>
                 <p>Unlike other dropdowns on this page, this one filters results by query string normally, but returns the matched results sorted from shortest to longest by string length. Try typing 'e' and seeing how the results are sorted. This function is useful for sorting results by relevance to a user's query.</p>
                 <p>
                     <select id="e22" style="width:300px">
@@ -973,12 +956,9 @@ $("#e18,#e18_2").select2();
               });
           </script>
           <div class="span12">
-              <h3><label for="e18">Responsive Design - Percent Width</label></h3>
+              <h3>Responsive Design - Percent Width</h3>
               <p>Select2's width can be set to a percentage of its parent to support responsive design. The two Select2 boxes below are styled to 50% and 75% width respectively.</p>
-
               <p><select id="e18" style="width:50%" class="populate"></select><br/></p>
-          <label for="e18_2">Multiple</label>
-
               <p><select multiple="multiple" id="e18_2" style="width:75%" placeholder="Select a state" class="populate placeholder"></select><br/></p>
               <p class="alert alert-warning">Select2 will do its best to resolve the percent width specified via a css class, but it is not always possible. The best way to ensure that Select2 is using a percent based width is to inline the style declaration into the tag.</p>
           </div>
@@ -1073,9 +1053,8 @@ $(document).ready(function () {
 
       <article class="row" id="diacritics">
           <div class="span12">
-              <h3><label for="e30">Diacritics Support</label></h3>
+              <h3>Diacritics Support</h3>
               <p>Select2's default matcher will ignore diacritics, making it easier for users to filter results in international selects. Type &quot;aero&quot; into the select below:</p>
-
               <p>
                   <select id="e30" multiple="multiple" style="width:300px;">
                       <option>Aeróbics</option>
@@ -1126,8 +1105,8 @@ $(document).ready(function () {
                     <dt>off</dt><dd>No width attribute will be set. Keep in mind that the container div copies classes from the source element so setting the width attribute may not always be necessary.</dd>
                     <dt>element</dt><dd>Uses javascript to calculate the width of the source element.</dd>
                     <dt>copy</dt><dd>Copies the value of the width style attribute set on the source element.</dd>
-                    <dt>resolve</dt><dd>First attempts to <u>copy</u> then falls back on <u>element</u>.</dd>
-                    <dt>other values</dt><dd>If the width attribute contains a function it will be evaluated, otherwise the value is used verbatim.</dd>
+                    <dt>resolve</dt><dd>First attempts to <u>copy</u> than falls back on <u>element</u>.</dd>
+                    <dt>other values</dt><dd>if the width attribute contains a function it will be evaluated, otherwise the value is used verbatim.</dd>
                 </dl>
             </td></tr>
             <tr><td>minimumInputLength</td><td>int</td><td>Number of characters necessary to start a search.</td></tr>
@@ -1500,7 +1479,7 @@ $("#select").select2({
                 ignore duplicates, silently swallowing those tokens.
             </td></tr>
             <tr id="doc-tokenSeparators"><td>tokenSeparators</td><td>array</td><td>
-                An array of strings that define token separators for the default <a href="#doc-tokenizer">tokenizer</a>
+                An array of strings that define token separators for the default <a href="doc-tokenizer">tokenizer</a>
                 function. By default, this option is set to an empty array which means tokenization using the default
                 tokenizer is disabled. Usually it is sensible to set this option to a value similar to <code>[',', ' ']</code>.
             </td></tr>
@@ -1758,7 +1737,7 @@ $("#select").select2({
     <p>Notifies Select2 that a drag and drop sorting operation has finished. Select2 will re-display any elements previously hidden and update the selection of the element it is attached to.
         Example: <code>$("#tags").select2("onSortEnd");</code>
     </p>
-  <div class="row">
+   <div class="row">
         <div class="span12"><h3>search</h3></div>
     </div>
     <p>Executes a new search using the provided value.
