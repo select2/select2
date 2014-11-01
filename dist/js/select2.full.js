@@ -11031,6 +11031,13 @@ define('select2/defaults',[
 
     if (options.resultsAdapter == null) {
       options.resultsAdapter = ResultsList;
+
+      if (options.placeholder != null) {
+        options.resultsAdapter = Utils.Decorate(
+          options.resultsAdapter,
+          HidePlaceholder
+        );
+      }
     }
 
     if (options.dropdownAdapter == null) {
@@ -11051,11 +11058,6 @@ define('select2/defaults',[
         options.selectionAdapter = Utils.Decorate(
           options.selectionAdapter,
           Placeholder
-        );
-
-        options.resultsAdapter = Utils.Decorate(
-          options.resultsAdapter,
-          HidePlaceholder
         );
       }
     }
