@@ -2097,7 +2097,7 @@ define('select2/core',[
     // Bind the container to all of the adapters
     this._bindAdapters();
 
-    // Register any DOM event handler
+    // Register any DOM event handlers
     this._registerDomEvents();
 
     // Register any internal event handlers
@@ -2173,6 +2173,26 @@ define('select2/core',[
 
   Select2.prototype._registerDomEvents = function () {
     var self = this;
+
+    $(document.body).on('mousedown', function (e) {
+      var $target = $(e.target);
+
+      var $select = $target.closest('.select2');
+
+      var $all = $('.select2.open');
+
+      $all.each(function () {
+        var $this = $(this);
+
+        if (this == $select[0]) {
+          return;
+        }
+
+        var $element = $this.data('element');
+
+        $element.select2('close');
+      });
+    });
 
     this.$element.on('change', function () {
       self.data.current(function (data) {
@@ -2291,6 +2311,8 @@ define('select2/core',[
     );
 
     this.$container = $container;
+
+    $container.data('element', this.$element);
 
     return $container;
   };
