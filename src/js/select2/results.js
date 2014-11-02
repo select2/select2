@@ -110,7 +110,7 @@ define([
         .removeAttr('aria-selected');
 
       var $label = $('<strong class="group-label"></strong>');
-      $label.html(data.text);
+      this.template(data, $label);
 
       var $children = [];
 
@@ -129,7 +129,7 @@ define([
       $option.append($label);
       $option.append($childrenContainer);
     } else {
-      $option.html(data.text);
+      this.template(data, $option);
     }
 
     if (data.disabled) {
@@ -357,6 +357,12 @@ define([
     } else if (offsetDelta > this.$results.outerHeight() || offsetDelta < 0) {
       this.$results.scrollTop(nextOffset);
     }
+  };
+
+  Results.prototype.template = function (result, $container) {
+    var template = this.options.get('templateResult');
+
+    $container.html(template(result));
   };
 
   return Results;

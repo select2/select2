@@ -462,6 +462,12 @@ $.fn.select2.amd.require(["select2/core", "select2/utils"], function (Select2, U
         return data.items;
       },
       cache: true
+    },
+    templateResult: function (repo) {
+      return repo.full_name;
+    },
+    templateSelection: function (repo) {
+      return repo.full_name;
     }
   });
 

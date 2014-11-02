@@ -264,7 +264,7 @@ define('select2/results',[
         .removeAttr('aria-selected');
 
       var $label = $('<strong class="group-label"></strong>');
-      $label.html(data.text);
+      this.template(data, $label);
 
       var $children = [];
 
@@ -283,7 +283,7 @@ define('select2/results',[
       $option.append($label);
       $option.append($childrenContainer);
     } else {
-      $option.html(data.text);
+      this.template(data, $option);
     }
 
     if (data.disabled) {
@@ -511,6 +511,12 @@ define('select2/results',[
     } else if (offsetDelta > this.$results.outerHeight() || offsetDelta < 0) {
       this.$results.scrollTop(nextOffset);
     }
+  };
+
+  Results.prototype.template = function (result, $container) {
+    var template = this.options.get('templateResult');
+
+    $container.html(template(result));
   };
 
   return Results;
@@ -1616,7 +1622,10 @@ define('select2/defaults',[
 
   Defaults.prototype.reset = function () {
     this.defaults = {
-      language: ['select2/i18n/en']
+      language: ['select2/i18n/en'],
+      templateResult: function (result) {
+        return result.text;
+      }
     };
   };
 

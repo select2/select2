@@ -113,7 +113,10 @@ define([
 
   Defaults.prototype.reset = function () {
     this.defaults = {
-      language: ['select2/i18n/en']
+      language: ['select2/i18n/en'],
+      templateResult: function (result) {
+        return result.text;
+      }
     };
   };
 
