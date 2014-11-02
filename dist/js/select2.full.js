@@ -10108,10 +10108,51 @@ define('select2/selection/base',[
   return BaseSelection;
 });
 
+define('select2/keys',[
+
+], function () {
+  var KEYS = {
+    BACKSPACE: 8,
+    TAB: 9,
+    ENTER: 13,
+    SHIFT: 16,
+    CTRL: 17,
+    ALT: 18,
+    ESC: 27,
+    SPACE: 32,
+    PAGE_UP: 33,
+    PAGE_DOWN: 34,
+    END: 35,
+    HOME: 36,
+    LEFT: 37,
+    UP: 38,
+    RIGHT: 39,
+    DOWN: 40,
+    DELETE: 46,
+
+    isArrow: function (k) {
+        k = k.which ? k.which : k;
+
+        switch (k) {
+        case KEY.LEFT:
+        case KEY.RIGHT:
+        case KEY.UP:
+        case KEY.DOWN:
+            return true;
+        }
+
+        return false;
+    }
+  };
+
+  return KEYS;
+});
+
 define('select2/selection/single',[
   './base',
-  '../utils'
-], function (BaseSelection, Utils) {
+  '../utils',
+  '../keys'
+], function (BaseSelection, Utils, KEYS) {
   function SingleSelection () {
     SingleSelection.__super__.constructor.apply(this, arguments);
   }
@@ -10179,6 +10220,10 @@ define('select2/selection/single',[
 
     this.$selection.on('keydown', function (evt) {
       self.trigger('keypress', evt);
+
+      if (evt.which === KEYS.SPACE) {
+        evt.preventDefault();
+      }
     });
 
     container.on('results:focus', function (params) {
@@ -10879,16 +10924,20 @@ define('select2/dropdown/search',[
 
     decorated.call(this, container, $container);
 
-    this.$search.on('keyup', function (evt) {
+    this.$search.on('keydown', function (evt) {
       self.trigger('keypress', evt);
 
-      if (evt.isDefaultPrevented()) {
-        return;
+      self._keyUpPrevented = evt.isDefaultPrevented();
+    });
+
+    this.$search.on('keyup', function (evt) {
+      if (!self._keyUpPrevented) {
+        self.trigger('query', {
+          term: $(this).val()
+        });
       }
 
-      self.trigger('query', {
-        term: $(this).val()
-      });
+      self._keyUpPrevented = false;
     });
 
     container.on('open', function () {
@@ -11128,46 +11177,6 @@ define('select2/options',[
   return Options;
 });
 
-define('select2/keys',[
-
-], function () {
-  var KEYS = {
-    BACKSPACE: 8,
-    TAB: 9,
-    ENTER: 13,
-    SHIFT: 16,
-    CTRL: 17,
-    ALT: 18,
-    ESC: 27,
-    SPACE: 32,
-    PAGE_UP: 33,
-    PAGE_DOWN: 34,
-    END: 35,
-    HOME: 36,
-    LEFT: 37,
-    UP: 38,
-    RIGHT: 39,
-    DOWN: 40,
-    DELETE: 46,
-
-    isArrow: function (k) {
-        k = k.which ? k.which : k;
-
-        switch (k) {
-        case KEY.LEFT:
-        case KEY.RIGHT:
-        case KEY.UP:
-        case KEY.DOWN:
-            return true;
-        }
-
-        return false;
-    }
-  };
-
-  return KEYS;
-});
-
 define('select2/core',[
   'jquery',
   './options',
@@ -11397,22 +11406,26 @@ define('select2/core',[
       var key = evt.which;
 
       if (self.isOpen()) {
-        if (key == KEYS.ENTER) {
+        if (key === KEYS.ENTER) {
           self.trigger('results:select');
 
           evt.preventDefault();
-        } else if (key == KEYS.UP) {
+        } else if (key === KEYS.UP) {
           self.trigger('results:previous');
 
           evt.preventDefault();
-        } else if (key == KEYS.DOWN) {
+        } else if (key === KEYS.DOWN) {
           self.trigger('results:next');
+
+          evt.preventDefault();
+        } else if (key === KEYS.ESC || key === KEYS.TAB) {
+          self.close();
 
           evt.preventDefault();
         }
       } else {
-        if (key == KEYS.ENTER || key == KEYS.SPACE) {
-          self.trigger('open');
+        if (key === KEYS.ENTER || key === KEYS.SPACE) {
+          self.open();
 
           evt.preventDefault();
         }

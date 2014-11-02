@@ -1,7 +1,8 @@
 define([
   './base',
-  '../utils'
-], function (BaseSelection, Utils) {
+  '../utils',
+  '../keys'
+], function (BaseSelection, Utils, KEYS) {
   function SingleSelection () {
     SingleSelection.__super__.constructor.apply(this, arguments);
   }
@@ -69,6 +70,10 @@ define([
 
     this.$selection.on('keydown', function (evt) {
       self.trigger('keypress', evt);
+
+      if (evt.which === KEYS.SPACE) {
+        evt.preventDefault();
+      }
     });
 
     container.on('results:focus', function (params) {

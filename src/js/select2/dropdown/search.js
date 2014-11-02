@@ -25,16 +25,20 @@ define([
 
     decorated.call(this, container, $container);
 
-    this.$search.on('keyup', function (evt) {
+    this.$search.on('keydown', function (evt) {
       self.trigger('keypress', evt);
 
-      if (evt.isDefaultPrevented()) {
-        return;
+      self._keyUpPrevented = evt.isDefaultPrevented();
+    });
+
+    this.$search.on('keyup', function (evt) {
+      if (!self._keyUpPrevented) {
+        self.trigger('query', {
+          term: $(this).val()
+        });
       }
 
-      self.trigger('query', {
-        term: $(this).val()
-      });
+      self._keyUpPrevented = false;
     });
 
     container.on('open', function () {

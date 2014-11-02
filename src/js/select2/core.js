@@ -227,22 +227,26 @@ define([
       var key = evt.which;
 
       if (self.isOpen()) {
-        if (key == KEYS.ENTER) {
+        if (key === KEYS.ENTER) {
           self.trigger('results:select');
 
           evt.preventDefault();
-        } else if (key == KEYS.UP) {
+        } else if (key === KEYS.UP) {
           self.trigger('results:previous');
 
           evt.preventDefault();
-        } else if (key == KEYS.DOWN) {
+        } else if (key === KEYS.DOWN) {
           self.trigger('results:next');
+
+          evt.preventDefault();
+        } else if (key === KEYS.ESC || key === KEYS.TAB) {
+          self.close();
 
           evt.preventDefault();
         }
       } else {
-        if (key == KEYS.ENTER || key == KEYS.SPACE) {
-          self.trigger('open');
+        if (key === KEYS.ENTER || key === KEYS.SPACE) {
+          self.open();
 
           evt.preventDefault();
         }
