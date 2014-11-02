@@ -1,6 +1,6 @@
 define([
-
-], function () {
+  '../utils'
+], function (Utils) {
   function Search () { }
 
   Search.prototype.render = function (decorated) {
@@ -25,8 +25,14 @@ define([
 
     decorated.call(this, container, $container);
 
-    this.$search.on('keyup', function () {
-      container.trigger('query', {
+    this.$search.on('keyup', function (evt) {
+      self.trigger('keypress', evt);
+
+      if (evt.isDefaultPrevented()) {
+        return;
+      }
+
+      self.trigger('query', {
         term: $(this).val()
       });
     });
@@ -37,6 +43,8 @@ define([
 
     container.on('close', function () {
       self.$search.attr('tabindex', -1);
+
+      self.$search.val('');
     });
 
     container.on('results:all', function (params) {
@@ -52,7 +60,7 @@ define([
     });
   };
 
-  Search.prototype.showSearch = function (params) {
+  Search.prototype.showSearch = function (_, params) {
     return true;
   };
 

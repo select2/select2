@@ -9642,6 +9642,8 @@ define('select2/utils',[], function () {
   };
 
   Observable.prototype.on = function (event, callback) {
+    this.listeners = this.listeners || {};
+
     if (event in this.listeners) {
       this.listeners[event].push(callback);
     } else {
@@ -9651,6 +9653,8 @@ define('select2/utils',[], function () {
 
   Observable.prototype.trigger = function (event) {
     var slice = Array.prototype.slice;
+
+    this.listeners = this.listeners || {};
 
     if (event in this.listeners) {
       this.invoke(this.listeners[event], slice.call(arguments, 1));
@@ -10104,51 +10108,10 @@ define('select2/selection/base',[
   return BaseSelection;
 });
 
-define('select2/keys',[
-
-], function () {
-  var KEYS = {
-    BACKSPACE: 8,
-    TAB: 9,
-    ENTER: 13,
-    SHIFT: 16,
-    CTRL: 17,
-    ALT: 18,
-    ESC: 27,
-    SPACE: 32,
-    PAGE_UP: 33,
-    PAGE_DOWN: 34,
-    END: 35,
-    HOME: 36,
-    LEFT: 37,
-    UP: 38,
-    RIGHT: 39,
-    DOWN: 40,
-    DELETE: 46,
-
-    isArrow: function (k) {
-        k = k.which ? k.which : k;
-
-        switch (k) {
-        case KEY.LEFT:
-        case KEY.RIGHT:
-        case KEY.UP:
-        case KEY.DOWN:
-            return true;
-        }
-
-        return false;
-    }
-  };
-
-  return KEYS;
-});
-
 define('select2/selection/single',[
   './base',
-  '../utils',
-  '../keys'
-], function (BaseSelection, Utils, KEYS) {
+  '../utils'
+], function (BaseSelection, Utils) {
   function SingleSelection () {
     SingleSelection.__super__.constructor.apply(this, arguments);
   }
@@ -10202,6 +10165,8 @@ define('select2/selection/single',[
       // When the dropdown is closed, aria-expanded="false"
       self.$selection.attr('aria-expanded', 'false');
       self.$selection.removeAttr('aria-activedescendant');
+
+      self.$selection.focus();
     });
 
     this.$selection.on('focus', function (evt) {
@@ -10213,29 +10178,7 @@ define('select2/selection/single',[
     });
 
     this.$selection.on('keydown', function (evt) {
-      var key = evt.which;
-
-      if (container.isOpen()) {
-        if (key == KEYS.ENTER) {
-          self.trigger('results:select');
-
-          evt.preventDefault();
-        } else if (key == KEYS.UP) {
-          self.trigger('results:previous');
-
-          evt.preventDefault();
-        } else if (key == KEYS.DOWN) {
-          self.trigger('results:next');
-
-          evt.preventDefault();
-        }
-      } else {
-        if (key == KEYS.ENTER || key == KEYS.SPACE) {
-          self.trigger('open');
-
-          evt.preventDefault();
-        }
-      }
+      self.trigger('keypress', evt);
     });
 
     container.on('results:focus', function (params) {
@@ -10910,8 +10853,8 @@ define('select2/dropdown',[
 });
 
 define('select2/dropdown/search',[
-
-], function () {
+  '../utils'
+], function (Utils) {
   function Search () { }
 
   Search.prototype.render = function (decorated) {
@@ -10936,8 +10879,14 @@ define('select2/dropdown/search',[
 
     decorated.call(this, container, $container);
 
-    this.$search.on('keyup', function () {
-      container.trigger('query', {
+    this.$search.on('keyup', function (evt) {
+      self.trigger('keypress', evt);
+
+      if (evt.isDefaultPrevented()) {
+        return;
+      }
+
+      self.trigger('query', {
         term: $(this).val()
       });
     });
@@ -10948,6 +10897,8 @@ define('select2/dropdown/search',[
 
     container.on('close', function () {
       self.$search.attr('tabindex', -1);
+
+      self.$search.val('');
     });
 
     container.on('results:all', function (params) {
@@ -10963,7 +10914,7 @@ define('select2/dropdown/search',[
     });
   };
 
-  Search.prototype.showSearch = function (params) {
+  Search.prototype.showSearch = function (_, params) {
     return true;
   };
 
@@ -11177,11 +11128,52 @@ define('select2/options',[
   return Options;
 });
 
+define('select2/keys',[
+
+], function () {
+  var KEYS = {
+    BACKSPACE: 8,
+    TAB: 9,
+    ENTER: 13,
+    SHIFT: 16,
+    CTRL: 17,
+    ALT: 18,
+    ESC: 27,
+    SPACE: 32,
+    PAGE_UP: 33,
+    PAGE_DOWN: 34,
+    END: 35,
+    HOME: 36,
+    LEFT: 37,
+    UP: 38,
+    RIGHT: 39,
+    DOWN: 40,
+    DELETE: 46,
+
+    isArrow: function (k) {
+        k = k.which ? k.which : k;
+
+        switch (k) {
+        case KEY.LEFT:
+        case KEY.RIGHT:
+        case KEY.UP:
+        case KEY.DOWN:
+            return true;
+        }
+
+        return false;
+    }
+  };
+
+  return KEYS;
+});
+
 define('select2/core',[
   'jquery',
   './options',
-  './utils'
-], function ($, Options, Utils) {
+  './utils',
+  './keys'
+], function ($, Options, Utils, KEYS) {
   var Select2 = function ($element, options) {
     this.$element = $element;
 
@@ -11235,6 +11227,7 @@ define('select2/core',[
 
     // Register any internal event handlers
     this._registerSelectionEvents();
+    this._registerDropdownEvents();
     this._registerResultsEvents();
     this._registerEvents();
 
@@ -11245,8 +11238,6 @@ define('select2/core',[
         data: initialData
       });
     });
-
-    this.trigger('query', {});
 
     // Hide the original select
 
@@ -11344,6 +11335,22 @@ define('select2/core',[
 
       self.close();
     });
+
+    this.selection.on('keypress', function (e) {
+      self.trigger('keypress', e);
+    });
+  };
+
+  Select2.prototype._registerDropdownEvents = function () {
+    var self = this;
+
+    this.dropdown.on('query', function (params) {
+      self.trigger('query', params);
+    });
+
+    this.dropdown.on('keypress', function (e) {
+      self.trigger('keypress', e);
+    });
   };
 
   Select2.prototype._registerResultsEvents = function () {
@@ -11385,6 +11392,32 @@ define('select2/core',[
         });
       });
     });
+
+    this.on('keypress', function (evt) {
+      var key = evt.which;
+
+      if (self.isOpen()) {
+        if (key == KEYS.ENTER) {
+          self.trigger('results:select');
+
+          evt.preventDefault();
+        } else if (key == KEYS.UP) {
+          self.trigger('results:previous');
+
+          evt.preventDefault();
+        } else if (key == KEYS.DOWN) {
+          self.trigger('results:next');
+
+          evt.preventDefault();
+        }
+      } else {
+        if (key == KEYS.ENTER || key == KEYS.SPACE) {
+          self.trigger('open');
+
+          evt.preventDefault();
+        }
+      }
+    });
   };
 
   Select2.prototype.toggleDropdown = function () {
@@ -11399,6 +11432,8 @@ define('select2/core',[
     if (this.isOpen()) {
       return;
     }
+
+    this.trigger('query', {});
 
     this.trigger('open');
   };

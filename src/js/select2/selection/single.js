@@ -1,8 +1,7 @@
 define([
   './base',
-  '../utils',
-  '../keys'
-], function (BaseSelection, Utils, KEYS) {
+  '../utils'
+], function (BaseSelection, Utils) {
   function SingleSelection () {
     SingleSelection.__super__.constructor.apply(this, arguments);
   }
@@ -56,6 +55,8 @@ define([
       // When the dropdown is closed, aria-expanded="false"
       self.$selection.attr('aria-expanded', 'false');
       self.$selection.removeAttr('aria-activedescendant');
+
+      self.$selection.focus();
     });
 
     this.$selection.on('focus', function (evt) {
@@ -67,29 +68,7 @@ define([
     });
 
     this.$selection.on('keydown', function (evt) {
-      var key = evt.which;
-
-      if (container.isOpen()) {
-        if (key == KEYS.ENTER) {
-          self.trigger('results:select');
-
-          evt.preventDefault();
-        } else if (key == KEYS.UP) {
-          self.trigger('results:previous');
-
-          evt.preventDefault();
-        } else if (key == KEYS.DOWN) {
-          self.trigger('results:next');
-
-          evt.preventDefault();
-        }
-      } else {
-        if (key == KEYS.ENTER || key == KEYS.SPACE) {
-          self.trigger('open');
-
-          evt.preventDefault();
-        }
-      }
+      self.trigger('keypress', evt);
     });
 
     container.on('results:focus', function (params) {

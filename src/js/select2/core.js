@@ -1,8 +1,9 @@
 define([
   'jquery',
   './options',
-  './utils'
-], function ($, Options, Utils) {
+  './utils',
+  './keys'
+], function ($, Options, Utils, KEYS) {
   var Select2 = function ($element, options) {
     this.$element = $element;
 
@@ -56,6 +57,7 @@ define([
 
     // Register any internal event handlers
     this._registerSelectionEvents();
+    this._registerDropdownEvents();
     this._registerResultsEvents();
     this._registerEvents();
 
@@ -66,8 +68,6 @@ define([
         data: initialData
       });
     });
-
-    this.trigger('query', {});
 
     // Hide the original select
 
@@ -165,6 +165,22 @@ define([
 
       self.close();
     });
+
+    this.selection.on('keypress', function (e) {
+      self.trigger('keypress', e);
+    });
+  };
+
+  Select2.prototype._registerDropdownEvents = function () {
+    var self = this;
+
+    this.dropdown.on('query', function (params) {
+      self.trigger('query', params);
+    });
+
+    this.dropdown.on('keypress', function (e) {
+      self.trigger('keypress', e);
+    });
   };
 
   Select2.prototype._registerResultsEvents = function () {
@@ -206,6 +222,32 @@ define([
         });
       });
     });
+
+    this.on('keypress', function (evt) {
+      var key = evt.which;
+
+      if (self.isOpen()) {
+        if (key == KEYS.ENTER) {
+          self.trigger('results:select');
+
+          evt.preventDefault();
+        } else if (key == KEYS.UP) {
+          self.trigger('results:previous');
+
+          evt.preventDefault();
+        } else if (key == KEYS.DOWN) {
+          self.trigger('results:next');
+
+          evt.preventDefault();
+        }
+      } else {
+        if (key == KEYS.ENTER || key == KEYS.SPACE) {
+          self.trigger('open');
+
+          evt.preventDefault();
+        }
+      }
+    });
   };
 
   Select2.prototype.toggleDropdown = function () {
@@ -220,6 +262,8 @@ define([
     if (this.isOpen()) {
       return;
     }
+
+    this.trigger('query', {});
 
     this.trigger('open');
   };
