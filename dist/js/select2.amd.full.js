@@ -183,19 +183,25 @@ define('select2/results',[
     this.$results.empty();
   };
 
-  Results.prototype.empty = function () {
-    var $empty = $('<li role="treeitem" class="option"></li>');
+  Results.prototype.displayMessage = function (params) {
+    this.clear();
 
-    $empty.text(this.options.get('translations').get('noResults'));
+    var $message = $('<li role="treeitem" class="option"></li>');
 
-    this.$results.append($empty);
+    var message = this.options.get('translations').get(params.message);
+
+    $message.text(message(params.args));
+
+    this.$results.append($message);
   };
 
   Results.prototype.append = function (data) {
     var $options = [];
 
     if (data.length === 0) {
-      this.empty();
+      this.trigger('results:message', {
+        message: 'noResults'
+      });
 
       return;
     }
@@ -447,6 +453,14 @@ define('select2/results',[
 
     container.on('results:focus', function (params) {
       params.element.addClass('highlighted');
+    });
+
+    container.on('results:message', function (params) {
+      self.trigger('results:message', params);
+    });
+
+    this.on('results:message', function (params) {
+      self.displayMessage(params);
     });
 
     this.$results.on('mouseup', '.option[aria-selected]', function (evt) {
@@ -741,10 +755,7 @@ define('select2/selection/multiple',[
   '../utils'
 ], function (BaseSelection, Utils) {
   function MultipleSelection ($element, options) {
-    this.$element = $element;
-    this.options = options;
-
-    MultipleSelection.__super__.constructor.call(this);
+    MultipleSelection.__super__.constructor.apply(this, arguments);
   }
 
   Utils.Extend(MultipleSelection, BaseSelection);
@@ -1361,6 +1372,37 @@ define('select2/data/tags',[
   return Tags;
 });
 
+define('select2/data/minimumInputLength',[
+
+], function () {
+  function MinimumInputLength (decorated, $e, options) {
+    this.minimumInputLength = options.get('minimumInputLength');
+
+    decorated.call(this, $e, options);
+  }
+
+  MinimumInputLength.prototype.query = function (decorated, params, callback) {
+    params.term = params.term || '';
+
+    if (params.term.length < this.minimumInputLength) {
+      this.trigger('results:message', {
+        message: 'inputTooShort',
+        args: {
+          minimum: this.minimumInputLength,
+          input: params.term,
+          params: params
+        }
+      });
+
+      return;
+    }
+
+    decorated.call(this, params, callback);
+  };
+
+  return MinimumInputLength;
+});
+
 define('select2/dropdown',[
   './utils'
 ], function (Utils) {
@@ -1421,13 +1463,7 @@ define('select2/dropdown/search',[
     });
 
     this.$search.on('keyup', function (evt) {
-      if (!self._keyUpPrevented) {
-        self.trigger('query', {
-          term: $(this).val()
-        });
-      }
-
-      self._keyUpPrevented = false;
+      self.handleSearch(evt);
     });
 
     container.on('open', function () {
@@ -1451,6 +1487,18 @@ define('select2/dropdown/search',[
         }
       }
     });
+  };
+
+  Search.prototype.handleSearch = function (evt) {
+    if (!this._keyUpPrevented) {
+      var input = this.$search.val();
+
+      this.trigger('query', {
+        term: input
+      });
+    }
+
+    this._keyUpPrevented = false;
   };
 
   Search.prototype.showSearch = function (_, params) {
@@ -1505,6 +1553,17 @@ define('select2/dropdown/hidePlaceholder',[
 
 define('select2/i18n/en',[],function () {
   return {
+    inputTooShort: function (args) {
+      var remainingChars = args.minimum - args.input.length;
+
+      var message = 'Please enter ' + remainingChars + ' or more character';
+
+      if (remainingChars != 1) {
+        message += 's';
+      }
+
+      return message;
+    },
     noResults: function () {
       return 'No results found';
     }
@@ -1526,6 +1585,7 @@ define('select2/defaults',[
   './data/array',
   './data/ajax',
   './data/tags',
+  './data/minimumInputLength',
 
   './dropdown',
   './dropdown/search',
@@ -1535,7 +1595,7 @@ define('select2/defaults',[
 ], function ($, ResultsList,
              SingleSelection, MultipleSelection, Placeholder,
              Utils, Translation,
-             SelectData, ArrayData, AjaxData, Tags,
+             SelectData, ArrayData, AjaxData, Tags, MinimumInputLength,
              Dropdown, Search, HidePlaceholder,
              EnglishTranslation) {
   function Defaults () {
@@ -1553,6 +1613,14 @@ define('select2/defaults',[
       } else {
         options.dataAdapter = SelectData;
       }
+    }
+
+
+    if (options.minimumInputLength > 0) {
+      options.dataAdapter = Utils.Decorate(
+        options.dataAdapter,
+        MinimumInputLength
+      );
     }
 
     if (options.tags != null) {
@@ -1627,6 +1695,7 @@ define('select2/defaults',[
   Defaults.prototype.reset = function () {
     this.defaults = {
       language: ['select2/i18n/en'],
+      minimumInputLength: 0,
       templateResult: function (result) {
         return result.text;
       },
@@ -1731,6 +1800,7 @@ define('select2/core',[
     this._registerDomEvents();
 
     // Register any internal event handlers
+    this._registerDataEvents();
     this._registerSelectionEvents();
     this._registerDropdownEvents();
     this._registerResultsEvents();
@@ -1809,6 +1879,14 @@ define('select2/core',[
           data: data
         });
       });
+    });
+  };
+
+  Select2.prototype._registerDataEvents = function () {
+    var self = this;
+
+    this.data.on('results:message', function (params) {
+      self.trigger('results:message', params);
     });
   };
 

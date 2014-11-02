@@ -32,13 +32,7 @@ define([
     });
 
     this.$search.on('keyup', function (evt) {
-      if (!self._keyUpPrevented) {
-        self.trigger('query', {
-          term: $(this).val()
-        });
-      }
-
-      self._keyUpPrevented = false;
+      self.handleSearch(evt);
     });
 
     container.on('open', function () {
@@ -62,6 +56,18 @@ define([
         }
       }
     });
+  };
+
+  Search.prototype.handleSearch = function (evt) {
+    if (!this._keyUpPrevented) {
+      var input = this.$search.val();
+
+      this.trigger('query', {
+        term: input
+      });
+    }
+
+    this._keyUpPrevented = false;
   };
 
   Search.prototype.showSearch = function (_, params) {

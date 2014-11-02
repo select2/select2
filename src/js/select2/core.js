@@ -56,6 +56,7 @@ define([
     this._registerDomEvents();
 
     // Register any internal event handlers
+    this._registerDataEvents();
     this._registerSelectionEvents();
     this._registerDropdownEvents();
     this._registerResultsEvents();
@@ -134,6 +135,14 @@ define([
           data: data
         });
       });
+    });
+  };
+
+  Select2.prototype._registerDataEvents = function () {
+    var self = this;
+
+    this.data.on('results:message', function (params) {
+      self.trigger('results:message', params);
     });
   };
 

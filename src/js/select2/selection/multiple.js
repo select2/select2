@@ -3,10 +3,7 @@ define([
   '../utils'
 ], function (BaseSelection, Utils) {
   function MultipleSelection ($element, options) {
-    this.$element = $element;
-    this.options = options;
-
-    MultipleSelection.__super__.constructor.call(this);
+    MultipleSelection.__super__.constructor.apply(this, arguments);
   }
 
   Utils.Extend(MultipleSelection, BaseSelection);

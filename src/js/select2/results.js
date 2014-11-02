@@ -29,19 +29,25 @@ define([
     this.$results.empty();
   };
 
-  Results.prototype.empty = function () {
-    var $empty = $('<li role="treeitem" class="option"></li>');
+  Results.prototype.displayMessage = function (params) {
+    this.clear();
 
-    $empty.text(this.options.get('translations').get('noResults'));
+    var $message = $('<li role="treeitem" class="option"></li>');
 
-    this.$results.append($empty);
+    var message = this.options.get('translations').get(params.message);
+
+    $message.text(message(params.args));
+
+    this.$results.append($message);
   };
 
   Results.prototype.append = function (data) {
     var $options = [];
 
     if (data.length === 0) {
-      this.empty();
+      this.trigger('results:message', {
+        message: 'noResults'
+      });
 
       return;
     }
@@ -293,6 +299,14 @@ define([
 
     container.on('results:focus', function (params) {
       params.element.addClass('highlighted');
+    });
+
+    container.on('results:message', function (params) {
+      self.trigger('results:message', params);
+    });
+
+    this.on('results:message', function (params) {
+      self.displayMessage(params);
     });
 
     this.$results.on('mouseup', '.option[aria-selected]', function (evt) {

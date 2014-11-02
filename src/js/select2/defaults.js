@@ -13,6 +13,7 @@ define([
   './data/array',
   './data/ajax',
   './data/tags',
+  './data/minimumInputLength',
 
   './dropdown',
   './dropdown/search',
@@ -22,7 +23,7 @@ define([
 ], function ($, ResultsList,
              SingleSelection, MultipleSelection, Placeholder,
              Utils, Translation,
-             SelectData, ArrayData, AjaxData, Tags,
+             SelectData, ArrayData, AjaxData, Tags, MinimumInputLength,
              Dropdown, Search, HidePlaceholder,
              EnglishTranslation) {
   function Defaults () {
@@ -40,6 +41,14 @@ define([
       } else {
         options.dataAdapter = SelectData;
       }
+    }
+
+
+    if (options.minimumInputLength > 0) {
+      options.dataAdapter = Utils.Decorate(
+        options.dataAdapter,
+        MinimumInputLength
+      );
     }
 
     if (options.tags != null) {
@@ -114,6 +123,7 @@ define([
   Defaults.prototype.reset = function () {
     this.defaults = {
       language: ['select2/i18n/en'],
+      minimumInputLength: 0,
       templateResult: function (result) {
         return result.text;
       },
