@@ -418,6 +418,8 @@ $.fn.select2.amd.require(["select2/core", "select2/utils"], function (Select2, U
 
   var data = [{ id: 0, text: 'enhancement' }, { id: 1, text: 'bug' }, { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, { id: 4, text: 'wontfix' }];
 
+  var $ajax = $(".js-example-data-ajax");
+
   var $disabledResults = $(".js-example-disabled-results");
 
   var $tags = $(".js-example-tags");
@@ -441,6 +443,26 @@ $.fn.select2.amd.require(["select2/core", "select2/utils"], function (Select2, U
 
   $dataArraySelected.select2({
     data: data
+  });
+
+  $ajax.select2({
+    ajax: {
+      url: "https://api.github.com/search/repositories",
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          q: params.term, // search term
+        };
+      },
+      processResults: function (data, page) {
+        // parse the results into the format expected by Select2.
+        // since we are using custom formatting functions we do not need to
+        // alter the remote JSON data
+        return data.items;
+      },
+      cache: true
+    }
   });
 
   $disabledResults.select2();

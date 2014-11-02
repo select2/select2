@@ -6,15 +6,18 @@ define([
   function AjaxAdapter ($element, options) {
     this.ajaxOptions = options.get('ajax');
 
-    this.processResults = this.ajaxOptions.processResults ||
-      function (results) {
-        return results;
-      };
+    if (this.ajaxOptions.processResults != null) {
+      this.processResults = this.ajaxOptions.processResults;
+    }
 
     ArrayAdapter.__super__.constructor.call(this, $element, options);
   }
 
   Utils.Extend(AjaxAdapter, ArrayAdapter);
+
+  AjaxAdapter.prototype.processResults = function (results) {
+    return results;
+  };
 
   AjaxAdapter.prototype.query = function (params, callback) {
     var matches = [];
@@ -32,13 +35,25 @@ define([
       options.data = options.data(params);
     }
 
-    var $request = $.ajax(options);
+    function request () {
+      var $request = $.ajax(options);
 
-    $request.success(function (data) {
-      var results = self.processResults(data);
+      $request.success(function (data) {
+        var results = self.processResults(data);
 
-      callback(results);
-    });
+        callback(results);
+      });
+    }
+
+    if (this.ajaxOptions.delay && params.term !== '') {
+      if (this._queryTimeout) {
+        window.clearTimeout(this._queryTimeout);
+      }
+
+      this._queryTimeout = window.setTimeout(request, this.ajaxOptions.delay);
+    } else {
+      request();
+    }
   };
 
   return AjaxAdapter;
