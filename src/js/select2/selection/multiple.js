@@ -52,7 +52,9 @@ define([
   };
 
   MultipleSelection.prototype.display = function (data) {
-    return data.text;
+    var template = this.options.get('templateSelection');
+
+    return template(data);
   };
 
   MultipleSelection.prototype.selectionContainer = function () {

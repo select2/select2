@@ -116,6 +116,9 @@ define([
       language: ['select2/i18n/en'],
       templateResult: function (result) {
         return result.text;
+      },
+      templateSelection: function (selection) {
+        return selection.text;
       }
     };
   };

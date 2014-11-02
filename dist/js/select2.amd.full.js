@@ -711,7 +711,9 @@ define('select2/selection/single',[
   };
 
   SingleSelection.prototype.display = function (data) {
-    return data.text;
+    var template = this.options.get('templateSelection');
+
+    return template(data);
   };
 
   SingleSelection.prototype.selectionContainer = function () {
@@ -788,7 +790,9 @@ define('select2/selection/multiple',[
   };
 
   MultipleSelection.prototype.display = function (data) {
-    return data.text;
+    var template = this.options.get('templateSelection');
+
+    return template(data);
   };
 
   MultipleSelection.prototype.selectionContainer = function () {
@@ -1625,6 +1629,9 @@ define('select2/defaults',[
       language: ['select2/i18n/en'],
       templateResult: function (result) {
         return result.text;
+      },
+      templateSelection: function (selection) {
+        return selection.text;
       }
     };
   };

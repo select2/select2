@@ -90,7 +90,9 @@ define([
   };
 
   SingleSelection.prototype.display = function (data) {
-    return data.text;
+    var template = this.options.get('templateSelection');
+
+    return template(data);
   };
 
   SingleSelection.prototype.selectionContainer = function () {
