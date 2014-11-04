@@ -45,9 +45,11 @@ define([
     var $options = [];
 
     if (data.length === 0) {
-      this.trigger('results:message', {
-        message: 'noResults'
-      });
+      if (this.$results.children().length === 0) {
+        this.trigger('results:message', {
+          message: 'noResults'
+        });
+      }
 
       return;
     }

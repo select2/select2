@@ -38,7 +38,12 @@ define([
     });
 
     this.$results.on('scroll', function () {
-      if (self.loading) {
+      var loadMoreVisible = $.contains(
+        document.documentElement,
+        self.$loadingMore[0]
+      );
+
+      if (self.loading || !loadMoreVisible) {
         return;
       }
 

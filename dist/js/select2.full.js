@@ -9734,9 +9734,11 @@ define('select2/results',[
     var $options = [];
 
     if (data.length === 0) {
-      this.trigger('results:message', {
-        message: 'noResults'
-      });
+      if (this.$results.children().length === 0) {
+        this.trigger('results:message', {
+          message: 'noResults'
+        });
+      }
 
       return;
     }
@@ -11126,7 +11128,12 @@ define('select2/dropdown/infiniteScroll',[
     });
 
     this.$results.on('scroll', function () {
-      if (self.loading) {
+      var loadMoreVisible = $.contains(
+        document.documentElement,
+        self.$loadingMore[0]
+      );
+
+      if (self.loading || !loadMoreVisible) {
         return;
       }
 
