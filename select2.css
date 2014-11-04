@@ -5,9 +5,6 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     margin: 0;
     position: relative;
     display: inline-block;
-    /* inline-block for ie7 */
-    zoom: 1;
-    *display: inline;
     vertical-align: middle;
 }
 
