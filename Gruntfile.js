@@ -48,6 +48,22 @@ module.exports = function (grunt) {
       ]
     },
 
+    jekyll: {
+      options: {
+        src: 'docs',
+        dest: 'docs/_site'
+      },
+      build: {
+        d: null
+      },
+      serve: {
+        options: {
+          serve: true,
+          watch: true
+        }
+      }
+    },
+
     jshint: {
       options: {
         jshintrc: true
@@ -182,6 +198,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
+  grunt.loadNpmTasks('grunt-jekyll');
   grunt.loadNpmTasks('grunt-sass');
 
   grunt.registerTask('default', ['compile', 'test', 'minify']);
@@ -189,4 +206,8 @@ module.exports = function (grunt) {
   grunt.registerTask('compile', ['requirejs', 'sass:dev']);
   grunt.registerTask('minify', ['uglify', 'sass:dist']);
   grunt.registerTask('test', ['qunit', 'jshint']);
+
+  grunt.registerTask('docs', ['jekyll:serve']);
+
+  grunt.registerTask('release', ['default', 'jekyll:build']);
 };
