@@ -18,13 +18,14 @@ define([
   './dropdown',
   './dropdown/search',
   './dropdown/hidePlaceholder',
+  './dropdown/infiniteScroll',
 
   './i18n/en'
 ], function ($, ResultsList,
              SingleSelection, MultipleSelection, Placeholder,
              Utils, Translation,
              SelectData, ArrayData, AjaxData, Tags, MinimumInputLength,
-             Dropdown, Search, HidePlaceholder,
+             Dropdown, Search, HidePlaceholder, InfiniteScroll,
              EnglishTranslation) {
   function Defaults () {
     this.reset();
@@ -34,9 +35,9 @@ define([
     options = $.extend({}, this.defaults, options);
 
     if (options.dataAdapter == null) {
-      if (options.ajax) {
+      if (options.ajax != null) {
         options.dataAdapter = AjaxData;
-      } else if (options.data) {
+      } else if (options.data != null) {
         options.dataAdapter = ArrayData;
       } else {
         options.dataAdapter = SelectData;
@@ -57,6 +58,13 @@ define([
 
     if (options.resultsAdapter == null) {
       options.resultsAdapter = ResultsList;
+
+      if (options.ajax != null) {
+        options.resultsAdapter = Utils.Decorate(
+          options.resultsAdapter,
+          InfiniteScroll
+        );
+      }
 
       if (options.placeholder != null) {
         options.resultsAdapter = Utils.Decorate(

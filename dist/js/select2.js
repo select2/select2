@@ -1979,6 +1979,86 @@ define('select2/dropdown/hidePlaceholder',[
   return HidePlaceholder;
 });
 
+define('select2/dropdown/infiniteScroll',[
+  'jquery'
+], function ($) {
+  function InfiniteScroll (decorated, $element, options, dataAdapter) {
+    this.lastParams = {};
+
+    decorated.call(this, $element, options, dataAdapter);
+
+    this.$loadingMore = this.createLoadingMore();
+    this.loading = false;
+  }
+
+  InfiniteScroll.prototype.append = function (decorated, data) {
+    this.$loadingMore.remove();
+
+    decorated.call(this, data);
+
+    if (data.length > 0) {
+      this.$results.append(this.$loadingMore);
+    }
+
+    this.loading = false;
+  };
+
+  InfiniteScroll.prototype.bind = function (decorated, container, $container) {
+    var self = this;
+
+    decorated.call(this, container, $container);
+
+    container.on('query', function (params) {
+      self.lastParams = params;
+      self.loading = true;
+    });
+
+    container.on('query:append', function (params) {
+      self.lastParams = params;
+      self.loading = true;
+    });
+
+    this.$results.on('scroll', function () {
+      if (self.loading) {
+        return;
+      }
+
+      var currentOffset = self.$results.offset().top +
+        self.$results.outerHeight(false);
+      var loadingMoreOffset = self.$loadingMore.offset().top +
+        self.$loadingMore.outerHeight(false);
+
+      if (currentOffset + 50 >= loadingMoreOffset) {
+        self.loadMore();
+      }
+    });
+  };
+
+  InfiniteScroll.prototype.loadMore = function () {
+    this.loading = true;
+
+    var params = $.extend({}, {page: 1}, this.lastParams);
+
+    params.page++;
+
+    this.trigger('query:append', params);
+  };
+
+  InfiniteScroll.prototype.createLoadingMore = function () {
+    var $option = $(
+      '<li class="option load-more" role="treeitem"></li>'
+    );
+
+    var message = this.options.get('translations').get('loadingMore');
+
+    $option.html(message(this.lastParams));
+
+    return $option;
+  };
+
+  return InfiniteScroll;
+});
+
 define('select2/i18n/en',[],function () {
   return {
     inputTooShort: function (args) {
@@ -1991,6 +2071,9 @@ define('select2/i18n/en',[],function () {
       }
 
       return message;
+    },
+    loadingMore: function () {
+      return 'Loading more results…';
     },
     noResults: function () {
       return 'No results found';
@@ -2018,13 +2101,14 @@ define('select2/defaults',[
   './dropdown',
   './dropdown/search',
   './dropdown/hidePlaceholder',
+  './dropdown/infiniteScroll',
 
   './i18n/en'
 ], function ($, ResultsList,
              SingleSelection, MultipleSelection, Placeholder,
              Utils, Translation,
              SelectData, ArrayData, AjaxData, Tags, MinimumInputLength,
-             Dropdown, Search, HidePlaceholder,
+             Dropdown, Search, HidePlaceholder, InfiniteScroll,
              EnglishTranslation) {
   function Defaults () {
     this.reset();
@@ -2034,9 +2118,9 @@ define('select2/defaults',[
     options = $.extend({}, this.defaults, options);
 
     if (options.dataAdapter == null) {
-      if (options.ajax) {
+      if (options.ajax != null) {
         options.dataAdapter = AjaxData;
-      } else if (options.data) {
+      } else if (options.data != null) {
         options.dataAdapter = ArrayData;
       } else {
         options.dataAdapter = SelectData;
@@ -2057,6 +2141,13 @@ define('select2/defaults',[
 
     if (options.resultsAdapter == null) {
       options.resultsAdapter = ResultsList;
+
+      if (options.ajax != null) {
+        options.resultsAdapter = Utils.Decorate(
+          options.resultsAdapter,
+          InfiniteScroll
+        );
+      }
 
       if (options.placeholder != null) {
         options.resultsAdapter = Utils.Decorate(
@@ -2367,6 +2458,10 @@ define('select2/core',[
   Select2.prototype._registerResultsEvents = function () {
     var self = this;
 
+    this.results.on('query:append', function (params) {
+      self.trigger('query:append', params);
+    });
+
     this.results.on('selected', function (params) {
       self.trigger('select', params);
 
@@ -2398,6 +2493,15 @@ define('select2/core',[
     this.on('query', function (params) {
       this.data.query(params, function (data) {
         self.trigger('results:all', {
+          data: data,
+          query: params
+        });
+      });
+    });
+
+    this.on('query:append', function (params) {
+      this.data.query(params, function (data) {
+        self.trigger('results:append', {
           data: data,
           query: params
         });

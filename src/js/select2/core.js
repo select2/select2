@@ -195,6 +195,10 @@ define([
   Select2.prototype._registerResultsEvents = function () {
     var self = this;
 
+    this.results.on('query:append', function (params) {
+      self.trigger('query:append', params);
+    });
+
     this.results.on('selected', function (params) {
       self.trigger('select', params);
 
@@ -226,6 +230,15 @@ define([
     this.on('query', function (params) {
       this.data.query(params, function (data) {
         self.trigger('results:all', {
+          data: data,
+          query: params
+        });
+      });
+    });
+
+    this.on('query:append', function (params) {
+      this.data.query(params, function (data) {
+        self.trigger('results:append', {
           data: data,
           query: params
         });

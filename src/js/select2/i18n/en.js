@@ -11,6 +11,9 @@ define(function () {
 
       return message;
     },
+    loadingMore: function () {
+      return 'Loading more results…';
+    },
     noResults: function () {
       return 'No results found';
     }

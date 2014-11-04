@@ -453,6 +453,7 @@ $.fn.select2.amd.require(["select2/core", "select2/utils"], function (Select2, U
       data: function (params) {
         return {
           q: params.term, // search term
+          page: params.page
         };
       },
       processResults: function (data, page) {
