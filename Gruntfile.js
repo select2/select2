@@ -9,7 +9,8 @@ module.exports = function (grunt) {
   ];
 
   fullIncludes = [
-    'jquery'
+    'jquery',
+    'select2/compat/matcher'
   ].concat(includes);
 
   var i18nModules = [];

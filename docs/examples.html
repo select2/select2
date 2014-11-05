@@ -4,6 +4,8 @@ title: Examples - Select2
 slug: examples
 ---
 
+<script type="text/javascript" src="dist/js/i18n/es.js"></script>
+
 <div class="container">
   <section id="basic" class="row">
     <div class="col-md-4">
@@ -343,7 +345,9 @@ $.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
 
       <p>
         Select2 supports displaying the messages in different languages, as well
-        as provding your own custom messages that can be displayed.
+        as provding your own
+        <a href="options.html#language">custom messages</a>
+        that can be displayed.
       </p>
 
       <p>
@@ -352,11 +356,10 @@ $.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
       </p>
 
       <p>
-        Note that when tagging is enabled the user can select from pre-existing
-        options or create a new tag by picking the first choice, which is what
-        the user has typed into the search box so far.
+        The language does not have to be defined when Select2 is being
+        initialized, but instead can be defined in the <code>[lang]</code>
+        attribute of any parent elements as <code>[lang="es"]</code>.
       </p>
-
     </div>
     <div class="col-md-8">
       <h2>Example code</h2>
@@ -565,7 +568,7 @@ $.fn.select2.amd.require(
   });
 
   $language.select2({
-    language: "en"
+    language: "es"
   });
 });
 </script>

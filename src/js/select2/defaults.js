@@ -20,8 +20,7 @@ define([
   './dropdown/hidePlaceholder',
   './dropdown/infiniteScroll',
 
-  './i18n/en',
-  './compat/matcher'
+  './i18n/en'
 ], function ($, ResultsList,
              SingleSelection, MultipleSelection, Placeholder,
              Utils, Translation,
