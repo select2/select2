@@ -304,6 +304,15 @@ $(".js-example-tags").select2({
       <p>
         <select class="js-example-matcher-start js-states form-control"></select>
       </p>
+
+      <p>
+        This custom matcher uses a
+        <a href="compatibility.html">compatibility module</a> that is only
+        bundled in the
+        <a href="getting-started#versions">full version of Select2</a>. You also
+        have the option of using a
+        <a href="options.html#matcher">more complex matcher</a>.
+      </p>
     </div>
     <div class="col-md-8">
       <h2>Example code</h2>
@@ -311,40 +320,19 @@ $(".js-example-tags").select2({
       <pre data-fill-from=".js-code-matcher-start"></pre>
 
 <script type="text/x-example-code" class="js-code-matcher-start">
-function matchStart (params, data) {
-  var match = $.extend(true, {}, data);
-
-  if (data.children) {
-    for (var c = data.children.length - 1; c >= 0; c--) {
-      var child = data.children[c];
-
-      var matches = matchStart(params, child);
-
-      // If there wasn't a match, remove the object in the array
-      if (matches === null) {
-        match.children.splice(c, 1);
-      }
-    }
-
-    if (match.children.length > 0) {
-      return match;
-    }
+function matchStart (term, text) {
+  if (text.toUpperCase().indexOf(term.toUpperCase()) == 0) {
+    return true;
   }
 
-  if ($.trim(params.term) === '') {
-    return match;
-  }
-
-  if (data.text.toUpperCase().indexOf(params.term.toUpperCase()) == 0) {
-    return match;
-  }
-
-  return null;
+  return false;
 }
 
-$(".js-example-matcher-start").select2({
-  matcher: matchStart
-})
+$.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
+  $(".js-example-matcher-start").select2({
+    matcher: oldMatcher(matchStart)
+  })
+});
 </script>
     </div>
   </section>
