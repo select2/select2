@@ -5,6 +5,7 @@ define([
 ], function (BaseAdapter, Utils, $) {
   function SelectAdapter ($element, options) {
     this.$element = $element;
+    this.options = options;
 
     SelectAdapter.__super__.constructor.call(this);
   }
@@ -180,34 +181,9 @@ define([
   };
 
   SelectAdapter.prototype.matches = function (params, data) {
-    var match = $.extend(true, {}, data);
+    var matcher = this.options.get('matcher');
 
-    if (data.children) {
-      for (var c = data.children.length - 1; c >= 0; c--) {
-        var child = data.children[c];
-
-        var matches = this.matches(params, child);
-
-        // If there wasn't a match, remove the object in the array
-        if (matches === null) {
-          match.children.splice(c, 1);
-        }
-      }
-
-      if (match.children.length > 0) {
-        return match;
-      }
-    }
-
-    if ($.trim(params.term) === '') {
-      return match;
-    }
-
-    if (data.text.toUpperCase().indexOf(params.term.toUpperCase()) > -1) {
-      return match;
-    }
-
-    return null;
+    return matcher(params, data);
   };
 
   return SelectAdapter;

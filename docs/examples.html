@@ -292,6 +292,63 @@ $(".js-example-tags").select2({
     </div>
   </section>
 
+  <section id="matcher" class="row">
+    <div class="col-md-4">
+      <h1>Custom matcher</h1>
+
+      <p>
+        Unlike other dropdowns on this page, this one matches options only if
+        the term appears in the beginning of the string as opposed to anywhere:
+      </p>
+
+      <p>
+        <select class="js-example-matcher-start js-states form-control"></select>
+      </p>
+    </div>
+    <div class="col-md-8">
+      <h2>Example code</h2>
+
+      <pre data-fill-from=".js-code-matcher-start"></pre>
+
+<script type="text/x-example-code" class="js-code-matcher-start">
+function matchStart (params, data) {
+  var match = $.extend(true, {}, data);
+
+  if (data.children) {
+    for (var c = data.children.length - 1; c >= 0; c--) {
+      var child = data.children[c];
+
+      var matches = matchStart(params, child);
+
+      // If there wasn't a match, remove the object in the array
+      if (matches === null) {
+        match.children.splice(c, 1);
+      }
+    }
+
+    if (match.children.length > 0) {
+      return match;
+    }
+  }
+
+  if ($.trim(params.term) === '') {
+    return match;
+  }
+
+  if (data.text.toUpperCase().indexOf(params.term.toUpperCase()) == 0) {
+    return match;
+  }
+
+  return null;
+}
+
+$(".js-example-matcher-start").select2({
+  matcher: matchStart
+})
+</script>
+    </div>
+  </section>
+
   <section id="language" class="row">
     <div class="col-md-4">
       <h1>Multiple languages</h1>
@@ -342,7 +399,8 @@ $(".js-example-language").select2({
     <option value="AZ">Arizona</option>
     <option value="CO">Colorado</option>
     <option value="ID">Idaho</option>
-    <option value="MT">Montana</option><option value="NE">Nebraska</option>
+    <option value="MT">Montana</option>
+    <option value="NE">Nebraska</option>
     <option value="NM">New Mexico</option>
     <option value="ND">North Dakota</option>
     <option value="UT">Utah</option>
@@ -375,12 +433,16 @@ $(".js-example-language").select2({
     <option value="MD">Maryland</option>
     <option value="MA">Massachusetts</option>
     <option value="MI">Michigan</option>
-    <option value="NH">New Hampshire</option><option value="NJ">New Jersey</option>
+    <option value="NH">New Hampshire</option>
+    <option value="NJ">New Jersey</option>
     <option value="NY">New York</option>
     <option value="NC">North Carolina</option>
     <option value="OH">Ohio</option>
-    <option value="PA">Pennsylvania</option><option value="RI">Rhode Island</option><option value="SC">South Carolina</option>
-    <option value="VT">Vermont</option><option value="VA">Virginia</option>
+    <option value="PA">Pennsylvania</option>
+    <option value="RI">Rhode Island</option>
+    <option value="SC">South Carolina</option>
+    <option value="VT">Vermont</option>
+    <option value="VA">Virginia</option>
     <option value="WV">West Virginia</option>
   </optgroup>
 </select>
@@ -406,7 +468,9 @@ $("[data-fill-from]").each(function () {
 
 prettyPrint();
 
-$.fn.select2.amd.require(["select2/core", "select2/utils"], function (Select2, Utils) {
+$.fn.select2.amd.require(
+    ["select2/core", "select2/utils", "select2/compat/matcher"],
+    function (Select2, Utils, oldMatcher) {
   var $basicSingle = $(".js-example-basic-single");
   var $basicMultiple = $(".js-example-basic-multiple");
 
@@ -423,6 +487,8 @@ $.fn.select2.amd.require(["select2/core", "select2/utils"], function (Select2, U
   var $disabledResults = $(".js-example-disabled-results");
 
   var $tags = $(".js-example-tags");
+
+  var $matcherStart = $('.js-example-matcher-start');
 
   var $language = $(".js-example-language");
 
@@ -496,6 +562,18 @@ $.fn.select2.amd.require(["select2/core", "select2/utils"], function (Select2, U
 
   $tags.select2({
     tags: true
+  });
+
+  function matchStart (term, text) {
+    if (text.toUpperCase().indexOf(term.toUpperCase()) == 0) {
+      return true;
+    }
+
+    return false;
+  }
+
+  $matcherStart.select2({
+    matcher: oldMatcher(matchStart)
   });
 
   $language.select2({

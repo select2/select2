@@ -1,47 +1,42 @@
 define([
 
 ], function () {
-  function OldMatcher (decorated, $element, options) {
-    decorated.call(this, $element, options);
+  function oldMatcher (matcher) {
+    function wrappedMatcher (params, data) {
+      var match = $.extend(true, {}, data);
 
-    this.matcher = options.get('matcher');
-  }
+      if (params.term == null || $.trim(params.term) === '') {
+        return match;
+      }
 
-  OldMatcher.prototype.matches = function (decorated, params, data) {
-    // If there is no custom matcher, call the original matcher function
-    if (this.matcher == null) {
-      return decorated.call(params, data);
-    }
+      if (data.children) {
+        for (var c = data.children.length - 1; c >= 0; c--) {
+          var child = data.children[c];
 
-    var match = $.extend(true, {}, data);
+          // Check if the child object matches
+          // The old matcher returned a boolean true or false
+          var doesMatch = matcher(params.term, child.text, child);
 
-    if (data.children) {
-      for (var c = data.children.length - 1; c >= 0; c--) {
-        var child = data.children[c];
+          // If the child didn't match, pop it off
+          if (!doesMatch) {
+            match.children.splice(c, 1);
+          }
+        }
 
-        // Check if the child object matches
-        // The old matcher returned a boolean true or false
-        var doesMatch = this.matcher(params.term, child.text, child);
-
-        // If the child didn't match, pop it off
-        if (!doesMatch) {
-          match.children.splice(c, 1);
+        if (match.children.length > 0) {
+          return match;
         }
       }
 
-      if (match.children.length > 0) {
+      if (matcher(params.term, data.text, data)) {
         return match;
       }
+
+      return null;
     }
 
-    if ($.trim(params.term) === '') {
-      return match;
-    }
+    return wrappedMatcher;
+  }
 
-    if (this.matcher(params.term, data.text, data)) {
-      return match;
-    }
-
-    return null;
-  };
+  return oldMatcher;
 });

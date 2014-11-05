@@ -10503,6 +10503,7 @@ define('select2/data/select',[
 ], function (BaseAdapter, Utils, $) {
   function SelectAdapter ($element, options) {
     this.$element = $element;
+    this.options = options;
 
     SelectAdapter.__super__.constructor.call(this);
   }
@@ -10678,34 +10679,9 @@ define('select2/data/select',[
   };
 
   SelectAdapter.prototype.matches = function (params, data) {
-    var match = $.extend(true, {}, data);
+    var matcher = this.options.get('matcher');
 
-    if (data.children) {
-      for (var c = data.children.length - 1; c >= 0; c--) {
-        var child = data.children[c];
-
-        var matches = this.matches(params, child);
-
-        // If there wasn't a match, remove the object in the array
-        if (matches === null) {
-          match.children.splice(c, 1);
-        }
-      }
-
-      if (match.children.length > 0) {
-        return match;
-      }
-    }
-
-    if ($.trim(params.term) === '') {
-      return match;
-    }
-
-    if (data.text.toUpperCase().indexOf(params.term.toUpperCase()) > -1) {
-      return match;
-    }
-
-    return null;
+    return matcher(params, data);
   };
 
   return SelectAdapter;
@@ -11195,6 +11171,49 @@ define('select2/i18n/en',[],function () {
   };
 });
 
+define('select2/compat/matcher',[
+
+], function () {
+  function oldMatcher (matcher) {
+    function wrappedMatcher (params, data) {
+      var match = $.extend(true, {}, data);
+
+      if (params.term == null || $.trim(params.term) === '') {
+        return match;
+      }
+
+      if (data.children) {
+        for (var c = data.children.length - 1; c >= 0; c--) {
+          var child = data.children[c];
+
+          // Check if the child object matches
+          // The old matcher returned a boolean true or false
+          var doesMatch = matcher(params.term, child.text, child);
+
+          // If the child didn't match, pop it off
+          if (!doesMatch) {
+            match.children.splice(c, 1);
+          }
+        }
+
+        if (match.children.length > 0) {
+          return match;
+        }
+      }
+
+      if (matcher(params.term, data.text, data)) {
+        return match;
+      }
+
+      return null;
+    }
+
+    return wrappedMatcher;
+  }
+
+  return oldMatcher;
+});
+
 define('select2/defaults',[
   'jquery',
   './results',
@@ -11217,7 +11236,8 @@ define('select2/defaults',[
   './dropdown/hidePlaceholder',
   './dropdown/infiniteScroll',
 
-  './i18n/en'
+  './i18n/en',
+  './compat/matcher'
 ], function ($, ResultsList,
              SingleSelection, MultipleSelection, Placeholder,
              Utils, Translation,
@@ -11326,8 +11346,40 @@ define('select2/defaults',[
   };
 
   Defaults.prototype.reset = function () {
+    function matcher (params, data) {
+      var match = $.extend(true, {}, data);
+
+      if (data.children) {
+        for (var c = data.children.length - 1; c >= 0; c--) {
+          var child = data.children[c];
+
+          var matches = matcher(params, child);
+
+          // If there wasn't a match, remove the object in the array
+          if (matches === null) {
+            match.children.splice(c, 1);
+          }
+        }
+
+        if (match.children.length > 0) {
+          return match;
+        }
+      }
+
+      if ($.trim(params.term) === '') {
+        return match;
+      }
+
+      if (data.text.toUpperCase().indexOf(params.term.toUpperCase()) > -1) {
+        return match;
+      }
+
+      return null;
+    }
+
     this.defaults = {
       language: ['select2/i18n/en'],
+      matcher: matcher,
       minimumInputLength: 0,
       templateResult: function (result) {
         return result.text;

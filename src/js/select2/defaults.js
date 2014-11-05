@@ -20,7 +20,8 @@ define([
   './dropdown/hidePlaceholder',
   './dropdown/infiniteScroll',
 
-  './i18n/en'
+  './i18n/en',
+  './compat/matcher'
 ], function ($, ResultsList,
              SingleSelection, MultipleSelection, Placeholder,
              Utils, Translation,
@@ -129,8 +130,40 @@ define([
   };
 
   Defaults.prototype.reset = function () {
+    function matcher (params, data) {
+      var match = $.extend(true, {}, data);
+
+      if (data.children) {
+        for (var c = data.children.length - 1; c >= 0; c--) {
+          var child = data.children[c];
+
+          var matches = matcher(params, child);
+
+          // If there wasn't a match, remove the object in the array
+          if (matches === null) {
+            match.children.splice(c, 1);
+          }
+        }
+
+        if (match.children.length > 0) {
+          return match;
+        }
+      }
+
+      if ($.trim(params.term) === '') {
+        return match;
+      }
+
+      if (data.text.toUpperCase().indexOf(params.term.toUpperCase()) > -1) {
+        return match;
+      }
+
+      return null;
+    }
+
     this.defaults = {
       language: ['select2/i18n/en'],
+      matcher: matcher,
       minimumInputLength: 0,
       templateResult: function (result) {
         return result.text;
