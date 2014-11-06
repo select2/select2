@@ -1517,6 +1517,7 @@ define('select2/data/select',[
     $option.text(data.text);
     $option.val(data.id);
     $option.prop('disabled', data.disabled || false);
+    $option.prop('selected', data.selected || false);
 
     // Get any automatically generated data values
     var detectedData = this.item($option);
@@ -1565,6 +1566,8 @@ define('select2/data/select',[
         data._resultId = this.generateResultId(this.container, data);
       }
 
+      data.selected = $option.prop('selected');
+
       $option.data('data', data);
     }
 
@@ -1586,45 +1589,56 @@ define('select2/data/array',[
   'jquery'
 ], function (SelectAdapter, Utils, $) {
   function ArrayAdapter ($element, options) {
-    this.data = options.get('data');
+    var data = options.get('data');
 
     ArrayAdapter.__super__.constructor.call(this, $element, options);
+
+    this.convertToOptions(data);
   }
 
   Utils.Extend(ArrayAdapter, SelectAdapter);
 
-  ArrayAdapter.prototype.select = function (data) {
+  ArrayAdapter.prototype.convertToOptions = function (data) {
     var self = this;
 
-    this.$element.find('option').each(function () {
-      var $option = $(this);
-      var option = self.item($option);
+    var $existing = this.$element.find('option');
+    var existingIds = $existing.map(function () {
+      return self.item($(this)).id;
+    }).get();
 
-      if (option.id == data.id.toString()) {
-        $option.remove();
+    // Filter out all items except for the one passed in the argument
+    function onlyItem (item) {
+      return function () {
+        return $(this).val() == item.id;
+      };
+    }
+
+    for (var d = 0; d < data.length; d++) {
+      var item = data[d];
+      item.id = item.id.toString();
+
+      console.log(existingIds, item.id, existingIds.indexOf(item.id));
+
+      // Skip items which were pre-loaded, only merge the data
+      if (existingIds.indexOf(item.id) >= 0) {
+        console.log(item.id);
+
+        var $existingOption = $existing.filter(onlyItem(item));
+
+        var existingData = this.item($existingOption);
+        var newData = $.extend(true, {}, existingData, item);
+
+        var $newOption = this.option(existingData);
+
+        $existingOption.replaceWith($newOption);
+
+        continue;
       }
-    });
 
-    var $option = this.option(data);
+      var option = this.option(item);
 
-    this.$element.append($option);
-
-    ArrayAdapter.__super__.select.call(this, data);
-  };
-
-  ArrayAdapter.prototype.query = function (params, callback) {
-    var matches = [];
-    var self = this;
-
-    $.each(this.data, function () {
-      var option = this;
-
-      if (self.matches(params, option)) {
-        matches.push(option);
-      }
-    });
-
-    callback(matches);
+      this.$element.append(option);
+    }
   };
 
   return ArrayAdapter;

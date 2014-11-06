@@ -29,8 +29,16 @@ test('current gets default for single', function (assert) {
   data.current(function (val) {
     assert.equal(
       val.length,
-      0,
-      'There should be no default selection.'
+      1,
+      'There should always be a selected item for array data.'
+    );
+
+    var item = val[0];
+
+    assert.equal(
+      item.id,
+      'default',
+      'The first item should be selected'
     );
   });
 });
@@ -117,14 +125,22 @@ test('select works for single', function (assert) {
 
   var data = new ArrayData($select, options);
 
-  assert.equal($select.val(), null);
+  assert.equal(
+    $select.val(),
+    'default',
+    'There should already be a selection'
+  );
 
   data.select({
     id: '1',
     text: 'One'
   });
 
-  assert.equal($select.val(), '1');
+  assert.equal(
+    $select.val(),
+    '1',
+    'The selected value should be the same as the selected id'
+  );
 });
 
 test('multiple sets the value', function (assert) {

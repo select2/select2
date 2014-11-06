@@ -126,6 +126,7 @@ define([
     $option.text(data.text);
     $option.val(data.id);
     $option.prop('disabled', data.disabled || false);
+    $option.prop('selected', data.selected || false);
 
     // Get any automatically generated data values
     var detectedData = this.item($option);
@@ -173,6 +174,8 @@ define([
       if (data.id && this.container != null) {
         data._resultId = this.generateResultId(this.container, data);
       }
+
+      data.selected = $option.prop('selected');
 
       $option.data('data', data);
     }
