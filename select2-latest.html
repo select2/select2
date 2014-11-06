@@ -1259,7 +1259,7 @@ $(document).ready(function () {
             </td></tr>
             <tr><td>formatSelection</td><td>function</td><td>
                 Function used to render the current selection.
-                <pre>formatSelection(object, container)</pre>
+                <pre>formatSelection(object, container, escapeMarkup)</pre>
                 <table class="table table-bordered table-striped">
                     <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
                     <tr><td>object</td><td>object</td><td>The selected result object returned from the <code>query</code> function.</td></tr>
@@ -1282,7 +1282,7 @@ format(item) {
             </td></tr>
             <tr><td>formatResult</td><td>function</td><td>
                 Function used to render a result that the user can select.
-                <pre>formatResult(object, container, query)</pre>
+                <pre>formatResult(object, container, query, escapeMarkup)</pre>
                 <table class="table table-bordered table-striped">
                     <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
                     <tr><td>object</td><td>object</td><td>One of the result objects returned from the <code>query</code> function.</td></tr>
