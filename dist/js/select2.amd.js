@@ -1189,12 +1189,8 @@ define('select2/data/array',[
       var item = data[d];
       item.id = item.id.toString();
 
-      console.log(existingIds, item.id, existingIds.indexOf(item.id));
-
       // Skip items which were pre-loaded, only merge the data
       if (existingIds.indexOf(item.id) >= 0) {
-        console.log(item.id);
-
         var $existingOption = $existing.filter(onlyItem(item));
 
         var existingData = this.item($existingOption);

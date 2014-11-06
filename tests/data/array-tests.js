@@ -174,3 +174,15 @@ test('multiple adds to the old value', function (assert) {
 
   assert.deepEqual($select.val(), ['3', 'default']);
 });
+
+test('option tags are automatically generated', function (assert) {
+  var $select = $('#qunit-fixture .single');
+
+  var data = new ArrayData($select, options);
+
+  assert.equal(
+    $select.find('option').length,
+    3,
+    'An <option> element should be created for each object'
+  );
+});
