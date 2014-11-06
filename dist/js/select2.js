@@ -689,16 +689,44 @@ define('select2/results',[
   };
 
   Results.prototype.option = function (data) {
-    var $option = $(
-      '<li class="option" role="treeitem" aria-selected="false"></li>'
-    );
+    var attrs = {
+      'class': 'option',
+      'role': 'treeitem',
+      'aria-selected': 'false'
+    };
+
+    if (data.disabled) {
+      delete attrs['aria-selected'];
+      attrs['aria-disabled'] = 'true';
+    }
+
+    if (data.id == null) {
+      delete attrs['aria-selected'];
+    }
+
+    if (data._resultId != null) {
+      attrs.id = data._resultId;
+    }
 
     if (data.children) {
-      $option
-        .attr('role', 'group')
-        .attr('aria-label', data.text)
-        .removeAttr('aria-selected');
+      attrs.role = 'group';
+      attrs['aria-label'] = data.text;
+      delete attrs['aria-selected'];
+    }
 
+    var html = '<li';
+
+    for (var attr in attrs) {
+      var val = attrs[attr];
+
+      html += ' ' + attr + '="' + val + '"';
+    }
+
+    html += '></li>';
+
+    var $option = $(html);
+
+    if (data.children) {
       var $label = $('<strong class="group-label"></strong>');
       this.template(data, $label);
 
@@ -720,20 +748,6 @@ define('select2/results',[
       $option.append($childrenContainer);
     } else {
       this.template(data, $option);
-    }
-
-    if (data.disabled) {
-      $option
-        .removeAttr('aria-selected')
-        .attr('aria-disabled', 'true');
-    }
-
-    if (data.id == null) {
-      $option.removeAttr('aria-selected');
-    }
-
-    if (data._resultId != null) {
-      $option.attr('id', data._resultId);
     }
 
     $option.data('data', data);
