@@ -423,10 +423,12 @@ h3 > label {
             $(document).ready(function() {
 $("#e2").select2({
     placeholder: "Select a State",
+    searchInputPlaceholder: "Search...",
     allowClear: true
 });
 $("#e2_2").select2({
-    placeholder: "Select a State"
+    placeholder: "Select a State",
+    searchInputPlaceholder: "Search..."
 });
             });
           </script>
@@ -442,6 +444,7 @@ $("#e2_2").select2({
              <p>The placeholder can be declared via a <code>data-placeholder</code> attribute attached to the <code>select</code>, or via the <code>placeholder</code> configuration element as seen in the example code.</p>
              <p>When placeholder is used for a non-multi-value select box, it requires that you include an empty <code>&lt;option&gt;&lt;/option&gt;</code> tag as your first option.</p>
               <p>Optionally, a clear button (visible once a selection is made) is available to reset the select box back to the placeholder value.</p>
+             <p>If you want to set placeholder on search input - use <code>searchInputPlaceholder</code> configuration option.</p>
 
           </div>
           <div class="span8">
@@ -1151,6 +1154,9 @@ $(document).ready(function () {
                     for the placeholder to work.
                 </p>
             </td></tr>
+            <tr><td>searchInputPlaceholder</td><td>string</td><td>
+                <p>Sets placeholder for search input.</p>
+            </td></tr>
             <tr><td>placeholderOption</td><td>function/string</td><td>
                 <p>When attached to a <code>select</code> resolves the <code>option</code> that should be used as the placeholder.
                     Can either be a function which given the <code>select</code> element should return the <code>option</code>
@@ -1651,8 +1657,7 @@ $("#select").select2({
             <tbody>
             <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
             <tr><td>data</td><td>object</td><td>Retrieved data.</td></tr>
-            <tr><td>this.search.val()</td><td>string</td><td>Search term that yielded the current result set.</td></tr>
-            </tbody>
+            <tr><td>this.search.val()</td><td>string</td><td>Search term that yielded the current result set.</td></tr></tbody>
             </table>
             <p>Here is an example implementation used to display the current search term when the dropdown is opened:</p>
             <pre class="prettyprint">
