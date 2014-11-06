@@ -21,6 +21,20 @@
         <li{% if page.slug == "examples" %} class="active"{% endif %}>
           <a href="./examples.html">Examples</a>
         </li>
+        <li{% if page.slug == "options" %} class="active"{% endif %}>
+          <a href="./options.html">Options</a>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            Announcements
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li{% if page.slug == "announcements-4.0" %} class="active"{% endif %}>
+              <a href="./announcements-4.0.html">Select2 4.0</a>
+            </li>
+          </ul>
+        </li>
         <li{% if page.slug == "community" %} class="active"{% endif %}>
           <a href="./community.html">Community</a>
         </li>

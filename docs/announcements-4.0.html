@@ -1,0 +1,94 @@
+---
+layout: default
+title: Select2 4.0.0 Released
+slug: announcements-4.0
+---
+
+<div class="container">
+  <section id="pre-release">
+    <h2>Pre-release notes</h2>
+
+    <p>
+      The 4.0 release is ready for early adopters interested in testing it out.
+      You can use the development version, available on GitHub, by getting the
+      source code available in the <code>select2-ng</code> branch. The source
+      code can be
+      <a href="https://github.com/ivaynberg/select2/archive/select2-ng.zip">
+        downloaded as a <code>zip</code> archive
+      </a> as well.
+    </p>
+  </section>
+
+  <section id="release">
+    <h1>Select2 4.0.0</h1>
+
+    <p>
+      The 4.0 release of Select2 is the result of three years of working on the
+      code base and watching where it needs to go. At the core, it is a full
+      rewrite that addresses many of the extensibility and usability problems
+      that could not be addressed in previous versions.
+    </p>
+
+    <p>
+      This release contains many breaking changes, but easy-upgrade pathes have
+      been created as well as helper modules that will allow for backwards
+      compatibility to be maintained with past versions of Select2. Upgrading
+      <em>will</em> require you to read the release notes carefully, but the
+      migration path should be relatively straightforward. You can find more
+      information on the modules that have been created to make upgrading easier
+      by <a href="compat.html">looking at the compatibility guide</a> for older
+      Select2 versions.
+    </p>
+
+    <p>
+      Below is an in-depth review of what is new in Select2, as well as some of
+      the major changes that have been made.
+    </p>
+  </section>
+
+  <section id="plugins">
+    <h2>Plugins</h2>
+
+    <p>
+      Select2 now provides interfaces that allow for it to be easily extended,
+      allowing for anyone to create a plugin that changes the way Select2 works.
+      This is the result of Select2 being broken into four distinct sections,
+      each of which can be extended and used together to create your unique
+      Select2.
+    </p>
+
+    <h3>
+      Container (selection)
+    </h3>
+
+    <p>
+      This includes the primary container that users interact with to open the
+      dropdown.
+    </p>
+
+    <h3>
+      Dropdown
+    </h3>
+
+    <p>
+      This includes the dropdown that is opened when the container is clicked.
+      This also includes the results list, which is a separate component.
+    </p>
+
+    <h3>
+      Results
+    </h3>
+
+    <p>
+      This includes the list of possible options that can be selected.
+    </p>
+
+    <h3>
+      Data set
+    </h3>
+
+    <p>
+      This is how the options are calculated.
+    </p>
+  </section>
+</div>
