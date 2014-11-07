@@ -238,13 +238,24 @@ test('empty optgroups are still shown when queried', function (assert) {
   var data = new SelectData($select, options);
 
   data.query({}, function (data) {
-    assert.deepEqual(
-      data[1],
-      {
-        text: 'Empty',
-        children: []
-      },
+    assert.equal(
+      data.length,
+      2,
       'The empty optgroup element should still be returned when queried'
+    );
+
+    var item = data[1];
+
+    assert.equal(
+      item.text,
+      'Empty',
+      'The text of the empty optgroup should match the label'
+    );
+
+    assert.equal(
+      item.children.length,
+      0,
+      'There should be no children in the empty opgroup'
     );
   });
 });

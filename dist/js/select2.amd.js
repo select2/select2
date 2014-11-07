@@ -1098,66 +1098,85 @@ define('select2/data/select',[
   };
 
   SelectAdapter.prototype.option = function (data) {
-    var $option = $('<option></option>');
+    var option = document.createElement('option');
 
-    $option.text(data.text);
-    $option.val(data.id);
-    $option.prop('disabled', data.disabled || false);
-    $option.prop('selected', data.selected || false);
+    option.value = data.id;
 
-    // Get any automatically generated data values
-    var detectedData = this.item($option);
+    if (data.disabled) {
+      option.disabled = true;
+    }
 
-    // Merge it with the already present data
-    var combinedData = $.extend({}, data, detectedData);
+    if (data.selected) {
+      option.selected = true;
+    }
+
+    option.innerText = data.text;
+
+    var $option = $(option);
+
+    var normalizedData = this._normalizeItem(data);
 
     // Override the option's data with the combined data
-    $option.data('data', combinedData);
+    $.data($option, normalizedData);
 
     return $option;
   };
 
   SelectAdapter.prototype.item = function ($option) {
-    var data = $option.data('data');
+    var data = {};
 
-    // If the data has already be generated, use it
-    if (data == null) {
-      if ($option.is('option')) {
-        data = {
-          id: $option.val(),
-          text: $option.html(),
-          disabled: $option.prop('disabled')
-        };
-      } else if ($option.is('optgroup')) {
-        data = {
-          text: $option.attr('label'),
-          children: []
-        };
+    if ($.hasData($option)) {
+      data = $option.data('data');
 
-        var $children = $option.children('option');
-        var children = [];
-
-        for (var c = 0; c < $children.length; c++) {
-          var $child = $($children[c]);
-
-          var child = this.item($child);
-
-          children.push(child);
-        }
-
-        data.children = children;
+      if (data != null) {
+        return data;
       }
-
-      if (data.id && this.container != null) {
-        data._resultId = this.generateResultId(this.container, data);
-      }
-
-      data.selected = $option.prop('selected');
-
-      $option.data('data', data);
     }
 
+    if ($option.is('option')) {
+      data = {
+        id: $option.val(),
+        text: $option.html(),
+        disabled: $option.prop('disabled')
+      };
+    } else if ($option.is('optgroup')) {
+      data = {
+        text: $option.attr('label'),
+        children: []
+      };
+
+      var $children = $option.children('option');
+      var children = [];
+
+      for (var c = 0; c < $children.length; c++) {
+        var $child = $($children[c]);
+
+        var child = this.item($child);
+
+        children.push(child);
+      }
+
+      data.children = children;
+    }
+
+    data = this._normalizeItem(data);
+
+    $option.data('data', data);
+
     return data;
+  };
+
+  SelectAdapter.prototype._normalizeItem = function (item) {
+    var defaults = {
+      selected: false,
+      disabled: false
+    };
+
+    if (item._resultId == null && item.id && this.container != null) {
+      item._resultId = this.generateResultId(this.container, item);
+    }
+
+    return $.extend({}, defaults, item);
   };
 
   SelectAdapter.prototype.matches = function (params, data) {
