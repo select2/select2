@@ -189,6 +189,13 @@ define([
   };
 
   SelectAdapter.prototype._normalizeItem = function (item) {
+    if (item.text == null) {
+      item = {
+        id: item,
+        text: item
+      };
+    }
+
     var defaults = {
       selected: false,
       disabled: false

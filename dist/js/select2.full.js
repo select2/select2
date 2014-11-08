@@ -10703,6 +10703,13 @@ define('select2/data/select',[
   };
 
   SelectAdapter.prototype._normalizeItem = function (item) {
+    if (item.text == null) {
+      item = {
+        id: item,
+        text: item
+      };
+    }
+
     var defaults = {
       selected: false,
       disabled: false
@@ -10869,6 +10876,17 @@ define('select2/data/tags',[
     var tags = options.get('tags');
 
     decorated.call(this, $element, options);
+
+    if ($.isArray(tags)) {
+      for (var t = 0; t < tags.length; t++) {
+        var tag = tags[t];
+        var item = this._normalizeItem(tag);
+
+        var $option = this.option(item);
+
+        this.$element.append($option);
+      }
+    }
   }
 
   Tags.prototype.query = function (decorated, params, callback) {
