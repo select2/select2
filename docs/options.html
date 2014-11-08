@@ -5,7 +5,347 @@ slug: options
 ---
 
 <div class="container">
-  <section id="">
+  <section id="core">
+    <div class="page-header">
+      <h1>Core options</h1>
+    </div>
 
+    <p>
+      Select2 supports a small subset of options in every build that is
+      generated. Each option typically has a decorator that is required that
+      wraps an adapter, adding support for the option. This is only required
+      when a custom adapter is being used, as Select2 will build the required
+      adapters by default.
+    </p>
+
+    <h2>
+      Display
+    </h2>
+
+    <h3 id="placeholder">
+      Placeholders
+    </h3>
+
+    <p>
+      Select2 can display a placeholder for a single-value select that will
+      replace an option, or be shown when no options are selected for
+      multiple-value selects. You can find an example on the
+      <a href="examples.html#placeholders">example page</a>.
+    </p>
+
+    <div class="row">
+      <div class="col-sm-4">
+        <dl class="dl-horizontal">
+          <dt>Key</dt>
+          <dd>
+            <code>placeholder</code>
+          </dd>
+
+          <dt>Value</dt>
+          <dd>string or object</dd>
+        </dl>
+
+        <hr />
+
+        <dl class="dl-horizontal">
+          <dt>Adapter</dt>
+          <dd>
+            <code title="select2/selection/base">SelectionAdapter</code>
+          </dd>
+
+          <dt>Decorator</dt>
+          <dd>
+            <code title="select2/selection/placeholder">Placeholder</code>
+          </dd>
+        </dl>
+      </div>
+
+      <div class="col-sm-8">
+        <div class="alert alert-warning">
+          <strong>Heads up!</strong>
+          Because browsers assume that the first <code>option</code> in
+          single-value select boxes is selected, you must add an empty
+          <code>&lt;option&gt;&lt;/option&gt;</code> tag that the placeholder
+          should use, or it will not work.
+        </div>
+      </div>
+    </div>
+
+    <p>
+      If the <strong>value is a string</strong>, the placeholder will be
+      displayed when a <strong>blank option</strong> is used as the placeholder.
+      The <strong>value</strong> will be the message to show to users as the
+      placeholders.
+    </p>
+
+    <p>
+      If the <strong>value is an object</strong>, the object should be
+      compatible with Select2's internal objects. The <code>id</code> should
+      be the id to look for when determining if the placeholder should be
+      displayed. The <code>text</code> should be the placeholder to display
+      when that option is selected.
+    </p>
+
+    <div class="alert alert-info">
+      You <strong>pass in an object</strong> when you are using a framework that
+      <strong>creates its own placeholder option</strong>. The
+      <strong>id</strong> should be the same as the <code>value</code>
+      attribute on the <code>option</code>.
+    </div>
+
+    <h3 id="translation">
+      Internationalization (Language support)
+    </h3>
+
+    <p>
+      Messages will be displayed to users when necessary, such as when no
+      search results were found or more characters need to be entered in order
+      for a search to be made. These messages have been
+      <a href="community.html#translations">translated into many languages</a>
+      by contributors to Select2, but you can also provide your own
+      translations.
+    </p>
+
+    <div class="row">
+      <div class="col-sm-4">
+        <dl class="dl-horizontal">
+          <dt>Key</dt>
+          <dd><code>language</code></dd>
+
+          <dt>Value</dt>
+          <dd>object or string</dd>
+        </dl>
+
+        <hr />
+
+        <dl class="dl-horizontal">
+          <dt>Module</dt>
+          <dd>
+            <code title="select2/translation">Translation</code>
+          </dd>
+        </dl>
+      </div>
+
+      <div class="col-sm-8">
+        <p class="alert alert-warning">
+          <strong>Heads up!</strong> When using translations provided by Select2,
+          you must make sure to include the translation file in your page after
+          Select2.
+        </p>
+      </div>
+    </div>
+
+    <p>
+      When a string is passed in as the language, Select2 will try to resolve
+      it into a language file. This allows you to specify your own language
+      files, which must be defined as an AMD module. If the language file
+      cannot be found, Select2 will assume it is a language code controlled by
+      Select2, and it will try to load the translations for that language
+      instead.
+    </p>
+
+    <p>
+      You can include your own translations by providing an object similar to
+      the one below.
+    </p>
+
+<pre class="prettyprint">
+language: {
+  // You can find all of the options in the language files provided in the
+  // build. They all must be functions that return the string that should be
+  // displayed.
+  inputTooShort: function () {
+    return "You must enter more characters...";
+  }
+}
+</pre>
+
+    <h2>
+      Results
+    </h2>
+
+    <p>
+      Select2 can work on many different data sets ranging from local options,
+      the same way that a <code>&lt;select&gt;</code> typically works, from
+      remove options where a server generates the results that users can select
+      from.
+    </p>
+
+    <h3 id="data">
+      Array
+    </h3>
+
+    <p>
+      Select2 allows creating the results based on an array of data objects that
+      is included when initializing Select2.
+    </p>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <dl class="dl-horizontal">
+          <dt>Key</dt>
+          <dd><code>data</code></dd>
+
+          <dt>Value</dt>
+          <dd>array of objects</dd>
+        </dl>
+      </div>
+
+      <div class="col-sm-6">
+        <dl class="dl-horizontal">
+          <dt>Adapter</dt>
+          <dd>
+            <code title="select2/data/array">ArrayAdapter</code>
+          </dd>
+        </dl>
+      </div>
+    </div>
+
+    <p>
+      The objects that the users can select from should be passed as an array
+      with each object containing <code>id</code> and <code>text</code>
+      properties.
+    </p>
+
+    <h3 id="ajax">
+      AJAX
+    </h3>
+
+    <p>
+      Select2 allows searching for results from remote data sources using AJAX
+      requests.
+    </p>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <dl class="dl-horizontal">
+          <dt>Key</dt>
+          <dd><code>ajax</code></dd>
+
+          <dt>Value</dt>
+          <dd>object</dd>
+        </dl>
+      </div>
+
+      <div class="col-sm-6">
+        <dl class="dl-horizontal">
+          <dt>Adapter</dt>
+          <dd>
+            <code title="select2/data/ajax">AjaxAdapter</code>
+          </dd>
+        </dl>
+      </div>
+    </div>
+
+    <p>
+      All options passed to this option will be directly passed to the
+      <code>$.ajax</code> function that executes AJAX requests. There are a few
+      custom options that Select2 will intercept, allowing you to customize the
+      request as it is being made.
+
+<pre class="prettyprint">
+ajax: {
+  // The number of milliseconds to wait for the user to stop typing before
+  // issuing the ajax request.
+  delay: 250,
+  // You can craft a custom url based on the parameters that are passed into the
+  // request. This is useful if you are using a framework which has
+  // JavaScript-based functions for generating the urls to make requests to.
+  //
+  // @param params The object containing the parameters used to generate the
+  //   request.
+  // @returns The url that the request should be made to.
+  url: function (params) {
+    return UrlGenerator.Random();
+  },
+  // You can pass custom data into the request based on the parameters used to
+  // make the request. For `GET` requests, the default method, these are the
+  // query parameters that are appended to the url. For `POST` requests, this
+  // is the form data that will be passed into the request. For other requests,
+  // the data returned from here should be customized based on what jQuery and
+  // your server are expecting.
+  //
+  // @param params The object containing the parameters used to generate the
+  //   request.
+  // @returns Data to be directly passed into the request.
+  data: function (params) {
+    var queryParameters = {
+      q: params.term
+    }
+
+    return queryParameters;
+  },
+  // You can modify the results that are returned from the server, allowing you
+  // to make last-minute changes to the data, or find the correct part of the
+  // response to pass to Select2. Keep in mind that results should be passed as
+  // an array of objects.
+  //
+  // @param data The data as it is returned directly by jQuery.
+  // @returns An array of objects that will be rendered by Select2.
+  processResults: function (data) {
+    return data;
+  }
+}
+</pre>
+    </p>
+
+    <h3 id="tags">
+      Tags
+    </h3>
+
+    <p>
+      Users can create their own options based on the text that they have
+      entered.
+    </p>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <dl class="dl-horizontal">
+          <dt>Key</dt>
+          <dd><code>tags</code></dd>
+
+          <dt>Value</dt>
+          <dd>boolean / array of objects</dd>
+        </dl>
+      </div>
+
+      <div class="col-sm-6">
+        <dl class="dl-horizontal">
+          <dt>Adapter</dt>
+          <dd>
+            <code title="select2/data/base">DataAdapter</code>
+          </dd>
+
+          <dt>Decorator</dt>
+          <dd>
+            <code title="select2/data/tags">Tags</code>
+          </dd>
+        </dl>
+      </div>
+    </div>
+
+    <p>
+      If the <code>tags</code> option is passed into Select2, if a user types
+      anything into the search box which doesn't already exist, it will be
+      displayed at the top and the user will be able to select it.
+    </p>
+
+    <p>
+      <strong>For backwards compatibility</strong>, if an array of objects is
+      passed in with the <code>tags</code> option, the options will be
+      automatically created and the user will be able to select from them.
+      This is the <strong>same as how <a href="#data">array data</a>
+      works</strong>, and has similar limitations.
+    </p>
+  </section>
+
+  <section id="adapters">
+    <div class="page-header">
+      <h1>Adapters</h1>
+    </div>
   </section>
 </div>
+
+<script type="text/javascript">
+prettyPrint();
+</script>
