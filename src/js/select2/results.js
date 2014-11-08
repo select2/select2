@@ -107,8 +107,10 @@ define([
   };
 
   Results.prototype.option = function (data) {
+    var option = document.createElement('li');
+    option.className = 'option';
+
     var attrs = {
-      'class': 'option',
       'role': 'treeitem',
       'aria-selected': 'false'
     };
@@ -123,7 +125,7 @@ define([
     }
 
     if (data._resultId != null) {
-      attrs.id = data._resultId;
+      option.id = data._resultId;
     }
 
     if (data.children) {
@@ -132,21 +134,15 @@ define([
       delete attrs['aria-selected'];
     }
 
-    var html = '<li';
-
-    for (var attr in attrs) {
-      var val = attrs[attr];
-
-      html += ' ' + attr + '="' + val + '"';
-    }
-
-    html += '></li>';
-
-    var $option = $(html);
+    var $option = $(option);
+    $option.attr(attrs);
 
     if (data.children) {
-      var $label = $('<strong class="group-label"></strong>');
-      this.template(data, $label);
+      var label = document.createElement('strong');
+      label.className = 'group-label';
+
+      var $label = $(label);
+      this.template(data, label);
 
       var $children = [];
 
@@ -162,10 +158,10 @@ define([
 
       $childrenContainer.append($children);
 
-      $option.append($label);
+      $option.append(label);
       $option.append($childrenContainer);
     } else {
-      this.template(data, $option);
+      this.template(data, option);
     }
 
     $option.data('data', data);
@@ -389,10 +385,10 @@ define([
     }
   };
 
-  Results.prototype.template = function (result, $container) {
+  Results.prototype.template = function (result, container) {
     var template = this.options.get('templateResult');
 
-    $container.html(template(result));
+    container.innerHTML = template(result);
   };
 
   return Results;

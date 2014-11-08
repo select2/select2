@@ -130,33 +130,44 @@ define([
 
   Defaults.prototype.reset = function () {
     function matcher (params, data) {
-      var match = $.extend(true, {}, data);
+      // Always return the object if there is nothing to compare
+      if ($.trim(params.term) === '') {
+        return data;
+      }
 
-      if (data.children) {
+      // Do a recursive check for options with children
+      if (data.children && data.children.length > 0) {
+        // Clone the data object if there are children
+        // This is required as we modify the object to remove any non-matches
+        var match = $.extend(true, {}, data);
+
+        // Check each child of the option
         for (var c = data.children.length - 1; c >= 0; c--) {
           var child = data.children[c];
 
           var matches = matcher(params, child);
 
           // If there wasn't a match, remove the object in the array
-          if (matches === null) {
+          if (matches == null) {
             match.children.splice(c, 1);
           }
         }
 
+        // If any children matched, return the new object
         if (match.children.length > 0) {
           return match;
         }
+
+        // If there were no matching children, check just the plain object
+        return matcher(params, match);
       }
 
-      if ($.trim(params.term) === '') {
-        return match;
-      }
-
+      // Check if the text contains the term
       if (data.text.toUpperCase().indexOf(params.term.toUpperCase()) > -1) {
-        return match;
+        return data;
       }
 
+      // If it doesn't contain the term, don't return anything
       return null;
     }
 

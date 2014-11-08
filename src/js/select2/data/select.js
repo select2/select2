@@ -148,12 +148,10 @@ define([
   SelectAdapter.prototype.item = function ($option) {
     var data = {};
 
-    if ($.hasData($option)) {
-      data = $option.data('data');
+    data = $option.data('data');
 
-      if (data != null) {
-        return data;
-      }
+    if (data != null) {
+      return data;
     }
 
     if ($option.is('option')) {

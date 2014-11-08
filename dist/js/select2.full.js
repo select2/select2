@@ -9796,8 +9796,10 @@ define('select2/results',[
   };
 
   Results.prototype.option = function (data) {
+    var option = document.createElement('li');
+    option.className = 'option';
+
     var attrs = {
-      'class': 'option',
       'role': 'treeitem',
       'aria-selected': 'false'
     };
@@ -9812,7 +9814,7 @@ define('select2/results',[
     }
 
     if (data._resultId != null) {
-      attrs.id = data._resultId;
+      option.id = data._resultId;
     }
 
     if (data.children) {
@@ -9821,21 +9823,15 @@ define('select2/results',[
       delete attrs['aria-selected'];
     }
 
-    var html = '<li';
-
-    for (var attr in attrs) {
-      var val = attrs[attr];
-
-      html += ' ' + attr + '="' + val + '"';
-    }
-
-    html += '></li>';
-
-    var $option = $(html);
+    var $option = $(option);
+    $option.attr(attrs);
 
     if (data.children) {
-      var $label = $('<strong class="group-label"></strong>');
-      this.template(data, $label);
+      var label = document.createElement('strong');
+      label.className = 'group-label';
+
+      var $label = $(label);
+      this.template(data, label);
 
       var $children = [];
 
@@ -9851,10 +9847,10 @@ define('select2/results',[
 
       $childrenContainer.append($children);
 
-      $option.append($label);
+      $option.append(label);
       $option.append($childrenContainer);
     } else {
-      this.template(data, $option);
+      this.template(data, option);
     }
 
     $option.data('data', data);
@@ -10078,10 +10074,10 @@ define('select2/results',[
     }
   };
 
-  Results.prototype.template = function (result, $container) {
+  Results.prototype.template = function (result, container) {
     var template = this.options.get('templateResult');
 
-    $container.html(template(result));
+    container.innerHTML = template(result);
   };
 
   return Results;
@@ -10660,12 +10656,10 @@ define('select2/data/select',[
   SelectAdapter.prototype.item = function ($option) {
     var data = {};
 
-    if ($.hasData($option)) {
-      data = $option.data('data');
+    data = $option.data('data');
 
-      if (data != null) {
-        return data;
-      }
+    if (data != null) {
+      return data;
     }
 
     if ($option.is('option')) {
@@ -11346,33 +11340,44 @@ define('select2/defaults',[
 
   Defaults.prototype.reset = function () {
     function matcher (params, data) {
-      var match = $.extend(true, {}, data);
+      // Always return the object if there is nothing to compare
+      if ($.trim(params.term) === '') {
+        return data;
+      }
 
-      if (data.children) {
+      // Do a recursive check for options with children
+      if (data.children && data.children.length > 0) {
+        // Clone the data object if there are children
+        // This is required as we modify the object to remove any non-matches
+        var match = $.extend(true, {}, data);
+
+        // Check each child of the option
         for (var c = data.children.length - 1; c >= 0; c--) {
           var child = data.children[c];
 
           var matches = matcher(params, child);
 
           // If there wasn't a match, remove the object in the array
-          if (matches === null) {
+          if (matches == null) {
             match.children.splice(c, 1);
           }
         }
 
+        // If any children matched, return the new object
         if (match.children.length > 0) {
           return match;
         }
+
+        // If there were no matching children, check just the plain object
+        return matcher(params, match);
       }
 
-      if ($.trim(params.term) === '') {
-        return match;
-      }
-
+      // Check if the text contains the term
       if (data.text.toUpperCase().indexOf(params.term.toUpperCase()) > -1) {
-        return match;
+        return data;
       }
 
+      // If it doesn't contain the term, don't return anything
       return null;
     }
 
