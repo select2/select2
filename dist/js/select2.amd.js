@@ -1510,6 +1510,8 @@ define('select2/dropdown/search',[
 
     container.on('open', function () {
       self.$search.attr('tabindex', 0);
+
+      self.$search.focus();
     });
 
     container.on('close', function () {
