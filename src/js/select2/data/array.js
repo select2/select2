@@ -46,9 +46,9 @@ define([
         continue;
       }
 
-      var option = this.option(item);
+      var $option = this.option(item);
 
-      this.$element.append(option);
+      this.$element.append($option);
     }
   };
 

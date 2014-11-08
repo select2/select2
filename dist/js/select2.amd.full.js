@@ -1137,7 +1137,8 @@ define('select2/data/select',[
       data = {
         id: $option.val(),
         text: $option.html(),
-        disabled: $option.prop('disabled')
+        disabled: $option.prop('disabled'),
+        selected: $option.prop('selected')
       };
     } else if ($option.is('optgroup')) {
       data = {
@@ -1244,9 +1245,9 @@ define('select2/data/array',[
         continue;
       }
 
-      var option = this.option(item);
+      var $option = this.option(item);
 
-      this.$element.append(option);
+      this.$element.append($option);
     }
   };
 

@@ -158,7 +158,8 @@ define([
       data = {
         id: $option.val(),
         text: $option.html(),
-        disabled: $option.prop('disabled')
+        disabled: $option.prop('disabled'),
+        selected: $option.prop('selected')
       };
     } else if ($option.is('optgroup')) {
       data = {

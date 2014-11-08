@@ -473,15 +473,6 @@ $.fn.select2.amd.require(
 
   var data = [{ id: 0, text: 'enhancement' }, { id: 1, text: 'bug' }, { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, { id: 4, text: 'wontfix' }];
 
-  var data = [];
-
-  for (var i = 0; i < 9999; i++) {
-    data.push({
-      id: i.toString(),
-      text: i
-    });
-  }
-
   var $ajax = $(".js-example-data-ajax");
 
   var $disabledResults = $(".js-example-disabled-results");
