@@ -1640,6 +1640,18 @@ define('select2/data/array',[
 
   Utils.Extend(ArrayAdapter, SelectAdapter);
 
+  ArrayAdapter.prototype.select = function (data) {
+    var $option = this.$element.find('option[value="' + data.id + '"]');
+
+    if ($option.length === 0) {
+      $option = this.option(data);
+
+      this.$element.append($option);
+    }
+
+    ArrayAdapter.__super__.select.call(this, data);
+  };
+
   ArrayAdapter.prototype.convertToOptions = function (data) {
     var self = this;
 
