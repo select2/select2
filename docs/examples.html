@@ -170,7 +170,9 @@ $(".js-example-data-array-selected").select2({
       </p>
 
       <p>
-        <select class="js-example-data-ajax form-control"></select>
+        <select class="js-example-data-ajax form-control">
+          <option value="ivaynberg/select2" selected="selected">ivaynberg/select2</option>
+        </select>
       </p>
 
       <pre data-fill-from=".js-code-data-ajax"></pre>
@@ -543,7 +545,7 @@ $.fn.select2.amd.require(
       return markup;
     },
     templateSelection: function (repo) {
-      return repo.full_name;
+      return repo.full_name || repo.text;
     }
   });
 
