@@ -83,7 +83,8 @@ define([
 
       $options.each(function () {
         var $option = $(this);
-        var item = $option.data('data');
+
+        var item = $.data(this, 'data');
 
         if (item.id != null && selectedIds.indexOf(item.id.toString()) > -1) {
           $option.attr('aria-selected', 'true');
@@ -134,10 +135,15 @@ define([
       delete attrs['aria-selected'];
     }
 
-    var $option = $(option);
-    $option.attr(attrs);
+    for (var attr in attrs) {
+      var val = attrs[attr];
+
+      option.setAttribute(attr, val);
+    }
 
     if (data.children) {
+      var $option = $(option);
+
       var label = document.createElement('strong');
       label.className = 'group-label';
 
@@ -164,9 +170,9 @@ define([
       this.template(data, option);
     }
 
-    $option.data('data', data);
+    $.data(option, 'data', data);
 
-    return $option;
+    return option;
   };
 
   Results.prototype.bind = function (container, $container) {

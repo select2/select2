@@ -140,7 +140,7 @@ define([
     var normalizedData = this._normalizeItem(data);
 
     // Override the option's data with the combined data
-    $.data($option, normalizedData);
+    $.data(option, 'data', normalizedData);
 
     return $option;
   };
@@ -148,7 +148,7 @@ define([
   SelectAdapter.prototype.item = function ($option) {
     var data = {};
 
-    data = $option.data('data');
+    data = $.data($option[0], 'data');
 
     if (data != null) {
       return data;
@@ -182,7 +182,7 @@ define([
 
     data = this._normalizeItem(data);
 
-    $option.data('data', data);
+    $.data($option[0], 'data', data);
 
     return data;
   };
@@ -192,6 +192,14 @@ define([
       selected: false,
       disabled: false
     };
+
+    if (item.id != null) {
+      item.id = item.id.toString();
+    }
+
+    if (item.text != null) {
+      item.text = item.text.toString();
+    }
 
     if (item._resultId == null && item.id && this.container != null) {
       item._resultId = this.generateResultId(this.container, item);

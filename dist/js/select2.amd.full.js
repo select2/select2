@@ -237,7 +237,8 @@ define('select2/results',[
 
       $options.each(function () {
         var $option = $(this);
-        var item = $option.data('data');
+
+        var item = $.data(this, 'data');
 
         if (item.id != null && selectedIds.indexOf(item.id.toString()) > -1) {
           $option.attr('aria-selected', 'true');
@@ -288,10 +289,15 @@ define('select2/results',[
       delete attrs['aria-selected'];
     }
 
-    var $option = $(option);
-    $option.attr(attrs);
+    for (var attr in attrs) {
+      var val = attrs[attr];
+
+      option.setAttribute(attr, val);
+    }
 
     if (data.children) {
+      var $option = $(option);
+
       var label = document.createElement('strong');
       label.className = 'group-label';
 
@@ -318,9 +324,9 @@ define('select2/results',[
       this.template(data, option);
     }
 
-    $option.data('data', data);
+    $.data(option, 'data', data);
 
-    return $option;
+    return option;
   };
 
   Results.prototype.bind = function (container, $container) {
@@ -1113,7 +1119,7 @@ define('select2/data/select',[
     var normalizedData = this._normalizeItem(data);
 
     // Override the option's data with the combined data
-    $.data($option, normalizedData);
+    $.data(option, 'data', normalizedData);
 
     return $option;
   };
@@ -1121,7 +1127,7 @@ define('select2/data/select',[
   SelectAdapter.prototype.item = function ($option) {
     var data = {};
 
-    data = $option.data('data');
+    data = $.data($option[0], 'data');
 
     if (data != null) {
       return data;
@@ -1155,7 +1161,7 @@ define('select2/data/select',[
 
     data = this._normalizeItem(data);
 
-    $option.data('data', data);
+    $.data($option[0], 'data', data);
 
     return data;
   };
@@ -1165,6 +1171,14 @@ define('select2/data/select',[
       selected: false,
       disabled: false
     };
+
+    if (item.id != null) {
+      item.id = item.id.toString();
+    }
+
+    if (item.text != null) {
+      item.text = item.text.toString();
+    }
 
     if (item._resultId == null && item.id && this.container != null) {
       item._resultId = this.generateResultId(this.container, item);
