@@ -14,7 +14,14 @@ define([
       '</span>'
     );
 
+    this.$dropdown = $dropdown;
+
     return $dropdown;
+  };
+
+  Dropdown.prototype.destroy = function () {
+    // Remove the dropdown from the DOM
+    this.$dropdown.remove();
   };
 
   Dropdown.prototype.bind = function (container, $container) {

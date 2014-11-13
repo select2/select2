@@ -95,6 +95,14 @@ define([
     });
   };
 
+  SelectAdapter.prototype.destroy = function () {
+    // Remove anything added to child elements
+    this.$element.find('*').each(function () {
+      // Remove any custom data set by Select2
+      $.removeData(this, 'data');
+    });
+  };
+
   SelectAdapter.prototype.query = function (params, callback) {
     var data = [];
     var self = this;

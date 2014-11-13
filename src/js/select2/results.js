@@ -366,6 +366,10 @@ define([
     });
   };
 
+  Results.prototype.destroy = function () {
+    this.$results.remove();
+  };
+
   Results.prototype.ensureHighlightVisible = function () {
     var $highlighted = this.$results.find('.highlighted');
 

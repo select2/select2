@@ -948,6 +948,10 @@ define('select2/results',[
     });
   };
 
+  Results.prototype.destroy = function () {
+    this.$results.remove();
+  };
+
   Results.prototype.ensureHighlightVisible = function () {
     var $highlighted = this.$results.find('.highlighted');
 
@@ -1030,6 +1034,11 @@ define('select2/selection/base',[
         $(document.body).off('mousedown.select2.' + container.id);
       });
     });
+  };
+
+  BaseSelection.prototype.destroy = function () {
+    // Unbind the dropdown click handler if it exists
+    $(document.body).off('.select2.' + container.id);
   };
 
   BaseSelection.prototype.update = function (data) {
@@ -1389,6 +1398,10 @@ define('select2/data/base',[
     // Can be implemented in subclasses
   };
 
+  BaseAdapter.prototype.destroy = function () {
+    // Can be implemented in subclasses
+  };
+
   BaseAdapter.prototype.generateResultId = function (container, data) {
     var id = container.id + '-result-';
 
@@ -1499,6 +1512,14 @@ define('select2/data/select',[
 
     container.on('unselect', function (params) {
       self.unselect(params.data);
+    });
+  };
+
+  SelectAdapter.prototype.destroy = function () {
+    // Remove anything added to child elements
+    this.$element.find('*').each(function () {
+      // Remove any custom data set by Select2
+      $.removeData(this, 'data');
     });
   };
 
@@ -1907,7 +1928,14 @@ define('select2/dropdown',[
       '</span>'
     );
 
+    this.$dropdown = $dropdown;
+
     return $dropdown;
+  };
+
+  Dropdown.prototype.destroy = function () {
+    // Remove the dropdown from the DOM
+    this.$dropdown.remove();
   };
 
   Dropdown.prototype.bind = function (container, $container) {
@@ -2378,6 +2406,10 @@ define('select2/core',[
   './keys'
 ], function ($, Options, Utils, KEYS) {
   var Select2 = function ($element, options) {
+    if ($element.data('select2') != null) {
+      return;
+    }
+
     this.$element = $element;
 
     this.id = this._generateId($element);
@@ -2446,6 +2478,9 @@ define('select2/core',[
     // Hide the original select
 
     $element.hide();
+
+    this._tabindex = $element.attr('tabindex') || 0;
+
     $element.attr('tabindex', '-1');
 
     $element.data('select2', this);
@@ -2502,7 +2537,7 @@ define('select2/core',[
   Select2.prototype._registerDomEvents = function () {
     var self = this;
 
-    this.$element.on('change', function () {
+    this.$element.on('change.select2', function () {
       self.data.current(function (data) {
         self.trigger('selection:update', {
           data: data
@@ -2677,6 +2712,26 @@ define('select2/core',[
 
   Select2.prototype.isOpen = function () {
     return this.$container.hasClass('open');
+  };
+
+  Select2.prototype.destroy = function () {
+    this.$container.remove();
+
+    this.$element.off('.select2');
+    this.$element.attr('tabindex', this._tabindex);
+
+    this.$element.show();
+    this.$element.removeData('select2');
+
+    this.data.destroy();
+    this.selection.destroy();
+    this.dropdown.destroy();
+    this.results.destroy();
+
+    this.data = null;
+    this.selection = null;
+    this.dropdown = null;
+    this.results = null;
   };
 
   Select2.prototype.render = function () {

@@ -19,6 +19,10 @@ define([
     // Can be implemented in subclasses
   };
 
+  BaseAdapter.prototype.destroy = function () {
+    // Can be implemented in subclasses
+  };
+
   BaseAdapter.prototype.generateResultId = function (container, data) {
     var id = container.id + '-result-';
 

@@ -246,6 +246,14 @@ $(".js-example-data-array-selected").select2({
         <button class="js-programmatic-close btn btn-success">
           Close
         </button>
+
+        <button class="js-programmatic-init btn btn-danger">
+          Init
+        </button>
+
+        <button class="js-programmatic-destroy btn btn-danger">
+          Destroy
+        </button>
       </p>
 
       <p>
@@ -263,6 +271,9 @@ var $example = $(".js-example-programmatic");
 
 $(".js-programmatic-open").on("click", function () { $example.select2("open"); });
 $(".js-programmatic-close").on("click", function () { $example.select2("close"); });
+
+$(".js-programmatic-init").on("click", function () { $example.select2(); });
+$(".js-programmatic-destroy").on("click", function () { $example.select2("destroy"); });
 </script>
     </div>
   </section>

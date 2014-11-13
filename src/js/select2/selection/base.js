@@ -48,6 +48,11 @@ define([
     });
   };
 
+  BaseSelection.prototype.destroy = function () {
+    // Unbind the dropdown click handler if it exists
+    $(document.body).off('.select2.' + container.id);
+  };
+
   BaseSelection.prototype.update = function (data) {
     throw new Error('The `update` method must be defined in child classes.');
   };

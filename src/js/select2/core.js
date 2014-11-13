@@ -5,6 +5,10 @@ define([
   './keys'
 ], function ($, Options, Utils, KEYS) {
   var Select2 = function ($element, options) {
+    if ($element.data('select2') != null) {
+      return;
+    }
+
     this.$element = $element;
 
     this.id = this._generateId($element);
@@ -73,6 +77,9 @@ define([
     // Hide the original select
 
     $element.hide();
+
+    this._tabindex = $element.attr('tabindex') || 0;
+
     $element.attr('tabindex', '-1');
 
     $element.data('select2', this);
@@ -129,7 +136,7 @@ define([
   Select2.prototype._registerDomEvents = function () {
     var self = this;
 
-    this.$element.on('change', function () {
+    this.$element.on('change.select2', function () {
       self.data.current(function (data) {
         self.trigger('selection:update', {
           data: data
@@ -304,6 +311,26 @@ define([
 
   Select2.prototype.isOpen = function () {
     return this.$container.hasClass('open');
+  };
+
+  Select2.prototype.destroy = function () {
+    this.$container.remove();
+
+    this.$element.off('.select2');
+    this.$element.attr('tabindex', this._tabindex);
+
+    this.$element.show();
+    this.$element.removeData('select2');
+
+    this.data.destroy();
+    this.selection.destroy();
+    this.dropdown.destroy();
+    this.results.destroy();
+
+    this.data = null;
+    this.selection = null;
+    this.dropdown = null;
+    this.results = null;
   };
 
   Select2.prototype.render = function () {
