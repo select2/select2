@@ -1721,6 +1721,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             function render(html) {
                 results.html(html);
+                html.length > 0 ? results.removeClass("select2-no-results-found") : results.addClass("select2-no-results-found");
                 postRender();
             }
 
