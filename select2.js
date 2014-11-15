@@ -3002,7 +3002,6 @@ the specific language governing permissions and limitations under the Apache Lic
             this.nextSearchTerm = this.opts.nextSearchTerm(data, this.search.val());
 
             this.clearSearch();
-            this.updateResults();
 
             if (this.select || !this.opts.closeOnSelect) this.postprocessResults(data, false, this.opts.closeOnSelect===true);
 
@@ -3023,7 +3022,10 @@ the specific language governing permissions and limitations under the Apache Lic
                             this.search.val(this.nextSearchTerm);
                             this.updateResults();
                             this.search.select();
+                        } else {
+                            this.updateResults();
                         }
+
                     }
                     this.positionDropdown();
                 } else {
