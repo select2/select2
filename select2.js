@@ -2994,6 +2994,8 @@ the specific language governing permissions and limitations under the Apache Lic
 
             if (!this.triggerSelect(data) || data.text === "") { return; }
 
+            this.addedFromSelection = true;
+
             this.addSelectedChoice(data);
 
             this.opts.element.trigger({ type: "selected", val: this.id(data), choice: data });
@@ -3094,7 +3096,7 @@ the specific language governing permissions and limitations under the Apache Lic
             choice.data("select2-data", data);
             choice.insertBefore(this.searchContainer);
 
-            val.push(id);
+            if (this.addedFromSelection) val.push(id);
             this.setVal(val);
         },
 
@@ -3126,7 +3128,14 @@ the specific language governing permissions and limitations under the Apache Lic
                 return false;
             }
 
-            while((index = indexOf(this.id(data), val)) >= 0) {
+            if (!this.opts.allowDuplicates) {
+                while((index = indexOf(this.id(data), val)) >= 0) {
+                    val.splice(index, 1);
+                    this.setVal(val);
+                    if (this.select) this.postprocessResults();
+                }
+            }else{
+                index = selected.index(); 
                 val.splice(index, 1);
                 this.setVal(val);
                 if (this.select) this.postprocessResults();
@@ -3231,12 +3240,16 @@ the specific language governing permissions and limitations under the Apache Lic
             if (this.select) {
                 this.select.val(val);
             } else {
-                unique = [];
-                // filter out duplicates
-                $(val).each(function () {
-                    if (indexOf(this, unique) < 0) unique.push(this);
-                });
-                this.opts.element.val(unique.length === 0 ? "" : unique.join(this.opts.separator));
+                if (!this.opts.allowDuplicates) {
+                    unique = [];
+                    // filter out duplicates
+                    $(val).each(function () {
+                        if (indexOf(this, unique) < 0) unique.push(this);
+                    });
+                    this.opts.element.val(unique.length === 0 ? "" : unique.join(this.opts.separator));
+                } else {
+                    this.opts.element.val(val.length === 0 ? "" : val.join(this.opts.separator));
+                }
             }
         },
 
@@ -3426,6 +3439,7 @@ the specific language governing permissions and limitations under the Apache Lic
     $.fn.select2.defaults = {
         width: "copy",
         loadMorePadding: 0,
+        addedFromSelection: false,
         closeOnSelect: true,
         openOnEnter: true,
         containerCss: {},
