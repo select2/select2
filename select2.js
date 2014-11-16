@@ -1812,7 +1812,8 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
 
                 if (data.results.length === 0 && checkFormatter(opts.formatNoMatches, "formatNoMatches")) {
-                    render("<li class='select2-no-results'>" + evaluate(opts.formatNoMatches, opts.element, search.val()) + "</li>");
+                    var message = (typeof data.error === 'string') ? data.error : evaluate(opts.formatNoMatches, opts.element, search.val());
+                    render("<li class='select2-no-results'>" + message + "</li>");
                     return;
                 }
 
