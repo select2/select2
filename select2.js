@@ -3092,7 +3092,16 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             choice.data("select2-data", data);
-            choice.insertBefore(this.searchContainer);
+            if (this.opts.searchFirst === true) {
+              var nextAll = this.searchContainer.nextAll();
+              if (nextAll.length > 0) {
+                choice.insertAfter(nextAll[nextAll.length - 1]);
+              } else {
+                choice.insertAfter(this.searchContainer);
+              }
+            } else {
+              choice.insertBefore(this.searchContainer);
+            }
 
             val.push(id);
             this.setVal(val);
@@ -3494,7 +3503,8 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             return true;
-        }
+        },
+        searchFirst: false
     };
 
     $.fn.select2.locales = [];
