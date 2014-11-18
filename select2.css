@@ -372,6 +372,8 @@ html[dir="rtl"] .select2-results {
     list-style: none;
     display: list-item;
     background-image: none;
+    padding: 0;
+    margin: 0;
 }
 
 .select2-results li.select2-result-with-children > .select2-result-label {
