@@ -939,13 +939,6 @@ define('select2/results',[
         element: $(this)
       });
     });
-
-    this.$results.on('mouseleave', '.option', function (evt) {
-      if ($(this).hasClass('highlighted')) {
-        $(this).removeClass('highlighted');
-        self.$results.removeAttr('aria-activedescendant');
-      }
-    });
   };
 
   Results.prototype.destroy = function () {
