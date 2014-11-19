@@ -358,6 +358,42 @@ $.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
     </div>
   </section>
 
+  <section id="diacritics" class="row">
+    <div class="col-md-4">
+      <h1>Diacritics support</h1>
+
+      <p>
+        Select2's default matcher will ignore diacritics, making it easier for
+        users to filter results in international selects. Type "aero" into the
+        select below.
+      </p>
+
+      <p>
+        <select class="js-example-diacritics form-control">
+          <option>Aeróbics</option>
+          <option>Aeróbics en Agua</option>
+          <option>Aerografía</option>
+          <option>Aeromodelaje</option>
+          <option>Águilas</option>
+          <option>Ajedrez</option>
+          <option>Ala Delta</option>
+          <option>Álbumes de Música</option>
+          <option>Alusivos</option>
+          <option>Análisis de Escritura a Mano</option>
+        </select>
+      </p>
+    </div>
+    <div class="col-md-8">
+      <h2>Example code</h2>
+
+      <pre data-fill-from=".js-code-language"></pre>
+
+      <script type="text/x-example-code" class="js-code-language">
+      $(".js-example-diacritics").select2();
+      </script>
+    </div>
+  </section>
+
   <section id="language" class="row">
     <div class="col-md-4">
       <h1>Multiple languages</h1>
@@ -388,7 +424,7 @@ $.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
 <script type="text/x-example-code" class="js-code-language">
 $(".js-example-language").select2({
   language: "es"
-})
+});
 </script>
     </div>
   </section>
@@ -500,6 +536,7 @@ $.fn.select2.amd.require(
 
   var $matcherStart = $('.js-example-matcher-start');
 
+  var $diacritics = $(".js-example-diacritics");
   var $language = $(".js-example-language");
 
   $basicSingle.select2({
@@ -589,6 +626,8 @@ $.fn.select2.amd.require(
   $matcherStart.select2({
     matcher: oldMatcher(matchStart)
   });
+
+  $diacritics.select2();
 
   $language.select2({
     language: "es"

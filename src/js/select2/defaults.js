@@ -8,6 +8,7 @@ define([
 
   './utils',
   './translation',
+  './diacritics',
 
   './data/select',
   './data/array',
@@ -23,7 +24,7 @@ define([
   './i18n/en'
 ], function ($, ResultsList,
              SingleSelection, MultipleSelection, Placeholder,
-             Utils, Translation,
+             Utils, Translation, DIACRITICS,
              SelectData, ArrayData, AjaxData, Tags, MinimumInputLength,
              Dropdown, Search, HidePlaceholder, InfiniteScroll,
              EnglishTranslation) {
@@ -129,6 +130,15 @@ define([
   };
 
   Defaults.prototype.reset = function () {
+    function stripDiacritics (text) {
+      // Used 'uni range + named function' from http://jsperf.com/diacritics/18
+      function match(a) {
+        return DIACRITICS[a] || a;
+      }
+
+      return text.replace(/[^\u0000-\u007E]/g, match);
+    }
+
     function matcher (params, data) {
       // Always return the object if there is nothing to compare
       if ($.trim(params.term) === '') {
@@ -162,8 +172,11 @@ define([
         return matcher(params, match);
       }
 
+      var original = stripDiacritics(data.text).toUpperCase();
+      var term = stripDiacritics(params.term).toUpperCase();
+
       // Check if the text contains the term
-      if (data.text.toUpperCase().indexOf(params.term.toUpperCase()) > -1) {
+      if (original.indexOf(term) > -1) {
         return data;
       }
 
