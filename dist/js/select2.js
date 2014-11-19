@@ -613,6 +613,7 @@ define('select2/results',[
 
   Results.prototype.displayMessage = function (params) {
     this.clear();
+    this.hideLoading();
 
     var $message = $('<li role="treeitem" class="option"></li>');
 
@@ -624,6 +625,8 @@ define('select2/results',[
   };
 
   Results.prototype.append = function (data) {
+    this.hideLoading();
+
     var $options = [];
 
     if (data.length === 0) {
@@ -687,6 +690,26 @@ define('select2/results',[
         $options.first().trigger('mouseenter');
       }
     });
+  };
+
+  Results.prototype.showLoading = function (params) {
+    this.hideLoading();
+
+    var loadingMore = this.options.get('translations').get('loadingMore');
+
+    var loading = {
+      disabled: true,
+      loading: true,
+      text: loadingMore(params)
+    };
+    var $loading = this.option(loading);
+    $loading.className += ' loading-results';
+
+    this.$results.prepend($loading);
+  };
+
+  Results.prototype.hideLoading = function () {
+    this.$results.find('.loading-results').remove();
   };
 
   Results.prototype.option = function (data) {
@@ -779,6 +802,10 @@ define('select2/results',[
       if (container.isOpen()) {
         self.setClasses();
       }
+    });
+
+    container.on('query', function (params) {
+      self.showLoading(params);
     });
 
     container.on('select', function () {

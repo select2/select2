@@ -544,6 +544,8 @@ $.fn.select2.amd.require(
     },
     minimumInputLength: 1,
     templateResult: function (repo) {
+      if (repo.loading) return repo.text;
+
       var markup = '<div class="clearfix">' +
         '<div class="col-sm-1">' +
           '<img src="' + repo.owner.avatar_url + '" style="max-width: 100%" />' +
