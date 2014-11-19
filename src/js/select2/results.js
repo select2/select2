@@ -113,7 +113,7 @@ define([
   Results.prototype.showLoading = function (params) {
     this.hideLoading();
 
-    var loadingMore = this.options.get('translations').get('loadingMore');
+    var loadingMore = this.options.get('translations').get('searching');
 
     var loading = {
       disabled: true,

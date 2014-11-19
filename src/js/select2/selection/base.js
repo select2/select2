@@ -1,6 +1,7 @@
 define([
-  '../utils'
-], function (Utils) {
+  '../utils',
+  '../keys'
+], function (Utils, KEYS) {
   function BaseSelection ($element, options) {
     this.$element = $element;
     this.options = options;

@@ -9802,7 +9802,7 @@ define('select2/results',[
   Results.prototype.showLoading = function (params) {
     this.hideLoading();
 
-    var loadingMore = this.options.get('translations').get('loadingMore');
+    var loadingMore = this.options.get('translations').get('searching');
 
     var loading = {
       disabled: true,
@@ -10113,9 +10113,50 @@ define('select2/results',[
   return Results;
 });
 
+define('select2/keys',[
+
+], function () {
+  var KEYS = {
+    BACKSPACE: 8,
+    TAB: 9,
+    ENTER: 13,
+    SHIFT: 16,
+    CTRL: 17,
+    ALT: 18,
+    ESC: 27,
+    SPACE: 32,
+    PAGE_UP: 33,
+    PAGE_DOWN: 34,
+    END: 35,
+    HOME: 36,
+    LEFT: 37,
+    UP: 38,
+    RIGHT: 39,
+    DOWN: 40,
+    DELETE: 46,
+
+    isArrow: function (k) {
+        k = k.which ? k.which : k;
+
+        switch (k) {
+        case KEY.LEFT:
+        case KEY.RIGHT:
+        case KEY.UP:
+        case KEY.DOWN:
+            return true;
+        }
+
+        return false;
+    }
+  };
+
+  return KEYS;
+});
+
 define('select2/selection/base',[
-  '../utils'
-], function (Utils) {
+  '../utils',
+  '../keys'
+], function (Utils, KEYS) {
   function BaseSelection ($element, options) {
     this.$element = $element;
     this.options = options;
@@ -10199,46 +10240,6 @@ define('select2/selection/base',[
   };
 
   return BaseSelection;
-});
-
-define('select2/keys',[
-
-], function () {
-  var KEYS = {
-    BACKSPACE: 8,
-    TAB: 9,
-    ENTER: 13,
-    SHIFT: 16,
-    CTRL: 17,
-    ALT: 18,
-    ESC: 27,
-    SPACE: 32,
-    PAGE_UP: 33,
-    PAGE_DOWN: 34,
-    END: 35,
-    HOME: 36,
-    LEFT: 37,
-    UP: 38,
-    RIGHT: 39,
-    DOWN: 40,
-    DELETE: 46,
-
-    isArrow: function (k) {
-        k = k.which ? k.which : k;
-
-        switch (k) {
-        case KEY.LEFT:
-        case KEY.RIGHT:
-        case KEY.UP:
-        case KEY.DOWN:
-            return true;
-        }
-
-        return false;
-    }
-  };
-
-  return KEYS;
 });
 
 define('select2/selection/single',[
@@ -10876,6 +10877,11 @@ define('select2/data/ajax',[
     var matches = [];
     var self = this;
 
+    if (this._request) {
+      this._request.abort();
+      this._request = null;
+    }
+
     var options = $.extend({
       type: 'GET'
     }, this.ajaxOptions);
@@ -10896,6 +10902,8 @@ define('select2/data/ajax',[
 
         callback(results);
       });
+
+      self._request = $request;
     }
 
     if (this.ajaxOptions.delay && params.term !== '') {
@@ -11285,6 +11293,20 @@ define('select2/dropdown/infiniteScroll',[
 
 define('select2/i18n/en',[],function () {
   return {
+    errorLoading: function () {
+      return 'The results could not be loaded.';
+    },
+    inputTooLong: function (args) {
+      var overChars = args.input.length - args.maximum;
+
+      var message = 'Please delete ' + overChars + ' character';
+
+      if (overChars != 1) {
+        message += 's';
+      }
+
+      return message;
+    },
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
@@ -11296,8 +11318,20 @@ define('select2/i18n/en',[],function () {
 
       return message;
     },
+    searching: function () {
+      return 'Searching…';
+    },
     loadingMore: function () {
       return 'Loading more results…';
+    },
+    maximumSelected: function (args) {
+      var message = 'You can only select' + args.maximum + ' item';
+
+      if (args.maximum != 1) {
+        message += 's';
+      }
+
+      return message;
     },
     noResults: function () {
       return 'No results found';

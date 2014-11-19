@@ -23,6 +23,11 @@ define([
     var matches = [];
     var self = this;
 
+    if (this._request) {
+      this._request.abort();
+      this._request = null;
+    }
+
     var options = $.extend({
       type: 'GET'
     }, this.ajaxOptions);
@@ -43,6 +48,8 @@ define([
 
         callback(results);
       });
+
+      self._request = $request;
     }
 
     if (this.ajaxOptions.delay && params.term !== '') {
