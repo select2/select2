@@ -1,0 +1,94 @@
+@import "defaults";
+@import "../../mixins/gradients";
+
+.select2-container.select2-theme-classic {
+  .selection {
+      .single-select {
+          background-color: mix($selection-bg-top-color, $selection-bg-bottom-color);
+
+          border: 1px solid $border-color;
+          border-radius: $border-radius;
+
+          outline: 0;
+
+          @include gradient-vertical($selection-bg-top-color, $selection-bg-bottom-color, 50%, 100%);
+
+          &:focus {
+            border: 1px solid $focus-border-color;
+          }
+
+          .rendered-selection {
+            color: #444;
+            line-height: 28px;
+
+            .placeholder {
+              color: #999;
+            }
+          }
+      }
+  }
+
+  &.open {
+    .selection {
+      .single-select {
+        border: 1px solid $focus-border-color;
+
+        @include gradient-vertical($selection-opened-bg-top-color, $selection-opened-bg-bottom-color, 50%, 100%);
+      }
+
+      .single-select,
+      .multiple-select {
+        border-bottom: none;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    }
+  }
+
+  .dropdown {
+    background-color: $dropdown-bg-color;
+    border-top: none;
+
+    .search {
+      input {
+        border: 1px solid $border-color;
+        outline: 0;
+      }
+    }
+
+    .results {
+      &> .options {
+        max-height: $results-max-height;
+        overflow-y: auto;
+      }
+
+      .options {
+        .option {
+          &[role=group] {
+            padding: 0;
+
+            .group-label {
+              cursor: default;
+              display: block;
+              padding: 6px;
+            }
+          }
+
+          &[aria-disabled=true] {
+            color: $results-choice-fg-unselectable-color;
+          }
+
+          &[aria-selected].highlighted {
+            background-color: $results-choice-bg-hover-color;
+            color: $results-choice-fg-hover-color;
+          }
+        }
+      }
+    }
+  }
+
+  &.open .dropdown {
+    border: 1px solid $focus-border-color;
+    border-top: none;
+  }
+}

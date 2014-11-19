@@ -502,7 +502,9 @@ $.fn.select2.amd.require(
 
   var $language = $(".js-example-language");
 
-  $basicSingle.select2();
+  $basicSingle.select2({
+    theme: "classic"
+  });
   $basicMultiple.select2()
 
   $placeholderSingle.select2({

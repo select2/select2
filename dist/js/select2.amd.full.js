@@ -1925,6 +1925,7 @@ define('select2/defaults',[
       language: ['select2/i18n/en'],
       matcher: matcher,
       minimumInputLength: 0,
+      theme: 'default',
       templateResult: function (result) {
         return result.text;
       },
@@ -2308,13 +2309,15 @@ define('select2/core',[
 
   Select2.prototype.render = function () {
     var $container = $(
-      '<span class="select2 select2-container select2-theme-default">' +
+      '<span class="select2 select2-container">' +
         '<span class="selection"></span>' +
         '<span class="dropdown-wrapper" aria-hidden="true"></span>' +
       '</span>'
     );
 
     this.$container = $container;
+
+    this.$container.addClass('select2-theme-' + this.options.get('theme'));
 
     $container.data('element', this.$element);
 

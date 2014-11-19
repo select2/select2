@@ -175,6 +175,7 @@ define([
       language: ['select2/i18n/en'],
       matcher: matcher,
       minimumInputLength: 0,
+      theme: 'default',
       templateResult: function (result) {
         return result.text;
       },
