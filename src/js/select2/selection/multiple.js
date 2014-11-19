@@ -10,10 +10,13 @@ define([
 
   MultipleSelection.prototype.render = function () {
     var $selection = $(
-      '<span class="multiple-select">' +
+      '<span class="multiple-select" tabindex="0" role="combobox" ' +
+        'aria-autocomplete="list" aria-haspopup="true" aria-expanded="false">' +
         '<ul class="rendered-selection"></ul>' +
       '</span>'
     );
+
+    $selection.attr('title', this.$element.attr('title'));
 
     this.$selection = $selection;
 

@@ -30,11 +30,9 @@ define([
     SingleSelection.__super__.bind.apply(this, arguments);
 
     var id = container.id + '-container';
-    var resultsId = container.id + '-results';
 
     this.$selection.find('.rendered-selection').attr('id', id);
     this.$selection.attr('aria-labelledby', id);
-    this.$selection.attr('aria-owns', resultsId);
 
     this.$selection.on('mousedown', function (evt) {
       // Only respond to left clicks
@@ -47,37 +45,12 @@ define([
       });
     });
 
-    container.on('open', function () {
-      // When the dropdown is open, aria-expanded="true"
-      self.$selection.attr('aria-expanded', 'true');
-    });
-
-    container.on('close', function () {
-      // When the dropdown is closed, aria-expanded="false"
-      self.$selection.attr('aria-expanded', 'false');
-      self.$selection.removeAttr('aria-activedescendant');
-
-      self.$selection.focus();
-    });
-
     this.$selection.on('focus', function (evt) {
       // User focuses on the container
     });
 
     this.$selection.on('blur', function (evt) {
       // User exits the container
-    });
-
-    this.$selection.on('keydown', function (evt) {
-      self.trigger('keypress', evt);
-
-      if (evt.which === KEYS.SPACE) {
-        evt.preventDefault();
-      }
-    });
-
-    container.on('results:focus', function (params) {
-      self.$selection.attr('aria-activedescendant', params.data._resultId);
     });
 
     container.on('selection:update', function (params) {

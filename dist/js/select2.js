@@ -998,11 +998,31 @@ define('select2/selection/base',[
   BaseSelection.prototype.bind = function (container, $container) {
     var self = this;
 
+    var id = container.id + '-container';
+    var resultsId = container.id + '-results';
+
+    this.$selection.attr('aria-owns', resultsId);
+
+    this.$selection.on('keydown', function (evt) {
+      self.trigger('keypress', evt);
+
+      if (evt.which === KEYS.SPACE) {
+        evt.preventDefault();
+      }
+    });
+
+    container.on('results:focus', function (params) {
+      self.$selection.attr('aria-activedescendant', params.data._resultId);
+    });
+
     container.on('selection:update', function (params) {
       self.update(params.data);
     });
 
     container.on('open', function () {
+      // When the dropdown is open, aria-expanded="true"
+      self.$selection.attr('aria-expanded', 'true');
+
       $(document.body).on('mousedown.select2.' + container.id, function (e) {
         var $target = $(e.target);
 
@@ -1022,10 +1042,16 @@ define('select2/selection/base',[
           $element.select2('close');
         });
       });
+    });
 
-      container.on('close', function () {
-        $(document.body).off('mousedown.select2.' + container.id);
-      });
+    container.on('close', function () {
+      // When the dropdown is closed, aria-expanded="false"
+      self.$selection.attr('aria-expanded', 'false');
+      self.$selection.removeAttr('aria-activedescendant');
+
+      self.$selection.focus();
+
+      $(document.body).off('mousedown.select2.' + container.id);
     });
   };
 
@@ -1113,11 +1139,9 @@ define('select2/selection/single',[
     SingleSelection.__super__.bind.apply(this, arguments);
 
     var id = container.id + '-container';
-    var resultsId = container.id + '-results';
 
     this.$selection.find('.rendered-selection').attr('id', id);
     this.$selection.attr('aria-labelledby', id);
-    this.$selection.attr('aria-owns', resultsId);
 
     this.$selection.on('mousedown', function (evt) {
       // Only respond to left clicks
@@ -1130,37 +1154,12 @@ define('select2/selection/single',[
       });
     });
 
-    container.on('open', function () {
-      // When the dropdown is open, aria-expanded="true"
-      self.$selection.attr('aria-expanded', 'true');
-    });
-
-    container.on('close', function () {
-      // When the dropdown is closed, aria-expanded="false"
-      self.$selection.attr('aria-expanded', 'false');
-      self.$selection.removeAttr('aria-activedescendant');
-
-      self.$selection.focus();
-    });
-
     this.$selection.on('focus', function (evt) {
       // User focuses on the container
     });
 
     this.$selection.on('blur', function (evt) {
       // User exits the container
-    });
-
-    this.$selection.on('keydown', function (evt) {
-      self.trigger('keypress', evt);
-
-      if (evt.which === KEYS.SPACE) {
-        evt.preventDefault();
-      }
-    });
-
-    container.on('results:focus', function (params) {
-      self.$selection.attr('aria-activedescendant', params.data._resultId);
     });
 
     container.on('selection:update', function (params) {
@@ -1210,10 +1209,13 @@ define('select2/selection/multiple',[
 
   MultipleSelection.prototype.render = function () {
     var $selection = $(
-      '<span class="multiple-select">' +
+      '<span class="multiple-select" tabindex="0" role="combobox" ' +
+        'aria-autocomplete="list" aria-haspopup="true" aria-expanded="false">' +
         '<ul class="rendered-selection"></ul>' +
       '</span>'
     );
+
+    $selection.attr('title', this.$element.attr('title'));
 
     this.$selection = $selection;
 
