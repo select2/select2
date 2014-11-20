@@ -1414,6 +1414,8 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.dropdown.detach().appendTo(dropdownParent);
             }
 
+            dropdownParent.addClass('select2-drop-area');
+
             // create the dropdown mask if doesn't already exist
             mask = $("#select2-drop-mask");
             if (mask.length === 0) {
