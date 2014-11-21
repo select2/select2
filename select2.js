@@ -1814,6 +1814,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 // handle ajax error
                 if(data.hasError !== undefined && checkFormatter(opts.formatAjaxError, "formatAjaxError")) {
                     render("<li class='select2-ajax-error'>" + evaluate(opts.formatAjaxError, opts.element, data.jqXHR, data.textStatus, data.errorThrown) + "</li>");
+                    this.showSearch(false);
                     return;
                 }
 
