@@ -19,6 +19,7 @@
       background-color: white;
       border: 1px solid #aaa;
       border-radius: 4px;
+      cursor: text;
 
       .rendered-selection {
         list-style: none;
@@ -38,6 +39,7 @@
 
           border: 1px solid #aaa;
           border-radius: 4px;
+          cursor: default;
 
           float: left;
 
@@ -47,6 +49,8 @@
 
           .remove {
             color: #999;
+            cursor: pointer;
+
             display: inline-block;
             font-weight: bold;
 
@@ -74,6 +78,13 @@
   .select2-search {
     input {
       border: 1px solid #aaa;
+    }
+  }
+
+  .select2-search-inline {
+    input {
+      border: none;
+      outline: 0;
     }
   }
 

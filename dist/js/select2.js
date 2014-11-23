@@ -1401,16 +1401,6 @@ define('select2/selection/search',[
 
     decorated.call(this, container, $container);
 
-    this.$search.on('keydown', function (evt) {
-      self.trigger('keypress', evt);
-
-      self._keyUpPrevented = evt.isDefaultPrevented();
-    });
-
-    this.$search.on('keyup', function (evt) {
-      self.handleSearch(evt);
-    });
-
     container.on('open', function () {
       self.$search.attr('tabindex', 0);
 
@@ -1423,12 +1413,16 @@ define('select2/selection/search',[
       self.$search.val('');
     });
 
-    this.$search.off('keydown').on('keydown', function (evt) {
+    this.$selection.on('keydown', '.select2-search-inline', function (evt) {
       evt.stopPropagation();
 
       self.trigger('keypress', evt);
 
       self._keyUpPrevented = evt.isDefaultPrevented();
+    });
+
+    this.$selection.on('keyup', '.select2-search-inline', function (evt) {
+      self.handleSearch(evt);
     });
   };
 
@@ -1442,9 +1436,13 @@ define('select2/selection/search',[
     decorated.call(this, data);
 
     this.$selection.find('.rendered-selection').append(this.$searchContainer);
+
+    this.resizeSearch();
   };
 
   Search.prototype.handleSearch = function (evt) {
+    this.resizeSearch();
+
     if (!this._keyUpPrevented) {
       var input = this.$search.val();
 
@@ -1454,6 +1452,25 @@ define('select2/selection/search',[
     }
 
     this._keyUpPrevented = false;
+  };
+
+  Search.prototype.resizeSearch = function () {
+    this.$search.css('width', '25px');
+
+    var width = '';
+
+    if (this.$search.attr('placeholder') !== '') {
+      width = this.$selection.innerWidth();
+      width -= this.$selection.find('.rendered-selection').innerWidth();
+
+      width = width + 'px';
+    } else {
+      var minimumWidth = this.$search.val().length + 1;
+
+      width = (minimumWidth * 0.75) + 'em';
+    }
+
+    this.$search.css('width', width);
   };
 
   Search.prototype.showSearch = function (_, params) {
