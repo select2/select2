@@ -744,6 +744,12 @@ the specific language governing permissions and limitations under the Apache Lic
             this.dropdown.data("select2", this);
             this.dropdown.on("click", killEvent);
 
+            this.arrow = this.container.find(".select2-arrow");
+            this.arrow.addClass(evaluate(opts.arrowCssClass, this.opts.element));
+
+            this.choiceclose = this.container.find(".select2-search-choice-close");
+            this.choiceclose.addClass(evaluate(opts.choiceCloseCssClass, this.opts.element));
+
             this.results = results = this.container.find(resultsSelector);
             this.search = search = this.container.find("input.select2-input");
 
@@ -2242,22 +2248,42 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
             }));
 
-            selection.on("mousedown touchstart", this.bind(function (e) {
-                // Prevent IE from generating a click event on the body
-                reinsertElement(selection);
+            if(this.supportsTouchEvents)
+            {
+                selection.on("click", this.bind(function (e) {
+                    // Prevent IE from generating a click event on the body
+                    reinsertElement(selection);
 
-                if (!this.container.hasClass("select2-container-active")) {
-                    this.opts.element.trigger($.Event("select2-focus"));
-                }
+                    if (!this.container.hasClass("select2-container-active")) {
+                        this.opts.element.trigger($.Event("select2-focus"));
+                    }
 
-                if (this.opened()) {
-                    this.close();
-                } else if (this.isInterfaceEnabled()) {
-                    this.open();
-                }
+                    if (this.opened()) {
+                        this.close();
+                    } else if (this.isInterfaceEnabled()) {
+                        this.open();
+                    }
 
-                killEvent(e);
-            }));
+                    killEvent(e);
+                }));
+            } else {
+                selection.on("mousedown", this.bind(function (e) {
+                    // Prevent IE from generating a click event on the body
+                    reinsertElement(selection);
+
+                    if (!this.container.hasClass("select2-container-active")) {
+                        this.opts.element.trigger($.Event("select2-focus"));
+                    }
+
+                    if (this.opened()) {
+                        this.close();
+                    } else if (this.isInterfaceEnabled()) {
+                        this.open();
+                    }
+
+                    killEvent(e);
+                }));
+            }
 
             dropdown.on("mousedown touchstart", this.bind(function() {
                 if (this.opts.shouldFocusInput(this)) {
@@ -3437,6 +3463,8 @@ the specific language governing permissions and limitations under the Apache Lic
         dropdownCss: {},
         containerCssClass: "",
         dropdownCssClass: "",
+        arrowCssClass: "",
+        choiceCloseCssClass: "",
         formatResult: function(result, container, query, escapeMarkup) {
             var markup=[];
             markMatch(this.text(result), query.term, markup, escapeMarkup);
