@@ -9568,6 +9568,10 @@ define('select2/utils',[], function () {
         continue;
       }
 
+      if (methodName === 'constructor') {
+        continue;
+      }
+
       methods.push(methodName);
     }
 
@@ -10448,6 +10452,15 @@ define('select2/selection/placeholder',[
     return placeholder;
   };
 
+  Placeholder.prototype.createPlaceholder = function (decorated, placeholder) {
+    var $placeholder = this.selectionContainer();
+
+    $placeholder.html(this.display(placeholder));
+    $placeholder.addClass('placeholder').removeClass('choice');
+
+    return $placeholder;
+  };
+
   Placeholder.prototype.update = function (decorated, data) {
     var singlePlaceholder = (
       data.length == 1 && data[0].id != this.placeholder.id
@@ -10460,15 +10473,101 @@ define('select2/selection/placeholder',[
 
     this.clear();
 
-    var $placeholder = this.selectionContainer();
-
-    $placeholder.html(this.display(this.placeholder));
-    $placeholder.addClass('placeholder').removeClass('choice');
+    var $placeholder = this.createPlaceholder(this.placeholder);
 
     this.$selection.find('.rendered-selection').append($placeholder);
   };
 
   return Placeholder;
+});
+
+define('select2/selection/search',[
+  '../utils'
+], function (Utils) {
+  function Search (decorated, $element, options) {
+    decorated.call(this, $element, options);
+  }
+
+  Search.prototype.render = function (decorated) {
+    var $search = $(
+      '<li class="select2-search-inline">' +
+        '<input type="search" tabindex="-1" role="textbox" />' +
+      '</li>'
+    );
+
+    this.$searchContainer = $search;
+    this.$search = $search.find('input');
+
+    var $rendered = decorated.call(this);
+
+    return $rendered;
+  };
+
+  Search.prototype.bind = function (decorated, container, $container) {
+    var self = this;
+
+    decorated.call(this, container, $container);
+
+    this.$search.on('keydown', function (evt) {
+      self.trigger('keypress', evt);
+
+      self._keyUpPrevented = evt.isDefaultPrevented();
+    });
+
+    this.$search.on('keyup', function (evt) {
+      self.handleSearch(evt);
+    });
+
+    container.on('open', function () {
+      self.$search.attr('tabindex', 0);
+
+      self.$search.focus();
+    });
+
+    container.on('close', function () {
+      self.$search.attr('tabindex', -1);
+
+      self.$search.val('');
+    });
+
+    this.$search.off('keydown').on('keydown', function (evt) {
+      evt.stopPropagation();
+
+      self.trigger('keypress', evt);
+
+      self._keyUpPrevented = evt.isDefaultPrevented();
+    });
+  };
+
+  Search.prototype.createPlaceholder = function (decorated, placeholder) {
+    this.$search.attr('placeholder', placeholder.text);
+  };
+
+  Search.prototype.update = function (decorated, data) {
+    this.$search.attr('placeholder', '');
+
+    decorated.call(this, data);
+
+    this.$selection.find('.rendered-selection').append(this.$searchContainer);
+  };
+
+  Search.prototype.handleSearch = function (evt) {
+    if (!this._keyUpPrevented) {
+      var input = this.$search.val();
+
+      this.trigger('query', {
+        term: input
+      });
+    }
+
+    this._keyUpPrevented = false;
+  };
+
+  Search.prototype.showSearch = function (_, params) {
+    return true;
+  };
+
+  return Search;
 });
 
 define('select2/translation',[
@@ -11939,8 +12038,8 @@ define('select2/dropdown/search',[
     var $rendered = decorated.call(this);
 
     var $search = $(
-      '<span class="search">' +
-        '<input type="search" name="search" tabindex="-1" role="textbox" />' +
+      '<span class="select2-search">' +
+        '<input type="search" tabindex="-1" role="textbox" />' +
       '</span>'
     );
 
@@ -12194,6 +12293,7 @@ define('select2/defaults',[
   './selection/single',
   './selection/multiple',
   './selection/placeholder',
+  './selection/search',
 
   './utils',
   './translation',
@@ -12212,10 +12312,10 @@ define('select2/defaults',[
 
   './i18n/en'
 ], function ($, ResultsList,
-             SingleSelection, MultipleSelection, Placeholder,
+             SingleSelection, MultipleSelection, Placeholder, SelectionSearch,
              Utils, Translation, DIACRITICS,
              SelectData, ArrayData, AjaxData, Tags, MinimumInputLength,
-             Dropdown, Search, HidePlaceholder, InfiniteScroll,
+             Dropdown, DropdownSearch, HidePlaceholder, InfiniteScroll,
              EnglishTranslation) {
   function Defaults () {
     this.reset();
@@ -12265,9 +12365,13 @@ define('select2/defaults',[
     }
 
     if (options.dropdownAdapter == null) {
-      var SearchableDropdown = Utils.Decorate(Dropdown, Search);
+      if (options.multiple) {
+        options.dropdownAdapter = Dropdown;
+      } else {
+        var SearchableDropdown = Utils.Decorate(Dropdown, DropdownSearch);
 
-      options.dropdownAdapter = SearchableDropdown;
+        options.dropdownAdapter = SearchableDropdown;
+      }
     }
 
     if (options.selectionAdapter == null) {
@@ -12282,6 +12386,13 @@ define('select2/defaults',[
         options.selectionAdapter = Utils.Decorate(
           options.selectionAdapter,
           Placeholder
+        );
+      }
+
+      if (options.multiple) {
+        options.selectionAdapter = Utils.Decorate(
+          options.selectionAdapter,
+          SelectionSearch
         );
       }
     }
@@ -12606,6 +12717,10 @@ define('select2/core',[
       self.trigger('unselect', params);
 
       self.close();
+    });
+
+    this.selection.on('query', function (params) {
+      self.trigger('query', params);
     });
 
     this.selection.on('keypress', function (e) {

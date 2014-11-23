@@ -11,10 +11,20 @@
     -webkit-user-select: none;
 
     .rendered-selection {
-      display: block;
+      display: inline-block;
       overflow: hidden;
       padding-left: 8px;
       text-overflow: ellipsis;
+    }
+  }
+
+  .select2-search-inline {
+    float: left;
+
+    input {
+      border: none;
+      font-size: 100%;
+      margin-top: 5px;
     }
   }
 }

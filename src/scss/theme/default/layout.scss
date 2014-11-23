@@ -23,11 +23,12 @@
       .rendered-selection {
         list-style: none;
         margin: 0;
-        padding: 5px;
-        padding-bottom: 0;
+        padding: 0 5px;
 
         .placeholder {
           color: #999;
+
+          margin-top: 5px;
 
           float: left;
         }
@@ -41,7 +42,7 @@
           float: left;
 
           margin-right: 5px;
-          margin-bottom: 5px;
+          margin-top: 5px;
           padding: 0 5px;
 
           .remove {
@@ -70,13 +71,13 @@
     }
   }
 
-  .dropdown {
-    .search {
-      input {
-        border: 1px solid #aaa;
-      }
+  .select2-search {
+    input {
+      border: 1px solid #aaa;
     }
+  }
 
+  .dropdown {
     .results {
       &> .options {
         max-height: 200px;

@@ -26,10 +26,16 @@
   user-select: none;
   -webkit-user-select: none; }
   .select2-container .selection .multiple-select .rendered-selection {
-    display: block;
+    display: inline-block;
     overflow: hidden;
     padding-left: 8px;
     text-overflow: ellipsis; }
+.select2-container .select2-search-inline {
+  float: left; }
+  .select2-container .select2-search-inline input {
+    border: none;
+    font-size: 100%;
+    margin-top: 5px; }
 
 .select2-container .dropdown {
   background-color: white;
@@ -41,12 +47,6 @@
   left: -100000px;
   width: 100%;
   z-index: 100; }
-  .select2-container .dropdown .search {
-    display: block;
-    padding: 4px; }
-    .select2-container .dropdown .search input {
-      padding: 4px;
-      width: 100%; }
   .select2-container .dropdown .results {
     display: block; }
     .select2-container .dropdown .results .options {
@@ -59,6 +59,12 @@
         -webkit-user-select: none; }
         .select2-container .dropdown .results .options .option[aria-selected] {
           cursor: pointer; }
+.select2-container .select2-search {
+  display: block;
+  padding: 4px; }
+  .select2-container .select2-search input {
+    padding: 4px;
+    width: 100%; }
 .select2-container.open .dropdown {
   border-top: none;
   border-top-left-radius: 0;
@@ -81,10 +87,10 @@
   .select2-container.select2-theme-default .selection .multiple-select .rendered-selection {
     list-style: none;
     margin: 0;
-    padding: 5px;
-    padding-bottom: 0; }
+    padding: 0 5px; }
     .select2-container.select2-theme-default .selection .multiple-select .rendered-selection .placeholder {
       color: #999;
+      margin-top: 5px;
       float: left; }
     .select2-container.select2-theme-default .selection .multiple-select .rendered-selection .choice {
       background-color: #e4e4e4;
@@ -92,7 +98,7 @@
       border-radius: 4px;
       float: left;
       margin-right: 5px;
-      margin-bottom: 5px;
+      margin-top: 5px;
       padding: 0 5px; }
       .select2-container.select2-theme-default .selection .multiple-select .rendered-selection .choice .remove {
         color: #999;
@@ -104,7 +110,7 @@
 .select2-container.select2-theme-default.open .selection .single-select, .select2-container.select2-theme-default.open .selection .multiple-select {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0; }
-.select2-container.select2-theme-default .dropdown .search input {
+.select2-container.select2-theme-default .select2-search input {
   border: 1px solid #aaa; }
 .select2-container.select2-theme-default .dropdown .results > .options {
   max-height: 200px;
@@ -154,7 +160,7 @@
 .select2-container.select2-theme-classic .dropdown {
   background-color: white;
   border-top: none; }
-  .select2-container.select2-theme-classic .dropdown .search input {
+  .select2-container.select2-theme-classic .dropdown .select2-search input {
     border: 1px solid #aaa;
     outline: 0; }
   .select2-container.select2-theme-classic .dropdown .results > .options {

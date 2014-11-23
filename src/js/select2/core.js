@@ -182,6 +182,10 @@ define([
       self.close();
     });
 
+    this.selection.on('query', function (params) {
+      self.trigger('query', params);
+    });
+
     this.selection.on('keypress', function (e) {
       self.trigger('keypress', e);
     });

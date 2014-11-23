@@ -1,21 +1,21 @@
 define([
   '../utils'
 ], function (Utils) {
-  function Search () { }
+  function Search (decorated, $element, options) {
+    decorated.call(this, $element, options);
+  }
 
   Search.prototype.render = function (decorated) {
-    var $rendered = decorated.call(this);
-
     var $search = $(
-      '<span class="select2-search">' +
+      '<li class="select2-search-inline">' +
         '<input type="search" tabindex="-1" role="textbox" />' +
-      '</span>'
+      '</li>'
     );
 
     this.$searchContainer = $search;
     this.$search = $search.find('input');
 
-    $rendered.prepend($search);
+    var $rendered = decorated.call(this);
 
     return $rendered;
   };
@@ -47,17 +47,25 @@ define([
       self.$search.val('');
     });
 
-    container.on('results:all', function (params) {
-      if (params.query.term == null || params.query.term === '') {
-        var showSearch = self.showSearch(params);
+    this.$search.off('keydown').on('keydown', function (evt) {
+      evt.stopPropagation();
 
-        if (showSearch) {
-          self.$searchContainer.show();
-        } else {
-          self.$searchContainer.hide();
-        }
-      }
+      self.trigger('keypress', evt);
+
+      self._keyUpPrevented = evt.isDefaultPrevented();
     });
+  };
+
+  Search.prototype.createPlaceholder = function (decorated, placeholder) {
+    this.$search.attr('placeholder', placeholder.text);
+  };
+
+  Search.prototype.update = function (decorated, data) {
+    this.$search.attr('placeholder', '');
+
+    decorated.call(this, data);
+
+    this.$selection.find('.rendered-selection').append(this.$searchContainer);
   };
 
   Search.prototype.handleSearch = function (evt) {

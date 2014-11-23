@@ -5,6 +5,7 @@ define([
   './selection/single',
   './selection/multiple',
   './selection/placeholder',
+  './selection/search',
 
   './utils',
   './translation',
@@ -23,10 +24,10 @@ define([
 
   './i18n/en'
 ], function ($, ResultsList,
-             SingleSelection, MultipleSelection, Placeholder,
+             SingleSelection, MultipleSelection, Placeholder, SelectionSearch,
              Utils, Translation, DIACRITICS,
              SelectData, ArrayData, AjaxData, Tags, MinimumInputLength,
-             Dropdown, Search, HidePlaceholder, InfiniteScroll,
+             Dropdown, DropdownSearch, HidePlaceholder, InfiniteScroll,
              EnglishTranslation) {
   function Defaults () {
     this.reset();
@@ -76,9 +77,13 @@ define([
     }
 
     if (options.dropdownAdapter == null) {
-      var SearchableDropdown = Utils.Decorate(Dropdown, Search);
+      if (options.multiple) {
+        options.dropdownAdapter = Dropdown;
+      } else {
+        var SearchableDropdown = Utils.Decorate(Dropdown, DropdownSearch);
 
-      options.dropdownAdapter = SearchableDropdown;
+        options.dropdownAdapter = SearchableDropdown;
+      }
     }
 
     if (options.selectionAdapter == null) {
@@ -93,6 +98,13 @@ define([
         options.selectionAdapter = Utils.Decorate(
           options.selectionAdapter,
           Placeholder
+        );
+      }
+
+      if (options.multiple) {
+        options.selectionAdapter = Utils.Decorate(
+          options.selectionAdapter,
+          SelectionSearch
         );
       }
     }

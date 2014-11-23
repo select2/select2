@@ -33,6 +33,10 @@ define([], function () {
         continue;
       }
 
+      if (methodName === 'constructor') {
+        continue;
+      }
+
       methods.push(methodName);
     }
 

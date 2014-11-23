@@ -16,16 +16,6 @@
 
     z-index: 100;
 
-    .search {
-      display: block;
-      padding: 4px;
-
-      input {
-        padding: 4px;
-        width: 100%;
-      }
-    }
-
     .results {
       display: block;
 
@@ -45,6 +35,16 @@
           }
         }
       }
+    }
+  }
+
+  .select2-search {
+    display: block;
+    padding: 4px;
+
+    input {
+      padding: 4px;
+      width: 100%;
     }
   }
 

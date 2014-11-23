@@ -18,6 +18,15 @@ define([
     return placeholder;
   };
 
+  Placeholder.prototype.createPlaceholder = function (decorated, placeholder) {
+    var $placeholder = this.selectionContainer();
+
+    $placeholder.html(this.display(placeholder));
+    $placeholder.addClass('placeholder').removeClass('choice');
+
+    return $placeholder;
+  };
+
   Placeholder.prototype.update = function (decorated, data) {
     var singlePlaceholder = (
       data.length == 1 && data[0].id != this.placeholder.id
@@ -30,10 +39,7 @@ define([
 
     this.clear();
 
-    var $placeholder = this.selectionContainer();
-
-    $placeholder.html(this.display(this.placeholder));
-    $placeholder.addClass('placeholder').removeClass('choice');
+    var $placeholder = this.createPlaceholder(this.placeholder);
 
     this.$selection.find('.rendered-selection').append($placeholder);
   };
