@@ -347,7 +347,7 @@ define([
 
     this.$container = $container;
 
-    this.$container.addClass('select2-theme-' + this.options.get('theme'));
+    this.$container.addClass('select2-container--' + this.options.get('theme'));
 
     $container.data('element', this.$element);
 

@@ -10259,9 +10259,10 @@ define('select2/selection/single',[
 
   SingleSelection.prototype.render = function () {
     var $selection = $(
-      '<span class="single-select" tabindex="0" role="combobox" ' +
-        'aria-autocomplete="list" aria-haspopup="true" aria-expanded="false">' +
-        '<span class="rendered-selection"></span>' +
+      '<span class="select2-selection select2-selection--single" tabindex="0"' +
+        ' role="combobox" aria-autocomplete="list" aria-haspopup="true"' +
+        ' aria-expanded="false">' +
+        '<span class="select2-selection__rendered"></span>' +
       '</span>'
     );
 
@@ -10279,7 +10280,7 @@ define('select2/selection/single',[
 
     var id = container.id + '-container';
 
-    this.$selection.find('.rendered-selection').attr('id', id);
+    this.$selection.find('.select2-selection__rendered').attr('id', id);
     this.$selection.attr('aria-labelledby', id);
 
     this.$selection.on('mousedown', function (evt) {
@@ -10307,7 +10308,7 @@ define('select2/selection/single',[
   };
 
   SingleSelection.prototype.clear = function () {
-    this.$selection.find('.rendered-selection').empty();
+    this.$selection.find('.select2-selection__rendered').empty();
   };
 
   SingleSelection.prototype.display = function (data) {
@@ -10330,7 +10331,7 @@ define('select2/selection/single',[
 
     var formatted = this.display(selection);
 
-    this.$selection.find('.rendered-selection').html(formatted);
+    this.$selection.find('.select2-selection__rendered').html(formatted);
   };
 
   return SingleSelection;
@@ -10456,7 +10457,8 @@ define('select2/selection/placeholder',[
     var $placeholder = this.selectionContainer();
 
     $placeholder.html(this.display(placeholder));
-    $placeholder.addClass('placeholder').removeClass('choice');
+    $placeholder.addClass('select2-selection__placeholder')
+                .removeClass('select2-selection__choice');
 
     return $placeholder;
   };
@@ -10475,7 +10477,7 @@ define('select2/selection/placeholder',[
 
     var $placeholder = this.createPlaceholder(this.placeholder);
 
-    this.$selection.find('.rendered-selection').append($placeholder);
+    this.$selection.find('.select2-selection__rendered').append($placeholder);
   };
 
   return Placeholder;
@@ -12901,7 +12903,7 @@ define('select2/core',[
 
     this.$container = $container;
 
-    this.$container.addClass('select2-theme-' + this.options.get('theme'));
+    this.$container.addClass('select2-container--' + this.options.get('theme'));
 
     $container.data('element', this.$element);
 

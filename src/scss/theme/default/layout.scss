@@ -1,20 +1,22 @@
-.select2-container.select2-theme-default {
-  .selection {
-    .single-select {
-      background-color: #fff;
-      border: 1px solid #aaa;
-      border-radius: 4px;
+.select2-container--default {
+  .select2-selection--single {
+    background-color: #fff;
+    border: 1px solid #aaa;
+    border-radius: 4px;
 
-      .rendered-selection {
-        color: #444;
-        line-height: 28px;
-
-        .placeholder {
-          color: #999;
-        }
-      }
+    .select2-selection__rendered {
+      color: #444;
+      line-height: 28px;
     }
 
+    .select2-selection__placeholder {
+      color: #999;
+    }
+  }
+}
+
+.select2-container.select2-theme-default {
+  .selection {
     .multiple-select {
       background-color: white;
       border: 1px solid #aaa;

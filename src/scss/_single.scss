@@ -1,20 +1,18 @@
-.select2-container {
-  .selection .single-select {
-    box-sizing: border-box;
+.select2-selection--single {
+  box-sizing: border-box;
 
-    cursor: pointer;
+  cursor: pointer;
+  display: block;
+
+  height: 28px;
+
+  user-select: none;
+  -webkit-user-select: none;
+
+  .select2-selection__rendered {
     display: block;
-
-    height: 28px;
-
-    user-select: none;
-    -webkit-user-select: none;
-
-    .rendered-selection {
-      display: block;
-      overflow: hidden;
-      padding-left: 8px;
-      text-overflow: ellipsis;
-    }
+    overflow: hidden;
+    padding-left: 8px;
+    text-overflow: ellipsis;
   }
 }
