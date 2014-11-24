@@ -38,21 +38,21 @@
     }
   }
 
-  .select2-search {
-    display: block;
-    padding: 4px;
-
-    input {
-      padding: 4px;
-      width: 100%;
-    }
-  }
-
   &.open .dropdown {
     border-top: none;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 
     left: 0;
+  }
+}
+
+.select2-search--dropdown {
+  display: block;
+  padding: 4px;
+
+  .select2-search__field {
+    padding: 4px;
+    width: 100%;
   }
 }

@@ -7,8 +7,9 @@ define([
 
   Search.prototype.render = function (decorated) {
     var $search = $(
-      '<li class="select2-search-inline">' +
-        '<input type="search" tabindex="-1" role="textbox" />' +
+      '<li class="select2-search select2-search--inline">' +
+        '<input class="select2-search__field" type="search" tabindex="-1"' +
+          ' role="textbox" />' +
       '</li>'
     );
 
@@ -37,7 +38,7 @@ define([
       self.$search.val('');
     });
 
-    this.$selection.on('keydown', '.select2-search-inline', function (evt) {
+    this.$selection.on('keydown', '.select2-search--inline', function (evt) {
       evt.stopPropagation();
 
       self.trigger('keypress', evt);
@@ -45,7 +46,7 @@ define([
       self._keyUpPrevented = evt.isDefaultPrevented();
     });
 
-    this.$selection.on('keyup', '.select2-search-inline', function (evt) {
+    this.$selection.on('keyup', '.select2-search--inline', function (evt) {
       self.handleSearch(evt);
     });
   };
@@ -59,7 +60,8 @@ define([
 
     decorated.call(this, data);
 
-    this.$selection.find('.rendered-selection').append(this.$searchContainer);
+    this.$selection.find('.select2-selection__rendered')
+                   .append(this.$searchContainer);
 
     this.resizeSearch();
   };
@@ -85,7 +87,8 @@ define([
 
     if (this.$search.attr('placeholder') !== '') {
       width = this.$selection.innerWidth();
-      width -= this.$selection.find('.rendered-selection').innerWidth();
+      width -= this.$selection.find('.select2-selection__rendered')
+                              .innerWidth();
 
       width = width + 'px';
     } else {

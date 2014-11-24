@@ -10,9 +10,10 @@ define([
 
   MultipleSelection.prototype.render = function () {
     var $selection = $(
-      '<span class="multiple-select" tabindex="0" role="combobox" ' +
-        'aria-autocomplete="list" aria-haspopup="true" aria-expanded="false">' +
-        '<ul class="rendered-selection"></ul>' +
+      '<span class="select2-selection select2-selection--multiple"' +
+        ' tabindex="0" role="combobox" aria-autocomplete="list"' +
+        ' aria-haspopup="true" aria-expanded="false">' +
+        '<ul class="select2-selection__rendered"></ul>' +
       '</span>'
     );
 
@@ -48,7 +49,7 @@ define([
   };
 
   MultipleSelection.prototype.clear = function () {
-    this.$selection.find('.rendered-selection').empty();
+    this.$selection.find('.select2-selection__rendered').empty();
   };
 
   MultipleSelection.prototype.display = function (data) {
@@ -59,8 +60,10 @@ define([
 
   MultipleSelection.prototype.selectionContainer = function () {
     var $container = $(
-      '<li class="choice">' +
-        '<span class="remove" role="presentation">&times;</span>' +
+      '<li class="select2-selection__choice">' +
+        '<span class="select2-selection__choice__remove" role="presentation">' +
+          '&times;' +
+        '</span>' +
       '</li>'
     );
 
@@ -88,7 +91,7 @@ define([
       $selections.push($selection);
     }
 
-    this.$selection.find('.rendered-selection').append($selections);
+    this.$selection.find('.select2-selection__rendered').append($selections);
   };
 
   return MultipleSelection;

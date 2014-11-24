@@ -1242,9 +1242,10 @@ define('select2/selection/multiple',[
 
   MultipleSelection.prototype.render = function () {
     var $selection = $(
-      '<span class="multiple-select" tabindex="0" role="combobox" ' +
-        'aria-autocomplete="list" aria-haspopup="true" aria-expanded="false">' +
-        '<ul class="rendered-selection"></ul>' +
+      '<span class="select2-selection select2-selection--multiple"' +
+        ' tabindex="0" role="combobox" aria-autocomplete="list"' +
+        ' aria-haspopup="true" aria-expanded="false">' +
+        '<ul class="select2-selection__rendered"></ul>' +
       '</span>'
     );
 
@@ -1280,7 +1281,7 @@ define('select2/selection/multiple',[
   };
 
   MultipleSelection.prototype.clear = function () {
-    this.$selection.find('.rendered-selection').empty();
+    this.$selection.find('.select2-selection__rendered').empty();
   };
 
   MultipleSelection.prototype.display = function (data) {
@@ -1291,8 +1292,10 @@ define('select2/selection/multiple',[
 
   MultipleSelection.prototype.selectionContainer = function () {
     var $container = $(
-      '<li class="choice">' +
-        '<span class="remove" role="presentation">&times;</span>' +
+      '<li class="select2-selection__choice">' +
+        '<span class="select2-selection__choice__remove" role="presentation">' +
+          '&times;' +
+        '</span>' +
       '</li>'
     );
 
@@ -1320,7 +1323,7 @@ define('select2/selection/multiple',[
       $selections.push($selection);
     }
 
-    this.$selection.find('.rendered-selection').append($selections);
+    this.$selection.find('.select2-selection__rendered').append($selections);
   };
 
   return MultipleSelection;
@@ -1385,8 +1388,9 @@ define('select2/selection/search',[
 
   Search.prototype.render = function (decorated) {
     var $search = $(
-      '<li class="select2-search-inline">' +
-        '<input type="search" tabindex="-1" role="textbox" />' +
+      '<li class="select2-search select2-search--inline">' +
+        '<input class="select2-search__field" type="search" tabindex="-1"' +
+          ' role="textbox" />' +
       '</li>'
     );
 
@@ -1415,7 +1419,7 @@ define('select2/selection/search',[
       self.$search.val('');
     });
 
-    this.$selection.on('keydown', '.select2-search-inline', function (evt) {
+    this.$selection.on('keydown', '.select2-search--inline', function (evt) {
       evt.stopPropagation();
 
       self.trigger('keypress', evt);
@@ -1423,7 +1427,7 @@ define('select2/selection/search',[
       self._keyUpPrevented = evt.isDefaultPrevented();
     });
 
-    this.$selection.on('keyup', '.select2-search-inline', function (evt) {
+    this.$selection.on('keyup', '.select2-search--inline', function (evt) {
       self.handleSearch(evt);
     });
   };
@@ -1437,7 +1441,8 @@ define('select2/selection/search',[
 
     decorated.call(this, data);
 
-    this.$selection.find('.rendered-selection').append(this.$searchContainer);
+    this.$selection.find('.select2-selection__rendered')
+                   .append(this.$searchContainer);
 
     this.resizeSearch();
   };
@@ -1463,7 +1468,8 @@ define('select2/selection/search',[
 
     if (this.$search.attr('placeholder') !== '') {
       width = this.$selection.innerWidth();
-      width -= this.$selection.find('.rendered-selection').innerWidth();
+      width -= this.$selection.find('.select2-selection__rendered')
+                              .innerWidth();
 
       width = width + 'px';
     } else {
