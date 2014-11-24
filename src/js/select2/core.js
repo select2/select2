@@ -121,7 +121,7 @@ define([
   };
 
   Select2.prototype._placeResults = function ($results) {
-    var $resultsContainer = this.$dropdown.find('.results');
+    var $resultsContainer = this.$dropdown.find('.select2-results');
     $resultsContainer.append($results);
   };
 

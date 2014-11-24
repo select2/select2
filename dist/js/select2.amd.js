@@ -171,7 +171,7 @@ define('select2/results',[
 
   Results.prototype.render = function () {
     var $results = $(
-      '<ul class="options" role="tree"></ul>'
+      '<ul class="select2-results__options" role="tree"></ul>'
     );
 
     if (this.options.get('multiple')) {
@@ -191,7 +191,9 @@ define('select2/results',[
     this.clear();
     this.hideLoading();
 
-    var $message = $('<li role="treeitem" class="option"></li>');
+    var $message = $(
+      '<li role="treeitem" class="select2-results__option"></li>'
+    );
 
     var message = this.options.get('translations').get(params.message);
 
@@ -240,7 +242,8 @@ define('select2/results',[
         return s.id.toString();
       });
 
-      var $options = self.$results.find('.option[aria-selected]');
+      var $options = self.$results
+        .find('.select2-results__option[aria-selected]');
 
       $options.each(function () {
         var $option = $(this);
@@ -290,7 +293,7 @@ define('select2/results',[
 
   Results.prototype.option = function (data) {
     var option = document.createElement('li');
-    option.className = 'option';
+    option.className = 'select2-results__option';
 
     var attrs = {
       'role': 'treeitem',
@@ -326,7 +329,7 @@ define('select2/results',[
       var $option = $(option);
 
       var label = document.createElement('strong');
-      label.className = 'group-label';
+      label.className = 'select2-results__group';
 
       var $label = $(label);
       this.template(data, label);
@@ -341,7 +344,9 @@ define('select2/results',[
         $children.push($child);
       }
 
-      var $childrenContainer = $('<ul class="options nested-options"></ul>');
+      var $childrenContainer = $('<ul></ul>', {
+        'class': 'select2-results__options select2-results__options--nested'
+      });
 
       $childrenContainer.append($children);
 
@@ -417,7 +422,7 @@ define('select2/results',[
     });
 
     container.on('results:select', function () {
-      var $highlighted = self.$results.find('.highlighted');
+      var $highlighted = self.getHighlightedResults();
 
       if ($highlighted.length === 0) {
         return;
@@ -437,7 +442,7 @@ define('select2/results',[
     });
 
     container.on('results:previous', function () {
-      var $highlighted = self.$results.find('.highlighted');
+      var $highlighted = self.getHighlightedResults();
 
       var $options = self.$results.find('[aria-selected]');
 
@@ -471,7 +476,7 @@ define('select2/results',[
     });
 
     container.on('results:next', function () {
-      var $highlighted = self.$results.find('.highlighted');
+      var $highlighted = self.getHighlightedResults();
 
       var $options = self.$results.find('[aria-selected]');
 
@@ -501,7 +506,7 @@ define('select2/results',[
     });
 
     container.on('results:focus', function (params) {
-      params.element.addClass('highlighted');
+      params.element.addClass('select2-results__option--highlighted');
     });
 
     container.on('results:message', function (params) {
@@ -512,7 +517,8 @@ define('select2/results',[
       self.displayMessage(params);
     });
 
-    this.$results.on('mouseup', '.option[aria-selected]', function (evt) {
+    this.$results.on('mouseup', '.select2-results__option[aria-selected]',
+      function (evt) {
       var $this = $(this);
 
       var data = $this.data('data');
@@ -532,10 +538,12 @@ define('select2/results',[
       });
     });
 
-    this.$results.on('mouseenter', '.option[aria-selected]', function (evt) {
+    this.$results.on('mouseenter', '.select2-results__option[aria-selected]',
+      function (evt) {
       var data = $(this).data('data');
 
-      self.$results.find('.option.highlighted').removeClass('highlighted');
+      self.getHighlightedResults()
+          .removeClass('select2-results__option--highlighted');
 
       self.trigger('results:focus', {
         data: data,
@@ -544,12 +552,19 @@ define('select2/results',[
     });
   };
 
+  Results.prototype.getHighlightedResults = function () {
+    var $highlighted = this.$results
+    .find('.select2-results__option--highlighted');
+
+    return $highlighted;
+  };
+
   Results.prototype.destroy = function () {
     this.$results.remove();
   };
 
   Results.prototype.ensureHighlightVisible = function () {
-    var $highlighted = this.$results.find('.highlighted');
+    var $highlighted = this.getHighlightedResults();
 
     if ($highlighted.length === 0) {
       return;
@@ -2498,8 +2513,8 @@ define('select2/dropdown',[
 
   Dropdown.prototype.render = function () {
     var $dropdown = $(
-      '<span class="dropdown">' +
-        '<span class="results"></span>' +
+      '<span class="select2-dropdown">' +
+        '<span class="select2-results"></span>' +
       '</span>'
     );
 
@@ -2529,8 +2544,9 @@ define('select2/dropdown/search',[
     var $rendered = decorated.call(this);
 
     var $search = $(
-      '<span class="select2-search">' +
-        '<input type="search" tabindex="-1" role="textbox" />' +
+      '<span class="select2-search select2-search--dropdown">' +
+        '<input class="select2-search__field" type="search" tabindex="-1"' +
+        ' role="textbox" />' +
       '</span>'
     );
 
@@ -3149,7 +3165,7 @@ define('select2/core',[
   };
 
   Select2.prototype._placeResults = function ($results) {
-    var $resultsContainer = this.$dropdown.find('.results');
+    var $resultsContainer = this.$dropdown.find('.select2-results');
     $resultsContainer.append($results);
   };
 

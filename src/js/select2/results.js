@@ -13,7 +13,7 @@ define([
 
   Results.prototype.render = function () {
     var $results = $(
-      '<ul class="options" role="tree"></ul>'
+      '<ul class="select2-results__options" role="tree"></ul>'
     );
 
     if (this.options.get('multiple')) {
@@ -33,7 +33,9 @@ define([
     this.clear();
     this.hideLoading();
 
-    var $message = $('<li role="treeitem" class="option"></li>');
+    var $message = $(
+      '<li role="treeitem" class="select2-results__option"></li>'
+    );
 
     var message = this.options.get('translations').get(params.message);
 
@@ -82,7 +84,8 @@ define([
         return s.id.toString();
       });
 
-      var $options = self.$results.find('.option[aria-selected]');
+      var $options = self.$results
+        .find('.select2-results__option[aria-selected]');
 
       $options.each(function () {
         var $option = $(this);
@@ -132,7 +135,7 @@ define([
 
   Results.prototype.option = function (data) {
     var option = document.createElement('li');
-    option.className = 'option';
+    option.className = 'select2-results__option';
 
     var attrs = {
       'role': 'treeitem',
@@ -168,7 +171,7 @@ define([
       var $option = $(option);
 
       var label = document.createElement('strong');
-      label.className = 'group-label';
+      label.className = 'select2-results__group';
 
       var $label = $(label);
       this.template(data, label);
@@ -183,7 +186,9 @@ define([
         $children.push($child);
       }
 
-      var $childrenContainer = $('<ul class="options nested-options"></ul>');
+      var $childrenContainer = $('<ul></ul>', {
+        'class': 'select2-results__options select2-results__options--nested'
+      });
 
       $childrenContainer.append($children);
 
@@ -259,7 +264,7 @@ define([
     });
 
     container.on('results:select', function () {
-      var $highlighted = self.$results.find('.highlighted');
+      var $highlighted = self.getHighlightedResults();
 
       if ($highlighted.length === 0) {
         return;
@@ -279,7 +284,7 @@ define([
     });
 
     container.on('results:previous', function () {
-      var $highlighted = self.$results.find('.highlighted');
+      var $highlighted = self.getHighlightedResults();
 
       var $options = self.$results.find('[aria-selected]');
 
@@ -313,7 +318,7 @@ define([
     });
 
     container.on('results:next', function () {
-      var $highlighted = self.$results.find('.highlighted');
+      var $highlighted = self.getHighlightedResults();
 
       var $options = self.$results.find('[aria-selected]');
 
@@ -343,7 +348,7 @@ define([
     });
 
     container.on('results:focus', function (params) {
-      params.element.addClass('highlighted');
+      params.element.addClass('select2-results__option--highlighted');
     });
 
     container.on('results:message', function (params) {
@@ -354,7 +359,8 @@ define([
       self.displayMessage(params);
     });
 
-    this.$results.on('mouseup', '.option[aria-selected]', function (evt) {
+    this.$results.on('mouseup', '.select2-results__option[aria-selected]',
+      function (evt) {
       var $this = $(this);
 
       var data = $this.data('data');
@@ -374,10 +380,12 @@ define([
       });
     });
 
-    this.$results.on('mouseenter', '.option[aria-selected]', function (evt) {
+    this.$results.on('mouseenter', '.select2-results__option[aria-selected]',
+      function (evt) {
       var data = $(this).data('data');
 
-      self.$results.find('.option.highlighted').removeClass('highlighted');
+      self.getHighlightedResults()
+          .removeClass('select2-results__option--highlighted');
 
       self.trigger('results:focus', {
         data: data,
@@ -386,12 +394,19 @@ define([
     });
   };
 
+  Results.prototype.getHighlightedResults = function () {
+    var $highlighted = this.$results
+    .find('.select2-results__option--highlighted');
+
+    return $highlighted;
+  };
+
   Results.prototype.destroy = function () {
     this.$results.remove();
   };
 
   Results.prototype.ensureHighlightVisible = function () {
-    var $highlighted = this.$results.find('.highlighted');
+    var $highlighted = this.getHighlightedResults();
 
     if ($highlighted.length === 0) {
       return;

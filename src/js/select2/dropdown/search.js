@@ -7,8 +7,9 @@ define([
     var $rendered = decorated.call(this);
 
     var $search = $(
-      '<span class="select2-search">' +
-        '<input type="search" tabindex="-1" role="textbox" />' +
+      '<span class="select2-search select2-search--dropdown">' +
+        '<input class="select2-search__field" type="search" tabindex="-1"' +
+        ' role="textbox" />' +
       '</span>'
     );
 
