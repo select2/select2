@@ -10207,7 +10207,7 @@ define('select2/selection/base',[
 
         var $select = $target.closest('.select2');
 
-        var $all = $('.select2.open');
+        var $all = $('.select2.select2-container--open');
 
         $all.each(function () {
           var $this = $(this);
@@ -10374,7 +10374,8 @@ define('select2/selection/multiple',[
       });
     });
 
-    this.$selection.on('click', '.remove', function (evt) {
+    this.$selection.on('click', '.select2-selection__choice__remove',
+      function (evt) {
       var $remove = $(this);
       var $selection = $remove.parent();
 
@@ -12793,11 +12794,11 @@ define('select2/core',[
     var self = this;
 
     this.on('open', function () {
-      self.$container.addClass('open');
+      self.$container.addClass('select2-container--open');
     });
 
     this.on('close', function () {
-      self.$container.removeClass('open');
+      self.$container.removeClass('select2-container--open');
     });
 
     this.on('query', function (params) {
@@ -12876,7 +12877,7 @@ define('select2/core',[
   };
 
   Select2.prototype.isOpen = function () {
-    return this.$container.hasClass('open');
+    return this.$container.hasClass('select2-container--open');
   };
 
   Select2.prototype.destroy = function () {

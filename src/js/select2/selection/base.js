@@ -48,7 +48,7 @@ define([
 
         var $select = $target.closest('.select2');
 
-        var $all = $('.select2.open');
+        var $all = $('.select2.select2-container--open');
 
         $all.each(function () {
           var $this = $(this);

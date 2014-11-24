@@ -231,11 +231,11 @@ define([
     var self = this;
 
     this.on('open', function () {
-      self.$container.addClass('open');
+      self.$container.addClass('select2-container--open');
     });
 
     this.on('close', function () {
-      self.$container.removeClass('open');
+      self.$container.removeClass('select2-container--open');
     });
 
     this.on('query', function (params) {
@@ -314,7 +314,7 @@ define([
   };
 
   Select2.prototype.isOpen = function () {
-    return this.$container.hasClass('open');
+    return this.$container.hasClass('select2-container--open');
   };
 
   Select2.prototype.destroy = function () {
