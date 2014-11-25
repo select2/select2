@@ -51,10 +51,6 @@ $(document).ready(function() {
       <h1>Multiple select boxes</h1>
 
       <p>
-        <select class="js-states" multiple="multiple"></select>
-      </p>
-
-      <p>
         Select2 also supports multi-value select boxes. The select below is declared with the <code>multiple</code> attribute.
       </p>
 
@@ -106,9 +102,10 @@ $(".js-example-basic-multiple").select2();
 
       <pre data-fill-from=".js-code-placeholder"></pre>
 
-<script type="text/x-example-code" class="js-code-placeholder">
+<script type="text/javascript" class="js-code-placeholder">
 $(".js-example-placeholder-single").select2({
-  placeholder: "Select a state"
+  placeholder: "Select a state",
+  allowClear: true
 });
 
 $(".js-example-placeholder-multiple").select2({
@@ -386,11 +383,11 @@ $.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
     <div class="col-md-8">
       <h2>Example code</h2>
 
-      <pre data-fill-from=".js-code-language"></pre>
+      <pre data-fill-from=".js-code-diacritics"></pre>
 
-      <script type="text/x-example-code" class="js-code-language">
-      $(".js-example-diacritics").select2();
-      </script>
+<script type="text/x-example-code" class="js-code-diacritics">
+$(".js-example-diacritics").select2();
+</script>
     </div>
   </section>
 
@@ -421,11 +418,11 @@ $.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
 
       <pre data-fill-from=".js-code-language"></pre>
 
-      <script type="text/x-example-code" class="js-code-language">
-      $(".js-example-language").select2({
-        language: "es"
-      });
-      </script>
+<script type="text/x-example-code" class="js-code-language">
+$(".js-example-language").select2({
+  language: "es"
+});
+</script>
     </div>
   </section>
 
@@ -561,9 +558,6 @@ $.fn.select2.amd.require(
   var $basicSingle = $(".js-example-basic-single");
   var $basicMultiple = $(".js-example-basic-multiple");
 
-  var $placeholderSingle = $(".js-example-placeholder-single");
-  var $placeholderMultiple = $(".js-example-placeholder-multiple");
-
   var $dataArray = $(".js-example-data-array");
   var $dataArraySelected = $(".js-example-data-array-selected");
 
@@ -582,14 +576,6 @@ $.fn.select2.amd.require(
 
   $basicSingle.select2();
   $basicMultiple.select2()
-
-  $placeholderSingle.select2({
-    placeholder: "Select a state"
-  });
-
-  $placeholderMultiple.select2({
-    placeholder: "Select a state"
-  });
 
   $dataArray.select2({
     data: data

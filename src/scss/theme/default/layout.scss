@@ -9,6 +9,13 @@
       line-height: 28px;
     }
 
+    .select2-selection__clear {
+      cursor: pointer;
+      float: right;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+
     .select2-selection__placeholder {
       color: #999;
     }

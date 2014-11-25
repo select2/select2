@@ -5,6 +5,7 @@ define([
   './selection/single',
   './selection/multiple',
   './selection/placeholder',
+  './selection/allowClear',
   './selection/search',
 
   './utils',
@@ -24,7 +25,8 @@ define([
 
   './i18n/en'
 ], function ($, ResultsList,
-             SingleSelection, MultipleSelection, Placeholder, SelectionSearch,
+             SingleSelection, MultipleSelection, Placeholder, AllowClear,
+             SelectionSearch,
              Utils, Translation, DIACRITICS,
              SelectData, ArrayData, AjaxData, Tags, MinimumInputLength,
              Dropdown, DropdownSearch, HidePlaceholder, InfiniteScroll,
@@ -99,6 +101,13 @@ define([
           options.selectionAdapter,
           Placeholder
         );
+
+        if (options.allowClear) {
+          options.selectionAdapter = Utils.Decorate(
+            options.selectionAdapter,
+            AllowClear
+          );
+        }
       }
 
       if (options.multiple) {

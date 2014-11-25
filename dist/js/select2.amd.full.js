@@ -967,6 +967,45 @@ define('select2/selection/placeholder',[
   return Placeholder;
 });
 
+define('select2/selection/allowClear',[
+
+], function () {
+  function AllowClear () { }
+
+  AllowClear.prototype.bind = function (decorated, container, $container) {
+    var self = this;
+
+    decorated.call(this, container, $container);
+
+    this.$selection.on('mousedown', '.select2-selection__clear',
+      function (evt) {
+      evt.stopPropagation();
+
+      self.$element.val(self.placeholder.id).trigger('change');
+
+      self.trigger('toggle');
+    });
+  };
+
+  AllowClear.prototype.update = function (decorated, data) {
+    decorated.call(this, data);
+
+    if (this.$selection.find('.select2-selection__placeholder').length > 0) {
+      return;
+    }
+
+    var $remove = $(
+      '<span class="select2-selection__clear">' +
+        '&times;' +
+      '</span>'
+    );
+
+    this.$selection.find('.select2-selection__rendered').append($remove);
+  };
+
+  return AllowClear;
+});
+
 define('select2/selection/search',[
   '../utils'
 ], function (Utils) {
@@ -2800,6 +2839,7 @@ define('select2/defaults',[
   './selection/single',
   './selection/multiple',
   './selection/placeholder',
+  './selection/allowClear',
   './selection/search',
 
   './utils',
@@ -2819,7 +2859,8 @@ define('select2/defaults',[
 
   './i18n/en'
 ], function ($, ResultsList,
-             SingleSelection, MultipleSelection, Placeholder, SelectionSearch,
+             SingleSelection, MultipleSelection, Placeholder, AllowClear,
+             SelectionSearch,
              Utils, Translation, DIACRITICS,
              SelectData, ArrayData, AjaxData, Tags, MinimumInputLength,
              Dropdown, DropdownSearch, HidePlaceholder, InfiniteScroll,
@@ -2894,6 +2935,13 @@ define('select2/defaults',[
           options.selectionAdapter,
           Placeholder
         );
+
+        if (options.allowClear) {
+          options.selectionAdapter = Utils.Decorate(
+            options.selectionAdapter,
+            AllowClear
+          );
+        }
       }
 
       if (options.multiple) {
