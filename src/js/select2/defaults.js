@@ -26,12 +26,17 @@ define([
 
   './i18n/en'
 ], function ($, ResultsList,
+
              SingleSelection, MultipleSelection, Placeholder, AllowClear,
              SelectionSearch,
+
              Utils, Translation, DIACRITICS,
+
              SelectData, ArrayData, AjaxData, Tags, MinimumInputLength,
+
              Dropdown, DropdownSearch, HidePlaceholder, InfiniteScroll,
              AttachBody,
+
              EnglishTranslation) {
   function Defaults () {
     this.reset();

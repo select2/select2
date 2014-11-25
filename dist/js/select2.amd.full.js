@@ -2586,8 +2586,7 @@ define('select2/dropdown',[
   };
 
   Dropdown.prototype.position = function ($dropdown, $container) {
-    var $dropdownContainer = $container.find('.dropdown-wrapper');
-    $dropdownContainer.append($dropdown);
+    // Should be implmented in subclasses
   };
 
   Dropdown.prototype.destroy = function () {
@@ -2961,12 +2960,17 @@ define('select2/defaults',[
 
   './i18n/en'
 ], function ($, ResultsList,
+
              SingleSelection, MultipleSelection, Placeholder, AllowClear,
              SelectionSearch,
+
              Utils, Translation, DIACRITICS,
+
              SelectData, ArrayData, AjaxData, Tags, MinimumInputLength,
+
              Dropdown, DropdownSearch, HidePlaceholder, InfiniteScroll,
              AttachBody,
+
              EnglishTranslation) {
   function Defaults () {
     this.reset();
@@ -3578,6 +3582,22 @@ define('select2/compat/matcher',[
   }
 
   return oldMatcher;
+});
+
+define('select2/dropdown/attachContainer',[
+
+], function () {
+  function AttachContainer (decorated, $element, options) {
+    decorated.call(this, $element, options);
+  }
+
+  AttachContainer.prototype.position =
+    function (decorated, $container, $dropdown) {
+    var $dropdownContainer = $container.find('.dropdown-wrapper');
+    $dropdownContainer.append($dropdown);
+  };
+
+  return AttachContainer;
 });
 
 define('jquery.select2',[

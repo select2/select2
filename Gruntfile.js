@@ -10,7 +10,10 @@ module.exports = function (grunt) {
 
   fullIncludes = [
     'jquery',
-    'select2/compat/matcher'
+
+    'select2/compat/matcher',
+
+    'select2/dropdown/attachContainer'
   ].concat(includes);
 
   var i18nModules = [];

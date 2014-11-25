@@ -20,8 +20,7 @@ define([
   };
 
   Dropdown.prototype.position = function ($dropdown, $container) {
-    var $dropdownContainer = $container.find('.dropdown-wrapper');
-    $dropdownContainer.append($dropdown);
+    // Should be implmented in subclasses
   };
 
   Dropdown.prototype.destroy = function () {
