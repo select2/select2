@@ -684,25 +684,7 @@ define('select2/selection/base',[
       // When the dropdown is open, aria-expanded="true"
       self.$selection.attr('aria-expanded', 'true');
 
-      $(document.body).on('mousedown.select2.' + container.id, function (e) {
-        var $target = $(e.target);
-
-        var $select = $target.closest('.select2');
-
-        var $all = $('.select2.select2-container--open');
-
-        $all.each(function () {
-          var $this = $(this);
-
-          if (this == $select[0]) {
-            return;
-          }
-
-          var $element = $this.data('element');
-
-          $element.select2('close');
-        });
-      });
+      self._attachCloseHandler(container);
     });
 
     container.on('close', function () {
@@ -712,8 +694,34 @@ define('select2/selection/base',[
 
       self.$selection.focus();
 
-      $(document.body).off('mousedown.select2.' + container.id);
+      self._detachCloseHandler(container);
     });
+  };
+
+  BaseSelection.prototype._attachCloseHandler = function (container) {
+    $(document.body).on('mousedown.select2.' + container.id, function (e) {
+      var $target = $(e.target);
+
+      var $select = $target.closest('.select2');
+
+      var $all = $('.select2.select2-container--open');
+
+      $all.each(function () {
+        var $this = $(this);
+
+        if (this == $select[0]) {
+          return;
+        }
+
+        var $element = $this.data('element');
+
+        $element.select2('close');
+      });
+    });
+  };
+
+  BaseSelection.prototype._detachCloseHandler = function (container) {
+    $(document.body).off('mousedown.select2.' + container.id);
   };
 
   BaseSelection.prototype.destroy = function () {
