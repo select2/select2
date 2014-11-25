@@ -6,7 +6,7 @@ define([
 ], function ($, Options, Utils, KEYS) {
   var Select2 = function ($element, options) {
     if ($element.data('select2') != null) {
-      return;
+      $element.select2('destroy');
     }
 
     this.$element = $element;

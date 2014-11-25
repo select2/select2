@@ -21,6 +21,8 @@ define([
     var id = container.id + '-container';
     var resultsId = container.id + '-results';
 
+    this.container = container;
+
     this.$selection.attr('aria-owns', resultsId);
 
     this.$selection.on('keydown', function (evt) {
@@ -77,7 +79,7 @@ define([
 
   BaseSelection.prototype.destroy = function () {
     // Unbind the dropdown click handler if it exists
-    $(document.body).off('.select2.' + container.id);
+    $(document.body).off('.select2.' + this.container.id);
   };
 
   BaseSelection.prototype.update = function (data) {

@@ -10195,6 +10195,8 @@ define('select2/selection/base',[
     var id = container.id + '-container';
     var resultsId = container.id + '-results';
 
+    this.container = container;
+
     this.$selection.attr('aria-owns', resultsId);
 
     this.$selection.on('keydown', function (evt) {
@@ -10251,7 +10253,7 @@ define('select2/selection/base',[
 
   BaseSelection.prototype.destroy = function () {
     // Unbind the dropdown click handler if it exists
-    $(document.body).off('.select2.' + container.id);
+    $(document.body).off('.select2.' + this.container.id);
   };
 
   BaseSelection.prototype.update = function (data) {
@@ -12636,7 +12638,7 @@ define('select2/core',[
 ], function ($, Options, Utils, KEYS) {
   var Select2 = function ($element, options) {
     if ($element.data('select2') != null) {
-      return;
+      $element.select2('destroy');
     }
 
     this.$element = $element;
