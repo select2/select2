@@ -32,6 +32,10 @@ module.exports = function (grunt) {
   }
 
   grunt.initConfig({
+    clean: {
+      docs: ['docs/_site']
+    },
+
     uglify: {
       'dist': {
         src: 'dist/js/select2.js',
@@ -47,6 +51,17 @@ module.exports = function (grunt) {
       all: [
         'tests/**/*.html'
       ]
+    },
+
+    'gh-pages': {
+      options: {
+        base: 'docs',
+        clone: 'node_modules/grunt-gh-pages/repo',
+        message: 'Updated docs with master',
+        push: false,
+        repo: 'git@github.com:kevin-brown/select2.git'
+      },
+      src: '**'
     },
 
     jekyll: {
@@ -192,6 +207,7 @@ module.exports = function (grunt) {
     }
   });
 
+  grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-qunit');
@@ -199,6 +215,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
+  grunt.loadNpmTasks('grunt-gh-pages');
   grunt.loadNpmTasks('grunt-jekyll');
   grunt.loadNpmTasks('grunt-sass');
 
@@ -210,5 +227,5 @@ module.exports = function (grunt) {
 
   grunt.registerTask('docs', ['jekyll:serve']);
 
-  grunt.registerTask('release', ['default', 'jekyll:build']);
+  grunt.registerTask('release', ['default', 'clean:docs', 'gh-pages']);
 };
