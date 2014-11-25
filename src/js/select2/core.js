@@ -44,7 +44,7 @@ define([
     this.results = new ResultsAdapter($element, this.options, this.data);
     this.$results = this.results.render();
 
-    this.results.position(this.$results, $container);
+    this.results.position(this.$results, this.$dropdown);
 
     // Bind events
 

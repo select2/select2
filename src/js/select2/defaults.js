@@ -22,6 +22,7 @@ define([
   './dropdown/search',
   './dropdown/hidePlaceholder',
   './dropdown/infiniteScroll',
+  './dropdown/attachBody',
 
   './i18n/en'
 ], function ($, ResultsList,
@@ -30,6 +31,7 @@ define([
              Utils, Translation, DIACRITICS,
              SelectData, ArrayData, AjaxData, Tags, MinimumInputLength,
              Dropdown, DropdownSearch, HidePlaceholder, InfiniteScroll,
+             AttachBody,
              EnglishTranslation) {
   function Defaults () {
     this.reset();
@@ -86,6 +88,11 @@ define([
 
         options.dropdownAdapter = SearchableDropdown;
       }
+
+      options.dropdownAdapter = Utils.Decorate(
+        options.dropdownAdapter,
+        AttachBody
+      );
     }
 
     if (options.selectionAdapter == null) {
