@@ -15,6 +15,9 @@ define([
         ' role="combobox" aria-autocomplete="list" aria-haspopup="true"' +
         ' aria-expanded="false">' +
         '<span class="select2-selection__rendered"></span>' +
+        '<span class="select2-selection__arrow" role="presentation">' +
+          '<b role="presentation"></b>' +
+        '</span>' +
       '</span>'
     );
 
