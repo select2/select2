@@ -61,7 +61,7 @@ module.exports = function (grunt) {
         base: 'docs',
         clone: 'node_modules/grunt-gh-pages/repo',
         message: 'Updated docs with master',
-        push: false,
+        push: true,
         repo: 'git@github.com:kevin-brown/select2.git'
       },
       src: '**'
