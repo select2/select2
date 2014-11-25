@@ -421,9 +421,50 @@ $.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
 
       <pre data-fill-from=".js-code-language"></pre>
 
-<script type="text/x-example-code" class="js-code-language">
-$(".js-example-language").select2({
-  language: "es"
+      <script type="text/x-example-code" class="js-code-language">
+      $(".js-example-language").select2({
+        language: "es"
+      });
+      </script>
+    </div>
+  </section>
+
+  <section id="themes" class="row">
+    <div class="col-md-4">
+      <h1>Theme support</h1>
+
+      <p>
+        Select2 supports custom themes using the
+        <a href="options.html#theme">theme option</a>
+        so you can style Select2 to match the rest of your application.
+      </p>
+
+      <p>
+        <select class="js-example-theme-single js-states form-control">
+        </select>
+      </p>
+
+      <p>
+        These are using the <code>classic</code> theme, which matches the old
+        look of Select2.
+      </p>
+
+      <p>
+        <select class="js-example-theme-multiple js-states form-control" multiple="multiple"></select>
+      </p>
+    </div>
+    <div class="col-md-8">
+      <h2>Example code</h2>
+
+      <pre data-fill-from=".js-code-theme"></pre>
+
+<script type="text/javascript" class="js-code-theme">
+$(".js-example-theme-single").select2({
+  theme: "classic"
+});
+
+$(".js-example-theme-multiple").select2({
+  theme: "classic"
 });
 </script>
     </div>
@@ -539,9 +580,7 @@ $.fn.select2.amd.require(
   var $diacritics = $(".js-example-diacritics");
   var $language = $(".js-example-language");
 
-  $basicSingle.select2({
-    theme: "classic"
-  });
+  $basicSingle.select2();
   $basicMultiple.select2()
 
   $placeholderSingle.select2({

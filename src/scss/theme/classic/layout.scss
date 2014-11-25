@@ -2,48 +2,18 @@
 @import "../../mixins/gradients";
 
 .select2-container--classic {
-  .select2-selection--single {
-    background-color: mix($selection-bg-top-color, $selection-bg-bottom-color);
-
-    border: 1px solid $border-color;
-    border-radius: $border-radius;
-
-    outline: 0;
-
-    @include gradient-vertical($selection-bg-top-color, $selection-bg-bottom-color, 50%, 100%);
-
-    &:focus {
-      border: 1px solid $focus-border-color;
-    }
-
-    .select2-selection__rendered {
-      color: #444;
-      line-height: 28px;
-    }
-
-    .select2-selection__placeholder {
-      color: #999;
-    }
-  }
-
-  &.select2-container--open {
-    .select2-selection--single {
-      border: 1px solid $focus-border-color;
-
-      @include gradient-vertical($selection-opened-bg-top-color, $selection-opened-bg-bottom-color, 50%, 100%);
-    }
-
-    .select2-selection--single,
-    .select2-selection--multiple {
-      border-bottom: none;
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-  }
+  @import "single";
+  @import "multiple";
 
   .select2-search--dropdown {
     .select2-search__field {
       border: 1px solid $border-color;
+      outline: 0;
+    }
+  }
+
+  .select2-search--inline {
+    .select2-search__field {
       outline: 0;
     }
   }

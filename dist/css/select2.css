@@ -165,12 +165,48 @@
   background-image: linear-gradient(to bottom, #eee 50%, #ffffff 100%);
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eee', endColorstr='#ffffff', GradientType=0); }
-.select2-container--classic.select2-container--open .select2-selection--single, .select2-container--classic.select2-container--open .select2-selection--multiple {
+.select2-container--classic.select2-container--open .select2-selection--single {
+  border-bottom: none;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0; }
+.select2-container--classic .select2-selection--multiple {
+  background-color: white;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  cursor: text;
+  outline: 0; }
+  .select2-container--classic .select2-selection--multiple:focus {
+    border: 1px solid #5897fb; }
+  .select2-container--classic .select2-selection--multiple .select2-selection__rendered {
+    list-style: none;
+    margin: 0;
+    padding: 0 5px; }
+  .select2-container--classic .select2-selection--multiple .select2-selection__choice {
+    background-color: #e4e4e4;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    cursor: default;
+    float: left;
+    margin-right: 5px;
+    margin-top: 5px;
+    padding: 0 5px; }
+  .select2-container--classic .select2-selection--multiple .select2-selection__choice__remove {
+    color: #888;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: bold;
+    margin-right: 2px; }
+    .select2-container--classic .select2-selection--multiple .select2-selection__choice__remove:hover {
+      color: #555; }
+.select2-container--classic.select2-container--open .select2-selection--multiple {
+  border: 1px solid #5897fb;
   border-bottom: none;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0; }
 .select2-container--classic .select2-search--dropdown .select2-search__field {
   border: 1px solid #aaa;
+  outline: 0; }
+.select2-container--classic .select2-search--inline .select2-search__field {
   outline: 0; }
 .select2-container--classic .select2-dropdown {
   background-color: white;
