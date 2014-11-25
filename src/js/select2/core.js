@@ -30,24 +30,21 @@ define([
 
     var SelectionAdapter = this.options.get('selectionAdapter');
     this.selection = new SelectionAdapter($element, this.options);
+    this.$selection = this.selection.render();
 
-    var $selection = this.selection.render();
-
-    this._placeSelection($selection);
+    this.selection.position(this.$selection, $container);
 
     var DropdownAdapter = this.options.get('dropdownAdapter');
     this.dropdown = new DropdownAdapter($element, this.options);
+    this.$dropdown = this.dropdown.render();
 
-    var $dropdown = this.dropdown.render();
-
-    this._placeDropdown($dropdown);
+    this.dropdown.position(this.$dropdown, $container);
 
     var ResultsAdapter = this.options.get('resultsAdapter');
     this.results = new ResultsAdapter($element, this.options, this.data);
+    this.$results = this.results.render();
 
-    var $results = this.results.render();
-
-    this._placeResults($results);
+    this.results.position(this.$results, $container);
 
     // Bind events
 
@@ -106,23 +103,6 @@ define([
   Select2.prototype._placeContainer = function ($container) {
     $container.insertAfter(this.$element);
     $container.width(this.$element.outerWidth(false));
-  };
-
-  Select2.prototype._placeSelection = function ($selection) {
-    var $selectionContainer = this.$container.find('.selection');
-    $selectionContainer.append($selection);
-  };
-
-  Select2.prototype._placeDropdown = function ($dropdown) {
-    this.$dropdown = $dropdown;
-
-    var $dropdownContainer = this.$container.find('.dropdown-wrapper');
-    $dropdownContainer.append($dropdown);
-  };
-
-  Select2.prototype._placeResults = function ($results) {
-    var $resultsContainer = this.$dropdown.find('.select2-results');
-    $resultsContainer.append($results);
   };
 
   Select2.prototype._bindAdapters = function () {

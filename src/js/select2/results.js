@@ -72,6 +72,11 @@ define([
     this.$results.append($options);
   };
 
+  Results.prototype.position = function ($results, $container) {
+    var $resultsContainer = $container.find('.select2-results');
+    $resultsContainer.append($results);
+  };
+
   Results.prototype.sort = function (data) {
     return data;
   };

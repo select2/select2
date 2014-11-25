@@ -658,6 +658,11 @@ define('select2/results',[
     this.$results.append($options);
   };
 
+  Results.prototype.position = function ($results, $container) {
+    var $resultsContainer = $container.find('.select2-results');
+    $resultsContainer.append($results);
+  };
+
   Results.prototype.sort = function (data) {
     return data;
   };
@@ -1150,6 +1155,11 @@ define('select2/selection/base',[
 
   BaseSelection.prototype._detachCloseHandler = function (container) {
     $(document.body).off('mousedown.select2.' + container.id);
+  };
+
+  BaseSelection.prototype.position = function ($selection, $container) {
+    var $selectionContainer = $container.find('.selection');
+    $selectionContainer.append($selection);
   };
 
   BaseSelection.prototype.destroy = function () {
@@ -3003,6 +3013,11 @@ define('select2/dropdown',[
     return $dropdown;
   };
 
+  Dropdown.prototype.position = function ($dropdown, $container) {
+    var $dropdownContainer = $container.find('.dropdown-wrapper');
+    $dropdownContainer.append($dropdown);
+  };
+
   Dropdown.prototype.destroy = function () {
     // Remove the dropdown from the DOM
     this.$dropdown.remove();
@@ -3563,24 +3578,22 @@ define('select2/core',[
 
     var SelectionAdapter = this.options.get('selectionAdapter');
     this.selection = new SelectionAdapter($element, this.options);
+    this.$selection = this.selection.render();
 
-    var $selection = this.selection.render();
-
-    this._placeSelection($selection);
+    this.selection.position(this.$selection, $container);
 
     var DropdownAdapter = this.options.get('dropdownAdapter');
     this.dropdown = new DropdownAdapter($element, this.options);
+    this.$dropdown = this.dropdown.render();
 
-    var $dropdown = this.dropdown.render();
-
-    this._placeDropdown($dropdown);
+    this.dropdown.position(this.$dropdown, $container);
 
     var ResultsAdapter = this.options.get('resultsAdapter');
     this.results = new ResultsAdapter($element, this.options, this.data);
 
-    var $results = this.results.render();
+    this.$results = this.results.render();
 
-    this._placeResults($results);
+    this.results.position(this.$results, $container);
 
     // Bind events
 
@@ -3639,23 +3652,6 @@ define('select2/core',[
   Select2.prototype._placeContainer = function ($container) {
     $container.insertAfter(this.$element);
     $container.width(this.$element.outerWidth(false));
-  };
-
-  Select2.prototype._placeSelection = function ($selection) {
-    var $selectionContainer = this.$container.find('.selection');
-    $selectionContainer.append($selection);
-  };
-
-  Select2.prototype._placeDropdown = function ($dropdown) {
-    this.$dropdown = $dropdown;
-
-    var $dropdownContainer = this.$container.find('.dropdown-wrapper');
-    $dropdownContainer.append($dropdown);
-  };
-
-  Select2.prototype._placeResults = function ($results) {
-    var $resultsContainer = this.$dropdown.find('.select2-results');
-    $resultsContainer.append($results);
   };
 
   Select2.prototype._bindAdapters = function () {

@@ -19,6 +19,11 @@ define([
     return $dropdown;
   };
 
+  Dropdown.prototype.position = function ($dropdown, $container) {
+    var $dropdownContainer = $container.find('.dropdown-wrapper');
+    $dropdownContainer.append($dropdown);
+  };
+
   Dropdown.prototype.destroy = function () {
     // Remove the dropdown from the DOM
     this.$dropdown.remove();

@@ -85,6 +85,11 @@ define([
     $(document.body).off('mousedown.select2.' + container.id);
   };
 
+  BaseSelection.prototype.position = function ($selection, $container) {
+    var $selectionContainer = $container.find('.selection');
+    $selectionContainer.append($selection);
+  };
+
   BaseSelection.prototype.destroy = function () {
     // Unbind the dropdown click handler if it exists
     $(document.body).off('.select2.' + this.container.id);
