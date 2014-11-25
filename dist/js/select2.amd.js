@@ -3090,7 +3090,7 @@ define('select2/defaults',[
 
       options.translations = languages;
     } else {
-      options.translations = new Translations(options.language);
+      options.translations = new Translation(options.language);
     }
 
     return options;
@@ -3152,7 +3152,7 @@ define('select2/defaults',[
     }
 
     this.defaults = {
-      language: ['select2/i18n/en'],
+      language: EnglishTranslation,
       matcher: matcher,
       minimumInputLength: 0,
       theme: 'default',

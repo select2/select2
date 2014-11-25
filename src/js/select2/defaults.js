@@ -156,7 +156,7 @@ define([
 
       options.translations = languages;
     } else {
-      options.translations = new Translations(options.language);
+      options.translations = new Translation(options.language);
     }
 
     return options;
@@ -218,7 +218,7 @@ define([
     }
 
     this.defaults = {
-      language: ['select2/i18n/en'],
+      language: EnglishTranslation,
       matcher: matcher,
       minimumInputLength: 0,
       theme: 'default',
