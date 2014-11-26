@@ -177,10 +177,6 @@ html[dir="rtl"] .select2-container .select2-choice > .select2-chosen {
     width: auto;
 }
 
-.select2-drop-auto-width .select2-search {
-    padding-top: 4px;
-}
-
 .select2-container .select2-choice .select2-arrow {
     display: inline-block;
     width: 18px;
@@ -227,8 +223,7 @@ html[dir="rtl"] .select2-container .select2-choice .select2-arrow b {
     width: 100%;
     min-height: 26px;
     margin: 0;
-    padding-left: 4px;
-    padding-right: 4px;
+    padding: 4px 4px 0 4px;
 
     position: relative;
     z-index: 10000;
@@ -268,10 +263,6 @@ html[dir="rtl"] .select2-search input {
     background: url('select2.png') no-repeat -37px -22px, -webkit-linear-gradient(center bottom, #fff 85%, #eee 99%);
     background: url('select2.png') no-repeat -37px -22px, -moz-linear-gradient(center bottom, #fff 85%, #eee 99%);
     background: url('select2.png') no-repeat -37px -22px, linear-gradient(to bottom, #fff 85%, #eee 99%) 0 0;
-}
-
-.select2-drop.select2-drop-above .select2-search input {
-    margin-top: 4px;
 }
 
 .select2-search input.select2-active {
