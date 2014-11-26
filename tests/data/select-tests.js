@@ -1,10 +1,9 @@
+module('Data adapters - Select - current');
+
 var SelectData = require('select2/data/select');
 var $ = require('jquery');
 var Options = require('select2/options');
-
 var options = new Options({});
-
-module('Data adapters - Select - current');
 
 test('current gets default for single', function (assert) {
   var $select = $('#qunit-fixture .single');

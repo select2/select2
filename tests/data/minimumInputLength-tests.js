@@ -1,3 +1,5 @@
+module('Data adapters - Minimum input length');
+
 var MinimumInputLength = require('select2/data/minimumInputLength');
 var $ = require('jquery');
 var Options = require('select2/options');
@@ -12,8 +14,6 @@ StubData.prototype.query = function (params, callback) {
 };
 
 var MinimumData = Utils.Decorate(StubData, MinimumInputLength);
-
-module('Data adapters - Select - current');
 
 test('0 never displays the notice', function (assert) {
   var zeroOptions = new Options({
