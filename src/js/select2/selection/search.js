@@ -100,9 +100,5 @@ define([
     this.$search.css('width', width);
   };
 
-  Search.prototype.showSearch = function (_, params) {
-    return true;
-  };
-
   return Search;
 });

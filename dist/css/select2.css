@@ -76,6 +76,8 @@
   .select2-search--dropdown .select2-search__field {
     padding: 4px;
     width: 100%; }
+  .select2-search--dropdown .select2-search--hide {
+    display: none; }
 
 .select2-container--default .select2-selection--single {
   background-color: #fff;

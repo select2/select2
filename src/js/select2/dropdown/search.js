@@ -53,9 +53,9 @@ define([
         var showSearch = self.showSearch(params);
 
         if (showSearch) {
-          self.$searchContainer.show();
+          self.$searchContainer.removeClass('select2-search--hide');
         } else {
-          self.$searchContainer.hide();
+          self.$searchContainer.addClass('select2-search--hide');
         }
       }
     });

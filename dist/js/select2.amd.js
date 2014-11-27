@@ -1131,10 +1131,6 @@ define('select2/selection/search',[
     this.$search.css('width', width);
   };
 
-  Search.prototype.showSearch = function (_, params) {
-    return true;
-  };
-
   return Search;
 });
 
@@ -2658,9 +2654,9 @@ define('select2/dropdown/search',[
         var showSearch = self.showSearch(params);
 
         if (showSearch) {
-          self.$searchContainer.show();
+          self.$searchContainer.removeClass('select2-search--hide');
         } else {
-          self.$searchContainer.hide();
+          self.$searchContainer.addClass('select2-search--hide');
         }
       }
     });
