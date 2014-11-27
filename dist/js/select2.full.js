@@ -12097,6 +12097,38 @@ define('select2/data/minimumInputLength',[
   return MinimumInputLength;
 });
 
+define('select2/data/maximumInputLength',[
+
+], function () {
+  function MaximumInputLength (decorated, $e, options) {
+    this.maximumInputLength = options.get('maximumInputLength');
+
+    decorated.call(this, $e, options);
+  }
+
+  MaximumInputLength.prototype.query = function (decorated, params, callback) {
+    params.term = params.term || '';
+
+    if (this.maximumInputLength > 0 &&
+        params.term.length > this.maximumInputLength) {
+      this.trigger('results:message', {
+        message: 'inputTooLong',
+        args: {
+          minimum: this.maximumInputLength,
+          input: params.term,
+          params: params
+        }
+      });
+
+      return;
+    }
+
+    decorated.call(this, params, callback);
+  };
+
+  return MaximumInputLength;
+});
+
 define('select2/dropdown',[
   './utils'
 ], function (Utils) {
@@ -12484,6 +12516,7 @@ define('select2/defaults',[
   './data/ajax',
   './data/tags',
   './data/minimumInputLength',
+  './data/maximumInputLength',
 
   './dropdown',
   './dropdown/search',
@@ -12499,7 +12532,8 @@ define('select2/defaults',[
 
              Utils, Translation, DIACRITICS,
 
-             SelectData, ArrayData, AjaxData, Tags, MinimumInputLength,
+             SelectData, ArrayData, AjaxData, Tags,
+             MinimumInputLength, MaximumInputLength,
 
              Dropdown, DropdownSearch, HidePlaceholder, InfiniteScroll,
              AttachBody,
@@ -12527,6 +12561,13 @@ define('select2/defaults',[
       options.dataAdapter = Utils.Decorate(
         options.dataAdapter,
         MinimumInputLength
+      );
+    }
+
+    if (options.maximumInputLength > 0) {
+      options.dataAdapter = Utils.Decorate(
+        options.dataAdapter,
+        MaximumInputLength
       );
     }
 
@@ -12688,6 +12729,7 @@ define('select2/defaults',[
       language: EnglishTranslation,
       matcher: matcher,
       minimumInputLength: 0,
+      maximumInputLength: 0,
       theme: 'default',
       templateResult: function (result) {
         return result.text;

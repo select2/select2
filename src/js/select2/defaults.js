@@ -17,6 +17,7 @@ define([
   './data/ajax',
   './data/tags',
   './data/minimumInputLength',
+  './data/maximumInputLength',
 
   './dropdown',
   './dropdown/search',
@@ -32,7 +33,8 @@ define([
 
              Utils, Translation, DIACRITICS,
 
-             SelectData, ArrayData, AjaxData, Tags, MinimumInputLength,
+             SelectData, ArrayData, AjaxData, Tags,
+             MinimumInputLength, MaximumInputLength,
 
              Dropdown, DropdownSearch, HidePlaceholder, InfiniteScroll,
              AttachBody,
@@ -60,6 +62,13 @@ define([
       options.dataAdapter = Utils.Decorate(
         options.dataAdapter,
         MinimumInputLength
+      );
+    }
+
+    if (options.maximumInputLength > 0) {
+      options.dataAdapter = Utils.Decorate(
+        options.dataAdapter,
+        MaximumInputLength
       );
     }
 
@@ -221,6 +230,7 @@ define([
       language: EnglishTranslation,
       matcher: matcher,
       minimumInputLength: 0,
+      maximumInputLength: 0,
       theme: 'default',
       templateResult: function (result) {
         return result.text;
