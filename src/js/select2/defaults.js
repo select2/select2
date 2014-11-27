@@ -145,7 +145,9 @@ define([
 
     if ($.isArray(options.language)) {
       var languages = new Translation();
-      var languageNames = options.language.concat(this.defaults.language);
+      options.language.push('en');
+
+      var languageNames = options.language;
 
       for (var l = 0; l < languageNames.length; l++) {
         var name = languageNames[l];

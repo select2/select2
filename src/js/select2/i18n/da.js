@@ -6,42 +6,34 @@ define(function () {
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;
 
-      var message = 'Please delete ' + overChars + ' character';
-
-      if (overChars != 1) {
-        message += 's';
-      }
+      var message = 'Angiv venligst ' + overChars + ' tegn mindre';
 
       return message;
     },
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
-      var message = 'Please enter ' + remainingChars + ' or more character';
-
-      if (remainingChars != 1) {
-        message += 's';
-      }
+      var message = 'Angiv venligst ' + remainingChars + ' tegn mere';
 
       return message;
     },
     loadingMore: function () {
-      return 'Loading more results…';
+      return 'Indlæser flere resultater…';
     },
     maximumSelected: function (args) {
-      var message = 'You can only select ' + args.maximum + ' item';
+      var message = 'Du kan kun vælge ' + args.maximum + ' emne';
 
       if (args.maximum != 1) {
-        message += 's';
+        message += 'r';
       }
 
       return message;
     },
     noResults: function () {
-      return 'No results found';
+      return 'Ingen resultater fundet';
     },
     searching: function () {
-      return 'Searching…';
+      return 'Søger…';
     }
   };
 });

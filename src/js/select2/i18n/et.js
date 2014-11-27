@@ -1,47 +1,52 @@
 define(function () {
   return {
-    errorLoading: function () {
-      return 'The results could not be loaded.';
-    },
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;
 
-      var message = 'Please delete ' + overChars + ' character';
+      var message = 'Sisesta ' + overChars + ' täht';
 
       if (overChars != 1) {
-        message += 's';
+        message += 'e';
       }
+
+      message += ' vähem';
 
       return message;
     },
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
-      var message = 'Please enter ' + remainingChars + ' or more character';
+      var message = 'Sisesta ' + remainingChars + ' täht';
 
       if (remainingChars != 1) {
-        message += 's';
+        message += 'e';
       }
+
+      message += ' rohkem';
 
       return message;
     },
     loadingMore: function () {
-      return 'Loading more results…';
+      return 'Laen tulemusi…';
     },
     maximumSelected: function (args) {
-      var message = 'You can only select ' + args.maximum + ' item';
+      var message = 'Saad vaid ' + args.maximum + ' tulemus';
 
-      if (args.maximum != 1) {
-        message += 's';
+      if (args.maximum == 1) {
+        message += 'e';
+      } else {
+        message += 't';
       }
+
+      message += ' valida';
 
       return message;
     },
     noResults: function () {
-      return 'No results found';
+      return 'Tulemused puuduvad';
     },
     searching: function () {
-      return 'Searching…';
+      return 'Otsin…';
     }
   };
 });

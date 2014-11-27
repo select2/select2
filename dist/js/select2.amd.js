@@ -2947,14 +2947,11 @@ define('select2/i18n/en',[],function () {
 
       return message;
     },
-    searching: function () {
-      return 'Searching…';
-    },
     loadingMore: function () {
       return 'Loading more results…';
     },
     maximumSelected: function (args) {
-      var message = 'You can only select' + args.maximum + ' item';
+      var message = 'You can only select ' + args.maximum + ' item';
 
       if (args.maximum != 1) {
         message += 's';
@@ -2964,6 +2961,9 @@ define('select2/i18n/en',[],function () {
     },
     noResults: function () {
       return 'No results found';
+    },
+    searching: function () {
+      return 'Searching…';
     }
   };
 });
@@ -3115,7 +3115,9 @@ define('select2/defaults',[
 
     if ($.isArray(options.language)) {
       var languages = new Translation();
-      var languageNames = options.language.concat(this.defaults.language);
+      options.language.push('en');
+
+      var languageNames = options.language;
 
       for (var l = 0; l < languageNames.length; l++) {
         var name = languageNames[l];
