@@ -130,3 +130,58 @@ test('old tags are removed automatically', function (assert) {
     assert.equal($tag.text(), 'second');
   });
 });
+
+test('insertTag controls the tag location', function (assert) {
+  var data = new SelectTags($('#qunit-fixture .single'), options);
+
+  data.insertTag = function (data, tag) {
+    data.push(tag);
+  };
+
+  data.query({
+    term: 'o'
+  }, function (data) {
+    assert.equal(data.length, 2);
+
+    var item = data[1];
+
+    assert.equal(item.id, 'o');
+    assert.equal(item.text, 'o');
+  });
+});
+
+test('createTag controls the tag object', function (assert) {
+  var data = new SelectTags($('#qunit-fixture .single'), options);
+
+  data.createTag = function (params) {
+    return {
+      id: 0,
+      text: params.term
+    };
+  };
+
+  data.query({
+    term: 'test'
+  }, function (data) {
+    assert.equal(data.length, 1);
+
+    var item = data[0];
+
+    assert.equal(item.id, 0);
+    assert.equal(item.text, 'test');
+  });
+});
+
+test('createTag returns null for no tag', function (assert) {
+  var data = new SelectTags($('#qunit-fixture .single'), options);
+
+  data.createTag = function (params) {
+    return null;
+  };
+
+  data.query({
+    term: 'o'
+  }, function (data) {
+    assert.equal(data.length, 1);
+  });
+});

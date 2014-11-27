@@ -2492,12 +2492,14 @@ define('select2/data/tags',[
 
       var tag = self.createTag(params);
 
-      var $option = self.option(tag);
-      $option.attr('data-select2-tag', true);
+      if (tag != null) {
+        var $option = self.option(tag);
+        $option.attr('data-select2-tag', true);
 
-      self.$element.append($option);
+        self.$element.append($option);
 
-      self.insertTag(data, tag);
+        self.insertTag(data, tag);
+      }
 
       callback(data);
     }
