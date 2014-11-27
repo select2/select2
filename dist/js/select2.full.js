@@ -10239,6 +10239,8 @@ define('select2/selection/base',[
   };
 
   BaseSelection.prototype._attachCloseHandler = function (container) {
+    var self = this;
+
     $(document.body).on('mousedown.select2.' + container.id, function (e) {
       var $target = $(e.target);
 
@@ -10258,10 +10260,15 @@ define('select2/selection/base',[
         $element.select2('close');
       });
     });
+
+    $(window).on('scroll.select2.' + container.id, function (e) {
+      self.trigger('close');
+    });
   };
 
   BaseSelection.prototype._detachCloseHandler = function (container) {
     $(document.body).off('mousedown.select2.' + container.id);
+    $(window).off('scroll.select2.' + container.id);
   };
 
   BaseSelection.prototype.position = function ($selection, $container) {
@@ -10270,8 +10277,7 @@ define('select2/selection/base',[
   };
 
   BaseSelection.prototype.destroy = function () {
-    // Unbind the dropdown click handler if it exists
-    $(document.body).off('.select2.' + this.container.id);
+    this._detachCloseHandler();
   };
 
   BaseSelection.prototype.update = function (data) {

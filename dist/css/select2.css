@@ -16,6 +16,7 @@
     display: block;
     overflow: hidden;
     padding-left: 8px;
+    padding-right: 20px;
     text-overflow: ellipsis; }
 
 .select2-selection--multiple {
@@ -89,8 +90,7 @@
   .select2-container--default .select2-selection--single .select2-selection__clear {
     cursor: pointer;
     float: right;
-    font-weight: bold;
-    margin-right: 10px; }
+    font-weight: bold; }
   .select2-container--default .select2-selection--single .select2-selection__placeholder {
     color: #999; }
   .select2-container--default .select2-selection--single .select2-selection__arrow {
