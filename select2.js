@@ -1393,15 +1393,33 @@ the specific language governing permissions and limitations under the Apache Lic
                 scroll = "scroll." + cid,
                 resize = "resize."+cid,
                 orient = "orientationchange."+cid,
-                mask;
+                mask,
+                dropdownParent;
 
             this.container.addClass("select2-dropdown-open").addClass("select2-container-active");
 
             this.clearDropdownAlignmentPreference();
 
-            if(this.dropdown[0] !== this.body.children().last()[0]) {
-                this.dropdown.detach().appendTo(this.body);
+            if(typeof this.opts.dropdownParent !== 'undefined' && this.opts.dropdownParent !== null && this.opts.dropdownParent !== 'body') {
+                if(this.opts.dropdownParent instanceof $) {
+                    dropdownParent = this.opts.dropdownParent;
+                } else {
+                    if(this.opts.dropdownParent === 'inside') {
+                        this.container.append('<div class="select2-drop-area-inside"></div>');
+                        dropdownParent = this.container.find('.select2-drop-area-inside');
+                    } else {
+                        dropdownParent = $(this.opts.dropdownParent);
+                    }
+                }
+            } else {
+                dropdownParent = this.body;
             }
+
+            if(this.dropdown[0] !== dropdownParent.children().last()[0]) {
+                this.dropdown.detach().appendTo(dropdownParent);
+            }
+
+            dropdownParent.addClass('select2-drop-area');
 
             // create the dropdown mask if doesn't already exist
             mask = $("#select2-drop-mask");
