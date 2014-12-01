@@ -1404,7 +1404,12 @@ the specific language governing permissions and limitations under the Apache Lic
                 if(this.opts.dropdownParent instanceof $) {
                     dropdownParent = this.opts.dropdownParent;
                 } else {
-                    dropdownParent = $(this.opts.dropdownParent);
+                    if(this.opts.dropdownParent === 'inside') {
+                        this.container.append('<div class="select2-drop-area-inside"></div>');
+                        dropdownParent = this.container.find('.select2-drop-area-inside');
+                    } else {
+                        dropdownParent = $(this.opts.dropdownParent);
+                    }
                 }
             } else {
                 dropdownParent = this.body;
