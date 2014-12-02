@@ -697,7 +697,10 @@ the specific language governing permissions and limitations under the Apache Lic
                 opts.element.data("select2").destroy();
             }
 
-            this.container = this.createContainer();
+            if (opts.DivTemplate !== null)
+                this.container = this.createContainerWithTemplate(opts.DivTemplate);
+            else
+                this.container = this.createContainer();
 
             this.liveRegion = $('.select2-hidden-accessible');
             if (this.liveRegion.length == 0) {
@@ -1976,6 +1979,26 @@ the specific language governing permissions and limitations under the Apache Lic
 
     SingleSelect2 = clazz(AbstractSelect2, {
 
+        // Create single container with DIV for Add New Item
+        createContainerWithTemplate: function (content) {
+            var container = $(document.createElement("div")).attr({
+                "class": "select2-container"
+            }).html([
+                "<a href='javascript:void(0)' onclick='return false;' class='select2-choice' tabindex='-1'>",
+                "   <span class='select2-chosen'>&nbsp;</span><abbr class='select2-search-choice-close'></abbr>",
+                "   <span class='select2-arrow'><b></b></span>",
+                "</a>",
+                "<input class='select2-focusser select2-offscreen' type='text'/>",
+                "<div class='select2-drop select2-display-none'>",
+                "   <div class='select2-search'>",
+                "       <input type='text' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' class='select2-input'/>",
+                "   </div>",
+                content,
+                "   <ul class='select2-results'>",
+                "   </ul>",
+                "</div>"].join(""));
+            return container;
+        },
         // single
 
         createContainer: function () {
@@ -2594,6 +2617,25 @@ the specific language governing permissions and limitations under the Apache Lic
 
     MultiSelect2 = clazz(AbstractSelect2, {
 
+        createContainerWithTemplate: function (content) {
+            var container = $(document.createElement("div")).attr({
+                "class": "select2-container"
+            }).html([
+                "<a href='javascript:void(0)' onclick='return false;' class='select2-choice' tabindex='-1'>",
+                "   <span class='select2-chosen'>&nbsp;</span><abbr class='select2-search-choice-close'></abbr>",
+                "   <span class='select2-arrow'><b></b></span>",
+                "</a>",
+                "<input class='select2-focusser select2-offscreen' type='text'/>",
+                "<div class='select2-drop select2-display-none'>",
+                "   <div class='select2-search'>",
+                "       <input type='text' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' class='select2-input'/>",
+                "   </div>",
+                content,
+                "   <ul class='select2-results'>",
+                "   </ul>",
+                "</div>"].join(""));
+            return container;
+        },
         // multi
         createContainer: function () {
             var container = $(document.createElement("div")).attr({
