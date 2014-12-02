@@ -870,17 +870,21 @@ the specific language governing permissions and limitations under the Apache Lic
                 select2.container.remove();
                 select2.liveRegion.remove();
                 select2.dropdown.remove();
-                element
-                    .show()
-                    .removeData("select2")
-                    .off(".select2")
-                    .prop("autofocus", this.autofocus || false);
-                if (this.elementTabIndex) {
-                    element.attr({tabindex: this.elementTabIndex});
+                element.removeData("select2")
+                    .off("select2");
+                if (!element.is("input[type='hidden']")) {
+                    element
+                        .show()
+                        .prop("autofocus", this.autofocus || false);
+                    if (this.elementTabIndex) {
+                        element.attr({tabindex: this.elementTabIndex});
+                    } else {
+                        element.removeAttr("tabindex");
+                    }
+                    element.show();
                 } else {
-                    element.removeAttr("tabindex");
+                    element.css("display", "");
                 }
-                element.show();
             }
 
             cleanupJQueryElements.call(this,
