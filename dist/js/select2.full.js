@@ -13244,9 +13244,12 @@ define('select2/dropdown/attachContainer',[
   }
 
   AttachContainer.prototype.position =
-    function (decorated, $container, $dropdown) {
+    function (decorated, $dropdown, $container) {
     var $dropdownContainer = $container.find('.dropdown-wrapper');
     $dropdownContainer.append($dropdown);
+
+    $dropdown.addClass('select2-dropdown--below');
+    $container.addClass('select2-container--below');
   };
 
   return AttachContainer;

@@ -87,6 +87,23 @@
   .select2-search--dropdown .select2-search--hide {
     display: none; }
 
+.select2-close-mask {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: block;
+  position: fixed;
+  left: 0;
+  top: 0;
+  min-height: 100%;
+  min-width: 100%;
+  height: auto;
+  width: auto;
+  opacity: 0;
+  z-index: 99;
+  background-color: #fff;
+  filter: alpha(opacity=0); }
+
 .select2-container--default .select2-selection--single {
   background-color: #fff;
   border: 1px solid #aaa;
