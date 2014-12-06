@@ -70,12 +70,6 @@
   .select2-selection--single {
     border: 1px solid $focus-border-color;
 
-    border-bottom: none;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-
-    @include gradient-vertical($selection-opened-bg-top-color, $selection-opened-bg-bottom-color, 50%, 100%);
-
     .select2-selection__arrow {
       background: transparent;
 
@@ -85,6 +79,26 @@
         border-color: transparent transparent #888 transparent;
         border-width: 0 4px 5px 4px;
       }
+    }
+  }
+
+  &.select2-container--above {
+    .select2-selection--single {
+      border-top: none;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+
+      @include gradient-vertical($selection-opened-bg-bottom-color, $selection-opened-bg-top-color, 0%, 50%);
+    }
+  }
+
+  &.select2-container--below {
+    .select2-selection--single {
+      border-bottom: none;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+
+      @include gradient-vertical($selection-opened-bg-top-color, $selection-opened-bg-bottom-color, 50%, 100%);
     }
   }
 }

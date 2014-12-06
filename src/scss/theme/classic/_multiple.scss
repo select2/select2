@@ -51,9 +51,21 @@
 &.select2-container--open {
   .select2-selection--multiple {
     border: 1px solid $focus-border-color;
+  }
 
-    border-bottom: none;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+  &.select2-container--above {
+    .select2-selection--multiple {
+      border-top: none;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+  }
+
+  &.select2-container--below {
+    .select2-selection--multiple {
+      border-bottom: none;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
   }
 }

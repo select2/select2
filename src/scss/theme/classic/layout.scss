@@ -20,6 +20,14 @@
 
   .select2-dropdown {
     background-color: $dropdown-bg-color;
+    border: 1px solid transparent;
+  }
+
+  .select2-dropdown--above {
+    border-bottom: none;
+  }
+
+  .select2-dropdown--below {
     border-top: none;
   }
 
@@ -50,7 +58,6 @@
   }
 
   &.select2-container--open .select2-dropdown {
-    border: 1px solid $focus-border-color;
-    border-top: none;
+    border-color: $focus-border-color;
   }
 }
