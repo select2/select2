@@ -972,6 +972,9 @@ the specific language governing permissions and limitations under the Apache Lic
                                 label.html(formatted);
                                 node.append(label);
                             }
+                            else {
+                                continue;
+                            }
 
 
                             if (compound) {
