@@ -78,7 +78,9 @@ define([
   };
 
   Results.prototype.sort = function (data) {
-    return data;
+    var sorter = this.options.get('sorter');
+
+    return sorter(data);
   };
 
   Results.prototype.setClasses = function () {

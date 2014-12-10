@@ -9771,7 +9771,9 @@ define('select2/results',[
   };
 
   Results.prototype.sort = function (data) {
-    return data;
+    var sorter = this.options.get('sorter');
+
+    return sorter(data);
   };
 
   Results.prototype.setClasses = function () {
@@ -12803,6 +12805,9 @@ define('select2/defaults',[
     this.defaults = {
       language: EnglishTranslation,
       matcher: matcher,
+      sorter: function (data) {
+        return data;
+      },
       minimumInputLength: 0,
       maximumInputLength: 0,
       theme: 'default',

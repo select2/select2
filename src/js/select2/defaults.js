@@ -231,6 +231,9 @@ define([
     this.defaults = {
       language: EnglishTranslation,
       matcher: matcher,
+      sorter: function (data) {
+        return data;
+      },
       minimumInputLength: 0,
       maximumInputLength: 0,
       theme: 'default',

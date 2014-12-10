@@ -502,7 +502,15 @@ $(".js-example-language").select2({
 
       <pre data-fill-from=".js-code-theme"></pre>
 
-      <!-- Code is further down the page -->
+<script type="text/javascript" class="js-code-theme">
+$(".js-example-theme-single").select2({
+  theme: "classic"
+});
+
+$(".js-example-theme-multiple").select2({
+  theme: "classic"
+});
+</script>
     </div>
   </section>
 </div>
@@ -696,15 +704,5 @@ $.fn.select2.amd.require(
   $language.select2({
     language: "es"
   });
-});
-</script>
-
-<script type="text/javascript" class="js-code-theme">
-$(".js-example-theme-single").select2({
-  theme: "classic"
-});
-
-$(".js-example-theme-multiple").select2({
-  theme: "classic"
 });
 </script>
