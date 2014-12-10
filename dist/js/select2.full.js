@@ -12528,6 +12528,42 @@ define('select2/dropdown/attachBody',[
   return AttachBody;
 });
 
+define('select2/dropdown/minimumResultsForSearch',[
+
+], function () {
+  function countResults (data) {
+    count = 0;
+
+    for (var d = 0; d < data.length; d++) {
+      var item = data[d];
+
+      if (item.children) {
+        count += countResults(item.children);
+      } else {
+        count++;
+      }
+    }
+
+    return count;
+  }
+
+  function MinimumResultsForSearch (decorated, $element, options, dataAdapter) {
+    this.minimumResultsForSearch = options.get('minimumResultsForSearch');
+
+    decorated.call(this, $element, options, dataAdapter);
+  }
+
+  MinimumResultsForSearch.prototype.showSearch = function (decorated, params) {
+    if (countResults(params.data) < this.minimumResultsForSearch) {
+      return false;
+    }
+
+    return decorated.call(this, params);
+  };
+
+  return MinimumResultsForSearch;
+});
+
 define('select2/i18n/en',[],function () {
   return {
     errorLoading: function () {
@@ -12598,6 +12634,7 @@ define('select2/defaults',[
   './dropdown/hidePlaceholder',
   './dropdown/infiniteScroll',
   './dropdown/attachBody',
+  './dropdown/minimumResultsForSearch',
 
   './i18n/en'
 ], function ($, ResultsList,
@@ -12611,7 +12648,7 @@ define('select2/defaults',[
              MinimumInputLength, MaximumInputLength,
 
              Dropdown, DropdownSearch, HidePlaceholder, InfiniteScroll,
-             AttachBody,
+             AttachBody, MinimumResultsForSearch,
 
              EnglishTranslation) {
   function Defaults () {
@@ -12629,25 +12666,24 @@ define('select2/defaults',[
       } else {
         options.dataAdapter = SelectData;
       }
-    }
 
+      if (options.minimumInputLength > 0) {
+        options.dataAdapter = Utils.Decorate(
+          options.dataAdapter,
+          MinimumInputLength
+        );
+      }
 
-    if (options.minimumInputLength > 0) {
-      options.dataAdapter = Utils.Decorate(
-        options.dataAdapter,
-        MinimumInputLength
-      );
-    }
+      if (options.maximumInputLength > 0) {
+        options.dataAdapter = Utils.Decorate(
+          options.dataAdapter,
+          MaximumInputLength
+        );
+      }
 
-    if (options.maximumInputLength > 0) {
-      options.dataAdapter = Utils.Decorate(
-        options.dataAdapter,
-        MaximumInputLength
-      );
-    }
-
-    if (options.tags != null) {
-      options.dataAdapter = Utils.Decorate(options.dataAdapter, Tags);
+      if (options.tags != null) {
+        options.dataAdapter = Utils.Decorate(options.dataAdapter, Tags);
+      }
     }
 
     if (options.resultsAdapter == null) {
@@ -12675,6 +12711,13 @@ define('select2/defaults',[
         var SearchableDropdown = Utils.Decorate(Dropdown, DropdownSearch);
 
         options.dropdownAdapter = SearchableDropdown;
+      }
+
+      if (options.minimumResultsForSearch > 0) {
+        options.dropdownAdapter = Utils.Decorate(
+          options.dropdownAdapter,
+          MinimumResultsForSearch
+        );
       }
 
       options.dropdownAdapter = Utils.Decorate(
@@ -12810,13 +12853,14 @@ define('select2/defaults',[
       },
       minimumInputLength: 0,
       maximumInputLength: 0,
-      theme: 'default',
+      minimumResultsForSearch: 0,
       templateResult: function (result) {
         return result.text;
       },
       templateSelection: function (selection) {
         return selection.text;
-      }
+      },
+      theme: 'default'
     };
   };
 

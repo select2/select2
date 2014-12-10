@@ -84,7 +84,7 @@
   .select2-search--dropdown .select2-search__field {
     padding: 4px;
     width: 100%; }
-  .select2-search--dropdown .select2-search--hide {
+  .select2-search--dropdown.select2-search--hide {
     display: none; }
 
 .select2-close-mask {

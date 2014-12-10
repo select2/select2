@@ -24,6 +24,7 @@ define([
   './dropdown/hidePlaceholder',
   './dropdown/infiniteScroll',
   './dropdown/attachBody',
+  './dropdown/minimumResultsForSearch',
 
   './i18n/en'
 ], function ($, ResultsList,
@@ -37,7 +38,7 @@ define([
              MinimumInputLength, MaximumInputLength,
 
              Dropdown, DropdownSearch, HidePlaceholder, InfiniteScroll,
-             AttachBody,
+             AttachBody, MinimumResultsForSearch,
 
              EnglishTranslation) {
   function Defaults () {
@@ -55,25 +56,24 @@ define([
       } else {
         options.dataAdapter = SelectData;
       }
-    }
 
+      if (options.minimumInputLength > 0) {
+        options.dataAdapter = Utils.Decorate(
+          options.dataAdapter,
+          MinimumInputLength
+        );
+      }
 
-    if (options.minimumInputLength > 0) {
-      options.dataAdapter = Utils.Decorate(
-        options.dataAdapter,
-        MinimumInputLength
-      );
-    }
+      if (options.maximumInputLength > 0) {
+        options.dataAdapter = Utils.Decorate(
+          options.dataAdapter,
+          MaximumInputLength
+        );
+      }
 
-    if (options.maximumInputLength > 0) {
-      options.dataAdapter = Utils.Decorate(
-        options.dataAdapter,
-        MaximumInputLength
-      );
-    }
-
-    if (options.tags != null) {
-      options.dataAdapter = Utils.Decorate(options.dataAdapter, Tags);
+      if (options.tags != null) {
+        options.dataAdapter = Utils.Decorate(options.dataAdapter, Tags);
+      }
     }
 
     if (options.resultsAdapter == null) {
@@ -101,6 +101,13 @@ define([
         var SearchableDropdown = Utils.Decorate(Dropdown, DropdownSearch);
 
         options.dropdownAdapter = SearchableDropdown;
+      }
+
+      if (options.minimumResultsForSearch > 0) {
+        options.dropdownAdapter = Utils.Decorate(
+          options.dropdownAdapter,
+          MinimumResultsForSearch
+        );
       }
 
       options.dropdownAdapter = Utils.Decorate(
@@ -236,13 +243,14 @@ define([
       },
       minimumInputLength: 0,
       maximumInputLength: 0,
-      theme: 'default',
+      minimumResultsForSearch: 0,
       templateResult: function (result) {
         return result.text;
       },
       templateSelection: function (selection) {
         return selection.text;
-      }
+      },
+      theme: 'default'
     };
   };
 
