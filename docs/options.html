@@ -86,6 +86,8 @@ $.fn.select2.amd.require(
           <dt>Decorator</dt>
           <dd>
             <code title="select2/selection/placeholder">Placeholder</code>
+            and
+            <code title="select2/dropdown/hidePlaceholder">HidePlaceholder</code>
           </dd>
         </dl>
       </div>
@@ -108,6 +110,10 @@ $.fn.select2.amd.require(
       placeholders.
     </p>
 
+<pre class="prettyprint linenums">
+placeholder: "Select a repository",
+</pre>
+
     <p>
       If the <strong>value is an object</strong>, the object should be
       compatible with Select2's internal objects. The <code>id</code> should
@@ -116,12 +122,77 @@ $.fn.select2.amd.require(
       when that option is selected.
     </p>
 
+<pre class="prettyprint linenums">
+placeholder: {
+  id: "-1",
+  text: "Select a repository"
+}
+</pre>
+
     <div class="alert alert-info">
-      You <strong>pass in an object</strong> when you are using a framework that
-      <strong>creates its own placeholder option</strong>. The
+      You should <strong>pass in an object</strong> when you are using a
+      framework that <strong>creates its own placeholder option</strong>. The
       <strong>id</strong> should be the same as the <code>value</code>
       attribute on the <code>option</code>.
     </div>
+
+    <p id="allowClear">
+      You can allow a selected option to be cleared back to the placeholder by
+      enabling the <code>allowClear</code> option.
+    </p>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <dl class="dl-horizontal">
+          <dt>Key</dt>
+          <dd><code>allowClear</code></dd>
+
+          <dt>Value</dt>
+          <dd>boolean</dd>
+        </dl>
+      </div>
+
+      <div class="col-sm-6">
+        <dl class="dl-horizontal">
+          <dt>Adapter</dt>
+          <dd>
+            <code title="select2/selection/base">SelectionAdapter</code>
+          </dd>
+
+          <dt>Decorator</dt>
+          <dd>
+            <code title="select2/selection/allowClear">AllowClear</code>
+          </dd>
+        </dl>
+      </div>
+    </div>
+
+    <p>
+      This will display an "x" that the user can click to clear the current
+      selection. It is designed to be used for cases where a single selection
+      can be made.
+    </p>
+
+    <h3 id="multiple">
+      Multiple selections
+    </h3>
+
+    <p>
+      Select2 can display either a single selection or multiple selections.
+    </p>
+
+    <dl class="dl-horizontal">
+      <dt>Key</dt>
+      <dd><code>multiple</code></dd>
+
+      <dt>Value</dt>
+      <dd>boolean (<code>true</code> or <code>false</code>)</dd>
+    </dl>
+
+    This option will determine what the <code>SelectAdapter</code> (used by
+    default) should use to set the value of the underlying <code>select</code>
+    element. It will also determine if the <code>MultipleSelection</code>
+    adapter should be used.
 
     <h3 id="language">
       Internationalization (Language support)
@@ -366,6 +437,125 @@ ajax: {
       automatically created and the user will be able to select from them.
       This is the <strong>same as how <a href="#data">array data</a>
       works</strong>, and has similar limitations.
+    </p>
+  </section>
+
+  <section id="dropdown">
+    <div class="page-header">
+      <h1>Dropdown</h1>
+    </div>
+
+    <p>
+      Select2 allows you to change the way that the dropdown works, allowing you
+      to do anything from attach it to a different location in the document or
+      add a search box.
+    </p>
+
+    <h2 id="dropdownParent">
+      Attached to body
+    </h2>
+
+    <p>
+      By default, Select2 will attach the dropdown to the end of the body and
+      will absolutely position it to appear below the selection container.
+    </p>
+
+    <div class="row">
+      <div class="col-sm-4">
+        <dl class="dl-horizontal">
+          <dt>Key</dt>
+          <dd><code>dropdownParent</code></dd>
+
+          <dt>Value</dt>
+          <dd>jQuery element</dd>
+
+          <hr />
+
+          <dt>Adapter</dt>
+          <dd>
+            <code title="select2/dropdown">DropdownAdapter</code>
+          </dd>
+
+          <dt>Decorator</dt>
+          <dd>
+            <code title="select2/dropdown/attachBody">AttachBody</code>
+          </dd>
+        </dl>
+      </div>
+
+      <div class="col-sm-8">
+        <div class="alert alert-warning">
+          <strong>Heads up!</strong>
+          This will cause DOM events to be raised outside of the standard
+          Select2 DOM container. This can cause issues with
+          third-party components such as modals.
+        </div>
+      </div>
+    </div>
+
+    <p>
+      When the dropdown is attached to the body, you are not limited to just
+      displaying the dropdown below the container. Select2 will display above
+      the container if there is not enough space below the container, but there
+      is enough space above it. You are also not limited to displaying the
+      drodown within the parent container, which means Select2 will render
+      correctly inside of modals and other small containers.
+    </p>
+
+    <h2 id="dropdown-attachContainer">
+      Attached below the container
+    </h2>
+
+    <p>
+      Select2 can place the dropdown directly after the selection cotainer, so
+      it will appear in the same location within the DOM as the rest of Select2.
+    </p>
+
+    <dl class="dl-horizontal">
+      <dt>Adapter</dt>
+      <dd>
+        <code title="select2/dropdown">DropdownAdapter</code>
+      </dd>
+
+      <dt>Decorator</dt>
+      <dd>
+        <code title="select2/dropdown/attachContainer">AttachContainer</code>
+      </dd>
+    </dl>
+
+    <div class="alert alert-info">
+      <strong>
+        <a href="https://harvesthq.github.io/chosen/">Harvest Chosen</a>
+        migrators!
+      </strong>
+      If you are migrating to Select2 from Chosen, this option will cause
+      Select2 to position the dropdown in a similar way.
+    </div>
+
+    <h2 id="dropdown-search">
+      Search
+    </h2>
+
+    <p>
+      Users can filter down the results by typing a search term into a box that
+      is displayed at the top of the dropdown.
+    </p>
+
+    <dl class="dl-horizontal">
+      <dt>Adapter</dt>
+      <dd>
+        <code title="select2/dropdown">DropdownAdapter</code>
+      </dd>
+
+      <dt>Decorator</dt>
+      <dd>
+        <code title="select2/dropdown/search">DropdownSearch</code>
+      </dd>
+    </dl>
+
+    <p>
+      A search box is added to the top of the dropdown automatically for select
+      boxes where only a single option can be selected.
     </p>
   </section>
 
