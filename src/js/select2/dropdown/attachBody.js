@@ -2,6 +2,8 @@ define([
 
 ], function () {
   function AttachBody (decorated, $element, options) {
+    this.$dropdownParent = options.get('dropdownParent') || document.body;
+
     decorated.call(this, $element, options);
   }
 
@@ -132,7 +134,7 @@ define([
   };
 
   AttachBody.prototype._showDropdown = function (decorated) {
-    this.$dropdownContainer.appendTo(document.body);
+    this.$dropdownContainer.appendTo(this.$dropdownParent);
 
     this._positionDropdown();
   };

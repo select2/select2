@@ -98,7 +98,7 @@ define([
   };
 
   BaseSelection.prototype.destroy = function () {
-    this._detachCloseHandler();
+    this._detachCloseHandler(this.container);
   };
 
   BaseSelection.prototype.update = function (data) {

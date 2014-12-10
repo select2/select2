@@ -10277,7 +10277,7 @@ define('select2/selection/base',[
   };
 
   BaseSelection.prototype.destroy = function () {
-    this._detachCloseHandler();
+    this._detachCloseHandler(this.container);
   };
 
   BaseSelection.prototype.update = function (data) {
@@ -12386,6 +12386,8 @@ define('select2/dropdown/attachBody',[
 
 ], function () {
   function AttachBody (decorated, $element, options) {
+    this.$dropdownParent = options.get('dropdownParent') || document.body;
+
     decorated.call(this, $element, options);
   }
 
@@ -12516,7 +12518,7 @@ define('select2/dropdown/attachBody',[
   };
 
   AttachBody.prototype._showDropdown = function (decorated) {
-    this.$dropdownContainer.appendTo(document.body);
+    this.$dropdownContainer.appendTo(this.$dropdownParent);
 
     this._positionDropdown();
   };
@@ -12858,7 +12860,7 @@ define('select2/core',[
 ], function ($, Options, Utils, KEYS) {
   var Select2 = function ($element, options) {
     if ($element.data('select2') != null) {
-      $element.select2('destroy');
+      $element.data('select2').destroy();
     }
 
     this.$element = $element;
