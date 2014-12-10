@@ -3300,14 +3300,17 @@ define('select2/options',[
   }
 
   Options.prototype.fromElement = function ($e) {
-    var fromProperties = ['multiple'];
     var excludedData = ['select2'];
 
-    for (var p = 0; p < fromProperties.length; p++) {
-      var prop = fromProperties[p];
+    if (this.options.multiple == null) {
+      this.options.multiple = $e.prop('multiple');
+    }
 
-      if (this.options[prop] == null) {
-        this.options[prop] = $e.prop(prop);
+    if (this.options.language == null) {
+      if ($e.prop('lang')) {
+        this.options.language = $e.prop('lang').toLowerCase();
+      } else if ($e.closest('[lang]').prop('lang')) {
+        this.options.language = $e.closest('[lang]').prop('lang');
       }
     }
 
