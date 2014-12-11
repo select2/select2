@@ -1119,7 +1119,7 @@ define('select2/selection/search',[
     this.resizeSearch();
   };
 
-  Search.prototype.handleSearch = function (evt) {
+  Search.prototype.handleSearch = function () {
     this.resizeSearch();
 
     if (!this._keyUpPrevented) {
@@ -1133,7 +1133,7 @@ define('select2/selection/search',[
     this._keyUpPrevented = false;
   };
 
-  Search.prototype.searchRemoveChoice = function (item) {
+  Search.prototype.searchRemoveChoice = function (decorated, item) {
     this.trigger('unselected', {
       data: item
     });
