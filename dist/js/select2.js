@@ -1466,8 +1466,9 @@ define('select2/selection/allowClear',[
 });
 
 define('select2/selection/search',[
-  '../utils'
-], function (Utils) {
+  '../utils',
+  '../keys'
+], function (Utils, KEYS) {
   function Search (decorated, $element, options) {
     decorated.call(this, $element, options);
   }
@@ -1511,6 +1512,19 @@ define('select2/selection/search',[
       self.trigger('keypress', evt);
 
       self._keyUpPrevented = evt.isDefaultPrevented();
+
+      var key = evt.which;
+
+      if (key === KEYS.BACKSPACE && self.$search.val() === '') {
+        var $previousChoice = self.$searchContainer
+          .prev('.select2-selection__choice');
+
+        if ($previousChoice.length > 0) {
+          var item = $previousChoice.data('data');
+
+          self.searchRemoveChoice(item);
+        }
+      }
     });
 
     this.$selection.on('keyup', '.select2-search--inline', function (evt) {
@@ -1545,6 +1559,16 @@ define('select2/selection/search',[
     }
 
     this._keyUpPrevented = false;
+  };
+
+  Search.prototype.searchRemoveChoice = function (item) {
+    this.trigger('unselected', {
+      data: item
+    });
+
+    this.trigger('open');
+
+    this.$search.val(item.text + ' ');
   };
 
   Search.prototype.resizeSearch = function () {
