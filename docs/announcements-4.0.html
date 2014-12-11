@@ -98,6 +98,31 @@ slug: announcements-4.0
 
   <section id="amd-builds">
     <h2>AMD-based build system</h2>
+
+    <p>
+      Select2 now uses an
+      <a href="https://en.wikipedia.org/wiki/Asynchronous_module_definition">AMD-based build system</a>,
+      allowing for builds that only require the parts of Select2 that you need.
+      While a custom build system has not yet been created, Select2 is open
+      source and will gladly accept a pull request for one.
+    </p>
+
+    <p>
+      Select2 includes the minimal <a href="https://github.com/jrburke/almond">almond</a>
+      AMD loader, but a custom <code>select2.amd.js</code> build is available
+      if you already use an AMD loader. The code base (available in the
+      <code>src</code> directory) also uses AMD, allowing you to include Select2
+      in your own build system and generate your own builds alongside your
+      existing infrastructure.
+    </p>
+
+    <p>
+      The AMD methods used by Select2 are available as
+      <code>jQuery.fn.select2.amd.define()/require()</code>, allowing you to use the
+      included almond loader. These methods are primarily used by the
+      translations, but they are the recommended way to access custom modules
+      that Select2 provides.
+    </p>
   </section>
 
   <section id="migrating">
@@ -179,7 +204,8 @@ slug: announcements-4.0
     <p>
       A function has been created that allows old-style matcher functions to be
       converted to the new style. You can retrieve the function from the
-      <code>select2/compat/matcher</code> module.
+      <code>select2/compat/matcher</code> module, which should just wrap the old
+      matcher function.
     </p>
 
     <h2 id="flexible-placeholders">More flexible placeholders</h2>
@@ -233,6 +259,55 @@ $("select").select2({
       the select is <code>-1</code>, which it is by default. This does not break
       the old functionality of Select2 where the placeholder option was blank by
       default.
+    </p>
+
+    <h2 id="value-ordering">Display reflects the actual order of the values</h2>
+
+    <p>
+      In past versions of Select2, choices were displayed in the order that
+      they were selected. In cases where Select2 was used on a
+      <code>&lt;select&gt;</code> element, the order that the server recieved
+      the selections did not always match the order that the choices were
+      displayed, resulting in confusion in situations where the order is
+      important.
+    </p>
+
+    <p>
+      Select2 will now order selected choices in the same order that will be
+      sent to the server.
+    </p>
+
+    <h2 id="removed-methods">Deprecated and removed methods</h2>
+
+    <p>
+      As Select2 now uses a <code>&lt;select&gt;</code> element for all data
+      sources, a few methods that were available by calling
+      <code>.select2()</code> are no longer required.
+    </p>
+
+    <h3>.select2("val")</h3>
+
+    <p>
+      The <code>val</code> method has been deprecated and will be removed in
+      Select2 4.1. The deprecated method no longer includes the
+      <code>triggerChange</code> parameter.
+    </p>
+
+    <p>
+      You should directly call <code>val</code> on the underlying
+      <code>&lt;select&gt;</code> element instead. If you needed the second
+      parameter (<code>triggerChange</code>), you should also call
+      <code>.trigger("change")</code> on the element.
+    </p>
+
+    <h3>.select2("enable")</h3>
+
+    <p>
+      Select2 will respect the <code>disabled</code> property of the underlying
+      select element. In order to enable or disable Select2, you should call
+      <code>.prop('disabled', true/false)</code> on the
+      <code>&lt;select&gt;</code> element. This method will be completely
+      removed in Select2 4.1.
     </p>
   </section>
 </div>

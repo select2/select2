@@ -332,8 +332,7 @@ $(".js-data-example-ajax").select2({
 var $example = $(".js-example-programmatic");
 var $exampleMulti = $(".js-example-programmatic-multi");
 
-// Recommended to use $e.val("CA").trigger("change");
-$(".js-programmatic-set-val").on("click", function () { $example.select2("val", "CA"); });
+$(".js-programmatic-set-val").on("click", function () { $example.val("CA").trigger("change"); });
 
 $(".js-programmatic-open").on("click", function () { $example.select2("open"); });
 $(".js-programmatic-close").on("click", function () { $example.select2("close"); });
@@ -341,9 +340,8 @@ $(".js-programmatic-close").on("click", function () { $example.select2("close");
 $(".js-programmatic-init").on("click", function () { $example.select2(); });
 $(".js-programmatic-destroy").on("click", function () { $example.select2("destroy"); });
 
-// Recommended to use $e.val(["CA", "AL"]).trigger("change");
-$(".js-programmatic-multi-set-val").on("click", function () { $exampleMulti.select2("val", ["CA", "AL"]); });
-$(".js-programmatic-multi-clear").on("click", function () { $exampleMulti.select2("val", null); });
+$(".js-programmatic-multi-set-val").on("click", function () { $exampleMulti.val(["CA", "AL"]).trigger("change"); });
+$(".js-programmatic-multi-clear").on("click", function () { $exampleMulti.val(null).trigger("change"); });
 </script>
     </div>
   </section>
@@ -528,15 +526,15 @@ $(".js-example-language").select2({
 
       <pre data-fill-from=".js-code-theme"></pre>
 
-<script type="text/javascript" class="js-code-theme">
-$(".js-example-theme-single").select2({
-  theme: "classic"
-});
+      <script type="text/x-example-code" class="js-code-theme">
+      $(".js-example-theme-single").select2({
+        theme: "classic"
+      });
 
-$(".js-example-theme-multiple").select2({
-  theme: "classic"
-});
-</script>
+      $(".js-example-theme-multiple").select2({
+        theme: "classic"
+      });
+      </script>
     </div>
   </section>
 </div>
@@ -730,6 +728,14 @@ $.fn.select2.amd.require(
 
   $language.select2({
     language: "es"
+  });
+
+  $(".js-example-theme-single").select2({
+    theme: "classic"
+  });
+
+  $(".js-example-theme-multiple").select2({
+    theme: "classic"
   });
 });
 </script>
