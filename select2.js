@@ -2970,21 +2970,18 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // multi
         updateSelection: function (data) {
-            var ids = [], filtered = [], self = this;
+            var ids = {}, filtered = [], self = this;
 
             // filter out duplicates
             $(data).each(function () {
-                if (indexOf(self.id(this), ids) < 0) {
-                    ids.push(self.id(this));
+                if (!(self.id(this) in ids)) {
+                    ids[self.id(this)] = 0;
                     filtered.push(this);
                 }
             });
-            data = filtered;
 
             this.selection.find(".select2-search-choice").remove();
-            $(data).each(function () {
-                self.addSelectedChoice(this);
-            });
+            this.addSelectedChoice(filtered);
             self.postprocessResults();
         },
 
@@ -3058,6 +3055,14 @@ the specific language governing permissions and limitations under the Apache Lic
         },
 
         addSelectedChoice: function (data) {
+            var val = this.getVal(), self = this;
+            $(data).each(function () {
+                val.push(self.createChoice(this));
+            });
+            this.setVal(val);
+        },
+        
+        createChoice: function (data) {
             var enableChoice = !data.locked,
                 enabledItem = $(
                     "<li class='select2-search-choice'>" +
@@ -3070,7 +3075,6 @@ the specific language governing permissions and limitations under the Apache Lic
                     "</li>");
             var choice = enableChoice ? enabledItem : disabledItem,
                 id = this.id(data),
-                val = this.getVal(),
                 formatted,
                 cssClass;
 
@@ -3104,8 +3108,7 @@ the specific language governing permissions and limitations under the Apache Lic
             choice.data("select2-data", data);
             choice.insertBefore(this.searchContainer);
 
-            val.push(id);
-            this.setVal(val);
+            return id;
         },
 
         // multi
@@ -3237,14 +3240,16 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // multi
         setVal: function (val) {
-            var unique;
             if (this.select) {
                 this.select.val(val);
             } else {
-                unique = [];
+                var unique = [], valMap = {};
                 // filter out duplicates
                 $(val).each(function () {
-                    if (indexOf(this, unique) < 0) unique.push(this);
+                    if (!(this in valMap)) {
+                        unique.push(this);
+                        valMap[this] = 0;
+                    }
                 });
                 this.opts.element.val(unique.length === 0 ? "" : unique.join(this.opts.separator));
             }
@@ -3260,11 +3265,9 @@ the specific language governing permissions and limitations under the Apache Lic
                 for (var j = 0; j < old.length; j++) {
                     if (equal(this.opts.id(current[i]), this.opts.id(old[j]))) {
                         current.splice(i, 1);
-                        if(i>0){
-                            i--;
-                        }
+                        i--;
                         old.splice(j, 1);
-                        j--;
+                        break;
                     }
                 }
             }
