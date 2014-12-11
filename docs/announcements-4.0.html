@@ -40,8 +40,7 @@ slug: announcements-4.0
       <em>will</em> require you to read the release notes carefully, but the
       migration path should be relatively straightforward. You can find more
       information on the modules that have been created to make upgrading easier
-      by <a href="compat.html">looking at the compatibility guide</a> for older
-      Select2 versions.
+      by looking through <a href="release-notes.html">the release notes</a>.
     </p>
 
     <p>
@@ -78,7 +77,7 @@ slug: announcements-4.0
   </section>
 
   <section id="plugins">
-    <h2>Plugins</h2>
+    <h2>Plugin system</h2>
 
     <p>
       Select2 now provides interfaces that allow for it to be easily extended,
@@ -88,38 +87,152 @@ slug: announcements-4.0
       Select2.
     </p>
 
-    <h3>
-      Container (selection)
-    </h3>
+    <p>
+      The adapters implement a consistent interface that is documented in the
+      <a href="options.html#adapters">options section for adapters</a>, allowing
+      you to customize Select2 to do exactly what you are looking for. Select2
+      is designed such that you can mix and match plugins, with most of the core
+      options being built as decorators that wrap the standard adapters.
+    </p>
+  </section>
+
+  <section id="amd-builds">
+    <h2>AMD-based build system</h2>
+  </section>
+
+  <section id="migrating">
+    <h1>Migrating from Select2 3.5</h1>
 
     <p>
-      This includes the primary container that users interact with to open the
-      dropdown.
+      There are a few breaking changes that migrators should be aware of when
+      they are coming from older versions of Select2.
     </p>
 
-    <h3>
-      Dropdown
-    </h3>
+    <h2 id="hidden-input">No more hidden input tags</h2>
 
     <p>
-      This includes the dropdown that is opened when the container is clicked.
-      This also includes the results list, which is a separate component.
+      In past versions of Select2, an <code>&lt;input type="hidden" /&gt;</code>
+      tag was recommended if you wanted to do anything advanced with Select2,
+      such as work with remote data sources or allow users to add their own
+      tags. This had the unfortunate side-effect of servers not receiving the
+      data from Select2 as an array, like a standard <code>&lt;select&gt;</code>
+      element does, but instead sending a string containing the comma-separated
+      strings. The code base ended up being littered with special cases for the
+      hidden input, and libraries using Select2 had to work around the
+      differences it caused.
     </p>
 
-    <h3>
-      Results
-    </h3>
-
     <p>
-      This includes the list of possible options that can be selected.
+      In Select2 4.0, the <code>&lt;select&gt;</code> element supports all core
+      options, and support for the old
+      <code>&lt;input type="hidden" /&gt;</code> has been removed. This means
+      that if you previously declared an AJAX field with some pre-selected
+      options that looked like...
     </p>
 
-    <h3>
-      Data set
-    </h3>
+<pre class="prettyprint linenums">
+&lt;input type="hidden" name="select-boxes" value="1,2,4,6" /&gt;
+</pre>
 
     <p>
-      This is how the options are calculated.
+      Will need to be recreated as a <code>&lt;select&gt;</code> element with
+      some <code>&lt;option&gt;</code> tags that have <code>value</code>
+      attributes that match the old value.
+    </p>
+
+<pre class="prettyprint linenums">
+&lt;select name="select-boxes" multiple="multiple"&gt;
+  &lt;option value="1" selected="selected"&gt;Select2&lt;/option&gt;
+  &lt;option value="2" selected="selected"&gt;Chosen&lt;/option&gt;
+  &lt;option value="4" selected="selected"&gt;selectize.js&lt;/option&gt;
+  &lt;option value="6" selected="selected"&gt;typeahead.js&lt;/option&gt;
+&lt;/select&gt;
+</pre>
+
+    <p>
+      The options that you create should have <code>selected="selected"</code>
+      set, so Select2 and the browser knows that they should be selected. The
+      <code>value</code> attribute of the option should also be set to the value
+      that will be returned from the server for the result, so Select2 can
+      highlight it as selected in the dropdown. The text within the option
+      should also reflect the value that should be displayed by default for the
+      option.
+    </p>
+
+    <h2 id="new-matcher">Advanced matching of searches</h2>
+
+    <p>
+      In past versions of Select2, when matching search terms to individual
+      options, which limited the control that you had when displaying results,
+      especially in cases where there was nested data. The <code>matcher</code>
+      function was only given the individual option, even if it was a nested
+      options, without any context.
+    </p>
+
+    <p>
+      With the new matcher function, only the root-level options are matched and
+      matchers are expected to limit the results of any children options that
+      they contain. This allows developers to customize how options within
+      groups can be displayed, and modify how the results are returned.
+    </p>
+
+    <p>
+      A function has been created that allows old-style matcher functions to be
+      converted to the new style. You can retrieve the function from the
+      <code>select2/compat/matcher</code> module.
+    </p>
+
+    <h2 id="flexible-placeholders">More flexible placeholders</h2>
+
+    <p>
+      In the most recent versions of Select2, placeholders could only be
+      applied to the first (typically the default) option in a
+      <code>&lt;select&gt;</code> if it was blank. The
+      <code>placeholderOption</code> option was added to Select2 to allow users
+      using the <code>select</code> tag to select a different option, typically
+      an automatically generated option with a different value.
+    </p>
+
+    <p>
+      The <code>placeholder</code> option can now take an object as well as just
+      a string. This replaces the need for the old
+      <code>placeholderOption</code>, as now the <code>id</code> of the object
+      can be set to the <code>value</code> attribute of the
+      <code>&lt;option&gt;</code> tag.
+    </p>
+
+    <p>
+      For a select that looks like the following, where the first option (with a
+      value of <code>-1</code>) is the placeholder option...
+    </p>
+
+<pre class="prettyprint linenums">
+&lt;select&gt;
+  &lt;option value="-1" selected="selected"&gt;Select an option&lt;/option&gt;
+  &lt;option value="1"&gt;Something else&lt;/option&gt;
+&lt;/select&gt;
+</pre>
+
+    <p>
+      You would have previously had to get the placeholder option through the
+      <code>placeholderOption</code>, but now you can do it through the
+      <code>placeholder</code> option by setting an <code>id</code>.
+    </p>
+
+<pre class="prettyprint linenums">
+$("select").select2({
+  placeholder: {
+    id: "-1",
+    placeholder: "Select an option"
+  }
+})
+</pre>
+
+    <p>
+      And Select2 will automatically display the placeholder when the value of
+      the select is <code>-1</code>, which it is by default. This does not break
+      the old functionality of Select2 where the placeholder option was blank by
+      default.
     </p>
   </section>
 </div>
