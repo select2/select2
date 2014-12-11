@@ -13285,6 +13285,22 @@ define('select2/core',[
     return this.$container.hasClass('select2-container--open');
   };
 
+  Select2.prototype.val = function (args) {
+    if (args.length === 0) {
+      return this.$element.val();
+    }
+
+    var newVal = args[0];
+
+    if ($.isArray(newVal)) {
+      newVal = $.map(newVal, function (obj) {
+        return obj.toString();
+      });
+    }
+
+    this.$element.val(newVal).trigger('change');
+  };
+
   Select2.prototype.destroy = function () {
     this.$container.remove();
 

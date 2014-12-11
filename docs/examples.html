@@ -283,6 +283,10 @@ $(".js-data-example-ajax").select2({
       </p>
 
       <p>
+        <button class="js-programmatic-set-val btn btn-primary">
+          Set to California
+        </button>
+
         <button class="js-programmatic-open btn btn-success">
           Open
         </button>
@@ -304,6 +308,20 @@ $(".js-data-example-ajax").select2({
         <select class="js-example-programmatic js-states form-control"></select>
       </p>
 
+      <p>
+        <button class="js-programmatic-multi-set-val btn btn-primary">
+          Set to California and Alabama
+        </button>
+
+        <button class="js-programmatic-multi-clear btn btn-primary">
+          Clear
+        </button>
+      </p>
+
+      <p>
+        <select class="js-example-programmatic-multi js-states form-control" multiple="multiple"></select>
+      </p>
+
     </div>
     <div class="col-md-8">
       <h2>Example code</h2>
@@ -312,12 +330,20 @@ $(".js-data-example-ajax").select2({
 
 <script type="text/javascript" class="js-code-programmatic">
 var $example = $(".js-example-programmatic");
+var $exampleMulti = $(".js-example-programmatic-multi");
+
+// Recommended to use $e.val("CA").trigger("change");
+$(".js-programmatic-set-val").on("click", function () { $example.select2("val", "CA"); });
 
 $(".js-programmatic-open").on("click", function () { $example.select2("open"); });
 $(".js-programmatic-close").on("click", function () { $example.select2("close"); });
 
 $(".js-programmatic-init").on("click", function () { $example.select2(); });
 $(".js-programmatic-destroy").on("click", function () { $example.select2("destroy"); });
+
+// Recommended to use $e.val(["CA", "AL"]).trigger("change");
+$(".js-programmatic-multi-set-val").on("click", function () { $exampleMulti.select2("val", ["CA", "AL"]); });
+$(".js-programmatic-multi-clear").on("click", function () { $exampleMulti.select2("val", null); });
 </script>
     </div>
   </section>
@@ -682,6 +708,7 @@ $.fn.select2.amd.require(
   $disabledResults.select2();
 
   $(".js-example-programmatic").select2();
+  $(".js-example-programmatic-multi").select2();
 
   $tags.select2({
     tags: ['red', 'blue', 'green']
