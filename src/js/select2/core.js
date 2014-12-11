@@ -297,7 +297,32 @@ define([
     return this.$container.hasClass('select2-container--open');
   };
 
+  Select2.prototype.enable = function (args) {
+    if (console && console.warn) {
+      console.warn(
+        'Select2: The `select2("val")` method has been deprecated and will be' +
+        ' removed in later Select2 versions. Use $element.prop("disabled") ' +
+        'instead.'
+      );
+    }
+
+    if (args.length === 0) {
+      args = [true];
+    }
+
+    var disabled = !args[0];
+
+    this.$element.prop('disabled', disabled);
+  };
+
   Select2.prototype.val = function (args) {
+    if (console && console.warn) {
+      console.warn(
+        'Select2: The `select2("val")` method has been deprecated and will be' +
+        ' removed in later Select2 versions. Use $element.val() instead.'
+      );
+    }
+
     if (args.length === 0) {
       return this.$element.val();
     }
