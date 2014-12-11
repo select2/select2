@@ -1,16 +1,16 @@
 /**
  * Select2 Vietnamese translation.
  * 
- * Author: Long Nguyen <olragon@gmail.com>
+ * Author: Long Nguyen <olragon@gmail.com>, Nguyen Chien Cong
  */
 (function ($) {
     "use strict";
 
     $.fn.select2.locales['vi'] = {
         formatNoMatches: function () { return "Không tìm thấy kết quả"; },
-        formatInputTooShort: function (input, min) { var n = min - input.length; return "Vui lòng nhập nhiều hơn " + n + " ký tự" + (n == 1 ? "" : "s"); },
-        formatInputTooLong: function (input, max) { var n = input.length - max; return "Vui lòng nhập ít hơn " + n + " ký tự" + (n == 1? "" : "s"); },
-        formatSelectionTooBig: function (limit) { return "Chỉ có thể chọn được " + limit + " tùy chọn" + (limit == 1 ? "" : "s"); },
+        formatInputTooShort: function (input, min) { var n = min - input.length; return "Vui lòng nhập nhiều hơn " + n + " ký tự"; },
+        formatInputTooLong: function (input, max) { var n = input.length - max; return "Vui lòng nhập ít hơn " + n + " ký tự"; },
+        formatSelectionTooBig: function (limit) { return "Chỉ có thể chọn được " + limit + " lựa chọn"; },
         formatLoadMore: function (pageNumber) { return "Đang lấy thêm kết quả…"; },
         formatSearching: function () { return "Đang tìm…"; }
     };
