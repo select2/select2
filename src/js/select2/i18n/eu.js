@@ -30,7 +30,7 @@ define(function () {
 
       return message;
     },
-    lodingMore: function () {
+    loadingMore: function () {
       return 'Emaitza gehiago kargatzen…';
     },
     maximumSelection: function (args) {

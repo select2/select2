@@ -22,7 +22,7 @@ define(function () {
 
       return message;
     },
-    lodingMore: function () {
+    loadingMore: function () {
       return 'Chargement de résultats supplémentaires…';
     },
     maximumSelection: function (args) {

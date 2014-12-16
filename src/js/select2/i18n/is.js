@@ -24,7 +24,7 @@ define(function () {
 
       return message;
     },
-    lodingMore: function () {
+    loadingMore: function () {
       return 'Sæki fleiri niðurstöður…';
     },
     maximumSelection: function (args) {

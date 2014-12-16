@@ -10,7 +10,7 @@ define(function () {
 
       return 'Túl rövid. Még ' + remainingChars + ' karakter hiányzik.';
     },
-    lodingMore: function () {
+    loadingMore: function () {
       return 'Töltés…';
     },
     maximumSelection: function (args) {

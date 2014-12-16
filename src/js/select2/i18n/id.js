@@ -10,7 +10,7 @@ define(function () {
 
       return 'Masukkan ' + remainingChars + ' huruf lagi';
     },
-    lodingMore: function () {
+    loadingMore: function () {
       return 'Mengambil data…';
     },
     maximumSelection: function (args) {

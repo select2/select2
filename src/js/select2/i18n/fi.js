@@ -10,7 +10,7 @@ define(function () {
 
       return 'Ole hyvä ja anna ' + remainingChars + ' merkkiä lisää';
     },
-    lodingMore: function () {
+    loadingMore: function () {
       return 'Ladataan lisää tuloksia…';
     },
     maximumSelection: function (args) {

@@ -26,7 +26,7 @@ define(function () {
 
       return message;
     },
-    lodingMore: function () {
+    loadingMore: function () {
       return 'Cargando máis resultados…';
     },
     maximumSelection: function (args) {

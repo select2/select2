@@ -24,7 +24,7 @@ define(function () {
 
       return 'Unesite još ' + character(remainingChars);
     },
-    lodingMore: function () {
+    loadingMore: function () {
       return 'Učitavanje rezultata…';
     },
     maximumSelection: function (args) {
