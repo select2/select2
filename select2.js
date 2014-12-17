@@ -1892,7 +1892,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 highlighted=this.results.find(".select2-highlighted"),
                 data = highlighted.closest('.select2-result').data("select2-data");
 
-            if (data) {
+            if (data || data=="0") {
                 this.highlight(index);
                 this.onSelect(data, options);
             } else if (options && options.noFocus) {
