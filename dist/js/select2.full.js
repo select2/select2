@@ -11774,6 +11774,7 @@ define('select2/data/select',[
     var $option = $(option);
 
     var normalizedData = this._normalizeItem(data);
+    normalizedData.element = option;
 
     // Override the option's data with the combined data
     $.data(option, 'data', normalizedData);
@@ -11818,6 +11819,7 @@ define('select2/data/select',[
     }
 
     data = this._normalizeItem(data);
+    data.element = $option[0];
 
     $.data($option[0], 'data', data);
 
@@ -11825,12 +11827,10 @@ define('select2/data/select',[
   };
 
   SelectAdapter.prototype._normalizeItem = function (item) {
-    if (item.text == null) {
-      item = {
-        id: item,
-        text: item
-      };
-    }
+    $.extend(item, {
+      id: item,
+      text: item
+    });
 
     var defaults = {
       selected: false,
