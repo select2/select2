@@ -46,3 +46,10 @@
     }
   }
 }
+
+&.select2-container--disabled {
+  .select2-selection--multiple {
+    background-color: #eee;
+    cursor: default;
+  }
+}

@@ -47,6 +47,14 @@ define([
         data: data
       });
     });
+
+    container.on('enable', function () {
+      self.$selection.attr('tabindex', '0');
+    });
+
+    container.on('disable', function () {
+      self.$selection.attr('tabindex', '-1');
+    });
   };
 
   MultipleSelection.prototype.clear = function () {

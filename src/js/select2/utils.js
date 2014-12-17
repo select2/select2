@@ -153,5 +153,11 @@ define([], function () {
     return chars;
   };
 
+  Utils.bind = function (func, context) {
+    return function () {
+      func.apply(context, arguments);
+    };
+  };
+
   return Utils;
 });

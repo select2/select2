@@ -39,6 +39,14 @@ define([
       self.$search.val('');
     });
 
+    container.on('enable', function () {
+      self.$search.prop('disabled', false);
+    });
+
+    container.on('disable', function () {
+      self.$search.prop('disabled', true);
+    });
+
     this.$selection.on('keydown', '.select2-search--inline', function (evt) {
       evt.stopPropagation();
 

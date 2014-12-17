@@ -238,6 +238,52 @@ $(".js-data-example-ajax").select2({
     </div>
   </section>
 
+  <section id="disabled" class="row">
+    <div class="col-md-4">
+      <h1>Disabled mode</h1>
+
+      <p>
+        Select2 will response the <code>disabled</code> attribute on
+        <code>&lt;select&gt;</code> elements. You can also initialize Select2
+        with <code>disabled: true</code> to get the same effect.
+      </p>
+
+      <p>
+        <select class="js-example-disabled js-states form-control" disabled="disabled"></select>
+      </p>
+
+      <p>
+        <select class="js-example-disabled-multi js-states form-control" multiple="multiple" disabled="disabled"></select>
+      </p>
+
+      <p>
+        <button class="js-programmatic-enable btn btn-primary">
+          Enable
+        </button>
+        <button class="js-programmatic-disable btn btn-warning">
+          Disable
+        </button>
+      </p>
+    </div>
+    <div class="col-md-8">
+      <h2>Example code</h2>
+
+      <pre data-fill-from=".js-code-disabled"></pre>
+
+<script type="text/javascript" class="js-code-disabled">
+$(".js-programmatic-enable").on("click", function () {
+  $(".js-example-disabled").prop("disabled", false);
+  $(".js-example-disabled-multi").prop("disabled", false);
+});
+
+$(".js-programmatic-disable").on("click", function () {
+  $(".js-example-disabled").prop("disabled", true);
+  $(".js-example-disabled-multi").prop("disabled", true);
+});
+</script>
+    </div>
+  </section>
+
   <section id="disabled-results" class="row">
     <div class="col-md-4">
       <h1>Disabled results</h1>
@@ -256,7 +302,6 @@ $(".js-data-example-ajax").select2({
           <option value="three">Third</option>
         </select>
       </p>
-
     </div>
     <div class="col-md-8">
       <h2>Example code</h2>
@@ -702,6 +747,9 @@ $.fn.select2.amd.require(
       return repo.full_name || repo.text;
     }
   });
+
+  $(".js-example-disabled").select2();
+  $(".js-example-disabled-multi").select2();
 
   $disabledResults.select2();
 

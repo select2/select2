@@ -19,6 +19,10 @@ define([
       this.options.multiple = $e.prop('multiple');
     }
 
+    if (this.options.disabled == null) {
+      this.options.disabled = $e.prop('disabled');
+    }
+
     if (this.options.language == null) {
       if ($e.prop('lang')) {
         this.options.language = $e.prop('lang').toLowerCase();
@@ -26,6 +30,9 @@ define([
         this.options.language = $e.closest('[lang]').prop('lang');
       }
     }
+
+    $e.prop('disabled', this.options.disabled);
+    $e.prop('multiple', this.options.multiple);
 
     var data = $e.data();
 

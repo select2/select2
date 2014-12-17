@@ -153,6 +153,12 @@ window.$ = window.$ || {};(function() { if ($ && $.fn && $.fn.select2 && $.fn.se
     return chars;
   };
 
+  Utils.bind = function (func, context) {
+    return function () {
+      func.apply(context, arguments);
+    };
+  };
+
   return Utils;
 });
 
@@ -813,6 +819,14 @@ define('select2/selection/single',[
       // User exits the container
     });
 
+    container.on('enable', function () {
+      self.$selection.attr('tabindex', '0');
+    });
+
+    container.on('disable', function () {
+      self.$selection.attr('tabindex', '-1');
+    });
+
     container.on('selection:update', function (params) {
       self.update(params.data);
     });
@@ -896,6 +910,14 @@ define('select2/selection/multiple',[
         originalEvent: evt,
         data: data
       });
+    });
+
+    container.on('enable', function () {
+      self.$selection.attr('tabindex', '0');
+    });
+
+    container.on('disable', function () {
+      self.$selection.attr('tabindex', '-1');
     });
   };
 
@@ -1076,6 +1098,14 @@ define('select2/selection/search',[
       self.$search.attr('tabindex', -1);
 
       self.$search.val('');
+    });
+
+    container.on('enable', function () {
+      self.$search.prop('disabled', false);
+    });
+
+    container.on('disable', function () {
+      self.$search.prop('disabled', true);
     });
 
     this.$selection.on('keydown', '.select2-search--inline', function (evt) {
@@ -3379,6 +3409,10 @@ define('select2/options',[
       this.options.multiple = $e.prop('multiple');
     }
 
+    if (this.options.disabled == null) {
+      this.options.disabled = $e.prop('disabled');
+    }
+
     if (this.options.language == null) {
       if ($e.prop('lang')) {
         this.options.language = $e.prop('lang').toLowerCase();
@@ -3386,6 +3420,9 @@ define('select2/options',[
         this.options.language = $e.closest('[lang]').prop('lang');
       }
     }
+
+    $e.prop('disabled', this.options.disabled);
+    $e.prop('multiple', this.options.multiple);
 
     var data = $e.data();
 
@@ -3517,7 +3554,6 @@ define('select2/core',[
     this._registerEvents();
 
     // Set the initial state
-
     this.data.current(function (initialData) {
       self.trigger('selection:update', {
         data: initialData
@@ -3525,8 +3561,10 @@ define('select2/core',[
     });
 
     // Hide the original select
-
     $element.hide();
+
+    // Synchronize any monitored attributes
+    this._syncAttributes();
 
     this._tabindex = $element.attr('tabindex') || 0;
 
@@ -3576,6 +3614,27 @@ define('select2/core',[
         });
       });
     });
+
+    this._sync = Utils.bind(this._syncAttributes, this);
+
+    if (this.$element[0].attachEvent) {
+      this.$element[0].attachEvent('onpropertychange', this._sync);
+    }
+
+    var observer = window.MutationObserver ||
+      window.WebKitMutationObserver ||
+      window.MozMutationObserver
+    ;
+
+    if (observer != null) {
+      this._observer = new observer(function (mutations) {
+        $.each(mutations, self._sync);
+      });
+      this._observer.observe(this.$element[0], {
+        attributes: true,
+        subtree: false
+      });
+    }
   };
 
   Select2.prototype._registerDataEvents = function () {
@@ -3671,6 +3730,14 @@ define('select2/core',[
       self.$container.removeClass('select2-container--open');
     });
 
+    this.on('enable', function () {
+      self.$container.removeClass('select2-container--disabled');
+    });
+
+    this.on('disable', function () {
+      self.$container.addClass('select2-container--disabled');
+    });
+
     this.on('query', function (params) {
       this.data.query(params, function (data) {
         self.trigger('results:all', {
@@ -3720,7 +3787,25 @@ define('select2/core',[
     });
   };
 
+  Select2.prototype._syncAttributes = function () {
+    this.options.set('disabled', this.$element.prop('disabled'));
+
+    if (this.options.get('disabled')) {
+      if (this.isOpen()) {
+        this.trigger('close');
+      }
+
+      this.trigger('disable');
+    } else {
+      this.trigger('enable');
+    }
+  };
+
   Select2.prototype.toggleDropdown = function () {
+    if (this.options.get('disabled')) {
+      return;
+    }
+
     if (this.isOpen()) {
       this.close();
     } else {
@@ -3793,6 +3878,17 @@ define('select2/core',[
 
   Select2.prototype.destroy = function () {
     this.$container.remove();
+
+    if (this.$element[0].detachEvent) {
+      this.$element[0].detachEvent('onpropertychange', this._sync);
+    }
+
+    if (this._observer != null) {
+      this._observer.disconnect();
+      this._observer = null;
+    }
+
+    this._sync = null;
 
     this.$element.off('.select2');
     this.$element.attr('tabindex', this._tabindex);

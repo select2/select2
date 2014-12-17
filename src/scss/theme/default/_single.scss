@@ -47,6 +47,13 @@
   }
 }
 
+&.select2-container--disabled {
+  .select2-selection--single {
+    background-color: #eee;
+    cursor: default;
+  }
+}
+
 &.select2-container--open {
   .select2-selection--single {
     .select2-selection__arrow {

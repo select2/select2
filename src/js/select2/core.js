@@ -64,7 +64,6 @@ define([
     this._registerEvents();
 
     // Set the initial state
-
     this.data.current(function (initialData) {
       self.trigger('selection:update', {
         data: initialData
@@ -72,8 +71,10 @@ define([
     });
 
     // Hide the original select
-
     $element.hide();
+
+    // Synchronize any monitored attributes
+    this._syncAttributes();
 
     this._tabindex = $element.attr('tabindex') || 0;
 
@@ -123,6 +124,27 @@ define([
         });
       });
     });
+
+    this._sync = Utils.bind(this._syncAttributes, this);
+
+    if (this.$element[0].attachEvent) {
+      this.$element[0].attachEvent('onpropertychange', this._sync);
+    }
+
+    var observer = window.MutationObserver ||
+      window.WebKitMutationObserver ||
+      window.MozMutationObserver
+    ;
+
+    if (observer != null) {
+      this._observer = new observer(function (mutations) {
+        $.each(mutations, self._sync);
+      });
+      this._observer.observe(this.$element[0], {
+        attributes: true,
+        subtree: false
+      });
+    }
   };
 
   Select2.prototype._registerDataEvents = function () {
@@ -218,6 +240,14 @@ define([
       self.$container.removeClass('select2-container--open');
     });
 
+    this.on('enable', function () {
+      self.$container.removeClass('select2-container--disabled');
+    });
+
+    this.on('disable', function () {
+      self.$container.addClass('select2-container--disabled');
+    });
+
     this.on('query', function (params) {
       this.data.query(params, function (data) {
         self.trigger('results:all', {
@@ -267,7 +297,25 @@ define([
     });
   };
 
+  Select2.prototype._syncAttributes = function () {
+    this.options.set('disabled', this.$element.prop('disabled'));
+
+    if (this.options.get('disabled')) {
+      if (this.isOpen()) {
+        this.trigger('close');
+      }
+
+      this.trigger('disable');
+    } else {
+      this.trigger('enable');
+    }
+  };
+
   Select2.prototype.toggleDropdown = function () {
+    if (this.options.get('disabled')) {
+      return;
+    }
+
     if (this.isOpen()) {
       this.close();
     } else {
@@ -340,6 +388,17 @@ define([
 
   Select2.prototype.destroy = function () {
     this.$container.remove();
+
+    if (this.$element[0].detachEvent) {
+      this.$element[0].detachEvent('onpropertychange', this._sync);
+    }
+
+    if (this._observer != null) {
+      this._observer.disconnect();
+      this._observer = null;
+    }
+
+    this._sync = null;
 
     this.$element.off('.select2');
     this.$element.attr('tabindex', this._tabindex);

@@ -57,6 +57,14 @@ define([
       // User exits the container
     });
 
+    container.on('enable', function () {
+      self.$selection.attr('tabindex', '0');
+    });
+
+    container.on('disable', function () {
+      self.$selection.attr('tabindex', '-1');
+    });
+
     container.on('selection:update', function (params) {
       self.update(params.data);
     });
