@@ -45,7 +45,7 @@
 
     width: 20px;
 
-    @include gradient-vertical(#eee, #ccc, 50%, 100%);
+    @include gradient-vertical(#eeeeee, #cccccc, 50%, 100%);
 
     b {
       border-color: #888 transparent transparent transparent;

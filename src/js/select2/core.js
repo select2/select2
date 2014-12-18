@@ -288,7 +288,8 @@ define([
           evt.preventDefault();
         }
       } else {
-        if (key === KEYS.ENTER || key === KEYS.SPACE) {
+        if (key === KEYS.ENTER || key === KEYS.SPACE ||
+            ((key === KEYS.DOWN || key === KEYS.UP) && evt.altKey)) {
           self.open();
 
           evt.preventDefault();
