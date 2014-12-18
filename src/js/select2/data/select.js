@@ -199,10 +199,17 @@ define([
   };
 
   SelectAdapter.prototype._normalizeItem = function (item) {
-    $.extend(item, {
-      id: item,
-      text: item
-    });
+    if (!$.isPlainObject(item)) {
+      item = {
+        id: item,
+        text: item
+      };
+    }
+
+    item = $.extend({}, {
+      id: '',
+      text: ''
+    }, item);
 
     var defaults = {
       selected: false,
