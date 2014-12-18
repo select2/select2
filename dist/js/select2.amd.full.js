@@ -2153,6 +2153,15 @@ define('select2/data/select',[
   SelectAdapter.prototype.select = function (data) {
     var self = this;
 
+    // If data.element is a DOM nose, use it instead
+    if ($(data.element).is('option')) {
+      data.element.selected = true;
+
+      this.$element.trigger('change');
+
+      return;
+    }
+
     if (this.$element.prop('multiple')) {
       this.current(function (currentData) {
         var val = [];
@@ -2184,6 +2193,14 @@ define('select2/data/select',[
     var self = this;
 
     if (!this.$element.prop('multiple')) {
+      return;
+    }
+
+    if ($(data.element).is('option')) {
+      data.element.selected = false;
+
+      this.$element.trigger('change');
+
       return;
     }
 

@@ -154,6 +154,158 @@ test('multiple adds to the old value', function (assert) {
   assert.deepEqual($select.val(), ['default', '2']);
 });
 
+test('duplicates - single - same id on select triggers change',
+  function (assert) {
+  var $select = $('#qunit-fixture .duplicates');
+
+  var data = new SelectData($select, data);
+  var second = $('#qunit-fixture .duplicates option')[2];
+
+  var changeTriggered = false;
+
+  assert.equal($select.val(), 'one');
+
+  $select.on('change', function () {
+    changeTriggered = true;
+  });
+
+  data.select({
+    id: 'one',
+    text: 'Uno',
+    element: second
+  });
+
+  assert.equal(
+    $select.val(),
+    'one',
+    'The value never changed'
+  );
+
+  assert.ok(
+    changeTriggered,
+    'The change event should be triggered'
+  );
+
+  assert.ok(
+    second.selected,
+    'The second duplicate is selected, not the first'
+  );
+});
+
+test('duplicates - single - different id on select triggers change',
+  function (assert) {
+  var $select = $('#qunit-fixture .duplicates');
+
+  var data = new SelectData($select, data);
+  var second = $('#qunit-fixture .duplicates option')[2];
+
+  var changeTriggered = false;
+
+  $select.val('two');
+
+  $select.on('change', function () {
+    changeTriggered = true;
+  });
+
+  data.select({
+    id: 'one',
+    text: 'Uno',
+    element: second
+  });
+
+  assert.equal(
+    $select.val(),
+    'one',
+    'The value changed to the duplicate id'
+  );
+
+  assert.ok(
+    changeTriggered,
+    'The change event should be triggered'
+  );
+
+  assert.ok(
+    second.selected,
+    'The second duplicate is selected, not the first'
+  );
+});
+
+test('duplicates - multiple - same id on select triggers change',
+function (assert) {
+  var $select = $('#qunit-fixture .duplicates-multi');
+
+  var data = new SelectData($select, data);
+  var second = $('#qunit-fixture .duplicates-multi option')[2];
+
+  var changeTriggered = false;
+
+  $select.val(['one']);
+
+  $select.on('change', function () {
+    changeTriggered = true;
+  });
+
+  data.select({
+    id: 'one',
+    text: 'Uno',
+    element: second
+  });
+
+  assert.deepEqual(
+    $select.val(),
+    ['one', 'one'],
+    'The value now has duplicates'
+  );
+
+  assert.ok(
+    changeTriggered,
+    'The change event should be triggered'
+  );
+
+  assert.ok(
+    second.selected,
+    'The second duplicate is selected, not the first'
+  );
+});
+
+test('duplicates - multiple - different id on select triggers change',
+function (assert) {
+  var $select = $('#qunit-fixture .duplicates-multi');
+
+  var data = new SelectData($select, data);
+  var second = $('#qunit-fixture .duplicates-multi option')[2];
+
+  var changeTriggered = false;
+
+  $select.val(['two']);
+
+  $select.on('change', function () {
+    changeTriggered = true;
+  });
+
+  data.select({
+    id: 'one',
+    text: 'Uno',
+    element: second
+  });
+
+  assert.deepEqual(
+    $select.val(),
+    ['two', 'one'],
+    'The value has the new id'
+  );
+
+  assert.ok(
+    changeTriggered,
+    'The change event should be triggered'
+  );
+
+  assert.ok(
+    second.selected,
+    'The second duplicate is selected, not the first'
+  );
+});
+
 module('Data adapter - Select - query');
 
 test('all options are returned with no term', function (assert) {
@@ -255,6 +407,35 @@ test('empty optgroups are still shown when queried', function (assert) {
       item.children.length,
       0,
       'There should be no children in the empty opgroup'
+    );
+  });
+});
+
+test('multiple options with the same value are returned', function (assert) {
+  var $select = $('#qunit-fixture .duplicates');
+
+  var data = new SelectData($select, options);
+
+  data.query({}, function (data) {
+    assert.equal(
+      data.length,
+      3,
+      'The duplicate option should still be returned when queried'
+    );
+
+    var first = data[0];
+    var duplicate = data[2];
+
+    assert.equal(
+      first.id,
+      duplicate.id,
+      'The duplicates should have the same id'
+    );
+
+    assert.notEqual(
+      first.text,
+      duplicate.text,
+      'The duplicates do not have the same text'
     );
   });
 });
