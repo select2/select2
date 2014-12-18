@@ -321,7 +321,7 @@ $(".js-programmatic-disable").on("click", function () {
     </div>
   </section>
 
-  <section id="tagss" class="row">
+  <section id="programmatic" class="row">
     <div class="col-md-4">
       <h1>Programmatic access</h1>
 
@@ -585,6 +585,36 @@ $(".js-example-language").select2({
       </script>
     </div>
   </section>
+
+  <section id="rtl" class="row">
+    <div class="col-md-4">
+      <h1>RTL support</h1>
+
+      <p>
+        Select2 will work on RTL websites if the <code>dir</code> attribute is
+        set on the <code>&lt;select&gt;</code> or any parents of it.
+      </p>
+
+      <p>
+        <select class="js-example-rtl js-states form-control" dir="rtl"></select>
+      </p>
+
+      <p>
+        You can also use initialize Select2 with <code>dir: "rtl"</code> set.
+      </p>
+    </div>
+    <div class="col-md-8">
+      <h2>Example code</h2>
+
+      <pre data-fill-from=".js-code-theme"></pre>
+
+      <script type="text/x-example-code" class="js-code-rtl">
+      $(".js-example-rtl").select2({
+        dir: "rtl"
+      });
+      </script>
+    </div>
+  </section>
 </div>
 
 <select class="js-source-states" style="display: none;">
@@ -788,5 +818,7 @@ $.fn.select2.amd.require(
   $(".js-example-theme-multiple").select2({
     theme: "classic"
   });
+
+  $(".js-example-rtl").select2();
 });
 </script>

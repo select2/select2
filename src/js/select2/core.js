@@ -426,6 +426,8 @@ define([
       '</span>'
     );
 
+    $container.attr('dir', this.options.get('dir'));
+
     this.$container = $container;
 
     this.$container.addClass('select2-container--' + this.options.get('theme'));

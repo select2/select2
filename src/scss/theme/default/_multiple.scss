@@ -47,6 +47,24 @@
   }
 }
 
+&[dir="rtl"] {
+  .select2-selection--multiple {
+    .select2-selection__choice, .select2-selection__placeholder {
+      float: right;
+    }
+
+    .select2-selection__choice {
+      margin-left: 5px;
+      margin-right: auto;
+    }
+
+    .select2-selection__choice__remove {
+      margin-left: 2px;
+      margin-right: auto;
+    }
+  }
+}
+
 &.select2-container--disabled {
   .select2-selection--multiple {
     background-color: #eee;

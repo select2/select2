@@ -2347,7 +2347,6 @@ define('select2/data/select',[
     }
 
     item = $.extend({}, {
-      id: '',
       text: ''
     }, item);
 
@@ -2685,6 +2684,9 @@ define('select2/dropdown',[
 ], function (Utils) {
   function Dropdown ($element, options) {
     this.$element = $element;
+    this.options = options;
+
+    Dropdown.__super__.constructor.call(this);
   }
 
   Utils.Extend(Dropdown, Utils.Observable);
@@ -2695,6 +2697,8 @@ define('select2/dropdown',[
         '<span class="select2-results"></span>' +
       '</span>'
     );
+
+    $dropdown.attr('dir', this.options.get('dir'));
 
     this.$dropdown = $dropdown;
 
@@ -3445,6 +3449,16 @@ define('select2/options',[
       }
     }
 
+    if (this.options.dir == null) {
+      if ($e.prop('dir')) {
+        this.options.dir = $e.prop('dir');
+      } else if ($e.closest('[dir]').prop('dir')) {
+        this.options.dir = $e.closest('[dir]').prop('dir');
+      } else {
+        this.options.dir = 'ltr';
+      }
+    }
+
     $e.prop('disabled', this.options.disabled);
     $e.prop('multiple', this.options.multiple);
 
@@ -3939,6 +3953,8 @@ define('select2/core',[
         '<span class="dropdown-wrapper" aria-hidden="true"></span>' +
       '</span>'
     );
+
+    $container.attr('dir', this.options.get('dir'));
 
     this.$container = $container;
 

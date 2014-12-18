@@ -17,3 +17,12 @@
     text-overflow: ellipsis;
   }
 }
+
+&[dir="rtl"] {
+  .select2-selection--single {
+    .select2-selection__rendered {
+      padding-right: 8px;
+      padding-left: 20px;
+    }
+  }
+}

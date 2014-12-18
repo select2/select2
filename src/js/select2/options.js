@@ -31,6 +31,16 @@ define([
       }
     }
 
+    if (this.options.dir == null) {
+      if ($e.prop('dir')) {
+        this.options.dir = $e.prop('dir');
+      } else if ($e.closest('[dir]').prop('dir')) {
+        this.options.dir = $e.closest('[dir]').prop('dir');
+      } else {
+        this.options.dir = 'ltr';
+      }
+    }
+
     $e.prop('disabled', this.options.disabled);
     $e.prop('multiple', this.options.multiple);
 

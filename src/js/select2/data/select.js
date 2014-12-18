@@ -224,7 +224,6 @@ define([
     }
 
     item = $.extend({}, {
-      id: '',
       text: ''
     }, item);
 

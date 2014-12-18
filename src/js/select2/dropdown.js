@@ -3,6 +3,9 @@ define([
 ], function (Utils) {
   function Dropdown ($element, options) {
     this.$element = $element;
+    this.options = options;
+
+    Dropdown.__super__.constructor.call(this);
   }
 
   Utils.Extend(Dropdown, Utils.Observable);
@@ -13,6 +16,8 @@ define([
         '<span class="select2-results"></span>' +
       '</span>'
     );
+
+    $dropdown.attr('dir', this.options.get('dir'));
 
     this.$dropdown = $dropdown;
 
