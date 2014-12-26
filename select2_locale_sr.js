@@ -7,9 +7,9 @@
     "use strict";
 
     $.fn.select2.locales['sr'] = {
-        formatMatches: function (matches) { if (matches === 1) { return "Jedan rezultat pronađen, pritisni enter da ga izavereš."; } return matches + " " + declination(matches, 'rezultata pronađeno', 'rezultata pronađeno', 'rezultat pronađen') + ", koristi strelice gore/dole za navigaciju."; },
+        formatMatches: function (matches) { if (matches === 1) { return "Jedan rezultat pronađen, pritisni \"enter\" da ga izabereš."; } return matches + " " + declination(matches, 'rezultata pronađeno', 'rezultata pronađeno', 'rezultat pronađen') + ", koristi strelice gore/dole za navigaciju."; },
         formatNoMatches: function () { return "Nema rezultata"; },
-        formatInputTooShort: function (input, min) { var n = min - input.length; return "Upiši " + n + " ili više " + declination(n, 'karaktera', 'karaktera', 'karakter'); },
+        formatInputTooShort: function (input, min) { var n = min - input.length; return "Upiši " + n + " ili više karaktera"; },
         formatInputTooLong: function (input, max) { var n = input.length - max; return "Obriši " + n + " " + declination(n, 'karaktera', 'karaktera', 'karakter'); },
         formatSelectionTooBig: function (limit) { return "Možeš izabrati samo " + limit + " " + declination(limit, 'opcije' , 'opcije', 'opciju'); },
         formatLoadMore: function (pageNumber) { return "Učitavam još rezultata…"; },
