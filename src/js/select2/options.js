@@ -44,6 +44,31 @@ define([
     $e.prop('disabled', this.options.disabled);
     $e.prop('multiple', this.options.multiple);
 
+    if ($e.data('select2-tags')) {
+      if (console && console.warn) {
+        console.warn(
+          'Select2: The `data-select2-tags` attribute has been changed to ' +
+          'use the `data-data` and `data-tags="true"` attributes and will be ' +
+          'removed in future versions of Select2.'
+        );
+      }
+
+      $e.data('data', $e.data('select2-tags'));
+      $e.data('tags', true);
+    }
+
+    if ($e.data('ajax-url')) {
+      if (console && console.warn) {
+        console.warn(
+          'Select2: The `data-ajax-attribute` has been changed to ' +
+          '`data-ajax--url` and support for the old attribute will be removed' +
+          ' in future versions of Select2.'
+        );
+      }
+
+      $e.data('ajax--url', $e.data('ajax-url'));
+    }
+
     var data = $e.data();
 
     function convertData (data) {
