@@ -44,6 +44,7 @@ Integrations
 * [Yii 2.x](http://demos.krajee.com/widgets#select2)
 * [Yii 1.x](https://github.com/tonybolzan/yii-select2)
 * [AtmosphereJS](https://atmospherejs.com/package/jquery-select2)
+* [EmberJS](https://github.com/iStefo/ember-select-2)
 
 ### Example Integrations
 
