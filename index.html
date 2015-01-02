@@ -1545,7 +1545,19 @@ $("#select").select2({
                     <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
                     <tr><td>transport</td><td>function</td><td>Function that will be used to perform the ajax request. Must be parameter-compatible with <code>$.ajax</code>. Defaults to <code>$.ajax</code> if not specified.
                         Allows the use of various ajax wrapper libraries such as: <a href="http://www.protofunc.com/scripts/jquery/ajaxManager/">AjaxManager</a>. </td></tr>
-                    <tr><td>url</td><td>string/function</td><td>String containing the ajax url or a function that returns such a string.</td></tr>
+                    <tr><td>url</td><td>string/function</td><td>String containing the ajax url or a function that returns such a string.
+                      
+                      <pre>url(term, page)</pre>
+                        <table class="table table-bordered table-striped">
+                            <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                            <tr><td>term</td><td>string</td><td>Search term.</td></tr>
+                            <tr><td>page</td><td>int</td><td>1-based page number tracked by Select2 for use with infinite scrolling of results.</td></tr>
+                            <tr><td>context</td><td>object</td><td>See <a href="#doc-query-options-callback"><code>options.context</code></a> parameter to the <a href="#doc-query"><code>query</code></a> function above.</td></tr>
+                            <tr><td>&lt;returns&gt;</td><td>object</td><td>Object containing url parameters.</td></tr>
+                        </table>
+                      
+                      
+                    </td></tr>
                     <tr><td>dataType</td><td>string</td><td>Data type for the request. <code>xml</code>, <code>json</code>, <code>jsonp</code>, other formats supported by jquery.</td></tr>
                     <tr><td>quietMillis</td><td>int</td><td>Number of milliseconds to wait for the user to stop typing before issuing the ajax request.</td></tr>
                     <tr><td>cache</td><td>boolean</td><td>If set to <code>false</code>, it will force requested pages not to be cached by the browser. Default is <code>false</code>.</td></tr>
