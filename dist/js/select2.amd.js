@@ -163,8 +163,9 @@ window.$ = window.$ || {};(function() { if ($ && $.fn && $.fn.select2 && $.fn.se
 });
 
 define('select2/results',[
+  'jquery',
   './utils'
-], function (Utils) {
+], function ($, Utils) {
   function Results ($element, options, dataAdapter) {
     this.$element = $element;
     this.data = dataAdapter;
@@ -529,6 +530,33 @@ define('select2/results',[
     this.on('results:message', function (params) {
       self.displayMessage(params);
     });
+
+    if ($.fn.mousewheel) {
+      this.$results.on('mousewheel', function (e) {
+        var top = self.$results.scrollTop();
+
+        var bottom = (
+          self.$results.get(0).scrollHeight -
+          self.$results.scrollTop() +
+          e.deltaY
+        );
+
+        var isAtTop = e.deltaY > 0 && top - e.deltaY <= 0;
+        var isAtBottom = e.deltaY < 0 && bottom <= self.$results.height();
+
+        if (isAtTop) {
+          self.$results.scrollTop(0);
+          e.preventDefault();
+          e.stopPropagation();
+        } else if (isAtBottom) {
+          self.$results.scrollTop(
+            self.$results.get(0).scrollHeight - self.$results.height()
+          );
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      });
+    }
 
     this.$results.on('mouseup', '.select2-results__option[aria-selected]',
       function (evt) {
@@ -4005,6 +4033,11 @@ define('jquery.select2',[
   'jquery',
   'select2/core'
 ], function ($, Select2) {
+  // Force jQuery.mousewheel to be loaded if it hasn't already
+  try {
+    require('jquery.mousewheel');
+  } catch (Exception) { }
+
   if ($.fn.select2 == null) {
     $.fn.select2 = function (options) {
       options = options || {};

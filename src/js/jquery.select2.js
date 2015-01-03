@@ -2,6 +2,11 @@ define([
   'jquery',
   'select2/core'
 ], function ($, Select2) {
+  // Force jQuery.mousewheel to be loaded if it hasn't already
+  try {
+    require('jquery.mousewheel');
+  } catch (Exception) { }
+
   if ($.fn.select2 == null) {
     $.fn.select2 = function (options) {
       options = options || {};

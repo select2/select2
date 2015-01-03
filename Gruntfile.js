@@ -10,6 +10,7 @@ module.exports = function (grunt) {
 
   fullIncludes = [
     'jquery',
+    'jquery.mousewheel',
 
     'select2/compat/matcher',
 
@@ -144,7 +145,8 @@ module.exports = function (grunt) {
           include: amdIncludes.concat(fullIncludes),
           paths: {
             almond: '../../vendor/almond-0.2.9',
-            jquery: '../../vendor/jquery-2.1.0'
+            jquery: '../../vendor/jquery-2.1.0',
+            'jquery.mousewheel': '../../vendor/jquery.mousewheel'
           },
           wrap: grunt.file.readJSON('src/js/banner.json')
         }
@@ -170,7 +172,8 @@ module.exports = function (grunt) {
           out: 'dist/js/select2.amd.full.js',
           include: fullIncludes,
           paths: {
-            jquery: 'empty:'
+            jquery: 'empty:',
+            'jquery.mousewheel': '../../vendor/jquery.mousewheel'
           },
           wrap: grunt.file.readJSON('src/js/banner.json')
         }
