@@ -546,12 +546,14 @@ define('select2/results',[
 
         if (isAtTop) {
           self.$results.scrollTop(0);
+
           e.preventDefault();
           e.stopPropagation();
         } else if (isAtBottom) {
           self.$results.scrollTop(
             self.$results.get(0).scrollHeight - self.$results.height()
           );
+
           e.preventDefault();
           e.stopPropagation();
         }

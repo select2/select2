@@ -60,10 +60,11 @@ module.exports = function (grunt) {
     'gh-pages': {
       options: {
         base: 'docs',
+        branch: 'master',
         clone: 'node_modules/grunt-gh-pages/repo',
         message: 'Updated docs with master',
         push: true,
-        repo: 'git@github.com:kevin-brown/select2.git'
+        repo: 'git@github.com:select2/select2.github.io.git'
       },
       src: '**'
     },
@@ -233,5 +234,5 @@ module.exports = function (grunt) {
 
   grunt.registerTask('docs', ['jekyll:serve']);
 
-  grunt.registerTask('release', ['default', 'clean:docs', 'gh-pages']);
+  grunt.registerTask('docs-release', ['default', 'clean:docs', 'gh-pages']);
 };
