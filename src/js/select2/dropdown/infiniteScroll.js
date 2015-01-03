@@ -12,14 +12,18 @@ define([
 
   InfiniteScroll.prototype.append = function (decorated, data) {
     this.$loadingMore.remove();
+    this.loading = false;
 
-    decorated.call(this, data);
-
-    if (data.length > 0) {
-      this.$results.append(this.$loadingMore);
+    if ($.isArray(data)) {
+      decorated.call(this, data);
+      return;
     }
 
-    this.loading = false;
+    decorated.call(this, data.results);
+
+    if (this.showLoadingMore(data)) {
+      this.$results.append(this.$loadingMore);
+    }
   };
 
   InfiniteScroll.prototype.bind = function (decorated, container, $container) {
@@ -38,12 +42,12 @@ define([
     });
 
     this.$results.on('scroll', function () {
-      var loadMoreVisible = $.contains(
+      var isLoadMoreVisible = $.contains(
         document.documentElement,
         self.$loadingMore[0]
       );
 
-      if (self.loading || !loadMoreVisible) {
+      if (self.loading || !isLoadMoreVisible) {
         return;
       }
 
@@ -66,6 +70,10 @@ define([
     params.page++;
 
     this.trigger('query:append', params);
+  };
+
+  InfiniteScroll.prototype.showLoadingMore = function (_, data) {
+    return data.pagination && data.pagination.more;
   };
 
   InfiniteScroll.prototype.createLoadingMore = function () {

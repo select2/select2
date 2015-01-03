@@ -12029,7 +12029,7 @@ define('select2/data/ajax',[
       var $request = $.ajax(options);
 
       $request.success(function (data) {
-        var results = self.processResults(data);
+        var results = self.processResults(data, params);
 
         callback(results);
       });
@@ -12395,14 +12395,18 @@ define('select2/dropdown/infiniteScroll',[
 
   InfiniteScroll.prototype.append = function (decorated, data) {
     this.$loadingMore.remove();
+    this.loading = false;
 
-    decorated.call(this, data);
-
-    if (data.length > 0) {
-      this.$results.append(this.$loadingMore);
+    if ($.isArray(data)) {
+      decorated.call(this, data);
+      return;
     }
 
-    this.loading = false;
+    decorated.call(this, data.results);
+
+    if (this.showLoadingMore(data)) {
+      this.$results.append(this.$loadingMore);
+    }
   };
 
   InfiniteScroll.prototype.bind = function (decorated, container, $container) {
@@ -12421,12 +12425,12 @@ define('select2/dropdown/infiniteScroll',[
     });
 
     this.$results.on('scroll', function () {
-      var loadMoreVisible = $.contains(
+      var isLoadMoreVisible = $.contains(
         document.documentElement,
         self.$loadingMore[0]
       );
 
-      if (self.loading || !loadMoreVisible) {
+      if (self.loading || !isLoadMoreVisible) {
         return;
       }
 
@@ -12449,6 +12453,10 @@ define('select2/dropdown/infiniteScroll',[
     params.page++;
 
     this.trigger('query:append', params);
+  };
+
+  InfiniteScroll.prototype.showLoadingMore = function (_, data) {
+    return data.pagination && data.pagination.more;
   };
 
   InfiniteScroll.prototype.createLoadingMore = function () {

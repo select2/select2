@@ -44,7 +44,7 @@ define([
       var $request = $.ajax(options);
 
       $request.success(function (data) {
-        var results = self.processResults(data);
+        var results = self.processResults(data, params);
 
         callback(results);
       });
