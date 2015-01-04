@@ -5,6 +5,7 @@
  * @author  Uriy Efremochkin <efremochkin@uriy.me>
  * @author  Michał Połtyn <mike@poltyn.com>
  * @author  Damian Zajkowski <damian.zajkowski@gmail.com>
+ * @ author Krzysztof Maliszewski <k.a.maliszewski@gmail.com>
  */
 (function($) {
     "use strict";
@@ -14,13 +15,13 @@
             return "Brak wyników";
         },
         formatInputTooShort: function(input, min) {
-            return "Wpisz co najmniej" + character(min - input.length, "znak", "i");
+            return "Wpisz co najmniej" + character(min - input.length, ["znak","znaki","znaków"]);
         },
         formatInputTooLong: function(input, max) {
-            return "Wpisana fraza jest za długa o" + character(input.length - max, "znak", "i");
+            return "Wpisana fraza jest za długa o" + character(input.length - max, ["znak","znaki","znaków"]);
         },
         formatSelectionTooBig: function(limit) {
-            return "Możesz zaznaczyć najwyżej" + character(limit, "element", "y");
+            return "Możesz zaznaczyć najwyżej" + character(limit, ["element","elementy","elementów"]);
         },
         formatLoadMore: function(pageNumber) {
             return "Ładowanie wyników…";
@@ -32,23 +33,18 @@
 
     $.extend($.fn.select2.defaults, $.fn.select2.locales['pl']);
 
-    function character(n, word, pluralSuffix) {
-        //Liczba pojedyncza - brak suffiksu
-        //jeden znak
-        //jeden element
-        var suffix = '';
-        if (n > 1 && n < 5) {
-            //Liczaba mnoga ilość od 2 do 4 - własny suffiks
-            //Dwa znaki, trzy znaki, cztery znaki.
-            //Dwa elementy, trzy elementy, cztery elementy
-            suffix = pluralSuffix;
-        } else if (n == 0 || n >= 5) {
-            //Ilość 0 suffiks ów
-            //Liczaba mnoga w ilości 5 i więcej - suffiks ów (nie poprawny dla wszystkich wyrazów, np. 100 wiadomości)
-            //Zero znaków, Pięć znaków, sześć znaków, siedem znaków, osiem znaków.
-            //Zero elementów Pięć elementów, sześć elementów, siedem elementów, osiem elementów.
-            suffix = 'ów';
-        }
-        return " " + n + " " + word + suffix;
+    function character(n, words) {
+		var index = 0;
+        if(n == 1) index = 0;
+		else{
+			var modulo = n % 10;
+			var modulo_2 = n % 100;
+			if((modulo == 2 || modulo == 3 || modulo == 4) && modulo_2 != 12 && modulo_2 != 13 && modulo_2 != 14) index = 1;
+			else index = 2;
+		}
+		
+		var word = words[index];
+		
+		return " " + n + " " + word;
     }
 })(jQuery);
