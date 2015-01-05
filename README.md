@@ -3,7 +3,7 @@ Select2
 
 Select2 is a jQuery-based replacement for select boxes. It supports searching, remote data sets, and infinite scrolling of results.
 
-To get started, checkout examples and documentation at http://ivaynberg.github.com/select2
+To get started, checkout examples and documentation at http://select2.github.io/select2/
 
 Use cases
 ---------
@@ -27,7 +27,7 @@ Browser compatibility
 
 Usage
 -----
-You can source Select2 directly from a CDN like [jsDelivr](http://www.jsdelivr.com/#!select2) or [CDNJS](http://www.cdnjs.com/libraries/select2), [download it from this GitHub repo](https://github.com/ivaynberg/select2/tags), or use one of the integrations below.
+You can source Select2 directly from a CDN like [jsDelivr](http://www.jsdelivr.com/#!select2) or [CDNJS](http://www.cdnjs.com/libraries/select2), [download it from this GitHub repo](https://github.com/select2/select2/tags), or use one of the integrations below.
 
 Integrations
 ------------
@@ -64,7 +64,7 @@ it, and make a pull request back to Select2 here on GitHub.
 Documentation
 -------------
 
-The documentation for Select2 is available [through GitHub Pages](https://ivaynberg.github.io/select2/) and is located within this repository in the [`gh-pages` branch](https://github.com/ivaynberg/select2/tree/gh-pages).
+The documentation for Select2 is available [through GitHub Pages](http://select2.github.io/select2/) and is located within this repository in the [`gh-pages` branch](https://github.com/ivaynberg/select2/tree/gh-pages).
 
 Community
 ---------
@@ -96,7 +96,7 @@ Need help implementing Select2 in your project? Ask in our IRC channel!
 Copyright and license
 ---------------------
 
-Copyright 2014 Igor Vaynberg
+Copyright 2015 Igor Vaynberg
 
 This software is licensed under the Apache License, Version 2.0 (the "Apache License") or the GNU
 General Public License version 2 (the "GPL License"). You may choose either license to govern your
