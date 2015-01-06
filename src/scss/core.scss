@@ -5,10 +5,10 @@
   margin: 0;
   position: relative;
   vertical-align: middle;
-}
 
-@import "single";
-@import "multiple";
+  @import "single";
+  @import "multiple";
+}
 
 @import "dropdown";
 

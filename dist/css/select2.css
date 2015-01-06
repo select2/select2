@@ -4,44 +4,40 @@
   margin: 0;
   position: relative;
   vertical-align: middle; }
-
-.select2-selection--single {
-  box-sizing: border-box;
-  cursor: pointer;
-  display: block;
-  height: 28px;
-  user-select: none;
-  -webkit-user-select: none; }
-  .select2-selection--single .select2-selection__rendered {
+  .select2-container .select2-selection--single {
+    box-sizing: border-box;
+    cursor: pointer;
     display: block;
-    overflow: hidden;
-    padding-left: 8px;
-    padding-right: 20px;
-    text-overflow: ellipsis; }
-
-[dir="rtl"] .select2-selection--single .select2-selection__rendered {
-  padding-right: 8px;
-  padding-left: 20px; }
-
-.select2-selection--multiple {
-  box-sizing: border-box;
-  cursor: pointer;
-  display: block;
-  min-height: 32px;
-  user-select: none;
-  -webkit-user-select: none; }
-  .select2-selection--multiple .select2-selection__rendered {
-    display: inline-block;
-    overflow: hidden;
-    padding-left: 8px;
-    text-overflow: ellipsis; }
-
-.select2-search--inline {
-  float: left; }
-  .select2-search--inline .select2-search__field {
-    border: none;
-    font-size: 100%;
-    margin-top: 5px; }
+    height: 28px;
+    user-select: none;
+    -webkit-user-select: none; }
+    .select2-container .select2-selection--single .select2-selection__rendered {
+      display: block;
+      overflow: hidden;
+      padding-left: 8px;
+      padding-right: 20px;
+      text-overflow: ellipsis; }
+  .select2-container[dir="rtl"] .select2-selection--single .select2-selection__rendered {
+    padding-right: 8px;
+    padding-left: 20px; }
+  .select2-container .select2-selection--multiple {
+    box-sizing: border-box;
+    cursor: pointer;
+    display: block;
+    min-height: 32px;
+    user-select: none;
+    -webkit-user-select: none; }
+    .select2-container .select2-selection--multiple .select2-selection__rendered {
+      display: inline-block;
+      overflow: hidden;
+      padding-left: 8px;
+      text-overflow: ellipsis; }
+  .select2-container .select2-search--inline {
+    float: left; }
+    .select2-container .select2-search--inline .select2-search__field {
+      border: none;
+      font-size: 100%;
+      margin-top: 5px; }
 
 .select2-dropdown {
   background-color: white;
