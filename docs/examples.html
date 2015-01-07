@@ -429,6 +429,45 @@ $(".js-example-tags").select2({
     </div>
   </section>
 
+  <section id="tokenizer" class="row">
+    <div class="col-md-4">
+      <h1>Automatic tokenization</h1>
+
+      <p>
+        Select2 supports ability to add choices automatically as the user is
+        typing into the search field. Try typing in the search field below and
+        entering a space or a comma.
+      </p>
+
+      <p>
+        <select class="js-example-tokenizer form-control" multiple="multiple">
+          <option>red</option>
+          <option>blue</option>
+          <option>green</option>
+        </select>
+      </p>
+
+      <p>
+        The separators that should be used when tokenizing can be specified
+        using the <a href="options.html#tokenSeparators">tokenSeparators</a>
+        options.
+      </p>
+
+    </div>
+    <div class="col-md-8">
+      <h2>Example code</h2>
+
+      <pre data-fill-from=".js-code-tokenizer"></pre>
+
+<script type="text/x-example-code" class="js-code-tokenizer">
+$(".js-example-tokenizer").select2({
+  tags: true,
+  tokenSeparators: [',', ' ']
+})
+</script>
+    </div>
+  </section>
+
   <section id="matcher" class="row">
     <div class="col-md-4">
       <h1>Custom matcher</h1>
@@ -799,6 +838,11 @@ $.fn.select2.amd.require(
 
   $tags.select2({
     tags: ['red', 'blue', 'green']
+  });
+
+  $(".js-example-tokenizer").select2({
+    tags: true,
+    tokenSeparators: [',', ' ']
   });
 
   function matchStart (term, text) {

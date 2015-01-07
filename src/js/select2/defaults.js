@@ -16,6 +16,7 @@ define([
   './data/array',
   './data/ajax',
   './data/tags',
+  './data/tokenizer',
   './data/minimumInputLength',
   './data/maximumInputLength',
 
@@ -34,7 +35,7 @@ define([
 
              Utils, Translation, DIACRITICS,
 
-             SelectData, ArrayData, AjaxData, Tags,
+             SelectData, ArrayData, AjaxData, Tags, Tokenizer,
              MinimumInputLength, MaximumInputLength,
 
              Dropdown, DropdownSearch, HidePlaceholder, InfiniteScroll,
@@ -73,6 +74,13 @@ define([
 
       if (options.tags != null) {
         options.dataAdapter = Utils.Decorate(options.dataAdapter, Tags);
+      }
+
+      if (options.tokenSeparators != null || options.tokenizer != null) {
+        options.dataAdapter = Utils.Decorate(
+          options.dataAdapter,
+          Tokenizer
+        );
       }
     }
 
