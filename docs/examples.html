@@ -223,7 +223,9 @@ $(".js-data-example-ajax").select2({
       // parse the results into the format expected by Select2.
       // since we are using custom formatting functions we do not need to
       // alter the remote JSON data
-      return data.items;
+      return {
+        results: data.items
+      };
     },
     cache: true
   },

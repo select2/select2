@@ -18,9 +18,9 @@ test('does not trigger on blank/null terms', function (assert) {
   data.query({
     term: ''
   }, function (data) {
-    assert.equal(data.length, 1);
+    assert.equal(data.results.length, 1);
 
-    var item = data[0];
+    var item = data.results[0];
 
     assert.equal(item.id, 'One');
     assert.equal(item.text, 'One');
@@ -29,9 +29,9 @@ test('does not trigger on blank/null terms', function (assert) {
   data.query({
     term: null
   }, function (data) {
-    assert.equal(data.length, 1);
+    assert.equal(data.results.length, 1);
 
-    var item = data[0];
+    var item = data.results[0];
 
     assert.equal(item.id, 'One');
     assert.equal(item.text, 'One');
@@ -44,9 +44,9 @@ test('does not trigger for additional pages', function (assert) {
   data.query({
     page: 2
   }, function (data) {
-    assert.equal(data.length, 1);
+    assert.equal(data.results.length, 1);
 
-    var item = data[0];
+    var item = data.results[0];
 
     assert.equal(item.id, 'One');
     assert.equal(item.text, 'One');
@@ -59,9 +59,9 @@ test('creates tag at beginning', function (assert) {
   data.query({
     term: 'o'
   }, function (data) {
-    assert.equal(data.length, 2);
+    assert.equal(data.results.length, 2);
 
-    var first = data[0];
+    var first = data.results[0];
 
     assert.equal(first.id, 'o');
     assert.equal(first.text, 'o');
@@ -74,9 +74,9 @@ test('tags can be the only result', function (assert) {
   data.query({
     term: 'test'
   }, function (data) {
-    assert.equal(data.length, 1);
+    assert.equal(data.results.length, 1);
 
-    var item = data[0];
+    var item = data.results[0];
 
     assert.equal(item.id, 'test');
     assert.equal(item.text, 'test');
@@ -89,7 +89,7 @@ test('tags are injected as options', function (assert) {
   data.query({
     term: 'test'
   }, function (data) {
-    assert.equal(data.length, 1);
+    assert.equal(data.results.length, 1);
 
     var $children = $('#qunit-fixture .single option');
 
@@ -108,7 +108,7 @@ test('old tags are removed automatically', function (assert) {
   data.query({
     term: 'first'
   }, function (data) {
-    assert.equal(data.length, 1);
+    assert.equal(data.results.length, 1);
 
     var $children = $('#qunit-fixture .single option');
 
@@ -118,7 +118,7 @@ test('old tags are removed automatically', function (assert) {
   data.query({
     term: 'second'
   }, function (data) {
-    assert.equal(data.length, 1);
+    assert.equal(data.results.length, 1);
 
     var $children = $('#qunit-fixture .single option');
 
@@ -141,9 +141,9 @@ test('insertTag controls the tag location', function (assert) {
   data.query({
     term: 'o'
   }, function (data) {
-    assert.equal(data.length, 2);
+    assert.equal(data.results.length, 2);
 
-    var item = data[1];
+    var item = data.results[1];
 
     assert.equal(item.id, 'o');
     assert.equal(item.text, 'o');
@@ -163,9 +163,9 @@ test('createTag controls the tag object', function (assert) {
   data.query({
     term: 'test'
   }, function (data) {
-    assert.equal(data.length, 1);
+    assert.equal(data.results.length, 1);
 
-    var item = data[0];
+    var item = data.results[0];
 
     assert.equal(item.id, 0);
     assert.equal(item.text, 'test');
@@ -182,6 +182,6 @@ test('createTag returns null for no tag', function (assert) {
   data.query({
     term: 'o'
   }, function (data) {
-    assert.equal(data.length, 1);
+    assert.equal(data.results.length, 1);
   });
 });

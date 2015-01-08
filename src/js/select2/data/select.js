@@ -142,7 +142,9 @@ define([
       }
     });
 
-    callback(data);
+    callback({
+      results: data
+    });
   };
 
   SelectAdapter.prototype.option = function (data) {

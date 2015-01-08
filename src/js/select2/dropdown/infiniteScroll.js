@@ -14,12 +14,7 @@ define([
     this.$loadingMore.remove();
     this.loading = false;
 
-    if ($.isArray(data)) {
-      decorated.call(this, data);
-      return;
-    }
-
-    decorated.call(this, data.results);
+    decorated.call(this, data);
 
     if (this.showLoadingMore(data)) {
       this.$results.append(this.$loadingMore);

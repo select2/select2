@@ -9749,7 +9749,7 @@ define('select2/results',[
 
     var $options = [];
 
-    if (data.length === 0) {
+    if (data.results == null || data.results.length === 0) {
       if (this.$results.children().length === 0) {
         this.trigger('results:message', {
           message: 'noResults'
@@ -9759,10 +9759,10 @@ define('select2/results',[
       return;
     }
 
-    data = this.sort(data);
+    data.results = this.sort(data.results);
 
-    for (var d = 0; d < data.length; d++) {
-      var item = data[d];
+    for (var d = 0; d < data.results.length; d++) {
+      var item = data.results[d];
 
       var $option = this.option(item);
 
@@ -11830,7 +11830,9 @@ define('select2/data/select',[
       }
     });
 
-    callback(data);
+    callback({
+      results: data
+    });
   };
 
   SelectAdapter.prototype.option = function (data) {
@@ -12111,12 +12113,17 @@ define('select2/data/tags',[
       return;
     }
 
-    function wrapper (data, child) {
+    function wrapper (obj, child) {
+      var data = obj.results;
+
       for (var i = 0; i < data.length; i++) {
         var option = data[i];
 
         var checkChildren = (
-          option.children != null && !wrapper(option.children, true)
+          option.children != null &&
+          !wrapper({
+            results: option.children
+          }, true)
         );
 
         var checkText = option.text === params.term;
@@ -12126,7 +12133,8 @@ define('select2/data/tags',[
             return false;
           }
 
-          callback(data);
+          obj.data = data;
+          callback(obj);
 
           return;
         }
@@ -12147,7 +12155,9 @@ define('select2/data/tags',[
         self.insertTag(data, tag);
       }
 
-      callback(data);
+      obj.results = data;
+
+      callback(obj);
     }
 
     decorated.call(this, params, wrapper);
@@ -12465,7 +12475,7 @@ define('select2/dropdown/hidePlaceholder',[
   }
 
   HidePlaceholder.prototype.append = function (decorated, data) {
-    data = this.removePlaceholder(data);
+    data.results = this.removePlaceholder(data.results);
 
     decorated.call(this, data);
   };
@@ -12514,12 +12524,7 @@ define('select2/dropdown/infiniteScroll',[
     this.$loadingMore.remove();
     this.loading = false;
 
-    if ($.isArray(data)) {
-      decorated.call(this, data);
-      return;
-    }
-
-    decorated.call(this, data.results);
+    decorated.call(this, data);
 
     if (this.showLoadingMore(data)) {
       this.$results.append(this.$loadingMore);
@@ -12761,7 +12766,7 @@ define('select2/dropdown/minimumResultsForSearch',[
   }
 
   MinimumResultsForSearch.prototype.showSearch = function (decorated, params) {
-    if (countResults(params.data) < this.minimumResultsForSearch) {
+    if (countResults(params.data.results) < this.minimumResultsForSearch) {
       return false;
     }
 

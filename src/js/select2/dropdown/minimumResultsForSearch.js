@@ -24,7 +24,7 @@ define([
   }
 
   MinimumResultsForSearch.prototype.showSearch = function (decorated, params) {
-    if (countResults(params.data) < this.minimumResultsForSearch) {
+    if (countResults(params.data.results) < this.minimumResultsForSearch) {
       return false;
     }
 

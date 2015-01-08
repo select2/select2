@@ -50,7 +50,7 @@ define([
 
     var $options = [];
 
-    if (data.length === 0) {
+    if (data.results == null || data.results.length === 0) {
       if (this.$results.children().length === 0) {
         this.trigger('results:message', {
           message: 'noResults'
@@ -60,10 +60,10 @@ define([
       return;
     }
 
-    data = this.sort(data);
+    data.results = this.sort(data.results);
 
-    for (var d = 0; d < data.length; d++) {
-      var item = data[d];
+    for (var d = 0; d < data.results.length; d++) {
+      var item = data.results[d];
 
       var $option = this.option(item);
 

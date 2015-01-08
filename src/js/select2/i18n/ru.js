@@ -1,8 +1,9 @@
 define(function () {
   // Russian
   function ending (count, one, couple, more) {
-    if (n % 10 < 5 && n % 10 > 0 && n % 100 < 5 || n % 100 > 20) {
-      if (n % 10 > 1) {
+    if (count % 10 < 5 && count % 10 > 0 &&
+        count % 100 < 5 || count % 100 > 20) {
+      if (count % 10 > 1) {
         return couple;
       }
     } else {
@@ -16,16 +17,19 @@ define(function () {
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;
 
-      var message = 'Пожалуйста, введите еще хотя бы ' + overChars + ' символ';
+      var message = 'Пожалуйста, введите на ' + overChars + ' символ';
 
       message += ending(overChars, '', 'a', 'ов');
+
+      message += ' меньше';
 
       return message;
     },
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
-      var message = 'Пожалуйста, введите на ' + remainingChars + ' символ';
+      var message = 'Пожалуйста, введите еще хотя бы ' + remainingChars +
+        ' символ';
 
       message += ending(overChars, '', 'a', 'ов');
 
@@ -45,7 +49,7 @@ define(function () {
       return 'Совпадений не найдено';
     },
     searching: function () {
-      return 'SПоиск…';
+      return 'Поиск…';
     }
   };
 });

@@ -28,12 +28,17 @@ define([
       return;
     }
 
-    function wrapper (data, child) {
+    function wrapper (obj, child) {
+      var data = obj.results;
+
       for (var i = 0; i < data.length; i++) {
         var option = data[i];
 
         var checkChildren = (
-          option.children != null && !wrapper(option.children, true)
+          option.children != null &&
+          !wrapper({
+            results: option.children
+          }, true)
         );
 
         var checkText = option.text === params.term;
@@ -43,7 +48,8 @@ define([
             return false;
           }
 
-          callback(data);
+          obj.data = data;
+          callback(obj);
 
           return;
         }
@@ -64,7 +70,9 @@ define([
         self.insertTag(data, tag);
       }
 
-      callback(data);
+      obj.results = data;
+
+      callback(obj);
     }
 
     decorated.call(this, params, wrapper);

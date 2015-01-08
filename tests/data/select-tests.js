@@ -10,14 +10,14 @@ test('current gets default for single', function (assert) {
 
   var data = new SelectData($select, options);
 
-  data.current(function (val) {
+  data.current(function (data) {
     assert.equal(
-      val.length,
+      data.length,
       1,
       'There should only be one selected option'
     );
 
-    var option = val[0];
+    var option = data[0];
 
     assert.equal(
       option.id,
@@ -38,9 +38,9 @@ test('current gets default for multiple', function (assert) {
 
   var data = new SelectData($select, options);
 
-  data.current(function (val) {
+  data.current(function (data) {
     assert.equal(
-      val.length,
+      data.length,
       0,
       'Multiple selects have no default selection.'
     );
@@ -54,14 +54,14 @@ test('current gets options with explicit value', function (assert) {
 
   $select.val('1');
 
-  data.current(function (val) {
+  data.current(function (data) {
     assert.equal(
-      val.length,
+      data.length,
       1,
       'There should be one selected option'
     );
 
-    var option = val[0];
+    var option = data[0];
 
     assert.equal(
       option.id,
@@ -315,7 +315,7 @@ test('all options are returned with no term', function (assert) {
 
   data.query({}, function (data) {
     assert.equal(
-      data.length,
+      data.results.length,
       3,
       'The number of items returned should be equal to the number of options'
     );
@@ -331,7 +331,7 @@ test('the matcher checks the text', function (assert) {
     term: 'Default'
   }, function (data) {
     assert.equal(
-      data.length,
+      data.results.length,
       1,
       'Only the "Default" option should be found'
     );
@@ -347,7 +347,7 @@ test('the matcher ignores case', function (assert) {
     term: 'one'
   }, function (data) {
     assert.equal(
-      data.length,
+      data.results.length,
       1,
       'The "One" option should still be found'
     );
@@ -363,7 +363,7 @@ test('no options may be returned with no matches', function (assert) {
     term: 'qwerty'
   }, function (data) {
     assert.equal(
-      data.length,
+      data.results.length,
       0,
       'Only matching items should be returned'
     );
@@ -377,7 +377,7 @@ test('optgroup tags are marked with children', function (assert) {
 
   data.query({}, function (data) {
     assert.ok(
-      'children' in data[0],
+      'children' in data.results[0],
       'The optgroup element should have children when queried'
     );
   });
@@ -390,12 +390,12 @@ test('empty optgroups are still shown when queried', function (assert) {
 
   data.query({}, function (data) {
     assert.equal(
-      data.length,
+      data.results.length,
       2,
       'The empty optgroup element should still be returned when queried'
     );
 
-    var item = data[1];
+    var item = data.results[1];
 
     assert.equal(
       item.text,
@@ -418,13 +418,13 @@ test('multiple options with the same value are returned', function (assert) {
 
   data.query({}, function (data) {
     assert.equal(
-      data.length,
+      data.results.length,
       3,
       'The duplicate option should still be returned when queried'
     );
 
-    var first = data[0];
-    var duplicate = data[2];
+    var first = data.results[0];
+    var duplicate = data.results[2];
 
     assert.equal(
       first.id,
