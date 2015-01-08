@@ -3846,13 +3846,14 @@ define('select2/core',[
   Select2.prototype._registerDataEvents = function () {
     var self = this;
 
-    this.data.on('results:message', function (params) {
-      self.trigger('results:message', params);
+    this.data.on('*', function (name, params) {
+      self.trigger(name, params);
     });
   };
 
   Select2.prototype._registerSelectionEvents = function () {
     var self = this;
+    var nonRelayEvents = ['open', 'close', 'toggle', 'unselected'];
 
     this.selection.on('open', function () {
       self.open();
@@ -3864,49 +3865,32 @@ define('select2/core',[
       self.toggleDropdown();
     });
 
-    this.selection.on('results:select', function () {
-      self.trigger('results:select');
-    });
-    this.selection.on('results:previous', function () {
-      self.trigger('results:previous');
-    });
-    this.selection.on('results:next', function () {
-      self.trigger('results:next');
-    });
-
     this.selection.on('unselected', function (params) {
       self.trigger('unselect', params);
 
       self.close();
     });
 
-    this.selection.on('query', function (params) {
-      self.trigger('query', params);
-    });
+    this.selection.on('*', function (name, params) {
+      if (nonRelayEvents.indexOf(name) !== -1) {
+        return;
+      }
 
-    this.selection.on('keypress', function (e) {
-      self.trigger('keypress', e);
+      self.trigger(name, params);
     });
   };
 
   Select2.prototype._registerDropdownEvents = function () {
     var self = this;
 
-    this.dropdown.on('query', function (params) {
-      self.trigger('query', params);
-    });
-
-    this.dropdown.on('keypress', function (e) {
-      self.trigger('keypress', e);
+    this.dropdown.on('*', function (name, params) {
+      self.trigger(name, params);
     });
   };
 
   Select2.prototype._registerResultsEvents = function () {
     var self = this;
-
-    this.results.on('query:append', function (params) {
-      self.trigger('query:append', params);
-    });
+    var nonRelayEvents = ['selected', 'unselected'];
 
     this.results.on('selected', function (params) {
       self.trigger('select', params);
@@ -3920,8 +3904,12 @@ define('select2/core',[
       self.close();
     });
 
-    this.results.on('results:focus', function (params) {
-      self.trigger('results:focus', params);
+    this.results.on('*', function (name, params) {
+      if (nonRelayEvents.indexOf(name) !== -1) {
+        return;
+      }
+
+      self.trigger(name, params);
     });
   };
 
