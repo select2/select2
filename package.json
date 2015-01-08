@@ -7,19 +7,26 @@
     "type": "git",
     "url": "git://github.com/select2/select2.git"
   },
+  "bugs": {
+    "url": "https://github.com/select2/select2/issues"
+  },
+  "keywords": [
+    "select",
+    "autocomplete",
+    "typeahead",
+    "dropdown",
+    "multiselect",
+    "tag",
+    "tagging"
+  ],
+  "license": "MIT",
   "main": "dist/js/select2.js",
-  "version": "4.0.0",
+  "version": "4.0.0-beta.1",
   "jspm": {
-    "main": "select2",
-    "files": [
-      "select2.js",
-      "select2.png",
-      "select2.css",
-      "select2-spinner.gif"
-    ],
-    "buildConfig": {
-      "uglify": true
-    }
+    "main": "js/select2",
+    "directories": {
+      "lib": "dist"
+    },
   },
   "devDependencies": {
     "grunt": "^0.4.5",
