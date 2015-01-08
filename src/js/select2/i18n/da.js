@@ -1,4 +1,5 @@
 define(function () {
+  // Danish
   return {
     errorLoading: function () {
       return 'The results could not be loaded.';

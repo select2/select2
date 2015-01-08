@@ -1,4 +1,6 @@
 define(function () {
+  // Slovak
+
   // use text for the numbers 2 through 4
   var smallNumbers = {
     2: function (masc) { return (masc ? 'dva' : 'dve'); },

@@ -3665,6 +3665,7 @@ define('select2/dropdown/minimumResultsForSearch',[
 });
 
 define('select2/i18n/en',[],function () {
+  // English
   return {
     errorLoading: function () {
       return 'The results could not be loaded.';

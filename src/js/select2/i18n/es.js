@@ -1,4 +1,5 @@
 define(function () {
+  // Spanish
   return {
     errorLoading: function () {
       return 'La carga falló';

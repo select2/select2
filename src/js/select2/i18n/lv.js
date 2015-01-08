@@ -1,4 +1,5 @@
 define(function () {
+  // Latvian
   function ending (count, eleven, singular, other) {
     if (count === 11) {
       return eleven;

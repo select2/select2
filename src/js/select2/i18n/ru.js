@@ -1,4 +1,5 @@
 define(function () {
+  // Russian
   function ending (count, one, couple, more) {
     if (n % 10 < 5 && n % 10 > 0 && n % 100 < 5 || n % 100 > 20) {
       if (n % 10 > 1) {

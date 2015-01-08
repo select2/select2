@@ -1,4 +1,5 @@
 define(function () {
+  // Croatian
   function character (n) {
     var message = ' ' + n + ' znak';
 

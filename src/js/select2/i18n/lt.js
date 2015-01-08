@@ -1,4 +1,5 @@
 define(function () {
+  // Italian
   function ending (count, first, second, third) {
     if ((count % 100 > 9 && count % 100 < 21) || count % 10 === 0) {
       if (count % 10 > 1) {
@@ -24,7 +25,7 @@ define(function () {
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
-      var message = 'Įrašykite dar ' + remainingChars + ' simbol'; 
+      var message = 'Įrašykite dar ' + remainingChars + ' simbol';
 
       message += ending(remainingChars, 'ių', 'ius', 'į');
 

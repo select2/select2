@@ -1,4 +1,5 @@
 define(function () {
+  // Thai
   return {
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;

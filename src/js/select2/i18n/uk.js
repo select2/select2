@@ -1,4 +1,5 @@
 define(function () {
+  // Ukranian
   function ending (count, one, couple, more) {
     if ([11,12,13,14].indexOf(count % 100) !== -1) {
       return more;
