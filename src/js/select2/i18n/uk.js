@@ -1,5 +1,5 @@
 define(function () {
-  function ending(count, one, couple, more) {
+  function ending (count, one, couple, more) {
     if ([11,12,13,14].indexOf(count % 100) !== -1) {
       return more;
     }
@@ -18,7 +18,8 @@ define(function () {
     },
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;
-      return 'Будь ласка, видаліть ' + overChars + ' ' + ending(args.maximum, 'літеру', 'літери', 'літер');
+      return 'Будь ласка, видаліть ' + overChars + ' ' +
+        ending(args.maximum, 'літеру', 'літери', 'літер');
     },
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
@@ -28,7 +29,8 @@ define(function () {
       return 'Завантаження інших результатів…';
     },
     maximumSelected: function (args) {
-      return 'Ви можете вибрати лише ' + args.maximum + ' ' + ending(args.maximum, 'пункт', 'пункти', 'пунктів');
+      return 'Ви можете вибрати лише ' + args.maximum + ' ' +
+        ending(args.maximum, 'пункт', 'пункти', 'пунктів');
     },
     noResults: function () {
       return 'Нічого не знайдено';
