@@ -38,9 +38,9 @@ slug: announcements-4.0
       been created as well as helper modules that will allow for backwards
       compatibility to be maintained with past versions of Select2. Upgrading
       <em>will</em> require you to read the release notes carefully, but the
-      migration path should be relatively straightforward. You can find more
-      information on the modules that have been created to make upgrading easier
-      by looking through <a href="release-notes.html">the release notes</a>.
+      migration path should be relatively straightforward. You can view a list
+      of the most common changes that you will need to make
+      <a href="https://github.com/select2/select2/releases">in the release notes</a>.
     </p>
 
     <p>
@@ -290,17 +290,99 @@ $("select").select2({
     <h3 id="changed-templating">Renamed templating options</h3>
 
     <p>
-      Select2 previously provided multiple options for formatting the results list and selected options, commonly referred to as "formatters", using the <code>formatSelection</code> and <code>formatResult</code> options. As the "formatters" were also used for things such as localization, <a href="#changed-translations">which has also changed</a>, they have been renamed to <code>templateSelection</code> and <code>templateResult</code> and their signatures have changed as well.
+      Select2 previously provided multiple options for formatting the results
+      list and selected options, commonly referred to as "formatters", using the
+      <code>formatSelection</code> and <code>formatResult</code> options. As the
+      "formatters" were also used for things such as localization,
+      <a href="#changed-translations">which has also changed</a>, they have been
+      renamed to <code>templateSelection</code> and <code>templateResult</code>
+      and their signatures have changed as well.
     </p>
 
     <p>
-      You should refer to the updated <a href="options.html#templates">documentation on templates</a> when migrating from previous versions of Select2.
+      You should refer to the updated
+      <a href="options.html#templates">documentation on templates</a> when
+      migrating from previous versions of Select2.
+    </p>
+
+    <h3 id="changed-id">
+      The <code>id</code> and <code>text</code> properties are strictly enforced
+    </h3>
+
+    <p>
+      When working with array and AJAX data in the past, Select2 allowed a
+      custom <code>id</code> function or attribute to be set in various places,
+      ranging from the initializion of Select2 to when the remote data was being
+      returned. This allowed Select2 to better integrate with existing data
+      sources that did not necessarily use the <code>id</code> attribute to
+      indicate the unique identifier for an object.
+    </p>
+
+    <p>
+      Select2 no longer supports a custom <code>id</code> or <code>text</code>
+      to be used, but provides integration points for converting incorrect data
+      to the expected format.
+    </p>
+
+    <h4>
+      When working with array data
+    </h4>
+
+    <p>
+      Select2 previously supported defining array data as an object that matched
+      the signature of an AJAX response. A <code>text</code> property could be
+      specified that would map the given property to the <code>text</code>
+      property on the individual objects. You can now do this when initializing
+      Select2 by using the following jQuery code to map the old
+      <code>text</code> and <code>id</code> properties to the new ones.
+    </p>
+
+<pre class="prettyprint linenums">
+var data = $.map([
+  {
+    pk: 1,
+    word: 'one'
+  },
+  {
+    pk: 2,
+    word: 'two'
+  }
+], function (obj) {
+  obj.id = obj.id || obj.pk;
+  obj.text = obj.text || obj.word;
+
+  return obj;
+});
+</pre>
+
+    <p>
+      This will result in an array of data objects that have the <code>id</code>
+      properties that match the existing <code>pk</code> properties and
+      <code>text</code> properties that match the existing <code>word</code>
+      properties.
+    </p>
+
+    <h4>
+      When working with remote data
+    </h4>
+
+    <p>
+      The same code that was given above can be used in the
+      <code>processResults</code> method of an AJAX call to map properties there
+      as well.
     </p>
 
     <h3 id="changed-translations">Renamed translation options</h3>
 
     <p>
-      In previous versions of Select2, the default messages provided to users could be localized to fit the language of the website that it was being used on. Select2 only comes with the English language by default, but provides <a href="options.html#language">community-contributed translations</a> for many common languages. Many of the formatters have been moved to the <code>language</code> option and the signatures of the formatters have been changed to handle future additions.
+      In previous versions of Select2, the default messages provided to users
+      could be localized to fit the language of the website that it was being
+      used on. Select2 only comes with the English language by default, but
+      provides
+      <a href="options.html#language">community-contributed translations</a> for
+      many common languages. Many of the formatters have been moved to the
+      <code>language</code> option and the signatures of the formatters have
+      been changed to handle future additions.
     </p>
 
     <h3 id="changed-data">
@@ -323,7 +405,14 @@ $("select").select2({
     </p>
 
     <p>
-      Although it was not documented, a list of possible tags could also be provided using the <code>data-select2-tags</code> attribute and passing in a JSON-formatted array of objects for tags. As the method for specifying tags has changed in 4.0, you should now provide the array of objects using the <code>data-data</code> attribute, which maps to <a href="options.html#data">the array data</a> option. You should also enable tags by setting <code>data-tags="true"</code> on the object, to maintain the ability for users to create their own options as well.
+      Although it was not documented, a list of possible tags could also be
+      provided using the <code>data-select2-tags</code> attribute and passing in
+      a JSON-formatted array of objects for tags. As the method for specifying
+      tags has changed in 4.0, you should now provide the array of objects using
+      the <code>data-data</code> attribute, which maps to
+      <a href="options.html#data">the array data</a> option. You should also
+      enable tags by setting <code>data-tags="true"</code> on the object, to
+      maintain the ability for users to create their own options as well.
     </p>
 
     <p>
@@ -353,17 +442,21 @@ $("select").select2({
     <h3>.select2("val")</h3>
 
     <p>
-      The <code>val</code> method has been deprecated and will be removed in
+      The <code>"val"</code> method has been deprecated and will be removed in
       Select2 4.1. The deprecated method no longer includes the
       <code>triggerChange</code> parameter.
     </p>
 
     <p>
-      You should directly call <code>val</code> on the underlying
+      You should directly call <code>.val</code> on the underlying
       <code>&lt;select&gt;</code> element instead. If you needed the second
       parameter (<code>triggerChange</code>), you should also call
       <code>.trigger("change")</code> on the element.
     </p>
+
+<pre class="prettyprint linenums">
+$("select").val("1"); // instead of $("select").select2("val", "1");
+</pre>
 
     <h3>.select2("enable")</h3>
 
@@ -374,6 +467,10 @@ $("select").select2({
       <code>&lt;select&gt;</code> element. Support for the old methods will be
       completely removed in Select2 4.1.
     </p>
+
+<pre class="prettyprint linenums">
+$("select").prop("disabled", true); // instead of $("select").enable(false);
+</pre>
   </section>
 </div>
 

@@ -155,9 +155,9 @@ $("select").select2({
         <div class="alert alert-warning">
           <strong>Heads up!</strong>
           Because browsers assume that the first <code>option</code> in
-          single-value select boxes is selected, you must add an empty
+          single-value select boxes is selected, you should add an empty
           <code>&lt;option&gt;&lt;/option&gt;</code> tag that the placeholder
-          should use, or it will not work.
+          should use or it may not work.
         </div>
       </div>
     </div>
@@ -441,9 +441,13 @@ ajax: {
   // an array of objects.
   //
   // @param data The data as it is returned directly by jQuery.
-  // @returns An array of objects that will be rendered by Select2.
+  // @returns An object containing the results data as well as any required
+  //   metadata that is used by plugins. The object should contain an array of
+  //   data objects as the `results` key.
   processResults: function (data) {
-    return data;
+    return {
+      results: data
+    };
   }
 }
 </pre>
