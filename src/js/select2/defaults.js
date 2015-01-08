@@ -7,6 +7,7 @@ define([
   './selection/placeholder',
   './selection/allowClear',
   './selection/search',
+  './selection/eventRelay',
 
   './utils',
   './translation',
@@ -31,7 +32,7 @@ define([
 ], function ($, ResultsList,
 
              SingleSelection, MultipleSelection, Placeholder, AllowClear,
-             SelectionSearch,
+             SelectionSearch, EventRelay,
 
              Utils, Translation, DIACRITICS,
 
@@ -152,6 +153,11 @@ define([
           SelectionSearch
         );
       }
+
+      options.selectionAdapter = Utils.Decorate(
+        options.selectionAdapter,
+        EventRelay
+      );
     }
 
     if (typeof options.language === 'string') {

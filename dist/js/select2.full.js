@@ -10761,6 +10761,31 @@ define('select2/selection/search',[
   return Search;
 });
 
+define('select2/selection/eventRelay',[
+  'jquery'
+], function ($) {
+  function EventRelay () { }
+
+  EventRelay.prototype.bind = function (decorated, container, $container) {
+    var self = this;
+    var relayEvents = ['open', 'close'];
+
+    decorated.call(this, container, $container);
+
+    container.on('*', function (name, params) {
+      if (relayEvents.indexOf(name) === -1) {
+        return;
+      }
+
+      var evt = $.Event('select2:' + name, params);
+
+      self.$element.trigger(evt);
+    });
+  };
+
+  return EventRelay;
+});
+
 define('select2/translation',[
 
 ], function () {
@@ -12834,6 +12859,7 @@ define('select2/defaults',[
   './selection/placeholder',
   './selection/allowClear',
   './selection/search',
+  './selection/eventRelay',
 
   './utils',
   './translation',
@@ -12858,7 +12884,7 @@ define('select2/defaults',[
 ], function ($, ResultsList,
 
              SingleSelection, MultipleSelection, Placeholder, AllowClear,
-             SelectionSearch,
+             SelectionSearch, EventRelay,
 
              Utils, Translation, DIACRITICS,
 
@@ -12979,6 +13005,11 @@ define('select2/defaults',[
           SelectionSearch
         );
       }
+
+      options.selectionAdapter = Utils.Decorate(
+        options.selectionAdapter,
+        EventRelay
+      );
     }
 
     if (typeof options.language === 'string') {
