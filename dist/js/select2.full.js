@@ -12425,6 +12425,10 @@ define('select2/dropdown/search',[
       self.$search.attr('tabindex', 0);
 
       self.$search.focus();
+
+      window.setTimeout(function () {
+        self.$search.focus();
+      }, 0);
     });
 
     container.on('close', function () {

@@ -40,6 +40,10 @@ define([
       self.$search.attr('tabindex', 0);
 
       self.$search.focus();
+
+      window.setTimeout(function () {
+        self.$search.focus();
+      }, 0);
     });
 
     container.on('close', function () {
