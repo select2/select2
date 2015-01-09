@@ -360,10 +360,6 @@ define([
     });
 
     container.on('results:message', function (params) {
-      self.trigger('results:message', params);
-    });
-
-    this.on('results:message', function (params) {
       self.displayMessage(params);
     });
 
