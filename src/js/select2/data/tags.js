@@ -4,6 +4,12 @@ define([
   function Tags (decorated, $element, options) {
     var tags = options.get('tags');
 
+    var createTag = options.get('createTag');
+
+    if (createTag !== undefined) {
+      this.createTag = createTag;
+    }
+
     decorated.call(this, $element, options);
 
     if ($.isArray(tags)) {
