@@ -1078,7 +1078,8 @@ define('select2/selection/allowClear',[
   AllowClear.prototype.update = function (decorated, data) {
     decorated.call(this, data);
 
-    if (this.$selection.find('.select2-selection__placeholder').length > 0) {
+    if (this.$selection.find('.select2-selection__placeholder').length > 0 ||
+        data.length === 0) {
       return;
     }
 
