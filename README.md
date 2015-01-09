@@ -1,6 +1,8 @@
 Select2
 =======
 
+[![Build Status][travis-ci-image]][travis-ci-status]
+
 Select2 is a jQuery-based replacement for select boxes. It supports searching,
 remote data sets, and pagination of results.
 
@@ -116,6 +118,8 @@ The license is available within the repository in the [LICENSE][license] file.
 [select2-rails]: https://github.com/argerim/select2-rails
 [symfony-select2]: https://github.com/19Gerhard85/sfSelect2WidgetsPlugin
 [symfony2-select2]: https://github.com/avocode/FormExtensions
+[travis-ci-image]: https://travis-ci.org/select2/select2.svg?branch=select2-ng
+[travis-ci-status]: https://travis-ci.org/select2/select2
 [wicket]: http://wicket.apache.org
 [wicket-select2]: https://github.com/ivaynberg/wicket-select2
 [yii-select2]: https://github.com/tonybolzan/yii-select2
