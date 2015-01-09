@@ -42,7 +42,7 @@ define([
 
       var data = $selection.data('data');
 
-      self.trigger('unselected', {
+      self.trigger('unselect', {
         originalEvent: evt,
         data: data
       });

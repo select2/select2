@@ -103,7 +103,7 @@ define([
   };
 
   Search.prototype.searchRemoveChoice = function (decorated, item) {
-    this.trigger('unselected', {
+    this.trigger('unselect', {
       data: item
     });
 

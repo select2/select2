@@ -281,11 +281,11 @@ define([
       var data = $highlighted.data('data');
 
       if ($highlighted.attr('aria-selected') == 'true') {
-        self.trigger('unselected', {
+        self.trigger('unselect', {
           data: data
         });
       } else {
-        self.trigger('selected', {
+        self.trigger('select', {
           data: data
         });
       }
@@ -403,7 +403,7 @@ define([
       var data = $this.data('data');
 
       if ($this.attr('aria-selected') === 'true') {
-        self.trigger('unselected', {
+        self.trigger('unselect', {
           originalEvent: evt,
           data: data
         });
@@ -411,7 +411,7 @@ define([
         return;
       }
 
-      self.trigger('selected', {
+      self.trigger('select', {
         originalEvent: evt,
         data: data
       });

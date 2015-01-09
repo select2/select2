@@ -34,7 +34,21 @@ define([
   };
 
   Dropdown.prototype.bind = function (container, $container) {
-    // Can be implemented in subclasses
+    container.on('select', function (params) {
+      self._onSelect(params);
+    });
+
+    container.on('unselect', function (params) {
+      self._onUnSelect(params);
+    });
+  };
+
+  Dropdown.prototype._onSelect = function () {
+    self.trigger('close');
+  };
+
+  Dropdown.prototype._onUnSelect = function () {
+    self.trigger('close');
   };
 
   return Dropdown;

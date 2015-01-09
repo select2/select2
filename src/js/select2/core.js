@@ -157,22 +157,10 @@ define([
 
   Select2.prototype._registerSelectionEvents = function () {
     var self = this;
-    var nonRelayEvents = ['open', 'close', 'toggle', 'unselected'];
+    var nonRelayEvents = ['toggle'];
 
-    this.selection.on('open', function () {
-      self.open();
-    });
-    this.selection.on('close', function () {
-      self.close();
-    });
     this.selection.on('toggle', function () {
       self.toggleDropdown();
-    });
-
-    this.selection.on('unselected', function (params) {
-      self.trigger('unselect', params);
-
-      self.close();
     });
 
     this.selection.on('*', function (name, params) {
@@ -194,25 +182,8 @@ define([
 
   Select2.prototype._registerResultsEvents = function () {
     var self = this;
-    var nonRelayEvents = ['selected', 'unselected'];
-
-    this.results.on('selected', function (params) {
-      self.trigger('select', params);
-
-      self.close();
-    });
-
-    this.results.on('unselected', function (params) {
-      self.trigger('unselect', params);
-
-      self.close();
-    });
 
     this.results.on('*', function (name, params) {
-      if (nonRelayEvents.indexOf(name) !== -1) {
-        return;
-      }
-
       self.trigger(name, params);
     });
   };

@@ -873,11 +873,11 @@ define('select2/results',[
       var data = $highlighted.data('data');
 
       if ($highlighted.attr('aria-selected') == 'true') {
-        self.trigger('unselected', {
+        self.trigger('unselect', {
           data: data
         });
       } else {
-        self.trigger('selected', {
+        self.trigger('select', {
           data: data
         });
       }
@@ -995,7 +995,7 @@ define('select2/results',[
       var data = $this.data('data');
 
       if ($this.attr('aria-selected') === 'true') {
-        self.trigger('unselected', {
+        self.trigger('unselect', {
           originalEvent: evt,
           data: data
         });
@@ -1003,7 +1003,7 @@ define('select2/results',[
         return;
       }
 
-      self.trigger('selected', {
+      self.trigger('select', {
         originalEvent: evt,
         data: data
       });
@@ -1364,7 +1364,7 @@ define('select2/selection/multiple',[
 
       var data = $selection.data('data');
 
-      self.trigger('unselected', {
+      self.trigger('unselect', {
         originalEvent: evt,
         data: data
       });
@@ -1622,7 +1622,7 @@ define('select2/selection/search',[
   };
 
   Search.prototype.searchRemoveChoice = function (decorated, item) {
-    this.trigger('unselected', {
+    this.trigger('unselect', {
       data: item
     });
 
@@ -3295,7 +3295,21 @@ define('select2/dropdown',[
   };
 
   Dropdown.prototype.bind = function (container, $container) {
-    // Can be implemented in subclasses
+    container.on('select', function (params) {
+      self._onSelect(params);
+    });
+
+    container.on('unselect', function (params) {
+      self._onUnSelect(params);
+    });
+  };
+
+  Dropdown.prototype._onSelect = function () {
+    self.trigger('close');
+  };
+
+  Dropdown.prototype._onUnSelect = function () {
+    self.trigger('close');
   };
 
   return Dropdown;
@@ -4312,22 +4326,10 @@ define('select2/core',[
 
   Select2.prototype._registerSelectionEvents = function () {
     var self = this;
-    var nonRelayEvents = ['open', 'close', 'toggle', 'unselected'];
+    var nonRelayEvents = ['toggle'];
 
-    this.selection.on('open', function () {
-      self.open();
-    });
-    this.selection.on('close', function () {
-      self.close();
-    });
     this.selection.on('toggle', function () {
       self.toggleDropdown();
-    });
-
-    this.selection.on('unselected', function (params) {
-      self.trigger('unselect', params);
-
-      self.close();
     });
 
     this.selection.on('*', function (name, params) {
@@ -4349,25 +4351,8 @@ define('select2/core',[
 
   Select2.prototype._registerResultsEvents = function () {
     var self = this;
-    var nonRelayEvents = ['selected', 'unselected'];
-
-    this.results.on('selected', function (params) {
-      self.trigger('select', params);
-
-      self.close();
-    });
-
-    this.results.on('unselected', function (params) {
-      self.trigger('unselect', params);
-
-      self.close();
-    });
 
     this.results.on('*', function (name, params) {
-      if (nonRelayEvents.indexOf(name) !== -1) {
-        return;
-      }
-
       self.trigger(name, params);
     });
   };
