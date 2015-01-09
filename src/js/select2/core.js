@@ -308,9 +308,9 @@ define([
   Select2.prototype.enable = function (args) {
     if (console && console.warn) {
       console.warn(
-        'Select2: The `select2("val")` method has been deprecated and will be' +
-        ' removed in later Select2 versions. Use $element.prop("disabled") ' +
-        'instead.'
+        'Select2: The `select2("enable")` method has been deprecated and will' +
+        ' be removed in later Select2 versions. Use $element.prop("disabled")' +
+        ' instead.'
       );
     }
 

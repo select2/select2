@@ -34,6 +34,8 @@ define([
   };
 
   Dropdown.prototype.bind = function (container, $container) {
+    var self = this;
+
     container.on('select', function (params) {
       self._onSelect(params);
     });
@@ -44,11 +46,11 @@ define([
   };
 
   Dropdown.prototype._onSelect = function () {
-    self.trigger('close');
+    this.trigger('close');
   };
 
   Dropdown.prototype._onUnSelect = function () {
-    self.trigger('close');
+    this.trigger('close');
   };
 
   return Dropdown;

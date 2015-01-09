@@ -10,11 +10,16 @@ define([
 
     this.$selection.on('mousedown', '.select2-selection__clear',
       function (evt) {
-      evt.stopPropagation();
+        // Ignore the event if it is disabled
+        if (self.options.get('disabled')) {
+          return;
+        }
 
-      self.$element.val(self.placeholder.id).trigger('change');
+        evt.stopPropagation();
 
-      self.trigger('toggle');
+        self.$element.val(self.placeholder.id).trigger('change');
+
+        self.trigger('toggle');
     });
   };
 

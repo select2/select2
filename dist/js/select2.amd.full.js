@@ -1062,11 +1062,16 @@ define('select2/selection/allowClear',[
 
     this.$selection.on('mousedown', '.select2-selection__clear',
       function (evt) {
-      evt.stopPropagation();
+        // Ignore the event if it is disabled
+        if (self.options.get('disabled')) {
+          return;
+        }
 
-      self.$element.val(self.placeholder.id).trigger('change');
+        evt.stopPropagation();
 
-      self.trigger('toggle');
+        self.$element.val(self.placeholder.id).trigger('change');
+
+        self.trigger('toggle');
     });
   };
 
@@ -2873,6 +2878,8 @@ define('select2/dropdown',[
   };
 
   Dropdown.prototype.bind = function (container, $container) {
+    var self = this;
+
     container.on('select', function (params) {
       self._onSelect(params);
     });
@@ -2883,11 +2890,11 @@ define('select2/dropdown',[
   };
 
   Dropdown.prototype._onSelect = function () {
-    self.trigger('close');
+    this.trigger('close');
   };
 
   Dropdown.prototype._onUnSelect = function () {
-    self.trigger('close');
+    this.trigger('close');
   };
 
   return Dropdown;
@@ -4055,9 +4062,9 @@ define('select2/core',[
   Select2.prototype.enable = function (args) {
     if (console && console.warn) {
       console.warn(
-        'Select2: The `select2("val")` method has been deprecated and will be' +
-        ' removed in later Select2 versions. Use $element.prop("disabled") ' +
-        'instead.'
+        'Select2: The `select2("enable")` method has been deprecated and will' +
+        ' be removed in later Select2 versions. Use $element.prop("disabled")' +
+        ' instead.'
       );
     }
 

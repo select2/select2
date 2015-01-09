@@ -64,6 +64,10 @@
   .select2-selection--single {
     background-color: #eee;
     cursor: default;
+
+    .select2-selection__clear {
+      display: none;
+    }
   }
 }
 
