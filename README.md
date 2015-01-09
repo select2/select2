@@ -5,11 +5,10 @@ Select2 is a jQuery-based replacement for select boxes. It supports searching,
 remote data sets, and pagination of results.
 
 To get started, checkout examples and documentation at
-http://select2.github.io/select2
+http://select2.github.io/
 
 Use cases
 ---------
-
 * Enhancing native selects with search.
 * Enhancing native selects with a better multi-select interface.
 * Loading data from JavaScript: easily load items via ajax and have them searchable.
@@ -30,7 +29,7 @@ Browser compatibility
 Usage
 -----
 You can source Select2 directly from a CDN like [JSDliver][jsdelivr] or
-[CDNJS][cdnjs], [download it from this GitHub repo][tags], or use one of
+[CDNJS][cdnjs], [download it from this GitHub repo][releases], or use one of
 the integrations below.
 
 Integrations
@@ -105,7 +104,7 @@ The license is available within the repository in the [LICENSE][license] file.
 [bootstrap3-select2]: https://github.com/t0m/select2-bootstrap-css/tree/bootstrap3
 [cdnjs]: http://www.cdnjs.com/libraries/select2
 [django-select2]: https://github.com/applegrew/django-select2
-[documentation]: https://select2.github.io/select2/
+[documentation]: https://select2.github.io/
 [documentation-folder]: https://github.com/select2/select2/tree/master/docs
 [freenode]: https://freenode.net/
 [jsdelivr]: http://www.jsdelivr.com/#!select2
@@ -113,10 +112,10 @@ The license is available within the repository in the [LICENSE][license] file.
 [meteor-select2]: https://github.com/nate-strauser/meteor-select2
 [meteor-select2-alt]: https://jquery-select2.meteor.com
 [meteor-select2-bootstrap3]: https://github.com/esperadomedia/meteor-select2-bootstrap3-css/
+[releases]: https://github.com/select2/select2/releases
 [select2-rails]: https://github.com/argerim/select2-rails
 [symfony-select2]: https://github.com/19Gerhard85/sfSelect2WidgetsPlugin
 [symfony2-select2]: https://github.com/avocode/FormExtensions
-[tags]: https://github.com/select2/select2/tags
 [wicket]: http://wicket.apache.org
 [wicket-select2]: https://github.com/ivaynberg/wicket-select2
 [yii-select2]: https://github.com/tonybolzan/yii-select2

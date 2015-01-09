@@ -57,13 +57,6 @@ Before starting work on a major feature for Select2, **contact the
 time on something which the project developers are not interested in bringing
 into the project.
 
-### Select2 4.0
-
-Many feature requests will be closed off until 4.0, where Select2 plans to adopt
-a more flexible API.  If you are interested in helping with the development of
-the next major Select2 release, please send a message to the
-[mailing list][mailing-list] or [irc channel][irc-channel] for more information.
-
 Triaging issues and pull requests
 ---------------------------------
 Anyone can help the project maintainers triage issues and review pull requests.
@@ -92,9 +85,8 @@ submitted code, or know of a better way to do something, do not hesitate to make
 a comment on the pull request.
 
 It should also be made clear that **all code contributed to Select** must be
-licensable under the [Apache 2 or GPL 2 licenses][licensing].  Code that cannot
-be released under either of these licenses **cannot be accepted** into the
-project.
+licensable under the [MIT license][licensing].  Code that cannot be released
+under either of these licenses **cannot be accepted** into the project.
 
 [community]: https://select2.github.io/community.html
 [reporting-bugs]: #reporting-bugs-with-select2
