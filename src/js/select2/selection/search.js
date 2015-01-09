@@ -118,11 +118,7 @@ define([
     var width = '';
 
     if (this.$search.attr('placeholder') !== '') {
-      width = this.$selection.innerWidth();
-      width -= this.$selection.find('.select2-selection__rendered')
-                              .innerWidth();
-
-      width = width + 'px';
+      width = this.$selection.find('.select2-selection__rendered').innerWidth();
     } else {
       var minimumWidth = this.$search.val().length + 1;
 
