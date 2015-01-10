@@ -148,9 +148,19 @@ define([
   };
 
   SelectAdapter.prototype.option = function (data) {
-    var option = document.createElement('option');
+    var option;
 
-    option.value = data.id;
+    if (data.children) {
+      option = document.createElement('optgroup');
+      option.label = data.text;
+    } else {
+      option = document.createElement('option');
+      option.innerText = data.text;
+    }
+
+    if (data.id) {
+      option.value = data.id;
+    }
 
     if (data.disabled) {
       option.disabled = true;
@@ -159,8 +169,6 @@ define([
     if (data.selected) {
       option.selected = true;
     }
-
-    option.innerText = data.text;
 
     var $option = $(option);
 
@@ -191,7 +199,7 @@ define([
       };
     } else if ($option.is('optgroup')) {
       data = {
-        text: $option.attr('label'),
+        text: $option.prop('label'),
         children: []
       };
 

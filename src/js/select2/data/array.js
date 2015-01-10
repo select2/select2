@@ -8,7 +8,7 @@ define([
 
     ArrayAdapter.__super__.constructor.call(this, $element, options);
 
-    this.convertToOptions(data);
+    $element.append(this.convertToOptions(data));
   }
 
   Utils.Extend(ArrayAdapter, SelectAdapter);
@@ -33,6 +33,8 @@ define([
       return self.item($(this)).id;
     }).get();
 
+    var $options = [];
+
     // Filter out all items except for the one passed in the argument
     function onlyItem (item) {
       return function () {
@@ -41,8 +43,7 @@ define([
     }
 
     for (var d = 0; d < data.length; d++) {
-      var item = data[d];
-      item.id = item.id.toString();
+      var item = this._normalizeItem(data[d]);
 
       // Skip items which were pre-loaded, only merge the data
       if (existingIds.indexOf(item.id) >= 0) {
@@ -60,8 +61,16 @@ define([
 
       var $option = this.option(item);
 
-      this.$element.append($option);
+      if (item.children) {
+        var $children = this.convertToOptions(item.children);
+
+        $option.append($children);
+      }
+
+      $options.push($option);
     }
+
+    return $options;
   };
 
   return ArrayAdapter;

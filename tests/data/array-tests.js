@@ -21,6 +21,25 @@ var options = new Options({
   ]
 });
 
+var nestedOptions = new Options({
+  data: [
+    {
+      text: 'Default',
+      children: [
+        {
+          text: 'Next',
+          children: [
+            {
+              id: 'a',
+              text: 'Option'
+            }
+          ]
+        }
+      ]
+    }
+  ]
+});
+
 test('current gets default for single', function (assert) {
   var $select = $('#qunit-fixture .single');
 
@@ -184,5 +203,43 @@ test('option tags are automatically generated', function (assert) {
     $select.find('option').length,
     3,
     'An <option> element should be created for each object'
+  );
+});
+
+test('optgroup tags can also be generated', function (assert) {
+  var $select = $('#qunit-fixture .single');
+
+  var data = new ArrayData($select, nestedOptions);
+
+  assert.equal(
+    $select.find('option').length,
+    1,
+    'An <option> element should be created for the one selectable object'
+  );
+
+  assert.equal(
+    $select.find('optgroup').length,
+    2,
+    'An <optgroup> element should be created for the two with children'
+  );
+});
+
+test('optgroup tags have the right properties', function (assert) {
+  var $select = $('#qunit-fixture .single');
+
+  var data = new ArrayData($select, nestedOptions);
+
+  var $group = $select.children('optgroup');
+
+  assert.equal(
+    $group.prop('label'),
+    'Default',
+    'An `<optgroup>` label should match the text property'
+  );
+
+  assert.equal(
+    $group.children().length,
+    1,
+    'The <optgroup> should have one child under it'
   );
 });

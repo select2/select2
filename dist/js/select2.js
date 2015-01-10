@@ -2752,9 +2752,19 @@ define('select2/data/select',[
   };
 
   SelectAdapter.prototype.option = function (data) {
-    var option = document.createElement('option');
+    var option;
 
-    option.value = data.id;
+    if (data.children) {
+      option = document.createElement('optgroup');
+      option.label = data.text;
+    } else {
+      option = document.createElement('option');
+      option.innerText = data.text;
+    }
+
+    if (data.id) {
+      option.value = data.id;
+    }
 
     if (data.disabled) {
       option.disabled = true;
@@ -2763,8 +2773,6 @@ define('select2/data/select',[
     if (data.selected) {
       option.selected = true;
     }
-
-    option.innerText = data.text;
 
     var $option = $(option);
 
@@ -2795,7 +2803,7 @@ define('select2/data/select',[
       };
     } else if ($option.is('optgroup')) {
       data = {
-        text: $option.attr('label'),
+        text: $option.prop('label'),
         children: []
       };
 
@@ -2872,7 +2880,7 @@ define('select2/data/array',[
 
     ArrayAdapter.__super__.constructor.call(this, $element, options);
 
-    this.convertToOptions(data);
+    $element.append(this.convertToOptions(data));
   }
 
   Utils.Extend(ArrayAdapter, SelectAdapter);
@@ -2897,6 +2905,8 @@ define('select2/data/array',[
       return self.item($(this)).id;
     }).get();
 
+    var $options = [];
+
     // Filter out all items except for the one passed in the argument
     function onlyItem (item) {
       return function () {
@@ -2905,8 +2915,7 @@ define('select2/data/array',[
     }
 
     for (var d = 0; d < data.length; d++) {
-      var item = data[d];
-      item.id = item.id.toString();
+      var item = this._normalizeItem(data[d]);
 
       // Skip items which were pre-loaded, only merge the data
       if (existingIds.indexOf(item.id) >= 0) {
@@ -2924,8 +2933,16 @@ define('select2/data/array',[
 
       var $option = this.option(item);
 
-      this.$element.append($option);
+      if (item.children) {
+        var $children = this.convertToOptions(item.children);
+
+        $option.append($children);
+      }
+
+      $options.push($option);
     }
+
+    return $options;
   };
 
   return ArrayAdapter;
