@@ -20,7 +20,7 @@ slug: options
 
     <p>
       Select2 will automatically apply decorators to any adapters which have not
-      been manually overriden. The only time you need to decorate adapters is
+      been manually overridden. The only time you need to decorate adapters is
       when you are using third-party adapters not provided by Select2, or you
       are using features not provided in the Select2 core. You can apply a
       decorator to an adapter using the
@@ -570,7 +570,7 @@ ajax: {
     </h2>
 
     <p>
-      Select2 can place the dropdown directly after the selection cotainer, so
+      Select2 can place the dropdown directly after the selection container, so
       it will appear in the same location within the DOM as the rest of Select2.
     </p>
 
@@ -683,7 +683,7 @@ ajax: {
       adapters. You can change almost anything involving the way Select2 works
       to the way Select2 interacts with the page by modifying the core adapters.
       Most third-party plugins should provide decorators (used to wrap adapters)
-      and custom adpaters that you can use.
+      and custom adapters that you can use.
     </p>
 
     <p>
@@ -813,7 +813,7 @@ SelectionAdapter.update = function (data) { };
 // what options within the results are selected.
 //
 // @param callback A function that should be called when the current selection
-//   has been retrieved. The first paramter to the function should be an array
+//   has been retrieved. The first parameter to the function should be an array
 //   of data objects.
 DataAdapter.current = function (callback) {
   callback(currentData);
@@ -867,7 +867,7 @@ DataAdapter.query = function (params, callback) {
       The results adapter controls the list of results that the user can select
       from. While the results adapter does not define any additional methods
       that must be implemented, it makes extensive use of the Select2 event
-      system for cotrolling the display of results and messages.
+      system for controlling the display of results and messages.
     </p>
 
     <dl class="dl-horizontal">
