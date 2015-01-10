@@ -1,23 +1,26 @@
 Select2
 =======
-
 [![Build Status][travis-ci-image]][travis-ci-status]
 
 Select2 is a jQuery-based replacement for select boxes. It supports searching,
 remote data sets, and pagination of results.
 
 To get started, checkout examples and documentation at
-http://select2.github.io/
+https://select2.github.io/
 
 Use cases
 ---------
 * Enhancing native selects with search.
 * Enhancing native selects with a better multi-select interface.
-* Loading data from JavaScript: easily load items via ajax and have them searchable.
-* Nesting optgroups: native selects only support one level of nested. Select2 does not have this restriction.
+* Loading data from JavaScript: easily load items via AJAX and have them
+  searchable.
+* Nesting optgroups: native selects only support one level of nesting. Select2
+  does not have this restriction.
 * Tagging: ability to add new items on the fly.
-* Working with large, remote datasets: ability to partially load a dataset based on the search term.
-* Paging of large datasets: easy support for loading more pages when the results are scrolled to the end.
+* Working with large, remote datasets: ability to partially load a dataset based
+  on the search term.
+* Paging of large datasets: easy support for loading more pages when the results
+  are scrolled to the end.
 * Templating: support for custom rendering of results and selections.
 
 Browser compatibility
@@ -36,7 +39,6 @@ the integrations below.
 
 Integrations
 ------------
-
 * [Wicket-Select2][wicket-select2] (Java / [Apache Wicket][wicket])
 * [select2-rails][select2-rails] (Ruby on Rails)
 * [AngularUI][angularui-select] ([AngularJS][angularjs])
@@ -53,7 +55,6 @@ Integrations
 
 Internationalization (i18n)
 ---------------------------
-
 Select2 supports multiple languages by simply including the right language JS
 file (`dist/js/i18n/it.js`, `dist/js/i18n/nl.js`, etc.) after
 `dist/js/select2.js`.
@@ -63,37 +64,14 @@ make a pull request back to Select2 here on GitHub.
 
 Documentation
 -------------
-
 The documentation for Select2 is available
 [through GitHub Pages][documentation] and is located within this repository
-in the [docs folder][documentation-folder].
+in the [`docs` folder][documentation-folder].
 
 Community
 ---------
-
-### Bug tracker
-
-Have a bug? Please create an issue here on GitHub!
-
-https://github.com/select2/select2/issues
-
-### Mailing list
-
-Have a question? Ask on our mailing list!
-
-select2@googlegroups.com
-
-https://groups.google.com/d/forum/select2
-
-### IRC channel
-
-Need help implementing Select2 in your project? Ask in our IRC channel!
-
-**Network:** [Freenode][freenode] (`chat.freenode.net`)
-
-**Channel:** `#select2`
-
-**Web access:** https://webchat.freenode.net/?channels=select2
+You can find out about the different ways to get in touch with the Select2
+community at the [Select2 community page][community].
 
 Copyright and license
 ---------------------
@@ -105,6 +83,7 @@ The license is available within the repository in the [LICENSE][license] file.
 [bootstrap2-select2]: https://github.com/t0m/select2-bootstrap-css
 [bootstrap3-select2]: https://github.com/t0m/select2-bootstrap-css/tree/bootstrap3
 [cdnjs]: http://www.cdnjs.com/libraries/select2
+[community]: https://select2.github.io/community.html
 [django-select2]: https://github.com/applegrew/django-select2
 [documentation]: https://select2.github.io/
 [documentation-folder]: https://github.com/select2/select2/tree/master/docs

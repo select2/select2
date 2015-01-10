@@ -45,7 +45,7 @@ to are:
 - What version of jQuery are you using? And what version of Select2?
 - Are you using Select2 with other plugins?
 
-All of these questions will help people fix and identify any potential bugs.
+All of these questions will help others fix and identify any potential bugs.
 
 Requesting features in Select2
 ------------------------------
@@ -84,9 +84,20 @@ the community before being accepted.  If you are not sure about a piece of
 submitted code, or know of a better way to do something, do not hesitate to make
 a comment on the pull request.
 
+### Reviving old tickets
+
+If you come across tickets which have not been updated for a while, you are
+encouraged to revive them. While this can be as simple as saying `:+1:`, it is
+best if you can include more information on the issue. Common bugs and feature
+requests are more likely to be fixed, whether it is by the community or the
+developers, so keeping tickets up to date is encouraged.
+
+Licensing
+---------
+
 It should also be made clear that **all code contributed to Select** must be
 licensable under the [MIT license][licensing].  Code that cannot be released
-under either of these licenses **cannot be accepted** into the project.
+under this license **cannot be accepted** into the project.
 
 [community]: https://select2.github.io/community.html
 [reporting-bugs]: #reporting-bugs-with-select2
