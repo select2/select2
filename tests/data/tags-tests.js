@@ -12,7 +12,7 @@ var options = new Options({
   tags: true
 });
 
-test('does not trigger on blank/null terms', function (assert) {
+test('does not trigger on blank or null terms', function (assert) {
   var data = new SelectTags($('#qunit-fixture .single'), options);
 
   data.query({
@@ -183,5 +183,33 @@ test('createTag returns null for no tag', function (assert) {
     term: 'o'
   }, function (data) {
     assert.equal(data.results.length, 1);
+  });
+});
+
+test('the createTag options customizes the function', function (assert) {
+  var data = new SelectTags(
+    $('#qunit-fixture .single'),
+    new Options({
+      tags: true,
+      createTag: function (params) {
+        return {
+          id: params.term,
+          text: params.term,
+          tag: true
+        };
+      }
+    })
+  );
+
+  data.query({
+    term: 'test'
+  }, function (data) {
+    assert.equal(data.results.length, 1);
+
+    var item = data.results[0];
+
+    assert.equal(item.id, 'test');
+    assert.equal(item.text, 'test');
+    assert.equal(item.tag, true);
   });
 });
