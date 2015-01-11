@@ -47,7 +47,8 @@ define([
     $dropdown.addClass('select2-container--open');
 
     $dropdown.css({
-      position: 'absolute'
+      position: 'absolute',
+      top: -999999
     });
 
     $dropdown.width($container.outerWidth(false));
