@@ -248,10 +248,70 @@ placeholder: {
       <dd>boolean (<code>true</code> or <code>false</code>)</dd>
     </dl>
 
-    This option will determine what the <code>SelectAdapter</code> (used by
-    default) should use to set the value of the underlying <code>select</code>
-    element. It will also determine if the <code>MultipleSelection</code>
-    adapter should be used.
+    <p>
+      This option will determine what the <code>SelectAdapter</code> (used by
+      default) should use to set the value of the underlying <code>select</code>
+      element. It will also determine if the <code>MultipleSelection</code>
+      adapter should be used.
+    </p>
+
+    <h3 id="width">
+      Container width
+    </h3>
+
+    <p>
+      Select2 will try to match the width of the original element as closely as
+      possible. Sometimes this isn't perfect, which is what you can tell Select2
+      how to determine the width.
+    </p>
+
+    <div class="row">
+      <div class="col-sm-8">
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Value</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>"element"</code></td>
+              <td>
+                Uses javascript to calculate the width of the source element.
+              </td>
+            </tr>
+            <tr>
+              <td><code>"style"</code></td>
+              <td>
+                Copies the value of the width <code>style</code> attribute set on the source element.
+              </td>
+            </tr>
+            <tr>
+              <td><code>"resolve"</code></td>
+              <td>
+                Tries to use <code>style</code> to determine the width, falling back to <code>element</code>.
+              </td>
+            </tr>
+            <tr>
+              <td>Anything else</td>
+              <td>
+                The value of the <code>width</code> option is diretly set as the width of the container.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-sm-4">
+        <dl class="dl-horizontal">
+          <dt>Key</dt>
+          <dd><code>width</code></dd>
+
+          <dt>Value</dt>
+          <dd>string</dd>
+        </dl>
+      </div>
+    </div>
 
     <h3 id="language">
       Internationalization (Language support)

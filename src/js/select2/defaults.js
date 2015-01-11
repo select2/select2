@@ -264,7 +264,8 @@ define([
       templateSelection: function (selection) {
         return selection.text;
       },
-      theme: 'default'
+      theme: 'default',
+      width: 'resolve'
     };
   };
 
