@@ -27,6 +27,7 @@ define([
   './dropdown/infiniteScroll',
   './dropdown/attachBody',
   './dropdown/minimumResultsForSearch',
+  './dropdown/selectOnClose',
 
   './i18n/en'
 ], function ($, ResultsList,
@@ -40,7 +41,7 @@ define([
              MinimumInputLength, MaximumInputLength,
 
              Dropdown, DropdownSearch, HidePlaceholder, InfiniteScroll,
-             AttachBody, MinimumResultsForSearch,
+             AttachBody, MinimumResultsForSearch, SelectOnClose,
 
              EnglishTranslation) {
   function Defaults () {
@@ -116,6 +117,13 @@ define([
         options.dropdownAdapter = Utils.Decorate(
           options.dropdownAdapter,
           MinimumResultsForSearch
+        );
+      }
+
+      if (options.selectOnClose) {
+        options.dropdownAdapter = Utils.Decorate(
+          options.dropdownAdapter,
+          SelectOnClose
         );
       }
 
@@ -252,12 +260,13 @@ define([
     this.defaults = {
       language: EnglishTranslation,
       matcher: matcher,
-      sorter: function (data) {
-        return data;
-      },
       minimumInputLength: 0,
       maximumInputLength: 0,
       minimumResultsForSearch: 0,
+      selectOnClose: false,
+      sorter: function (data) {
+        return data;
+      },
       templateResult: function (result) {
         return result.text;
       },

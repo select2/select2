@@ -3736,6 +3736,34 @@ define('select2/dropdown/minimumResultsForSearch',[
   return MinimumResultsForSearch;
 });
 
+define('select2/dropdown/selectOnClose',[
+
+], function () {
+  function SelectOnClose () { }
+
+  SelectOnClose.prototype.bind = function (decorated, container, $container) {
+    var self = this;
+
+    decorated.call(this, container, $container);
+
+    container.on('close', function () {
+      self._handleSelectOnClose();
+    });
+  };
+
+  SelectOnClose.prototype._handleSelectOnClose = function () {
+    var $highlightedResults = this.getHighlightedResults();
+
+    if ($highlightedResults.length < 1) {
+      return;
+    }
+
+    $highlightedResults.trigger('mouseup');
+  };
+
+  return SelectOnClose;
+});
+
 define('select2/i18n/en',[],function () {
   // English
   return {
@@ -3810,6 +3838,7 @@ define('select2/defaults',[
   './dropdown/infiniteScroll',
   './dropdown/attachBody',
   './dropdown/minimumResultsForSearch',
+  './dropdown/selectOnClose',
 
   './i18n/en'
 ], function ($, ResultsList,
@@ -3823,7 +3852,7 @@ define('select2/defaults',[
              MinimumInputLength, MaximumInputLength,
 
              Dropdown, DropdownSearch, HidePlaceholder, InfiniteScroll,
-             AttachBody, MinimumResultsForSearch,
+             AttachBody, MinimumResultsForSearch, SelectOnClose,
 
              EnglishTranslation) {
   function Defaults () {
@@ -3899,6 +3928,13 @@ define('select2/defaults',[
         options.dropdownAdapter = Utils.Decorate(
           options.dropdownAdapter,
           MinimumResultsForSearch
+        );
+      }
+
+      if (options.selectOnClose) {
+        options.dropdownAdapter = Utils.Decorate(
+          options.dropdownAdapter,
+          SelectOnClose
         );
       }
 
@@ -4035,12 +4071,13 @@ define('select2/defaults',[
     this.defaults = {
       language: EnglishTranslation,
       matcher: matcher,
-      sorter: function (data) {
-        return data;
-      },
       minimumInputLength: 0,
       maximumInputLength: 0,
       minimumResultsForSearch: 0,
+      selectOnClose: false,
+      sorter: function (data) {
+        return data;
+      },
       templateResult: function (result) {
         return result.text;
       },
