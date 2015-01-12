@@ -1,6 +1,6 @@
 define([
   'jquery',
-  'select2/core'
+  './select2/core'
 ], function ($, Select2) {
   // Force jQuery.mousewheel to be loaded if it hasn't already
   try {

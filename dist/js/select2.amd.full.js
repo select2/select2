@@ -3570,7 +3570,7 @@ define('select2/defaults',[
           language = Translation.loadPath(name);
         } catch (e) {
           // If we couldn't load it, check if it wasn't the full path
-          name = 'select2/i18n/' + name;
+          name = this.get('amdTranslationBase') + name;
           language = Translation.loadPath(name);
         }
 
@@ -3641,6 +3641,8 @@ define('select2/defaults',[
     }
 
     this.defaults = {
+      amdBase: 'select2/',
+      amdLanguageBase: 'select2/i18n/',
       language: EnglishTranslation,
       matcher: matcher,
       minimumInputLength: 0,
@@ -4538,7 +4540,7 @@ define('select2/dropdown/attachContainer',[
 
 define('jquery.select2',[
   'jquery',
-  'select2/core'
+  './select2/core'
 ], function ($, Select2) {
   // Force jQuery.mousewheel to be loaded if it hasn't already
   try {
