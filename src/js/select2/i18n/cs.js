@@ -3,13 +3,13 @@ define(function () {
   function small (count, masc) {
     switch(count) {
       case 2:
-        return masc ? "dva" : "dvě";
+        return masc ? 'dva' : 'dvě';
       case 3:
-        return "tři";
+        return 'tři';
       case 4:
-        return "čtyři";
+        return 'čtyři';
     }
-    return "";
+    return '';
   }
   return {
     errorLoading: function () {
@@ -19,22 +19,22 @@ define(function () {
       var n = args.input.length - args.maximum;
 
       if (n == 1) {
-        return "Prosím zadejte o jeden znak méně";
+        return 'Prosím zadejte o jeden znak méně';
       } else if (n <= 4) {
-        return "Prosím zadejte o " + small(n, true) + " znaky méně";
+        return 'Prosím zadejte o ' + small(n, true) + ' znaky méně';
       } else {
-        return "Prosím zadejte o " + n + " znaků méně";
+        return 'Prosím zadejte o ' + n + ' znaků méně';
       }
     },
     inputTooShort: function (args) {
       var n = args.minimum - args.input.length;
 
       if (n == 1) {
-        return "Prosím zadejte ještě jeden znak";
+        return 'Prosím zadejte ještě jeden znak';
       } else if (n <= 4) {
-        return "Prosím zadejte ještě další " + small(n, true) + " znaky";
+        return 'Prosím zadejte ještě další ' + small(n, true) + ' znaky';
       } else {
-        return "Prosím zadejte ještě dalších " + n + " znaků";
+        return 'Prosím zadejte ještě dalších ' + n + ' znaků';
       }
     },
     loadingMore: function () {
@@ -44,11 +44,11 @@ define(function () {
       var n = args.maximum;
 
       if (n == 1) {
-        return "Můžete zvolit jen jednu položku";
+        return 'Můžete zvolit jen jednu položku';
       } else if (n <= 4) {
-        return "Můžete zvolit maximálně " + small(n, false) + " položky";
+        return 'Můžete zvolit maximálně ' + small(n, false) + ' položky';
       } else {
-        return "Můžete zvolit maximálně " + n + " položek";
+        return 'Můžete zvolit maximálně ' + n + ' položek';
       }
     },
     noResults: function () {
