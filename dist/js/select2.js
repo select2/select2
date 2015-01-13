@@ -3306,8 +3306,6 @@ define('select2/data/maximumSelectionLength',[
         }
         decorated.call(self, params, callback);
       });
-
-
   };
 
   return MaximumSelectionLength;
