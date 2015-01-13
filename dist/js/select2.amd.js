@@ -2863,20 +2863,23 @@ define('select2/data/maximumSelectionLength',[
 
   MaximumSelectionLength.prototype.query =
     function (decorated, params, callback) {
+      var self = this;
 
-    var count = this.$element.val() != null ? this.$element.val().length : 0;
-    if (count >= this.maximumSelectionLength) {
-      this.trigger('results:message', {
-        message: 'maximumSelected',
-        args: {
-          maximum: this.maximumSelectionLength
+      this.current(function (currentData) {
+        var count = currentData != null ? currentData.length : 0;
+        if (count >= self.maximumSelectionLength) {
+          self.trigger('results:message', {
+            message: 'maximumSelected',
+            args: {
+              maximum: self.maximumSelectionLength
+            }
+          });
+          return;
         }
+        decorated.call(self, params, callback);
       });
 
-      return;
-    }
 
-    decorated.call(this, params, callback);
   };
 
   return MaximumSelectionLength;

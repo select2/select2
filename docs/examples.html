@@ -76,6 +76,35 @@ $(".js-example-basic-multiple").select2();
     </div>
   </section>
 
+  <section id="multiple_max" class="row">
+    <div class="col-md-4">
+      <h1>Limited Multiple select boxes</h1>
+      <p>Select2 multi-value select boxes can set restrictions regarding the maximum number of options selected.
+        The select below is declared with the <code>multiple</code> attribute with <code>maxSelectionLength</code> in the select2 options</p>
+
+      <p>
+        <select class="js-example-basic-multiple-limit js-states form-control" multiple="multiple"></select>
+      </p>
+    </div>
+    <div class="col-md-8">
+      <h2>Example code</h2>
+
+      <pre data-fill-from=".js-code-multiple-limit"></pre>
+
+<script type="text/x-example-code" class="js-code-multiple-limit">
+$(".js-example-basic-multiple-limit").select2({
+  maximumSelectionLength: 2
+  });
+
+<select class="js-example-basic-multiple" multiple="multiple">
+  <option value="AL">Alabama</option>
+    ...
+  <option value="WY">Wyoming</option>
+</select>
+</script>
+    </div>
+  </section>
+
   <section id="placeholders" class="row">
     <div class="col-md-4">
       <h1>Placeholders</h1>
@@ -812,6 +841,7 @@ $.fn.select2.amd.require(
     function (Select2, Utils, oldMatcher) {
   var $basicSingle = $(".js-example-basic-single");
   var $basicMultiple = $(".js-example-basic-multiple");
+  var $limitMultiple = $(".js-example-basic-multiple-limit");
 
   var $dataArray = $(".js-example-data-array");
   var $dataArraySelected = $(".js-example-data-array-selected");
@@ -830,7 +860,10 @@ $.fn.select2.amd.require(
   var $language = $(".js-example-language");
 
   $basicSingle.select2();
-  $basicMultiple.select2()
+  $basicMultiple.select2();
+  $limitMultiple.select2({
+    maximumSelectionLength: 2
+  });
 
   $dataArray.select2({
     data: data
