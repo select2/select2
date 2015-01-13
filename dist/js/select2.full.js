@@ -10766,18 +10766,39 @@ define('select2/selection/eventRelay',[
 
   EventRelay.prototype.bind = function (decorated, container, $container) {
     var self = this;
-    var relayEvents = ['open', 'close'];
+    var relayEvents = [
+      'open', 'opening',
+      'close', 'closing',
+      'select', 'selecting',
+      'unselect', 'unselecting'
+    ];
+
+    var preventableEvents = ['opening', 'closing', 'selecting', 'unselecting'];
 
     decorated.call(this, container, $container);
 
     container.on('*', function (name, params) {
+      // Ignore events that should not be relayed
       if (relayEvents.indexOf(name) === -1) {
         return;
       }
 
-      var evt = $.Event('select2:' + name, params);
+      // The parameters should always be an object
+      params = params || {};
+
+      // Generate the jQuery event for the Select2 event
+      var evt = $.Event('select2:' + name, {
+        params: params
+      });
 
       self.$element.trigger(evt);
+
+      // Only handle preventable events if it was one
+      if (preventableEvents.indexOf(name) === -1) {
+        return;
+      }
+
+      params.prevented = evt.isDefaultPrevented();
     });
   };
 
@@ -13673,14 +13694,14 @@ define('select2/core',[
 
           evt.preventDefault();
         } else if (key === KEYS.ESC || key === KEYS.TAB) {
-          self.close();
+          self.trigger('close');
 
           evt.preventDefault();
         }
       } else {
         if (key === KEYS.ENTER || key === KEYS.SPACE ||
             ((key === KEYS.DOWN || key === KEYS.UP) && evt.altKey)) {
-          self.open();
+          self.trigger('open');
 
           evt.preventDefault();
         }
@@ -13702,15 +13723,48 @@ define('select2/core',[
     }
   };
 
+  /**
+   * Override the trigger method to automatically trigger pre-events when
+   * there are events that can be prevented.
+   */
+  Select2.prototype.trigger = function (name, args) {
+    var actualTrigger = Select2.__super__.trigger;
+    var preTriggerMap = {
+      'open': 'opening',
+      'close': 'closing',
+      'select': 'selecting',
+      'unselect': 'unselecting'
+    };
+
+    if (name in preTriggerMap) {
+      var preTriggerName = preTriggerMap[name];
+      var preTriggerArgs = {
+        prevented: false,
+        name: name,
+        args: args
+      };
+
+      actualTrigger.call(this, preTriggerName, preTriggerArgs);
+
+      if (preTriggerArgs.prevented) {
+        args.prevented = true;
+
+        return;
+      }
+    }
+
+    actualTrigger.call(this, name, args);
+  };
+
   Select2.prototype.toggleDropdown = function () {
     if (this.options.get('disabled')) {
       return;
     }
 
     if (this.isOpen()) {
-      this.close();
+      this.trigger('close');
     } else {
-      this.open();
+      this.trigger('open');
     }
   };
 

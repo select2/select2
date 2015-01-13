@@ -292,14 +292,14 @@ define([
 
           evt.preventDefault();
         } else if (key === KEYS.ESC || key === KEYS.TAB) {
-          self.close();
+          self.trigger('close');
 
           evt.preventDefault();
         }
       } else {
         if (key === KEYS.ENTER || key === KEYS.SPACE ||
             ((key === KEYS.DOWN || key === KEYS.UP) && evt.altKey)) {
-          self.open();
+          self.trigger('open');
 
           evt.preventDefault();
         }
@@ -321,15 +321,48 @@ define([
     }
   };
 
+  /**
+   * Override the trigger method to automatically trigger pre-events when
+   * there are events that can be prevented.
+   */
+  Select2.prototype.trigger = function (name, args) {
+    var actualTrigger = Select2.__super__.trigger;
+    var preTriggerMap = {
+      'open': 'opening',
+      'close': 'closing',
+      'select': 'selecting',
+      'unselect': 'unselecting'
+    };
+
+    if (name in preTriggerMap) {
+      var preTriggerName = preTriggerMap[name];
+      var preTriggerArgs = {
+        prevented: false,
+        name: name,
+        args: args
+      };
+
+      actualTrigger.call(this, preTriggerName, preTriggerArgs);
+
+      if (preTriggerArgs.prevented) {
+        args.prevented = true;
+
+        return;
+      }
+    }
+
+    actualTrigger.call(this, name, args);
+  };
+
   Select2.prototype.toggleDropdown = function () {
     if (this.options.get('disabled')) {
       return;
     }
 
     if (this.isOpen()) {
-      this.close();
+      this.trigger('close');
     } else {
-      this.open();
+      this.trigger('open');
     }
   };
 
