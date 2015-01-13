@@ -227,7 +227,20 @@ $(".js-data-example-ajax").select2({
         results: data.items
       };
     },
+    results: function(data, page){
+      return {
+        results: data
+      };
+    }
     cache: true
+  },
+  formatResult: function(user) {
+    var markup = '<span class="select2-match"></span>' +
+    user.name ;
+
+    markup += '</div>';
+
+    return markup;
   },
   minimumInputLength: 1,
   templateResult: formatRepo, // omitted for brevity, see the source of this page
