@@ -12387,6 +12387,38 @@ define('select2/data/maximumInputLength',[
   return MaximumInputLength;
 });
 
+define('select2/data/maximumSelectionLength',[
+
+], function (){
+  function MaximumSelectionLength (decorated, $e, options) {
+    this.maximumSelectionLength = options.get('maximumSelectionLength');
+
+    decorated.call(this, $e, options);
+  }
+
+  MaximumSelectionLength.prototype.query =
+    function (decorated, params, callback) {
+      var self = this;
+
+      this.current(function (currentData) {
+        var count = currentData != null ? currentData.length : 0;
+        if (self.maximumSelectionLength > 0 &&
+          count >= self.maximumSelectionLength) {
+          self.trigger('results:message', {
+            message: 'maximumSelected',
+            args: {
+              maximum: self.maximumSelectionLength
+            }
+          });
+          return;
+        }
+        decorated.call(self, params, callback);
+      });
+  };
+
+  return MaximumSelectionLength;
+});
+
 define('select2/dropdown',[
   './utils'
 ], function (Utils) {
@@ -12938,6 +12970,7 @@ define('select2/defaults',[
   './data/tokenizer',
   './data/minimumInputLength',
   './data/maximumInputLength',
+  './data/maximumSelectionLength',
 
   './dropdown',
   './dropdown/search',
@@ -12956,7 +12989,7 @@ define('select2/defaults',[
              Utils, Translation, DIACRITICS,
 
              SelectData, ArrayData, AjaxData, Tags, Tokenizer,
-             MinimumInputLength, MaximumInputLength,
+             MinimumInputLength, MaximumInputLength, MaximumSelectionLength,
 
              Dropdown, DropdownSearch, HidePlaceholder, InfiniteScroll,
              AttachBody, MinimumResultsForSearch, SelectOnClose,
@@ -12989,6 +13022,13 @@ define('select2/defaults',[
         options.dataAdapter = Utils.Decorate(
           options.dataAdapter,
           MaximumInputLength
+        );
+      }
+
+      if (options.maximumSelectionLength > 0) {
+        options.dataAdapter = Utils.Decorate(
+          options.dataAdapter,
+          MaximumSelectionLength
         );
       }
 
@@ -13105,7 +13145,7 @@ define('select2/defaults',[
           language = Translation.loadPath(name);
         } catch (e) {
           // If we couldn't load it, check if it wasn't the full path
-          name = this.get('amdTranslationBase') + name;
+          name = this.defaults.amdLanguageBase + name;
           language = Translation.loadPath(name);
         }
 
@@ -13182,6 +13222,7 @@ define('select2/defaults',[
       matcher: matcher,
       minimumInputLength: 0,
       maximumInputLength: 0,
+      maximumSelectionLength: 0,
       minimumResultsForSearch: 0,
       selectOnClose: false,
       sorter: function (data) {

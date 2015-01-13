@@ -20,6 +20,7 @@ define([
   './data/tokenizer',
   './data/minimumInputLength',
   './data/maximumInputLength',
+  './data/maximumSelectionLength',
 
   './dropdown',
   './dropdown/search',
@@ -38,7 +39,7 @@ define([
              Utils, Translation, DIACRITICS,
 
              SelectData, ArrayData, AjaxData, Tags, Tokenizer,
-             MinimumInputLength, MaximumInputLength,
+             MinimumInputLength, MaximumInputLength, MaximumSelectionLength,
 
              Dropdown, DropdownSearch, HidePlaceholder, InfiniteScroll,
              AttachBody, MinimumResultsForSearch, SelectOnClose,
@@ -71,6 +72,13 @@ define([
         options.dataAdapter = Utils.Decorate(
           options.dataAdapter,
           MaximumInputLength
+        );
+      }
+
+      if (options.maximumSelectionLength > 0) {
+        options.dataAdapter = Utils.Decorate(
+          options.dataAdapter,
+          MaximumSelectionLength
         );
       }
 
@@ -187,7 +195,7 @@ define([
           language = Translation.loadPath(name);
         } catch (e) {
           // If we couldn't load it, check if it wasn't the full path
-          name = this.get('amdTranslationBase') + name;
+          name = this.defaults.amdLanguageBase + name;
           language = Translation.loadPath(name);
         }
 
@@ -264,6 +272,7 @@ define([
       matcher: matcher,
       minimumInputLength: 0,
       maximumInputLength: 0,
+      maximumSelectionLength: 0,
       minimumResultsForSearch: 0,
       selectOnClose: false,
       sorter: function (data) {
