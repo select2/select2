@@ -14,7 +14,7 @@ define(function () {
     loadingMore: function () {
       return 'Lade mehr Ergebnisse…';
     },
-    maximumSelected: function () {
+    maximumSelected: function (args) {
       var message = 'Sie können nur ' + args.maximum + ' Eintr';
 
       if (args.maximum === 1) {
