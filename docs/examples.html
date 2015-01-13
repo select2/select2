@@ -33,7 +33,7 @@ slug: examples
 
       <pre class="code" data-fill-from=".js-code-basic"></pre>
 
-<script type="text/x-example-code" class="js-code-basic">
+      <script type="text/x-example-code" class="js-code-basic">
 $(document).ready(function() {
   $(".js-example-basic-single").select2();
 });
@@ -64,37 +64,8 @@ $(document).ready(function() {
 
       <pre data-fill-from=".js-code-multiple"></pre>
 
-<script type="text/x-example-code" class="js-code-multiple">
+      <script type="text/x-example-code" class="js-code-multiple">
 $(".js-example-basic-multiple").select2();
-
-<select class="js-example-basic-multiple" multiple="multiple">
-  <option value="AL">Alabama</option>
-    ...
-  <option value="WY">Wyoming</option>
-</select>
-</script>
-    </div>
-  </section>
-
-  <section id="multiple_max" class="row">
-    <div class="col-md-4">
-      <h1>Limited Multiple select boxes</h1>
-      <p>Select2 multi-value select boxes can set restrictions regarding the maximum number of options selected.
-        The select below is declared with the <code>multiple</code> attribute with <code>maxSelectionLength</code> in the select2 options</p>
-
-      <p>
-        <select class="js-example-basic-multiple-limit js-states form-control" multiple="multiple"></select>
-      </p>
-    </div>
-    <div class="col-md-8">
-      <h2>Example code</h2>
-
-      <pre data-fill-from=".js-code-multiple-limit"></pre>
-
-<script type="text/x-example-code" class="js-code-multiple-limit">
-$(".js-example-basic-multiple-limit").select2({
-  maximumSelectionLength: 2
-  });
 
 <select class="js-example-basic-multiple" multiple="multiple">
   <option value="AL">Alabama</option>
@@ -134,16 +105,16 @@ $(".js-example-basic-multiple-limit").select2({
 
       <pre data-fill-from=".js-code-placeholder"></pre>
 
-<script type="text/javascript" class="js-code-placeholder">
-$(".js-example-placeholder-single").select2({
-  placeholder: "Select a state",
-  allowClear: true
-});
+      <script type="text/javascript" class="js-code-placeholder">
+        $(".js-example-placeholder-single").select2({
+          placeholder: "Select a state",
+          allowClear: true
+        });
 
-$(".js-example-placeholder-multiple").select2({
-  placeholder: "Select a state"
-});
-</script>
+        $(".js-example-placeholder-multiple").select2({
+          placeholder: "Select a state"
+        });
+      </script>
     </div>
   </section>
 
@@ -176,7 +147,7 @@ $(".js-example-placeholder-multiple").select2({
 
       <pre data-fill-from=".js-code-data-array"></pre>
 
-<script type="text/x-example-code" class="js-code-data-array">
+      <script type="text/x-example-code" class="js-code-data-array">
 var data = [{ id: 0, text: 'enhancement' }, { id: 1, text: 'bug' }, { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, { id: 4, text: 'wontfix' }];
 
 $(".js-example-data-array").select2({
@@ -236,7 +207,7 @@ $(".js-example-data-array-selected").select2({
         function you specify.
       </p>
 
-<script type="text/x-example-code" class="js-code-data-ajax">
+      <script type="text/x-example-code" class="js-code-data-ajax">
 $(".js-data-example-ajax").select2({
   ajax: {
     url: "https://api.github.com/search/repositories",
@@ -264,7 +235,7 @@ $(".js-data-example-ajax").select2({
 });
 </script>
 
-<script type="text/x-example-code" class="js-code-data-ajax-html">
+      <script type="text/x-example-code" class="js-code-data-ajax-html">
 <select class="js-data-example-ajax">
   <option value="select2/select2" selected="selected">select2/select2</option>
 </select>
@@ -304,17 +275,17 @@ $(".js-data-example-ajax").select2({
 
       <pre data-fill-from=".js-code-disabled"></pre>
 
-<script type="text/javascript" class="js-code-disabled">
-$(".js-programmatic-enable").on("click", function () {
-  $(".js-example-disabled").prop("disabled", false);
-  $(".js-example-disabled-multi").prop("disabled", false);
-});
+      <script type="text/javascript" class="js-code-disabled">
+        $(".js-programmatic-enable").on("click", function () {
+          $(".js-example-disabled").prop("disabled", false);
+          $(".js-example-disabled-multi").prop("disabled", false);
+        });
 
-$(".js-programmatic-disable").on("click", function () {
-  $(".js-example-disabled").prop("disabled", true);
-  $(".js-example-disabled-multi").prop("disabled", true);
-});
-</script>
+        $(".js-programmatic-disable").on("click", function () {
+          $(".js-example-disabled").prop("disabled", true);
+          $(".js-example-disabled-multi").prop("disabled", true);
+        });
+      </script>
     </div>
   </section>
 
@@ -342,7 +313,7 @@ $(".js-programmatic-disable").on("click", function () {
 
       <pre data-fill-from=".js-code-disabled-results"></pre>
 
-<script type="text/x-example-code" class="js-code-disabled-results">
+      <script type="text/x-example-code" class="js-code-disabled-results">
 <select class="js-example-disabled-results">
   <option value="one">First</option>
   <option value="two" disabled="disabled">Second (disabled)</option>
@@ -407,20 +378,42 @@ $(".js-programmatic-disable").on("click", function () {
 
       <pre data-fill-from=".js-code-programmatic"></pre>
 
-<script type="text/javascript" class="js-code-programmatic">
-var $example = $(".js-example-programmatic");
-var $exampleMulti = $(".js-example-programmatic-multi");
+      <script type="text/javascript" class="js-code-programmatic">
+        var $example = $(".js-example-programmatic");
+        var $exampleMulti = $(".js-example-programmatic-multi");
 
-$(".js-programmatic-set-val").on("click", function () { $example.val("CA").trigger("change"); });
+        $(".js-programmatic-set-val").on("click", function () { $example.val("CA").trigger("change"); });
 
-$(".js-programmatic-open").on("click", function () { $example.select2("open"); });
-$(".js-programmatic-close").on("click", function () { $example.select2("close"); });
+        $(".js-programmatic-open").on("click", function () { $example.select2("open"); });
+        $(".js-programmatic-close").on("click", function () { $example.select2("close"); });
 
-$(".js-programmatic-init").on("click", function () { $example.select2(); });
-$(".js-programmatic-destroy").on("click", function () { $example.select2("destroy"); });
+        $(".js-programmatic-init").on("click", function () { $example.select2(); });
+        $(".js-programmatic-destroy").on("click", function () { $example.select2("destroy"); });
 
-$(".js-programmatic-multi-set-val").on("click", function () { $exampleMulti.val(["CA", "AL"]).trigger("change"); });
-$(".js-programmatic-multi-clear").on("click", function () { $exampleMulti.val(null).trigger("change"); });
+        $(".js-programmatic-multi-set-val").on("click", function () { $exampleMulti.val(["CA", "AL"]).trigger("change"); });
+        $(".js-programmatic-multi-clear").on("click", function () { $exampleMulti.val(null).trigger("change"); });
+      </script>
+    </div>
+  </section>
+  <section id="multiple_max" class="row">
+    <div class="col-md-4">
+      <h1>Limiting the number of selections</h1>
+      <p>Select2 multi-value select boxes can set restrictions regarding the maximum number of options selected.
+        The select below is declared with the <code>multiple</code> attribute with <code>maxSelectionLength</code> in the select2 options</p>
+
+      <p>
+        <select class="js-example-basic-multiple-limit js-states form-control" multiple="multiple"></select>
+      </p>
+    </div>
+    <div class="col-md-8">
+      <h2>Example code</h2>
+
+      <pre data-fill-from=".js-code-multiple-limit"></pre>
+
+      <script type="text/x-example-code" class="js-code-multiple-limit">
+$(".js-example-basic-multiple-limit").select2({
+  maximumSelectionLength: 2
+  });
 </script>
     </div>
   </section>
@@ -517,7 +510,7 @@ function log (name, args) {
 
       <pre data-fill-from=".js-code-tags"></pre>
 
-<script type="text/x-example-code" class="js-code-tags">
+      <script type="text/x-example-code" class="js-code-tags">
 $(".js-example-tags").select2({
   tags: true
 })
@@ -555,7 +548,7 @@ $(".js-example-tags").select2({
 
       <pre data-fill-from=".js-code-tokenizer"></pre>
 
-<script type="text/x-example-code" class="js-code-tokenizer">
+      <script type="text/x-example-code" class="js-code-tokenizer">
 $(".js-example-tokenizer").select2({
   tags: true,
   tokenSeparators: [',', ' ']
@@ -591,7 +584,7 @@ $(".js-example-tokenizer").select2({
 
       <pre data-fill-from=".js-code-matcher-start"></pre>
 
-<script type="text/x-example-code" class="js-code-matcher-start">
+      <script type="text/x-example-code" class="js-code-matcher-start">
 function matchStart (term, text) {
   if (text.toUpperCase().indexOf(term.toUpperCase()) == 0) {
     return true;
@@ -639,7 +632,7 @@ $.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
 
       <pre data-fill-from=".js-code-diacritics"></pre>
 
-<script type="text/x-example-code" class="js-code-diacritics">
+      <script type="text/x-example-code" class="js-code-diacritics">
 $(".js-example-diacritics").select2();
 </script>
     </div>
@@ -672,7 +665,7 @@ $(".js-example-diacritics").select2();
 
       <pre data-fill-from=".js-code-language"></pre>
 
-<script type="text/x-example-code" class="js-code-language">
+      <script type="text/x-example-code" class="js-code-language">
 $(".js-example-language").select2({
   language: "es"
 });
@@ -709,7 +702,7 @@ $(".js-example-language").select2({
 
       <pre data-fill-from=".js-code-theme"></pre>
 
-<script type="text/x-example-code" class="js-code-theme">
+      <script type="text/x-example-code" class="js-code-theme">
 $(".js-example-theme-single").select2({
   theme: "classic"
 });
@@ -743,7 +736,7 @@ $(".js-example-theme-multiple").select2({
 
       <pre data-fill-from=".js-code-rtl"></pre>
 
-<script type="text/x-example-code" class="js-code-rtl">
+      <script type="text/x-example-code" class="js-code-rtl">
 $(".js-example-rtl").select2({
   dir: "rtl"
 });
@@ -816,163 +809,163 @@ $(".js-example-rtl").select2({
 </select>
 
 <script type="text/javascript">
-var $states = $(".js-source-states");
-var statesOptions = $states.html();
-$states.remove();
+  var $states = $(".js-source-states");
+  var statesOptions = $states.html();
+  $states.remove();
 
-$(".js-states").append(statesOptions);
+  $(".js-states").append(statesOptions);
 
-$("[data-fill-from]").each(function () {
-  var $this = $(this);
+  $("[data-fill-from]").each(function () {
+    var $this = $(this);
 
-  var codeContainer = $this.data("fill-from");
-  var $container = $(codeContainer);
+    var codeContainer = $this.data("fill-from");
+    var $container = $(codeContainer);
 
-  var code = $.trim($container.html());
+    var code = $.trim($container.html());
 
-  $this.text(code);
-  $this.addClass("prettyprint linenums");
-});
-
-prettyPrint();
-
-$.fn.select2.amd.require(
-    ["select2/core", "select2/utils", "select2/compat/matcher"],
-    function (Select2, Utils, oldMatcher) {
-  var $basicSingle = $(".js-example-basic-single");
-  var $basicMultiple = $(".js-example-basic-multiple");
-  var $limitMultiple = $(".js-example-basic-multiple-limit");
-
-  var $dataArray = $(".js-example-data-array");
-  var $dataArraySelected = $(".js-example-data-array-selected");
-
-  var data = [{ id: 0, text: 'enhancement' }, { id: 1, text: 'bug' }, { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, { id: 4, text: 'wontfix' }];
-
-  var $ajax = $(".js-example-data-ajax");
-
-  var $disabledResults = $(".js-example-disabled-results");
-
-  var $tags = $(".js-example-tags");
-
-  var $matcherStart = $('.js-example-matcher-start');
-
-  var $diacritics = $(".js-example-diacritics");
-  var $language = $(".js-example-language");
-
-  $basicSingle.select2();
-  $basicMultiple.select2();
-  $limitMultiple.select2({
-    maximumSelectionLength: 2
+    $this.text(code);
+    $this.addClass("prettyprint linenums");
   });
 
-  $dataArray.select2({
-    data: data
-  });
+  prettyPrint();
 
-  $dataArraySelected.select2({
-    data: data
-  });
+  $.fn.select2.amd.require(
+          ["select2/core", "select2/utils", "select2/compat/matcher"],
+          function (Select2, Utils, oldMatcher) {
+            var $basicSingle = $(".js-example-basic-single");
+            var $basicMultiple = $(".js-example-basic-multiple");
+            var $limitMultiple = $(".js-example-basic-multiple-limit");
 
-  $ajax.select2({
-    ajax: {
-      url: "https://api.github.com/search/repositories",
-      dataType: 'json',
-      delay: 250,
-      data: function (params) {
-        return {
-          q: params.term, // search term
-          page: params.page
-        };
-      },
-      processResults: function (data, params) {
-        // parse the results into the format expected by Select2
-        // since we are using custom formatting functions we do not need to
-        // alter the remote JSON data, except to indicate that infinite
-        // scrolling can be used
-        params.page = params.page || 1;
+            var $dataArray = $(".js-example-data-array");
+            var $dataArraySelected = $(".js-example-data-array-selected");
 
-        return {
-          results: data.items,
-          pagination: {
-            more: (params.page * 30) < data.total_count
-          }
-        };
-      },
-      cache: true
-    },
-    minimumInputLength: 1,
-    templateResult: function (repo) {
-      if (repo.loading) return repo.text;
+            var data = [{ id: 0, text: 'enhancement' }, { id: 1, text: 'bug' }, { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, { id: 4, text: 'wontfix' }];
 
-      var markup = '<div class="clearfix">' +
-        '<div class="col-sm-1">' +
-          '<img src="' + repo.owner.avatar_url + '" style="max-width: 100%" />' +
-        '</div>' +
-        '<div clas="col-sm-10">' +
-          '<div class="clearfix">' +
-            '<div class="col-sm-6">' + repo.full_name + '</div>' +
-            '<div class="col-sm-3"><i class="fa fa-code-fork"></i> ' + repo.forks_count + '</div>' +
-            '<div class="col-sm-2"><i class="fa fa-star"></i> ' + repo.stargazers_count + '</div>' +
-          '</div>';
+            var $ajax = $(".js-example-data-ajax");
 
-      if (repo.description) {
-         markup += '<div>' + repo.description + '</div>';
-      }
+            var $disabledResults = $(".js-example-disabled-results");
 
-      markup += '</div></div>';
+            var $tags = $(".js-example-tags");
 
-      return markup;
-    },
-    templateSelection: function (repo) {
-      return repo.full_name || repo.text;
-    }
-  });
+            var $matcherStart = $('.js-example-matcher-start');
 
-  $(".js-example-disabled").select2();
-  $(".js-example-disabled-multi").select2();
+            var $diacritics = $(".js-example-diacritics");
+            var $language = $(".js-example-language");
 
-  $disabledResults.select2();
+            $basicSingle.select2();
+            $basicMultiple.select2();
+            $limitMultiple.select2({
+              maximumSelectionLength: 2
+            });
 
-  $(".js-example-programmatic").select2();
-  $(".js-example-programmatic-multi").select2();
+            $dataArray.select2({
+              data: data
+            });
 
-  //$eventSelect.select2();
+            $dataArraySelected.select2({
+              data: data
+            });
 
-  $tags.select2({
-    tags: ['red', 'blue', 'green']
-  });
+            $ajax.select2({
+              ajax: {
+                url: "https://api.github.com/search/repositories",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                  return {
+                    q: params.term, // search term
+                    page: params.page
+                  };
+                },
+                processResults: function (data, params) {
+                  // parse the results into the format expected by Select2
+                  // since we are using custom formatting functions we do not need to
+                  // alter the remote JSON data, except to indicate that infinite
+                  // scrolling can be used
+                  params.page = params.page || 1;
 
-  $(".js-example-tokenizer").select2({
-    tags: true,
-    tokenSeparators: [',', ' ']
-  });
+                  return {
+                    results: data.items,
+                    pagination: {
+                      more: (params.page * 30) < data.total_count
+                    }
+                  };
+                },
+                cache: true
+              },
+              minimumInputLength: 1,
+              templateResult: function (repo) {
+                if (repo.loading) return repo.text;
 
-  function matchStart (term, text) {
-    if (text.toUpperCase().indexOf(term.toUpperCase()) == 0) {
-      return true;
-    }
+                var markup = '<div class="clearfix">' +
+                        '<div class="col-sm-1">' +
+                        '<img src="' + repo.owner.avatar_url + '" style="max-width: 100%" />' +
+                        '</div>' +
+                        '<div clas="col-sm-10">' +
+                        '<div class="clearfix">' +
+                        '<div class="col-sm-6">' + repo.full_name + '</div>' +
+                        '<div class="col-sm-3"><i class="fa fa-code-fork"></i> ' + repo.forks_count + '</div>' +
+                        '<div class="col-sm-2"><i class="fa fa-star"></i> ' + repo.stargazers_count + '</div>' +
+                        '</div>';
 
-    return false;
-  }
+                if (repo.description) {
+                  markup += '<div>' + repo.description + '</div>';
+                }
 
-  $matcherStart.select2({
-    matcher: oldMatcher(matchStart)
-  });
+                markup += '</div></div>';
 
-  $diacritics.select2();
+                return markup;
+              },
+              templateSelection: function (repo) {
+                return repo.full_name || repo.text;
+              }
+            });
 
-  $language.select2({
-    language: "es"
-  });
+            $(".js-example-disabled").select2();
+            $(".js-example-disabled-multi").select2();
 
-  $(".js-example-theme-single").select2({
-    theme: "classic"
-  });
+            $disabledResults.select2();
 
-  $(".js-example-theme-multiple").select2({
-    theme: "classic"
-  });
+            $(".js-example-programmatic").select2();
+            $(".js-example-programmatic-multi").select2();
 
-  $(".js-example-rtl").select2();
-});
+            //$eventSelect.select2();
+
+            $tags.select2({
+              tags: ['red', 'blue', 'green']
+            });
+
+            $(".js-example-tokenizer").select2({
+              tags: true,
+              tokenSeparators: [',', ' ']
+            });
+
+            function matchStart (term, text) {
+              if (text.toUpperCase().indexOf(term.toUpperCase()) == 0) {
+                return true;
+              }
+
+              return false;
+            }
+
+            $matcherStart.select2({
+              matcher: oldMatcher(matchStart)
+            });
+
+            $diacritics.select2();
+
+            $language.select2({
+              language: "es"
+            });
+
+            $(".js-example-theme-single").select2({
+              theme: "classic"
+            });
+
+            $(".js-example-theme-multiple").select2({
+              theme: "classic"
+            });
+
+            $(".js-example-rtl").select2();
+          });
 </script>
