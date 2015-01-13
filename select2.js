@@ -1232,6 +1232,18 @@ the specific language governing permissions and limitations under the Apache Lic
             return (this.container) ? this.container.hasClass("select2-dropdown-open") : false;
         },
 
+		// abstract
+		calcExcludeHeight:function(){
+			var excludeHeight = 0;
+			if ($("body").outerHeight(false) > $("html").outerHeight(false) ||
+				Math.abs(document.body.getBoundingClientRect().top) === Math.abs(window.pageYOffset)) {
+				excludeHeight = 0;
+			} else {
+				excludeHeight = window.pageYOffset;
+			}
+			return excludeHeight;
+		},
+		
         // abstract
         positionDropdown: function() {
             var $dropdown = this.dropdown,
@@ -1245,7 +1257,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 windowHeight = $window.height(),
                 viewPortRight = $window.scrollLeft() + windowWidth,
                 viewportBottom = $window.scrollTop() + windowHeight,
-                dropTop = offset.top + height,
+                dropTop = offset.top + height - this.calcExcludeHeight(),
                 dropLeft = offset.left,
                 enoughRoomBelow = dropTop + dropHeight <= viewportBottom,
                 enoughRoomAbove = (offset.top - dropHeight) >= $window.scrollTop(),
@@ -2132,7 +2144,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.focusser.attr("id", "s2id_autogen"+idSuffix);
 
             elementLabel = $("label[for='" + this.opts.element.attr("id") + "']");
-            this.opts.element.focus(this.bind(function () { this.focus(); }));
+            //this.opts.element.focus(this.bind(function () { this.focus(); }));
 
             this.focusser.prev()
                 .text(elementLabel.text())
@@ -2296,7 +2308,7 @@ the specific language governing permissions and limitations under the Apache Lic
             }));
 
             this.initContainerWidth();
-            this.opts.element.hide();
+            this.opts.element.addClass("select2-offscreen");
             this.setPlaceholder();
 
         },
@@ -2727,12 +2739,12 @@ the specific language governing permissions and limitations under the Apache Lic
             this.search.prev()
                 .text($("label[for='" + this.opts.element.attr("id") + "']").text())
                 .attr('for', this.search.attr('id'));
-            this.opts.element.focus(this.bind(function () { this.focus(); }));
+            //this.opts.element.focus(this.bind(function () { this.focus(); }));
 
-            this.search.on("input paste", this.bind(function() {
+            this.search.on("input paste", this.bind(function(event) {
                 if (this.search.attr('placeholder') && this.search.val().length == 0) return;
                 if (!this.isInterfaceEnabled()) return;
-                if (!this.opened()) {
+                if (event.type === "input" && !this.opened()) {
                     this.open();
                 }
             }));
@@ -2879,7 +2891,7 @@ the specific language governing permissions and limitations under the Apache Lic
             }));
 
             this.initContainerWidth();
-            this.opts.element.hide();
+            this.opts.element.addClass("select2-offscreen");
 
             // set the placeholder if necessary
             this.clearSearch();
