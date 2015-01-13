@@ -13,7 +13,8 @@ define([
 
       this.current(function (currentData) {
         var count = currentData != null ? currentData.length : 0;
-        if (count >= self.maximumSelectionLength) {
+        if (self.maximumSelectionLength > 0 &&
+          count >= self.maximumSelectionLength) {
           self.trigger('results:message', {
             message: 'maximumSelected',
             args: {
