@@ -10,7 +10,7 @@ define([
   MaximumSelectionLength.prototype.query =
     function (decorated, params, callback) {
 
-    var count = this.$element.val() != null ? this.$element.val().length : 0;
+    var count = this.current() != null ? this.current().length : 0;
     if (count >= this.maximumSelectionLength) {
       this.trigger('results:message', {
         message: 'maximumSelected',
