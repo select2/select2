@@ -46,6 +46,7 @@
     "grunt-contrib-nodeunit": "~0.3.3",
     "grunt-contrib-qunit": "~0.4.0",
     "grunt-contrib-requirejs": "^0.4.4",
+    "grunt-contrib-symlink": "^0.3.0",
     "grunt-contrib-uglify": "~0.4.0",
     "grunt-contrib-watch": "~0.6.0",
     "grunt-gh-pages": "^0.9.1",

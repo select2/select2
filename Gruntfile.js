@@ -122,6 +122,19 @@ module.exports = function (grunt) {
       }
     },
 
+    symlink: {
+      docs: {
+        cwd: 'dist',
+        expand: true,
+        overwrite: false,
+        src: [
+          '*'
+        ],
+        dest: 'docs/dist',
+        filter: 'isDirectory'
+      }
+    },
+
     requirejs: {
       'dist': {
         options: {
@@ -219,6 +232,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
+  grunt.loadNpmTasks('grunt-contrib-symlink');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
@@ -232,7 +246,7 @@ module.exports = function (grunt) {
   grunt.registerTask('minify', ['uglify', 'sass:dist']);
   grunt.registerTask('test', ['qunit', 'jshint']);
 
-  grunt.registerTask('docs', ['jekyll:serve']);
+  grunt.registerTask('docs', ['symlink:docs', 'jekyll:serve']);
 
   grunt.registerTask('docs-release', ['default', 'clean:docs', 'gh-pages']);
 };
