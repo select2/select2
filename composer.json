@@ -6,7 +6,7 @@
   "license": "MIT",
   "require": {
     "robloach/component-installer": "*",
-    "components/jquery": ">=1.7.1"
+    "components/jquery": ">=1.7.2"
   },
   "extra": {
     "component": {
