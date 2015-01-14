@@ -466,7 +466,13 @@ define([
   Results.prototype.template = function (result, container) {
     var template = this.options.get('templateResult');
 
-    container.innerHTML = template(result);
+    var result = template(result);
+
+    if (result) {
+        container.innerHTML = result;
+    } else {
+        container.style.display = 'none';
+    }
   };
 
   return Results;
