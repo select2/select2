@@ -664,7 +664,13 @@ define('select2/results',[
   Results.prototype.template = function (result, container) {
     var template = this.options.get('templateResult');
 
-    container.innerHTML = template(result);
+    var content = template(result);
+
+    if (content == null) {
+      container.style.display = 'none';
+    } else {
+      container.innerHTML = content;
+    }
   };
 
   return Results;
