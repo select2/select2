@@ -4587,14 +4587,14 @@ define('select2/core',[
 
           evt.preventDefault();
         } else if (key === KEYS.ESC || key === KEYS.TAB) {
-          self.trigger('close');
+          self.close();
 
           evt.preventDefault();
         }
       } else {
         if (key === KEYS.ENTER || key === KEYS.SPACE ||
             ((key === KEYS.DOWN || key === KEYS.UP) && evt.altKey)) {
-          self.trigger('open');
+          self.open();
 
           evt.preventDefault();
         }
@@ -4607,7 +4607,7 @@ define('select2/core',[
 
     if (this.options.get('disabled')) {
       if (this.isOpen()) {
-        this.trigger('close');
+        this.close();
       }
 
       this.trigger('disable');
@@ -4655,9 +4655,9 @@ define('select2/core',[
     }
 
     if (this.isOpen()) {
-      this.trigger('close');
+      this.close();
     } else {
-      this.trigger('open');
+      this.open();
     }
   };
 
