@@ -1,7 +1,8 @@
 define([
+  'jquery',
   './base',
   '../utils'
-], function (BaseSelection, Utils) {
+], function ($, BaseSelection, Utils) {
   function MultipleSelection ($element, options) {
     MultipleSelection.__super__.constructor.apply(this, arguments);
   }
@@ -9,17 +10,13 @@ define([
   Utils.Extend(MultipleSelection, BaseSelection);
 
   MultipleSelection.prototype.render = function () {
-    var $selection = $(
-      '<span class="select2-selection select2-selection--multiple"' +
-        ' tabindex="0" role="combobox" aria-autocomplete="list"' +
-        ' aria-haspopup="true" aria-expanded="false">' +
-        '<ul class="select2-selection__rendered"></ul>' +
-      '</span>'
+    var $selection = MultipleSelection.__super__.render.call(this);
+
+    $selection.addClass('select2-selection--multiple');
+
+    $selection.html(
+      '<ul class="select2-selection__rendered"></ul>'
     );
-
-    $selection.attr('title', this.$element.attr('title'));
-
-    this.$selection = $selection;
 
     return $selection;
   };
@@ -46,14 +43,6 @@ define([
         originalEvent: evt,
         data: data
       });
-    });
-
-    container.on('enable', function () {
-      self.$selection.attr('tabindex', '0');
-    });
-
-    container.on('disable', function () {
-      self.$selection.attr('tabindex', '-1');
     });
   };
 

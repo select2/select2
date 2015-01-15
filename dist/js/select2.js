@@ -1105,9 +1105,10 @@ define('select2/keys',[
 });
 
 define('select2/selection/base',[
+  'jquery',
   '../utils',
   '../keys'
-], function (Utils, KEYS) {
+], function ($, Utils, KEYS) {
   function BaseSelection ($element, options) {
     this.$element = $element;
     this.options = options;
@@ -1118,7 +1119,17 @@ define('select2/selection/base',[
   Utils.Extend(BaseSelection, Utils.Observable);
 
   BaseSelection.prototype.render = function () {
-    throw new Error('The `render` method must be defined in child classes.');
+    var $selection = $(
+      '<span class="select2-selection" tabindex="0" role="combobox" ' +
+      'aria-autocomplete="list" aria-haspopup="true" aria-expanded="false">' +
+      '</span>'
+    );
+
+    $selection.attr('title', this.$element.attr('title'));
+
+    this.$selection = $selection;
+
+    return $selection;
   };
 
   BaseSelection.prototype.bind = function (container, $container) {
@@ -1162,6 +1173,14 @@ define('select2/selection/base',[
       self.$selection.focus();
 
       self._detachCloseHandler(container);
+    });
+
+    container.on('enable', function () {
+      self.$selection.attr('tabindex', '0');
+    });
+
+    container.on('disable', function () {
+      self.$selection.attr('tabindex', '-1');
     });
   };
 
@@ -1215,10 +1234,11 @@ define('select2/selection/base',[
 });
 
 define('select2/selection/single',[
+  'jquery',
   './base',
   '../utils',
   '../keys'
-], function (BaseSelection, Utils, KEYS) {
+], function ($, BaseSelection, Utils, KEYS) {
   function SingleSelection () {
     SingleSelection.__super__.constructor.apply(this, arguments);
   }
@@ -1226,20 +1246,16 @@ define('select2/selection/single',[
   Utils.Extend(SingleSelection, BaseSelection);
 
   SingleSelection.prototype.render = function () {
-    var $selection = $(
-      '<span class="select2-selection select2-selection--single" tabindex="0"' +
-        ' role="combobox" aria-autocomplete="list" aria-haspopup="true"' +
-        ' aria-expanded="false">' +
-        '<span class="select2-selection__rendered"></span>' +
-        '<span class="select2-selection__arrow" role="presentation">' +
-          '<b role="presentation"></b>' +
-        '</span>' +
+    var $selection = SingleSelection.__super__.render.call(this);
+
+    $selection.addClass('select2-selection--single');
+
+    $selection.html(
+      '<span class="select2-selection__rendered"></span>' +
+      '<span class="select2-selection__arrow" role="presentation">' +
+        '<b role="presentation"></b>' +
       '</span>'
     );
-
-    $selection.attr('title', this.$element.attr('title'));
-
-    this.$selection = $selection;
 
     return $selection;
   };
@@ -1271,14 +1287,6 @@ define('select2/selection/single',[
 
     this.$selection.on('blur', function (evt) {
       // User exits the container
-    });
-
-    container.on('enable', function () {
-      self.$selection.attr('tabindex', '0');
-    });
-
-    container.on('disable', function () {
-      self.$selection.attr('tabindex', '-1');
     });
 
     container.on('selection:update', function (params) {
@@ -1317,9 +1325,10 @@ define('select2/selection/single',[
 });
 
 define('select2/selection/multiple',[
+  'jquery',
   './base',
   '../utils'
-], function (BaseSelection, Utils) {
+], function ($, BaseSelection, Utils) {
   function MultipleSelection ($element, options) {
     MultipleSelection.__super__.constructor.apply(this, arguments);
   }
@@ -1327,17 +1336,13 @@ define('select2/selection/multiple',[
   Utils.Extend(MultipleSelection, BaseSelection);
 
   MultipleSelection.prototype.render = function () {
-    var $selection = $(
-      '<span class="select2-selection select2-selection--multiple"' +
-        ' tabindex="0" role="combobox" aria-autocomplete="list"' +
-        ' aria-haspopup="true" aria-expanded="false">' +
-        '<ul class="select2-selection__rendered"></ul>' +
-      '</span>'
+    var $selection = MultipleSelection.__super__.render.call(this);
+
+    $selection.addClass('select2-selection--multiple');
+
+    $selection.html(
+      '<ul class="select2-selection__rendered"></ul>'
     );
-
-    $selection.attr('title', this.$element.attr('title'));
-
-    this.$selection = $selection;
 
     return $selection;
   };
@@ -1364,14 +1369,6 @@ define('select2/selection/multiple',[
         originalEvent: evt,
         data: data
       });
-    });
-
-    container.on('enable', function () {
-      self.$selection.attr('tabindex', '0');
-    });
-
-    container.on('disable', function () {
-      self.$selection.attr('tabindex', '-1');
     });
   };
 

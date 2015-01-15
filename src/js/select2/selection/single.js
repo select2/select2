@@ -1,8 +1,9 @@
 define([
+  'jquery',
   './base',
   '../utils',
   '../keys'
-], function (BaseSelection, Utils, KEYS) {
+], function ($, BaseSelection, Utils, KEYS) {
   function SingleSelection () {
     SingleSelection.__super__.constructor.apply(this, arguments);
   }
@@ -10,20 +11,16 @@ define([
   Utils.Extend(SingleSelection, BaseSelection);
 
   SingleSelection.prototype.render = function () {
-    var $selection = $(
-      '<span class="select2-selection select2-selection--single" tabindex="0"' +
-        ' role="combobox" aria-autocomplete="list" aria-haspopup="true"' +
-        ' aria-expanded="false">' +
-        '<span class="select2-selection__rendered"></span>' +
-        '<span class="select2-selection__arrow" role="presentation">' +
-          '<b role="presentation"></b>' +
-        '</span>' +
+    var $selection = SingleSelection.__super__.render.call(this);
+
+    $selection.addClass('select2-selection--single');
+
+    $selection.html(
+      '<span class="select2-selection__rendered"></span>' +
+      '<span class="select2-selection__arrow" role="presentation">' +
+        '<b role="presentation"></b>' +
       '</span>'
     );
-
-    $selection.attr('title', this.$element.attr('title'));
-
-    this.$selection = $selection;
 
     return $selection;
   };
@@ -55,14 +52,6 @@ define([
 
     this.$selection.on('blur', function (evt) {
       // User exits the container
-    });
-
-    container.on('enable', function () {
-      self.$selection.attr('tabindex', '0');
-    });
-
-    container.on('disable', function () {
-      self.$selection.attr('tabindex', '-1');
     });
 
     container.on('selection:update', function (params) {
