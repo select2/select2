@@ -13,6 +13,8 @@ module.exports = function (grunt) {
     'jquery.mousewheel',
 
     'select2/compat/matcher',
+    'select2/compat/initSelection',
+    'select2/compat/query',
 
     'select2/dropdown/attachContainer'
   ].concat(includes);

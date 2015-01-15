@@ -3527,55 +3527,21 @@ define('select2/defaults',[
       }
 
       if (options.query != null) {
-        if (console && console.warn) {
-          console.warn(
-            'Select2: The `query` option has been deprecated in favor of a ' +
-            'custom data adapter that overrides the `query` method. Support ' +
-            'will be removed for the `query` option in future versions of ' +
-            'Select2.'
-          );
-        }
+        var Query = require(options.amdBase + 'compat/query');
 
-        options.dataAdapter.prototype.query = function (params, callback) {
-          params.callback = callback;
-
-          options.query.call(null, params);
-        };
+        options.dataAdapter = Utils.Decorate(
+          options.dataAdapter,
+          Query
+        );
       }
 
       if (options.initSelection != null) {
-        if (console && console.warn) {
-          console.warn(
-            'Select2: The `initSelection` option has been deprecated in favor' +
-            ' of a custom data adapter that overrides the `current` method. ' +
-            'This method is now called multiple times instead of a single ' +
-            'time when the instance is initialized. Support will be removed ' +
-            'for the `initSelection` option in future versions of Select2'
-          );
-        }
+        var InitSelection = require(options.amdBase + 'compat/initSelection');
 
-        var oldCurrent = options.dataAdapter.prototype.current;
-        var newCurrent = function (callback) {
-          var self = this;
-
-          if (this._isInitialized) {
-            oldCurrent.call(this, callback);
-
-            return;
-          }
-
-          options.initSelection.call(null, this.$element, function (data) {
-            self._isInitialized = true;
-
-            if (!$.isArray(data)) {
-              data = [data];
-            }
-
-            callback(data);
-          });
-        };
-
-        options.dataAdapter.prototype.current = newCurrent;
+        options.dataAdapter = Utils.Decorate(
+          options.dataAdapter,
+          InitSelection
+        );
       }
     }
 

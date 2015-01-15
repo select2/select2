@@ -13062,55 +13062,21 @@ define('select2/defaults',[
       }
 
       if (options.query != null) {
-        if (console && console.warn) {
-          console.warn(
-            'Select2: The `query` option has been deprecated in favor of a ' +
-            'custom data adapter that overrides the `query` method. Support ' +
-            'will be removed for the `query` option in future versions of ' +
-            'Select2.'
-          );
-        }
+        var Query = require(options.amdBase + 'compat/query');
 
-        options.dataAdapter.prototype.query = function (params, callback) {
-          params.callback = callback;
-
-          options.query.call(null, params);
-        };
+        options.dataAdapter = Utils.Decorate(
+          options.dataAdapter,
+          Query
+        );
       }
 
       if (options.initSelection != null) {
-        if (console && console.warn) {
-          console.warn(
-            'Select2: The `initSelection` option has been deprecated in favor' +
-            ' of a custom data adapter that overrides the `current` method. ' +
-            'This method is now called multiple times instead of a single ' +
-            'time when the instance is initialized. Support will be removed ' +
-            'for the `initSelection` option in future versions of Select2'
-          );
-        }
+        var InitSelection = require(options.amdBase + 'compat/initSelection');
 
-        var oldCurrent = options.dataAdapter.prototype.current;
-        var newCurrent = function (callback) {
-          var self = this;
-
-          if (this._isInitialized) {
-            oldCurrent.call(this, callback);
-
-            return;
-          }
-
-          options.initSelection.call(null, this.$element, function (data) {
-            self._isInitialized = true;
-
-            if (!$.isArray(data)) {
-              data = [data];
-            }
-
-            callback(data);
-          });
-        };
-
-        options.dataAdapter.prototype.current = newCurrent;
+        options.dataAdapter = Utils.Decorate(
+          options.dataAdapter,
+          InitSelection
+        );
       }
     }
 
@@ -14196,6 +14162,76 @@ define('select2/compat/matcher',[
   }
 
   return oldMatcher;
+});
+
+define('select2/compat/initSelection',[
+  'jquery'
+], function ($) {
+  function InitSelection (decorated, $element, options) {
+    if (console && console.warn) {
+      console.warn(
+        'Select2: The `initSelection` option has been deprecated in favor' +
+        ' of a custom data adapter that overrides the `current` method. ' +
+        'This method is now called multiple times instead of a single ' +
+        'time when the instance is initialized. Support will be removed ' +
+        'for the `initSelection` option in future versions of Select2'
+      );
+    }
+
+    this.initSelection = options.get('initSelection');
+    this._isInitialized = false;
+
+    decorated.call(this, $element, options);
+  }
+
+  InitSelection.prototype.current = function (decorated, callback) {
+    var self = this;
+
+    if (this._isInitialized) {
+      decorated.call(this, callback);
+
+      return;
+    }
+
+    this.initSelection.call(null, this.$element, function (data) {
+      self._isInitialized = true;
+
+      if (!$.isArray(data)) {
+        data = [data];
+      }
+
+      callback(data);
+    });
+  };
+
+  return InitSelection;
+});
+
+define('select2/compat/query',[
+
+], function () {
+  function Query (decorated, $element, options) {
+    if (console && console.warn) {
+      console.warn(
+        'Select2: The `query` option has been deprecated in favor of a ' +
+        'custom data adapter that overrides the `query` method. Support ' +
+        'will be removed for the `query` option in future versions of ' +
+        'Select2.'
+      );
+    }
+
+    decorated.call(this, $element, options);
+  }
+
+  Query.prototype.query = function (_, params, callback) {
+    params.callback = callback;
+
+    var query = this.options.get('query');
+
+    query.call(null, params);
+  };
+
+  return Query;
 });
 
 define('select2/dropdown/attachContainer',[
