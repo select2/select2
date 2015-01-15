@@ -3956,6 +3956,40 @@ define('select2/defaults',[
           Tokenizer
         );
       }
+
+      if (options.initSelection != null) {
+        if (console && console.warn) {
+          console.warn(
+            'Select2: The `initSelection` option has been deprecated in favor' +
+            ' of a custom data adapter that overrides the `current` method. ' +
+            'This method is now called multiple times instead of a single ' +
+            'time when the instance is initialized.'
+          );
+        }
+
+        var oldCurrent = options.dataAdapter.prototype.current;
+        var newCurrent = function (callback) {
+          var self = this;
+
+          if (this._isInitialized) {
+            oldCurrent.call(this, callback);
+
+            return;
+          }
+
+          options.initSelection.call(null, this.$element, function (data) {
+            self._isInitialized = true;
+
+            if (!$.isArray(data)) {
+              data = [data];
+            }
+
+            callback(data);
+          });
+        };
+
+        options.dataAdapter.prototype.current = newCurrent;
+      }
     }
 
     if (options.resultsAdapter == null) {
