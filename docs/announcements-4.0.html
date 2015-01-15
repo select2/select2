@@ -287,6 +287,139 @@ $("select").select2({
       have been noted.
     </p>
 
+    <h3 id="removed-initselection">
+      Removed the requirement of <code>initSelection</code>
+    </h3>
+
+    <p>
+      In the past, whenever you wanted to use a custom data adapter, such as AJAX or tagging, you needed to help Select2 out in determining the initial values that were selected. This was typically done through the <code>initSelection</code> option, which took the underlying data of the input and converted it into data objects that Select2 could use.
+    </p>
+
+    <p>
+      This is now handled by <a href="options.html#dataAdapter">the data adapter</a> in the <code>current</code> method, which allows Select2 to convert the currently selected values into data objects that can be displayed. The default implementation converts the text and value of <code>option</code> elements into data objects, and is probably suitable for most cases. An example of the old <code>initSelection</code> option is included below, which converts the value of the selected options into a data object with both the <code>id</code> and <code>text</code> matching the selected value.
+    </p>
+
+<pre class="prettyprint linenums">
+initSelection : function (element, callback) {
+  var data = [];
+  $(element.val()).each(function () {
+    data.push({id: this, text: this});
+  });
+  callback(data);
+}
+</pre>
+
+    <p>
+      When using the new <code>current</code> method of the custom data adapter, <strong>this method is called any time Select2 needs a list</strong> of the currently selected options. This is different from the old <code>initSelection</code> in that it was only called once, so it could suffer from being relatively slow to process the data (such as from a remote data source).
+    </p>
+
+<pre class="prettyprint linenums">
+$.fn.select2.amd.require(
+['select2/data/array', 'select2/utils'],
+function (ArrayData, Utils) {
+  function CustomData ($element, options) {
+    CustomData.__super__.constructor.call(this, $element, options);
+  }
+
+  Utils.Extend(CustomData, ArrayData);
+
+  CustomData.prototype.current = function (callback) {
+    var data = [];
+    var currentVal = this.$element.val();
+
+    if (!this.$element.prop('multiple')) {
+      currentVal = [currentVal];
+    }
+
+    for (var v = 0; v < currentVal.length; v++) {
+      data.push({
+        id: currentVal[v],
+        text: currentVal[v]
+      });
+    }
+
+    callback(data);
+  };
+
+  $("#select").select2({
+    dataAdapter: CustomData
+  });
+}
+</pre>
+
+    <p>
+      The new <code>current</code> method of the data adapter works in a similar way to the old <code>initSelection</code> method, with three notable differences. The first, and most important, is that <code>it is called whenever the current selections are needed</code> to ensure that Select2 is always displaying the most accurate and up to date data. No matter what type of element Select2 is attached to, whether it supports a single or multiple selections, the data passed to the callback <strong>must be an array, even if it contains one selection</strong>. The last is that there is only one parameter, the callback to be executed with the latest data, and the current element that Select2 is attached to is available on the class itself as <code>this.$element</code>.
+    </p>
+
+    <h3 id="query-to-data-adapter">
+      Custom data adapters instead of <code>query</code>
+    </h3>
+
+    <p>
+      <a href="http://select2.github.io/select2/#data">In the past</a>, any time you wanted to hook Select2 up to a diferent data source you would be required to implement custom <code>query</code> and <code>initSelection</code> methods. This allowed Select2 to determine the initial selection and the list of results to display, and it would handle everything else internally, which was fine more most people.
+    </p>
+
+    <p>
+      The custom <code>query</code> and <code>initSelection</code> methods have been replaced by <a href="options.html#dataAdapter">custom data adapters</a> that handle how Select2 stores and retrieves the data that will be displayed to the user. An example of the old <code>query</code> option is provided below, which is <a href="http://select2.github.io/select2/#data">the same as the old example</a>, and it generates results that contain the search term repeated a certain number of times.
+    </p>
+
+<pre class="prettyprint linenums">
+query: function (query) {
+  var data = {results: []}, i, j, s;
+  for (i = 1; i < 5; i++) {
+    s = "";
+    for (j = 0; j < i; j++) {s = s + query.term;}
+    data.results.push({id: query.term + i, text: s});
+  }
+  query.callback(data);
+}
+</pre>
+
+    <p>
+      This has been replaced by custom data adapters which define a similarly named <code>query</code> method. The comparable data adapter is provided below as an example.
+    </p>
+
+<pre class="prettyprint linenums">
+$.fn.select2.amd.require(
+['select2/data/array', 'select2/utils'],
+function (ArrayData, Utils) {
+  function CustomData ($element, options) {
+    CustomData.__super__.constructor.call(this, $element, options);
+  }
+
+  Utils.Extend(CustomData, ArrayData);
+
+  CustomData.prototype.query = function (params, callback) {
+    var data = {
+      results: []
+    };
+
+    for (var i = 1; i < 5; i++) {
+      var s = "";
+
+      for (var j = 0; j < i; j++) {
+        s = s + params.term;
+      }
+
+      data.results.push({
+        id: params.term + i,
+        text: s
+      });
+    }
+
+    callback(data);
+  };
+
+  $("#select").select2({
+    dataAdapter: CustomData
+  });
+}
+</pre>
+
+    <p>
+      The new <code>query</code> method of the data adapter is very similar to the old <code>query</code> option that was passed into Select2 when initializing it. The old <code>query</code> argument is mostly the same as the new <code>params</code> that are passed in to query on, and the callback that should be used to return the results is now passed in as the second parameter.
+    </p>
+
     <h3 id="changed-templating">Renamed templating options</h3>
 
     <p>
