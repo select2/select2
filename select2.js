@@ -871,7 +871,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 select2.liveRegion.remove();
                 select2.dropdown.remove();
                 element.removeData("select2")
-                    .off("select2");
+                    .off(".select2");
                 if (!element.is("input[type='hidden']")) {
                     element
                         .show()
