@@ -4090,7 +4090,16 @@ define('select2/defaults',[
     }
 
     if (typeof options.language === 'string') {
-      options.language = [options.language];
+      // Check if the lanugage is specified with a region
+      if (options.language.indexOf('-') > 0) {
+        // Extract the region information if it is included
+        var languageParts = options.language.split('-');
+        var baseLanguage = languageParts[0];
+
+        options.language = [options.language, baseLanguage];
+      } else {
+        options.language = [options.language];
+      }
     }
 
     if ($.isArray(options.language)) {
@@ -4107,9 +4116,23 @@ define('select2/defaults',[
           // Try to load it with the original name
           language = Translation.loadPath(name);
         } catch (e) {
-          // If we couldn't load it, check if it wasn't the full path
-          name = this.defaults.amdLanguageBase + name;
-          language = Translation.loadPath(name);
+          try {
+            // If we couldn't load it, check if it wasn't the full path
+            name = this.defaults.amdLanguageBase + name;
+            language = Translation.loadPath(name);
+          } catch (ex) {
+            // The translation could not be loaded at all. Sometimes this is
+            // because of a configuration problem, other times this can be
+            // because of how Select2 helps load all possible translation files.
+            if (console && console.warn) {
+              console.warn(
+                'Select2: The lanugage file for "' + name + '" could not be ' +
+                'automatically loaded. A fallback will be used instead.'
+              );
+            }
+
+            continue;
+          }
         }
 
         languages.extend(language);
