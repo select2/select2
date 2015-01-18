@@ -307,6 +307,17 @@ define([
     };
   };
 
+  Defaults.prototype.set = function (key, value) {
+    var camelKey = $.camelCase(key);
+
+    var data = {};
+    data[camelKey] = value;
+
+    var convertedData = Utils._convertData(data);
+
+    $.extend(this.defaults, convertedData);
+  };
+
   var defaults = new Defaults();
 
   return defaults;

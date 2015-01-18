@@ -9694,6 +9694,40 @@ define('select2/utils',[], function () {
     };
   };
 
+  Utils._convertData = function (data) {
+    for (var originalKey in data) {
+      var keys = originalKey.split('-');
+
+      var dataLevel = data;
+
+      if (keys.length === 1) {
+        continue;
+      }
+
+      for (var k = 0; k < keys.length; k++) {
+        var key = keys[k];
+
+        // Lowercase the first letter
+        // By default, dash-separated becomes camelCase
+        key = key.substring(0, 1).toLowerCase() + key.substring(1);
+
+        if (!(key in dataLevel)) {
+          dataLevel[key] = {};
+        }
+
+        if (k == keys.length - 1) {
+          dataLevel[key] = data[originalKey];
+        }
+
+        dataLevel = dataLevel[key];
+      }
+
+      delete data[originalKey];
+    }
+
+    return data;
+  };
+
   return Utils;
 });
 
@@ -13275,6 +13309,17 @@ define('select2/defaults',[
     };
   };
 
+  Defaults.prototype.set = function (key, value) {
+    var camelKey = $.camelCase(key);
+
+    var data = {};
+    data[camelKey] = value;
+
+    var convertedData = Utils._convertData(data);
+
+    $.extend(this.defaults, convertedData);
+  };
+
   var defaults = new Defaults();
 
   return defaults;
@@ -13282,8 +13327,9 @@ define('select2/defaults',[
 
 define('select2/options',[
   'jquery',
-  './defaults'
-], function ($, Defaults) {
+  './defaults',
+  './utils'
+], function ($, Defaults, Utils) {
   function Options (options, $element) {
     this.options = options;
 
@@ -13353,41 +13399,7 @@ define('select2/options',[
 
     var data = $e.data();
 
-    function convertData (data) {
-      for (var originalKey in data) {
-        var keys = originalKey.split('-');
-
-        var dataLevel = data;
-
-        if (keys.length === 1) {
-          continue;
-        }
-
-        for (var k = 0; k < keys.length; k++) {
-          var key = keys[k];
-
-          // Lowercase the first letter
-          // By default, dash-separated becomes camelCase
-          key = key.substring(0, 1).toLowerCase() + key.substring(1);
-
-          if (!(key in dataLevel)) {
-            dataLevel[key] = {};
-          }
-
-          if (k == keys.length - 1) {
-            dataLevel[key] = data[originalKey];
-          }
-
-          dataLevel = dataLevel[key];
-        }
-
-        delete data[originalKey];
-      }
-
-      return data;
-    }
-
-    data = convertData(data);
+    data = Utils._convertData(data);
 
     for (var key in data) {
       if (excludedData.indexOf(key) > -1) {
@@ -14255,8 +14267,9 @@ define('select2/dropdown/attachContainer',[
 
 define('jquery.select2',[
   'jquery',
-  './select2/core'
-], function ($, Select2) {
+  './select2/core',
+  './select2/defaults'
+], function ($, Select2, Defaults) {
   // Force jQuery.mousewheel to be loaded if it hasn't already
   try {
     require('jquery.mousewheel');
@@ -14283,6 +14296,10 @@ define('jquery.select2',[
         throw new Error('Invalid arguments for Select2: ' + options);
       }
     };
+  }
+
+  if ($.fn.select2.defaults == null) {
+    $.fn.select2.defaults = Defaults;
   }
 
   return Select2;
