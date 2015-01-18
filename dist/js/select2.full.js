@@ -13580,6 +13580,8 @@ define('select2/core',[
           return matches[1];
         }
       }
+
+      return null;
     }
 
     return method;

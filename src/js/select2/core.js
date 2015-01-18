@@ -151,6 +151,8 @@ define([
           return matches[1];
         }
       }
+
+      return null;
     }
 
     return method;
