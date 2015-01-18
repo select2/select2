@@ -31,7 +31,7 @@ define(function () {
       var message = 'Пожалуйста, введите еще хотя бы ' + remainingChars +
         ' символ';
 
-      message += ending(overChars, '', 'a', 'ов');
+      message += ending(remainingChars, '', 'a', 'ов');
 
       return message;
     },
@@ -41,7 +41,7 @@ define(function () {
     maximumSelected: function (args) {
       var message = 'Вы можете выбрать не более ' + args.maximum + ' элемент';
 
-      message += ending(overChars, '', 'a', 'ов');
+      message += ending(args.maximum, '', 'a', 'ов');
 
       return message;
     },
