@@ -31,7 +31,8 @@ slug: home
 <section class="notice-previous">
   <div class="container">
     <a href="http://select2.github.io/select2/">Looking for the Select2 3.5.2 docs?</a>
-    We have moved them to a new location while we work on Select2 4.0.
+    We have moved them to a new location
+    <a href="announcements-4.0.html">while we push forward with Select2 4.0</a>.
   </div>
 </section>
 
@@ -118,7 +119,7 @@ slug: home
 
 <pre class="code">
 &lt;link href="path/to/select2.min.css" /&gt;
-&lt;script src="path/to/select2.js"&gt;&lt;/script&gt;
+&lt;script src="path/to/select2.min.js"&gt;&lt;/script&gt;
 </pre>
       </li>
       <li>
@@ -126,6 +127,62 @@ slug: home
         the additional features of Select2.
       </li>
     </ol>
+  </section>
+
+  <section id="builds">
+    <h2>
+      The different Select2 builds
+    </h2>
+
+    <p>
+      Select2 provides multiple builds that are tailored to different
+      environments where it is going to be used. If you think you need to use
+      Select2 in a nonstandard environment, like when you are using AMD, you
+      should read over the list below.
+    </p>
+
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Build name</th>
+          <th>When you should use it</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr id="builds-standard">
+          <td>
+            Standard (<code>select2.js</code> / <code>select2.min.js</code>)
+          </td>
+          <td>
+            This is the build that most people should be using for Select2. It
+            includes the most commonly used features.
+          </td>
+        </tr>
+        <tr id="builds-full">
+          <td>
+            Full (<code>select2.full.js</code> / <code>select2.full.min.js</code>)
+          </td>
+          <td>
+            You should only use this build if you need the additional features
+            from Select2, like the
+            <a href="options.html#compatibility">compatibility modules</a> or
+            recommended includes like
+            <a href="https://github.com/jquery/jquery-mousewheel">jquery.mousewheel</a>
+          </td>
+        </tr>
+        <tr id="builds-amd">
+          <td>
+            AMD (<code>select2.amd.js</code> / <code>select2.amd.full.js</code>)
+          </td>
+          <td>
+            This is the build that anyone who is using Select2 with an existing
+            AMD build system should use. It is also recommended that you read
+            the <a href="options.html#amd">AMD compatibility documentation</a>
+            to avoid any unexpected issues.
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 
   <section id="about">
