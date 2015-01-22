@@ -1,6 +1,6 @@
 define([
-
-], function () {
+  'jquery'
+], function ($) {
   function AllowClear () { }
 
   AllowClear.prototype.bind = function (decorated, container, $container) {

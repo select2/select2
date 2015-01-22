@@ -1,6 +1,6 @@
 define([
-
-], function () {
+  'jquery'
+], function ($) {
   function Tokenizer (decorated, $element, options) {
     var tokenizer = options.get('tokenizer');
 

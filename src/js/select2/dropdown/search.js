@@ -1,6 +1,7 @@
 define([
+  'jquery',
   '../utils'
-], function (Utils) {
+], function ($, Utils) {
   function Search () { }
 
   Search.prototype.render = function (decorated) {

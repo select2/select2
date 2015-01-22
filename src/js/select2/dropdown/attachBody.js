@@ -1,6 +1,6 @@
 define([
-
-], function () {
+  'jquery'
+], function ($) {
   function AttachBody (decorated, $element, options) {
     this.$dropdownParent = options.get('dropdownParent') || document.body;
 

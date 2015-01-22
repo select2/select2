@@ -1,7 +1,8 @@
 define([
+  'jquery',
   '../utils',
   '../keys'
-], function (Utils, KEYS) {
+], function ($, Utils, KEYS) {
   function Search (decorated, $element, options) {
     decorated.call(this, $element, options);
   }

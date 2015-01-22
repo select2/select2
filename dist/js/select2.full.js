@@ -1,4 +1,4 @@
-window.$ = window.$ || {};(function() { if ($ && $.fn && $.fn.select2 && $.fn.select2.amd) { define = $.fn.select2.amd.define; require = $.fn.select2.amd.require; }/**
+window.jQuery = window.jQuery || {};(function() { if (jQuery && jQuery.fn && jQuery.fn.select2 && jQuery.fn.select2.amd) { define = jQuery.fn.select2.amd.define; require = jQuery.fn.select2.amd.require; }/**
  * @license almond 0.2.9 Copyright (c) 2011-2014, The Dojo Foundation All Rights Reserved.
  * Available via the MIT or new BSD license.
  * see: http://github.com/jrburke/almond for details
@@ -10619,8 +10619,8 @@ define('select2/selection/placeholder',[
 });
 
 define('select2/selection/allowClear',[
-
-], function () {
+  'jquery'
+], function ($) {
   function AllowClear () { }
 
   AllowClear.prototype.bind = function (decorated, container, $container) {
@@ -10682,9 +10682,10 @@ define('select2/selection/allowClear',[
 });
 
 define('select2/selection/search',[
+  'jquery',
   '../utils',
   '../keys'
-], function (Utils, KEYS) {
+], function ($, Utils, KEYS) {
   function Search (decorated, $element, options) {
     decorated.call(this, $element, options);
   }
@@ -10861,8 +10862,8 @@ define('select2/selection/eventRelay',[
 });
 
 define('select2/translation',[
-
-], function () {
+  'jquery'
+], function ($) {
   function Translation (dict) {
     this.dict = dict || {};
   }
@@ -12210,8 +12211,8 @@ define('select2/data/ajax',[
 });
 
 define('select2/data/tags',[
-
-], function () {
+  'jquery'
+], function ($) {
   function Tags (decorated, $element, options) {
     var tags = options.get('tags');
 
@@ -12324,8 +12325,8 @@ define('select2/data/tags',[
 });
 
 define('select2/data/tokenizer',[
-
-], function () {
+  'jquery'
+], function ($) {
   function Tokenizer (decorated, $element, options) {
     var tokenizer = options.get('tokenizer');
 
@@ -12506,8 +12507,9 @@ define('select2/data/maximumSelectionLength',[
 });
 
 define('select2/dropdown',[
+  'jquery',
   './utils'
-], function (Utils) {
+], function ($, Utils) {
   function Dropdown ($element, options) {
     this.$element = $element;
     this.options = options;
@@ -12564,8 +12566,9 @@ define('select2/dropdown',[
 });
 
 define('select2/dropdown/search',[
+  'jquery',
   '../utils'
-], function (Utils) {
+], function ($, Utils) {
   function Search () { }
 
   Search.prototype.render = function (decorated) {
@@ -12781,8 +12784,8 @@ define('select2/dropdown/infiniteScroll',[
 });
 
 define('select2/dropdown/attachBody',[
-
-], function () {
+  'jquery'
+], function ($) {
   function AttachBody (decorated, $element, options) {
     this.$dropdownParent = options.get('dropdownParent') || document.body;
 
@@ -14193,8 +14196,8 @@ define('select2/core',[
 }));
 
 define('select2/compat/matcher',[
-
-], function () {
+  'jquery'
+], function ($) {
   function oldMatcher (matcher) {
     function wrappedMatcher (params, data) {
       var match = $.extend(true, {}, data);
@@ -14364,4 +14367,4 @@ define('jquery.select2',[
   return Select2;
 });
 
-require('jquery.select2'); $.fn.select2.amd = { define: define, require: require };}());
+require('jquery.select2'); jQuery.fn.select2.amd = { define: define, require: require };}());

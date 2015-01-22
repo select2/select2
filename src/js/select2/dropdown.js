@@ -1,6 +1,7 @@
 define([
+  'jquery',
   './utils'
-], function (Utils) {
+], function ($, Utils) {
   function Dropdown ($element, options) {
     this.$element = $element;
     this.options = options;

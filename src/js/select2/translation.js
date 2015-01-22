@@ -1,6 +1,6 @@
 define([
-
-], function () {
+  'jquery'
+], function ($) {
   function Translation (dict) {
     this.dict = dict || {};
   }

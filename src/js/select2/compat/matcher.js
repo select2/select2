@@ -1,6 +1,6 @@
 define([
-
-], function () {
+  'jquery'
+], function ($) {
   function oldMatcher (matcher) {
     function wrappedMatcher (params, data) {
       var match = $.extend(true, {}, data);
