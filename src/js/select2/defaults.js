@@ -128,6 +128,13 @@ define([
           HidePlaceholder
         );
       }
+
+      if (options.selectOnClose) {
+        options.resultsAdapter = Utils.Decorate(
+          options.resultsAdapter,
+          SelectOnClose
+        );
+      }
     }
 
     if (options.dropdownAdapter == null) {
@@ -143,13 +150,6 @@ define([
         options.dropdownAdapter = Utils.Decorate(
           options.dropdownAdapter,
           MinimumResultsForSearch
-        );
-      }
-
-      if (options.selectOnClose) {
-        options.dropdownAdapter = Utils.Decorate(
-          options.dropdownAdapter,
-          SelectOnClose
         );
       }
 

@@ -4088,13 +4088,6 @@ define('select2/defaults',[
         );
       }
 
-      if (options.selectOnClose) {
-        options.dropdownAdapter = Utils.Decorate(
-          options.dropdownAdapter,
-          SelectOnClose
-        );
-      }
-
       options.dropdownAdapter = Utils.Decorate(
         options.dropdownAdapter,
         AttachBody

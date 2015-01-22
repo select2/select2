@@ -688,17 +688,29 @@ ajax: {
       it will appear in the same location within the DOM as the rest of Select2.
     </p>
 
-    <dl class="dl-horizontal">
-      <dt>Adapter</dt>
-      <dd>
-        <code title="select2/dropdown">DropdownAdapter</code>
-      </dd>
+    <div class="row">
+      <div class="col-sm-4">
+        <dl class="dl-horizontal">
+          <dt>Adapter</dt>
+          <dd>
+            <code title="select2/dropdown">DropdownAdapter</code>
+          </dd>
 
-      <dt>Decorator</dt>
-      <dd>
-        <code title="select2/dropdown/attachContainer">AttachContainer</code>
-      </dd>
-    </dl>
+          <dt>Decorator</dt>
+          <dd>
+            <code title="select2/dropdown/attachContainer">AttachContainer</code>
+          </dd>
+        </dl>
+      </div>
+
+      <div class="col-sm-8">
+        <div class="alert alert-warning">
+          <strong>Check your build.</strong> This module is only included in the
+          <a href="index.html#builds-full" class="alert-link">full builds</a> of
+          Select2.
+        </div>
+      </div>
+    </div>
 
     <div class="alert alert-info">
       <strong>
@@ -734,6 +746,30 @@ ajax: {
       A search box is added to the top of the dropdown automatically for select
       boxes where only a single option can be selected.
     </p>
+
+    <h2 id="dropdown-select-on-close">
+      Select the highlighted option on close
+    </h2>
+
+    <p>
+      When users close the dropdown, the last highlighted option can be
+      automatically selected. This is commonly used in combination with
+      <a href="#tags">tagging</a> and <a href="#placeholder">placeholders</a>
+      and other situations where the user is required to select an option, or
+      they need to be able to quickly select multiple options.
+    </p>
+
+    <dl class="dl-horizontal">
+      <dt>Adapter</dt>
+      <dd>
+        <code title="select2/results">ResultsAdapter</code>
+      </dd>
+
+      <dt>Decorator</dt>
+      <dd>
+        <code title="select2/dropdown/selectOnClose">SelectOnClose</code>
+      </dd>
+    </dl>
   </section>
 
   <section id="events">
@@ -1053,9 +1089,10 @@ $.fn.select2.default2.set("theme", "classic");
     </p>
 
     <p>
-      <strong>The compatibility modules are only included in the full builds of
-        Select2</strong>. These files end in <code>.full.js</code>, and the
-        compatibility modules are prefixed with <code>select2/compat</code>.
+      <strong>The compatibility modules are only included in the
+      <a href="index.html#builds-full" class="alert-link">full builds</a> of
+      Select2</strong>. These files end in <code>.full.js</code>, and the
+      compatibility modules are prefixed with <code>select2/compat</code>.
     </p>
 
     <h2 id="initSelection">
@@ -1064,7 +1101,9 @@ $.fn.select2.default2.set("theme", "classic");
 
     <p class="alert alert-warning">
       <a href="announcements-4.0.html#removed-initselection" class="alert-link">Deprecated in Select2 4.0.</a>
-      This has been replaced by another option.
+      This has been replaced by another option and is only available in the
+      <a href="index.html#builds-full" class="alert-link">full builds</a> of
+      Select2.
     </p>
 
     <p>
@@ -1111,7 +1150,9 @@ $.fn.select2.default2.set("theme", "classic");
 
     <p class="alert alert-warning">
       <a href="announcements-4.0.html#query-to-data-adapter" class="alert-link">Deprecated in Select2 4.0.</a>
-      This has been replaced by another option.
+      This has been replaced by another option and is only available in the
+      <a href="index.html#builds-full" class="alert-link">full builds</a> of
+      Select2.
     </p>
 
     <p>
