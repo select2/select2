@@ -917,9 +917,13 @@ define('select2/results',[
       var data = $highlighted.data('data');
 
       if ($highlighted.attr('aria-selected') == 'true') {
-        self.trigger('unselect', {
-          data: data
-        });
+        if (self.options.get('multiple')) {
+          self.trigger('unselect', {
+            data: data
+          });
+        } else {
+          self.trigger('close');
+        }
       } else {
         self.trigger('select', {
           data: data
@@ -1035,10 +1039,14 @@ define('select2/results',[
       var data = $this.data('data');
 
       if ($this.attr('aria-selected') === 'true') {
-        self.trigger('unselect', {
-          originalEvent: evt,
-          data: data
-        });
+        if (self.options.get('multiple')) {
+          self.trigger('unselect', {
+            originalEvent: evt,
+            data: data
+          });
+        } else {
+          self.trigger('close');
+        }
 
         return;
       }
@@ -4068,6 +4076,13 @@ define('select2/defaults',[
         options.resultsAdapter = Utils.Decorate(
           options.resultsAdapter,
           HidePlaceholder
+        );
+      }
+
+      if (options.selectOnClose) {
+        options.resultsAdapter = Utils.Decorate(
+          options.resultsAdapter,
+          SelectOnClose
         );
       }
     }
