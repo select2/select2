@@ -826,15 +826,10 @@ define('select2/selection/base',[
         $element.select2('close');
       });
     });
-
-    $(window).on('scroll.select2.' + container.id, function (e) {
-      self.trigger('close');
-    });
   };
 
   BaseSelection.prototype._detachCloseHandler = function (container) {
     $(document.body).off('mousedown.select2.' + container.id);
-    $(window).off('scroll.select2.' + container.id);
   };
 
   BaseSelection.prototype.position = function ($selection, $container) {
@@ -3274,6 +3269,7 @@ define('select2/dropdown/attachBody',[
 
     container.on('open', function () {
       self._showDropdown();
+      self._attachPositioningHandler(container);
 
       if (!setupResultsEvents) {
         setupResultsEvents = true;
@@ -3290,6 +3286,7 @@ define('select2/dropdown/attachBody',[
 
     container.on('close', function () {
       self._hideDropdown();
+      self._detachPositioningHandler(container);
     });
 
     this.$dropdownContainer.on('mousedown', function (evt) {
@@ -3327,6 +3324,27 @@ define('select2/dropdown/attachBody',[
 
   AttachBody.prototype._hideDropdown = function (decorated) {
     this.$dropdownContainer.detach();
+  };
+
+  AttachBody.prototype._attachPositioningHandler = function (container) {
+    var self = this;
+
+    var scrollEvent = 'scroll.select2.' + container.id;
+    var resizeEvent = 'resize.select2.' + container.id;
+    var orientationEvent = 'orientationchange.select2.' + container.id;
+
+    $(window).on(scrollEvent + ' ' + resizeEvent + ' ' + orientationEvent,
+      function (e) {
+      self._positionDropdown();
+    });
+  };
+
+  AttachBody.prototype._detachPositioningHandler = function (container) {
+    var scrollEvent = 'scroll.select2.' + container.id;
+    var resizeEvent = 'resize.select2.' + container.id;
+    var orientationEvent = 'orientationchange.select2.' + container.id;
+
+    $(window).off(scrollEvent + ' ' + resizeEvent + ' ' + orientationEvent);
   };
 
   AttachBody.prototype._positionDropdown = function () {
@@ -3376,7 +3394,8 @@ define('select2/dropdown/attachBody',[
       newDirection = 'below';
     }
 
-    if (newDirection == 'above' || isCurrentlyAbove) {
+    if (newDirection == 'above' ||
+      (isCurrentlyAbove && newDirection !== 'below')) {
       css.top = container.top - dropdown.height;
     }
 
