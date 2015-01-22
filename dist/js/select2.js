@@ -1,4 +1,4 @@
-window.jQuery = window.jQuery || {};(function() { if (jQuery && jQuery.fn && jQuery.fn.select2 && jQuery.fn.select2.amd) { define = jQuery.fn.select2.amd.define; require = jQuery.fn.select2.amd.require; }/**
+(function() { if (window.define) { var define = window.define; } if (window.require) { var require = window.require; } if (window.jQuery && jQuery.fn && jQuery.fn.select2 && jQuery.fn.select2.amd) { var define = jQuery.fn.select2.amd.define; var require = jQuery.fn.select2.amd.require; }/**
  * @license almond 0.2.9 Copyright (c) 2011-2014, The Dojo Foundation All Rights Reserved.
  * Available via the MIT or new BSD license.
  * see: http://github.com/jrburke/almond for details
@@ -423,7 +423,17 @@ var requirejs, require, define;
 define("almond", function(){});
 
 define('jquery',[],function () {
-    return jQuery;
+  var _$ = jQuery || $;
+
+  if (_$ == null && console && console.error) {
+    console.error(
+      'Select2: An instance of jQuery or a jQuery-compatible library was not ' +
+      'found. Make sure that you are including jQuery before Select2 on your ' +
+      'web page.'
+    );
+  }
+
+  return _$;
 });
 
 define('select2/utils',[], function () {
@@ -4906,4 +4916,4 @@ define('jquery.select2',[
   return Select2;
 });
 
-require('jquery.select2'); jQuery.fn.select2.amd = { define: define, require: require };}());
+require('jquery.select2'); jQuery.fn.select2.amd = { define: define, require: require }; }());

@@ -161,7 +161,7 @@ module.exports = function (grunt) {
           include: amdIncludes.concat(fullIncludes),
           paths: {
             almond: '../../vendor/almond-0.2.9',
-            jquery: '../../vendor/jquery-2.1.0',
+            jquery: 'jquery.shim',
             'jquery.mousewheel': '../../vendor/jquery.mousewheel'
           },
           wrap: grunt.file.readJSON('src/js/banner.json')
@@ -177,7 +177,7 @@ module.exports = function (grunt) {
           paths: {
             jquery: 'empty:'
           },
-          wrap: grunt.file.readJSON('src/js/banner.json')
+          wrap: grunt.file.readJSON('src/js/banner.amd.json')
         }
       },
       'amd.full': {
@@ -191,7 +191,7 @@ module.exports = function (grunt) {
             jquery: 'empty:',
             'jquery.mousewheel': '../../vendor/jquery.mousewheel'
           },
-          wrap: grunt.file.readJSON('src/js/banner.json')
+          wrap: grunt.file.readJSON('src/js/banner.amd.json')
         }
       },
       'i18n': {
