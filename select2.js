@@ -2502,6 +2502,9 @@ the specific language governing permissions and limitations under the Apache Lic
             }
             if (formatted !== undefined) {
                 container.append(formatted);
+                if (this.opts.addSelectedTitle) {
+                    container.attr("title", formatted);
+                }
             }
             cssClass=this.opts.formatSelectionCssClass(data, container);
             if (cssClass !== undefined) {
@@ -3464,6 +3467,7 @@ the specific language governing permissions and limitations under the Apache Lic
         },
         formatResultCssClass: function(data) {return data.css;},
         formatSelectionCssClass: function(data, container) {return undefined;},
+        addSelectedTitle: false,
         minimumResultsForSearch: 0,
         minimumInputLength: 0,
         maximumInputLength: null,
