@@ -15,8 +15,10 @@ define([
 
   Utils.Extend(AjaxAdapter, ArrayAdapter);
 
-  AjaxAdapter.prototype.processResults = function (results) {
-    return results;
+  AjaxAdapter.prototype.processResults = function (data) {
+    return {
+      results: data
+    };
   };
 
   AjaxAdapter.prototype.query = function (params, callback) {
