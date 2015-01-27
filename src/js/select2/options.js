@@ -61,7 +61,7 @@ define([
     if ($e.data('ajax-url')) {
       if (console && console.warn) {
         console.warn(
-          'Select2: The `data-ajax-url` has been changed to ' +
+          'Select2: The `data-ajax-url` attribute has been changed to ' +
           '`data-ajax--url` and support for the old attribute will be removed' +
           ' in future versions of Select2.'
         );

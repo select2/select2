@@ -3714,10 +3714,12 @@ define('select2/dropdown/attachBody',[
 
         container.on('results:all', function () {
           self._positionDropdown();
+          self._resizeDropdown();
         });
 
         container.on('results:append', function () {
           self._positionDropdown();
+          self._resizeDropdown();
         });
       }
     });
@@ -3743,8 +3745,6 @@ define('select2/dropdown/attachBody',[
       position: 'absolute',
       top: -999999
     });
-
-    $dropdown.width($container.outerWidth(false));
 
     this.$container = $container;
   };
@@ -3774,6 +3774,7 @@ define('select2/dropdown/attachBody',[
     $(window).on(scrollEvent + ' ' + resizeEvent + ' ' + orientationEvent,
       function (e) {
       self._positionDropdown();
+      self._resizeDropdown();
     });
   };
 
@@ -3849,10 +3850,19 @@ define('select2/dropdown/attachBody',[
     this.$dropdownContainer.css(css);
   };
 
+  AttachBody.prototype._resizeDropdown = function () {
+    this.$dropdownContainer.width();
+
+    this.$dropdown.css({
+      width: this.$container.outerWidth(false) + 'px'
+    });
+  };
+
   AttachBody.prototype._showDropdown = function (decorated) {
     this.$dropdownContainer.appendTo(this.$dropdownParent);
 
     this._positionDropdown();
+    this._resizeDropdown();
   };
 
   return AttachBody;
@@ -4378,7 +4388,7 @@ define('select2/options',[
     if ($e.data('ajax-url')) {
       if (console && console.warn) {
         console.warn(
-          'Select2: The `data-ajax-attribute` has been changed to ' +
+          'Select2: The `data-ajax-url` attribute has been changed to ' +
           '`data-ajax--url` and support for the old attribute will be removed' +
           ' in future versions of Select2.'
         );
