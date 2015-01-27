@@ -1,6 +1,7 @@
 define([
-  'jquery'
-], function ($) {
+  'jquery',
+  '../utils'
+], function ($, Utils) {
   function AttachBody (decorated, $element, options) {
     this.$dropdownParent = options.get('dropdownParent') || document.body;
 
@@ -80,6 +81,19 @@ define([
     var resizeEvent = 'resize.select2.' + container.id;
     var orientationEvent = 'orientationchange.select2.' + container.id;
 
+    $watchers = this.$container.parents().filter(Utils.hasScroll);
+    $watchers.each(function () {
+      $(this).data('select2-scroll-position', {
+        x: $(this).scrollLeft(),
+        y: $(this).scrollTop()
+      });
+    });
+
+    $watchers.on(scrollEvent, function (ev) {
+      var position = $(this).data('select2-scroll-position');
+      $(this).scrollTop(position.y);
+    });
+
     $(window).on(scrollEvent + ' ' + resizeEvent + ' ' + orientationEvent,
       function (e) {
       self._positionDropdown();
@@ -91,6 +105,9 @@ define([
     var scrollEvent = 'scroll.select2.' + container.id;
     var resizeEvent = 'resize.select2.' + container.id;
     var orientationEvent = 'orientationchange.select2.' + container.id;
+
+    $watchers = this.$container.parents().filter(Utils.hasScroll);
+    $watchers.off(scrollEvent);
 
     $(window).off(scrollEvent + ' ' + resizeEvent + ' ' + orientationEvent);
   };

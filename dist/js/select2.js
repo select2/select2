@@ -631,6 +631,31 @@ define('select2/utils',[], function () {
     return data;
   };
 
+  Utils.hasScroll = function (index, el) {
+    // Adapted from the function created by @ShadowScripter
+    // and adapted by @BillBarry on the Stack Exchange Code Review website.
+    // The original code can be found at
+    // http://codereview.stackexchange.com/q/13338
+    // and was designed to be used with the Sizzle selector engine.
+
+    var $el = $(el);
+    var overflowX = el.style.overflowX;
+    var overflowY = el.style.overflowY;
+
+    //Check both x and y declarations
+    if (overflowX === overflowY &&
+        (overflowY === 'hidden' || overflowY === 'visible')) {
+      return false;
+    }
+
+    if (overflowX === 'scroll' || overflowY === 'scroll') {
+      return true;
+    }
+
+    return ($el.innerHeight() < el.scrollHeight ||
+      $el.innerWidth() < el.scrollWidth);
+  };
+
   return Utils;
 });
 
@@ -3690,8 +3715,9 @@ define('select2/dropdown/infiniteScroll',[
 });
 
 define('select2/dropdown/attachBody',[
-  'jquery'
-], function ($) {
+  'jquery',
+  '../utils'
+], function ($, Utils) {
   function AttachBody (decorated, $element, options) {
     this.$dropdownParent = options.get('dropdownParent') || document.body;
 
@@ -3771,6 +3797,19 @@ define('select2/dropdown/attachBody',[
     var resizeEvent = 'resize.select2.' + container.id;
     var orientationEvent = 'orientationchange.select2.' + container.id;
 
+    $watchers = this.$container.parents().filter(Utils.hasScroll);
+    $watchers.each(function () {
+      $(this).data('select2-scroll-position', {
+        x: $(this).scrollLeft(),
+        y: $(this).scrollTop()
+      });
+    });
+
+    $watchers.on(scrollEvent, function (ev) {
+      var position = $(this).data('select2-scroll-position');
+      $(this).scrollTop(position.y);
+    });
+
     $(window).on(scrollEvent + ' ' + resizeEvent + ' ' + orientationEvent,
       function (e) {
       self._positionDropdown();
@@ -3782,6 +3821,9 @@ define('select2/dropdown/attachBody',[
     var scrollEvent = 'scroll.select2.' + container.id;
     var resizeEvent = 'resize.select2.' + container.id;
     var orientationEvent = 'orientationchange.select2.' + container.id;
+
+    $watchers = this.$container.parents().filter(Utils.hasScroll);
+    $watchers.off(scrollEvent);
 
     $(window).off(scrollEvent + ' ' + resizeEvent + ' ' + orientationEvent);
   };
