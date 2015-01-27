@@ -83,7 +83,8 @@
   padding: 4px; }
   .select2-search--dropdown .select2-search__field {
     padding: 4px;
-    width: 100%; }
+    width: 100%;
+    box-sizing: border-box; }
   .select2-search--dropdown.select2-search--hide {
     display: none; }
 
