@@ -5,8 +5,7 @@
   "homepage": "https://select2.github.io/",
   "license": "MIT",
   "require": {
-    "robloach/component-installer": "*",
-    "components/jquery": ">=1.7.2"
+    "robloach/component-installer": "*"
   },
   "extra": {
     "component": {
