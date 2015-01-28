@@ -30,7 +30,7 @@
   ],
   "license": "MIT",
   "main": "dist/js/select2.js",
-  "version": "4.0.0-beta.2",
+  "version": "4.0.0-beta.3",
   "jspm": {
     "main": "js/select2",
     "directories": {
