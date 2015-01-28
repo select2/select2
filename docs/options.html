@@ -423,7 +423,7 @@ placeholder: {
       the one below.
     </p>
 
-<pre class="prettyprint">
+<pre class="prettyprint linenums">
 language: {
   // You can find all of the options in the language files provided in the
   // build. They all must be functions that return the string that should be
@@ -517,7 +517,7 @@ language: {
       custom options that Select2 will intercept, allowing you to customize the
       request as it is being made.
 
-<pre class="prettyprint">
+<pre class="prettyprint linenums">
 ajax: {
   // The number of milliseconds to wait for the user to stop typing before
   // issuing the ajax request.
@@ -614,6 +614,70 @@ ajax: {
       automatically created and the user will be able to select from them.
       This is the <strong>same as how <a href="#data">array data</a>
       works</strong>, and has similar limitations.
+    </p>
+
+    <h3 id="matcher">
+      Change how options are matched when searching
+    </h3>
+
+    <p>
+      When users filter down the results by entering search terms into the
+      search box, Select2 uses an internal "matcher" to match search terms to
+      results. <strong>When a remote data set is used, Select2 expects that the
+      returned results have already been filtered.</strong>
+    </p>
+
+    <dl class="dl-horizontal">
+      <dt>Key</dt>
+      <dd>
+        <code>matcher</code>
+      </dd>
+
+      <dt>Value</dt>
+      <dd>
+        A function taking search <code>params</code> and the
+        <code>data</code> object.
+      </dd>
+    </dl>
+
+    <p>
+      Select2 will pass the individual data objects that have been passed back
+      from the data adapter into the <code>matcher</code> individually to
+      determine if they should be displayed. Only the first-level objects will
+      be passed in, so <strong>if you are working with nested data, you need to
+      match those individually</strong>.
+    </p>
+
+<pre class="prettyprint linenums">
+matcher: function (params, data) {
+  // If there are no search terms, return all of the data
+  if ($.trim(params.term) === '') {
+    return data;
+  }
+
+  // `params.term` should be the term that is used for searching
+  // `data.text` is the text that is displayed for the data object
+  if (data.text.indexOf(params.term) > -1) {
+    var modifiedData = $.extend({}, data, true);
+    modifiedData.text += ' (matched)';
+
+    // You can return modified objects from here
+    // This includes matching the `children` how you want in nested data sets
+    return modifiedData;
+  }
+
+  // Return `null` if the term should not be displayed
+  return null;
+}
+</pre>
+
+    <p>
+      This allows for more advanced matching when working with nested objects,
+      allowing you to handle them however you want. For those who are not
+      looking to implement highly customized matching, but instead are just
+      looking to change the matching algorithm for the text, a
+      <a href="#compat-matcher">compatibility modules</a> has been created to
+      make it easier.
     </p>
   </section>
 
@@ -1093,6 +1157,55 @@ $.fn.select2.default2.set("theme", "classic");
       <a href="index.html#builds-full" class="alert-link">full builds</a> of
       Select2</strong>. These files end in <code>.full.js</code>, and the
       compatibility modules are prefixed with <code>select2/compat</code>.
+    </p>
+
+    <h2 id="compat-matcher">
+      Simplified function for matching data objects
+    </h2>
+
+    <p class="alert alert-info">
+      <a href="announcements-4.0.html#new-matcher" class="alert-link">Added in Select2 4.0.0.</a>
+      This method was added to make upgrading easier from earlier versions of
+      Select2.
+    </p>
+
+    <p>
+      During the <a href="announcements-4.0.html">Select2 4.0.0 release</a>, the
+      <code>matcher</code> function was changed to allow for more complex
+      matching of nested objects.
+    </p>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <dl class="dl-horizontal">
+          <dt>Key</dt>
+          <dd>
+            <code>matcher</code>
+          </dd>
+
+          <dt>Value</dt>
+          <dd>
+            A function taking a search <code>term</code> and the data object
+            <code>text</code>.
+          </dd>
+        </dl>
+      </div>
+
+      <div class="col-sm-6">
+        <dl class="dl-horizontal">
+          <dt>Adapter</dt>
+          <dd>
+            <code title="select2/compat/matcher">oldMatcher</code>
+          </dd>
+        </dl>
+      </div>
+    </div>
+
+    <p>
+      The <a href="examples.html#matcher">custom matcher example</a> provides a
+      guide for how to use this in your own application. For those upgrading
+      from older versions of Select2, you just need to wrap your old
+      <code>matcher</code> with this function to maintain compatibility.
     </p>
 
     <h2 id="initSelection">
