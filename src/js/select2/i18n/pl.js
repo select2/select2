@@ -25,13 +25,15 @@ define(function () {
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
       
-      return 'Podaj przynajmniej ' + remainingChars + ' ' + pluralWord(remainingChars, charsWords);
+      return 'Podaj przynajmniej ' + remainingChars + ' ' +
+        pluralWord(remainingChars, charsWords);
     },
     loadingMore: function () {
       return 'Trwa ładowanie…';
     },
     maximumSelected: function (args) {
-      return 'Możesz zaznaczyć tylko ' + args.maximum + ' ' + pluralWord(args.maxiumum, itemsWords);
+      return 'Możesz zaznaczyć tylko ' + args.maximum + ' ' +
+        pluralWord(args.maxiumum, itemsWords);
     },
     noResults: function () {
       return 'Brak wyników';
