@@ -88,12 +88,12 @@ $("select").select2({
     </p>
 
 <pre class="prettyprint linenums">
-  $("select").select2({
-    ajax: {
-      url: "http://example.org/api/test",
-      cache: "true"
-    }
-  });
+$("select").select2({
+  ajax: {
+    url: "http://example.org/api/test",
+    cache: "true"
+  }
+});
 </pre>
 
     <p>
@@ -562,6 +562,25 @@ ajax: {
     return {
       results: data
     };
+  },
+  // You can use a custom AJAX transport function if you do not want to use the
+  // default one provided by jQuery.
+  //
+  // @param params The object containing the parameters used to generate the
+  //   request.
+  // @param success A callback function that takes `data`, the results from the
+  //   request.
+  // @param failure A callback function that indicates that the request could
+  //   not be completed.
+  // @returns An object that has an `abort` function that can be called to abort
+  //   the request if needed.
+  transport: function (params, success, failure) {
+    var $request = $.ajax(params);
+
+    $request.then(success);
+    $request.fail(failure);
+
+    return $request;
   }
 }
 </pre>
