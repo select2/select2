@@ -1,5 +1,7 @@
 module('Options - Attributes');
 
+var $ = require('jquery');
+
 var Options = require('select2/options');
 
 test('no nesting', function (assert) {

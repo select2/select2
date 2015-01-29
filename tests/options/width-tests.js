@@ -1,5 +1,7 @@
 module('Options - Width');
 
+var $ = require('jquery');
+
 var Select2 = require('select2/core');
 var select = new Select2($('<select></select>'));
 

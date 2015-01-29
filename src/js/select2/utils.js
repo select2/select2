@@ -1,4 +1,6 @@
-define([], function () {
+define([
+  'jquery'
+], function ($) {
   var Utils = {};
 
   Utils.Extend = function (ChildClass, SuperClass) {

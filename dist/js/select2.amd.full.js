@@ -1,4 +1,6 @@
-define(['jquery'], function ($) {define('select2/utils',[], function () {
+define(['jquery'], function ($) {define('select2/utils',[
+  'jquery'
+], function ($) {
   var Utils = {};
 
   Utils.Extend = function (ChildClass, SuperClass) {

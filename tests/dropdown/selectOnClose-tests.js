@@ -1,5 +1,7 @@
 module('Dropdown - selectOnClose');
 
+var $ = require('jquery');
+
 var Utils = require('select2/utils');
 var Options = require('select2/options');
 
