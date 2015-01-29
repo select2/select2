@@ -229,6 +229,7 @@ $(".js-data-example-ajax").select2({
     },
     cache: true
   },
+  escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
   minimumInputLength: 1,
   templateResult: formatRepo, // omitted for brevity, see the source of this page
   templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
@@ -949,6 +950,7 @@ $.fn.select2.amd.require(
       },
       cache: true
     },
+    escapeMarkup: function (markup) { return markup; },
     minimumInputLength: 1,
     templateResult: function (repo) {
       if (repo.loading) return repo.text;

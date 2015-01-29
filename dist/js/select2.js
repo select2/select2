@@ -658,6 +658,22 @@ define('select2/utils',[
       $el.innerWidth() < el.scrollWidth);
   };
 
+  Utils.escapeMarkup = function (markup) {
+    var replaceMap = {
+      '\\': '&#92;',
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      '\'': '&#39;',
+      '/': '&#47;'
+    };
+
+    return String(markup).replace(/[&<>"'\/\\]/g, function (match) {
+      return replaceMap[match];
+    });
+  };
+
   return Utils;
 });
 
@@ -1136,13 +1152,14 @@ define('select2/results',[
 
   Results.prototype.template = function (result, container) {
     var template = this.options.get('templateResult');
+    var escapeMarkup = this.options.get('escapeMarkup');
 
     var content = template(result);
 
     if (content == null) {
       container.style.display = 'none';
     } else {
-      container.innerHTML = content;
+      container.innerHTML = escapeMarkup(content);
     }
   };
 
@@ -1380,8 +1397,9 @@ define('select2/selection/single',[
 
   SingleSelection.prototype.display = function (data) {
     var template = this.options.get('templateSelection');
+    var escapeMarkup = this.options.get('escapeMarkup');
 
-    return template(data);
+    return escapeMarkup(template(data));
   };
 
   SingleSelection.prototype.selectionContainer = function () {
@@ -1458,8 +1476,9 @@ define('select2/selection/multiple',[
 
   MultipleSelection.prototype.display = function (data) {
     var template = this.options.get('templateSelection');
+    var escapeMarkup = this.options.get('escapeMarkup');
 
-    return template(data);
+    return escapeMarkup(template(data));
   };
 
   MultipleSelection.prototype.selectionContainer = function () {
@@ -4332,6 +4351,7 @@ define('select2/defaults',[
     this.defaults = {
       amdBase: 'select2/',
       amdLanguageBase: 'select2/i18n/',
+      escapeMarkup: Utils.escapeMarkup,
       language: EnglishTranslation,
       matcher: matcher,
       minimumInputLength: 0,

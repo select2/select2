@@ -64,3 +64,25 @@ test('update renders the data text', function (assert) {
 
   assert.equal($rendered.text(), 'test');
 });
+
+test('escapePlaceholder is being used', function (assert) {
+  var selection = new SingleSelection(
+    $('#qunit-fixture .single'),
+    options
+  );
+
+  var $selection = selection.render();
+  var $rendered = $selection.find('.select2-selection__rendered');
+
+  var unescapedText = '<script>bad("stuff");</script>';
+
+  selection.update([{
+    text: unescapedText
+  }]);
+
+  assert.equal(
+    $rendered.text(),
+    unescapedText,
+    'The text should be escaped by default to prevent injection'
+  );
+});

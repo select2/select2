@@ -309,6 +309,7 @@ define([
     this.defaults = {
       amdBase: 'select2/',
       amdLanguageBase: 'select2/i18n/',
+      escapeMarkup: Utils.escapeMarkup,
       language: EnglishTranslation,
       matcher: matcher,
       minimumInputLength: 0,

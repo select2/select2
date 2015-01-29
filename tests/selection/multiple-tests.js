@@ -48,3 +48,25 @@ test('empty update clears the selection', function (assert) {
 
   assert.equal($rendered.text(), '');
 });
+
+test('escapePlaceholder is being used', function (assert) {
+  var selection = new MultipleSelection(
+    $('#qunit-fixture .multiple'),
+    options
+  );
+
+  var $selection = selection.render();
+  var $rendered = $selection.find('.select2-selection__rendered');
+
+  var unescapedText = '<script>bad("stuff");</script>';
+
+  selection.update([{
+    text: unescapedText
+  }]);
+
+  assert.equal(
+    $rendered.text().indexOf(unescapedText),
+    1,
+    'The text should be escaped by default to prevent injection'
+  );
+});

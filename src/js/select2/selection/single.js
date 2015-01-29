@@ -65,8 +65,9 @@ define([
 
   SingleSelection.prototype.display = function (data) {
     var template = this.options.get('templateSelection');
+    var escapeMarkup = this.options.get('escapeMarkup');
 
-    return template(data);
+    return escapeMarkup(template(data));
   };
 
   SingleSelection.prototype.selectionContainer = function () {

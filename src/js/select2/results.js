@@ -473,13 +473,14 @@ define([
 
   Results.prototype.template = function (result, container) {
     var template = this.options.get('templateResult');
+    var escapeMarkup = this.options.get('escapeMarkup');
 
     var content = template(result);
 
     if (content == null) {
       container.style.display = 'none';
     } else {
-      container.innerHTML = content;
+      container.innerHTML = escapeMarkup(content);
     }
   };
 
