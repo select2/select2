@@ -4,18 +4,15 @@
   "type": "component",
   "homepage": "https://select2.github.io/",
   "license": "MIT",
-  "require": {
-    "robloach/component-installer": "*"
-  },
   "extra": {
     "component": {
       "scripts": [
         "dist/js/select2.js"
       ],
       "files": [
-        "dist/js/select2.js",
+        "dist/js/*.js",
         "dist/js/i18n/*.js",
-        "dist/css/select2.css"
+        "dist/css/*.css"
       ]
     }
   }
