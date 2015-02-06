@@ -2993,7 +2993,7 @@ define('select2/data/maximumInputLength',[
       this.trigger('results:message', {
         message: 'inputTooLong',
         args: {
-          minimum: this.maximumInputLength,
+          maximum: this.maximumInputLength,
           input: params.term,
           params: params
         }

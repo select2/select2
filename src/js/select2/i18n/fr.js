@@ -4,7 +4,7 @@ define(function () {
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;
 
-      var message = 'Supprimez " + n + " caractère';
+      var message = 'Supprimez ' + overChars + ' caractère';
 
       if (overChars !== 1) {
         message += 's';
@@ -15,9 +15,9 @@ define(function () {
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
-      var message = 'Saisissez " + n + " caractère';
+      var message = 'Saisissez ' + remainingChars + ' caractère';
 
-      if (overChars !== 1) {
+      if (remainingChars !== 1) {
         message += 's';
       }
 
