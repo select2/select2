@@ -1580,6 +1580,15 @@ define('select2/selection/allowClear',[
 
     decorated.call(this, container, $container);
 
+    if (self.placeholder == null) {
+      if (console && console.error) {
+        console.error(
+          'Select2: The `allowClear` option should be used in combination ' +
+          'with the `placeholder` option.'
+        );
+      }
+    }
+
     this.$selection.on('mousedown', '.select2-selection__clear',
       function (evt) {
         // Ignore the event if it is disabled
@@ -4234,13 +4243,13 @@ define('select2/defaults',[
           options.selectionAdapter,
           Placeholder
         );
+      }
 
-        if (options.allowClear) {
-          options.selectionAdapter = Utils.Decorate(
-            options.selectionAdapter,
-            AllowClear
-          );
-        }
+      if (options.allowClear) {
+        options.selectionAdapter = Utils.Decorate(
+          options.selectionAdapter,
+          AllowClear
+        );
       }
 
       if (options.multiple) {

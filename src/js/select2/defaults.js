@@ -172,13 +172,13 @@ define([
           options.selectionAdapter,
           Placeholder
         );
+      }
 
-        if (options.allowClear) {
-          options.selectionAdapter = Utils.Decorate(
-            options.selectionAdapter,
-            AllowClear
-          );
-        }
+      if (options.allowClear) {
+        options.selectionAdapter = Utils.Decorate(
+          options.selectionAdapter,
+          AllowClear
+        );
       }
 
       if (options.multiple) {
