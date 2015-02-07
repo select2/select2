@@ -923,6 +923,33 @@ $.fn.select2.amd.require(
     data: data
   });
 
+  function formatRepo (repo) {
+    if (repo.loading) return repo.text;
+
+    var markup = '<div class="clearfix">' +
+    '<div class="col-sm-1">' +
+    '<img src="' + repo.owner.avatar_url + '" style="max-width: 100%" />' +
+    '</div>' +
+    '<div clas="col-sm-10">' +
+    '<div class="clearfix">' +
+    '<div class="col-sm-6">' + repo.full_name + '</div>' +
+    '<div class="col-sm-3"><i class="fa fa-code-fork"></i> ' + repo.forks_count + '</div>' +
+    '<div class="col-sm-2"><i class="fa fa-star"></i> ' + repo.stargazers_count + '</div>' +
+    '</div>';
+
+    if (repo.description) {
+      markup += '<div>' + repo.description + '</div>';
+    }
+
+    markup += '</div></div>';
+
+    return markup;
+  }
+
+  function formatRepoSelection (repo) {
+    return repo.full_name || repo.text;
+  }
+
   $ajax.select2({
     ajax: {
       url: "https://api.github.com/search/repositories",
@@ -952,31 +979,8 @@ $.fn.select2.amd.require(
     },
     escapeMarkup: function (markup) { return markup; },
     minimumInputLength: 1,
-    templateResult: function (repo) {
-      if (repo.loading) return repo.text;
-
-      var markup = '<div class="clearfix">' +
-        '<div class="col-sm-1">' +
-          '<img src="' + repo.owner.avatar_url + '" style="max-width: 100%" />' +
-        '</div>' +
-        '<div clas="col-sm-10">' +
-          '<div class="clearfix">' +
-            '<div class="col-sm-6">' + repo.full_name + '</div>' +
-            '<div class="col-sm-3"><i class="fa fa-code-fork"></i> ' + repo.forks_count + '</div>' +
-            '<div class="col-sm-2"><i class="fa fa-star"></i> ' + repo.stargazers_count + '</div>' +
-          '</div>';
-
-      if (repo.description) {
-         markup += '<div>' + repo.description + '</div>';
-      }
-
-      markup += '</div></div>';
-
-      return markup;
-    },
-    templateSelection: function (repo) {
-      return repo.full_name || repo.text;
-    }
+    templateResult: formatRepo,
+    templateSelection: formatRepoSelection
   });
 
   $(".js-example-disabled").select2();
