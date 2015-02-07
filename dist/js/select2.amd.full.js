@@ -272,6 +272,8 @@ define('select2/results',[
   };
 
   Results.prototype.displayMessage = function (params) {
+    var escapeMarkup = this.options.get('escapeMarkup');
+
     this.clear();
     this.hideLoading();
 
@@ -281,7 +283,11 @@ define('select2/results',[
 
     var message = this.options.get('translations').get(params.message);
 
-    $message.text(message(params.args));
+    $message.append(
+      escapeMarkup(
+        message(params.args)
+      )
+    );
 
     this.$results.append($message);
   };
