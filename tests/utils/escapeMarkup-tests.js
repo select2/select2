@@ -25,3 +25,12 @@ test('quotes are killed as well', function (assert) {
   assert.equal(escaped.indexOf('\''), -1);
   assert.equal(escaped.indexOf('"'), -1);
 });
+
+test('DocumentFragment options pass through', function (assert) {
+  var frag = document.createDocumentFragment();
+  frag.innerHTML = '<strong>test</strong>';
+
+  var escaped = Utils.escapeMarkup(frag);
+
+  assert.equal(frag, escaped);
+});
