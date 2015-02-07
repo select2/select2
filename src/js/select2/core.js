@@ -444,7 +444,8 @@ define([
       this._observer.disconnect();
       this._observer = null;
     } else if (this.$element[0].removeEventListener) {
-      this.$element[0].removeEventListener('DOMAttrModified', this._sync, false);
+      this.$element[0]
+        .removeEventListener('DOMAttrModified', this._sync, false);
     }
 
     this._sync = null;
