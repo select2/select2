@@ -1,5 +1,5 @@
 define(function () {
-  // Spanish
+  // Catalan
   return {
     errorLoading: function () {
       return 'La càrrega ha fallat';
