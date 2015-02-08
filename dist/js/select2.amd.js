@@ -1369,7 +1369,7 @@ define('select2/selection/eventRelay',[
 
     container.on('*', function (name, params) {
       // Ignore events that should not be relayed
-      if (relayEvents.indexOf(name) === -1) {
+      if ($.inArray(name, relayEvents) === -1) {
         return;
       }
 
@@ -1384,7 +1384,7 @@ define('select2/selection/eventRelay',[
       self.$element.trigger(evt);
 
       // Only handle preventable events if it was one
-      if (preventableEvents.indexOf(name) === -1) {
+      if ($.inArray(name, preventableEvents) === -1) {
         return;
       }
 
@@ -2636,7 +2636,7 @@ define('select2/data/array',[
       var item = this._normalizeItem(data[d]);
 
       // Skip items which were pre-loaded, only merge the data
-      if (existingIds.indexOf(item.id) >= 0) {
+      if ($.inArray(item.id, existingIds) >= 0) {
         var $existingOption = $existing.filter(onlyItem(item));
 
         var existingData = this.item($existingOption);
@@ -4315,7 +4315,7 @@ define('select2/core',[
     });
 
     this.selection.on('*', function (name, params) {
-      if (nonRelayEvents.indexOf(name) !== -1) {
+      if ($.inArray(name, nonRelayEvents) !== -1) {
         return;
       }
 
