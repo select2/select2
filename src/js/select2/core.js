@@ -216,7 +216,7 @@ define([
     });
 
     this.selection.on('*', function (name, params) {
-      if (nonRelayEvents.indexOf(name) !== -1) {
+      if ($.inArray(name, nonRelayEvents) !== -1) {
         return;
       }
 
