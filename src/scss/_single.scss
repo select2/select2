@@ -11,10 +11,12 @@
 
   .select2-selection__rendered {
     display: block;
-    overflow: hidden;
     padding-left: 8px;
     padding-right: 20px;
+
+    overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 
