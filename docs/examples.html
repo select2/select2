@@ -7,6 +7,13 @@ slug: examples
 <script type="text/javascript" src="vendor/js/placeholders.jquery.min.js"></script>
 <script type="text/javascript" src="dist/js/i18n/es.js"></script>
 
+<style type="text/css">
+.img-flag {
+  height: 15px;
+  width: 18px;
+}
+</style>
+
 <div class="container">
   <section id="basic" class="row">
     <div class="col-md-4">
@@ -113,6 +120,52 @@ $(".js-example-placeholder-single").select2({
 
 $(".js-example-placeholder-multiple").select2({
   placeholder: "Select a state"
+});
+</script>
+    </div>
+  </section>
+
+  <section id="templating" class="row">
+    <div class="col-md-4">
+      <h1>Templating</h1>
+
+      <p>
+        Various display options of the Select2 component can be changed
+      </p>
+
+      <p>
+        <select class="js-example-templating js-states form-control"></select>
+      </p>
+
+      <p>
+        You can access the <code>&lt;option&gt;</code> element
+        (or <code>&lt;optgroup&gt;</code>) and any attributes on those elements
+        using <code>.element</code>.
+      </p>
+
+      <p>
+        Templating is primarily controlled by the
+        <a href="options.html#templateResult"><code>templateResult</code></a>
+        and <a href="options.html#templateSelection"><code>templateSelection</code></a>
+        options.
+      </p>
+    </div>
+    <div class="col-md-8">
+      <h2>Example code</h2>
+
+      <pre data-fill-from=".js-code-templating"></pre>
+
+<script type="text/x-example-code" class="js-code-templating">
+function formatState (state) {
+  if (!state.id) { return state.text; }
+  var $state = $(
+    '<span><img src="vendor/images/flags/' + state.element.value.toLowerCase() + '.png" class="img-flag" /> ' + state.text + '</span>'
+  );
+  return $state;
+};
+
+$(".js-example-templating").select2({
+  templateResult: formatState
 });
 </script>
     </div>
@@ -913,6 +966,26 @@ $.fn.select2.amd.require(
   $basicMultiple.select2();
   $limitMultiple.select2({
     maximumSelectionLength: 2
+  });
+
+  function formatState (state) {
+    if (!state.id) {
+      return state.text;
+    }
+    var $state = $(
+      '<span>' +
+        '<img src="vendor/images/flags/' +
+          state.element.value.toLowerCase() +
+        '.png" class="img-flag" /> ' +
+        state.text +
+      '</span>'
+    );
+    return $state;
+  };
+
+  $(".js-example-templating").select2({
+    templateResult: formatState,
+    templateSelection: formatState
   });
 
   $dataArray.select2({

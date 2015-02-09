@@ -731,8 +731,10 @@ define('select2/results',[
 
     if (content == null) {
       container.style.display = 'none';
-    } else {
+    } else if (typeof content === 'string') {
       container.innerHTML = escapeMarkup(content);
+    } else {
+      $(container).append(content);
     }
   };
 
