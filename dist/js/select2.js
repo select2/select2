@@ -1694,6 +1694,7 @@ define('select2/selection/search',[
       self.$search.attr('tabindex', -1);
 
       self.$search.val('');
+      self.$search.focus();
     });
 
     container.on('enable', function () {
@@ -1706,6 +1707,10 @@ define('select2/selection/search',[
 
     this.$selection.on('keydown', '.select2-search--inline', function (evt) {
       evt.stopPropagation();
+
+      if (!container.isOpen()) {
+        self.trigger('open');
+      }
 
       self.trigger('keypress', evt);
 
