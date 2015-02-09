@@ -3542,26 +3542,6 @@ define('select2/dropdown',[
     this.$dropdown.remove();
   };
 
-  Dropdown.prototype.bind = function (container, $container) {
-    var self = this;
-
-    container.on('select', function (params) {
-      self._onSelect(params);
-    });
-
-    container.on('unselect', function (params) {
-      self._onUnSelect(params);
-    });
-  };
-
-  Dropdown.prototype._onSelect = function () {
-    this.trigger('close');
-  };
-
-  Dropdown.prototype._onUnSelect = function () {
-    this.trigger('close');
-  };
-
   return Dropdown;
 });
 
@@ -4048,6 +4028,31 @@ define('select2/dropdown/selectOnClose',[
   return SelectOnClose;
 });
 
+define('select2/dropdown/closeOnSelect',[
+
+], function () {
+  function CloseOnSelect () { }
+
+  CloseOnSelect.prototype.bind = function (decorated, container, $container) {
+    var self = this;
+
+    decorated.call(this, container, $container);
+
+    container.on('select', function (evt) {
+      var originalEvent = evt.originalEvent;
+
+      // Don't close if the control key is being held
+      if (originalEvent && originalEvent.ctrlKey) {
+        return;
+      }
+
+      self.trigger('close');
+    });
+  };
+
+  return CloseOnSelect;
+});
+
 define('select2/i18n/en',[],function () {
   // English
   return {
@@ -4124,6 +4129,7 @@ define('select2/defaults',[
   './dropdown/attachBody',
   './dropdown/minimumResultsForSearch',
   './dropdown/selectOnClose',
+  './dropdown/closeOnSelect',
 
   './i18n/en'
 ], function ($, ResultsList,
@@ -4137,7 +4143,7 @@ define('select2/defaults',[
              MinimumInputLength, MaximumInputLength, MaximumSelectionLength,
 
              Dropdown, DropdownSearch, HidePlaceholder, InfiniteScroll,
-             AttachBody, MinimumResultsForSearch, SelectOnClose,
+             AttachBody, MinimumResultsForSearch, SelectOnClose, CloseOnSelect,
 
              EnglishTranslation) {
   function Defaults () {
@@ -4245,6 +4251,13 @@ define('select2/defaults',[
         options.dropdownAdapter = Utils.Decorate(
           options.dropdownAdapter,
           MinimumResultsForSearch
+        );
+      }
+
+      if (options.closeOnSelect) {
+        options.dropdownAdapter = Utils.Decorate(
+          options.dropdownAdapter,
+          CloseOnSelect
         );
       }
 
@@ -4404,6 +4417,7 @@ define('select2/defaults',[
     this.defaults = {
       amdBase: 'select2/',
       amdLanguageBase: 'select2/i18n/',
+      closeOnSelect: true,
       escapeMarkup: Utils.escapeMarkup,
       language: EnglishTranslation,
       matcher: matcher,

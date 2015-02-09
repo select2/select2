@@ -29,6 +29,7 @@ define([
   './dropdown/attachBody',
   './dropdown/minimumResultsForSearch',
   './dropdown/selectOnClose',
+  './dropdown/closeOnSelect',
 
   './i18n/en'
 ], function ($, ResultsList,
@@ -42,7 +43,7 @@ define([
              MinimumInputLength, MaximumInputLength, MaximumSelectionLength,
 
              Dropdown, DropdownSearch, HidePlaceholder, InfiniteScroll,
-             AttachBody, MinimumResultsForSearch, SelectOnClose,
+             AttachBody, MinimumResultsForSearch, SelectOnClose, CloseOnSelect,
 
              EnglishTranslation) {
   function Defaults () {
@@ -150,6 +151,13 @@ define([
         options.dropdownAdapter = Utils.Decorate(
           options.dropdownAdapter,
           MinimumResultsForSearch
+        );
+      }
+
+      if (options.closeOnSelect) {
+        options.dropdownAdapter = Utils.Decorate(
+          options.dropdownAdapter,
+          CloseOnSelect
         );
       }
 
@@ -309,6 +317,7 @@ define([
     this.defaults = {
       amdBase: 'select2/',
       amdLanguageBase: 'select2/i18n/',
+      closeOnSelect: true,
       escapeMarkup: Utils.escapeMarkup,
       language: EnglishTranslation,
       matcher: matcher,

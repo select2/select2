@@ -856,6 +856,50 @@ matcher: function (params, data) {
         <code title="select2/dropdown/selectOnClose">SelectOnClose</code>
       </dd>
     </dl>
+
+    <h2 id="closeOnSelect">
+      Close the dropdown when a result is selected
+    </h2>
+
+    <p>
+      Select2 will automatically close the dropdown when an element is selected,
+      similar to what is done with a normal select box.  This behavior can be
+      changed though to keep the dropdown open when results are selected,
+      allowing for multiple options to be selected quickly.
+    </p>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <dl class="dl-horizontal">
+          <dt>Key</dt>
+          <dd><code>closeOnSelect</code></dd>
+
+          <dt>Default</dt>
+          <dd><code>true</code></dd>
+        </dl>
+      </div>
+
+      <div class="col-sm-6">
+        <dl class="dl-horizontal">
+          <dt>Adapter</dt>
+          <dd>
+            <code title="select2/dropdown">DropdownAdapter</code>
+          </dd>
+
+          <dt>Decorator</dt>
+          <dd>
+            <code title="select2/dropdown/closeOnSelect">CloseOnSelect</code>
+          </dd>
+        </dl>
+      </div>
+    </div>
+
+    <p>
+      If this decorator is not used (or <code>closeOnSelect</code> is set to
+      <code>false</code>), the dropdown will not automatically close when a
+      result is selected.  The dropdown will also never close if the
+      <kbd>ctrl</kbd> key is held down when the result is selected.
+    </p>
   </section>
 
   <section id="events">

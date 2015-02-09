@@ -34,25 +34,5 @@ define([
     this.$dropdown.remove();
   };
 
-  Dropdown.prototype.bind = function (container, $container) {
-    var self = this;
-
-    container.on('select', function (params) {
-      self._onSelect(params);
-    });
-
-    container.on('unselect', function (params) {
-      self._onUnSelect(params);
-    });
-  };
-
-  Dropdown.prototype._onSelect = function () {
-    this.trigger('close');
-  };
-
-  Dropdown.prototype._onUnSelect = function () {
-    this.trigger('close');
-  };
-
   return Dropdown;
 });
