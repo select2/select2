@@ -61,6 +61,10 @@
     padding: 4px;
     width: 100%;
     box-sizing: border-box;
+
+    &::-webkit-search-cancel-button {
+      -webkit-appearance: none;
+    }
   }
 
   &.select2-search--hide {

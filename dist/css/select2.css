@@ -35,9 +35,12 @@
   .select2-container .select2-search--inline {
     float: left; }
     .select2-container .select2-search--inline .select2-search__field {
+      box-sizing: border-box;
       border: none;
       font-size: 100%;
       margin-top: 5px; }
+      .select2-container .select2-search--inline .select2-search__field::-webkit-search-cancel-button {
+        -webkit-appearance: none; }
 
 .select2-dropdown {
   background-color: white;
@@ -85,6 +88,8 @@
     padding: 4px;
     width: 100%;
     box-sizing: border-box; }
+    .select2-search--dropdown .select2-search__field::-webkit-search-cancel-button {
+      -webkit-appearance: none; }
   .select2-search--dropdown.select2-search--hide {
     display: none; }
 

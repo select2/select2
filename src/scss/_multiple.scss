@@ -21,8 +21,13 @@
   float: left;
 
   .select2-search__field {
+    box-sizing: border-box;
     border: none;
     font-size: 100%;
     margin-top: 5px;
+
+    &::-webkit-search-cancel-button {
+      -webkit-appearance: none;
+    }
   }
 }

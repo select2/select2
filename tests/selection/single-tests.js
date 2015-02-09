@@ -65,7 +65,7 @@ test('update renders the data text', function (assert) {
   assert.equal($rendered.text(), 'test');
 });
 
-test('escapePlaceholder is being used', function (assert) {
+test('escapeMarkup is being used', function (assert) {
   var selection = new SingleSelection(
     $('#qunit-fixture .single'),
     options

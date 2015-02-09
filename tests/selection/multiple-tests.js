@@ -49,7 +49,7 @@ test('empty update clears the selection', function (assert) {
   assert.equal($rendered.text(), '');
 });
 
-test('escapePlaceholder is being used', function (assert) {
+test('escapeMarkup is being used', function (assert) {
   var selection = new MultipleSelection(
     $('#qunit-fixture .multiple'),
     options
