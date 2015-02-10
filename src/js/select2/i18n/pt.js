@@ -7,11 +7,8 @@ define(function () {
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;
 
-      var message = 'Apague ' + overChars + ' caracter';
-
-      if (overChars != 1) {
-        message += 'es';
-      }
+      var message = 'Apague ' + overChars;
+      message += (overChars != 1) ? 'carácter' : 'caracteres';
 
       return message;
     },
@@ -26,13 +23,8 @@ define(function () {
       return 'Carregando mais resultados…';
     },
     maximumSelected: function (args) {
-      var message = 'Você só pode selecionar ' + args.maximum + ' ite';
-
-      if (args.maximum == 1) {
-        message += 'm';
-      } else {
-        message += 'ns';
-      }
+      var message = 'Você só pode seleccionar ' + args.maximum + ' ite';
+      message += (args.maximum == 1) ? 'm' : 'ns';
 
       return message;
     },
