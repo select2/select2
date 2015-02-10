@@ -4969,6 +4969,23 @@ define('select2/core',[
     this.$element.prop('disabled', disabled);
   };
 
+  Select2.prototype.data = function () {
+    if (arguments.length > 0 && console && console.warn) {
+      console.warn(
+        'Select2: Data can no longer be set using `select2("data")`. You ' +
+        'should consider setting the value instead using `$element.val()`.'
+      );
+    }
+
+    var data = [];
+
+    this.dataAdpater.current(function (currentData) {
+      data = currentData;
+    });
+
+    return data;
+  };
+
   Select2.prototype.val = function (args) {
     if (console && console.warn) {
       console.warn(
