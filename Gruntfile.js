@@ -16,7 +16,10 @@ module.exports = function (grunt) {
     'select2/compat/initSelection',
     'select2/compat/query',
 
-    'select2/dropdown/attachContainer'
+    'select2/dropdown/attachContainer',
+    'select2/dropdown/stopPropagation',
+
+    'select2/selection/stopPropagation'
   ].concat(includes);
 
   var i18nModules = [];
