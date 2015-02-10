@@ -1,9 +1,12 @@
-'use strict';
+/*global document, window, define */
 
 define([
   'jquery',
   '../utils'
 ], function ($, Utils) {
+
+  'use strict';
+
   function AttachBody (decorated, $element, options) {
     this.$dropdownParent = options.get('dropdownParent') || document.body;
 
