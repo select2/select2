@@ -437,6 +437,112 @@ language: {
 }
 </pre>
 
+    <h3 id="templating">
+      Templating results and selections
+    </h3>
+
+    <p>
+      By default, Select2 will display the option text within the list of
+      results and when the option has been selected.  Select2 comes with options
+      that allow you to further customize the display of results and selections,
+      allowing you to display them however you want.
+    </p>
+
+    <h4 id="templateSelection">
+      Customizing the display of selections
+    </h4>
+
+    <p>
+      When an option is displayed after it has been selected, it is passed
+      through a formatting function that determines what is displayed. By
+      default, the function only retuns the <code>text</code> key of the data
+      object.
+    </p>
+
+    <dl class="dl-horizontal">
+      <dt>Key</dt>
+      <dd><code>templateSelection</code></dd>
+
+      <dt>Value</dt>
+      <dd>A function taking a <code>selection</code> object</dd>
+    </dl>
+
+    <div class="alert alert-info">
+      <strong>Anything rendered as a selection is templated.</strong>
+      This includes placeholders and pre-existing selections that are displayed,
+      so you must ensure that your templating functions can support them.
+    </div>
+
+    <p>
+      The <code>templateSelection</code> function should return a string
+      containing the text to be displayed, or an object (such as a jQuery
+      object) that contains the data that should be displayed.
+    </p>
+
+    <p>
+      <strong>Strings are assumed to contain only text</strong> and will be
+      passed through the <code>escapeMarkup</code> function, which strips any
+      HTML markup.
+    </p>
+
+    <p>
+      <strong>
+        Anything else will be passed
+        <a href="https://api.jquery.com/append/">directly to <code>jQuery.fn.append</code></a>
+      </strong> and will be handled directly by jQuery.  Any markup, such as
+      HTML, returned will not be escaped and it is up to you to escape any
+      malicious input provided by users.
+    </p>
+
+    <h4 id="templateResult">
+      Customizing the display of results
+    </h4>
+
+    <p>
+      When an option is displayed after it has been selected, it is passed
+      through a formatting function that determines what is displayed. By
+      default, the function only retuns the <code>text</code> key of the data
+      object.
+    </p>
+
+    <dl class="dl-horizontal">
+      <dt>Key</dt>
+      <dd><code>templateSelection</code></dd>
+
+      <dt>Value</dt>
+      <dd>A function taking a <code>selection</code> object</dd>
+    </dl>
+
+    <div class="alert alert-info">
+      <strong>Anything rendered in the results is templated.</strong>
+      This includes results such as the "Searching..." and "Loading more..."
+      text which will periodically be displayed, which allows you to add more
+      advanced formatting to these automatically generated options.
+    </div>
+
+    <p>
+      The <code>templateResult</code> function should return a string
+      containing the text to be displayed, or an object (such as a jQuery
+      object) that contains the data that should be displayed.  It can also
+      return <code>null</code>, which will prevent the option from being
+      displayed in the results list.
+    </p>
+
+    <p>
+      <strong>Strings are assumed to contain only text</strong> and will be
+      passed through the <code>escapeMarkup</code> function, which strips any
+      HTML markup.
+    </p>
+
+    <p>
+      <strong>
+        Anything else will be passed
+        <a href="https://api.jquery.com/append/">directly to <code>jQuery.fn.append</code></a>
+      </strong> and will be handled directly by jQuery.  Any markup, such as
+      HTML, returned will not be escaped and it is up to you to escape any
+      malicious input provided by users.
+    </p>
+
     <h2>
       Results
     </h2>

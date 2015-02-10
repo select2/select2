@@ -84,7 +84,8 @@ define([
 
     var formatted = this.display(selection);
 
-    this.$selection.find('.select2-selection__rendered').html(formatted);
+    this.$selection.find('.select2-selection__rendered')
+      .empty().append(formatted);
   };
 
   return SingleSelection;
