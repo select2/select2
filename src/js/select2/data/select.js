@@ -155,7 +155,12 @@ define([
       option.label = data.text;
     } else {
       option = document.createElement('option');
-      option.innerText = data.text;
+
+      if (option.textContent !== undefined) {
+        option.textContent = data.text;
+      } else {
+        option.innerText = data.text;
+      }
     }
 
     if (data.id) {
@@ -168,6 +173,10 @@ define([
 
     if (data.selected) {
       option.selected = true;
+    }
+
+    if (data.title) {
+      option.title = data.title;
     }
 
     var $option = $(option);
@@ -195,12 +204,14 @@ define([
         id: $option.val(),
         text: $option.html(),
         disabled: $option.prop('disabled'),
-        selected: $option.prop('selected')
+        selected: $option.prop('selected'),
+        title: $option.prop('title')
       };
     } else if ($option.is('optgroup')) {
       data = {
         text: $option.prop('label'),
-        children: []
+        children: [],
+        title: $option.prop('title')
       };
 
       var $children = $option.children('option');

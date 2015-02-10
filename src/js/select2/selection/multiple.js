@@ -85,6 +85,8 @@ define([
       var $selection = this.selectionContainer();
 
       $selection.append(formatted);
+      $selection.prop('title', selection.title);
+
       $selection.data('data', selection);
 
       $selections.push($selection);

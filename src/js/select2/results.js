@@ -169,6 +169,10 @@ define([
       option.id = data._resultId;
     }
 
+    if (data.title) {
+      option.title = data.title;
+    }
+
     if (data.children) {
       attrs.role = 'group';
       attrs['aria-label'] = data.text;

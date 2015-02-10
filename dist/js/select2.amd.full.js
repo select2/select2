@@ -415,6 +415,10 @@ define('select2/results',[
       option.id = data._resultId;
     }
 
+    if (data.title) {
+      option.title = data.title;
+    }
+
     if (data.children) {
       attrs.role = 'group';
       attrs['aria-label'] = data.text;
@@ -991,8 +995,9 @@ define('select2/selection/single',[
 
     var formatted = this.display(selection);
 
-    this.$selection.find('.select2-selection__rendered')
-      .empty().append(formatted);
+    var $rendered = this.$selection.find('.select2-selection__rendered');
+    $rendered.empty().append(formatted);
+    $rendered.prop('title', selection.title || selection.text);
   };
 
   return SingleSelection;
@@ -1085,6 +1090,8 @@ define('select2/selection/multiple',[
       var $selection = this.selectionContainer();
 
       $selection.append(formatted);
+      $selection.prop('title', selection.title);
+
       $selection.data('data', selection);
 
       $selections.push($selection);
@@ -2486,7 +2493,12 @@ define('select2/data/select',[
       option.label = data.text;
     } else {
       option = document.createElement('option');
-      option.innerText = data.text;
+
+      if (option.textContent !== undefined) {
+        option.textContent = data.text;
+      } else {
+        option.innerText = data.text;
+      }
     }
 
     if (data.id) {
@@ -2499,6 +2511,10 @@ define('select2/data/select',[
 
     if (data.selected) {
       option.selected = true;
+    }
+
+    if (data.title) {
+      option.title = data.title;
     }
 
     var $option = $(option);
@@ -2526,12 +2542,14 @@ define('select2/data/select',[
         id: $option.val(),
         text: $option.html(),
         disabled: $option.prop('disabled'),
-        selected: $option.prop('selected')
+        selected: $option.prop('selected'),
+        title: $option.prop('title')
       };
     } else if ($option.is('optgroup')) {
       data = {
         text: $option.prop('label'),
-        children: []
+        children: [],
+        title: $option.prop('title')
       };
 
       var $children = $option.children('option');
