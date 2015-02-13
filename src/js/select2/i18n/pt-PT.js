@@ -16,7 +16,7 @@ define(function () {
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
-      var message = 'Por favor introduza ' + remainingChars + ' ou mais caracteres';
+      var message = 'Introduza ' + remainingChars + ' ou mais caracteres';
 
       return message;
     },
