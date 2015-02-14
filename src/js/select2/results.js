@@ -106,7 +106,7 @@ define([
 
         var item = $.data(this, 'data');
 
-        if (item.id != null && selectedIds.indexOf(item.id.toString()) > -1) {
+        if ($.inArray(item.id, selectedIds) > -1) {
           $option.attr('aria-selected', 'true');
         } else {
           $option.attr('aria-selected', 'false');
