@@ -101,6 +101,10 @@ module.exports = function (grunt) {
               browserName: 'internet explorer',
               version: '9'
             },
+            {
+              browserName: 'internet explorer',
+              version: '10'
+            },
 
             {
               browserName: 'firefox'
@@ -108,6 +112,14 @@ module.exports = function (grunt) {
 
             {
               browserName: 'chrome'
+            },
+
+            {
+              browserName: 'opera',
+              version: '12'
+            },
+            {
+              browserName: 'opera'
             }
           ]
         }
