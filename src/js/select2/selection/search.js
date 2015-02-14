@@ -50,12 +50,16 @@ define([
       self.$search.prop('disabled', true);
     });
 
+    this.$selection.on('focusin', '.select2-search--inline', function (evt) {
+      self.trigger('focus', evt);
+    });
+
+    this.$selection.on('focusout', '.select2-search--inline', function (evt) {
+      self.trigger('blur', evt);
+    });
+
     this.$selection.on('keydown', '.select2-search--inline', function (evt) {
       evt.stopPropagation();
-
-      if (!container.isOpen()) {
-        self.trigger('open');
-      }
 
       self.trigger('keypress', evt);
 

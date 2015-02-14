@@ -1231,8 +1231,13 @@ define('select2/selection/base',[
       '</span>'
     );
 
-    this._tabindex = this.$element.data('old-tabindex') ||
-      this.$element.attr('tabindex') || 0;
+    this._tabindex = 0;
+
+    if (this.$element.data('old-tabindex') != null) {
+      this._tabindex = this.$element.data('old-tabindex');
+    } else if (this.$element.attr('tabindex') != null) {
+      this._tabindex = this.$element.attr('tabindex');
+    }
 
     $selection.attr('title', this.$element.attr('title'));
     $selection.attr('tabindex', this._tabindex);
@@ -1251,6 +1256,14 @@ define('select2/selection/base',[
     this.container = container;
 
     this.$selection.attr('aria-owns', resultsId);
+
+    this.$selection.on('focus', function (evt) {
+      self.trigger('focus', evt);
+    });
+
+    this.$selection.on('blur', function (evt) {
+      self.trigger('blur', evt);
+    });
 
     this.$selection.on('keydown', function (evt) {
       self.trigger('keypress', evt);
@@ -1706,12 +1719,16 @@ define('select2/selection/search',[
       self.$search.prop('disabled', true);
     });
 
+    this.$selection.on('focusin', '.select2-search--inline', function (evt) {
+      self.trigger('focus', evt);
+    });
+
+    this.$selection.on('focusout', '.select2-search--inline', function (evt) {
+      self.trigger('blur', evt);
+    });
+
     this.$selection.on('keydown', '.select2-search--inline', function (evt) {
       evt.stopPropagation();
-
-      if (!container.isOpen()) {
-        self.trigger('open');
-      }
 
       self.trigger('keypress', evt);
 
@@ -4831,6 +4848,14 @@ define('select2/core',[
 
     this.on('disable', function () {
       self.$container.addClass('select2-container--disabled');
+    });
+
+    this.on('focus', function () {
+      self.$container.addClass('select2-container--focus');
+    });
+
+    this.on('blur', function () {
+      self.$container.removeClass('select2-container--focus');
     });
 
     this.on('query', function (params) {

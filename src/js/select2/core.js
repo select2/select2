@@ -263,6 +263,14 @@ define([
       self.$container.addClass('select2-container--disabled');
     });
 
+    this.on('focus', function () {
+      self.$container.addClass('select2-container--focus');
+    });
+
+    this.on('blur', function () {
+      self.$container.removeClass('select2-container--focus');
+    });
+
     this.on('query', function (params) {
       this.data.query(params, function (data) {
         self.trigger('results:all', {

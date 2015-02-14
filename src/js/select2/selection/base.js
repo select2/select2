@@ -19,8 +19,13 @@ define([
       '</span>'
     );
 
-    this._tabindex = this.$element.data('old-tabindex') ||
-      this.$element.attr('tabindex') || 0;
+    this._tabindex = 0;
+
+    if (this.$element.data('old-tabindex') != null) {
+      this._tabindex = this.$element.data('old-tabindex');
+    } else if (this.$element.attr('tabindex') != null) {
+      this._tabindex = this.$element.attr('tabindex');
+    }
 
     $selection.attr('title', this.$element.attr('title'));
     $selection.attr('tabindex', this._tabindex);
@@ -39,6 +44,14 @@ define([
     this.container = container;
 
     this.$selection.attr('aria-owns', resultsId);
+
+    this.$selection.on('focus', function (evt) {
+      self.trigger('focus', evt);
+    });
+
+    this.$selection.on('blur', function (evt) {
+      self.trigger('blur', evt);
+    });
 
     this.$selection.on('keydown', function (evt) {
       self.trigger('keypress', evt);
