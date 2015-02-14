@@ -4323,6 +4323,8 @@ define('select2/core',[
         attributes: true,
         subtree: false
       });
+    } else if (this.$element[0].addEventListener) {
+      this.$element[0].addEventListener('DOMAttrModified', self._sync, false);
     }
   };
 
@@ -4585,6 +4587,9 @@ define('select2/core',[
     if (this._observer != null) {
       this._observer.disconnect();
       this._observer = null;
+    } else if (this.$element[0].removeEventListener) {
+      this.$element[0]
+        .removeEventListener('DOMAttrModified', this._sync, false);
     }
 
     this._sync = null;
