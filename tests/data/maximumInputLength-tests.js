@@ -5,22 +5,22 @@ var $ = require('jquery');
 var Options = require('select2/options');
 var Utils = require('select2/utils');
 
-function StubData () {
+function MaximumInputStub () {
   this.called = false;
 }
 
-StubData.prototype.query = function (params, callback) {
+MaximumInputStub.prototype.query = function (params, callback) {
   this.called = true;
 };
 
-var MaximumData = Utils.Decorate(StubData, MaximumInputLength);
+var MaximumInputData = Utils.Decorate(MaximumInputStub, MaximumInputLength);
 
 test('0 never displays the notice', function (assert) {
   var zeroOptions = new Options({
     maximumInputLength: 0
   });
 
-  var data = new MaximumData(null, zeroOptions);
+  var data = new MaximumInputData(null, zeroOptions);
 
   data.trigger = function () {
     assert.ok(false, 'No events should be triggered');
@@ -32,7 +32,7 @@ test('0 never displays the notice', function (assert) {
 
   assert.ok(data.called);
 
-  data = new MaximumData(null, zeroOptions);
+  data = new MaximumInputData(null, zeroOptions);
 
   data.query({
     term: 'test'
@@ -46,7 +46,7 @@ test('< 0 never displays the notice', function (assert) {
     maximumInputLength: -1
   });
 
-  var data = new MaximumData(null, negativeOptions);
+  var data = new MaximumInputData(null, negativeOptions);
 
   data.trigger = function () {
     assert.ok(false, 'No events should be triggered');
@@ -58,7 +58,7 @@ test('< 0 never displays the notice', function (assert) {
 
   assert.ok(data.called);
 
-  data = new MaximumData(null, negativeOptions);
+  data = new MaximumInputData(null, negativeOptions);
 
   data.query({
     term: 'test'
@@ -72,7 +72,7 @@ test('triggers when input is too long', function (assert) {
     maximumInputLength: 1
   });
 
-  var data = new MaximumData(null, options);
+  var data = new MaximumInputData(null, options);
 
   data.trigger = function () {
     assert.ok(true, 'The event should be triggered.');
@@ -82,7 +82,7 @@ test('triggers when input is too long', function (assert) {
     term: 'no'
   });
 
-  assert.ok(!data.called);
+  assert.ok(!data.called, 'The adapter should not be called');
 });
 
 test('does not trigger when equal', function (assert) {
@@ -90,7 +90,7 @@ test('does not trigger when equal', function (assert) {
     maximumInputLength: 10
   });
 
-  var data = new MaximumData(null, options);
+  var data = new MaximumInputData(null, options);
 
   data.trigger = function () {
     assert.ok(false, 'The event should not be triggered.');
@@ -108,7 +108,7 @@ test('does not trigger when less', function (assert) {
     maximumInputLength: 10
   });
 
-  var data = new MaximumData(null, options);
+  var data = new MaximumInputData(null, options);
 
   data.trigger = function () {
     assert.ok(false, 'The event should not be triggered.');
@@ -126,7 +126,7 @@ test('works with null term', function (assert) {
     maximumInputLength: 1
   });
 
-  var data = new MaximumData(null, options);
+  var data = new MaximumInputData(null, options);
 
   data.trigger = function () {
     assert.ok(false, 'The event should not be triggered');

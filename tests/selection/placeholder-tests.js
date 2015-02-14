@@ -9,7 +9,7 @@ var Utils = require('select2/utils');
 
 var SinglePlaceholder = Utils.Decorate(SingleSelection, Placeholder);
 
-var options = new Options({
+var placeholderOptions = new Options({
   placeholder: {
     id: 'placeholder',
     text: 'This is the placeholder'
@@ -19,7 +19,7 @@ var options = new Options({
 test('normalizing placeholder ignores objects', function (assert) {
   var selection = new SinglePlaceholder(
     $('#qunit-fixture .single'),
-    options
+    placeholderOptions
   );
 
   var original = {
@@ -35,7 +35,7 @@ test('normalizing placeholder ignores objects', function (assert) {
 test('normalizing placeholder gives object for string', function (assert) {
   var selection = new SinglePlaceholder(
     $('#qunit-fixture .single'),
-    options
+    placeholderOptions
   );
 
   var normalized = selection.normalizePlaceholder('placeholder');
@@ -48,7 +48,7 @@ test('normalizing placeholder gives object for string', function (assert) {
 test('text is shown for placeholder option on single', function (assert) {
   var selection = new SinglePlaceholder(
     $('#qunit-fixture .single'),
-    options
+    placeholderOptions
   );
 
   var $selection = selection.render();
@@ -63,7 +63,7 @@ test('text is shown for placeholder option on single', function (assert) {
 test('placeholder is shown when no options are selected', function (assert) {
   var selection = new SinglePlaceholder(
     $('#qunit-fixture .multiple'),
-    options
+    placeholderOptions
   );
 
   var $selection = selection.render();
