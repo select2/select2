@@ -939,6 +939,116 @@ matcher: function (params, data) {
       boxes where only a single option can be selected.
     </p>
 
+    <h3 id="dropdown-minimumInputLength">
+      Minimum search term length to filter results
+    </h3>
+
+    <p>
+      Sometimes when working with large data sets, it is more efficient to start
+      filtering the results when the search term is a certain length. This is
+      very common when working with remote data sets, as allows for only
+      significant search terms to be used.
+    </p>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <dl class="dl-horizontal">
+          <dt>Key</dt>
+          <dd><code>minimumInputLength</code></dd>
+
+          <dt>Value</dt>
+          <dd>integer</dd>
+        </dl>
+      </div>
+
+      <div class="col-sm-6">
+        <dl class="dl-horizontal">
+          <dt>Adapter</dt>
+          <dd>
+            <code title="select2/data/base">DataAdapter</code>
+          </dd>
+
+          <dt>Decorator</dt>
+          <dd>
+            <code title="select2/data/minimumInputLength">MinimumInputLength</code>
+          </dd>
+        </dl>
+      </div>
+    </div>
+
+    <h3 id="dropdown-maximumInputLength">
+      Maximum search term length to filter results
+    </h3>
+
+    <p>
+      In some cases, search terms need to be limited to a certain range. Select2
+      allows you to limit the length of the search term such that it does not
+      exceed a certain length.
+    </p>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <dl class="dl-horizontal">
+          <dt>Key</dt>
+          <dd><code>maximumInputLength</code></dd>
+
+          <dt>Value</dt>
+          <dd>integer</dd>
+        </dl>
+      </div>
+
+      <div class="col-sm-6">
+        <dl class="dl-horizontal">
+          <dt>Adapter</dt>
+          <dd>
+            <code title="select2/data/base">DataAdapter</code>
+          </dd>
+
+          <dt>Decorator</dt>
+          <dd>
+            <code title="select2/data/maximumInputLength">MaximumInputLength</code>
+          </dd>
+        </dl>
+      </div>
+    </div>
+
+    <h3 id="dropdown-maximumInputLength">
+      Minimum results to display the search box
+    </h3>
+
+    <p>
+      When working with smaller data sets, the search box can take up more space
+      that is necessary, as there are not enough results for filtering to be
+      effective. Select2 allows you to only display the search box when the
+      number of search results reaches a certain threshold.
+    </p>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <dl class="dl-horizontal">
+          <dt>Key</dt>
+          <dd><code>minimumResultsForSearch</code></dd>
+
+          <dt>Value</dt>
+          <dd>integer</dd>
+        </dl>
+      </div>
+
+      <div class="col-sm-6">
+        <dl class="dl-horizontal">
+          <dt>Adapter</dt>
+          <dd>
+            <code title="select2/dropdown">DropdownAdapter</code>
+          </dd>
+
+          <dt>Decorator</dt>
+          <dd>
+            <code title="select2/dropdown/minimumResultsForSearch">MinimumResultsForSearch</code>
+          </dd>
+        </dl>
+      </div>
+    </div>
+
     <h2 id="dropdown-select-on-close">
       Select the highlighted option on close
     </h2>
