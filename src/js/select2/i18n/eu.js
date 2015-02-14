@@ -21,10 +21,10 @@ define(function () {
 
       var message = 'Idatzi ';
 
-      if (overChars == 1) {
+      if (remainingChars == 1) {
         message += 'karaktere bat';
       } else {
-        message += overChars + ' karaktere';
+        message += remainingChars + ' karaktere';
       }
 
       message += ' gehiago';

@@ -16,9 +16,9 @@ define(function () {
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;
 
-      var message = 'Pašalinkite ' + remainingChars + ' simbol';
+      var message = 'Pašalinkite ' + overChars + ' simbol';
 
-      message += ending(remainingChars, 'ių', 'ius', 'į');
+      message += ending(overChars, 'ių', 'ius', 'į');
 
       return message;
     },

@@ -6,11 +6,20 @@
   "eqnull": true,
   "freeze": true,
   "globals": {
-    "define": true
+    "console": false,
+    "define": false,
+    "document": false,
+    "expect": false,
+    "MockContainer": false,
+    "module": false,
+    "require": false,
+    "test": false,
+    "window": false
   },
   "indent": 2,
   "maxlen": 80,
   "noarg": true,
   "nonew": true,
-  "quotmark": "single"
+  "quotmark": "single",
+  "undef": true
 }

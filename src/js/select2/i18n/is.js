@@ -17,7 +17,7 @@ define(function () {
 
       var message = 'Vinsamlegast skrifið ' + remainingChars + ' staf';
 
-      if (overChars > 1) {
+      if (remainingChars > 1) {
         message += 'i';
       }
 

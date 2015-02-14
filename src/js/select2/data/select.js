@@ -47,7 +47,7 @@ define([
         data.push.apply(data, currentData);
 
         for (var d = 0; d < data.length; d++) {
-          id = data[d].id;
+          var id = data[d].id;
 
           if (val.indexOf(id) === -1) {
             val.push(id);
@@ -85,7 +85,7 @@ define([
       var val = [];
 
       for (var d = 0; d < currentData.length; d++) {
-        id = currentData[d].id;
+        var id = currentData[d].id;
 
         if (id !== data.id && val.indexOf(id) === -1) {
           val.push(id);

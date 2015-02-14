@@ -765,21 +765,7 @@ define('select2/keys',[
     UP: 38,
     RIGHT: 39,
     DOWN: 40,
-    DELETE: 46,
-
-    isArrow: function (k) {
-        k = k.which ? k.which : k;
-
-        switch (k) {
-        case KEY.LEFT:
-        case KEY.RIGHT:
-        case KEY.UP:
-        case KEY.DOWN:
-            return true;
-        }
-
-        return false;
-    }
+    DELETE: 46
   };
 
   return KEYS;
@@ -1164,7 +1150,7 @@ define('select2/selection/allowClear',[
     decorated.call(this, container, $container);
 
     if (self.placeholder == null) {
-      if (console && console.error) {
+      if (window.console && console.error) {
         console.error(
           'Select2: The `allowClear` option should be used in combination ' +
           'with the `placeholder` option.'
@@ -2385,7 +2371,7 @@ define('select2/data/select',[
         data.push.apply(data, currentData);
 
         for (var d = 0; d < data.length; d++) {
-          id = data[d].id;
+          var id = data[d].id;
 
           if (val.indexOf(id) === -1) {
             val.push(id);
@@ -2423,7 +2409,7 @@ define('select2/data/select',[
       var val = [];
 
       for (var d = 0; d < currentData.length; d++) {
-        id = currentData[d].id;
+        var id = currentData[d].id;
 
         if (id !== data.id && val.indexOf(id) === -1) {
           val.push(id);
@@ -2759,7 +2745,7 @@ define('select2/data/ajax',[
       var $request = options.transport(options, function (data) {
         var results = self.processResults(data, params);
 
-        if (console && console.error) {
+        if (window.console && console.error) {
           // Check to make sure that the response included a `results` key.
           if (!results || !results.results || !$.isArray(results.results)) {
             console.error(
@@ -3428,7 +3414,7 @@ define('select2/dropdown/attachBody',[
     var resizeEvent = 'resize.select2.' + container.id;
     var orientationEvent = 'orientationchange.select2.' + container.id;
 
-    $watchers = this.$container.parents().filter(Utils.hasScroll);
+    var $watchers = this.$container.parents().filter(Utils.hasScroll);
     $watchers.each(function () {
       $(this).data('select2-scroll-position', {
         x: $(this).scrollLeft(),
@@ -3453,7 +3439,7 @@ define('select2/dropdown/attachBody',[
     var resizeEvent = 'resize.select2.' + container.id;
     var orientationEvent = 'orientationchange.select2.' + container.id;
 
-    $watchers = this.$container.parents().filter(Utils.hasScroll);
+    var $watchers = this.$container.parents().filter(Utils.hasScroll);
     $watchers.off(scrollEvent);
 
     $(window).off(scrollEvent + ' ' + resizeEvent + ' ' + orientationEvent);
@@ -3545,7 +3531,7 @@ define('select2/dropdown/minimumResultsForSearch',[
 
 ], function () {
   function countResults (data) {
-    count = 0;
+    var count = 0;
 
     for (var d = 0; d < data.length; d++) {
       var item = data[d];
@@ -3918,7 +3904,7 @@ define('select2/defaults',[
             // The translation could not be loaded at all. Sometimes this is
             // because of a configuration problem, other times this can be
             // because of how Select2 helps load all possible translation files.
-            if (console && console.warn) {
+            if (window.console && console.warn) {
               console.warn(
                 'Select2: The lanugage file for "' + name + '" could not be ' +
                 'automatically loaded. A fallback will be used instead.'
@@ -4085,7 +4071,7 @@ define('select2/options',[
     $e.prop('multiple', this.options.multiple);
 
     if ($e.data('select2-tags')) {
-      if (console && console.warn) {
+      if (window.console && console.warn) {
         console.warn(
           'Select2: The `data-select2-tags` attribute has been changed to ' +
           'use the `data-data` and `data-tags="true"` attributes and will be ' +
@@ -4098,7 +4084,7 @@ define('select2/options',[
     }
 
     if ($e.data('ajax-url')) {
-      if (console && console.warn) {
+      if (window.console && console.warn) {
         console.warn(
           'Select2: The `data-ajax-url` attribute has been changed to ' +
           '`data-ajax--url` and support for the old attribute will be removed' +
@@ -4284,8 +4270,8 @@ define('select2/core',[
 
       var attrs = style.split(';');
 
-      for (i = 0, l = attrs.length; i < l; i = i + 1) {
-        attr = attrs[i].replace(/\s/g, '');
+      for (var i = 0, l = attrs.length; i < l; i = i + 1) {
+        var attr = attrs[i].replace(/\s/g, '');
         var matches = attr.match(WIDTH);
 
         if (matches !== null && matches.length >= 1) {
@@ -4532,7 +4518,7 @@ define('select2/core',[
   };
 
   Select2.prototype.enable = function (args) {
-    if (console && console.warn) {
+    if (window.console && console.warn) {
       console.warn(
         'Select2: The `select2("enable")` method has been deprecated and will' +
         ' be removed in later Select2 versions. Use $element.prop("disabled")' +
@@ -4550,7 +4536,7 @@ define('select2/core',[
   };
 
   Select2.prototype.data = function () {
-    if (arguments.length > 0 && console && console.warn) {
+    if (arguments.length > 0 && window.console && console.warn) {
       console.warn(
         'Select2: Data can no longer be set using `select2("data")`. You ' +
         'should consider setting the value instead using `$element.val()`.'
@@ -4567,7 +4553,7 @@ define('select2/core',[
   };
 
   Select2.prototype.val = function (args) {
-    if (console && console.warn) {
+    if (window.console && console.warn) {
       console.warn(
         'Select2: The `select2("val")` method has been deprecated and will be' +
         ' removed in later Select2 versions. Use $element.val() instead.'

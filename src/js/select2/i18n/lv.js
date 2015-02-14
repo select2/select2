@@ -27,7 +27,7 @@ define(function () {
 
       var message = 'Lūdzu ievadiet vēl ' + remainingChars;
 
-      message += ' simbol' + ending(overChars, 'us', 'u', 'us');
+      message += ' simbol' + ending(remainingChars, 'us', 'u', 'us');
 
       return message;
     },

@@ -18,7 +18,7 @@ define(function () {
       return message;
     },
     inputTooShort: function (args) {
-      var remaningChars = args.minimum - args.input.length;
+      var remainingChars = args.minimum - args.input.length;
 
       var message = 'Por favor, introduzca ' + remainingChars + ' car';
 

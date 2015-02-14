@@ -81,7 +81,7 @@ define([
     var resizeEvent = 'resize.select2.' + container.id;
     var orientationEvent = 'orientationchange.select2.' + container.id;
 
-    $watchers = this.$container.parents().filter(Utils.hasScroll);
+    var $watchers = this.$container.parents().filter(Utils.hasScroll);
     $watchers.each(function () {
       $(this).data('select2-scroll-position', {
         x: $(this).scrollLeft(),
@@ -106,7 +106,7 @@ define([
     var resizeEvent = 'resize.select2.' + container.id;
     var orientationEvent = 'orientationchange.select2.' + container.id;
 
-    $watchers = this.$container.parents().filter(Utils.hasScroll);
+    var $watchers = this.$container.parents().filter(Utils.hasScroll);
     $watchers.off(scrollEvent);
 
     $(window).off(scrollEvent + ' ' + resizeEvent + ' ' + orientationEvent);

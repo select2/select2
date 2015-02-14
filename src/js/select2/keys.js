@@ -18,21 +18,7 @@ define([
     UP: 38,
     RIGHT: 39,
     DOWN: 40,
-    DELETE: 46,
-
-    isArrow: function (k) {
-        k = k.which ? k.which : k;
-
-        switch (k) {
-        case KEY.LEFT:
-        case KEY.RIGHT:
-        case KEY.UP:
-        case KEY.DOWN:
-            return true;
-        }
-
-        return false;
-    }
+    DELETE: 46
   };
 
   return KEYS;

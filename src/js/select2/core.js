@@ -143,8 +143,8 @@ define([
 
       var attrs = style.split(';');
 
-      for (i = 0, l = attrs.length; i < l; i = i + 1) {
-        attr = attrs[i].replace(/\s/g, '');
+      for (var i = 0, l = attrs.length; i < l; i = i + 1) {
+        var attr = attrs[i].replace(/\s/g, '');
         var matches = attr.match(WIDTH);
 
         if (matches !== null && matches.length >= 1) {

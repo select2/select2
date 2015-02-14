@@ -5,11 +5,11 @@ define(function () {
       return 'La càrrega ha fallat';
     },
     inputTooLong: function (args) {
-      var remainingChars = args.input.length - args.maximum;
+      var overChars = args.input.length - args.maximum;
 
-      var message = 'Si us plau, elimina ' + remainingChars + ' car';
+      var message = 'Si us plau, elimina ' + overChars + ' car';
 
-      if (remainingChars == 1) {
+      if (overChars == 1) {
         message += 'àcter';
       } else {
         message += 'àcters';
@@ -18,7 +18,7 @@ define(function () {
       return message;
     },
     inputTooShort: function (args) {
-      var remaningChars = args.minimum - args.input.length;
+      var remainingChars = args.minimum - args.input.length;
 
       var message = 'Si us plau, introdueix ' + remainingChars + ' car';
 

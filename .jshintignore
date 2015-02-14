@@ -1,1 +1,2 @@
 tests/vendor/*.js
+tests/helpers.js

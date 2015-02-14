@@ -303,9 +303,12 @@ module.exports = function (grunt) {
 
   grunt.registerTask('compile', ['requirejs', 'sass:dev']);
   grunt.registerTask('minify', ['uglify', 'sass:dist']);
-  grunt.registerTask('test', ['qunit', 'jshint']);
+  grunt.registerTask('test', ['connect:tests', 'qunit', 'jshint']);
 
-  grunt.registerTask('ci', ['compile', 'connect:tests', 'saucelabs-qunit', 'test']);
+  grunt.registerTask('ci', [
+    'compile', 'connect:tests',
+    'saucelabs-qunit', 'qunit', 'jshint'
+  ]);
 
   grunt.registerTask('docs', ['symlink:docs', 'jekyll:serve']);
 
