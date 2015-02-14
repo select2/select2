@@ -32,7 +32,8 @@
       display: inline-block;
       overflow: hidden;
       padding-left: 8px;
-      text-overflow: ellipsis; }
+      text-overflow: ellipsis;
+      white-space: nowrap; }
   .select2-container .select2-search--inline {
     float: left; }
     .select2-container .select2-search--inline .select2-search__field {
