@@ -1,7 +1,12 @@
+/*global document, window, define */
+
 define([
   'jquery',
   '../utils'
 ], function ($, Utils) {
+
+  'use strict';
+
   function AttachBody (decorated, $element, options) {
     this.$dropdownParent = options.get('dropdownParent') || document.body;
 
@@ -70,7 +75,7 @@ define([
     return $container;
   };
 
-  AttachBody.prototype._hideDropdown = function (decorated) {
+  AttachBody.prototype._hideDropdown = function () {
     this.$dropdownContainer.detach();
   };
 
@@ -89,13 +94,13 @@ define([
       });
     });
 
-    $watchers.on(scrollEvent, function (ev) {
+    $watchers.on(scrollEvent, function () {
       var position = $(this).data('select2-scroll-position');
       $(this).scrollTop(position.y);
     });
 
     $(window).on(scrollEvent + ' ' + resizeEvent + ' ' + orientationEvent,
-      function (e) {
+      function () {
       self._positionDropdown();
       self._resizeDropdown();
     });
@@ -120,7 +125,6 @@ define([
 
     var newDirection = null;
 
-    var position = this.$container.position();
     var offset = this.$container.offset();
 
     offset.bottom = offset.top + this.$container.outerHeight(false);
@@ -184,7 +188,7 @@ define([
     });
   };
 
-  AttachBody.prototype._showDropdown = function (decorated) {
+  AttachBody.prototype._showDropdown = function () {
     this.$dropdownContainer.appendTo(this.$dropdownParent);
 
     this._positionDropdown();
