@@ -19,6 +19,12 @@ define([
 
     Select2.__super__.constructor.call(this);
 
+    // Set up the tabindex
+
+    var tabindex = $element.attr('tabindex') || 0;
+    $element.data('old-tabindex', tabindex);
+    $element.attr('tabindex', '-1');
+
     // Set up containers and adapters
 
     var DataAdapter = this.options.get('dataAdapter');
@@ -75,10 +81,6 @@ define([
 
     // Synchronize any monitored attributes
     this._syncAttributes();
-
-    this._tabindex = $element.attr('tabindex') || 0;
-
-    $element.attr('tabindex', '-1');
 
     $element.data('select2', this);
   };
@@ -468,7 +470,7 @@ define([
     this._sync = null;
 
     this.$element.off('.select2');
-    this.$element.attr('tabindex', this._tabindex);
+    this.$element.attr('tabindex', this.$element.data('old-tabindex'));
 
     this.$element.show();
     this.$element.removeData('select2');

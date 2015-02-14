@@ -14,12 +14,16 @@ define([
 
   BaseSelection.prototype.render = function () {
     var $selection = $(
-      '<span class="select2-selection" tabindex="0" role="combobox" ' +
+      '<span class="select2-selection" role="combobox" ' +
       'aria-autocomplete="list" aria-haspopup="true" aria-expanded="false">' +
       '</span>'
     );
 
+    this._tabindex = this.$element.data('old-tabindex') ||
+      this.$element.attr('tabindex') || 0;
+
     $selection.attr('title', this.$element.attr('title'));
+    $selection.attr('tabindex', this._tabindex);
 
     this.$selection = $selection;
 
@@ -70,7 +74,7 @@ define([
     });
 
     container.on('enable', function () {
-      self.$selection.attr('tabindex', '0');
+      self.$selection.attr('tabindex', self._tabindex);
     });
 
     container.on('disable', function () {

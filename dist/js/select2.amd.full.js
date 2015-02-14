@@ -787,12 +787,16 @@ define('select2/selection/base',[
 
   BaseSelection.prototype.render = function () {
     var $selection = $(
-      '<span class="select2-selection" tabindex="0" role="combobox" ' +
+      '<span class="select2-selection" role="combobox" ' +
       'aria-autocomplete="list" aria-haspopup="true" aria-expanded="false">' +
       '</span>'
     );
 
+    this._tabindex = this.$element.data('old-tabindex') ||
+      this.$element.attr('tabindex') || 0;
+
     $selection.attr('title', this.$element.attr('title'));
+    $selection.attr('tabindex', this._tabindex);
 
     this.$selection = $selection;
 
@@ -843,7 +847,7 @@ define('select2/selection/base',[
     });
 
     container.on('enable', function () {
-      self.$selection.attr('tabindex', '0');
+      self.$selection.attr('tabindex', self._tabindex);
     });
 
     container.on('disable', function () {
@@ -4146,6 +4150,12 @@ define('select2/core',[
 
     Select2.__super__.constructor.call(this);
 
+    // Set up the tabindex
+
+    var tabindex = $element.attr('tabindex') || 0;
+    $element.data('old-tabindex', tabindex);
+    $element.attr('tabindex', '-1');
+
     // Set up containers and adapters
 
     var DataAdapter = this.options.get('dataAdapter');
@@ -4202,10 +4212,6 @@ define('select2/core',[
 
     // Synchronize any monitored attributes
     this._syncAttributes();
-
-    this._tabindex = $element.attr('tabindex') || 0;
-
-    $element.attr('tabindex', '-1');
 
     $element.data('select2', this);
   };
@@ -4595,7 +4601,7 @@ define('select2/core',[
     this._sync = null;
 
     this.$element.off('.select2');
-    this.$element.attr('tabindex', this._tabindex);
+    this.$element.attr('tabindex', this.$element.data('old-tabindex'));
 
     this.$element.show();
     this.$element.removeData('select2');
