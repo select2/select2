@@ -2,7 +2,7 @@ define([
   'jquery'
 ], function ($) {
   function InitSelection (decorated, $element, options) {
-    if (console && console.warn) {
+    if (window.console && console.warn) {
       console.warn(
         'Select2: The `initSelection` option has been deprecated in favor' +
         ' of a custom data adapter that overrides the `current` method. ' +

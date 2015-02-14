@@ -64,7 +64,7 @@ define([
       var $request = options.transport(options, function (data) {
         var results = self.processResults(data, params);
 
-        if (console && console.error) {
+        if (window.console && console.error) {
           // Check to make sure that the response included a `results` key.
           if (!results || !results.results || !$.isArray(results.results)) {
             console.error(

@@ -29,6 +29,21 @@ module.exports = function (grunt) {
     cwd: 'src/js'
   }, 'select2/i18n/*.js');
 
+  var testFiles = grunt.file.expand('tests/**/*.html');
+  var testUrls = testFiles.map(function (filePath) {
+    return 'http://localhost:9999/' + filePath;
+  });
+
+  var testBuildNumber = "unknown";
+
+  if (process.env.TRAVIS_JOB_ID) {
+    testBuildNumber = "travis-" + process.env.TRAVIS_JOB_ID;
+  } else {
+    var currentTime = new Date();
+
+    testBuildNumber = "manual-" + currentTime.getTime();
+  }
+
   for (var i = 0; i < i18nFiles.length; i++) {
     var file = i18nFiles[i];
     var name = file.split('.')[0];
@@ -45,6 +60,16 @@ module.exports = function (grunt) {
       docs: ['docs/_site']
     },
 
+    connect: {
+      tests: {
+        options: {
+          base: '.',
+          hostname: '127.0.0.1',
+          port: 9999
+        }
+      }
+    },
+
     uglify: {
       'dist': {
         src: 'dist/js/select2.js',
@@ -57,9 +82,36 @@ module.exports = function (grunt) {
     },
 
     qunit: {
-      all: [
-        'tests/**/*.html'
-      ]
+      all: {
+        options: {
+          urls: testUrls
+        }
+      }
+    },
+
+    'saucelabs-qunit': {
+      all: {
+        options: {
+          build: testBuildNumber,
+          tags: ['tests', 'qunit'],
+          urls: testUrls,
+          testname: 'QUnit test for Select2',
+          browsers: [
+            {
+              browserName: 'internet explorer',
+              version: '9'
+            },
+
+            {
+              browserName: 'firefox'
+            },
+
+            {
+              browserName: 'chrome'
+            }
+          ]
+        }
+      }
     },
 
     'gh-pages': {
@@ -234,6 +286,7 @@ module.exports = function (grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
@@ -243,6 +296,7 @@ module.exports = function (grunt) {
 
   grunt.loadNpmTasks('grunt-gh-pages');
   grunt.loadNpmTasks('grunt-jekyll');
+  grunt.loadNpmTasks('grunt-saucelabs');
   grunt.loadNpmTasks('grunt-sass');
 
   grunt.registerTask('default', ['compile', 'test', 'minify']);
@@ -250,6 +304,8 @@ module.exports = function (grunt) {
   grunt.registerTask('compile', ['requirejs', 'sass:dev']);
   grunt.registerTask('minify', ['uglify', 'sass:dist']);
   grunt.registerTask('test', ['qunit', 'jshint']);
+
+  grunt.registerTask('ci', ['compile', 'saucelabs-qunit', 'test']);
 
   grunt.registerTask('docs', ['symlink:docs', 'jekyll:serve']);
 

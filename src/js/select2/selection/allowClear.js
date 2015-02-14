@@ -9,7 +9,7 @@ define([
     decorated.call(this, container, $container);
 
     if (self.placeholder == null) {
-      if (console && console.error) {
+      if (window.console && console.error) {
         console.error(
           'Select2: The `allowClear` option should be used in combination ' +
           'with the `placeholder` option.'

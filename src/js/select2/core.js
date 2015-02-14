@@ -391,7 +391,7 @@ define([
   };
 
   Select2.prototype.enable = function (args) {
-    if (console && console.warn) {
+    if (window.console && console.warn) {
       console.warn(
         'Select2: The `select2("enable")` method has been deprecated and will' +
         ' be removed in later Select2 versions. Use $element.prop("disabled")' +
@@ -409,7 +409,7 @@ define([
   };
 
   Select2.prototype.data = function () {
-    if (arguments.length > 0 && console && console.warn) {
+    if (arguments.length > 0 && window.console && console.warn) {
       console.warn(
         'Select2: Data can no longer be set using `select2("data")`. You ' +
         'should consider setting the value instead using `$element.val()`.'
@@ -426,7 +426,7 @@ define([
   };
 
   Select2.prototype.val = function (args) {
-    if (console && console.warn) {
+    if (window.console && console.warn) {
       console.warn(
         'Select2: The `select2("val")` method has been deprecated and will be' +
         ' removed in later Select2 versions. Use $element.val() instead.'
