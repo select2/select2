@@ -1,5 +1,5 @@
 define(function () {
-  //Portuguese
+  // European Portuguese
   return {
     errorLoading: function () {
       return 'Os resultados não puderam ser carregados.';
@@ -16,7 +16,7 @@ define(function () {
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
-      var message = 'Digite ' + remainingChars + ' ou mais caracteres';
+      var message = 'Introduza ' + remainingChars + ' ou mais caracteres';
 
       return message;
     },
