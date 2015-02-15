@@ -317,10 +317,20 @@ module.exports = function (grunt) {
   grunt.registerTask('minify', ['uglify', 'sass:dist']);
   grunt.registerTask('test', ['connect:tests', 'qunit', 'jshint']);
 
-  grunt.registerTask('ci', [
-    'compile', 'connect:tests',
-    'saucelabs-qunit', 'qunit', 'jshint'
-  ]);
+  var ciTasks = [];
+
+  ciTasks.push('compile')
+  ciTasks.push('connect:tests');
+
+  // Can't run Sauce Labs tests in pull requests
+  if (process.env.TRAVIS_PULL_REQUEST == null) {
+    ciTasks.push('saucelabs-qunit');
+  }
+
+  ciTasks.push('qunit');
+  ciTasks.push('jshint');
+
+  grunt.registerTask('ci', ciTasks);
 
   grunt.registerTask('docs', ['symlink:docs', 'jekyll:serve']);
 
