@@ -323,7 +323,7 @@ module.exports = function (grunt) {
   ciTasks.push('connect:tests');
 
   // Can't run Sauce Labs tests in pull requests
-  if (process.env.TRAVIS_PULL_REQUEST == null) {
+  if (process.env.TRAVIS_PULL_REQUEST == 'false') {
     ciTasks.push('saucelabs-qunit');
   }
 
