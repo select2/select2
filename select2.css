@@ -177,6 +177,10 @@ html[dir="rtl"] .select2-container .select2-choice > .select2-chosen {
     width: auto;
 }
 
+.select2-drop-above.select2-drop-auto-width {
+    border-bottom: 1px solid #aaa;
+}
+
 .select2-container .select2-choice .select2-arrow {
     display: inline-block;
     width: 18px;
