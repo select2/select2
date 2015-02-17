@@ -2406,7 +2406,6 @@ define('select2/data/select',[
       var val = data.id;
 
       this.$element.val(val);
-
       this.$element.trigger('change');
     }
   };
@@ -2490,6 +2489,10 @@ define('select2/data/select',[
     callback({
       results: data
     });
+  };
+
+  SelectAdapter.prototype.addOptions = function ($options) {
+    this.$element.append($options);
   };
 
   SelectAdapter.prototype.option = function (data) {
@@ -2632,7 +2635,7 @@ define('select2/data/array',[
 
     ArrayAdapter.__super__.constructor.call(this, $element, options);
 
-    $element.append(this.convertToOptions(data));
+    this.addOptions(this.convertToOptions(data));
   }
 
   Utils.Extend(ArrayAdapter, SelectAdapter);
@@ -2643,7 +2646,7 @@ define('select2/data/array',[
     if ($option.length === 0) {
       $option = this.option(data);
 
-      this.$element.append($option);
+      this.addOptions([$option]);
     }
 
     ArrayAdapter.__super__.select.call(this, data);
@@ -2871,7 +2874,7 @@ define('select2/data/tags',[
         var $option = self.option(tag);
         $option.attr('data-select2-tag', true);
 
-        self.$element.append($option);
+        self.addOptions([$option]);
 
         self.insertTag(data, tag);
       }
@@ -4057,6 +4060,15 @@ define('select2/options',[
     }
 
     this.options = Defaults.apply(this.options);
+
+    if ($element && $element.is('input')) {
+      var InputCompat = require(this.get('amdBase') + 'compat/inputData');
+
+      this.options.dataAdapter = Utils.Decorate(
+        this.options.dataAdapter,
+        InputCompat
+      );
+    }
   }
 
   Options.prototype.fromElement = function ($e) {
@@ -4972,6 +4984,112 @@ define('select2/compat/initSelection',[
   };
 
   return InitSelection;
+});
+
+define('select2/compat/inputData',[
+  'jquery'
+], function ($) {
+  function InputData (decorated, $element, options) {
+    this._currentData = [];
+    this._valueSeparator = options.get('valueSeparator') || ',';
+
+    decorated.call(this, $element, options);
+  }
+
+  InputData.prototype.current = function (_, callback) {
+    function getSelected (data, selectedIds) {
+      var selected = [];
+
+      if (data.selected || $.inArray(selectedIds, data.id) !== -1) {
+        selected.push(data);
+      }
+
+      if (data.children) {
+        selected.push.apply(selected, getSelected(data.children, selectedIds));
+      }
+
+      return selected;
+    }
+
+    var selected = [];
+
+    for (var d = 0; d < this._currentData.length; d++) {
+      var data = this._currentData[d];
+
+      selected.push.apply(
+        selected,
+        getSelected(
+          data,
+          this.$element.val().split(
+            this._valueSeparator
+          )
+        )
+      );
+    }
+
+    callback(selected);
+  };
+
+  InputData.prototype.select = function (_, data) {
+    if (!this.options.get('multiple')) {
+      this.current(function (allData) {
+        $.map(allData, function (data) {
+          data.selected = false;
+        });
+      });
+    }
+
+    data.selected = true;
+
+    this._syncValue();
+  };
+
+  InputData.prototype.unselect = function (_, data) {
+    data.selected = false;
+
+    this._syncValue();
+  };
+
+  InputData.prototype._syncValue = function () {
+    var self = this;
+
+    this.current(function (allData) {
+      self.$element.val(
+        allData.join(
+          self._valueSeparator
+        )
+      );
+      self.$element.trigger('change');
+    });
+  };
+
+  InputData.prototype.query = function (_, params, callback) {
+    var results = [];
+
+    for (var d = 0; d < this._currentData.length; d++) {
+      var data = this._currentData[d];
+
+      var matches = this.matches(params, data);
+
+      if (matches !== null) {
+        results.push(matches);
+      }
+    }
+
+    callback({
+      results: results
+    });
+  };
+
+  InputData.prototype.addOptions = function (_, $options) {
+    var options = $.map($options, function ($option) {
+      return $.data($option[0], 'data');
+    });
+
+    this._currentData.push.apply(this._currentData, options);
+  };
+
+  return InputData;
 });
 
 define('select2/compat/query',[
