@@ -1,13 +1,13 @@
 define(function () {
   // Ukranian
   function ending (count, one, couple, more) {
-    if ([11,12,13,14].indexOf(count % 100) !== -1) {
+    if (count % 100 > 10 && count % 100 < 15) {
       return more;
     }
     if (count % 10 === 1) {
       return one;
     }
-    if ([2,3,4].indexOf(count % 10) !== -1) {
+    if (count % 10 > 1 && count % 10 < 5) {
       return couple;
     }
     return more;
