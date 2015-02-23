@@ -86,7 +86,7 @@ The license is available within the repository in the [LICENSE][license] file.
 [community]: https://select2.github.io/community.html
 [django-select2]: https://github.com/applegrew/django-select2
 [documentation]: https://select2.github.io/
-[documentation-folder]: https://github.com/select2/select2/tree/master/docs
+[documentation-folder]: https://select2.github.io/
 [freenode]: https://freenode.net/
 [jsdelivr]: http://www.jsdelivr.com/#!select2
 [license]: LICENSE.md
