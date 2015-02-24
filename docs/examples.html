@@ -703,7 +703,7 @@ function matchStart (term, text) {
   return false;
 }
 
-$.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
+$.fn.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
   $(".js-example-matcher-start").select2({
     matcher: oldMatcher(matchStart)
   })
