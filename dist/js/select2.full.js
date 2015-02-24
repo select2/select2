@@ -5439,8 +5439,11 @@ define('select2/compat/inputData',[
     function getSelected (data, selectedIds) {
       var selected = [];
 
-      if (data.selected || $.inArray(selectedIds, data.id) !== -1) {
+      if (data.selected || $.inArray(data.id, selectedIds) !== -1) {
+        data.selected = true;
         selected.push(data);
+      } else {
+        data.selected = false;
       }
 
       if (data.children) {
@@ -5476,28 +5479,37 @@ define('select2/compat/inputData',[
           data.selected = false;
         });
       });
+
+      this.$element.val(data.id);
+      this.$element.trigger('change');
+    } else {
+      var value = this.$element.val();
+      value += this._valueSeparator + data.id;
+
+      this.$element.val(value);
+      this.$element.trigger('change');
     }
-
-    data.selected = true;
-
-    this._syncValue();
   };
 
   InputData.prototype.unselect = function (_, data) {
-    data.selected = false;
-
-    this._syncValue();
-  };
-
-  InputData.prototype._syncValue = function () {
     var self = this;
 
+    data.selected = false;
+
     this.current(function (allData) {
-      self.$element.val(
-        allData.join(
-          self._valueSeparator
-        )
-      );
+      var values = [];
+
+      for (var d = 0; d < allData; d++) {
+        var item = allData[d];
+
+        if (data.id == item.id) {
+          continue;
+        }
+
+        values.push(data.id);
+      }
+
+      self.$element.val(values.join(self._valueSeparator));
       self.$element.trigger('change');
     });
   };
