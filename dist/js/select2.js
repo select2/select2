@@ -4555,7 +4555,9 @@ define('select2/options',[
       $e.data('ajax--url', $e.data('ajax-url'));
     }
 
-    var data = $e.data();
+    // Prefer the element's `dataset` attribute if it exists
+    // jQuery 1.x does not correctly handle data attributes with multiple dashes
+    var data = $.extend(true, {}, $e[0].dataset || $e.data());
 
     data = Utils._convertData(data);
 
