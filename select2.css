@@ -647,7 +647,8 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
     text-decoration: underline;
 }
 
-.select2-offscreen, .select2-offscreen:focus {
+.select2-offscreen,
+.select2-offscreen:focus {
     clip: rect(0 0 0 0) !important;
     width: 1px !important;
     height: 1px !important;
@@ -657,8 +658,12 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
     overflow: hidden !important;
     position: absolute !important;
     outline: 0 !important;
-    left: 0px !important;
-    top: 0px !important;
+    /*
+     * Keep original element in the same spot
+     * So that HTML5 valiation message appear in the correct position
+     */
+    left: auto !important;
+    top: auto !important;
 }
 
 .select2-display-none {
