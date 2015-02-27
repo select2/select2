@@ -61,7 +61,6 @@ define([
       var val = data.id;
 
       this.$element.val(val);
-
       this.$element.trigger('change');
     }
   };
@@ -145,6 +144,10 @@ define([
     callback({
       results: data
     });
+  };
+
+  SelectAdapter.prototype.addOptions = function ($options) {
+    this.$element.append($options);
   };
 
   SelectAdapter.prototype.option = function (data) {

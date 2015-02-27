@@ -8,7 +8,7 @@ define([
 
     ArrayAdapter.__super__.constructor.call(this, $element, options);
 
-    $element.append(this.convertToOptions(data));
+    this.addOptions(this.convertToOptions(data));
   }
 
   Utils.Extend(ArrayAdapter, SelectAdapter);
@@ -19,7 +19,7 @@ define([
     if ($option.length === 0) {
       $option = this.option(data);
 
-      this.$element.append($option);
+      this.addOptions([$option]);
     }
 
     ArrayAdapter.__super__.select.call(this, data);

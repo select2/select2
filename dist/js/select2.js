@@ -2845,7 +2845,6 @@ define('select2/data/select',[
       var val = data.id;
 
       this.$element.val(val);
-
       this.$element.trigger('change');
     }
   };
@@ -2929,6 +2928,10 @@ define('select2/data/select',[
     callback({
       results: data
     });
+  };
+
+  SelectAdapter.prototype.addOptions = function ($options) {
+    this.$element.append($options);
   };
 
   SelectAdapter.prototype.option = function (data) {
@@ -3071,7 +3074,7 @@ define('select2/data/array',[
 
     ArrayAdapter.__super__.constructor.call(this, $element, options);
 
-    $element.append(this.convertToOptions(data));
+    this.addOptions(this.convertToOptions(data));
   }
 
   Utils.Extend(ArrayAdapter, SelectAdapter);
@@ -3082,7 +3085,7 @@ define('select2/data/array',[
     if ($option.length === 0) {
       $option = this.option(data);
 
-      this.$element.append($option);
+      this.addOptions([$option]);
     }
 
     ArrayAdapter.__super__.select.call(this, data);
@@ -3310,7 +3313,7 @@ define('select2/data/tags',[
         var $option = self.option(tag);
         $option.attr('data-select2-tag', true);
 
-        self.$element.append($option);
+        self.addOptions([$option]);
 
         self.insertTag(data, tag);
       }
@@ -4496,6 +4499,15 @@ define('select2/options',[
     }
 
     this.options = Defaults.apply(this.options);
+
+    if ($element && $element.is('input')) {
+      var InputCompat = require(this.get('amdBase') + 'compat/inputData');
+
+      this.options.dataAdapter = Utils.Decorate(
+        this.options.dataAdapter,
+        InputCompat
+      );
+    }
   }
 
   Options.prototype.fromElement = function ($e) {
