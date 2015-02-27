@@ -202,7 +202,7 @@ define([
     // http://codereview.stackexchange.com/q/13338
     // and was designed to be used with the Sizzle selector engine.
 
-    var $el = $(el);
+    var $el = jQuery(el);
     var overflowX = el.style.overflowX;
     var overflowY = el.style.overflowY;
 
