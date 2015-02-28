@@ -4277,7 +4277,7 @@ define('select2/defaults',[
         options.dropdownAdapter = SearchableDropdown;
       }
 
-      if (options.minimumResultsForSearch > 0) {
+      if (options.minimumResultsForSearch !== 0) {
         options.dropdownAdapter = Utils.Decorate(
           options.dropdownAdapter,
           MinimumResultsForSearch
