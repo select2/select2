@@ -4272,9 +4272,13 @@ define('select2/defaults',[
       if (options.multiple) {
         options.dropdownAdapter = Dropdown;
       } else {
-        var SearchableDropdown = Utils.Decorate(Dropdown, DropdownSearch);
-
-        options.dropdownAdapter = SearchableDropdown;
+        //remove the search bar by setting searchable false when we don't neeed it
+        if(options.searchable == false){
+    	    options.dropdownAdapter = Dropdown;
+    	} else {
+    	    var SearchableDropdown = Utils.Decorate(Dropdown, DropdownSearch);
+    	    options.dropdownAdapter = SearchableDropdown;
+    	}
       }
 
       if (options.minimumResultsForSearch !== 0) {
