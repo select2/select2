@@ -4004,8 +4004,8 @@ define('select2/dropdown/attachBody',[
   AttachBody.prototype._showDropdown = function (decorated) {
     this.$dropdownContainer.appendTo(this.$dropdownParent);
 
-    this._positionDropdown();
     this._resizeDropdown();
+    this._positionDropdown();
   };
 
   return AttachBody;
