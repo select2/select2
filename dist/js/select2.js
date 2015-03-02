@@ -1532,7 +1532,7 @@ define('select2/selection/multiple',[
       var $selection = this.selectionContainer();
 
       $selection.append(formatted);
-      $selection.prop('title', selection.title);
+      $selection.prop('title', selection.title || selection.text);
 
       $selection.data('data', selection);
 
