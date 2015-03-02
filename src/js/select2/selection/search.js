@@ -84,10 +84,10 @@ define([
     // both the `keyup` and `input` events.
     this.$selection.on('input', '.select2-search--inline', function (evt) {
       // Unbind the duplicated `keyup` event
-      $(this).off('keyup');
+      self.$selection.off('keyup.search');
     });
 
-    this.$selection.on('keyup input', '.select2-search--inline',
+    this.$selection.on('keyup.search input', '.select2-search--inline',
         function (evt) {
       self.handleSearch(evt);
     });

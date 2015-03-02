@@ -272,6 +272,10 @@ define([
     });
 
     this.on('query', function (params) {
+      if (!self.isOpen()) {
+        self.trigger('open');
+      }
+
       this.data.query(params, function (data) {
         self.trigger('results:all', {
           data: data,
