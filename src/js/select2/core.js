@@ -297,6 +297,10 @@ define([
           self.trigger('results:select');
 
           evt.preventDefault();
+        } else if ((key === KEYS.SPACE && evt.ctrlKey)) {
+          self.trigger('results:toggle');
+
+          evt.preventDefault();
         } else if (key === KEYS.UP) {
           self.trigger('results:previous');
 

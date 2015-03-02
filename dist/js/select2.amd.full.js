@@ -527,6 +527,16 @@ define('select2/results',[
       self.$results.removeAttr('aria-activedescendant');
     });
 
+    container.on('results:toggle', function () {
+      var $highlighted = self.getHighlightedResults();
+
+      if ($highlighted.length === 0) {
+        return;
+      }
+
+      $highlighted.trigger('mouseup');
+    });
+
     container.on('results:select', function () {
       var $highlighted = self.getHighlightedResults();
 
@@ -537,13 +547,7 @@ define('select2/results',[
       var data = $highlighted.data('data');
 
       if ($highlighted.attr('aria-selected') == 'true') {
-        if (self.options.get('multiple')) {
-          self.trigger('unselect', {
-            data: data
-          });
-        } else {
-          self.trigger('close');
-        }
+        self.trigger('close');
       } else {
         self.trigger('select', {
           data: data
@@ -3647,15 +3651,23 @@ define('select2/dropdown/closeOnSelect',[
     decorated.call(this, container, $container);
 
     container.on('select', function (evt) {
-      var originalEvent = evt.originalEvent;
-
-      // Don't close if the control key is being held
-      if (originalEvent && originalEvent.ctrlKey) {
-        return;
-      }
-
-      self.trigger('close');
+      self._selectTriggered(evt);
     });
+
+    container.on('unselect', function (evt) {
+      self._selectTriggered(evt);
+    });
+  };
+
+  CloseOnSelect.prototype._selectTriggered = function (_, evt) {
+    var originalEvent = evt.originalEvent;
+
+    // Don't close if the control key is being held
+    if (originalEvent && originalEvent.ctrlKey) {
+      return;
+    }
+
+    this.trigger('close');
   };
 
   return CloseOnSelect;
@@ -4482,6 +4494,10 @@ define('select2/core',[
       if (self.isOpen()) {
         if (key === KEYS.ENTER) {
           self.trigger('results:select');
+
+          evt.preventDefault();
+        } else if ((key === KEYS.SPACE && evt.ctrlKey)) {
+          self.trigger('results:toggle');
 
           evt.preventDefault();
         } else if (key === KEYS.UP) {
