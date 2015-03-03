@@ -1,5 +1,5 @@
 define(function () {
-  // English
+  // Korean
   return {
     errorLoading: function () {
       return '결과를 불러올 수 없습니다.';
@@ -8,10 +8,6 @@ define(function () {
       var overChars = args.input.length - args.maximum;
 
       var message = '너무 깁니다. ' + overChars + ' 글자 지워주세요.';
-
-      if (overChars != 1) {
-        message += 's';
-      }
 
       return message;
     },
@@ -27,10 +23,6 @@ define(function () {
     },
     maximumSelected: function (args) {
       var message = '최대 ' + args.maximum + '개까지만 선택 가능합니다.';
-
-      if (args.maximum != 1) {
-        message += 's';
-      }
 
       return message;
     },
