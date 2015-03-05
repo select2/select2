@@ -11,10 +11,6 @@ define(function () {
 
       var message = 'لطفاً ' + overChars + ' کاراکتر را حذف نمایید';
 
-      if (overChars != 1) {
-        message += 's';
-      }
-
       return message;
     },
     inputTooShort: function (args) {
@@ -29,10 +25,6 @@ define(function () {
     },
     maximumSelected: function (args) {
       var message = 'شما تنها می‌توانید ' + args.maximum + ' آیتم را انتخاب نمایید';
-
-      if (args.maximum != 1) {
-        message += 's';
-      }
 
       return message;
     },
