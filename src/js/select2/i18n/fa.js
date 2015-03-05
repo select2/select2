@@ -1,5 +1,5 @@
 /* jshint -W100 */
-/*jslint maxlen: 130 */
+/* jslint maxlen: 86 */
 define(function () {
   // Farsi (Persian)
   return {
