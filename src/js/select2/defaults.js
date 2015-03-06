@@ -203,7 +203,7 @@ define([
     }
 
     if (typeof options.language === 'string') {
-      // Check if the lanugage is specified with a region
+      // Check if the language is specified with a region
       if (options.language.indexOf('-') > 0) {
         // Extract the region information if it is included
         var languageParts = options.language.split('-');
@@ -239,7 +239,7 @@ define([
             // because of how Select2 helps load all possible translation files.
             if (window.console && console.warn) {
               console.warn(
-                'Select2: The lanugage file for "' + name + '" could not be ' +
+                'Select2: The language file for "' + name + '" could not be ' +
                 'automatically loaded. A fallback will be used instead.'
               );
             }
