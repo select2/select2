@@ -318,6 +318,7 @@ define([
       amdBase: 'select2/',
       amdLanguageBase: 'select2/i18n/',
       closeOnSelect: true,
+      dropdownAutoWidth: false,
       escapeMarkup: Utils.escapeMarkup,
       language: EnglishTranslation,
       matcher: matcher,

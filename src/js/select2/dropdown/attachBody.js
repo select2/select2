@@ -4,6 +4,7 @@ define([
 ], function ($, Utils) {
   function AttachBody (decorated, $element, options) {
     this.$dropdownParent = options.get('dropdownParent') || document.body;
+    this.dropdownAutoWidth = options.get('dropdownAutoWidth');
 
     decorated.call(this, $element, options);
   }
@@ -179,9 +180,16 @@ define([
   AttachBody.prototype._resizeDropdown = function () {
     this.$dropdownContainer.width();
 
-    this.$dropdown.css({
+    var css = {
       width: this.$container.outerWidth(false) + 'px'
-    });
+    };
+
+    if (this.dropdownAutoWidth)
+    {
+      css.minWidth = css.width;
+      css.width = 'auto';
+    }
+    this.$dropdown.css(css);
   };
 
   AttachBody.prototype._showDropdown = function (decorated) {
