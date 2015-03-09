@@ -319,6 +319,7 @@ define([
       amdLanguageBase: 'select2/i18n/',
       closeOnSelect: true,
       dropdownAutoWidth: false,
+      dropdownMaxWidth: '100%',
       escapeMarkup: Utils.escapeMarkup,
       language: EnglishTranslation,
       matcher: matcher,
