@@ -5115,14 +5115,14 @@ define('select2/compat/inputData',[
     this.current(function (allData) {
       var values = [];
 
-      for (var d = 0; d < allData; d++) {
+      for (var d = 0; d < allData.length; d++) {
         var item = allData[d];
 
         if (data.id == item.id) {
           continue;
         }
 
-        values.push(data.id);
+        values.push(item.id);
       }
 
       self.$element.val(values.join(self._valueSeparator));

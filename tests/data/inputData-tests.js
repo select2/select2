@@ -34,7 +34,7 @@ test('test that options can be selected', function (assert) {
   );
 });
 
-test('test that options can be unselected', function (assert) {
+test('unselect the single selected option clears the value', function (assert) {
   var options = new Options({
     data: [
       {
@@ -56,6 +56,39 @@ test('test that options can be unselected', function (assert) {
     $element.val(),
     '',
     'The id should no longer be in the value'
+  );
+});
+
+test('options can be unselected individually', function (assert) {
+  var options = new Options({
+    data: [
+      {
+        id: 'test',
+        text: 'Test'
+      },
+      {
+        id: 'test2',
+        text: 'Test2'
+      },
+      {
+        id: 'test3',
+        text: 'Test3'
+      }
+    ]
+  });
+  var $element = $('<input />');
+  $element.val('test,test2,test3');
+
+  var adapter = new InputAdapter($element, options);
+
+  adapter.unselect({
+    id: 'test2'
+  });
+
+  assert.equal(
+    $element.val(),
+    'test,test3',
+    'The value should contain all the still selected options'
   );
 });
 
