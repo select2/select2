@@ -2845,7 +2845,7 @@ define('select2/data/tags',[
 
     this._removeOldTags();
 
-    if (params.term == null || params.term === '' || params.page != null) {
+    if (params.term == null || params.page != null) {
       decorated.call(this, params, callback);
       return;
     }
@@ -2901,9 +2901,15 @@ define('select2/data/tags',[
   };
 
   Tags.prototype.createTag = function (decorated, params) {
+    var term = $.trim(params.term);
+
+    if (term === '') {
+      return null;
+    }
+
     return {
-      id: params.term,
-      text: params.term
+      id: term,
+      text: term
     };
   };
 
