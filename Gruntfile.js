@@ -100,11 +100,19 @@ module.exports = function (grunt) {
           browsers: [
             {
               browserName: 'internet explorer',
+              version: '8'
+            },
+            {
+              browserName: 'internet explorer',
               version: '9'
             },
             {
               browserName: 'internet explorer',
               version: '10'
+            },
+            {
+              browserName: 'internet explorer',
+              version: '11'
             },
 
             {
