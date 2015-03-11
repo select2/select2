@@ -3,12 +3,12 @@ module('Data adapters - Select - current');
 var SelectData = require('select2/data/select');
 var $ = require('jquery');
 var Options = require('select2/options');
-var options = new Options({});
+var selectOptions = new Options({});
 
 test('current gets default for single', function (assert) {
   var $select = $('#qunit-fixture .single');
 
-  var data = new SelectData($select, options);
+  var data = new SelectData($select, selectOptions);
 
   data.current(function (data) {
     assert.equal(
@@ -21,13 +21,13 @@ test('current gets default for single', function (assert) {
 
     assert.equal(
       option.id,
-      'default',
+      'One',
       'The value of the option tag should be the id'
     );
 
     assert.equal(
       option.text,
-      'Default',
+      'One',
       'The text within the option tag should be the text'
     );
   });
@@ -36,7 +36,7 @@ test('current gets default for single', function (assert) {
 test('current gets default for multiple', function (assert) {
   var $select = $('#qunit-fixture .multiple');
 
-  var data = new SelectData($select, options);
+  var data = new SelectData($select, selectOptions);
 
   data.current(function (data) {
     assert.equal(
@@ -50,7 +50,10 @@ test('current gets default for multiple', function (assert) {
 test('current gets options with explicit value', function (assert) {
   var $select = $('#qunit-fixture .single');
 
-  var data = new SelectData($select, options);
+  var $option = $('<option value="1">One</option>');
+  $select.append($option);
+
+  var data = new SelectData($select, selectOptions);
 
   $select.val('1');
 
@@ -80,9 +83,9 @@ test('current gets options with explicit value', function (assert) {
 test('current gets options with implicit value', function (assert) {
   var $select = $('#qunit-fixture .single');
 
-  var data = new SelectData($select, options);
+  var data = new SelectData($select, selectOptions);
 
-  $select.val('2');
+  $select.val('One');
 
   data.current(function (val) {
     assert.equal(
@@ -95,63 +98,63 @@ test('current gets options with implicit value', function (assert) {
 
     assert.equal(
       option.id,
-      '2',
+      'One',
       'The id should be the same as the option text'
     );
 
     assert.equal(
       option.text,
-      '2',
+      'One',
       'The text should be the same as the option text'
     );
   });
 });
 
 test('select works for single', function (assert) {
-  var $select = $('#qunit-fixture .single');
+  var $select = $('#qunit-fixture .single-with-placeholder');
 
-  var data = new SelectData($select, options);
+  var data = new SelectData($select, selectOptions);
 
-  assert.equal($select.val(), 'default');
+  assert.equal($select.val(), 'placeholder');
 
   data.select({
-    id: '1',
+    id: 'One',
     text: 'One'
   });
 
-  assert.equal($select.val(), '1');
+  assert.equal($select.val(), 'One');
 });
 
 test('multiple sets the value', function (assert) {
   var $select = $('#qunit-fixture .multiple');
 
-  var data = new SelectData($select, options);
+  var data = new SelectData($select, selectOptions);
 
   assert.equal($select.val(), null);
 
   data.select({
-    id: 'default',
-    text: 'Default'
+    id: 'Two',
+    text: 'Two'
   });
 
-  assert.deepEqual($select.val(), ['default']);
+  assert.deepEqual($select.val(), ['Two']);
 });
 
 test('multiple adds to the old value', function (assert) {
   var $select = $('#qunit-fixture .multiple');
 
-  var data = new SelectData($select, options);
+  var data = new SelectData($select, selectOptions);
 
-  $select.val(['2']);
+  $select.val(['Two']);
 
-  assert.deepEqual($select.val(), ['2']);
+  assert.deepEqual($select.val(), ['Two']);
 
   data.select({
-    id: 'default',
-    text: 'Default'
+    id: 'One',
+    text: 'One'
   });
 
-  assert.deepEqual($select.val(), ['default', '2']);
+  assert.deepEqual($select.val(), ['One', 'Two']);
 });
 
 test('duplicates - single - same id on select triggers change',
@@ -311,12 +314,12 @@ module('Data adapter - Select - query');
 test('all options are returned with no term', function (assert) {
   var $select = $('#qunit-fixture .single');
 
-  var data = new SelectData($select, options);
+  var data = new SelectData($select, selectOptions);
 
   data.query({}, function (data) {
     assert.equal(
       data.results.length,
-      3,
+      1,
       'The number of items returned should be equal to the number of options'
     );
   });
@@ -325,15 +328,15 @@ test('all options are returned with no term', function (assert) {
 test('the matcher checks the text', function (assert) {
   var $select = $('#qunit-fixture .single');
 
-  var data = new SelectData($select, options);
+  var data = new SelectData($select, selectOptions);
 
   data.query({
-    term: 'Default'
+    term: 'One'
   }, function (data) {
     assert.equal(
       data.results.length,
       1,
-      'Only the "Default" option should be found'
+      'Only the "One" option should be found'
     );
   });
 });
@@ -341,7 +344,7 @@ test('the matcher checks the text', function (assert) {
 test('the matcher ignores case', function (assert) {
   var $select = $('#qunit-fixture .single');
 
-  var data = new SelectData($select, options);
+  var data = new SelectData($select, selectOptions);
 
   data.query({
     term: 'one'
@@ -357,7 +360,7 @@ test('the matcher ignores case', function (assert) {
 test('no options may be returned with no matches', function (assert) {
   var $select = $('#qunit-fixture .single');
 
-  var data = new SelectData($select, options);
+  var data = new SelectData($select, selectOptions);
 
   data.query({
     term: 'qwerty'
@@ -373,7 +376,7 @@ test('no options may be returned with no matches', function (assert) {
 test('optgroup tags are marked with children', function (assert) {
   var $select = $('#qunit-fixture .groups');
 
-  var data = new SelectData($select, options);
+  var data = new SelectData($select, selectOptions);
 
   data.query({}, function (data) {
     assert.ok(
@@ -386,7 +389,7 @@ test('optgroup tags are marked with children', function (assert) {
 test('empty optgroups are still shown when queried', function (assert) {
   var $select = $('#qunit-fixture .groups');
 
-  var data = new SelectData($select, options);
+  var data = new SelectData($select, selectOptions);
 
   data.query({}, function (data) {
     assert.equal(
@@ -414,7 +417,7 @@ test('empty optgroups are still shown when queried', function (assert) {
 test('multiple options with the same value are returned', function (assert) {
   var $select = $('#qunit-fixture .duplicates');
 
-  var data = new SelectData($select, options);
+  var data = new SelectData($select, selectOptions);
 
   data.query({}, function (data) {
     assert.equal(
@@ -443,7 +446,7 @@ test('multiple options with the same value are returned', function (assert) {
 test('data objects use the text of the option', function (assert) {
   var $select = $('#qunit-fixture .duplicates');
 
-  var data = new SelectData($select, options);
+  var data = new SelectData($select, selectOptions);
 
   var $option = $('<option>&amp;</option>');
 

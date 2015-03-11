@@ -29,8 +29,13 @@ test('width from style returns null if nothing is found', function (assert) {
   assert.equal(width, null);
 });
 
-test('width from computer element width', function (assert) {
+test('width from computed element width', function (assert) {
+  var $style = $(
+    '<style type="text/css">.css-set-width { width: 500px; }</style>'
+  );
   var $test = $('<select class="css-set-width"></select>');
+
+  $('#qunit-fixture').append($style);
   $('#qunit-fixture').append($test);
 
   var width = select._resolveWidth($test, 'element');
@@ -47,7 +52,12 @@ test('resolve gets the style if it is there', function (assert) {
 });
 
 test('resolve falls back to element if there is no style', function (assert) {
+  var $style = $(
+    '<style type="text/css">.css-set-width { width: 500px; }</style>'
+  );
   var $test = $('<select class="css-set-width"></select>');
+
+  $('#qunit-fixture').append($style);
   $('#qunit-fixture').append($test);
 
   var width = select._resolveWidth($test, 'resolve');
