@@ -118,9 +118,6 @@ module.exports = function (grunt) {
             {
               browserName: 'opera',
               version: '12'
-            },
-            {
-              browserName: 'opera'
             }
           ]
         }
