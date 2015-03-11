@@ -28,7 +28,7 @@ define([
     // Set up containers and adapters
 
     var DataAdapter = this.options.get('dataAdapter');
-    this.data = new DataAdapter($element, this.options);
+    this.dataAdapter = new DataAdapter($element, this.options);
 
     var $container = this.render();
 
@@ -47,7 +47,7 @@ define([
     this.dropdown.position(this.$dropdown, $container);
 
     var ResultsAdapter = this.options.get('resultsAdapter');
-    this.results = new ResultsAdapter($element, this.options, this.data);
+    this.results = new ResultsAdapter($element, this.options, this.dataAdapter);
     this.$results = this.results.render();
 
     this.results.position(this.$results, this.$dropdown);
@@ -70,7 +70,7 @@ define([
     this._registerEvents();
 
     // Set the initial state
-    this.data.current(function (initialData) {
+    this.dataAdapter.current(function (initialData) {
       self.trigger('selection:update', {
         data: initialData
       });
@@ -161,7 +161,7 @@ define([
   };
 
   Select2.prototype._bindAdapters = function () {
-    this.data.bind(this, this.$container);
+    this.dataAdapter.bind(this, this.$container);
     this.selection.bind(this, this.$container);
 
     this.dropdown.bind(this, this.$container);
@@ -172,7 +172,7 @@ define([
     var self = this;
 
     this.$element.on('change.select2', function () {
-      self.data.current(function (data) {
+      self.dataAdapter.current(function (data) {
         self.trigger('selection:update', {
           data: data
         });
@@ -206,7 +206,7 @@ define([
   Select2.prototype._registerDataEvents = function () {
     var self = this;
 
-    this.data.on('*', function (name, params) {
+    this.dataAdapter.on('*', function (name, params) {
       self.trigger(name, params);
     });
   };
@@ -276,7 +276,7 @@ define([
         self.trigger('open');
       }
 
-      this.data.query(params, function (data) {
+      this.dataAdapter.query(params, function (data) {
         self.trigger('results:all', {
           data: data,
           query: params
@@ -285,7 +285,7 @@ define([
     });
 
     this.on('query:append', function (params) {
-      this.data.query(params, function (data) {
+      this.dataAdapter.query(params, function (data) {
         self.trigger('results:append', {
           data: data,
           query: params
@@ -491,12 +491,12 @@ define([
     this.$element.show();
     this.$element.removeData('select2');
 
-    this.data.destroy();
+    this.dataAdapter.destroy();
     this.selection.destroy();
     this.dropdown.destroy();
     this.results.destroy();
 
-    this.data = null;
+    this.dataAdapter = null;
     this.selection = null;
     this.dropdown = null;
     this.results = null;
