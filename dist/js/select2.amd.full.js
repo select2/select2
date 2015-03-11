@@ -5283,7 +5283,7 @@ define('select2/selection/stopPropagation',[
   return StopPropagation;
 });
 
-define('jquery.select2',[
+define('Select2',[
   'jquery',
   './select2/core',
   './select2/defaults'

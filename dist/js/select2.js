@@ -5162,7 +5162,7 @@ define('select2/core',[
   return Select2;
 });
 
-define('jquery.select2',[
+define('Select2',[
   'jquery',
   './select2/core',
   './select2/defaults'
@@ -5202,4 +5202,4 @@ define('jquery.select2',[
   return Select2;
 });
 
-require('jquery.select2'); jQuery.fn.select2.amd = { define: define, require: require }; }());
+require('Select2'); jQuery.fn.select2.amd = { define: define, require: require }; }());
