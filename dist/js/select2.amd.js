@@ -4723,7 +4723,7 @@ define('select2/core',[
   return Select2;
 });
 
-define('jquery.select2',[
+define('Select2',[
   'jquery',
   './select2/core',
   './select2/defaults'
