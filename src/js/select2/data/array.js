@@ -19,7 +19,7 @@ define([
     if ($option.length === 0) {
       $option = this.option(data);
 
-      this.addOptions([$option]);
+      this.addOptions($option);
     }
 
     ArrayAdapter.__super__.select.call(this, data);
@@ -33,7 +33,7 @@ define([
       return self.item($(this)).id;
     }).get();
 
-    var $options = [];
+    var $options = $();
 
     // Filter out all items except for the one passed in the argument
     function onlyItem (item) {
@@ -67,7 +67,7 @@ define([
         $option.append($children);
       }
 
-      $options.push($option);
+      $options = $options.add($option);
     }
 
     return $options;

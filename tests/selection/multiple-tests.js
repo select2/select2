@@ -65,8 +65,8 @@ test('escapeMarkup is being used', function (assert) {
   }]);
 
   assert.equal(
-    $rendered.text().indexOf(unescapedText),
-    1,
+    $rendered.text().substr(1),
+    unescapedText,
     'The text should be escaped by default to prevent injection'
   );
 });

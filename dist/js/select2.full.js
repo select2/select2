@@ -1527,7 +1527,7 @@ define('select2/selection/multiple',[
       return;
     }
 
-    var $selections = [];
+    var $selections = $();
 
     for (var d = 0; d < data.length; d++) {
       var selection = data[d];
@@ -1540,7 +1540,7 @@ define('select2/selection/multiple',[
 
       $selection.data('data', selection);
 
-      $selections.push($selection);
+      $selections = $selections.add($selection);
     }
 
     this.$selection.find('.select2-selection__rendered').append($selections);
@@ -3098,7 +3098,7 @@ define('select2/data/array',[
     if ($option.length === 0) {
       $option = this.option(data);
 
-      this.addOptions([$option]);
+      this.addOptions($option);
     }
 
     ArrayAdapter.__super__.select.call(this, data);
@@ -3112,7 +3112,7 @@ define('select2/data/array',[
       return self.item($(this)).id;
     }).get();
 
-    var $options = [];
+    var $options = $();
 
     // Filter out all items except for the one passed in the argument
     function onlyItem (item) {
@@ -3146,7 +3146,7 @@ define('select2/data/array',[
         $option.append($children);
       }
 
-      $options.push($option);
+      $options = $options.add($option);
     }
 
     return $options;
@@ -3326,7 +3326,7 @@ define('select2/data/tags',[
         var $option = self.option(tag);
         $option.attr('data-select2-tag', true);
 
-        self.addOptions([$option]);
+        self.addOptions($option);
 
         self.insertTag(data, tag);
       }
@@ -4599,7 +4599,8 @@ define('select2/options',[
         );
       }
 
-      $e.data('ajax-Url', $e.data('ajaxUrl'));
+      $e.attr('ajax--url', $e.data('ajaxUrl'));
+      $e.data('ajax--url', $e.data('ajaxUrl'));
     }
 
     var dataset = {};
@@ -5594,8 +5595,8 @@ define('select2/compat/inputData',[
   };
 
   InputData.prototype.addOptions = function (_, $options) {
-    var options = $.map($options, function ($option) {
-      return $.data($option[0], 'data');
+    var options = $.map($options, function (option) {
+      return $.data(option, 'data');
     });
 
     this._currentData.push.apply(this._currentData, options);

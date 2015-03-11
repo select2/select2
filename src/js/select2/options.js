@@ -76,7 +76,8 @@ define([
         );
       }
 
-      $e.data('ajax-Url', $e.data('ajaxUrl'));
+      $e.attr('ajax--url', $e.data('ajaxUrl'));
+      $e.data('ajax--url', $e.data('ajaxUrl'));
     }
 
     var dataset = {};
