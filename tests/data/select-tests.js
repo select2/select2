@@ -439,3 +439,16 @@ test('multiple options with the same value are returned', function (assert) {
     );
   });
 });
+
+test('data objects use the text of the option', function (assert) {
+  var $select = $('#qunit-fixture .duplicates');
+
+  var data = new SelectData($select, options);
+
+  var $option = $('<option>&amp;</option>');
+
+  var item = data.item($option);
+
+  assert.equal(item.id, '&');
+  assert.equal(item.text, '&');
+});
