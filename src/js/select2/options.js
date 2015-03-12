@@ -55,7 +55,7 @@ define([
     $e.prop('multiple', this.options.multiple);
 
     if ($e.data('select2Tags')) {
-      if (window.console && console.warn) {
+      if (this.options.debug && window.console && console.warn) {
         console.warn(
           'Select2: The `data-select2-tags` attribute has been changed to ' +
           'use the `data-data` and `data-tags="true"` attributes and will be ' +
@@ -68,7 +68,7 @@ define([
     }
 
     if ($e.data('ajaxUrl')) {
-      if (window.console && console.warn) {
+      if (this.options.debug && window.console && console.warn) {
         console.warn(
           'Select2: The `data-ajax-url` attribute has been changed to ' +
           '`data-ajax--url` and support for the old attribute will be removed' +

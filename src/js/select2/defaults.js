@@ -237,7 +237,7 @@ define([
             // The translation could not be loaded at all. Sometimes this is
             // because of a configuration problem, other times this can be
             // because of how Select2 helps load all possible translation files.
-            if (window.console && console.warn) {
+            if (options.debug && window.console && console.warn) {
               console.warn(
                 'Select2: The language file for "' + name + '" could not be ' +
                 'automatically loaded. A fallback will be used instead.'
@@ -318,6 +318,7 @@ define([
       amdBase: 'select2/',
       amdLanguageBase: 'select2/i18n/',
       closeOnSelect: true,
+      debug: false,
       escapeMarkup: Utils.escapeMarkup,
       language: EnglishTranslation,
       matcher: matcher,

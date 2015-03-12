@@ -6,7 +6,7 @@ define([
     this._valueSeparator = options.get('valueSeparator') || ',';
 
     if ($element.prop('type') === 'hidden') {
-      if (console && console.warn) {
+      if (options.get('debug') && console && console.warn) {
         console.warn(
           'Select2: Using a hidden input with Select2 is no longer ' +
           'supported and may stop working in the future. It is recommended ' +

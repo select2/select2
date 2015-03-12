@@ -1171,7 +1171,7 @@ define('select2/selection/allowClear',[
     decorated.call(this, container, $container);
 
     if (self.placeholder == null) {
-      if (window.console && console.error) {
+      if (self.options.get('debug') && window.console && console.error) {
         console.error(
           'Select2: The `allowClear` option should be used in combination ' +
           'with the `placeholder` option.'
@@ -2782,7 +2782,7 @@ define('select2/data/ajax',[
       var $request = options.transport(options, function (data) {
         var results = self.processResults(data, params);
 
-        if (window.console && console.error) {
+        if (self.options.get('debug') && window.console && console.error) {
           // Check to make sure that the response included a `results` key.
           if (!results || !results.results || !$.isArray(results.results)) {
             console.error(
@@ -3963,7 +3963,7 @@ define('select2/defaults',[
             // The translation could not be loaded at all. Sometimes this is
             // because of a configuration problem, other times this can be
             // because of how Select2 helps load all possible translation files.
-            if (window.console && console.warn) {
+            if (options.debug && window.console && console.warn) {
               console.warn(
                 'Select2: The language file for "' + name + '" could not be ' +
                 'automatically loaded. A fallback will be used instead.'
@@ -4044,6 +4044,7 @@ define('select2/defaults',[
       amdBase: 'select2/',
       amdLanguageBase: 'select2/i18n/',
       closeOnSelect: true,
+      debug: false,
       escapeMarkup: Utils.escapeMarkup,
       language: EnglishTranslation,
       matcher: matcher,
@@ -4139,7 +4140,7 @@ define('select2/options',[
     $e.prop('multiple', this.options.multiple);
 
     if ($e.data('select2Tags')) {
-      if (window.console && console.warn) {
+      if (this.options.debug && window.console && console.warn) {
         console.warn(
           'Select2: The `data-select2-tags` attribute has been changed to ' +
           'use the `data-data` and `data-tags="true"` attributes and will be ' +
@@ -4152,7 +4153,7 @@ define('select2/options',[
     }
 
     if ($e.data('ajaxUrl')) {
-      if (window.console && console.warn) {
+      if (this.options.debug && window.console && console.warn) {
         console.warn(
           'Select2: The `data-ajax-url` attribute has been changed to ' +
           '`data-ajax--url` and support for the old attribute will be removed' +
@@ -4617,7 +4618,7 @@ define('select2/core',[
   };
 
   Select2.prototype.enable = function (args) {
-    if (window.console && console.warn) {
+    if (this.options.get('debug') && window.console && console.warn) {
       console.warn(
         'Select2: The `select2("enable")` method has been deprecated and will' +
         ' be removed in later Select2 versions. Use $element.prop("disabled")' +
@@ -4635,7 +4636,8 @@ define('select2/core',[
   };
 
   Select2.prototype.data = function () {
-    if (arguments.length > 0 && window.console && console.warn) {
+    if (this.options.get('debug') &&
+        arguments.length > 0 && window.console && console.warn) {
       console.warn(
         'Select2: Data can no longer be set using `select2("data")`. You ' +
         'should consider setting the value instead using `$element.val()`.'
@@ -4652,7 +4654,7 @@ define('select2/core',[
   };
 
   Select2.prototype.val = function (args) {
-    if (window.console && console.warn) {
+    if (this.options.get('debug') && window.console && console.warn) {
       console.warn(
         'Select2: The `select2("val")` method has been deprecated and will be' +
         ' removed in later Select2 versions. Use $element.val() instead.'
