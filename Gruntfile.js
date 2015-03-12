@@ -286,7 +286,7 @@ module.exports = function (grunt) {
           dir: 'dist/js/i18n',
           paths: i18nPaths,
           modules: i18nModules,
-          wrap: grunt.file.readJSON('src/js/banner.json')
+          wrap: grunt.file.readJSON('src/js/banner.basic.json')
         }
       }
     },
