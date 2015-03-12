@@ -34,7 +34,7 @@ define(function () {
     loadingMore: function () {
       return 'Emaitza gehiago kargatzen…';
     },
-    maximumSelection: function (args) {
+    maximumSelected: function (args) {
       if (args.maximum === 1) {
         return 'Elementu bakarra hauta dezakezu';
       } else {

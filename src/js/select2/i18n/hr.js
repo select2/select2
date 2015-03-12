@@ -28,7 +28,7 @@ define(function () {
     loadingMore: function () {
       return 'Učitavanje rezultata…';
     },
-    maximumSelection: function (args) {
+    maximumSelected: function (args) {
       return 'Maksimalan broj odabranih stavki je ' + args.maximum;
     },
     noResults: function () {

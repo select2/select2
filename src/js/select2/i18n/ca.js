@@ -33,7 +33,7 @@ define(function () {
     loadingMore: function () {
       return 'Carregant més resultats…';
     },
-    maximumSelection: function (args) {
+    maximumSelected: function (args) {
       var message = 'Només es pot seleccionar ' + args.maximum + ' element';
 
       if (args.maximum != 1) {

@@ -28,7 +28,7 @@ define(function () {
     loadingMore: function () {
       return 'Sæki fleiri niðurstöður…';
     },
-    maximumSelection: function (args) {
+    maximumSelected: function (args) {
       return 'Þú getur aðeins valið ' + args.maximum + ' atriði';
     },
     noResults: function () {

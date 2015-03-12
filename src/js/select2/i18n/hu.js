@@ -14,7 +14,7 @@ define(function () {
     loadingMore: function () {
       return 'Töltés…';
     },
-    maximumSelection: function (args) {
+    maximumSelected: function (args) {
       return 'Csak ' + args.maximum + ' elemet lehet kiválasztani.';
     },
     noResults: function () {

@@ -30,7 +30,7 @@ define(function () {
     loadingMore: function () {
       return 'Cargando máis resultados…';
     },
-    maximumSelection: function (args) {
+    maximumSelected: function (args) {
       var message = 'Só pode ';
 
       if (args.maximum === 1) {

@@ -26,7 +26,7 @@ define(function () {
     loadingMore: function () {
       return 'Вчитување резултати…';
     },
-    maximumSelection: function (args) {
+    maximumSelected: function (args) {
       var message = 'Можете да изберете само ' + args.maximum + ' ставк';
 
       if (args.maximum === 1) {

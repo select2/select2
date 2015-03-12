@@ -14,7 +14,7 @@ define(function () {
     loadingMore: function () {
       return 'Ladataan lisää tuloksia…';
     },
-    maximumSelection: function (args) {
+    maximumSelected: function (args) {
       return 'Voit valita ainoastaan ' + args.maximum + ' kpl';
     },
     noResults: function () {
