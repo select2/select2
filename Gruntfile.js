@@ -56,7 +56,14 @@ module.exports = function (grunt) {
     i18nPaths[name] = '../../' + name;
   }
 
+  var minifiedBanner = '/!* Select2 <%= package.version %> | <%= vars.date %> | https://github.com/select2/select2/blob/master/LICENSE.md */';
+
   grunt.initConfig({
+    package: grunt.file.readJSON('package.json'),
+    vars: {
+      date: (new Date()).toUTCString()
+    },
+
     clean: {
       docs: ['docs/_site']
     },
@@ -74,11 +81,17 @@ module.exports = function (grunt) {
     uglify: {
       'dist': {
         src: 'dist/js/select2.js',
-        dest: 'dist/js/select2.min.js'
+        dest: 'dist/js/select2.min.js',
+        options: {
+          banner: minifiedBanner
+        }
       },
       'dist.full': {
         src: 'dist/js/select2.full.js',
-        dest: 'dist/js/select2.full.min.js'
+        dest: 'dist/js/select2.full.min.js',
+        options: {
+          banner: minifiedBanner
+        }
       }
     },
 

@@ -1,4 +1,4 @@
 {
-  "start": "(function() { if (window.define) { var define = window.define; } if (window.require) { var require = window.require; } if (window.jQuery && jQuery.fn && jQuery.fn.select2 && jQuery.fn.select2.amd) { var define = jQuery.fn.select2.amd.define; var require = jQuery.fn.select2.amd.require; }",
+  "start": "/*!\n * Select2 <%= package.version %> - <%= vars.date %>\n * https://select2.github.io\n *\n * Released under the MIT license\n * https://github.com/select2/select2/blob/master/LICENSE.md\n */\n(function() { if (window.define) { var define = window.define; } if (window.require) { var require = window.require; } if (window.jQuery && jQuery.fn && jQuery.fn.select2 && jQuery.fn.select2.amd) { var define = jQuery.fn.select2.amd.define; var require = jQuery.fn.select2.amd.require; }",
   "end": "require('jquery.select2'); jQuery.fn.select2.amd = { define: define, require: require }; }());"
 }
