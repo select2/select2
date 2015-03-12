@@ -1,5 +1,5 @@
 /*!
- * Select2 4.0.0-rc.1 - Thu, 12 Mar 2015 00:39:48 GMT
+ * Select2 4.0.0-rc.1 - Thu, 12 Mar 2015 01:27:38 GMT
  * https://select2.github.io
  *
  * Released under the MIT license
@@ -1672,7 +1672,7 @@ define('select2/selection/allowClear',[
     );
     $remove.data('data', data);
 
-    this.$selection.find('.select2-selection__rendered').append($remove);
+    this.$selection.find('.select2-selection__rendered').prepend($remove);
   };
 
   return AllowClear;

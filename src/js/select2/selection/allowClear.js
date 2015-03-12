@@ -64,7 +64,7 @@ define([
     );
     $remove.data('data', data);
 
-    this.$selection.find('.select2-selection__rendered').append($remove);
+    this.$selection.find('.select2-selection__rendered').prepend($remove);
   };
 
   return AllowClear;
