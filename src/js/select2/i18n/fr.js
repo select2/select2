@@ -26,7 +26,7 @@ define(function () {
     loadingMore: function () {
       return 'Chargement de résultats supplémentaires…';
     },
-    maximumSelection: function (args) {
+    maximumSelected: function (args) {
       var message = 'Vous pouvez seulement sélectionner ' +
         args.maximum + ' élément';
 

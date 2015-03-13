@@ -34,7 +34,7 @@ define(function () {
     loadingMore: function () {
       return 'Datu ielāde…';
     },
-    maximumSelection: function (args) {
+    maximumSelected: function (args) {
       var message = 'Jūs varat izvēlēties ne vairāk kā ' + args.maximum;
 
       message += ' element' + ending(args.maximum, 'us', 'u', 'us');

@@ -34,7 +34,7 @@ define(function () {
     loadingMore: function () {
       return 'Kraunama daugiau rezultatų…';
     },
-    maximumSelection: function (args) {
+    maximumSelected: function (args) {
       var message = 'Jūs galite pasirinkti tik ' + args.maximum + ' element';
 
       message += ending(args.maximum, 'ų', 'us', 'ą');
