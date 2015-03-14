@@ -375,16 +375,50 @@ function (ArrayData, Utils) {
       The new <code>current</code> method of the data adapter works in a similar
       way to the old <code>initSelection</code> method, with three notable
       differences. The first, and most important, is that <code>it is called
-        whenever the current selections are needed</code> to ensure that Select2
-        is always displaying the most accurate and up to date data. No matter
-        what type of element Select2 is attached to, whether it supports a
-        single or multiple selections, the data passed to the callback
-        <strong>must be an array, even if it contains one selection</strong>.
-        The last is that there is only one parameter, the callback to be
-        executed with the latest data, and the current element that Select2 is
-        attached to is available on the class itself as
-        <code>this.$element</code>.
+      whenever the current selections are needed</code> to ensure that Select2
+      is always displaying the most accurate and up to date data. No matter
+      what type of element Select2 is attached to, whether it supports a
+      single or multiple selections, the data passed to the callback
+      <strong>must be an array, even if it contains one selection</strong>.
+      The last is that there is only one parameter, the callback to be
+      executed with the latest data, and the current element that Select2 is
+      attached to is available on the class itself as
+      <code>this.$element</code>.
     </p>
+
+    <p>
+      If you only need to load in the initial options once, and otherwise will
+      be letting Select2 handle the state of the selections, you don't need to
+      use a custom data adapter. You can just create the
+      <code>&lt;option&gt;</code> tags on your own, and Select2 will pick up
+      the changes.
+    </p>
+
+<pre class="prettyprint linenums">
+var $element = $('select').select2(); // the select element you are working with
+
+var $request = $.ajax({
+  url: '/my/remote/source' // wherever your data is actually coming from
+});
+
+$request.then(function (data) {
+  // This assumes that the data comes back as an array of data objects
+  // The idea is that you are using the same callback as the old `initSelection`
+
+  for (var d = 0; d < data.length; d++) {
+    var item = data[d];
+
+    // Create the DOM option that is pre-selected by default
+    var option = new Option(data.text, data.id, true, true);
+
+    // Append it to the select
+    $element.append(option);
+  }
+
+  // Update the selected options that are displayed
+  $element.trigger('change');
+});
+</pre>
 
     <h3 id="query-to-data-adapter">
       Custom data adapters instead of <code>query</code>
@@ -643,7 +677,7 @@ var data = $.map([
     </p>
 
 <pre class="prettyprint linenums">
-$("select").val("1"); // instead of $("select").select2("val", "1");
+$("select").val("1").trigger("change"); // instead of $("select").select2("val", "1");
 </pre>
 
     <h3>.select2("enable")</h3>
