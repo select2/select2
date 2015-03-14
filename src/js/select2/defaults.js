@@ -1,5 +1,7 @@
 define([
   'jquery',
+  'require',
+
   './results',
 
   './selection/single',
@@ -32,7 +34,9 @@ define([
   './dropdown/closeOnSelect',
 
   './i18n/en'
-], function ($, ResultsList,
+], function ($, require,
+
+             ResultsList,
 
              SingleSelection, MultipleSelection, Placeholder, AllowClear,
              SelectionSearch, EventRelay,
@@ -315,8 +319,8 @@ define([
     }
 
     this.defaults = {
-      amdBase: 'select2/',
-      amdLanguageBase: 'select2/i18n/',
+      amdBase: './',
+      amdLanguageBase: './i18n/',
       closeOnSelect: true,
       debug: false,
       escapeMarkup: Utils.escapeMarkup,

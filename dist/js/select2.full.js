@@ -4200,6 +4200,7 @@ S2.define('select2/i18n/en',[],function () {
 
 S2.define('select2/defaults',[
   'jquery',
+  'require',
   './results',
 
   './selection/single',
@@ -4232,7 +4233,9 @@ S2.define('select2/defaults',[
   './dropdown/closeOnSelect',
 
   './i18n/en'
-], function ($, ResultsList,
+], function ($, require,
+
+             ResultsList,
 
              SingleSelection, MultipleSelection, Placeholder, AllowClear,
              SelectionSearch, EventRelay,
@@ -4515,8 +4518,8 @@ S2.define('select2/defaults',[
     }
 
     this.defaults = {
-      amdBase: 'select2/',
-      amdLanguageBase: 'select2/i18n/',
+      amdBase: './',
+      amdLanguageBase: './i18n/',
       closeOnSelect: true,
       debug: false,
       escapeMarkup: Utils.escapeMarkup,
