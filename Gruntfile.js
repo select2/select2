@@ -1,10 +1,7 @@
 module.exports = function (grunt) {
   // Full list of files that must be included by RequireJS
   includes = [
-    'jquery.select2'
-  ];
-
-  amdIncludes = [
+    'jquery.select2',
     'almond'
   ];
 
@@ -56,13 +53,36 @@ module.exports = function (grunt) {
     i18nPaths[name] = '../../' + name;
   }
 
-  var minifiedBanner = '/!* Select2 <%= package.version %> | https://github.com/select2/select2/blob/master/LICENSE.md */';
+  var minifiedBanner = '/*! Select2 <%= package.version %> | https://github.com/select2/select2/blob/master/LICENSE.md */';
 
   grunt.initConfig({
     package: grunt.file.readJSON('package.json'),
 
     clean: {
       docs: ['docs/_site']
+    },
+
+    concat: {
+      'dist': {
+        options: {
+          banner: grunt.file.read('src/js/wrapper.start.js'),
+        },
+        src: [
+          'dist/js/select2.js',
+          'src/js/wrapper.end.js'
+        ],
+        dest: 'dist/js/select2.js'
+      },
+      'dist.full': {
+        options: {
+          banner: grunt.file.read('src/js/wrapper.start.js'),
+        },
+        src: [
+          'dist/js/select2.full.js',
+          'src/js/wrapper.end.js'
+        ],
+        dest: 'dist/js/select2.full.js'
+      }
     },
 
     connect: {
@@ -227,12 +247,16 @@ module.exports = function (grunt) {
           optimize: 'none',
           name: 'select2/core',
           out: 'dist/js/select2.js',
-          include: amdIncludes.concat(includes),
+          include: includes,
+          namespace: 'S2',
           paths: {
             almond: '../../vendor/almond-0.2.9',
             jquery: 'jquery.shim'
           },
-          wrap: grunt.file.readJSON('src/js/banner.json')
+          wrap: {
+            startFile: 'src/js/banner.start.js',
+            endFile: 'src/js/banner.end.js'
+          }
         }
       },
       'dist.full': {
@@ -241,40 +265,17 @@ module.exports = function (grunt) {
           optimize: 'none',
           name: 'select2/core',
           out: 'dist/js/select2.full.js',
-          include: amdIncludes.concat(fullIncludes),
+          include: fullIncludes,
+          namespace: 'S2',
           paths: {
             almond: '../../vendor/almond-0.2.9',
             jquery: 'jquery.shim',
             'jquery.mousewheel': '../../vendor/jquery.mousewheel'
           },
-          wrap: grunt.file.readJSON('src/js/banner.json')
-        }
-      },
-      'amd': {
-        options: {
-          baseUrl: 'src/js',
-          optimize: 'none',
-          name: 'select2/core',
-          out: 'dist/js/select2.amd.js',
-          include: includes,
-          paths: {
-            jquery: 'empty:'
-          },
-          wrap: grunt.file.readJSON('src/js/banner.amd.json')
-        }
-      },
-      'amd.full': {
-        options: {
-          baseUrl: 'src/js',
-          optimize: 'none',
-          name: 'select2/core',
-          out: 'dist/js/select2.amd.full.js',
-          include: fullIncludes,
-          paths: {
-            jquery: 'empty:',
-            'jquery.mousewheel': '../../vendor/jquery.mousewheel'
-          },
-          wrap: grunt.file.readJSON('src/js/banner.amd.json')
+          wrap: {
+            startFile: 'src/js/banner.start.js',
+            endFile: 'src/js/banner.end.js'
+          }
         }
       },
       'i18n': {
@@ -283,7 +284,11 @@ module.exports = function (grunt) {
           dir: 'dist/js/i18n',
           paths: i18nPaths,
           modules: i18nModules,
-          wrap: grunt.file.readJSON('src/js/banner.basic.json')
+          namespace: 'S2',
+          wrap: {
+            start: minifiedBanner + grunt.file.read('src/js/banner.start.js'),
+            end: grunt.file.read('src/js/banner.end.js')
+          }
         }
       }
     },
@@ -329,7 +334,11 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', ['compile', 'test', 'minify']);
 
-  grunt.registerTask('compile', ['requirejs', 'sass:dev']);
+  grunt.registerTask('compile', [
+    'requirejs:dist', 'requirejs:dist.full', 'requirejs:i18n',
+    'concat:dist', 'concat:dist.full',
+    'sass:dev'
+  ]);
   grunt.registerTask('minify', ['uglify', 'sass:dist']);
   grunt.registerTask('test', ['connect:tests', 'qunit', 'jshint']);
 

@@ -1,4 +1,0 @@
-{
-  "start": "define(['jquery'], function ($) {",
-  "end": "return require('jquery.select2'); });"
-}
