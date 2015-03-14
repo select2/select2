@@ -55,6 +55,10 @@ define([
     if (typeof options.url === 'function') {
       options.url = options.url(params);
     }
+    
+    if (typeof options.jsonpCallback === 'function') {
+      options.jsonpCallback = options.jsonpCallback(params);
+    }
 
     if (typeof options.data === 'function') {
       options.data = options.data(params);
