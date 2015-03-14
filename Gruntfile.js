@@ -56,13 +56,10 @@ module.exports = function (grunt) {
     i18nPaths[name] = '../../' + name;
   }
 
-  var minifiedBanner = '/!* Select2 <%= package.version %> | <%= vars.date %> | https://github.com/select2/select2/blob/master/LICENSE.md */';
+  var minifiedBanner = '/!* Select2 <%= package.version %> | https://github.com/select2/select2/blob/master/LICENSE.md */';
 
   grunt.initConfig({
     package: grunt.file.readJSON('package.json'),
-    vars: {
-      date: (new Date()).toUTCString()
-    },
 
     clean: {
       docs: ['docs/_site']

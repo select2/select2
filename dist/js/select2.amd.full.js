@@ -4626,7 +4626,7 @@ define('select2/core',[
       );
     }
 
-    if (args.length === 0) {
+    if (args == null || args.length === 0) {
       args = [true];
     }
 
@@ -4646,7 +4646,7 @@ define('select2/core',[
 
     var data = [];
 
-    this.dataAdpater.current(function (currentData) {
+    this.dataAdapter.current(function (currentData) {
       data = currentData;
     });
 
@@ -4661,7 +4661,7 @@ define('select2/core',[
       );
     }
 
-    if (args.length === 0) {
+    if (args == null || args.length === 0) {
       return this.$element.val();
     }
 

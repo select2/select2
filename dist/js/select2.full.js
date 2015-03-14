@@ -1,5 +1,5 @@
 /*!
- * Select2 4.0.0-rc.1 - Thu, 12 Mar 2015 17:03:44 GMT
+ * Select2 4.0.0-rc.1
  * https://select2.github.io
  *
  * Released under the MIT license
@@ -5072,7 +5072,7 @@ define('select2/core',[
       );
     }
 
-    if (args.length === 0) {
+    if (args == null || args.length === 0) {
       args = [true];
     }
 
@@ -5092,7 +5092,7 @@ define('select2/core',[
 
     var data = [];
 
-    this.dataAdpater.current(function (currentData) {
+    this.dataAdapter.current(function (currentData) {
       data = currentData;
     });
 
@@ -5107,7 +5107,7 @@ define('select2/core',[
       );
     }
 
-    if (args.length === 0) {
+    if (args == null || args.length === 0) {
       return this.$element.val();
     }
 

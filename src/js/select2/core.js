@@ -419,7 +419,7 @@ define([
       );
     }
 
-    if (args.length === 0) {
+    if (args == null || args.length === 0) {
       args = [true];
     }
 
@@ -439,7 +439,7 @@ define([
 
     var data = [];
 
-    this.dataAdpater.current(function (currentData) {
+    this.dataAdapter.current(function (currentData) {
       data = currentData;
     });
 
@@ -454,7 +454,7 @@ define([
       );
     }
 
-    if (args.length === 0) {
+    if (args == null || args.length === 0) {
       return this.$element.val();
     }
 
