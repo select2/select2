@@ -106,7 +106,10 @@ define([
 
         var item = $.data(this, 'data');
 
-        if ($.inArray(item.id, selectedIds) > -1) {
+        // id needs to be converted to a string when comparing
+        var id = '' + item.id;
+
+        if ($.inArray(id, selectedIds) > -1) {
           $option.attr('aria-selected', 'true');
         } else {
           $option.attr('aria-selected', 'false');
