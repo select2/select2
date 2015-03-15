@@ -87,7 +87,7 @@ define([
         );
       }
 
-      if (options.tags != null) {
+      if (options.tags) {
         options.dataAdapter = Utils.Decorate(options.dataAdapter, Tags);
       }
 

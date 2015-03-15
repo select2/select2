@@ -4287,7 +4287,7 @@ S2.define('select2/defaults',[
         );
       }
 
-      if (options.tags != null) {
+      if (options.tags) {
         options.dataAdapter = Utils.Decorate(options.dataAdapter, Tags);
       }
 
