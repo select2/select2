@@ -1,13 +1,13 @@
 define(function () {
-  // English
+  // Hebrew
   return {
     errorLoading: function () {
-      return 'The results could not be loaded.';
+      return 'התוצאות לא נטענו בהלכה';
     },
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;
 
-      var message = 'Please delete ' + overChars + ' character';
+      var message = 'נא למחוק ' + overChars + ' תווים';
 
       if (overChars != 1) {
         message += 's';
@@ -18,15 +18,15 @@ define(function () {
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
-      var message = 'Please enter ' + remainingChars + ' or more characters';
+      var message = 'נא להכניס ' + remainingChars + ' תווים או יותר';
 
       return message;
     },
     loadingMore: function () {
-      return 'Loading more results…';
+      return 'טען תוצאות נוספות…';
     },
     maximumSelected: function (args) {
-      var message = 'You can only select ' + args.maximum + ' item';
+      var message = 'באפשרותך לבחור רק ' + args.maximum + ' פריטים';
 
       if (args.maximum != 1) {
         message += 's';
@@ -35,10 +35,10 @@ define(function () {
       return message;
     },
     noResults: function () {
-      return 'No results found';
+      return 'לא נמצאו תוצאות';
     },
     searching: function () {
-      return 'Searching…';
+      return 'מחפש…';
     }
   };
 });
