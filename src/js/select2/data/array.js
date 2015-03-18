@@ -14,7 +14,9 @@ define([
   Utils.Extend(ArrayAdapter, SelectAdapter);
 
   ArrayAdapter.prototype.select = function (data) {
-    var $option = this.$element.find('option[value="' + data.id + '"]');
+    var $option = this.$element.find('option').filter(function (i, elm) {
+      return elm.value == data.id.toString();
+    });
 
     if ($option.length === 0) {
       $option = this.option(data);
