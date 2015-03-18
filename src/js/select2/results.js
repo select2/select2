@@ -109,8 +109,8 @@ define([
         // id needs to be converted to a string when comparing
         var id = '' + item.id;
 
-        if (item.selected ||
-            (item.selected == null && $.inArray(id, selectedIds) > -1)) {
+        if ((item.element != null && item.element.selected) ||
+            (item.element == null && $.inArray(id, selectedIds) > -1)) {
           $option.attr('aria-selected', 'true');
         } else {
           $option.attr('aria-selected', 'false');
