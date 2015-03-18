@@ -1786,6 +1786,8 @@ S2.define('select2/selection/search',[
           var item = $previousChoice.data('data');
 
           self.searchRemoveChoice(item);
+
+          evt.preventDefault();
         }
       }
     });

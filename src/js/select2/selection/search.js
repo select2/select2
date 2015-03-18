@@ -75,6 +75,8 @@ define([
           var item = $previousChoice.data('data');
 
           self.searchRemoveChoice(item);
+
+          evt.preventDefault();
         }
       }
     });
