@@ -8,12 +8,12 @@ define([
 
     decorated.call(this, container, $container);
 
-    container.on('close', function (evt) {
-      self._handleSelectOnClose(evt);
+    container.on('close', function () {
+      self._handleSelectOnClose();
     });
   };
 
-  SelectOnClose.prototype._handleSelectOnClose = function (evt) {
+  SelectOnClose.prototype._handleSelectOnClose = function () {
     var self = this;
 
     var $highlightedResults = this.getHighlightedResults();
@@ -23,7 +23,6 @@ define([
     }
 
     self.trigger('select', {
-        originalEvent: evt,
         data: $highlightedResults.data('data')
     });
   };
