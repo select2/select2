@@ -2,12 +2,13 @@ module.exports = function (grunt) {
   // Full list of files that must be included by RequireJS
   includes = [
     'jquery.select2',
-    'almond'
+    'almond',
+
+    'jquery.mousewheel' // shimmed for non-full builds
   ];
 
   fullIncludes = [
     'jquery',
-    'jquery.mousewheel',
 
     'select2/compat/matcher',
     'select2/compat/initSelection',
@@ -251,7 +252,8 @@ module.exports = function (grunt) {
           namespace: 'S2',
           paths: {
             almond: '../../vendor/almond-0.2.9',
-            jquery: 'jquery.shim'
+            jquery: 'jquery.shim',
+            'jquery.mousewheel': 'jquery.mousewheel.shim'
           },
           wrap: {
             startFile: 'src/js/banner.start.js',

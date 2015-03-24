@@ -1,8 +1,9 @@
 define([
+  'require',
   'jquery',
   './defaults',
   './utils'
-], function ($, Defaults, Utils) {
+], function (require, $, Defaults, Utils) {
   function Options (options, $element) {
     this.options = options;
 

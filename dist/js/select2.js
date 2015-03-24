@@ -4126,7 +4126,9 @@ S2.define('select2/dropdown/selectOnClose',[
       return;
     }
 
-    $highlightedResults.trigger('mouseup');
+    this.trigger('select', {
+        data: $highlightedResults.data('data')
+    });
   };
 
   return SelectOnClose;
@@ -4574,10 +4576,11 @@ S2.define('select2/defaults',[
 });
 
 S2.define('select2/options',[
+  'require',
   'jquery',
   './defaults',
   './utils'
-], function ($, Defaults, Utils) {
+], function (require, $, Defaults, Utils) {
   function Options (options, $element) {
     this.options = options;
 
@@ -5224,13 +5227,13 @@ S2.define('select2/core',[
 
 S2.define('jquery.select2',[
   'jquery',
+  'require',
+
   './select2/core',
   './select2/defaults'
-], function ($, Select2, Defaults) {
+], function ($, require, Select2, Defaults) {
   // Force jQuery.mousewheel to be loaded if it hasn't already
-  try {
-    require('jquery.mousewheel');
-  } catch (Exception) { }
+  require('jquery.mousewheel');
 
   if ($.fn.select2 == null) {
     $.fn.select2 = function (options) {
@@ -5260,6 +5263,13 @@ S2.define('jquery.select2',[
   }
 
   return Select2;
+});
+
+S2.define('jquery.mousewheel',[
+  'jquery'
+], function ($) {
+  // Used to shim jQuery.mousewheel for non-full builds.
+  return $;
 });
 
   // Return the AMD loader configuration so it can be used outside of this file

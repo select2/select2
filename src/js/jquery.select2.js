@@ -1,12 +1,12 @@
 define([
   'jquery',
+  'require',
+
   './select2/core',
   './select2/defaults'
-], function ($, Select2, Defaults) {
+], function ($, require, Select2, Defaults) {
   // Force jQuery.mousewheel to be loaded if it hasn't already
-  try {
-    require('jquery.mousewheel');
-  } catch (Exception) { }
+  require('jquery.mousewheel');
 
   if ($.fn.select2 == null) {
     $.fn.select2 = function (options) {
