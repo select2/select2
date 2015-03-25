@@ -20,7 +20,9 @@ define([
       return;
     }
 
-    $highlightedResults.trigger('mouseup');
+    this.trigger('select', {
+        data: $highlightedResults.data('data')
+    });
   };
 
   return SelectOnClose;
