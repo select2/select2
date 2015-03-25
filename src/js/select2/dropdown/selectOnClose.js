@@ -14,15 +14,13 @@ define([
   };
 
   SelectOnClose.prototype._handleSelectOnClose = function () {
-    var self = this;
-
     var $highlightedResults = this.getHighlightedResults();
 
     if ($highlightedResults.length < 1) {
       return;
     }
 
-    self.trigger('select', {
+    this.trigger('select', {
         data: $highlightedResults.data('data')
     });
   };
