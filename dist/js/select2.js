@@ -4814,8 +4814,9 @@ S2.define('select2/core',[
     });
 
     // Hide the original select
-    $element.hide();
-
+    $element.addClass('select2-hidden-accessible');
+	$element.attr('aria-hidden', 'true');
+	
     // Synchronize any monitored attributes
     this._syncAttributes();
 
@@ -5226,7 +5227,8 @@ S2.define('select2/core',[
     this.$element.off('.select2');
     this.$element.attr('tabindex', this.$element.data('old-tabindex'));
 
-    this.$element.show();
+    this.$element.removeClass('select2-hidden-accessible');
+	this.$element.attr('aria-hidden', 'false');
     this.$element.removeData('select2');
 
     this.dataAdapter.destroy();
