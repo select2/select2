@@ -2250,7 +2250,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
             }));
 
-            selection.on("mousedown touchstart", this.bind(function (e) {
+            selection.on("click", this.bind(function (e) {
                 // Prevent IE from generating a click event on the body
                 reinsertElement(selection);
 
@@ -2267,7 +2267,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 killEvent(e);
             }));
 
-            dropdown.on("mousedown touchstart", this.bind(function() {
+            dropdown.on("click", this.bind(function() {
                 if (this.opts.shouldFocusInput(this)) {
                     this.search.focus();
                 }
