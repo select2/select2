@@ -1668,8 +1668,6 @@ S2.define('select2/selection/allowClear',[
   };
 
   AllowClear.prototype._handleClear = function (_, evt) {
-    console.log(arguments);
-
     // Ignore the event if it is disabled
     if (this.options.get('disabled')) {
       return;
@@ -3275,8 +3273,12 @@ S2.define('select2/data/ajax',[
     var matches = [];
     var self = this;
 
-    if (this._request) {
-      this._request.abort();
+    if (this._request != null) {
+      // JSONP requests cannot always be aborted
+      if ($.isFunction(this._request.abort)) {
+        this._request.abort();
+      }
+
       this._request = null;
     }
 
