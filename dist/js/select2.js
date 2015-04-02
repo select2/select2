@@ -4471,7 +4471,14 @@ S2.define('select2/defaults',[
 
       options.translations = languages;
     } else {
-      options.translations = new Translation(options.language);
+      var baseTranslation = Translation.loadPath(
+        this.defaults.amdLanguageBase + 'en'
+      );
+      var customTranslation = new Translation(options.language);
+
+      customTranslation.extend(baseTranslation);
+
+      options.translations = customTranslation;
     }
 
     return options;
