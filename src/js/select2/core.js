@@ -78,7 +78,8 @@ define([
 
     // Hide the original select
     $element.addClass('select2-hidden-accessible');
-
+	$element.attr('aria-hidden', 'true');
+	
     // Synchronize any monitored attributes
     this._syncAttributes();
 
@@ -490,6 +491,7 @@ define([
     this.$element.attr('tabindex', this.$element.data('old-tabindex'));
 
     this.$element.removeClass('select2-hidden-accessible');
+	this.$element.attr('aria-hidden', 'false');
     this.$element.removeData('select2');
 
     this.dataAdapter.destroy();
