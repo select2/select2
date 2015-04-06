@@ -4428,6 +4428,19 @@ S2.define('select2/defaults',[
         );
       }
 
+      if (
+        options.dropdownCssClass != null ||
+        options.dropdownCss != null ||
+        options.adaptDropdownCssClass != null
+      ) {
+        var DropdownCSS = require(options.amdBase + 'compat/dropdownCss');
+
+        options.dropdownAdapter = Utils.Decorate(
+          options.dropdownAdapter,
+          DropdownCSS
+        );
+      }
+
       options.dropdownAdapter = Utils.Decorate(
         options.dropdownAdapter,
         AttachBody
@@ -4460,6 +4473,19 @@ S2.define('select2/defaults',[
         options.selectionAdapter = Utils.Decorate(
           options.selectionAdapter,
           SelectionSearch
+        );
+      }
+
+      if (
+        options.containerCssClass != null ||
+        options.containerCss != null ||
+        options.adaptContainerCssClass != null
+      ) {
+        var ContainerCSS = require(options.amdBase + 'compat/containerCss');
+
+        options.selectionAdapter = Utils.Decorate(
+          options.selectionAdapter,
+          ContainerCSS
         );
       }
 
