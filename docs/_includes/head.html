@@ -21,8 +21,44 @@
 
 <style type="text/css">
   body { font-size: 16px; }
-  footer { background-color: #eee; margin-top: 1em; padding: 1em; text-align: center; }
+
+  /* Footer */
+  .s2-docs-footer {
+    border-top: 1px solid #E5E5E5;
+    color: #767676;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    margin-top: 100px;
+    text-align: center;
+  }
+  .s2-docs-footer-links {
+    padding-left: 0;
+    margin-top: 20px;
+  }
+  .s2-docs-footer-links li {
+    display: inline;
+    padding: 0 2px;
+  }
+  .s2-docs-footer-links li:after {
+    content: "·";
+    padding-left: 8px;
+  }
+  .s2-docs-footer-links li:first-child {
+    padding-left: 0;
+  }
+  .s2-docs-footer-links li:last-child:after {
+    content: "";
+    padding-left: 0;
+  }
+  @media (min-width: 768px) {
+    .s2-docs-footer p {
+      margin-bottom: 0;
+    }
+  }
+
   .navbar-inverse .navbar-brand { color: #fff; }
+
+  /* anchor.js */
   .anchorjs-link {
     float: left;
     width: 1em;
