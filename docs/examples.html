@@ -352,15 +352,17 @@ $(".js-data-example-ajax").select2({
         <select class="js-example-disabled-multi js-states form-control" multiple="multiple" disabled="disabled"></select>
       </p>
 
-      <p>
-        <button class="js-programmatic-enable btn btn-primary">
+      <div class="btn-group" role="group" aria-label="Programmatic enabling and disabling">
+        <button type="button" class="js-programmatic-enable btn btn-default">
           Enable
         </button>
-        <button class="js-programmatic-disable btn btn-warning">
+        <button type="button" class="js-programmatic-disable btn btn-default">
           Disable
         </button>
-      </p>
+      </div>
+
     </div>
+
     <div class="col-md-8">
       <h2>Example code</h2>
 
@@ -424,46 +426,48 @@ $(".js-programmatic-disable").on("click", function () {
       </p>
 
       <p>
-        <button class="js-programmatic-set-val btn btn-primary">
-          Set to California
-        </button>
-
-        <button class="js-programmatic-open btn btn-success">
-          Open
-        </button>
-
-        <button class="js-programmatic-close btn btn-success">
-          Close
-        </button>
-
-        <button class="js-programmatic-init btn btn-danger">
-          Init
-        </button>
-
-        <button class="js-programmatic-destroy btn btn-danger">
-          Destroy
-        </button>
-      </p>
-
-      <p>
         <select class="js-example-programmatic js-states form-control"></select>
       </p>
 
-      <p>
-        <button class="js-programmatic-multi-set-val btn btn-primary">
-          Set to California and Alabama
-        </button>
-
-        <button class="js-programmatic-multi-clear btn btn-primary">
-          Clear
-        </button>
-      </p>
+      <div class="btn-toolbar" role="toolbar" aria-label="Programmatic control">
+        <div class="btn-group btn-group-sm" aria-label="Set Select2 option">
+          <button class="js-programmatic-set-val btn btn-default">
+            Set "California"
+          </button>
+        </div>
+        <div class="btn-group btn-group-sm" role="group" aria-label="Open and close">
+          <button class="js-programmatic-open btn btn-default">
+            Open
+          </button>
+          <button class="js-programmatic-close btn btn-default">
+            Close
+          </button>
+        </div>
+        <div class="btn-group btn-group-sm" role="group" aria-label="Initialize and destroy">
+          <button class="js-programmatic-init btn btn-default">
+            Init
+          </button>
+          <button class="js-programmatic-destroy btn btn-default">
+            Destroy
+          </button>
+        </div>
+      </div>
 
       <p>
         <select class="js-example-programmatic-multi js-states form-control" multiple="multiple"></select>
       </p>
 
+      <div class="btn-group" role="group" aria-label="Programmatic setting and clearing Select2 options">
+        <button type="button" class="js-programmatic-multi-set-val btn btn-default">
+          Set to California and Alabama
+        </button>
+        <button type="button" class="js-programmatic-multi-clear btn btn-default">
+          Clear
+        </button>
+      </div>
+
     </div>
+
     <div class="col-md-8">
       <h2>Example code</h2>
 
