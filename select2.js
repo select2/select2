@@ -518,7 +518,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     }
                     group.children=[];
                     $(datum.children).each2(function(i, childDatum) { process(childDatum, group.children); });
-                    if (group.children.length || query.matcher(t, text(group), datum)) {
+                    if (group.children.length || (query.matcher(t, text(group), datum) && datum.id !== undefined)) {
                         collection.push(group);
                     }
                 } else {
