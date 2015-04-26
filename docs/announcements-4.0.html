@@ -5,24 +5,6 @@ slug: announcements-4.0
 ---
 
 <div class="container">
-  <section id="pre-release">
-    <h1>Pre-release notes</h1>
-
-    <hr />
-
-    <p class="lead">
-      The 4.0 release is ready for early adopters interested in testing it out.
-      You can use the development version, available on GitHub, by getting the
-      source code available in the <code>select2-ng</code> branch. The source
-      code can be
-      <a href="https://github.com/select2/select2/archive/select2-ng.zip">
-        downloaded as a <code>zip</code> archive
-      </a> as well.
-    </p>
-  </section>
-
-  <hr />
-
   <section id="release">
     <h1>Select2 4.0.0</h1>
 
@@ -157,7 +139,7 @@ slug: announcements-4.0
     <p>
       In Select2 4.0, the <code>&lt;select&gt;</code> element supports all core
       options, and support for the old
-      <code>&lt;input type="hidden" /&gt;</code> has been removed. This means
+      <code>&lt;input type="hidden" /&gt;</code> has been deprecated. This means
       that if you previously declared an AJAX field with some pre-selected
       options that looked like...
     </p>
@@ -167,7 +149,7 @@ slug: announcements-4.0
 </pre>
 
     <p>
-      Will need to be recreated as a <code>&lt;select&gt;</code> element with
+      It will need to be recreated as a <code>&lt;select&gt;</code> element with
       some <code>&lt;option&gt;</code> tags that have <code>value</code>
       attributes that match the old value.
     </p>
@@ -213,6 +195,57 @@ slug: announcements-4.0
       converted to the new style. You can retrieve the function from the
       <code>select2/compat/matcher</code> module, which should just wrap the old
       matcher function.
+    </p>
+
+    <p>
+      So if your old code used a matcher that only displayed options if they
+      started with the term that was entered, it would look something like...
+    </p>
+
+<pre class="prettyprint linenums">
+function matchStart (term, text) {
+  if (text.toUpperCase().indexOf(term.toUpperCase()) == 0) {
+    return true;
+  }
+
+  return false;
+}
+
+$("select").select2({
+  matcher: matchStart
+})
+</pre>
+
+    <p>
+      Then in Select2 4.0, you would need to wrap the <code>matchStart</code>
+      method (or the name of the matcher you created) with a
+      <code>oldMatcher</code> method that we have created.
+    </p>
+
+<pre class="prettyprint linenums">
+function matchStart (term, text) {
+  if (text.toUpperCase().indexOf(term.toUpperCase()) == 0) {
+    return true;
+  }
+
+  return false;
+}
+
+$.fn.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
+  $("select").select2({
+    matcher: oldMatcher(matchStart)
+  })
+});
+</pre>
+
+    <p>
+      This will work for any matchers that only took in the search term and the
+      text of the option as parameters. If your matcher relied on the third
+      parameter containing the jQuery element representing the original
+      <code>&lt;option&gt;</code> tag, then you may need to slightly change
+      your matcher to expect the full JavaScript data object being passed in
+      instead. You can still retrieve the jQuery element from the data object
+      using the <code>data.element</code> property.
     </p>
 
     <h2 id="flexible-placeholders">More flexible placeholders</h2>
@@ -263,9 +296,9 @@ $("select").select2({
 
     <p>
       And Select2 will automatically display the placeholder when the value of
-      the select is <code>-1</code>, which it is by default. This does not break
-      the old functionality of Select2 where the placeholder option was blank by
-      default.
+      the select is <code>-1</code>, which it will be by default. This does not
+      break the old functionality of Select2 where the placeholder option was
+      blank by default.
     </p>
 
     <h2 id="value-ordering">Display reflects the actual order of the values</h2>
