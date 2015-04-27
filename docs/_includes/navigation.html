@@ -18,7 +18,7 @@
         <li{% if page.slug == "options" %} class="active"{% endif %}>
           <a href="./options.html">Options</a>
         </li>
-        <li class="dropdown">
+        <li class="dropdown{% if page.slug == "announcements-4.0" %} active{% endif %}">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             Topics
             <span class="caret"></span>
