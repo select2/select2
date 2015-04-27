@@ -1,0 +1,47 @@
+.com {
+  color: #999;
+}
+.lit {
+  color: #195f91;
+}
+.pun, .opn, .clo {
+  color: #93a1a1;
+}
+.fun {
+  color: #dc322f;
+}
+.str, .atv {
+  color: #C7254E;
+}
+.kwd, .prettyprint .tag {
+  color: #2F6F9F;
+}
+.typ, .atn, .dec, .var {
+  /*color: teal;*/
+  color: #428BCA;
+}
+.pln {
+  color: #333;
+}
+
+.prettyprint {
+  padding: 9px 14px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  border: 1px solid #e1e1e8;
+}
+.prettyprint.linenums {
+  -webkit-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
+     -moz-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
+          box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
+}
+
+/* Specify class=linenums on a pre to get line numbering */
+ol.linenums {
+  margin: 0 0 0 -12px;
+}
+ol.linenums li {
+  padding-left: 12px;
+  color: #bebec5;
+  line-height: 18px;
+}
