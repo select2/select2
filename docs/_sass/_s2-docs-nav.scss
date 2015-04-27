@@ -1,0 +1,19 @@
+.s2-docs-nav {
+  margin-bottom: 0;
+  border-color: #eee;
+  background-color: #fff;
+}
+
+.s2-docs-nav .navbar-brand {
+  font-weight: 500;
+  img {
+    margin-right: 4px;
+  }
+}
+
+.s2-docs-nav .navbar-nav > .active > a,
+.s2-docs-nav .navbar-nav > .active > a:hover,
+.s2-docs-nav .navbar-nav > .active > a:focus {
+  background-color: #f6f6f6;
+  color: #333;
+}

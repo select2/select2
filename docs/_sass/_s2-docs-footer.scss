@@ -1,0 +1,37 @@
+/* Footer */
+.s2-docs-footer {
+  border-top: 1px solid #E5E5E5;
+  color: #767676;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  margin-top: 100px;
+  text-align: center;
+
+  &-links {
+    padding-left: 0;
+    margin-top: 20px;
+  }
+
+  &-links li {
+    display: inline;
+    padding: 0 2px;
+
+    &:after {
+      content: "·";
+      padding-left: 8px;
+    }
+    &:first-child {
+      padding-left: 0;
+    }
+    &:last-child:after {
+      content: "";
+      padding-left: 0;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .s2-docs-footer p {
+    margin-bottom: 0;
+  }
+}
