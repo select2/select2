@@ -29,11 +29,11 @@
   margin-bottom: 20px;
   margin-top: 20px;
   border: 1px solid #e1e1e8;
-}
-.prettyprint.linenums {
-  -webkit-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
-     -moz-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
-          box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
+  &.linenums {
+    -webkit-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
+       -moz-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
+            box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
+  }
 }
 
 /* Specify class=linenums on a pre to get line numbering */
