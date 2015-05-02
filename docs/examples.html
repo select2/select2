@@ -716,73 +716,6 @@ $.fn.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
       </section>
 
       <section>
-        <h1 id="diacritics">Diacritics support</h1>
-
-        <p>
-          Select2's default matcher will ignore diacritics, making it easier for
-          users to filter results in international selects. Type "aero" into the
-          select below.
-        </p>
-
-        <div class="s2-example">
-          <p>
-            <select class="js-example-diacritics form-control">
-              <option>Aeróbics</option>
-              <option>Aeróbics en Agua</option>
-              <option>Aerografía</option>
-              <option>Aeromodelaje</option>
-              <option>Águilas</option>
-              <option>Ajedrez</option>
-              <option>Ala Delta</option>
-              <option>Álbumes de Música</option>
-              <option>Alusivos</option>
-              <option>Análisis de Escritura a Mano</option>
-            </select>
-          </p>
-        </div>
-
-        <pre data-fill-from=".js-code-diacritics"></pre>
-
-<script type="text/x-example-code" class="js-code-diacritics">
-$(".js-example-diacritics").select2();
-</script>
-
-      </section>
-
-      <section>
-        <h1 id="language">Multiple languages</h1>
-
-        <p>
-          Select2 supports displaying the messages in different languages, as well
-          as providing your own
-          <a href="options.html#language">custom messages</a>
-          that can be displayed.
-        </p>
-
-        <p>
-          The language does not have to be defined when Select2 is being
-          initialized, but instead can be defined in the <code>[lang]</code>
-          attribute of any parent elements as <code>[lang="es"]</code>.
-        </p>
-
-        <div class="s2-example">
-          <p>
-            <select class="js-example-language js-states form-control">
-            </select>
-          </p>
-        </div>
-
-        <pre data-fill-from=".js-code-language"></pre>
-
-<script type="text/x-example-code" class="js-code-language">
-$(".js-example-language").select2({
-  language: "es"
-});
-</script>
-
-      </section>
-
-      <section>
         <h1 id="themes">Theme support</h1>
 
         <p>
@@ -822,6 +755,40 @@ $(".js-example-theme-multiple").select2({
       </section>
 
       <section>
+        <h1 id="localization-rtl-diacritics" class="page-header">
+          Localization, RTL and diacritics support
+        </h1>
+
+        <h1 id="language">Multiple languages</h1>
+
+        <p>
+          Select2 supports displaying the messages in different languages, as well
+          as providing your own
+          <a href="options.html#language">custom messages</a>
+          that can be displayed.
+        </p>
+
+        <p>
+          The language does not have to be defined when Select2 is being
+          initialized, but instead can be defined in the <code>[lang]</code>
+          attribute of any parent elements as <code>[lang="es"]</code>.
+        </p>
+
+        <div class="s2-example">
+          <p>
+            <select class="js-example-language js-states form-control">
+            </select>
+          </p>
+        </div>
+
+        <pre data-fill-from=".js-code-language"></pre>
+
+<script type="text/x-example-code" class="js-code-language">
+$(".js-example-language").select2({
+  language: "es"
+});
+</script>
+
         <h1 id="rtl">RTL support</h1>
 
         <p>
@@ -842,6 +809,37 @@ $(".js-example-theme-multiple").select2({
 $(".js-example-rtl").select2({
   dir: "rtl"
 });
+</script>
+
+        <h1 id="diacritics">Diacritics support</h1>
+
+        <p>
+          Select2's default matcher will ignore diacritics, making it easier for
+          users to filter results in international selects. Type "aero" into the
+          select below.
+        </p>
+
+        <div class="s2-example">
+          <p>
+            <select class="js-example-diacritics form-control">
+              <option>Aeróbics</option>
+              <option>Aeróbics en Agua</option>
+              <option>Aerografía</option>
+              <option>Aeromodelaje</option>
+              <option>Águilas</option>
+              <option>Ajedrez</option>
+              <option>Ala Delta</option>
+              <option>Álbumes de Música</option>
+              <option>Alusivos</option>
+              <option>Análisis de Escritura a Mano</option>
+            </select>
+          </p>
+        </div>
+
+        <pre data-fill-from=".js-code-diacritics"></pre>
+
+<script type="text/x-example-code" class="js-code-diacritics">
+$(".js-example-diacritics").select2();
 </script>
 
       </section>
