@@ -26,30 +26,30 @@ slug: examples
 </section>
 
 <div class="container s2-docs-container">
-  <section id="basic" class="row">
-    <div class="col-md-4">
-      <h1>The basics</h1>
+  <div class="row">
+    <div class="col-md-9" role="main">
+      <section>
+        <h1 id="basic">The basics</h1>
 
-      <p>
-        Select2 can take a regular select box like this...
-      </p>
+        <p>
+          Select2 can take a regular select box like this...
+        </p>
 
-      <p>
-        <select class="js-states form-control"></select>
-      </p>
+        <p>
+          <select class="js-states form-control"></select>
+        </p>
 
-      <p>
-        and turn it into this...
-      </p>
+        <p>
+          and turn it into this...
+        </p>
 
-      <p>
-        <select class="js-example-basic-single js-states form-control"></select>
-      </p>
-    </div>
-    <div class="col-md-8">
-      <h2 class="s2-docs-headline-example">Example code</h2>
+        <div class="s2-example">
+          <p>
+            <select class="js-example-basic-single js-states form-control"></select>
+          </p>
+        </div>
 
-      <pre class="code" data-fill-from=".js-code-basic"></pre>
+        <pre class="code" data-fill-from=".js-code-basic"></pre>
 
 <script type="text/x-example-code" class="js-code-basic">
 $(document).ready(function() {
@@ -62,25 +62,22 @@ $(document).ready(function() {
   <option value="WY">Wyoming</option>
 </select>
 </script>
-    </div>
-  </section>
+      </section>
 
-  <section id="multiple" class="row">
-    <div class="col-md-4">
-      <h1>Multiple select boxes</h1>
+      <section>
+        <h1 id="multiple">Multiple select boxes</h1>
 
-      <p>
-        Select2 also supports multi-value select boxes. The select below is declared with the <code>multiple</code> attribute.
-      </p>
+        <p>
+          Select2 also supports multi-value select boxes. The select below is declared with the <code>multiple</code> attribute.
+        </p>
 
-      <p>
-        <select class="js-example-basic-multiple js-states form-control" multiple="multiple"></select>
-      </p>
-    </div>
-    <div class="col-md-8">
-      <h2 class="s2-docs-headline-example">Example code</h2>
+        <div class="s2-example">
+          <p>
+            <select class="js-example-basic-multiple js-states form-control" multiple="multiple"></select>
+          </p>
+        </div>
 
-      <pre data-fill-from=".js-code-multiple"></pre>
+        <pre data-fill-from=".js-code-multiple"></pre>
 
 <script type="text/x-example-code" class="js-code-multiple">
 $(".js-example-basic-multiple").select2();
@@ -91,37 +88,32 @@ $(".js-example-basic-multiple").select2();
   <option value="WY">Wyoming</option>
 </select>
 </script>
-    </div>
-  </section>
+      </section>
 
-  <section class="row">
-    <div class="col-md-4">
-      <h1 id="placeholders">Placeholders</h1>
+      <section>
+        <h1 id="placeholders">Placeholders</h1>
 
-      <p>
-        A placeholder value can be defined and will be displayed until a selection is made.
-      </p>
+        <p>
+          A placeholder value can be defined and will be displayed until a
+          selection is made. Select2 uses the <code>placeholder</code> attribute
+          on multiple select boxes, which requires IE 10+. You can support it in
+          older versions with
+          <a href="https://github.com/jamesallardice/Placeholders.js">the Placeholders.js polyfill</a>.
+        </p>
 
-      <p>
-        <select class="js-example-placeholder-single js-states form-control">
-          <option></option>
-        </select>
-      </p>
+        <div class="s2-example">
+          <p>
+            <select class="js-example-placeholder-single js-states form-control">
+              <option></option>
+            </select>
+          </p>
 
-      <p>
-        Select2 uses the <code>placeholder</code> attribute on multiple select
-        boxes, which requires IE 10+. You can support it in older versions with
-        <a href="https://github.com/jamesallardice/Placeholders.js">the Placeholders.js polyfill</a>.
-      </p>
+          <p>
+            <select class="js-example-placeholder-multiple js-states form-control" multiple="multiple"></select>
+          </p>
+        </div>
 
-      <p>
-        <select class="js-example-placeholder-multiple js-states form-control" multiple="multiple"></select>
-      </p>
-    </div>
-    <div class="col-md-8">
-      <h2 class="s2-docs-headline-example">Example code</h2>
-
-      <pre data-fill-from=".js-code-placeholder"></pre>
+        <pre data-fill-from=".js-code-placeholder"></pre>
 
 <script type="text/javascript" class="js-code-placeholder">
 $(".js-example-placeholder-single").select2({
@@ -133,38 +125,32 @@ $(".js-example-placeholder-multiple").select2({
   placeholder: "Select a state"
 });
 </script>
-    </div>
-  </section>
+      </section>
 
-  <section class="row">
-    <div class="col-md-4">
-      <h1 id="templating">Templating</h1>
+      <section>
+        <h1 id="templating">Templating</h1>
 
-      <p>
-        Various display options of the Select2 component can be changed
-      </p>
+        <p>
+          Various display options of the Select2 component can be changed:
+          You can access the <code>&lt;option&gt;</code> element
+          (or <code>&lt;optgroup&gt;</code>) and any attributes on those elements
+          using <code>.element</code>.
+        </p>
 
-      <p>
-        <select class="js-example-templating js-states form-control"></select>
-      </p>
+        <p>
+          Templating is primarily controlled by the
+          <a href="options.html#templateResult"><code>templateResult</code></a>
+          and <a href="options.html#templateSelection"><code>templateSelection</code></a>
+          options.
+        </p>
 
-      <p>
-        You can access the <code>&lt;option&gt;</code> element
-        (or <code>&lt;optgroup&gt;</code>) and any attributes on those elements
-        using <code>.element</code>.
-      </p>
+        <div class="s2-example">
+          <p>
+            <select class="js-example-templating js-states form-control"></select>
+          </p>
+        </div>
 
-      <p>
-        Templating is primarily controlled by the
-        <a href="options.html#templateResult"><code>templateResult</code></a>
-        and <a href="options.html#templateSelection"><code>templateSelection</code></a>
-        options.
-      </p>
-    </div>
-    <div class="col-md-8">
-      <h2 class="s2-docs-headline-example">Example code</h2>
-
-      <pre data-fill-from=".js-code-templating"></pre>
+        <pre data-fill-from=".js-code-templating"></pre>
 
 <script type="text/x-example-code" class="js-code-templating">
 function formatState (state) {
@@ -179,37 +165,31 @@ $(".js-example-templating").select2({
   templateResult: formatState
 });
 </script>
-    </div>
-  </section>
+      </section>
 
-  <section id="data-array" class="row">
-    <div class="col-md-4">
-      <h1>Loading array data</h1>
+      <section>
+        <h1 id="data-array" >Loading array data</h1>
 
-      <p>
-        Select2 provides a way to load the data from a local array.
-      </p>
+        <p>
+          Select2 provides a way to load the data from a local array.
+          You can provide initial selections with array data by providing the
+          option tag for the selected values, similar to how it would be done for
+          a standard select.
+        </p>
 
-      <p>
-        <select class="js-example-data-array form-control"></select>
-      </p>
+        <div class="s2-example">
+          <p>
+            <select class="js-example-data-array form-control"></select>
+          </p>
 
-      <p>
-        You can provide initial selections with array data by providing the
-        option tag for the selected values, similar to how it would be done for
-        a standard select.
-      </p>
+          <p>
+            <select class="js-example-data-array-selected form-control">
+              <option value="2" selected="selected">duplicate</option>
+            </select>
+          </p>
+        </div>
 
-      <p>
-        <select class="js-example-data-array-selected form-control">
-          <option value="2" selected="selected">duplicate</option>
-        </select>
-      </p>
-    </div>
-    <div class="col-md-8">
-      <h2 class="s2-docs-headline-example">Example code</h2>
-
-      <pre data-fill-from=".js-code-data-array"></pre>
+        <pre data-fill-from=".js-code-data-array"></pre>
 
 <script type="text/x-example-code" class="js-code-data-array">
 var data = [{ id: 0, text: 'enhancement' }, { id: 1, text: 'bug' }, { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, { id: 4, text: 'wontfix' }];
@@ -228,48 +208,46 @@ $(".js-example-data-array-selected").select2({
   <option value="2" selected="selected">duplicate</option>
 </select>
 </script>
-    </div>
-  </section>
+      </section>
 
-  <section id="data-ajax" class="row">
-    <div class="col-md-12">
-      <h1>Loading remote data</h1>
+      <section>
+        <h1 id="data-ajax" >Loading remote data</h1>
 
-      <p>
-        Select2 comes with AJAX support built in, using jQuery's AJAX methods.
-        In this example, we can search for repositories using GitHub's API.
-      </p>
+        <p>
+          Select2 comes with AJAX support built in, using jQuery's AJAX methods.
+          In this example, we can search for repositories using GitHub's API.
+        </p>
 
-      <p>
-        <select class="js-example-data-ajax form-control">
-          <option value="3620194" selected="selected">select2/select2</option>
-        </select>
-      </p>
+        <p>
+          <select class="js-example-data-ajax form-control">
+            <option value="3620194" selected="selected">select2/select2</option>
+          </select>
+        </p>
 
-      <p>
-        When using Select2 with remote data, the HTML required for the
-        <code>select</code> is the same as any other Select2. If you need to
-        provide default selections, you just need to include an
-        <code>option</code> for each selection that contains the value and text
-        that should be displayed.
-      </p>
+        <p>
+          When using Select2 with remote data, the HTML required for the
+          <code>select</code> is the same as any other Select2. If you need to
+          provide default selections, you just need to include an
+          <code>option</code> for each selection that contains the value and text
+          that should be displayed.
+        </p>
 
-      <pre data-fill-from=".js-code-data-ajax-html"></pre>
+        <pre data-fill-from=".js-code-data-ajax-html"></pre>
 
-      <p>
-        You can configure how Select2 searches for remote data using the
-        <code>ajax</code> option. More information on the individual options
-        that Select2 handles can be found in the
-        <a href="options.html#ajax">options documentation for <code>ajax</code></a>.
-      </p>
+        <p>
+          You can configure how Select2 searches for remote data using the
+          <code>ajax</code> option. More information on the individual options
+          that Select2 handles can be found in the
+          <a href="options.html#ajax">options documentation for <code>ajax</code></a>.
+        </p>
 
-      <pre data-fill-from=".js-code-data-ajax"></pre>
+        <pre data-fill-from=".js-code-data-ajax"></pre>
 
-      <p>
-        Select2 will pass any options in the <code>ajax</code> object to
-        jQuery's <code>$.ajax</code> function, or the <code>transport</code>
-        function you specify.
-      </p>
+        <p>
+          Select2 will pass any options in the <code>ajax</code> object to
+          jQuery's <code>$.ajax</code> function, or the <code>transport</code>
+          function you specify.
+        </p>
 
 <script type="text/x-example-code" class="js-code-data-ajax">
 $(".js-data-example-ajax").select2({
@@ -305,79 +283,73 @@ $(".js-data-example-ajax").select2({
   <option value="3620194" selected="selected">select2/select2</option>
 </select>
 </script>
-    </div>
-  </section>
+      </section>
 
-  <section id="responsive" class="row">
-    <div class="col-md-4">
-      <h1>Responsive design - Percent width</h1>
+      <section>
+        <h1 id="responsive">Responsive design - Percent width</h1>
 
-      <p>
-        Select2's width can be set to a percentage of its parent to support
-        responsive design. The two Select2 boxes below are styled to 50% and 75%
-        width respectively.
-      </p>
+        <p>
+          Select2's width can be set to a percentage of its parent to support
+          responsive design. The two Select2 boxes below are styled to 50% and 75%
+          width respectively.
+        </p>
 
-      <p>
-        <select class="js-example-responsive js-states" style="width: 50%"></select>
-      </p>
+        <div class="s2-example">
+          <p>
+            <select class="js-example-responsive js-states" style="width: 50%"></select>
+          </p>
 
-      <p>
-        <select class="js-example-responsive js-states" multiple="multiple" style="width: 75%"></select>
-      </p>
-    </div>
-    <div class="col-md-8">
-      <h2 class="s2-docs-headline-example">Example code</h2>
+          <p>
+            <select class="js-example-responsive js-states" multiple="multiple" style="width: 75%"></select>
+          </p>
+        </div>
 
-      <pre data-fill-from=".js-code-responsive"></pre>
+        <pre data-fill-from=".js-code-responsive"></pre>
 
-      <div class="alert alert-warning">
-        Select2 will do its best to resolve the percent width specified via a
-        css class, but it is not always possible. The best way to ensure that
-        Select2 is using a percent based width is to inline the
-        <code>style</code> declaration into the tag.
-      </div>
+        <div class="alert alert-warning">
+          Select2 will do its best to resolve the percent width specified via a
+          css class, but it is not always possible. The best way to ensure that
+          Select2 is using a percent based width is to inline the
+          <code>style</code> declaration into the tag.
+        </div>
 
 <script type="text/x-example-code" class="js-code-responsive">
 <select class="js-example-responsive" style="width: 50%"></select>
 <select class="js-example-responsive" multiple="multiple" style="width: 75%"></select>
 </script>
-    </div>
-  </section>
+      </section>
 
-  <section id="disabled" class="row">
-    <div class="col-md-4">
-      <h1>Disabled mode</h1>
+      <section>
+        <h1 id="disabled">Disabled mode</h1>
 
-      <p>
-        Select2 will response the <code>disabled</code> attribute on
-        <code>&lt;select&gt;</code> elements. You can also initialize Select2
-        with <code>disabled: true</code> to get the same effect.
-      </p>
+        <p>
+          Select2 will response the <code>disabled</code> attribute on
+          <code>&lt;select&gt;</code> elements. You can also initialize Select2
+          with <code>disabled: true</code> to get the same effect.
+        </p>
 
-      <p>
-        <select class="js-example-disabled js-states form-control" disabled="disabled"></select>
-      </p>
+        <div class="s2-example">
 
-      <p>
-        <select class="js-example-disabled-multi js-states form-control" multiple="multiple" disabled="disabled"></select>
-      </p>
+          <p>
+            <select class="js-example-disabled js-states form-control" disabled="disabled"></select>
+          </p>
 
-      <div class="btn-group" role="group" aria-label="Programmatic enabling and disabling">
-        <button type="button" class="js-programmatic-enable btn btn-default">
-          Enable
-        </button>
-        <button type="button" class="js-programmatic-disable btn btn-default">
-          Disable
-        </button>
-      </div>
+          <p>
+            <select class="js-example-disabled-multi js-states form-control" multiple="multiple" disabled="disabled"></select>
+          </p>
 
-    </div>
+          <div class="btn-group btn-group-sm" role="group" aria-label="Programmatic enabling and disabling">
+            <button type="button" class="js-programmatic-enable btn btn-default">
+              Enable
+            </button>
+            <button type="button" class="js-programmatic-disable btn btn-default">
+              Disable
+            </button>
+          </div>
 
-    <div class="col-md-8">
-      <h2 class="s2-docs-headline-example">Example code</h2>
+        </div>
 
-      <pre data-fill-from=".js-code-disabled"></pre>
+        <pre data-fill-from=".js-code-disabled"></pre>
 
 <script type="text/javascript" class="js-code-disabled">
 $(".js-programmatic-enable").on("click", function () {
@@ -390,32 +362,29 @@ $(".js-programmatic-disable").on("click", function () {
   $(".js-example-disabled-multi").prop("disabled", true);
 });
 </script>
-    </div>
-  </section>
+      </section>
 
-  <section id="disabled-results" class="row">
-    <div class="col-md-4">
-      <h1>Disabled results</h1>
+      <section>
+        <h1 id="disabled-results">Disabled results</h1>
 
-      <p>
-        Select2 will correctly handled disabled results, both with data coming
-        from a standard select (when the <code>disabled</code> attribute is set)
-        and from remote sources, where the object has
-        <code>disabled: true</code> set.
-      </p>
+        <p>
+          Select2 will correctly handled disabled results, both with data coming
+          from a standard select (when the <code>disabled</code> attribute is set)
+          and from remote sources, where the object has
+          <code>disabled: true</code> set.
+        </p>
 
-      <p>
-        <select class="js-example-disabled-results form-control">
-          <option value="one">First</option>
-          <option value="two" disabled="disabled">Second (disabled)</option>
-          <option value="three">Third</option>
-        </select>
-      </p>
-    </div>
-    <div class="col-md-8">
-      <h2 class="s2-docs-headline-example">Example code</h2>
+        <div class="s2-example">
+          <p>
+            <select class="js-example-disabled-results form-control">
+              <option value="one">First</option>
+              <option value="two" disabled="disabled">Second (disabled)</option>
+              <option value="three">Third</option>
+            </select>
+          </p>
+        </div>
 
-      <pre data-fill-from=".js-code-disabled-results"></pre>
+        <pre data-fill-from=".js-code-disabled-results"></pre>
 
 <script type="text/x-example-code" class="js-code-disabled-results">
 <select class="js-example-disabled-results">
@@ -424,65 +393,61 @@ $(".js-programmatic-disable").on("click", function () {
   <option value="three">Third</option>
 </select>
 </script>
-    </div>
-  </section>
+      </section>
 
-  <section id="programmatic" class="row">
-    <div class="col-md-4">
-      <h1>Programmatic access</h1>
+      <section>
+        <h1 id="programmatic">Programmatic access</h1>
 
-      <p>
-        Select2 supports methods that allow programmatic control of the
-        component.
-      </p>
+        <p>
+          Select2 supports methods that allow programmatic control of the
+          component.
+        </p>
 
-      <p>
-        <select class="js-example-programmatic js-states form-control"></select>
-      </p>
+        <div class="s2-example">
+          <p>
+            <select class="js-example-programmatic js-states form-control"></select>
+          </p>
 
-      <div class="btn-toolbar" role="toolbar" aria-label="Programmatic control">
-        <div class="btn-group btn-group-sm" aria-label="Set Select2 option">
-          <button class="js-programmatic-set-val btn btn-default">
-            Set "California"
-          </button>
+          <div class="btn-toolbar" role="toolbar" aria-label="Programmatic control">
+            <div class="btn-group btn-group-sm" aria-label="Set Select2 option">
+              <button class="js-programmatic-set-val btn btn-default">
+                Set "California"
+              </button>
+            </div>
+            <div class="btn-group btn-group-sm" role="group" aria-label="Open and close">
+              <button class="js-programmatic-open btn btn-default">
+                Open
+              </button>
+              <button class="js-programmatic-close btn btn-default">
+                Close
+              </button>
+            </div>
+            <div class="btn-group btn-group-sm" role="group" aria-label="Initialize and destroy">
+              <button class="js-programmatic-init btn btn-default">
+                Init
+              </button>
+              <button class="js-programmatic-destroy btn btn-default">
+                Destroy
+              </button>
+            </div>
+          </div>
+
+          <p>
+            <select class="js-example-programmatic-multi js-states form-control" multiple="multiple"></select>
+          </p>
+
+          <div class="btn-group btn-group-sm" role="group" aria-label="Programmatic setting and clearing Select2 options">
+            <button type="button" class="js-programmatic-multi-set-val btn btn-default">
+              Set to California and Alabama
+            </button>
+            <button type="button" class="js-programmatic-multi-clear btn btn-default">
+              Clear
+            </button>
+          </div>
+
         </div>
-        <div class="btn-group btn-group-sm" role="group" aria-label="Open and close">
-          <button class="js-programmatic-open btn btn-default">
-            Open
-          </button>
-          <button class="js-programmatic-close btn btn-default">
-            Close
-          </button>
-        </div>
-        <div class="btn-group btn-group-sm" role="group" aria-label="Initialize and destroy">
-          <button class="js-programmatic-init btn btn-default">
-            Init
-          </button>
-          <button class="js-programmatic-destroy btn btn-default">
-            Destroy
-          </button>
-        </div>
-      </div>
 
-      <p>
-        <select class="js-example-programmatic-multi js-states form-control" multiple="multiple"></select>
-      </p>
-
-      <div class="btn-group" role="group" aria-label="Programmatic setting and clearing Select2 options">
-        <button type="button" class="js-programmatic-multi-set-val btn btn-default">
-          Set to California and Alabama
-        </button>
-        <button type="button" class="js-programmatic-multi-clear btn btn-default">
-          Clear
-        </button>
-      </div>
-
-    </div>
-
-    <div class="col-md-8">
-      <h2 class="s2-docs-headline-example">Example code</h2>
-
-      <pre data-fill-from=".js-code-programmatic"></pre>
+        <pre data-fill-from=".js-code-programmatic"></pre>
 
 <script type="text/javascript" class="js-code-programmatic">
 var $example = $(".js-example-programmatic");
@@ -499,108 +464,112 @@ $(".js-programmatic-destroy").on("click", function () { $example.select2("destro
 $(".js-programmatic-multi-set-val").on("click", function () { $exampleMulti.val(["CA", "AL"]).trigger("change"); });
 $(".js-programmatic-multi-clear").on("click", function () { $exampleMulti.val(null).trigger("change"); });
 </script>
-    </div>
-  </section>
 
-  <section id="multiple-max" class="row">
-    <div class="col-md-4">
-      <h1>Limiting the number of selections</h1>
-      <p>Select2 multi-value select boxes can set restrictions regarding the maximum number of options selected.
-        The select below is declared with the <code>multiple</code> attribute with <code>maxSelectionLength</code> in the select2 options</p>
+      </section>
 
-      <p>
-        <select class="js-example-basic-multiple-limit js-states form-control" multiple="multiple"></select>
-      </p>
-    </div>
-    <div class="col-md-8">
-      <h2 class="s2-docs-headline-example">Example code</h2>
+      <section>
 
-      <pre data-fill-from=".js-code-multiple-limit"></pre>
+        <h1 id="multiple-max">
+          Limiting the number of selections
+        </h1>
+
+        <p>
+          Select2 multi-value select boxes can set restrictions regarding the
+          maximum number of options selected. The select below is declared with
+          the <code>multiple</code> attribute with <code>maxSelectionLength</code>
+          in the select2 options.
+        </p>
+
+        <div class="s2-example">
+          <p>
+            <select class="js-example-basic-multiple-limit js-states form-control" multiple="multiple"></select>
+          </p>
+        </div>
+
+        <pre data-fill-from=".js-code-multiple-limit"></pre>
 
 <script type="text/x-example-code" class="js-code-multiple-limit">
 $(".js-example-basic-multiple-limit").select2({
   maximumSelectionLength: 2
 });
 </script>
-    </div>
-  </section>
 
-  <section id="hide-search" class="row">
-    <div class="col-md-4">
-      <h1>Hiding the search box</h1>
+      </section>
 
-      <p>
-        Select2 allows you to hide the search box depending on the number of
-        options which are displayed. In this example, we use the value
-        <code>Infinity</code> to tell Select2 to never display the search box.
-      </p>
+      <section>
+        <h1 id="hide-search">Hiding the search box</h1>
 
-      <p>
-        <select class="js-example-basic-hide-search js-states form-control"></select>
-      </p>
-    </div>
-    <div class="col-md-8">
-      <h2 class="s2-docs-headline-example">Example code</h2>
+        <p>
+          Select2 allows you to hide the search box depending on the number of
+          options which are displayed. In this example, we use the value
+          <code>Infinity</code> to tell Select2 to never display the search box.
+        </p>
 
-      <pre data-fill-from=".js-code-hide-search"></pre>
+        <div class="s2-example">
+          <p>
+            <select class="js-example-basic-hide-search js-states form-control"></select>
+          </p>
+        </div>
+
+        <pre data-fill-from=".js-code-hide-search"></pre>
 
 <script type="text/x-example-code" class="js-code-hide-search">
 $(".js-example-basic-hide-search").select2({
   minimumResultsForSearch: Infinity
 });
 </script>
-    </div>
-  </section>
 
-  <section id="events" class="row">
-    <div class="col-md-4">
-      <h1>Events</h1>
+      </section>
 
-      <p>
-        Select2 will trigger some events on the original select element,
-        allowing you to integrate it with other components. You can find more
-        information on events
-        <a href="options.html#events">on the options page</a>.
-      </p>
+      <section>
+        <h1 id="events">Events</h1>
 
-      <p>
-        <select class="js-states js-example-events form-control"></select>
-      </p>
+        <p>
+          Select2 will trigger some events on the original select element,
+          allowing you to integrate it with other components. You can find more
+          information on events
+          <a href="options.html#events">on the options page</a>.
+        </p>
 
-      <p>
-        <select class="js-states js-example-events form-control" multiple="multiple"></select>
-      </p>
+        <p>
+          <code>change</code> is fired whenever an option is selected or removed.
+        </p>
 
-      <p>
-        <code>change</code> is fired whenever an option is selected or removed.
-      </p>
+        <p>
+          <code>select2:open</code> is fired whenever the dropdown is opened.
+          <code>select2:opening</code> is fired before this and can be prevented.
+        </p>
 
-      <p>
-        <code>select2:open</code> is fired whenever the dropdown is opened.
-        <code>select2:opening</code> is fired before this and can be prevented.
-      </p>
+        <p>
+          <code>select2:close</code> is fired whenever the dropdown is closed.
+          <code>select2:closing</code> is fired before this and can be prevented.
+        </p>
 
-      <p>
-        <code>select2:close</code> is fired whenever the dropdown is closed.
-        <code>select2:closing</code> is fired before this and can be prevented.
-      </p>
+        <p>
+          <code>select2:select</code> is fired whenever a result is selected.
+          <code>select2:selecting</code> is fired before this and can be prevented.
+        </p>
 
-      <p>
-        <code>select2:select</code> is fired whenever a result is selected.
-        <code>select2:selecting</code> is fired before this and can be prevented.
-      </p>
+        <p>
+          <code>select2:unselect</code> is fired whenever a result is unselected.
+          <code>select2:unselecting</code> is fired before this and can be prevented.
+        </p>
 
-      <p>
-        <code>select2:unselect</code> is fired whenever a result is unselected.
-        <code>select2:unselecting</code> is fired before this and can be prevented.
-      </p>
-    </div>
-    <div class="col-md-8">
-      <h2 class="s2-docs-headline-example">Example code</h2>
+        <div class="s2-example">
+          <p>
+            <select class="js-states js-example-events form-control"></select>
+          </p>
 
-      <ul class="js-event-log"></ul>
+          <p>
+            <select class="js-states js-example-events form-control" multiple="multiple"></select>
+          </p>
+        </div>
 
-      <pre data-fill-from=".js-code-events"></pre>
+        <div class="s2-event-log">
+          <ul class="js-event-log"></ul>
+        </div>
+
+        <pre data-fill-from=".js-code-events"></pre>
 
 <script type="text/javascript" class="js-code-events">
 var $eventLog = $(".js-event-log");
@@ -632,74 +601,67 @@ function log (name, evt) {
   });
 }
 </script>
-    </div>
-  </section>
+      </section>
 
-  <section id="tags" class="row">
-    <div class="col-md-4">
-      <h1>Tagging support</h1>
+      <section>
+        <h1 id="tags">Tagging support</h1>
 
-      <p>
-        Select2 can be used to quickly set up fields used for tagging.
-      </p>
+        <p>
+          Select2 can be used to quickly set up fields used for tagging.
+        </p>
 
-      <p>
-        <select class="js-example-tags form-control" multiple="multiple">
-          <option selected="selected">orange</option>
-          <option>white</option>
-          <option selected="selected">purple</option>
-        </select>
-      </p>
+        <p>
+          Note that when tagging is enabled the user can select from pre-existing
+          options or create a new tag by picking the first choice, which is what
+          the user has typed into the search box so far.
+        </p>
 
-      <p>
-        Note that when tagging is enabled the user can select from pre-existing
-        options or create a new tag by picking the first choice, which is what
-        the user has typed into the search box so far.
-      </p>
+        <div class="s2-example">
+          <p>
+            <select class="js-example-tags form-control" multiple="multiple">
+              <option selected="selected">orange</option>
+              <option>white</option>
+              <option selected="selected">purple</option>
+            </select>
+          </p>
+        </div>
 
-    </div>
-    <div class="col-md-8">
-      <h2 class="s2-docs-headline-example">Example code</h2>
-
-      <pre data-fill-from=".js-code-tags"></pre>
+        <pre data-fill-from=".js-code-tags"></pre>
 
 <script type="text/x-example-code" class="js-code-tags">
 $(".js-example-tags").select2({
   tags: true
 })
 </script>
-    </div>
-  </section>
 
-  <section id="tokenizer" class="row">
-    <div class="col-md-4">
-      <h1>Automatic tokenization</h1>
+      </section>
 
-      <p>
-        Select2 supports ability to add choices automatically as the user is
-        typing into the search field. Try typing in the search field below and
-        entering a space or a comma.
-      </p>
+      <section>
+        <h1 id="tokenizer">Automatic tokenization</h1>
 
-      <p>
-        <select class="js-example-tokenizer form-control" multiple="multiple">
-          <option>red</option>
-          <option>blue</option>
-          <option>green</option>
-        </select>
-      </p>
+        <p>
+          Select2 supports ability to add choices automatically as the user is
+          typing into the search field. Try typing in the search field below and
+          entering a space or a comma.
+        </p>
 
-      <p>
-        The separators that should be used when tokenizing can be specified
-        using the <a href="options.html#tokenSeparators">tokenSeparators</a>
-        options.
-      </p>
+        <p>
+          The separators that should be used when tokenizing can be specified
+          using the <a href="options.html#tokenSeparators">tokenSeparators</a>
+          options.
+        </p>
 
-    </div>
-    <div class="col-md-8">
-      <h2 class="s2-docs-headline-example">Example code</h2>
+        <div class="s2-example">
+          <p>
+            <select class="js-example-tokenizer form-control" multiple="multiple">
+              <option>red</option>
+              <option>blue</option>
+              <option>green</option>
+            </select>
+          </p>
+        </div>
 
-      <pre data-fill-from=".js-code-tokenizer"></pre>
+        <pre data-fill-from=".js-code-tokenizer"></pre>
 
 <script type="text/x-example-code" class="js-code-tokenizer">
 $(".js-example-tokenizer").select2({
@@ -707,35 +669,33 @@ $(".js-example-tokenizer").select2({
   tokenSeparators: [',', ' ']
 })
 </script>
-    </div>
-  </section>
 
-  <section id="matcher" class="row">
-    <div class="col-md-4">
-      <h1>Custom matcher</h1>
+      </section>
 
-      <p>
-        Unlike other dropdowns on this page, this one matches options only if
-        the term appears in the beginning of the string as opposed to anywhere:
-      </p>
+      <section>
+        <h1 id="matcher">Custom matcher</h1>
 
-      <p>
-        <select class="js-example-matcher-start js-states form-control"></select>
-      </p>
+        <p>
+          Unlike other dropdowns on this page, this one matches options only if
+          the term appears in the beginning of the string as opposed to anywhere:
+        </p>
 
-      <p>
-        This custom matcher uses a
-        <a href="options.html#compat-matcher">compatibility module</a> that is
-        only bundled in the
-        <a href="index.html#builds-full">full version of Select2</a>. You also
-        have the option of using a
-        <a href="options.html#matcher">more complex matcher</a>.
-      </p>
-    </div>
-    <div class="col-md-8">
-      <h2 class="s2-docs-headline-example">Example code</h2>
+        <p>
+          This custom matcher uses a
+          <a href="options.html#compat-matcher">compatibility module</a> that is
+          only bundled in the
+          <a href="index.html#builds-full">full version of Select2</a>. You also
+          have the option of using a
+          <a href="options.html#matcher">more complex matcher</a>.
+        </p>
 
-      <pre data-fill-from=".js-code-matcher-start"></pre>
+        <div class="s2-example">
+          <p>
+            <select class="js-example-matcher-start js-states form-control"></select>
+          </p>
+        </div>
+
+        <pre data-fill-from=".js-code-matcher-start"></pre>
 
 <script type="text/x-example-code" class="js-code-matcher-start">
 function matchStart (term, text) {
@@ -752,108 +712,102 @@ $.fn.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
   })
 });
 </script>
-    </div>
-  </section>
 
-  <section id="diacritics" class="row">
-    <div class="col-md-4">
-      <h1>Diacritics support</h1>
+      </section>
 
-      <p>
-        Select2's default matcher will ignore diacritics, making it easier for
-        users to filter results in international selects. Type "aero" into the
-        select below.
-      </p>
+      <section>
+        <h1 id="diacritics">Diacritics support</h1>
 
-      <p>
-        <select class="js-example-diacritics form-control">
-          <option>Aeróbics</option>
-          <option>Aeróbics en Agua</option>
-          <option>Aerografía</option>
-          <option>Aeromodelaje</option>
-          <option>Águilas</option>
-          <option>Ajedrez</option>
-          <option>Ala Delta</option>
-          <option>Álbumes de Música</option>
-          <option>Alusivos</option>
-          <option>Análisis de Escritura a Mano</option>
-        </select>
-      </p>
-    </div>
-    <div class="col-md-8">
-      <h2 class="s2-docs-headline-example">Example code</h2>
+        <p>
+          Select2's default matcher will ignore diacritics, making it easier for
+          users to filter results in international selects. Type "aero" into the
+          select below.
+        </p>
 
-      <pre data-fill-from=".js-code-diacritics"></pre>
+        <div class="s2-example">
+          <p>
+            <select class="js-example-diacritics form-control">
+              <option>Aeróbics</option>
+              <option>Aeróbics en Agua</option>
+              <option>Aerografía</option>
+              <option>Aeromodelaje</option>
+              <option>Águilas</option>
+              <option>Ajedrez</option>
+              <option>Ala Delta</option>
+              <option>Álbumes de Música</option>
+              <option>Alusivos</option>
+              <option>Análisis de Escritura a Mano</option>
+            </select>
+          </p>
+        </div>
+
+        <pre data-fill-from=".js-code-diacritics"></pre>
 
 <script type="text/x-example-code" class="js-code-diacritics">
 $(".js-example-diacritics").select2();
 </script>
-    </div>
-  </section>
 
-  <section id="language" class="row">
-    <div class="col-md-4">
-      <h1>Multiple languages</h1>
+      </section>
 
-      <p>
-        Select2 supports displaying the messages in different languages, as well
-        as providing your own
-        <a href="options.html#language">custom messages</a>
-        that can be displayed.
-      </p>
+      <section>
+        <h1 id="language">Multiple languages</h1>
 
-      <p>
-        <select class="js-example-language js-states form-control">
-        </select>
-      </p>
+        <p>
+          Select2 supports displaying the messages in different languages, as well
+          as providing your own
+          <a href="options.html#language">custom messages</a>
+          that can be displayed.
+        </p>
 
-      <p>
-        The language does not have to be defined when Select2 is being
-        initialized, but instead can be defined in the <code>[lang]</code>
-        attribute of any parent elements as <code>[lang="es"]</code>.
-      </p>
-    </div>
-    <div class="col-md-8">
-      <h2 class="s2-docs-headline-example">Example code</h2>
+        <p>
+          The language does not have to be defined when Select2 is being
+          initialized, but instead can be defined in the <code>[lang]</code>
+          attribute of any parent elements as <code>[lang="es"]</code>.
+        </p>
 
-      <pre data-fill-from=".js-code-language"></pre>
+        <div class="s2-example">
+          <p>
+            <select class="js-example-language js-states form-control">
+            </select>
+          </p>
+        </div>
+
+        <pre data-fill-from=".js-code-language"></pre>
 
 <script type="text/x-example-code" class="js-code-language">
 $(".js-example-language").select2({
   language: "es"
 });
 </script>
-    </div>
-  </section>
 
-  <section id="themes" class="row">
-    <div class="col-md-4">
-      <h1>Theme support</h1>
+      </section>
 
-      <p>
-        Select2 supports custom themes using the
-        <a href="options.html#theme">theme option</a>
-        so you can style Select2 to match the rest of your application.
-      </p>
+      <section>
+        <h1 id="themes">Theme support</h1>
 
-      <p>
-        <select class="js-example-theme-single js-states form-control">
-        </select>
-      </p>
+        <p>
+          Select2 supports custom themes using the
+          <a href="options.html#theme">theme option</a>
+          so you can style Select2 to match the rest of your application.
+        </p>
 
-      <p>
-        These are using the <code>classic</code> theme, which matches the old
-        look of Select2.
-      </p>
+        <p>
+          These are using the <code>classic</code> theme, which matches the old
+          look of Select2.
+        </p>
 
-      <p>
-        <select class="js-example-theme-multiple js-states form-control" multiple="multiple"></select>
-      </p>
-    </div>
-    <div class="col-md-8">
-      <h2 class="s2-docs-headline-example">Example code</h2>
+        <div class="s2-example">
+          <p>
+            <select class="js-example-theme-single js-states form-control">
+            </select>
+          </p>
 
-      <pre data-fill-from=".js-code-theme"></pre>
+          <p>
+            <select class="js-example-theme-multiple js-states form-control" multiple="multiple"></select>
+          </p>
+        </div>
+
+        <pre data-fill-from=".js-code-theme"></pre>
 
 <script type="text/x-example-code" class="js-code-theme">
 $(".js-example-theme-single").select2({
@@ -864,38 +818,38 @@ $(".js-example-theme-multiple").select2({
   theme: "classic"
 });
 </script>
-    </div>
-  </section>
 
-  <section id="rtl" class="row">
-    <div class="col-md-4">
-      <h1>RTL support</h1>
+      </section>
 
-      <p>
-        Select2 will work on RTL websites if the <code>dir</code> attribute is
-        set on the <code>&lt;select&gt;</code> or any parents of it.
-      </p>
+      <section>
+        <h1 id="rtl">RTL support</h1>
 
-      <p>
-        <select class="js-example-rtl js-states form-control" dir="rtl"></select>
-      </p>
+        <p>
+          Select2 will work on RTL websites if the <code>dir</code> attribute is
+          set on the <code>&lt;select&gt;</code> or any parents of it. You can also
+          initialize Select2 with <code>dir: "rtl"</code> set.
+        </p>
 
-      <p>
-        You can also use initialize Select2 with <code>dir: "rtl"</code> set.
-      </p>
-    </div>
-    <div class="col-md-8">
-      <h2 class="s2-docs-headline-example">Example code</h2>
+        <div class="s2-example">
+          <p>
+            <select class="js-example-rtl js-states form-control" dir="rtl"></select>
+          </p>
+        </div>
 
-      <pre data-fill-from=".js-code-rtl"></pre>
+        <pre data-fill-from=".js-code-rtl"></pre>
 
 <script type="text/x-example-code" class="js-code-rtl">
 $(".js-example-rtl").select2({
   dir: "rtl"
 });
 </script>
+
+      </section>
     </div>
-  </section>
+    <div class="col-md-3" role="complementary">
+      {% include nav/examples.html %}
+    </div>
+  </div>
 </div>
 
 <select class="js-source-states" style="display: none;">

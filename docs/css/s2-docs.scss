@@ -8,6 +8,7 @@
 @import "s2-docs-footer";
 @import "s2-docs-alert";
 @import "s2-docs-home";
+@import "s2-docs-examples";
 @import "anchorjs";
 @import "jumbotron";
 @import "prettify";
@@ -61,12 +62,4 @@ pre {
   margin-bottom: 14px;
   background-color: #f7f7f9;
   border: 1px solid #e1e1e8;
-}
-
-.s2-docs-headline-example {
-  font-size: 12px;
-  font-weight: 700;
-  color: #959595;
-  text-transform: uppercase;
-  letter-spacing: 1px;
 }
