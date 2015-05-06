@@ -156,6 +156,8 @@ $.fn.select2.amd.require(
   var $diacritics = $(".js-example-diacritics");
   var $language = $(".js-example-language");
 
+  $.fn.select2.defaults.set("width", "100%");
+
   $basicSingle.select2();
   $basicMultiple.select2();
   $limitMultiple.select2({
