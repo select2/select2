@@ -1,6 +1,8 @@
 <section>
 
-  <h1 id="basic">The basics</h1>
+  <h1 id="basics" class="page-header">The basics</h1>
+
+  <h2 id="single">Single select boxes</h2>
 
   <p>
     Select2 can take a regular select box like this...
@@ -33,5 +35,31 @@ $(document).ready(function() {
   <option value="WY">Wyoming</option>
 </select>
 </script>
+
+  <h2 id="multiple">Multiple select boxes</h2>
+
+  <p>
+    Select2 also supports multi-value select boxes. The select below is declared with the <code>multiple</code> attribute.
+  </p>
+
+  <div class="s2-example">
+    <p>
+      <select class="js-example-basic-multiple js-states form-control" multiple="multiple"></select>
+    </p>
+  </div>
+
+  <pre data-fill-from=".js-code-multiple"></pre>
+
+<script type="text/x-example-code" class="js-code-multiple">
+$(".js-example-basic-multiple").select2();
+
+<select class="js-example-basic-multiple" multiple="multiple">
+  <option value="AL">Alabama</option>
+    ...
+  <option value="WY">Wyoming</option>
+</select>
+</script>
+
+</section>
 
 </section>
