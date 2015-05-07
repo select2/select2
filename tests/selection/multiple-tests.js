@@ -33,6 +33,41 @@ test('display uses templateSelection', function (assert) {
   assert.equal(out, 'test');
 });
 
+test('templateSelection can addClass', function (assert) {
+  var called = false, found = false;
+
+  var templateOptions = new Options({
+    templateSelection: function (data, container) {
+      called = true;
+      container.addClass('testclass');
+      return data.text;
+    }
+  });
+
+  var selection = new MultipleSelection(
+    $('#qunit-fixture .multiple'),
+    templateOptions
+  );
+
+  var $container = selection.selectionContainer();
+  
+  var out = selection.display({
+    text: 'test'
+  }, $container);
+
+  for (var i = 0; i < $container[0].classList.length; i += 1) {
+    if ($container[0].classList[i] === 'testclass') {
+      found = true;
+    }
+  }
+  
+  assert.ok(called);
+
+  assert.equal(out, 'test');
+  
+  assert.ok(called);
+});
+
 test('empty update clears the selection', function (assert) {
   var selection = new MultipleSelection(
     $('#qunit-fixture .multiple'),
