@@ -55,17 +55,11 @@ test('templateSelection can addClass', function (assert) {
     text: 'test'
   }, $container);
 
-  for (var i = 0; i < $container[0].classList.length; i += 1) {
-    if ($container[0].classList[i] === 'testclass') {
-      found = true;
-    }
-  }
-  
   assert.ok(called);
 
   assert.equal(out, 'test');
   
-  assert.ok(called);
+  assert.ok($container.hasClass('testclass'));
 });
 
 test('empty update clears the selection', function (assert) {
