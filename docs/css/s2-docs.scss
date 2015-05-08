@@ -10,6 +10,7 @@
 @import "s2-docs-home";
 @import "s2-docs-examples";
 @import "s2-docs-social";
+@import "s2-docs-buttons";
 @import "anchorjs";
 @import "jumbotron";
 @import "prettify";
@@ -18,23 +19,6 @@
   margin-bottom: 20px;
 }
 
-.btn-outline-inverse {
-  color: #428BCA;
-  background-color: transparent;
-  border-color: #428BCA;
-  padding: 15px 30px;
-  font-size: 20px;
-}
-
-.btn-outline-inverse .fa {
-  margin-right: 8px;
-}
-
-.btn-outline-inverse:hover {
-  color: #fff;
-  border-color: #428BCA;
-  background-color: #428BCA;
-}
 
 .version {
   color: #999;
