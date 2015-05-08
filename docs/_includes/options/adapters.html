@@ -1,30 +1,30 @@
-    <section id="adapters">
-      <div class="page-header">
-        <h1>Adapters</h1>
-      </div>
+<section>
+  <div class="page-header">
+    <h1 id="adapters">Adapters</h1>
+  </div>
 
-      <p>
-        Select2 allows plugins to add additional functionality through the core
-        adapters. You can change almost anything involving the way Select2 works
-        to the way Select2 interacts with the page by modifying the core adapters.
-        Most third-party plugins should provide decorators (used to wrap adapters)
-        and custom adapters that you can use.
-      </p>
+  <p>
+    Select2 allows plugins to add additional functionality through the core
+    adapters. You can change almost anything involving the way Select2 works
+    to the way Select2 interacts with the page by modifying the core adapters.
+    Most third-party plugins should provide decorators (used to wrap adapters)
+    and custom adapters that you can use.
+  </p>
 
-      <p>
-        Each adapter contains a set of methods which will must always be defined.
-        Along with the global methods that all adapters must implement, these
-        methods must be implemented.
-      </p>
+  <p>
+    Each adapter contains a set of methods which will must always be defined.
+    Along with the global methods that all adapters must implement, these
+    methods must be implemented.
+  </p>
 
-      <h2 id="adapters-all">
-        All adapters
-      </h2>
+  <h2 id="adapters-all">
+    All adapters
+  </h2>
 
-      <p>
-        All adapters must implement a set of methods that Select2 will use to
-        display them and bind any internal events.
-      </p>
+  <p>
+    All adapters must implement a set of methods that Select2 will use to
+    display them and bind any internal events.
+  </p>
 
 <pre class="prettyprint linenums">
 // The basic HTML that should be rendered by Select2. A jQuery or DOM element
@@ -66,34 +66,34 @@ Adapter.position = function ($rendered, $defaultContainer) { };
 Adapter.destroy = function () { };
 </pre>
 
-      <h2 id="selectionAdapter">
-        Container (selection)
-      </h2>
+  <h2 id="selectionAdapter">
+    Container (selection)
+  </h2>
 
-      <p>
-        The selection is what is shown to the user as a replacement of the
-        standard <code>&lt;select&gt;</code> box. It controls the display of the
-        selection option(s), as well anything else that needs to be embedded
-        within the container, such as a search box.
-      </p>
+  <p>
+    The selection is what is shown to the user as a replacement of the
+    standard <code>&lt;select&gt;</code> box. It controls the display of the
+    selection option(s), as well anything else that needs to be embedded
+    within the container, such as a search box.
+  </p>
 
-      <dl class="dl-horizontal">
-        <dt>Key</dt>
-        <dd>
-          <code>selectionAdapter</code>
-        </dd>
+  <dl class="dl-horizontal">
+    <dt>Key</dt>
+    <dd>
+      <code>selectionAdapter</code>
+    </dd>
 
-        <dt>Default</dt>
-        <dd>
-          <code title="select2/selection/single">SingleSelection</code> or
-          <code title="select2/selection/multiple">MultipleSelection</code>
-        </dd>
+    <dt>Default</dt>
+    <dd>
+      <code title="select2/selection/single">SingleSelection</code> or
+      <code title="select2/selection/multiple">MultipleSelection</code>
+    </dd>
 
-        <dt>Base</dt>
-        <dd>
-          <code title="select2/selection/base">BaseSelection</code>
-        </dd>
-      </dl>
+    <dt>Base</dt>
+    <dd>
+      <code title="select2/selection/base">BaseSelection</code>
+    </dd>
+  </dl>
 
 <pre class="prettyprint linenums">
 // Update the selected data.
@@ -106,31 +106,31 @@ Adapter.destroy = function () { };
 SelectionAdapter.update = function (data) { };
 </pre>
 
-      <h2 id="dataAdapter">
-        Data set
-      </h2>
+  <h2 id="dataAdapter">
+    Data set
+  </h2>
 
-      <p>
-        The data set is what Select2 uses to generate the possible results that
-        can be selected, as well as the currently selected results.
-      </p>
+  <p>
+    The data set is what Select2 uses to generate the possible results that
+    can be selected, as well as the currently selected results.
+  </p>
 
-      <dl class="dl-horizontal">
-        <dt>Key</dt>
-        <dd>
-          <code>dataAdapter</code>
-        </dd>
+  <dl class="dl-horizontal">
+    <dt>Key</dt>
+    <dd>
+      <code>dataAdapter</code>
+    </dd>
 
-        <dt>Default</dt>
-        <dd>
-          <code title="select2/data/select">SelectAdapter</code>
-        </dd>
+    <dt>Default</dt>
+    <dd>
+      <code title="select2/data/select">SelectAdapter</code>
+    </dd>
 
-        <dt>Base</dt>
-        <dd>
-          <code title="select2/data/base">BaseAdapter</code>
-        </dd>
-      </dl>
+    <dt>Base</dt>
+    <dd>
+      <code title="select2/data/base">BaseAdapter</code>
+    </dd>
+  </dl>
 
 <pre class="prettyprint linenums">
 // Get the currently selected options. This is called when trying to get the
@@ -160,50 +160,50 @@ DataAdapter.query = function (params, callback) {
 }
 </pre>
 
-      <h2 id="dropdownAdapter">
-        Dropdown
-      </h2>
+  <h2 id="dropdownAdapter">
+    Dropdown
+  </h2>
 
-      <p>
-        The dropdown adapter defines the main container that the dropdown should
-        be held in. <strong>It does not define any extra methods that can be used
-        for decorators</strong>, but it is common for decorators to attach to the
-        <code>render</code> and <code>position</code> methods to alter how the
-        dropdown is altered and positioned.
-      </p>
+  <p>
+    The dropdown adapter defines the main container that the dropdown should
+    be held in. <strong>It does not define any extra methods that can be used
+    for decorators</strong>, but it is common for decorators to attach to the
+    <code>render</code> and <code>position</code> methods to alter how the
+    dropdown is altered and positioned.
+  </p>
 
-      <dl class="dl-horizontal">
-        <dt>Key</dt>
-        <dd>
-          <code>dropdownAdapter</code>
-        </dd>
+  <dl class="dl-horizontal">
+    <dt>Key</dt>
+    <dd>
+      <code>dropdownAdapter</code>
+    </dd>
 
-        <dt>Default</dt>
-        <dd>
-          <code title="select2/dropdown">DropdownAdapter</code>
-        </dd>
-      </dl>
+    <dt>Default</dt>
+    <dd>
+      <code title="select2/dropdown">DropdownAdapter</code>
+    </dd>
+  </dl>
 
-      <h2 id="resultsAdapter">
-        Results
-      </h2>
+  <h2 id="resultsAdapter">
+    Results
+  </h2>
 
-      <p>
-        The results adapter controls the list of results that the user can select
-        from. While the results adapter does not define any additional methods
-        that must be implemented, it makes extensive use of the Select2 event
-        system for controlling the display of results and messages.
-      </p>
+  <p>
+    The results adapter controls the list of results that the user can select
+    from. While the results adapter does not define any additional methods
+    that must be implemented, it makes extensive use of the Select2 event
+    system for controlling the display of results and messages.
+  </p>
 
-      <dl class="dl-horizontal">
-        <dt>Key</dt>
-        <dd>
-          <code>resultsAdapter</code>
-        </dd>
+  <dl class="dl-horizontal">
+    <dt>Key</dt>
+    <dd>
+      <code>resultsAdapter</code>
+    </dd>
 
-        <dt>Default</dt>
-        <dd>
-          <code title="select2/results">ResultsAdapter</code>
-        </dd>
-      </dl>
-    </section>
+    <dt>Default</dt>
+    <dd>
+      <code title="select2/results">ResultsAdapter</code>
+    </dd>
+  </dl>
+</section>
