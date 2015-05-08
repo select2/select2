@@ -19,16 +19,6 @@
   margin-bottom: 20px;
 }
 
-
-.version {
-  color: #999;
-}
-
-.page-header {
-  padding-bottom: 19px;
-  margin-bottom: 29px;
-}
-
 /* Inline code within headings retain the heading's background-color */
 h2 code,
 h3 code,
@@ -47,4 +37,9 @@ pre {
   margin-bottom: 14px;
   background-color: #f7f7f9;
   border: 1px solid #e1e1e8;
+}
+
+.half-rule {
+  width: 100px;
+  margin: 40px auto;
 }

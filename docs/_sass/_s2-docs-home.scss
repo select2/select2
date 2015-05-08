@@ -1,19 +1,36 @@
 .notice-previous {
-  padding: 15px 20px;
-  color: #777;
-  background-color: #FAFAFA;
+  background: #f6f6f6;
+  color: #666;
   border-bottom: 1px solid #eee;
-  a {
-    font-weight: bold;
-  }
+  padding: 15px 20px;
 }
 
 .s2-docs-home .jumbotron {
   margin-bottom: 0;
+  color: #000;
+  h1 {
+    color: #000;
+    margin-top: 20px;
+  }
 }
 
 #lead {
 	text-align: center;
 	max-width: 800px;
-	margin: 0 auto 80px;
+	margin: 0 auto 40px;
+}
+
+.s2-docs-featurette {
+  color: #777;
+  text-align: center;
+  padding: 15px 0;
+
+  .fa {
+    font-size: 28px;
+    color: #777;
+  }
+
+  h4 {
+    margin: 30px 0 15px;
+  }
 }

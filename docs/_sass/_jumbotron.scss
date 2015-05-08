@@ -6,7 +6,15 @@
   padding-right: 0;
 
   h1 {
-    font-size: 36px;
     color: #777;
+    font-size: 36px;
+    margin-top: 10px;
+  }
+
+  .version {
+    color: #999;
+    font-size: 14px;
+    font-weight: normal;
+    margin-bottom: 30px;
   }
 }
