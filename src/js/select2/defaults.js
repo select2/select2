@@ -375,7 +375,7 @@ define([
         return selection.text;
       },
       theme: 'default',
-      width: 'resolve'
+      width: null
     };
   };
 
