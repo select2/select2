@@ -292,7 +292,7 @@ define([
         return;
       }
 
-      $highlighted.trigger('mouseup');
+      $highlighted.trigger('click');
     });
 
     container.on('results:select', function () {
@@ -414,7 +414,7 @@ define([
       });
     }
 
-    this.$results.on('mouseup', '.select2-results__option[aria-selected]',
+    this.$results.on('click', '.select2-results__option[aria-selected]',
       function (evt) {
       var $this = $(this);
 
