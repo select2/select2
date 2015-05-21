@@ -4718,6 +4718,14 @@ S2.define('select2/options',[
         this.options.dir = 'ltr';
       }
     }
+    
+    if (this.options.idContainer == null) {
+        if ($e.data('s2-id-container')) {
+            this.options.idContainer = $e.data('s2-id-container');
+        } else {
+            this.options.idContainer = null;
+        }
+    }
 
     $e.prop('disabled', this.options.disabled);
     $e.prop('multiple', this.options.multiple);
@@ -5304,6 +5312,10 @@ S2.define('select2/core',[
     );
 
     $container.attr('dir', this.options.get('dir'));
+    
+    if(this.options.get('idContainer')) {
+     	$container.attr('id', this.options.get('idContainer'));
+    }
 
     this.$container = $container;
 
