@@ -1833,6 +1833,10 @@ S2.define('select2/selection/search',[
           self.searchRemoveChoice(item);
 
           evt.preventDefault();
+          
+          window.setTimeout(function () {
+            self.$search.focus();
+          }, 0);
         }
       }
     });
@@ -3259,7 +3263,7 @@ S2.define('select2/data/ajax',[
       this.processResults = this.ajaxOptions.processResults;
     }
 
-    ArrayAdapter.__super__.constructor.call(this, $element, options);
+    AjaxAdapter.__super__.constructor.call(this, $element, options);
   }
 
   Utils.Extend(AjaxAdapter, ArrayAdapter);

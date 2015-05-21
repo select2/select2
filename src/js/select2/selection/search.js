@@ -77,6 +77,10 @@ define([
           self.searchRemoveChoice(item);
 
           evt.preventDefault();
+          
+          window.setTimeout(function () {
+            self.$search.focus();
+          }, 0);
         }
       }
     });
