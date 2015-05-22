@@ -132,6 +132,7 @@ define([
     this.trigger('open');
 
     this.$search.val(item.text + ' ');
+    this.resizeSearch();
   };
 
   Search.prototype.resizeSearch = function () {
