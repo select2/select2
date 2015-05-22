@@ -298,7 +298,7 @@ define([
       var key = evt.which;
 
       if (self.isOpen()) {
-        if (key === KEYS.ENTER) {
+        if (key === KEYS.ENTER || key === KEYS.TAB) {
           self.trigger('results:select');
 
           evt.preventDefault();
@@ -314,7 +314,7 @@ define([
           self.trigger('results:next');
 
           evt.preventDefault();
-        } else if (key === KEYS.ESC || key === KEYS.TAB) {
+        } else if (key === KEYS.ESC) {
           self.close();
 
           evt.preventDefault();
