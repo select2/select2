@@ -54,6 +54,10 @@ define([
       self.trigger('focus', evt);
     });
 
+    this.$selection.on('focus', function (evt) {
+      self.$search.trigger('focus');
+    });
+
     this.$selection.on('focusout', '.select2-search--inline', function (evt) {
       self.trigger('blur', evt);
     });
