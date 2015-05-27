@@ -25,7 +25,11 @@ define([
     var self = this;
 
     MultipleSelection.__super__.bind.apply(this, arguments);
-
+    
+    this.$selection.on('focus', function (evt) {
+      self.$search.trigger('focus');
+    });
+    
     this.$selection.on('click', function (evt) {
       self.trigger('toggle', {
         originalEvent: evt
