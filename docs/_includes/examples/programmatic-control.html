@@ -4,7 +4,7 @@
     Programmatic control
   </h1>
 
-  <h2 id="events">Events</h2>
+  <h2 id="events">DOM events</h2>
 
   <p>
     Select2 will trigger some events on the original select element,
@@ -138,8 +138,8 @@ function log (name, evt) {
   <pre data-fill-from=".js-code-programmatic"></pre>
 
 <script type="text/javascript" class="js-code-programmatic">
-var $example = $(".js-example-programmatic");
-var $exampleMulti = $(".js-example-programmatic-multi");
+var $example = $(".js-example-programmatic").select2();
+var $exampleMulti = $(".js-example-programmatic-multi").select2();
 
 $(".js-programmatic-set-val").on("click", function () { $example.val("CA").trigger("change"); });
 
