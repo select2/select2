@@ -38,6 +38,11 @@ define([
   AjaxAdapter.prototype.processResults = function (results) {
     return results;
   };
+  
+  //Run when the AJAX data render completed
+  AjaxAdapter.prototype.complete = function () {
+              return;
+  };
 
   AjaxAdapter.prototype.query = function (params, callback) {
     var matches = [];
@@ -79,6 +84,10 @@ define([
         }
 
         callback(results);
+		//Support call back function when AJAX request render complete 
+        if (typeof self.complete === 'function') {
+			options.complete()
+		}
       }, function () {
         // TODO: Handle AJAX errors
       });
