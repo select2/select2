@@ -40,7 +40,7 @@ define([
   };
   
   //Run when the AJAX data render completed
-  AjaxAdapter.prototype.complete = function () {
+  AjaxAdapter.prototype.templateRenderCompleted = function () {
               return;
   };
 
@@ -85,8 +85,8 @@ define([
 
         callback(results);
 		//Support call back function when AJAX request render complete 
-        if (typeof self.complete === 'function') {
-			options.complete()
+        if (typeof self.templateRenderCompleted === 'function') {
+			options.templateRenderCompleted()
 		}
       }, function () {
         // TODO: Handle AJAX errors
