@@ -1,4 +1,3 @@
-/* Footer */
 .s2-docs-footer {
   border-top: 1px solid #eee;
   color: #767676;
@@ -20,9 +19,11 @@
       content: "·";
       padding-left: 8px;
     }
+
     &:first-child {
       padding-left: 0;
     }
+
     &:last-child:after {
       content: "";
       padding-left: 0;

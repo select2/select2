@@ -23,19 +23,19 @@
 	color: white;
 	position: relative;
 	padding: 45px 15px 15px;
-  	margin: 0 -15px 15px;
-}
+  margin: 0 -15px 15px;
 
-.s2-event-log:after {
-  content: "Event Log";
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  font-size: 12px;
-  font-weight: bold;
-  color: #BBB;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  &:after {
+    content: "Event Log";
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #BBB;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
 }
 
 .s2-example {
@@ -47,6 +47,18 @@
   border-color: #E5E5E5 #EEE #EEE;
   border-style: solid;
   border-width: 1px 0;
+
+  &:after {
+    content: "Example";
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #BBB;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
 }
 
 @media (min-width: 768px) {
@@ -70,14 +82,4 @@
 	}
 }
 
-.s2-example:after {
-  content: "Example";
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  font-size: 12px;
-  font-weight: bold;
-  color: #BBB;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
+

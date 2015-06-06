@@ -1,4 +1,6 @@
-/* Animated hamburger icon @see http://codepen.io/JulienMelissas/pen/LEBGLj */
+// animated hamburger icon
+// @see http://codepen.io/JulienMelissas/pen/LEBGLj
+
 .navbar-toggle {
   border: none;
   background: transparent !important;
@@ -6,28 +8,37 @@
   &:hover {
     background: transparent !important;
   }
+
   .icon-bar {
     width: 22px;
     transition: all 0.2s;
   }
+
   .top-bar {
     transform: rotate(45deg);
     transform-origin: 10% 10%;
   }
+
   .middle-bar {
     opacity: 0;
   }
+
   .bottom-bar {
     transform: rotate(-45deg);
     transform-origin: 10% 90%;
   }
-  &.collapsed .top-bar {
-    transform: rotate(0);
-  }
-  &.collapsed .middle-bar {
-    opacity: 1;
-  }
-  &.collapsed .bottom-bar {
-    transform: rotate(0);
+
+  &.collapsed {
+    .top-bar {
+      transform: rotate(0);
+    }
+
+    .middle-bar {
+      opacity: 1;
+    }
+
+    .bottom-bar {
+      transform: rotate(0);
+    }
   }
 }
