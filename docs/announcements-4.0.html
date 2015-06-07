@@ -379,9 +379,10 @@ initSelection : function (element, callback) {
         </p>
 
 <pre class="prettyprint linenums">
-$.fn.select2.amd.require(
-['select2/data/array', 'select2/utils'],
-function (ArrayData, Utils) {
+$.fn.select2.amd.require([
+  'select2/data/array',
+  'select2/utils'
+], function (ArrayData, Utils) {
   function CustomData ($element, options) {
     CustomData.__super__.constructor.call(this, $element, options);
   }
@@ -505,9 +506,10 @@ query: function (query) {
         </p>
 
 <pre class="prettyprint linenums">
-$.fn.select2.amd.require(
-['select2/data/array', 'select2/utils'],
-function (ArrayData, Utils) {
+$.fn.select2.amd.require([
+  'select2/data/array',
+  'select2/utils'
+], function (ArrayData, Utils) {
   function CustomData ($element, options) {
     CustomData.__super__.constructor.call(this, $element, options);
   }
@@ -746,5 +748,5 @@ $("select").prop("disabled", true); // instead of $("select").enable(false);
 </div>
 
 <script type="text/javascript">
-prettyPrint();
+  prettyPrint();
 </script>
