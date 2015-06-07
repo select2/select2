@@ -3,6 +3,8 @@
 @import "result-repository";
 @import "sidenav";
 @import "hamburger";
+@import "code";
+@import "featurette";
 @import "layout";
 @import "nav";
 @import "footer";
@@ -14,32 +16,4 @@
 @import "anchorjs";
 @import "jumbotron";
 @import "prettify";
-
-.btn-toolbar {
-  margin-bottom: 20px;
-}
-
-/* Inline code within headings retain the heading's background-color */
-h2 code,
-h3 code,
-h4 code {
-  background-color: inherit;
-}
-
-h1[id] {
-  padding-top: 20px;
-  margin-top: 0;
-}
-
-/* pre */
-pre {
-  padding: 9px 14px;
-  margin-bottom: 14px;
-  background-color: #f7f7f9;
-  border: 1px solid #e1e1e8;
-}
-
-.half-rule {
-  width: 100px;
-  margin: 40px auto;
-}
+@import "typography"

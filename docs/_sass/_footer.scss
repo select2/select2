@@ -1,3 +1,5 @@
+// Footer
+
 .s2-docs-footer {
   border-top: 1px solid #eee;
   color: #767676;
@@ -29,10 +31,12 @@
       padding-left: 0;
     }
   }
-}
 
-@media (min-width: 768px) {
-  .s2-docs-footer p {
-    margin-bottom: 0;
+  @media (min-width: 768px) {
+    p {
+      margin-bottom: 0;
+    }
   }
 }
+
+

@@ -1,31 +1,34 @@
-/*
- * Social buttons
- *
- * Twitter and GitHub social action buttons (for homepage and footer).
- */
+// Social buttons
+//
+// Twitter and GitHub social action buttons.
 
 .s2-docs-social {
   margin-bottom: 20px;
   text-align: center;
 }
+
 .s2-docs-social-buttons {
   display: inline-block;
   padding-left: 0;
   margin-bottom: 0;
   list-style: none;
+
+  li {
+    display: inline-block;
+    padding: 5px 8px;
+    line-height: 1;
+  }
+
+  .twitter-follow-button {
+    width: 225px !important;
+  }
+
+  .twitter-share-button {
+    width: 98px !important;
+  }
 }
-.s2-docs-social-buttons li {
-  display: inline-block;
-  padding: 5px 8px;
-  line-height: 1;
-}
-.s2-docs-social-buttons .twitter-follow-button {
-  width: 225px !important;
-}
-.s2-docs-social-buttons .twitter-share-button {
-  width: 98px !important;
-}
-/* Style the GitHub buttons via CSS instead of inline attributes */
+
+// Style the GitHub buttons via CSS instead of inline attributes
 .github-btn {
   overflow: hidden;
   border: 0;

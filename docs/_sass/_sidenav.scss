@@ -1,28 +1,24 @@
-/*
- * Side navigation
- *
- * Scrollspy and affixed enhanced navigation to highlight sections and secondary
- * sections of docs content.
- */
+// Side navigation
+//
+// Scrollspy and affixed enhanced navigation to
+// highlight sections and secondary sections of docs content`.
 
-/* By default it's not affixed in mobile views, so undo that */
-.s2-docs-sidebar.affix {
-  position: static;
-}
+// First level of nav
+.s2-docs-sidenav {
+  margin-top: 20px;
+  margin-bottom: 20px;
 
-@media (min-width: 768px) {
-  .s2-docs-sidebar {
+  // By default it is not affixed in mobile views, so undo that
+  &.affix {
+    position: static;
+  }
+
+  @media (min-width: 768px) {
     padding-left: 20px;
   }
 }
 
-/* First level of nav */
-.s2-docs-sidenav {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-/* All levels of nav */
+// All levels of nav
 .s2-docs-sidebar .nav {
   > li > a {
     margin-left: -1px;
@@ -59,9 +55,9 @@
     border-left: 2px solid #428BCA;
   }
 
-  /* Nav: second level (shown on .active) */
+  // Nav: second level (shown on .active)
   .nav {
-    display: none; /* Hide by default, but at >768px, show it */
+    display: none; // Hide by default, but at >768px, show it
     padding-bottom: 10px;
   }
 
@@ -86,36 +82,7 @@
   }
 }
 
-/* Back to top (hidden on mobile) */
-.back-to-top,
-.s2-docs-theme-toggle {
-  display: none;
-  padding: 4px 10px;
-  margin-top: 10px;
-  margin-left: 10px;
-  font-size: 12px;
-  font-weight: 500;
-  color: #999;
-}
-
-.back-to-top:hover,
-.s2-docs-theme-toggle:hover {
-  color: #428BCA;
-  text-decoration: none;
-}
-
-.s2-docs-theme-toggle {
-  margin-top: 0;
-}
-
-@media (min-width: 768px) {
-  .back-to-top,
-  .s2-docs-theme-toggle {
-    display: block;
-  }
-}
-
-/* Show and affix the side nav when space allows it */
+// Show and affix the side nav when space allows it
 @media (min-width: 992px) {
   .s2-docs-sidebar .s2-docs-sidenav {
     padding-top: 40px;
@@ -130,18 +97,25 @@
   .s2-docs-sidebar .nav > .active > ul {
     display: block;
   }
-  /* Widen the fixed sidebar */
+
+  // Widen the fixed sidebar
   .s2-docs-sidebar.affix,
   .s2-docs-sidebar.affix-bottom {
     width: 213px;
   }
+
+  // Undo the static from mobile first approach
   .s2-docs-sidebar.affix {
-    position: fixed; /* Undo the static from mobile first approach */
+
+    position: fixed;
     top: 0px;
   }
+
+  // Undo the static from mobile first approach
   .s2-docs-sidebar.affix-bottom {
-    position: absolute; /* Undo the static from mobile first approach */
+    position: absolute;
   }
+
   .s2-docs-sidebar.affix-bottom .s2-docs-sidenav,
   .s2-docs-sidebar.affix .s2-docs-sidenav {
     margin-top: 0;
@@ -150,7 +124,7 @@
 }
 
 @media (min-width: 1200px) {
-  /* Widen the fixed sidebar again */
+  // Widen the fixed sidebar again
   .s2-docs-sidebar.affix-bottom,
   .s2-docs-sidebar.affix {
     width: 263px;
@@ -171,10 +145,8 @@
     color: #428BCA;
     text-decoration: none;
   }
-}
 
-@media (min-width: 768px) {
-  .back-to-top {
+  @media (min-width: 768px) {
     display: block;
   }
 }

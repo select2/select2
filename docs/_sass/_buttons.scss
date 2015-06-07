@@ -1,3 +1,5 @@
+// Buttons
+
 .btn-outline-inverse {
   color: #428BCA;
   background-color: transparent;
@@ -11,8 +13,8 @@
     border-color: #428BCA;
     background-color: #428BCA;
   }
+}
 
-  .fa {
-    margin-right: 8px;
-  }
+.btn-toolbar {
+  margin-bottom: 20px;
 }
