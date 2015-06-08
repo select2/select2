@@ -1,0 +1,43 @@
+// AnchorJS Styles
+//
+// Styles for AnchorJS elements following the Bootstrap docs styles.
+//
+// @see https://github.com/twbs/bootstrap/blob/master/docs/assets/css/src/docs.css#L1599
+
+.anchorjs-link {
+  float: left;
+  width: 1em;
+  height: 1em;
+  margin-left: -1.2em;
+  opacity: 0;
+  color: inherit;
+  text-align: center;
+
+  &:link,
+  &:visited {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  @media (max-width: 480px) {
+    display: none;
+  }
+}
+
+*:hover > .anchorjs-link {
+  opacity: .5;
+  -webkit-transition: all .16s linear;
+       -o-transition: all .16s linear;
+          transition: all .16s linear;
+}
+
+*:hover > .anchorjs-link:hover,
+.anchorjs-link:focus {
+  opacity: 1;
+}
+
+.anchorjs-icon {
+  font-size: 60%;
+  vertical-align: .2em;
+}
+
