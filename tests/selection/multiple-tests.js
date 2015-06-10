@@ -34,7 +34,7 @@ test('display uses templateSelection', function (assert) {
 });
 
 test('templateSelection can addClass', function (assert) {
-  var called = false, found = false;
+  var called = false;
 
   var templateOptions = new Options({
     templateSelection: function (data, container) {
