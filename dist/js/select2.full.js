@@ -5823,6 +5823,11 @@ S2.define('jquery.select2',[
   // Force jQuery.mousewheel to be loaded if it hasn't already
   require('jquery.mousewheel');
 
+  if (typeof $.fn === 'undefined') {
+    // If we're not client-side, jquery isn't fully loaded; we don't need to be
+    return null;
+  }
+
   if ($.fn.select2 == null) {
     // All methods that should return the element
     var thisMethods = ['open', 'close', 'destroy'];
@@ -6107,7 +6112,9 @@ S2.define('jquery.select2',[
   // Hold the AMD module references on the jQuery function that was just loaded
   // This allows Select2 to use the internal loader outside of this file, such
   // as in the language files.
-  jQuery.fn.select2.amd = S2;
+  if (typeof jQuery.fn !== 'undefined') {
+    jQuery.fn.select2.amd = S2;
+  }
 
   // Return the Select2 instance for anyone who is importing it.
   return select2;

@@ -8,6 +8,11 @@ define([
   // Force jQuery.mousewheel to be loaded if it hasn't already
   require('jquery.mousewheel');
 
+  if (typeof $.fn === 'undefined') {
+    // If we're not client-side, jquery isn't fully loaded; we don't need to be
+    return null;
+  }
+
   if ($.fn.select2 == null) {
     // All methods that should return the element
     var thisMethods = ['open', 'close', 'destroy'];
