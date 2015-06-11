@@ -57,11 +57,11 @@ define([
     }, this.ajaxOptions);
 
     if (typeof options.url === 'function') {
-      options.url = options.url(params);
+      options.url = options.url.call(self.$element, params);
     }
 
     if (typeof options.data === 'function') {
-      options.data = options.data(params);
+      options.data = options.data.call(self.$element, params);
     }
 
     function request () {
