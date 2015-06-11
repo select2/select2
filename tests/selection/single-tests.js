@@ -33,6 +33,35 @@ test('display uses templateSelection', function (assert) {
   assert.equal(out, 'test');
 });
 
+test('templateSelection can addClass', function (assert) {
+  var called = false;
+
+  var templateOptions = new Options({
+    templateSelection: function (data, container) {
+      called = true;
+      container.addClass('testclass');
+      return data.text;
+    }
+  });
+
+  var selection = new SingleSelection(
+    $('#qunit-fixture .single'),
+    templateOptions
+  );
+
+  var $container = selection.selectionContainer();
+  
+  var out = selection.display({
+    text: 'test'
+  }, $container);
+
+  assert.ok(called);
+
+  assert.equal(out, 'test');
+  
+  assert.ok($container.hasClass('testclass'));
+});
+
 test('empty update clears the selection', function (assert) {
   var selection = new SingleSelection(
     $('#qunit-fixture .single'),
