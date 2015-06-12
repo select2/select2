@@ -52,8 +52,7 @@
     "grunt-contrib-watch": "~0.6.0",
     "grunt-gh-pages": "^0.9.1",
     "grunt-jekyll": "^0.4.2",
-    "grunt-sass": "~0.12.0",
-    "grunt-saucelabs": "^8.5.0",
-    "node-sass": "~0.8.6"
+    "grunt-sass": "^1.0.0",
+    "grunt-saucelabs": "^8.5.0"
   }
 }
