@@ -1263,6 +1263,16 @@ the specific language governing permissions and limitations under the Apache Lic
                 css,
                 resultsListNode;
 
+            // cal actual width
+            var rect = container[0].getBoundingClientRect();
+            if (rect.width) {
+              // 'width' is available for IE9+
+              width = rect.width;
+            } else {
+              // Calculate width for IE8 and below
+              width = rect.right - rect.left;
+            }
+
             // always prefer the current above/below alignment, unless there is not enough room
             if (aboveNow) {
                 above = true;
@@ -3064,7 +3074,7 @@ the specific language governing permissions and limitations under the Apache Lic
             });
             this.setVal(val);
         },
-        
+
         createChoice: function (data) {
             var enableChoice = !data.locked,
                 enabledItem = $(
