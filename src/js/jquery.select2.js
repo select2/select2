@@ -24,18 +24,21 @@ define([
 
         return this;
       } else if (typeof options === 'string') {
-        var instance = this.data('select2');
+        var ret;
+        this.each(function () {
+          var instance = $(this).data('select2');
 
-        if (instance == null && window.console && console.error) {
-          console.error(
-            'The select2(\'' + options + '\') method was called on an ' +
-            'element that is not using Select2.'
-          );
-        }
+          if (instance == null && window.console && console.error) {
+            console.error(
+              'The select2(\'' + options + '\') method was called on an ' +
+              'element that is not using Select2.'
+            );
+          }
 
-        var args = Array.prototype.slice.call(arguments, 1);
+          var args = Array.prototype.slice.call(arguments, 1);
 
-        var ret = instance[options](args);
+          ret = instance[options](args);
+        });
 
         // Check if we should be returning `this`
         if ($.inArray(options, thisMethods) > -1) {
