@@ -41,11 +41,11 @@
 // styles for the event log in the "DOM events" section of the docs
 .s2-event-log {
   background: #002451;
-	color: white;
+  color: white;
   font-family: Menlo, 'Bitstream Vera Sans Mono', 'DejaVu Sans Mono', Monaco, Consolas, monospace;
   margin: 0 -15px 15px;
   padding: 45px 15px 15px;
-	position: relative;
+  position: relative;
 
   &:after {
     content: "Event Log";
