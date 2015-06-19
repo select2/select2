@@ -1526,6 +1526,17 @@ the specific language governing permissions and limitations under the Apache Lic
 
             child = $(children[index]);
 
+            // ININ HACK
+            // For some reason certain instances have a calculation issue between the index
+            // and the number of select2-result-labels.
+            // This caused a strange bounce to the top of the results list.
+            // As a workaround just grab the last item. Supposedly 4.x of Select2 does
+            // a better job.
+            if (child.size() === 0) {
+                child = children.last();
+            }
+            // END ININ HACK
+
             topOffset = (child.offset() || {}).top || 0;
 
             hb = topOffset + child.outerHeight(true);
