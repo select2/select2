@@ -395,8 +395,6 @@ define([
     }
 
     this.trigger('query', {});
-
-    this.trigger('open');
   };
 
   Select2.prototype.close = function () {
