@@ -21,6 +21,8 @@ define([
 
     var $rendered = decorated.call(this);
 
+    this._transferTabIndex();
+
     return $rendered;
   };
 
@@ -30,36 +32,34 @@ define([
     decorated.call(this, container, $container);
 
     container.on('open', function () {
-      self.$search.attr('tabindex', 0);
-
-      self.$search.focus();
+      self.$search.trigger('focus');
     });
 
     container.on('close', function () {
-      self.$search.attr('tabindex', -1);
-
       self.$search.val('');
-      self.$search.focus();
+      self.$search.trigger('focus');
     });
 
     container.on('enable', function () {
       self.$search.prop('disabled', false);
+
+      self._transferTabIndex();
     });
 
     container.on('disable', function () {
       self.$search.prop('disabled', true);
     });
 
+    container.on('focus', function (evt) {
+      self.$search.trigger('focus');
+    });
+
     this.$selection.on('focusin', '.select2-search--inline', function (evt) {
       self.trigger('focus', evt);
     });
 
-    this.$selection.on('focus', function (evt) {
-      self.$search.trigger('focus');
-    });
-
     this.$selection.on('focusout', '.select2-search--inline', function (evt) {
-      self.trigger('blur', evt);
+      self._handleBlur(evt);
     });
 
     this.$selection.on('keydown', '.select2-search--inline', function (evt) {
@@ -95,8 +95,32 @@ define([
 
     this.$selection.on('keyup.search input', '.select2-search--inline',
         function (evt) {
+      var key = evt.which;
+
+      // We can freely ignore events from modifier keys
+      if (key == KEYS.SHIFT || key == KEYS.CTRL || key == KEYS.ALT) {
+        return;
+      }
+
+      // Tabbing will be handled during the `keydown` phase
+      if (key == KEYS.TAB) {
+        return;
+      }
+
       self.handleSearch(evt);
     });
+  };
+
+  /**
+   * This method will transfer the tabindex attribute from the rendered
+   * selection to the search box. This allows for the search box to be used as
+   * the primary focus instead of the selection container.
+   *
+   * @private
+   */
+  Search.prototype._transferTabIndex = function (decorated) {
+    this.$search.attr('tabindex', this.$selection.attr('tabindex'));
+    this.$selection.attr('tabindex', '-1');
   };
 
   Search.prototype.createPlaceholder = function (decorated, placeholder) {

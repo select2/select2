@@ -214,10 +214,14 @@ define([
 
   Select2.prototype._registerSelectionEvents = function () {
     var self = this;
-    var nonRelayEvents = ['toggle'];
+    var nonRelayEvents = ['toggle', 'focus'];
 
     this.selection.on('toggle', function () {
       self.toggleDropdown();
+    });
+
+    this.selection.on('focus', function (params) {
+      self.focus(params);
     });
 
     this.selection.on('*', function (name, params) {
@@ -262,10 +266,6 @@ define([
 
     this.on('disable', function () {
       self.$container.addClass('select2-container--disabled');
-    });
-
-    this.on('focus', function () {
-      self.$container.addClass('select2-container--focus');
     });
 
     this.on('blur', function () {
@@ -409,6 +409,20 @@ define([
 
   Select2.prototype.isOpen = function () {
     return this.$container.hasClass('select2-container--open');
+  };
+
+  Select2.prototype.hasFocus = function () {
+    return this.$container.hasClass('select2-container--focus');
+  };
+
+  Select2.prototype.focus = function (data) {
+    // No need to re-trigger focus events if we are already focused
+    if (this.hasFocus()) {
+      return;
+    }
+
+    this.$container.addClass('select2-container--focus');
+    this.trigger('focus');
   };
 
   Select2.prototype.enable = function (args) {
