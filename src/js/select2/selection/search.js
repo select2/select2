@@ -128,6 +128,7 @@ define([
   };
 
   Search.prototype.update = function (decorated, data) {
+    var had_focus = this.$search.is(":focus");
     this.$search.attr('placeholder', '');
 
     decorated.call(this, data);
@@ -136,6 +137,9 @@ define([
                    .append(this.$searchContainer);
 
     this.resizeSearch();
+    if (had_focus) {
+      this.$search.focus();
+    }
   };
 
   Search.prototype.handleSearch = function () {
