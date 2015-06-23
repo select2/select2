@@ -2756,12 +2756,12 @@ the specific language governing permissions and limitations under the Apache Lic
                 var next = selected.next(".select2-search-choice:not(.select2-locked)");
                 var pos = getCursorInfo(this.search);
 
-                this.multiSelectDown = e.shiftKey || e.ctrlKey;
+                this.multiSelectDown = e.shiftKey || e.ctrlKey || e.which === KEY.SHIFT || e.which === KEY.CTRL;
 
                 if (selected.length &&
                     (e.which == KEY.LEFT || e.which == KEY.RIGHT || e.which == KEY.BACKSPACE || e.which == KEY.DELETE || e.which == KEY.ENTER)) {
                     var selectedChoice = selected,
-                        shouldMultiSelect = e.shiftKey || e.ctrlKey;
+                        shouldMultiSelect = e.shiftKey || e.ctrlKey || e.which === KEY.SHIFT || e.which === KEY.CTRL;
 
                     if (e.which == KEY.LEFT && prev.length) {
                         selectedChoice = prev;
@@ -2792,7 +2792,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     this.selectChoice(selection.find(".select2-search-choice:not(.select2-locked)").last());
                     killEvent(e);
                     return;
-                } else if (e.which !== KEY.SHIFT && e.which !== KEY.CTRL && e.which !== KEY.ALT) {
+                } else if (!e.ctrlKey && e.which !== KEY.SHIFT && e.which !== KEY.CTRL && e.which !== KEY.ALT) {
                     this.selectChoice(null);
                 }
 
