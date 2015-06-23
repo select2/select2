@@ -2792,7 +2792,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     this.selectChoice(selection.find(".select2-search-choice:not(.select2-locked)").last());
                     killEvent(e);
                     return;
-                } else if (!e.ctrlKey && !e.altKey && (!e.shiftKey && !e.which)) {
+                } else if (e.which !== KEY.SHIFT && e.which !== KEY.CTRL && e.which !== KEY.ALT) {
                     this.selectChoice(null);
                 }
 
