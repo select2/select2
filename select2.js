@@ -2723,7 +2723,7 @@ the specific language governing permissions and limitations under the Apache Lic
             var _this = this;
             this.selection.on("click", ".select2-search-choice:not(.select2-locked)", function (e) {
                 _this.search.focus();
-                _this.selectChoice($(this), e.shiftKey);
+                _this.selectChoice($(this), e.shiftKey || e.ctrlKey);
             });
 
             // rewrite labels from original element to focusser
