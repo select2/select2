@@ -2761,7 +2761,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 if (selected.length &&
                     (e.which == KEY.LEFT || e.which == KEY.RIGHT || e.which == KEY.BACKSPACE || e.which == KEY.DELETE || e.which == KEY.ENTER)) {
                     var selectedChoice = selected,
-                        shouldMultiSelect = e.shiftKey;
+                        shouldMultiSelect = e.shiftKey || e.ctrlKey;
 
                     if (e.which == KEY.LEFT && prev.length) {
                         selectedChoice = prev;
