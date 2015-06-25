@@ -14,6 +14,9 @@ define(function () {
   }
 
   return {
+    errorLoading: function () {
+      return 'Невозможно загрузить результаты';
+    },
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;
 

@@ -22,7 +22,7 @@ define([
     dropdownCssAdapter = dropdownCssAdapter || _dropdownAdapter;
 
     if (dropdownCssClass.indexOf(':all:') !== -1) {
-      dropdownCssClass = dropdownCssClass.replace(':all', '');
+      dropdownCssClass = dropdownCssClass.replace(':all:', '');
 
       var _cssAdapter = dropdownCssAdapter;
 

@@ -1,23 +1,57 @@
 <!doctype html>
 <html>
-    <head>
-        {% include head.html %}
-    </head>
-    <body>
-        {% include navigation.html %}
+  <head>
+    {% include head.html %}
+  </head>
+  <body>
+    {% include navigation.html %}
 
-        {{ content }}
+    {{ content }}
 
-        {% include footer.html %}
+    {% include footer.html %}
 
-        <script type="text/javascript">
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    <script>
+      (function ($) {
+        'use strict';
 
-        ga('create', 'UA-57144786-2', 'auto');
-        ga('send', 'pageview');
-        </script>
-    </body>
+        $(function () {
+          var $window = $(window);
+          var $body = $(document.body);
+          var $sidebar = $('.s2-docs-sidebar');
+
+          $body.scrollspy({
+            target: '.s2-docs-sidebar',
+            offset: 40
+          });
+
+          $window.on('load', function () {
+            $body.scrollspy('refresh');
+          });
+
+          $sidebar.affix({
+            offset: {
+              top: function () {
+                var offsetTop = $sidebar.offset().top;
+                var navOuterHeight = $('.s2-docs-nav').height();
+
+                return (this.top = offsetTop - navOuterHeight);
+              },
+              bottom: function () {
+                return (this.bottom = $('.s2-docs-footer').outerHeight(true));
+              }
+            }
+          });
+        });
+      })(jQuery);
+
+      (function () {
+        'use strict';
+
+        anchors.options.placement = 'left';
+        anchors.add('.s2-docs-container h1, .s2-docs-container h2, .s2-docs-container h3, .s2-docs-container h4, .s2-docs-container h5');
+      })();
+    </script>
+
+    {% include ga.html %}
+  </body>
 </html>

@@ -4,7 +4,7 @@ define(function () {
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;
 
-      var message = 'Engada ';
+      var message = 'Elimine ';
 
       if (overChars === 1) {
         message += 'un carácter';
@@ -17,7 +17,7 @@ define(function () {
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
-      var message = 'Elimine ';
+      var message = 'Engada ';
 
       if (remainingChars === 1) {
         message += 'un carácter';

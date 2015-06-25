@@ -22,7 +22,7 @@ define([
     containerCssAdapter = containerCssAdapter || _containerAdapter;
 
     if (containerCssClass.indexOf(':all:') !== -1) {
-      containerCssClass = containerCssClass.replace(':all', '');
+      containerCssClass = containerCssClass.replace(':all:', '');
 
       var _cssAdapter = containerCssAdapter;
 
