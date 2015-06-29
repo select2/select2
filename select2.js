@@ -936,6 +936,155 @@ the specific language governing permissions and limitations under the Apache Lic
                 });
             }
 
+            opts.debug = opts.debug || $.fn.select2.defaults.debug;
+
+            // Warnings for options renamed/removed in Select2 4.0.0
+            // Only when it's enabled through debug mode
+            if (opts.debug && console && console.warn) {
+                // id was removed
+                if (opts.id != null) {
+                    console.warn(
+                        'Select2: The `id` option has been removed in Select2 4.0.0, ' +
+                        'consider renaming your `id` property or mapping the property before your data makes it to Select2. ' +
+                        'You can read more at https://select2.github.io/announcements-4.0.html#changed-id'
+                    );
+                }
+
+                // text was removed
+                if (opts.text != null) {
+                    console.warn(
+                        'Select2: The `text` option has been removed in Select2 4.0.0, ' +
+                        'consider renaming your `text` property or mapping the property before your data makes it to Select2. ' +
+                        'You can read more at https://select2.github.io/announcements-4.0.html#changed-id'
+                    );
+                }
+
+                // sortResults was renamed to results
+                if (opts.sortResults !- null) {
+                    console.warn(
+                        'Select2: the `sortResults` option has been renamed to `sorter` in Select2 4.0.0. '
+                    );
+                }
+
+                // selectOnBlur was renamed to selectOnClose
+                if (opts.selectOnBlur != null) {
+                    console.warn(
+                        'Select2: The `selectOnBlur` option has been renamed to `selectOnClose` in Select2 4.0.0.'
+                    );
+                }
+
+                // ajax.results was renamed to ajax.processResults
+                if (opts.ajax != null && opts.ajax.results != null) {
+                    console.warn(
+                        'Select2: The `ajax.results` option has been renamed to `ajax.processResults` in Select2 4.0.0.'
+                    );
+                }
+
+                // format* options were renamed to language.*
+                if (opts.formatNoResults != null) {
+                    console.warn(
+                        'Select2: The `formatNoResults` option has been renamed to `language.noResults` in Select2 4.0.0.'
+                    );
+                }
+                if (opts.formatSearching != null) {
+                    console.warn(
+                        'Select2: The `formatSearching` option has been renamed to `language.searching` in Select2 4.0.0.'
+                    );
+                }
+                if (opts.formatInputTooShort != null) {
+                    console.warn(
+                        'Select2: The `formatInputTooShort` option has been renamed to `language.inputTooShort` in Select2 4.0.0.'
+                    );
+                }
+                if (opts.formatInputTooLong != null) {
+                    console.warn(
+                        'Select2: The `formatInputTooLong` option has been renamed to `language.inputTooLong` in Select2 4.0.0.'
+                    );
+                }
+                if (opts.formatLoading != null) {
+                    console.warn(
+                        'Select2: The `formatLoading` option has been renamed to `language.loadingMore` in Select2 4.0.0.'
+                    );
+                }
+                if (opts.formatSelectionTooBig != null) {
+                    console.warn(
+                        'Select2: The `formatSelectionTooBig` option has been renamed to `language.maximumSelected` in Select2 4.0.0.'
+                    );
+                }
+
+                if (opts.element.data('select2Tags')) {
+                    console.warn(
+                        'Select2: The `data-select2-tags` attribute has been renamed to `data-tags` in Select2 4.0.0.'
+                    );
+                }
+            }
+
+            // Aliasing options renamed in Select2 4.0.0
+
+            // data-select2-tags -> data-tags
+            if (opts.element.data('tags') != null) {
+                var tags = opts.element.data('tags');
+
+                // data-tags should actually be a boolean
+                if (!$.isArray(tags)) {
+                    tags = [];
+                }
+
+                opts.element.data('select2Tags', tags);
+            }
+
+            // sortResults -> sorter
+            if (opts.sorter != null) {
+                opts.sortResults = opts.sorter;
+            }
+
+            // selectOnBlur -> selectOnClose
+            if (opts.selectOnClose != null) {
+                opts.selectOnBlur = opts.selectOnClose;
+            }
+
+            // ajax.results -> ajax.processResults
+            if (opts.ajax != null) {
+                if ($.isFunction(opts.ajax.processResults)) {
+                    opts.ajax.results = opts.ajax.processResults;
+                }
+            }
+
+            // Formatters/language options
+            if (opts.language != null) {
+                var lang = opts.language;
+
+                // formatNoMatches -> language.noMatches
+                if ($.isFunction(lang.noMatches)) {
+                    opts.formatNoMatches = lang.noMatches;
+                }
+
+                // formatSearching -> language.searching
+                if ($.isFunction(lang.searching)) {
+                    opts.formatSearching = lang.searching;
+                }
+
+                // formatInputTooShort -> language.inputTooShort
+                if ($.isFunction(lang.inputTooShort)) {
+                    opts.formatInputTooShort = lang.inputTooShort;
+                }
+
+                // formatInputTooLong -> language.inputTooLong
+                if ($.isFunction(lang.inputTooLong)) {
+                    opts.formatInputTooLong = lang.inputTooLong;
+                }
+
+                // formatLoading -> language.loadingMore
+                if ($.isFunction(lang.loadingMore)) {
+                    opts.formatLoading = lang.loadingMore;
+                }
+
+                // formatSelectionTooBig -> language.maximumSelected
+                if ($.isFunction(lang.maximumSelected)) {
+                    opts.formatSelectionTooBig = lang.maximumSelected;
+                }
+            }
+
             opts = $.extend({}, {
                 populateResults: function(container, results, query) {
                     var populate, id=this.opts.id, liveRegion=this.liveRegion;
@@ -979,7 +1128,6 @@ the specific language governing permissions and limitations under the Apache Lic
 
 
                             if (compound) {
-
                                 innerContainer=$("<ul></ul>");
                                 innerContainer.addClass("select2-result-sub");
                                 populate(result.children, innerContainer, depth+1);
@@ -1050,7 +1198,6 @@ the specific language governing permissions and limitations under the Apache Lic
                 opts.id=function(e) { return e.id; };
             } else {
                 if (!("query" in opts)) {
-
                     if ("ajax" in opts) {
                         ajaxUrl = opts.element.data("ajax-url");
                         if (ajaxUrl && ajaxUrl.length > 0) {
@@ -2533,9 +2680,23 @@ the specific language governing permissions and limitations under the Apache Lic
 
             if (arguments.length > 1) {
                 triggerChange = arguments[1];
+
+                if (this.opts.debug && console && console.warn) {
+                    console.warn(
+                        'Select2: The second option to `select2("val")` is not supported in Select2 4.0.0. ' +
+                        'The `change` event will always be triggered in 4.0.0.'
+                    );
+                }
             }
 
             if (this.select) {
+                if (this.opts.debug && console && console.warn) {
+                    console.warn(
+                        'Select2: Setting the value on a <select> using `select2("val")` is no longer supported in 4.0.0. ' +
+                        'You can use the `.val(newValue).trigger("change")` method provided by jQuery instead.'
+                    );
+                }
+
                 this.select
                     .val(val)
                     .find("option").filter(function() { return this.selected }).each2(function (i, elm) {
@@ -2584,6 +2745,13 @@ the specific language governing permissions and limitations under the Apache Lic
                 if (data == undefined) data = null;
                 return data;
             } else {
+                if (opts.debug && console && console.warn) {
+                    console.warn(
+                        'Select2: The `select2("data")` method can no longer set selected values in 4.0.0, ' +
+                        'consider using the `.val()` method instead.'
+                    );
+                }
+
                 if (arguments.length > 1) {
                     triggerChange = arguments[1];
                 }
@@ -3066,7 +3234,7 @@ the specific language governing permissions and limitations under the Apache Lic
             });
             this.setVal(val);
         },
-        
+
         createChoice: function (data) {
             var enableChoice = !data.locked,
                 enabledItem = $(
@@ -3442,6 +3610,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
     // plugin defaults, accessible to users
     $.fn.select2.defaults = {
+        debug: false,
         width: "copy",
         loadMorePadding: 0,
         closeOnSelect: true,
