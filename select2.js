@@ -313,7 +313,8 @@ the specific language governing permissions and limitations under the Apache Lic
             sizer.attr("class","select2-sizer");
             $(document.body).append(sizer);
         }
-        sizer.text(e.val());
+        //White space width is not calculated when element is hidden/offscreen. so replace whitespaces with a random character
+        sizer.text(e.val().replace(/\s/g, "o"));
         return sizer.width();
     }
 
@@ -1423,18 +1424,6 @@ the specific language governing permissions and limitations under the Apache Lic
 
                         e.preventDefault();
                         e.stopPropagation();
-
-                        var hasChildren = dropdown.find(".select2-result:not(.suppress-no-results)").length;
-                        if (!hasChildren) {
-                            // Re-create the event without the popover
-                            var receiver = document.elementFromPoint(e.clientX, e.clientY);
-                            var newEvt = $.Event("click", {
-                                target: receiver,
-                                shiftKey: e.shiftKey,
-                            });
-
-                            $(receiver).trigger(newEvt);
-                        }
                     }
                 });
             }
@@ -2734,7 +2723,13 @@ the specific language governing permissions and limitations under the Apache Lic
                 .attr('for', this.search.attr('id'));
             this.opts.element.focus(this.bind(function () { this.focus(); }));
 
-            this.search.on("input paste", this.bind(function() {
+            this.search.on("input paste", this.bind(function(ev) {
+                //reset search container position.
+                if (this.opts.editableTags && !this.search.val() && ev.type === 'input'){
+                    this.searchContainer.appendTo(this.searchContainer.parent());
+                    this.search.width(10);
+                    this.focusSearch();
+                }
                 if (this.search.attr('placeholder') && this.search.val().length == 0) return;
                 if (!this.isInterfaceEnabled()) return;
                 if (!this.opened()) {
@@ -2966,7 +2961,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 // stretch the search box to full width of the container so as much of the placeholder is visible as possible
                 // we could call this.resizeSearch(), but we do not because that requires a sizer and we do not want to create one so early because of a firefox bug, see #944
                 this.search.width(maxWidth > 0 ? maxWidth : this.container.css("width"));
-            } else {
+            } else if (this.opts.clearSearchOnClose){
                 this.search.val("").width(10);
             }
         },
@@ -3032,6 +3027,8 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
             });
             data = filtered;
+
+            this.opts.element.trigger($.Event("select2-before-update"));
 
             this.selection.find(".select2-search-choice").remove();
             $(data).each(function () {
@@ -3156,6 +3153,41 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             choice.data("select2-data", data);
+
+            if (this.opts.editableTags){
+                choice.on('dblclick', this.bind(function (ev) {
+
+                    var tokenText = this.opts.getDataText(data);
+
+                    if(!tokenText){
+                        return;
+                    }
+
+                    this.search.val('');
+
+                    var tokenIndex = choice.index();
+
+                    // get current search value;
+                    var searchVal =   this.search.val();
+
+                    this.unselect(choice);
+
+                    this.search.val(tokenText);
+                    this.resizeSearch();
+
+                    var newLocationEl =  this.container.find('li.select2-search-choice').eq(tokenIndex);
+
+                    newLocationEl.before(this.searchContainer);
+
+                    this.search.click();
+                    this.focusSearch();
+
+                    setTimeout(function(){
+                        this.search.select();
+                    }.bind(this),0);
+
+                }));
+            }
             choice.insertBefore(this.searchContainer);
 
             val.push(id);
@@ -3318,6 +3350,10 @@ the specific language governing permissions and limitations under the Apache Lic
 
             if (searchWidth <= 0) {
               searchWidth = minimumWidth;
+            }
+
+            if (this.opts.editableTags) {
+                searchWidth = minimumWidth + 10 > searchWidth ? searchWidth : minimumWidth + 10;
             }
 
             this.search.width(Math.floor(searchWidth));
@@ -3585,8 +3621,13 @@ the specific language governing permissions and limitations under the Apache Lic
         tokenSeparators: [],
         tokenizer: defaultTokenizer,
         escapeMarkup: defaultEscapeMarkup,
+        getDataText: function(data){
+            return data.text
+        },
         blurOnChange: false,
         selectOnBlur: false,
+        clearSearchOnClose: true,
+        editableTags: false,
         adaptContainerCssClass: function(c) { return c; },
         adaptDropdownCssClass: function(c) { return null; },
         nextSearchTerm: function(selectedObject, currentSearchTerm) { return undefined; },
