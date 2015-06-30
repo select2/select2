@@ -86,7 +86,7 @@ define([
     var formatted = this.display(selection, $rendered);
 
     $rendered.empty().append(formatted);
-    $rendered.prop('title', selection.title || selection.text);
+    $rendered.prop('title', selection.title || $rendered.text());
   };
 
   return SingleSelection;
