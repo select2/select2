@@ -21,6 +21,21 @@ var arrayOptions = new Options({
   ]
 });
 
+var extraOptions = new Options ({
+  data: [
+    {
+      id: 'default',
+      text: 'Default',
+      extra: true
+    },
+    {
+      id: 'One',
+      text: 'One',
+      extra: true
+    }
+  ]
+});
+
 var nestedOptions = new Options({
   data: [
     {
@@ -203,6 +218,36 @@ test('option tags are automatically generated', function (assert) {
     $select.find('option').length,
     3,
     'An <option> element should be created for each object'
+  );
+});
+
+test('option tags can receive new data', function(assert) {
+  var $select = $('#qunit-fixture .single');
+
+  var data = new ArrayData($select, extraOptions);
+
+  assert.equal(
+    $select.find('option').length,
+    2,
+    'Only one more <option> element should be created'
+  );
+
+  data.select({
+    id: 'default'
+  });
+
+  assert.ok(
+    $select.find(':selected').data('data').extra,
+    '<option> default should have new data'
+  );
+
+  data.select({
+    id: 'One'
+  });
+
+  assert.ok(
+    $select.find(':selected').data('data').extra,
+    '<option> One should have new data'
   );
 });
 
