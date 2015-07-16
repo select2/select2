@@ -120,7 +120,7 @@ define([
     if (options.resultsAdapter == null) {
       options.resultsAdapter = ResultsList;
 
-      if (options.ajax != null) {
+      if (options.ajax != null || options.pageSize != null) {
         options.resultsAdapter = Utils.Decorate(
           options.resultsAdapter,
           InfiniteScroll

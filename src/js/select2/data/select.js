@@ -126,6 +126,12 @@ define([
   SelectAdapter.prototype.query = function (params, callback) {
     var data = [];
     var self = this;
+    var more = false;
+
+    var pageSize = this.options.get('pageSize');
+    var page = params.page ? params.page : 1;
+    var seekTo = (page - 1) * pageSize;
+    var skipCount = 0;
 
     var $options = this.$element.children();
 
@@ -141,12 +147,22 @@ define([
       var matches = self.matches(params, option);
 
       if (matches !== null) {
-        data.push(matches);
+        if (skipCount < seekTo) {
+          skipCount++;
+        } else {
+          data.push(matches);
+        }
+      }
+
+      if (pageSize && data.length >= pageSize) {
+        more = true;
+        return false;
       }
     });
 
     callback({
-      results: data
+      results: data,
+      pagination: { more: more }
     });
   };
 
