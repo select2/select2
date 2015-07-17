@@ -3065,7 +3065,15 @@ S2.define('select2/data/select',[
     var pageSize = this.options.get('pageSize');
     var page = params.page ? params.page : 1;
     var seekTo = (page - 1) * pageSize;
-    var skipCount = 0;
+
+    if (pageSize && this.cachedQueryTerm === params.term) {
+      var end = seekTo + pageSize;
+      callback({
+        results: this.cachedQueryData.slice(seekTo, end),
+        pagination: { more: this.cachedQueryData.length >= end }
+      });
+      return;
+    }
 
     var $options = this.$element.children();
 
@@ -3081,23 +3089,23 @@ S2.define('select2/data/select',[
       var matches = self.matches(params, option);
 
       if (matches !== null) {
-        if (skipCount < seekTo) {
-          skipCount++;
-        } else {
-          data.push(matches);
-        }
-      }
-
-      if (pageSize && data.length >= pageSize) {
-        more = true;
-        return false;
+        data.push(matches);
       }
     });
 
-    callback({
-      results: data,
-      pagination: { more: more }
-    });
+    if (pageSize) {
+      this.cachedQueryTerm = params.term;
+      this.cachedQueryData = data;
+
+      callback({
+        results: data.slice(0, pageSize),
+        pagination: { more: data.length >= pageSize }
+      });
+    } else {
+      callback({
+        results: data,
+      });
+    }
   };
 
   SelectAdapter.prototype.addOptions = function ($options) {
