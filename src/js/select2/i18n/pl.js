@@ -33,7 +33,7 @@ define(function () {
     },
     maximumSelected: function (args) {
       return 'Możesz zaznaczyć tylko ' + args.maximum + ' ' +
-        pluralWord(args.maxiumum, itemsWords);
+        pluralWord(args.maximum, itemsWords);
     },
     noResults: function () {
       return 'Brak wyników';
