@@ -70,7 +70,8 @@ define([
 
       var data = createTag(partParams);
 
-      callback(data);
+      if(data !== null)
+        callback(data);
 
       // Reset the term to not include the tokenized portion
       term = term.substr(i + 1) || '';
