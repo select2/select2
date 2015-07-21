@@ -4167,6 +4167,10 @@ S2.define('select2/dropdown/attachBody',[
     this._positionDropdown();
     this._resizeDropdown();
   };
+  
+  AttachBody.prototype.destroy = function() {
+    this.$dropdownContainer.destroy();
+  };
 
   return AttachBody;
 });
