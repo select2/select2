@@ -199,7 +199,7 @@ define([
   };
   
   AttachBody.prototype.destroy = function() {
-    this.$dropdownContainer.destroy();
+    this.$dropdownContainer.remove();
   };
 
   return AttachBody;
