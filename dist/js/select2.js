@@ -1,5 +1,5 @@
 /*!
- * Select2 4.0.0
+ * Select2 4.0.1
  * https://select2.github.io
  *
  * Released under the MIT license
@@ -4166,6 +4166,10 @@ S2.define('select2/dropdown/attachBody',[
 
     this._positionDropdown();
     this._resizeDropdown();
+  };
+  
+  AttachBody.prototype.destroy = function() {
+    this.$dropdownContainer.remove();
   };
 
   return AttachBody;

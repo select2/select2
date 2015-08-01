@@ -197,6 +197,10 @@ define([
     this._positionDropdown();
     this._resizeDropdown();
   };
+  
+  AttachBody.prototype.destroy = function() {
+    this.$dropdownContainer.remove();
+  };
 
   return AttachBody;
 });
