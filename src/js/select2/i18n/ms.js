@@ -1,27 +1,27 @@
 define(function () {
-  // Indonesian
+  // Malay
   return {
     errorLoading: function () {
-      return 'Data tidak boleh diambil.';
+      return 'Keputusan tidak berjaya dimuatkan.';
     },
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;
 
-      return 'Hapuskan ' + overChars + ' huruf';
+      return 'Sila hapuskan ' + overChars + ' aksara';
     },
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
-      return 'Masukkan ' + remainingChars + ' huruf lagi';
+      return 'Sila masukkan ' + remainingChars + ' atau lebih aksara';
     },
     loadingMore: function () {
-      return 'Mengambil data…';
+      return 'Sedang memuatkan keputusan…';
     },
     maximumSelected: function (args) {
-      return 'Anda hanya dapat memilih ' + args.maximum + ' pilihan';
+      return 'Anda hanya boleh memilih ' + args.maximum + ' pilihan';
     },
     noResults: function () {
-      return 'Tidak ada data yang sesuai';
+      return 'Tiada padanan yang ditemui';
     },
     searching: function () {
       return 'Mencari…';
