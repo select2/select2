@@ -306,6 +306,41 @@ define([
       return text.replace(/[^\u0000-\u007E]/g, match);
     }
 
+    // translate all word breakers into spaces
+    function replaceWordDelimiters(text) {
+        return text.replace(/[ ()'"_-]+/g, " ");
+    }
+
+    // try to break chars string so that it will match beginning of some words
+    function matchesEx(terms, words, first_word) {
+        // matched all words
+        if (words.length <= first_word)
+            // true if all chars from terms are also matched
+            return terms.length === 0;
+
+        terms = terms.trim();
+
+        // matched all chars from terms string
+        if (terms.length === 0)
+            return true;
+
+        for (var w = first_word; w < words.length; w++) {
+            for (var i = 1; i <= terms.length; i++) {
+                var sl = terms.substr(0, i);
+
+                // check current left substring of terms and beginnig of current word
+                if (words[w].indexOf(sl) !== 0)
+                    break;
+
+                // if matched try to match the rest 
+                var sr = terms.substr(i, terms.length - i);
+                if (matchesEx(sr, words, w + 1))
+                    return true;
+            }
+        }
+        return false;
+    };
+
     function matcher (params, data) {
       // Always return the object if there is nothing to compare
       if ($.trim(params.term) === '') {
@@ -345,6 +380,14 @@ define([
       // Check if the text contains the term
       if (original.indexOf(term) > -1) {
         return data;
+      }
+
+      // Try extended match
+      var originalWords = replaceWordDelimiters(original).split(" ");
+      var terms = replaceWordDelimiters(term);
+
+      if (terms.trim().length > 0 && matchesEx(terms, originalWords, 0)) {
+          return data;
       }
 
       // If it doesn't contain the term, don't return anything
