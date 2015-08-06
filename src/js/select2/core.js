@@ -5,7 +5,7 @@ define([
   './keys'
 ], function ($, Options, Utils, KEYS) {
   var Select2 = function ($element, options) {
-    if ($element.data('select2') != null) {
+    if ($element.data('select2')) {
       $element.data('select2').destroy();
     }
 
