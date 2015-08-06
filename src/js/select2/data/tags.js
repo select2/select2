@@ -47,7 +47,7 @@ define([
           }, true)
         );
 
-        var checkText = option.text === params.term;
+        var checkText = $.trim(option.text) === $.trim(params.term);
 
         if (checkText || checkChildren) {
           if (child) {
