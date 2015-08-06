@@ -177,8 +177,6 @@ define([
   };
 
   AttachBody.prototype._resizeDropdown = function () {
-    this.$dropdownContainer.width();
-
     var css = {
       width: this.$container.outerWidth(false) + 'px'
     };
