@@ -54,7 +54,7 @@ define([
         var existingData = this.item($existingOption);
         var newData = $.extend(true, {}, existingData, item);
 
-        var $newOption = this.option(existingData);
+        var $newOption = this.option(newData);
 
         $existingOption.replaceWith($newOption);
 
