@@ -150,7 +150,8 @@ module.exports = function (grunt) {
             },
 
             {
-              browserName: 'firefox'
+              browserName: 'firefox',
+              platform: 'linux'
             },
 
             {
@@ -159,7 +160,8 @@ module.exports = function (grunt) {
 
             {
               browserName: 'opera',
-              version: '12'
+              version: '12',
+              platform: 'linux'
             }
           ]
         }
