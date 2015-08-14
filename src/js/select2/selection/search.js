@@ -103,10 +103,10 @@ define([
         }
     }());
 
-    var input_event = !isIE ? 'input' : 'keydown';
+    var inputEvent = !isIE ? 'input' : 'keydown';
 
     
-    this.$selection.on('keyup.search '+input_event, '.select2-search--inline',
+    this.$selection.on('keyup.search '+inputEvent, '.select2-search--inline',
         function (evt) {
       var key = evt.which;
 
