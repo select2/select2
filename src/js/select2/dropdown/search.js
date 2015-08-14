@@ -42,7 +42,21 @@ define([
       $(this).off('keyup');
     });
 
-    this.$search.on('keyup input', function (evt) {
+    //fix IE11 autofocus bug
+    var isIE = (function () {
+      var ua = window.navigator.userAgent.toLowerCase();
+      if (ua.indexOf("msie") > 0 || ua.indexOf("trident") > 0 ) {
+          return true;
+      }
+      else {
+          return false;
+      }
+    }());
+
+    var input_event = !isIE ? 'input' : 'keydown';
+
+    this.$selection.on('keyup.search '+input_event, '.select2-search--inline',
+        function (evt) {
       self.handleSearch(evt);
     });
 
