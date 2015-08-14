@@ -95,7 +95,7 @@ define([
     
     var isIE = (function () {
         var ua = window.navigator.userAgent.toLowerCase();
-        if (ua.indexOf("msie") > 0 || ua.indexOf("trident") > 0 ) {
+        if (ua.indexOf('msie') > 0 || ua.indexOf('trident') > 0 ) {
             return true;
         }
         else {
