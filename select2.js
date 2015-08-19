@@ -960,7 +960,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
 
                 // sortResults was renamed to results
-                if (opts.sortResults !- null) {
+                if (opts.sortResults != null) {
                     console.warn(
                         'Select2: the `sortResults` option has been renamed to `sorter` in Select2 4.0.0. '
                     );
