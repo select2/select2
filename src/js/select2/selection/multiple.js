@@ -32,18 +32,26 @@ define([
       });
     });
 
-    this.$selection.on('click', '.select2-selection__choice__remove',
+    this.$selection.on(
+      'click',
+      '.select2-selection__choice__remove',
       function (evt) {
-      var $remove = $(this);
-      var $selection = $remove.parent();
+        // Ignore the event if it is disabled
+        if (self.options.get('disabled')) {
+          return;
+        }
 
-      var data = $selection.data('data');
+        var $remove = $(this);
+        var $selection = $remove.parent();
 
-      self.trigger('unselect', {
-        originalEvent: evt,
-        data: data
-      });
-    });
+        var data = $selection.data('data');
+
+        self.trigger('unselect', {
+          originalEvent: evt,
+          data: data
+        });
+      }
+    );
   };
 
   MultipleSelection.prototype.clear = function () {
