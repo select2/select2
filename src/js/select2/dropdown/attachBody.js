@@ -44,6 +44,12 @@ define([
     });
   };
 
+  AttachBody.prototype.destroy = function (decorated) {
+    decorated.call(this);
+
+    this.$dropdownContainer.remove();
+  };
+
   AttachBody.prototype.position = function (decorated, $dropdown, $container) {
     // Clone all of the container classes
     $dropdown.attr('class', $container.attr('class'));
