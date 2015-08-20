@@ -1,13 +1,13 @@
 ---
 layout: main
-title: Select2 3.5.2
+title: Select2 3.5.3
 group: navigation
-version: 3.5.2
-milestone: 20
+version: 3.5.3
+milestone: 21
 ---
 
-<link href="select2-3.5.2/select2.css?ts={{ site.time | date_to_xmlschema | cgi_escape}}" rel="stylesheet"/>
-<script src="select2-3.5.2/select2.js?ts={{ site.time | date_to_xmlschema | cgi_escape}}"></script>
+<link href="select2-3.5.3/select2.css?ts={{ site.time | date_to_xmlschema | cgi_escape}}" rel="stylesheet"/>
+<script src="select2-3.5.3/select2.js?ts={{ site.time | date_to_xmlschema | cgi_escape}}"></script>
 
 <script id="script_e1">
 
@@ -1863,23 +1863,5 @@ $("#select").select2({
         <div class="span12">
             <h2>Configuring Defaults</h2>
             Select2 exposes its default options via the <code>$.fn.select2.defaults</code> object. Properties changed in this object (same properties configurable through the constructor) will take effect for every instance created after the change.
-
         </div>
     </div>
-
-<!--
-<div style="position: absolute; left:0; top:0; background: white; border: 1px solid red;" id="focus-spy">hello there</div>
-<script>
-    $(document).ready(function() {
-       var el=$("#focus-spy");
-       $(window).bind("scroll", function(){ el.css({top:$(window).scrollTop()}); });
-       var update=function() {
-            var a=document.activeElement;
-            var b=$(a);
-            el.html("tag: "+a.tagName+" id:"+a.id+" class:"+b.attr("class")+" val:"+b.val());
-            window.setTimeout(update, 100);
-       };
-       update();
-    });
-</script>
--->
