@@ -92,8 +92,21 @@ define([
       // Unbind the duplicated `keyup` event
       self.$selection.off('keyup.search');
     });
+    
+    var isIE = (function () {
+        var ua = window.navigator.userAgent.toLowerCase();
+        if (ua.indexOf('msie') > 0 || ua.indexOf('trident') > 0 ) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }());
 
-    this.$selection.on('keyup.search input', '.select2-search--inline',
+    var inputEvent = !isIE ? 'input' : 'keydown';
+
+    
+    this.$selection.on('keyup.search '+inputEvent, '.select2-search--inline',
         function (evt) {
       var key = evt.which;
 
