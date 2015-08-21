@@ -184,7 +184,7 @@ define([
       data: item
     });
 
-    this.trigger('open');
+    this.trigger('open', {});
 
     this.$search.val(item.text + ' ');
   };

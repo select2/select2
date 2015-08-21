@@ -305,7 +305,7 @@ define([
       var data = $highlighted.data('data');
 
       if ($highlighted.attr('aria-selected') == 'true') {
-        self.trigger('close');
+        self.trigger('close', {});
       } else {
         self.trigger('select', {
           data: data
@@ -427,7 +427,7 @@ define([
             data: data
           });
         } else {
-          self.trigger('close');
+          self.trigger('close', {});
         }
 
         return;

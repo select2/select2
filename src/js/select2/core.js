@@ -274,7 +274,7 @@ define([
 
     this.on('query', function (params) {
       if (!self.isOpen()) {
-        self.trigger('open');
+        self.trigger('open', {});
       }
 
       this.dataAdapter.query(params, function (data) {
@@ -304,19 +304,19 @@ define([
 
           evt.preventDefault();
         } else if (key === KEYS.ENTER) {
-          self.trigger('results:select');
+          self.trigger('results:select', {});
 
           evt.preventDefault();
         } else if ((key === KEYS.SPACE && evt.ctrlKey)) {
-          self.trigger('results:toggle');
+          self.trigger('results:toggle', {});
 
           evt.preventDefault();
         } else if (key === KEYS.UP) {
-          self.trigger('results:previous');
+          self.trigger('results:previous', {});
 
           evt.preventDefault();
         } else if (key === KEYS.DOWN) {
-          self.trigger('results:next');
+          self.trigger('results:next', {});
 
           evt.preventDefault();
         }
@@ -339,9 +339,9 @@ define([
         this.close();
       }
 
-      this.trigger('disable');
+      this.trigger('disable', {});
     } else {
-      this.trigger('enable');
+      this.trigger('enable', {});
     }
   };
 
@@ -403,7 +403,7 @@ define([
       return;
     }
 
-    this.trigger('close');
+    this.trigger('close', {});
   };
 
   Select2.prototype.isOpen = function () {
@@ -421,7 +421,7 @@ define([
     }
 
     this.$container.addClass('select2-container--focus');
-    this.trigger('focus');
+    this.trigger('focus', {});
   };
 
   Select2.prototype.enable = function (args) {

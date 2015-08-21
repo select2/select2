@@ -13,7 +13,7 @@ define([
     );
 
     this.$mask.on('mousedown touchstart click', function () {
-      self.trigger('close');
+      self.trigger('close', {});
     });
   };
 
