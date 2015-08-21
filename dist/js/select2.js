@@ -1041,7 +1041,7 @@ S2.define('select2/results',[
       var data = $highlighted.data('data');
 
       if ($highlighted.attr('aria-selected') == 'true') {
-        self.trigger('close');
+        self.trigger('close', {});
       } else {
         self.trigger('select', {
           data: data
@@ -1163,7 +1163,7 @@ S2.define('select2/results',[
             data: data
           });
         } else {
-          self.trigger('close');
+          self.trigger('close', {});
         }
 
         return;
@@ -1746,7 +1746,7 @@ S2.define('select2/selection/allowClear',[
 
     this.$element.val(this.placeholder.id).trigger('change');
 
-    this.trigger('toggle');
+    this.trigger('toggle', {});
   };
 
   AllowClear.prototype._handleKeyboardClear = function (_, evt, container) {
@@ -1966,7 +1966,7 @@ S2.define('select2/selection/search',[
       data: item
     });
 
-    this.trigger('open');
+    this.trigger('open', {});
 
     this.$search.val(item.text + ' ');
   };
@@ -3574,7 +3574,9 @@ S2.define('select2/data/tokenizer',[
     var self = this;
 
     function select (data) {
-      self.select(data);
+      self.trigger('select', {
+        data: data
+      });
     }
 
     params.term = params.term || '';
@@ -3621,6 +3623,11 @@ S2.define('select2/data/tokenizer',[
       });
 
       var data = createTag(partParams);
+
+      if (data == null) {
+        i++;
+        continue;
+      }
 
       callback(data);
 
@@ -4302,7 +4309,7 @@ S2.define('select2/dropdown/closeOnSelect',[
       return;
     }
 
-    this.trigger('close');
+    this.trigger('close', {});
   };
 
   return CloseOnSelect;
@@ -5149,7 +5156,7 @@ S2.define('select2/core',[
 
     this.on('query', function (params) {
       if (!self.isOpen()) {
-        self.trigger('open');
+        self.trigger('open', {});
       }
 
       this.dataAdapter.query(params, function (data) {
@@ -5179,19 +5186,19 @@ S2.define('select2/core',[
 
           evt.preventDefault();
         } else if (key === KEYS.ENTER) {
-          self.trigger('results:select');
+          self.trigger('results:select', {});
 
           evt.preventDefault();
         } else if ((key === KEYS.SPACE && evt.ctrlKey)) {
-          self.trigger('results:toggle');
+          self.trigger('results:toggle', {});
 
           evt.preventDefault();
         } else if (key === KEYS.UP) {
-          self.trigger('results:previous');
+          self.trigger('results:previous', {});
 
           evt.preventDefault();
         } else if (key === KEYS.DOWN) {
-          self.trigger('results:next');
+          self.trigger('results:next', {});
 
           evt.preventDefault();
         }
@@ -5214,9 +5221,9 @@ S2.define('select2/core',[
         this.close();
       }
 
-      this.trigger('disable');
+      this.trigger('disable', {});
     } else {
-      this.trigger('enable');
+      this.trigger('enable', {});
     }
   };
 
@@ -5278,7 +5285,7 @@ S2.define('select2/core',[
       return;
     }
 
-    this.trigger('close');
+    this.trigger('close', {});
   };
 
   Select2.prototype.isOpen = function () {
@@ -5296,7 +5303,7 @@ S2.define('select2/core',[
     }
 
     this.$container.addClass('select2-container--focus');
-    this.trigger('focus');
+    this.trigger('focus', {});
   };
 
   Select2.prototype.enable = function (args) {
