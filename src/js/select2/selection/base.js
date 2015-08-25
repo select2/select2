@@ -98,7 +98,7 @@ define([
   BaseSelection.prototype._handleBlur = function (evt) {
     var self = this;
 
-    // This needs to be delayed as the actve element is the body when the tab
+    // This needs to be delayed as the active element is the body when the tab
     // key is pressed, possibly along with others.
     window.setTimeout(function () {
       // Don't trigger `blur` if the focus is still in the selection
