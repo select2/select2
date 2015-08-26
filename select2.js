@@ -1023,14 +1023,14 @@ the specific language governing permissions and limitations under the Apache Lic
 
             // data-select2-tags -> data-tags
             if (opts.element.data('tags') != null) {
-                var tags = opts.element.data('tags');
+                var elemTags = opts.element.data('tags');
 
                 // data-tags should actually be a boolean
-                if (!$.isArray(tags)) {
-                    tags = [];
+                if (!$.isArray(elemTags)) {
+                    elemTags = [];
                 }
 
-                opts.element.data('select2Tags', tags);
+                opts.element.data('select2Tags', elemTags);
             }
 
             // sortResults -> sorter
