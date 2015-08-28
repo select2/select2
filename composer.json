@@ -12,6 +12,9 @@
       "scripts": [
         "dist/js/select2.js"
       ],
+      "styles": [
+        "dist/css/select2.css"
+      ],
       "files": [
         "dist/js/select2.js",
         "dist/js/i18n/*.js",
