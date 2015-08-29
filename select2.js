@@ -2745,7 +2745,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 if (data == undefined) data = null;
                 return data;
             } else {
-                if (opts.debug && console && console.warn) {
+                if (this.opts.debug && console && console.warn) {
                     console.warn(
                         'Select2: The `select2("data")` method can no longer set selected values in 4.0.0, ' +
                         'consider using the `.val()` method instead.'
