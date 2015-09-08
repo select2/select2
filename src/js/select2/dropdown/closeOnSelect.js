@@ -25,7 +25,11 @@ define([
       return;
     }
 
-    this.trigger('close', {});
+    // Trigger a close *unless* we've been asked to suppress. This is sent by
+    // SelectOnClose to prevent an infinite loop between triggers.
+    if (! evt.suppressCloseOnSelect) {
+      this.trigger('close', {});
+    }
   };
 
   return CloseOnSelect;
