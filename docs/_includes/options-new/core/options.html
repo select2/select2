@@ -3,7 +3,7 @@
     How should Select2 be initialized?
   </h2>
 
-  <h3>
+  <h3 id="setting-default-options">
     Can default options be set for all dropdowns?
   </h3>
 
@@ -24,12 +24,7 @@
 
   <p>
     <strong>You can set default options</strong> by calling
-    <code>$.fn.select2.defaults.set("key", "value")</code>. The key that is
-    set should take the same format as keys set using
-    <a href="#data-attributes">HTML <code>data-*</code> attributes</a> which
-    means that two dashes (<code>--</code>) will be replaced by a level of
-    nesting, and a single dash (<code>-</code>) will convert it to a camelCase
-    string.
+    <code>$.fn.select2.defaults.set("key", "value")</code>.
   </p>
 
 <pre class="prettyprint">
@@ -39,6 +34,15 @@ $.fn.select2.defaults.set("theme", "classic");
   <h3>
     How can I set a default value for a nested option?
   </h3>
+
+  <p>
+    The key that is
+    set should take the same format as keys set using
+    <a href="#data-attributes">HTML <code>data-*</code> attributes</a> which
+    means that two dashes (<code>--</code>) will be replaced by a level of
+    nesting, and a single dash (<code>-</code>) will convert it to a camelCase
+    string.
+  </p>
 
   <h3>
     How can I reset all of the global default options?
