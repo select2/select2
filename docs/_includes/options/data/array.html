@@ -1,0 +1,53 @@
+<section>
+  <h2 id="data">
+    Can I load data into Select2 using an array?
+  </h2>
+
+  <p>
+    Yes, but only when you are initially creating it.
+  </p>
+
+  <h3>
+    What properties are required on the objects passed in to the array?
+  </h3>
+
+  <p>
+    The <code>id</code> and <code>text</code> properties are required on each object, and these are the properties that Select2 uses for the internal data objects. Any additional paramters passed in with data objects will be included on the data objects that Select2 exposes.
+  </p>
+
+  <h3>
+    How should nested results be formatted?
+  </h3>
+
+  <h3>
+    How many levels of nesting are allowed?
+  </h3>
+
+  <p>
+    Because Select2 falls back to an <code>&lt;optgroup&gt;</code> when creating nested options, only a single level of nesting can be supported.
+  </p>
+
+  <h3>
+    Why are <code>&lt;option&gt;</code> tags being created?
+  </h3>
+
+  <p>
+    The <code>data</code> option is a shortcut that Select2 provides which allows you to load options into your <code>select</code> from a data array.
+  </p>
+
+  <h3>
+    My objects don&apos;t use <code>id</code> for their unique identifiers, what can I do?
+  </h3>
+
+  <p>
+    You can re-map your identifier before passing it to Select2.
+  </p>
+
+  <h3>
+    My objects use a property other than <code>text</code> for the text that needs to be displayed
+  </h3>
+
+  <p>
+    These can also be re-mapped.
+  </p>
+</section>

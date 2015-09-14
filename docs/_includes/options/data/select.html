@@ -1,0 +1,57 @@
+<section>
+  <h2 id="data-adapters-select-tag">
+    Can Select2 be used with a <code>&lt;select&gt;</code> tag?
+  </h2>
+
+  <h3>
+    Does Select2 support nesting options?
+  </h3>
+
+  <p>
+    Yes, just like in a standard <code>select</code>.
+  </p>
+
+  <h3>
+    How many levels of nesting can there be?
+  </h3>
+
+  <p>
+    Only a single level of nesting is allowed per the HTML specification.
+  </p>
+
+  <h3>
+    Can <code>&lt;optgroup&gt;</code> tags be made selectable?
+  </h3>
+
+  <p>
+    No. This is a limitation of the HTML specification and is not a limitation that Select2 can overcome.
+  </p>
+
+  <h3>
+    How are <code>&lt;option&gt;</code> and <code>&lt;optgroup&gt;</code> tags serialized into data objects?
+  </h3>
+
+  <p>
+    Select2 will convert the <code>&lt;option&gt;</code> tag into a data object based on the following rules.
+  </p>
+
+<pre class="prettyprint linenums">
+{
+  "id": "value attribute" || "option text",
+  "text": "label attribute" || "option text",
+  "element": HTMLOptionElement
+}
+</pre>
+
+  <p>
+    And <code>&lt;optgroup&gt;</code> tags will be converted into data objects using the following rules
+  </p>
+
+<pre class="prettyprint linenums">
+{
+  "text": "label attribute",
+  "children": [ option data object, ... ],
+  "elment": HTMLOptGroupElement
+}
+</pre>
+</section>
