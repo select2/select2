@@ -17,7 +17,7 @@ When [reporting bugs][reporting-bugs] or
 [issue tracker on GitHub][issue-tracker] is the recommended channel to use.
 
 The issue tracker **is not** a place for support requests. The
-[mailing list][mailing-list] or [IRC channel][irc-channel] are better places to
+[mailing list][community] or [IRC channel][community] are better places to
 get help.
 
 Reporting bugs with Select2
@@ -193,13 +193,11 @@ under this license **cannot be accepted** into the project.
 
 [community]: https://select2.github.io/community.html
 [grunt]: http://gruntjs.com/
-[irc-channel]: https://github.com/select2/select2#irc-channel
 [isolated-case]: http://css-tricks.com/6263-reduced-test-cases/
 [issue-search]: https://github.com/select2/select2/search?q=&type=Issues
 [issue-tracker]: https://github.com/select2/select2/issues
 [jekyll]: https://jekyllrb.com/docs/installation/
 [licensing]: https://github.com/select2/select2/blob/master/LICENSE.md
-[mailing-list]: https://github.com/select2/select2#mailing-list
 [nodejs]: https://nodejs.org/
 [npm]: https://www.npmjs.com/
 [reporting-bugs]: #reporting-bugs-with-select2
