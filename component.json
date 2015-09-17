@@ -13,6 +13,7 @@
   ],
   "scripts": [
     "dist/js/select2.js",
+    "dist/js/select2.min.js",
     "dist/js/i18n/*.js"
   ],
   "license": "MIT"
