@@ -19,6 +19,31 @@ CONDITIONS OF ANY KIND, either express or implied. See the Apache License and th
 the specific language governing permissions and limitations under the Apache License and the GPL License.
 */
 
+
+/*
+
+Modified by : futurist
+Date : 2015-09-25
+
+ZeptoJS polyfill for jQuery
+
+Config:
+1. ZeptoJS Core:
+    https://github.com/madrobby/zepto
+
+2. Zepto Selector extension
+    https://github.com/madrobby/zepto/blob/master/src/selector.js#files
+
+3. Zepto Data extension
+    https://github.com/madrobby/zepto/blob/master/src/data.js#files
+    
+NOTE:   Zepto $().data behavior is different with jQuery $().data, 
+        if your previous code has problem installing data extension, 
+        try to change the function name `data` to other say `data2`
+
+*/
+
+
 if(window.Zepto){
 
     window.jQuery = window.Zepto;
@@ -34,20 +59,16 @@ if(window.Zepto){
         }
         $.data = function(obj, key, val){
           if(val){
-            $(obj).data2(key, val );
+            $(obj).data(key, val );
           } else {
-            return $(obj).data2(key);
+            return $(obj).data(key);
           }
           return $(obj);
         }
         $.removeData = function(obj, key){
 
-          $(obj).data2(key, null );
+          $(obj).data(key, null );
           return $(obj);
-        }
-        $.fn.removeData = function(key){
-          $(this).data2(key, null );
-          return $(this);
         }
 
     })(window.Zepto||window.jQuery);
@@ -729,9 +750,9 @@ if(window.Zepto){
             this.id=opts.id;
 
             // destroy if called on an existing component
-            if (opts.element.data2("select2") !== undefined &&
-                opts.element.data2("select2") !== null) {
-                opts.element.data2("select2").destroy();
+            if (opts.element.data("select2") !== undefined &&
+                opts.element.data("select2") !== null) {
+                opts.element.data("select2").destroy();
             }
 
             this.container = this.createContainer();
@@ -766,19 +787,19 @@ if(window.Zepto){
 
             // swap container for the element
             this.opts.element
-                .data2("select2", this)
+                .data("select2", this)
                 .attr("tabindex", "-1")
                 .before(this.container)
                 .on("click.select2", killEvent); // do not leak click events
 
-            this.container.data2("select2", this);
+            this.container.data("select2", this);
 
             this.dropdown = this.container.find(".select2-drop");
 
             syncCssClasses(this.dropdown, this.opts.element, this.opts.adaptDropdownCssClass);
 
             this.dropdown.addClass(evaluate(opts.dropdownCssClass, this.opts.element));
-            this.dropdown.data2("select2", this);
+            this.dropdown.data("select2", this);
             this.dropdown.on("click", killEvent);
 
             this.results = results = this.container.find(resultsSelector);
@@ -886,7 +907,7 @@ if(window.Zepto){
 
         // abstract
         destroy: function () {
-            var element=this.opts.element, select2 = element.data2("select2"), self = this;
+            var element=this.opts.element, select2 = element.data("select2"), self = this;
 
             this.close();
 
@@ -942,7 +963,7 @@ if(window.Zepto){
                     element: element.get(),
                     css: element.attr("class"),
                     disabled: element.prop("disabled"),
-                    locked: equal(element.attr("locked"), "locked") || equal(element.data2("locked"), true)
+                    locked: equal(element.attr("locked"), "locked") || equal(element.data("locked"), true)
                 };
             } else if (element.is("optgroup")) {
                 return {
@@ -1049,7 +1070,7 @@ if(window.Zepto){
                     );
                 }
 
-                if (opts.element.data2('select2Tags')) {
+                if (opts.element.data('select2Tags')) {
                     console.warn(
                         'Select2: The `data-select2-tags` attribute has been renamed to `data-tags` in Select2 4.0.0.'
                     );
@@ -1059,15 +1080,15 @@ if(window.Zepto){
             // Aliasing options renamed in Select2 4.0.0
 
             // data-select2-tags -> data-tags
-            if (opts.element.data2('tags') != null) {
-                var elemTags = opts.element.data2('tags');
+            if (opts.element.data('tags') != null) {
+                var elemTags = opts.element.data('tags');
 
                 // data-tags should actually be a boolean
                 if (!$.isArray(elemTags)) {
                     elemTags = [];
                 }
 
-                opts.element.data2('select2Tags', elemTags);
+                opts.element.data('select2Tags', elemTags);
             }
 
             // sortResults -> sorter
@@ -1171,7 +1192,7 @@ if(window.Zepto){
                                 node.append(innerContainer);
                             }
 
-                            node.data2("select2-data", result);
+                            node.data("select2-data", result);
                             nodes.push(node[0]);
                         }
 
@@ -1189,11 +1210,11 @@ if(window.Zepto){
                 opts.id = function (e) { return e[idKey]; };
             }
 
-            if ($.isArray(opts.element.data2("select2Tags"))) {
+            if ($.isArray(opts.element.data("select2Tags"))) {
                 if ("tags" in opts) {
                     throw "tags specified as both an attribute 'data-select2-tags' and in options of Select2 " + opts.element.attr("id");
                 }
-                opts.tags=opts.element.data2("select2Tags");
+                opts.tags=opts.element.data("select2Tags");
             }
 
             if (select) {
@@ -1236,7 +1257,7 @@ if(window.Zepto){
             } else {
                 if (!("query" in opts)) {
                     if ("ajax" in opts) {
-                        ajaxUrl = opts.element.data2("ajax-url");
+                        ajaxUrl = opts.element.data("ajax-url");
                         if (ajaxUrl && ajaxUrl.length > 0) {
                             opts.ajax.url = ajaxUrl;
                         }
@@ -1290,7 +1311,7 @@ if(window.Zepto){
             var el = this.opts.element, observer, self = this;
 
             el.on("change.select2", this.bind(function (e) {
-                if (this.opts.element.data2("select2-change-triggered") !== true) {
+                if (this.opts.element.data("select2-change-triggered") !== true) {
                     this.initSelection();
                 }
             }));
@@ -1352,9 +1373,9 @@ if(window.Zepto){
             details = details || {};
             details= $.extend({}, details, { type: "change", val: this.val() });
             // prevents recursive triggering
-            this.opts.element.data2("select2-change-triggered", true);
+            this.opts.element.data("select2-change-triggered", true);
             this.opts.element.trigger(details);
-            this.opts.element.data2("select2-change-triggered", false);
+            this.opts.element.data("select2-change-triggered", false);
 
             // some validation frameworks ignore the change event and listen instead to keyup, click for selects
             // so here we trigger the click event manually
@@ -1604,7 +1625,7 @@ if(window.Zepto){
 
                     var dropdown = $("#select2-drop"), self;
                     if (dropdown.length > 0) {
-                        self=dropdown.data2("select2");
+                        self=dropdown.data("select2");
                         if (self.opts.selectOnBlur) {
                             self.selectHighlighted({noFocus: true});
                         }
@@ -1808,7 +1829,7 @@ if(window.Zepto){
 
             this.liveRegion.text(choice.text());
 
-            data = choice.data2("select2-data");
+            data = choice.data("select2-data");
             if (data) {
                 this.opts.element.trigger({ type: "select2-highlight", val: this.id(data), choice: data });
             }
@@ -2079,7 +2100,7 @@ if(window.Zepto){
             }
             var index=this.highlight(),
                 highlighted=this.results.find(".select2-highlighted"),
-                data = highlighted.closest('.select2-result').data2("select2-data");
+                data = highlighted.closest('.select2-result').data("select2-data");
 
             if (data) {
                 this.highlight(index);
@@ -2094,7 +2115,7 @@ if(window.Zepto){
             var placeholderOption;
             return this.opts.element.attr("placeholder") ||
                 this.opts.element.attr("data-placeholder") || // jquery 1.4 compat
-                this.opts.element.data2("placeholder") ||
+                this.opts.element.data("placeholder") ||
                 this.opts.placeholder ||
                 ((placeholderOption = this.getPlaceholderOption()) !== undefined ? placeholderOption.text() : undefined);
         },
@@ -2489,7 +2510,7 @@ if(window.Zepto){
 
         // single
         clear: function(triggerChange) {
-            var data=this.selection.data2("select2-data");
+            var data=this.selection.data("select2-data");
             if (data) { // guard against queued quick consecutive clicks
                 var evt = $.Event("select2-clearing");
                 this.opts.element.trigger(evt);
@@ -2613,7 +2634,7 @@ if(window.Zepto){
             // find the selected element in the result list
 
             this.findHighlightableChoices().each2(function (i, elm) {
-                if (equal(self.id(elm.data2("select2-data")), self.opts.element.val())) {
+                if (equal(self.id(elm.data("select2-data")), self.opts.element.val())) {
                     selected = i;
                     return false;
                 }
@@ -2680,7 +2701,7 @@ if(window.Zepto){
 
             var container=this.selection.find(".select2-chosen"), formatted, cssClass;
 
-            this.selection.data2("select2-data", data);
+            this.selection.data("select2-data", data);
 
             container.empty();
             if (data !== null) {
@@ -2778,7 +2799,7 @@ if(window.Zepto){
                 triggerChange = false;
 
             if (arguments.length === 0) {
-                data = this.selection.data2("select2-data");
+                data = this.selection.data("select2-data");
                 if (data == undefined) data = null;
                 return data;
             } else {
@@ -3316,7 +3337,7 @@ if(window.Zepto){
               }));
             }
 
-            choice.data2("select2-data", data);
+            choice.data("select2-data", data);
             choice.insertBefore(this.searchContainer);
 
             return id;
@@ -3333,7 +3354,7 @@ if(window.Zepto){
                 throw "Invalid argument: " + selected + ". Must be .select2-search-choice";
             }
 
-            data = selected.data2("select2-data");
+            data = selected.data("select2-data");
 
             if (!data) {
                 // prevent a race condition when the 'x' is clicked really fast repeatedly the event can be queued
@@ -3372,7 +3393,7 @@ if(window.Zepto){
                 self = this;
 
             choices.each2(function (i, choice) {
-                var id = self.id(choice.data2("select2-data"));
+                var id = self.id(choice.data("select2-data"));
                 if (indexOf(id, val) >= 0) {
                     choice.addClass("select2-selected");
                     // mark all children of the selected parent as selected
@@ -3545,7 +3566,7 @@ if(window.Zepto){
                     self.updateSelection(data);
                     self.clearSearch();
                     if (triggerChange) {
-                        self.triggerChange(self.buildChangeDetails(oldData, self.data2()));
+                        self.triggerChange(self.buildChangeDetails(oldData, self.data()));
                     }
                 });
             }
@@ -3578,7 +3599,7 @@ if(window.Zepto){
 
             // update selection
             this.selection.find(".select2-search-choice").each(function() {
-                val.push(self.opts.id($(this).data2("select2-data")));
+                val.push(self.opts.id($(this).data("select2-data")));
             });
             this.setVal(val);
             this.triggerChange();
@@ -3590,7 +3611,7 @@ if(window.Zepto){
             if (arguments.length === 0) {
                  return this.selection
                      .children(".select2-search-choice")
-                     .map(function() { return $(this).data2("select2-data"); })
+                     .map(function() { return $(this).data("select2-data"); })
                      .get();
             } else {
                 old = this.data();
@@ -3638,7 +3659,7 @@ if(window.Zepto){
                 }
 
                 value = undefined;
-                select2 = $(this).data2("select2");
+                select2 = $(this).data("select2");
                 if (select2 === undefined) return;
 
                 method=args[0];
