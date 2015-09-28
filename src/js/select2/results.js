@@ -36,8 +36,12 @@ define([
     this.clear();
     this.hideLoading();
 
+    var messageId = this.data.generateResultId(
+      { id: this.$results.attr('id') }, {}
+    );
     var $message = $(
-      '<li role="treeitem" class="select2-results__option"></li>'
+      '<li id="' + messageId + '" role="treeitem" ' +
+        'class="select2-results__option"></li>'
     );
 
     var message = this.options.get('translations').get(params.message);
@@ -51,6 +55,7 @@ define([
     $message[0].className += ' select2-results__message';
 
     this.$results.append($message);
+    this.trigger('results:speak', { id: messageId });
   };
 
   Results.prototype.hideMessages = function () {
@@ -456,6 +461,9 @@ define([
       self.trigger('results:focus', {
         data: data,
         element: $(this)
+      });
+      self.trigger('results:speak', {
+        id: $(this).attr('id')
       });
     });
   };
