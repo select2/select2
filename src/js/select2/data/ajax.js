@@ -68,6 +68,10 @@ define([
       var $request = options.transport(options, function (data) {
         var results = self.processResults(data, params);
 
+        $.each(results.results, function(i, result) {
+            results.results[i] = self._normalizeItem(result);
+        });
+
         if (self.options.get('debug') && window.console && console.error) {
           // Check to make sure that the response included a `results` key.
           if (!results || !results.results || !$.isArray(results.results)) {
