@@ -1,3 +1,5 @@
+@import "mixins/span_z_index";
+
 .select2-container {
   box-sizing: border-box;
 
@@ -8,6 +10,12 @@
 
   @import "single";
   @import "multiple";
+
+  @include span-z-index(1);
+
+  .selection {
+    @include span-z-index(2);
+  }
 }
 
 @import "dropdown";
