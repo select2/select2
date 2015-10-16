@@ -657,6 +657,11 @@ the specific language governing permissions and limitations under the Apache Lic
         });
     }
 
+    // Attempt to detect touch devices
+    function supportsTouchEvents() {
+        return (('ontouchstart' in window) || (navigator.msMaxTouchPoints > 0));
+    }
+
     /**
      * Creates a new class
      *
@@ -1531,9 +1536,12 @@ the specific language governing permissions and limitations under the Apache Lic
                 lastMousePosition.x = e.pageX;
                 lastMousePosition.y = e.pageY;
             });
-
+             
             return true;
         },
+
+        // tracks when the menu was first opened
+        openTime: 0,
 
         /**
          * Performs the opening of the dropdown
@@ -1605,12 +1613,19 @@ the specific language governing permissions and limitations under the Apache Lic
                 });
             });
 
+            this.openTime = new Date().getTime();
 
         },
 
         // abstract
         close: function () {
             if (!this.opened()) return;
+
+            // ensure dropdown has been open long enough, solves android
+            // browser immediately closing dropdown.
+            // Issue: https://github.com/select2/select2/issues/2061
+            var closeTime = new Date().getTime();
+            if (closeTime - this.openTime < this.opts.minimumTimeOpen) return;
 
             var cid = this.containerEventName,
                 scroll = "scroll." + cid,
@@ -3666,12 +3681,9 @@ the specific language governing permissions and limitations under the Apache Lic
         searchInputPlaceholder: '',
         createSearchChoicePosition: 'top',
         shouldFocusInput: function (instance) {
-            // Attempt to detect touch devices
-            var supportsTouchEvents = (('ontouchstart' in window) ||
-                                       (navigator.msMaxTouchPoints > 0));
 
             // Only devices which support touch events should be special cased
-            if (!supportsTouchEvents) {
+            if (!supportsTouchEvents()) {
                 return true;
             }
 
@@ -3681,7 +3693,10 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             return true;
-        }
+        },
+        // Milliseconds the menu must remain open before closing.  Defaults to
+        // 1500 to accomodate for slower android devices
+        minimumTimeOpen: 1500
     };
 
     $.fn.select2.locales = [];
@@ -3718,7 +3733,8 @@ the specific language governing permissions and limitations under the Apache Lic
             debounce: debounce,
             markMatch: markMatch,
             escapeMarkup: defaultEscapeMarkup,
-            stripDiacritics: stripDiacritics
+            stripDiacritics: stripDiacritics,
+            supportsTouchEvents: supportsTouchEvents
         }, "class": {
             "abstract": AbstractSelect2,
             "single": SingleSelect2,
