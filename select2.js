@@ -1625,7 +1625,9 @@ the specific language governing permissions and limitations under the Apache Lic
             // browser immediately closing dropdown.
             // Issue: https://github.com/select2/select2/issues/2061
             var closeTime = new Date().getTime();
-            if (closeTime - this.openTime < this.opts.minimumTimeOpen) return;
+            if (supportsTouchEvents() && (closeTime - this.openTime < this.opts.minimumTimeOpen)) {
+                return;
+            }
 
             var cid = this.containerEventName,
                 scroll = "scroll." + cid,
