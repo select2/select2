@@ -187,6 +187,12 @@ define([
     }
 
     var $option = $(option);
+	
+	if (data.dataAttributes) {
+	  $.each(data.dataAttributes, function (key, value) {
+		  $option.data(key, value);
+	  });
+	}
 
     var normalizedData = this._normalizeItem(data);
     normalizedData.element = option;
