@@ -185,15 +185,17 @@ define([
     if (data.title) {
       option.title = data.title;
     }
-
-    var $option = $(option);
 	
 	if (data.dataAttributes) {
 	  $.each(data.dataAttributes, function (key, value) {
-		  $option.data(key, value);
+		  if (key && value) {
+			  option.setAttribute("data-" + key, value);
+		  }
 	  });
 	}
 
+    var $option = $(option);
+	
     var normalizedData = this._normalizeItem(data);
     normalizedData.element = option;
 
