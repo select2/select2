@@ -189,7 +189,7 @@ define([
 	if (data.dataAttributes) {
 	  $.each(data.dataAttributes, function (key, value) {
 		  if (key && value) {
-			  option.setAttribute("data-" + key, value);
+			  option.setAttribute('data-' + key, value);
 		  }
 	  });
 	}
