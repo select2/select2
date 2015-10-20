@@ -357,6 +357,10 @@ define([
       'select': 'selecting',
       'unselect': 'unselecting'
     };
+    
+    if (args === undefined) {
+      args = {};
+    }
 
     if (name in preTriggerMap) {
       var preTriggerName = preTriggerMap[name];
