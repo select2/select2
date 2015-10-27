@@ -492,16 +492,33 @@ define([
 
   Select2.prototype.addOption = function (optionObj) {
     if (optionObj === undefined || optionObj === null) {
-        return;
+      return;
     }
 
+    this.__addOptionElement(optionObj);
+    this.reinitialize();
+  };
+
+  Select2.prototype.addOptions = function(options) {
+    if (!Array.isArray) {
+      return;
+    }
+
+    options.forEach(function(optionObj) {
+      // NOTE: if `optionObj` is not an object it should throw an error
+      this.__addOptionElement(optionObj);
+    }.bind(this));
+
+    this.reinitialize();
+  };
+
+  Select2.prototype.__addOptionElement = function(optionObj) {
     var $option = $('<option></option>', {
-        value: optionObj.value,
-        text: optionObj.text
+      value: optionObj.value,
+      text: optionObj.text
     });
 
     this._argsElement.append($option);
-    this.reinitialize();
   };
 
   Select2.prototype.reinitialize = function () {
