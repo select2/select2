@@ -784,7 +784,13 @@ S2.define('select2/results',[
       )
     );
 
+    $message[0].className += ' select2-results__message';
+
     this.$results.append($message);
+  };
+
+  Results.prototype.hideMessages = function () {
+    this.$results.find('.select2-results__message').remove();
   };
 
   Results.prototype.append = function (data) {
@@ -986,6 +992,7 @@ S2.define('select2/results',[
     });
 
     container.on('query', function (params) {
+      self.hideMessages();
       self.showLoading(params);
     });
 
@@ -1369,7 +1376,7 @@ S2.define('select2/selection/base',[
   BaseSelection.prototype._handleBlur = function (evt) {
     var self = this;
 
-    // This needs to be delayed as the actve element is the body when the tab
+    // This needs to be delayed as the active element is the body when the tab
     // key is pressed, possibly along with others.
     window.setTimeout(function () {
       // Don't trigger `blur` if the focus is still in the selection
@@ -3766,6 +3773,10 @@ S2.define('select2/dropdown',[
     return $dropdown;
   };
 
+  Dropdown.prototype.bind = function () {
+    // Should be implemented in subclasses
+  };
+
   Dropdown.prototype.position = function ($dropdown, $container) {
     // Should be implmented in subclasses
   };
@@ -4891,6 +4902,11 @@ S2.define('select2/core',[
       $element.data('select2').destroy();
     }
 
+    // Save args for potential re-initialization needs
+    this._argsOptions = options;
+    this._argsElement = $element;
+
+    // Continue initialization
     this.$element = $element;
 
     this.id = this._generateId($element);
@@ -4902,13 +4918,11 @@ S2.define('select2/core',[
     Select2.__super__.constructor.call(this);
 
     // Set up the tabindex
-
     var tabindex = $element.attr('tabindex') || 0;
     $element.data('old-tabindex', tabindex);
     $element.attr('tabindex', '-1');
 
     // Set up containers and adapters
-
     var DataAdapter = this.options.get('dataAdapter');
     this.dataAdapter = new DataAdapter($element, this.options);
 
@@ -5240,6 +5254,10 @@ S2.define('select2/core',[
       'unselect': 'unselecting'
     };
 
+    if (args === undefined) {
+      args = {};
+    }
+
     if (name in preTriggerMap) {
       var preTriggerName = preTriggerMap[name];
       var preTriggerArgs = {
@@ -5363,6 +5381,25 @@ S2.define('select2/core',[
     }
 
     this.$element.val(newVal).trigger('change');
+  };
+
+  Select2.prototype.addOption = function (optionObj) {
+    if (optionObj === undefined || optionObj === null) {
+        return;
+    }
+
+    var $option = $('<option></option>', {
+        value: optionObj.value,
+        text: optionObj.text
+    });
+
+    this._argsElement.append($option);
+    this.reinitialize();
+  };
+
+  Select2.prototype.reinitialize = function () {
+    this.destroy();
+    Select2.call(this, this._argsElement, this._argsOptions);
   };
 
   Select2.prototype.destroy = function () {
@@ -5689,14 +5726,14 @@ S2.define('select2/compat/inputData',[
       });
 
       this.$element.val(data.id);
-      this.$element.trigger('change');
     } else {
       var value = this.$element.val();
       value += this._valueSeparator + data.id;
 
       this.$element.val(value);
-      this.$element.trigger('change');
     }
+
+    this.$element.trigger('change');
   };
 
   InputData.prototype.unselect = function (_, data) {
@@ -5955,7 +5992,7 @@ S2.define('jquery.select2',[
 
         var args = Array.prototype.slice.call(arguments, 1);
 
-        var ret = instance[options](args);
+        var ret = instance[options].apply(instance, args);
 
         // Check if we should be returning `this`
         if ($.inArray(options, thisMethods) > -1) {

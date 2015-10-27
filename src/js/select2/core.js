@@ -9,6 +9,11 @@ define([
       $element.data('select2').destroy();
     }
 
+    // Save args for potential re-initialization needs
+    this._argsOptions = options;
+    this._argsElement = $element;
+
+    // Continue initialization
     this.$element = $element;
 
     this.id = this._generateId($element);
@@ -20,13 +25,11 @@ define([
     Select2.__super__.constructor.call(this);
 
     // Set up the tabindex
-
     var tabindex = $element.attr('tabindex') || 0;
     $element.data('old-tabindex', tabindex);
     $element.attr('tabindex', '-1');
 
     // Set up containers and adapters
-
     var DataAdapter = this.options.get('dataAdapter');
     this.dataAdapter = new DataAdapter($element, this.options);
 
@@ -357,7 +360,7 @@ define([
       'select': 'selecting',
       'unselect': 'unselecting'
     };
-    
+
     if (args === undefined) {
       args = {};
     }
@@ -485,6 +488,25 @@ define([
     }
 
     this.$element.val(newVal).trigger('change');
+  };
+
+  Select2.prototype.addOption = function (optionObj) {
+    if (optionObj === undefined || optionObj === null) {
+        return;
+    }
+
+    var $option = $('<option></option>', {
+        value: optionObj.value,
+        text: optionObj.text
+    });
+
+    this._argsElement.append($option);
+    this.reinitialize();
+  };
+
+  Select2.prototype.reinitialize = function () {
+    this.destroy();
+    Select2.call(this, this._argsElement, this._argsOptions);
   };
 
   Select2.prototype.destroy = function () {

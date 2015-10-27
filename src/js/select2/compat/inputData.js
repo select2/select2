@@ -64,14 +64,14 @@ define([
       });
 
       this.$element.val(data.id);
-      this.$element.trigger('change');
     } else {
       var value = this.$element.val();
       value += this._valueSeparator + data.id;
 
       this.$element.val(value);
-      this.$element.trigger('change');
     }
+
+    this.$element.trigger('change');
   };
 
   InputData.prototype.unselect = function (_, data) {
