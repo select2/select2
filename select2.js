@@ -3228,9 +3228,55 @@ the specific language governing permissions and limitations under the Apache Lic
         },
 
         addSelectedChoice: function (data) {
-            var val = this.getVal(), self = this;
+            var val = this.getVal(), self = this, choiceArr = [];
             $(data).each(function () {
-                val.push(self.createChoice(this));
+                var data = this;
+                var enableChoice = !data.locked,
+                    enabledItem = $(
+                        "<li class='select2-search-choice'>" +
+                        "    <div></div>" +
+                        "    <a href='#' class='select2-search-choice-close' tabindex='-1'></a>" +
+                        "</li>"),
+                    disabledItem = $(
+                        "<li class='select2-search-choice select2-locked'>" +
+                        "<div></div>" +
+                        "</li>");
+                var choice = enableChoice ? enabledItem : disabledItem,
+                    id = self.id(data),
+                    formatted,
+                    cssClass;
+
+                formatted=self.opts.formatSelection(data, choice.find("div"), self.opts.escapeMarkup);
+                if (formatted != undefined) {
+                    choice.find("div").replaceWith($("<div></div>").html(formatted));
+                }
+                cssClass=self.opts.formatSelectionCssClass(data, choice.find("div"));
+                if (cssClass != undefined) {
+                    choice.addClass(cssClass);
+                }
+
+                if(enableChoice){
+                  choice.find(".select2-search-choice-close")
+                      .on("mousedown", killEvent)
+                      .on("click dblclick", self.bind(function (e) {
+                      if (!self.isInterfaceEnabled()) return;
+
+                      self.unselect($(e.target));
+                      self.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
+                      killEvent(e);
+                      self.close();
+                      self.focusSearch();
+                  })).on("focus", self.bind(function () {
+                      if (!self.isInterfaceEnabled()) return;
+                      self.container.addClass("select2-container-active");
+                      self.dropdown.addClass("select2-drop-active");
+                  }));
+                }
+
+                choice.data("select2-data", data);
+                val.push(id));
+                choiceArr.push(choice[0]);
+
             });
             this.setVal(val);
         },
