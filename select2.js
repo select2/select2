@@ -3274,60 +3274,12 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
 
                 choice.data("select2-data", data);
-                val.push(id));
+                val.push(id);
                 choiceArr.push(choice[0]);
 
             });
+            self.searchContainer.before(choiceArr);
             this.setVal(val);
-        },
-
-        createChoice: function (data) {
-            var enableChoice = !data.locked,
-                enabledItem = $(
-                    "<li class='select2-search-choice'>" +
-                    "    <div></div>" +
-                    "    <a href='#' class='select2-search-choice-close' tabindex='-1'></a>" +
-                    "</li>"),
-                disabledItem = $(
-                    "<li class='select2-search-choice select2-locked'>" +
-                    "<div></div>" +
-                    "</li>");
-            var choice = enableChoice ? enabledItem : disabledItem,
-                id = this.id(data),
-                formatted,
-                cssClass;
-
-            formatted=this.opts.formatSelection(data, choice.find("div"), this.opts.escapeMarkup);
-            if (formatted != undefined) {
-                choice.find("div").replaceWith($("<div></div>").html(formatted));
-            }
-            cssClass=this.opts.formatSelectionCssClass(data, choice.find("div"));
-            if (cssClass != undefined) {
-                choice.addClass(cssClass);
-            }
-
-            if(enableChoice){
-              choice.find(".select2-search-choice-close")
-                  .on("mousedown", killEvent)
-                  .on("click dblclick", this.bind(function (e) {
-                  if (!this.isInterfaceEnabled()) return;
-
-                  this.unselect($(e.target));
-                  this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus");
-                  killEvent(e);
-                  this.close();
-                  this.focusSearch();
-              })).on("focus", this.bind(function () {
-                  if (!this.isInterfaceEnabled()) return;
-                  this.container.addClass("select2-container-active");
-                  this.dropdown.addClass("select2-drop-active");
-              }));
-            }
-
-            choice.data("select2-data", data);
-            choice.insertBefore(this.searchContainer);
-
-            return id;
         },
 
         // multi
