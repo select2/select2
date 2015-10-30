@@ -18,6 +18,7 @@ define([
 
     if (this.showLoadingMore(data)) {
       this.$results.append(this.$loadingMore);
+      this.$results.scroll();
     }
   };
 
