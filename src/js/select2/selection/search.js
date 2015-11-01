@@ -37,6 +37,7 @@ define([
 
     container.on('close', function () {
       self.$search.val('');
+      self.$search.attr('aria-activedescendant', null);
       self.$search.trigger('focus');
     });
 
@@ -54,7 +55,7 @@ define([
       self.$search.trigger('focus');
     });
 
-    container.on('results:speak', function (params) {
+    container.on('results:focus', function (params) {
       self.$search.attr('aria-activedescendant', params.id);
     });
 
