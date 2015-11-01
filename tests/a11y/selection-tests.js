@@ -64,31 +64,6 @@ test('static aria attributes are present', function (assert) {
     'true',
     'The dropdown is considered a popup of the container'
   );
-
-  assert.equal(
-    $selection.attr('aria-autocomplete'),
-    'list',
-    'The results in the dropdown are the autocomplete list'
-  );
-});
-
-test('aria-activedescendant should be removed when closed', function (assert) {
-  var $select = $('#qunit-fixture .single');
-
-  var selection = new BaseSelection($select, options);
-  var $selection = selection.render();
-
-  var container = new MockContainer();
-  selection.bind(container, $('<span></span>'));
-
-  $selection.attr('aria-activedescendant', 'something');
-
-  container.trigger('close');
-
-  assert.ok(
-    !$selection.attr('aria-activedescendant'),
-    'There is no active descendant when the dropdown is closed'
-  );
 });
 
 test('the container should be in the tab order', function (assert) {
