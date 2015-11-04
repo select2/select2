@@ -784,7 +784,13 @@ S2.define('select2/results',[
       )
     );
 
+    $message[0].className += ' select2-results__message';
+
     this.$results.append($message);
+  };
+
+  Results.prototype.hideMessages = function () {
+    this.$results.find('.select2-results__message').remove();
   };
 
   Results.prototype.append = function (data) {
@@ -986,6 +992,7 @@ S2.define('select2/results',[
     });
 
     container.on('query', function (params) {
+      self.hideMessages();
       self.showLoading(params);
     });
 
@@ -1369,7 +1376,7 @@ S2.define('select2/selection/base',[
   BaseSelection.prototype._handleBlur = function (evt) {
     var self = this;
 
-    // This needs to be delayed as the actve element is the body when the tab
+    // This needs to be delayed as the active element is the body when the tab
     // key is pressed, possibly along with others.
     window.setTimeout(function () {
       // Don't trigger `blur` if the focus is still in the selection
@@ -3052,9 +3059,10 @@ S2.define('select2/data/select',[
       var val = [];
 
       for (var d = 0; d < currentData.length; d++) {
-        var id = currentData[d].id;
+        // Make sure to always be comparing strings
+        var id = currentData[d].id + '';
 
-        if (id !== data.id && $.inArray(id, val) === -1) {
+        if (id !== (data.id + '') && $.inArray(id, val) === -1) {
           val.push(id);
         }
       }
@@ -3764,6 +3772,10 @@ S2.define('select2/dropdown',[
     this.$dropdown = $dropdown;
 
     return $dropdown;
+  };
+
+  Dropdown.prototype.bind = function () {
+    // Should be implemented in subclasses
   };
 
   Dropdown.prototype.position = function ($dropdown, $container) {
@@ -5239,6 +5251,10 @@ S2.define('select2/core',[
       'select': 'selecting',
       'unselect': 'unselecting'
     };
+    
+    if (args === undefined) {
+      args = {};
+    }
 
     if (name in preTriggerMap) {
       var preTriggerName = preTriggerMap[name];
@@ -5955,7 +5971,7 @@ S2.define('jquery.select2',[
 
         var args = Array.prototype.slice.call(arguments, 1);
 
-        var ret = instance[options](args);
+        var ret = instance[options].apply(instance, args);
 
         // Check if we should be returning `this`
         if ($.inArray(options, thisMethods) > -1) {
