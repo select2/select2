@@ -3062,7 +3062,7 @@ S2.define('select2/data/select',[
         // Make sure to always be comparing strings
         var id = currentData[d].id + '';
 
-        if (id !== data.id && $.inArray(id, val) === -1) {
+        if (id !== (data.id + '') && $.inArray(id, val) === -1) {
           val.push(id);
         }
       }
