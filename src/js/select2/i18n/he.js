@@ -2,7 +2,7 @@ define(function () {
   // Hebrew
   return {
     errorLoading: function () {
-      return 'התוצאות לא נטענו בהלכה';
+      return 'שגיאה בטעינת התוצאות';
     },
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;
@@ -23,10 +23,10 @@ define(function () {
       return message;
     },
     loadingMore: function () {
-      return 'טען תוצאות נוספות…';
+      return 'טוען תוצאות נוספות…';
     },
     maximumSelected: function (args) {
-      var message = 'באפשרותך לבחור רק ' + args.maximum + ' פריטים';
+      var message = 'באפשרותך לבחור עד ' + args.maximum + ' פריטים';
 
       if (args.maximum != 1) {
         message += 's';
