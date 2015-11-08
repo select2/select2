@@ -38,7 +38,7 @@ define(function () {
       return 'טוען תוצאות נוספות…';
     },
     maximumSelected: function (args) {
-      var message = 'באפשרותך לבחור עד ' 
+      var message = 'באפשרותך לבחור עד ';
 
       if (args.maximum != 1) {
         message += args.maximum + ' פריטים';
