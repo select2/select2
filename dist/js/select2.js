@@ -784,7 +784,13 @@ S2.define('select2/results',[
       )
     );
 
+    $message[0].className += ' select2-results__message';
+
     this.$results.append($message);
+  };
+
+  Results.prototype.hideMessages = function () {
+    this.$results.find('.select2-results__message').remove();
   };
 
   Results.prototype.append = function (data) {
@@ -986,6 +992,7 @@ S2.define('select2/results',[
     });
 
     container.on('query', function (params) {
+      self.hideMessages();
       self.showLoading(params);
     });
 
@@ -1369,7 +1376,7 @@ S2.define('select2/selection/base',[
   BaseSelection.prototype._handleBlur = function (evt) {
     var self = this;
 
-    // This needs to be delayed as the actve element is the body when the tab
+    // This needs to be delayed as the active element is the body when the tab
     // key is pressed, possibly along with others.
     window.setTimeout(function () {
       // Don't trigger `blur` if the focus is still in the selection
@@ -1867,6 +1874,14 @@ S2.define('select2/selection/search',[
       }
     });
 
+    // Try to detect the IE version should the `documentMode` property that
+    // is stored on the document. This is only implemented in IE and is
+    // slightly cleaner than doing a user agent check.
+    // This property is not available in Edge, but Edge also doesn't have
+    // this bug.
+    var msie = document.documentMode;
+    var disableInputEvents = msie && msie <= 11;
+
     // Workaround for browsers which do not support the `input` event
     // This will prevent double-triggering of events for browsers which support
     // both the `keyup` and `input` events.
@@ -1874,17 +1889,10 @@ S2.define('select2/selection/search',[
       'input.searchcheck',
       '.select2-search--inline',
       function (evt) {
-        // Try to detect the IE version should the `documentMode` property that
-        // is stored on the document. This is only implemented in IE and is
-        // slightly cleaner than doing a user agent check.
-        // This property is not available in Edge, but Edge also doesn't have
-        // this bug.
-        var msie = document.documentMode;
-
         // IE will trigger the `input` event when a placeholder is used on a
         // search box. To get around this issue, we are forced to ignore all
         // `input` events in IE and keep using `keyup`.
-        if (msie && msie <= 11) {
+        if (disableInputEvents) {
           self.$selection.off('input.search input.searchcheck');
           return;
         }
@@ -1898,6 +1906,14 @@ S2.define('select2/selection/search',[
       'keyup.search input.search',
       '.select2-search--inline',
       function (evt) {
+        // IE will trigger the `input` event when a placeholder is used on a
+        // search box. To get around this issue, we are forced to ignore all
+        // `input` events in IE and keep using `keyup`.
+        if (disableInputEvents && evt.type === 'input') {
+          self.$selection.off('input.search input.searchcheck');
+          return;
+        }
+
         var key = evt.which;
 
         // We can freely ignore events from modifier keys
@@ -3387,11 +3403,11 @@ S2.define('select2/data/ajax',[
     }, this.ajaxOptions);
 
     if (typeof options.url === 'function') {
-      options.url = options.url(params);
+      options.url = options.url.call(this.$element, params);
     }
 
     if (typeof options.data === 'function') {
-      options.data = options.data(params);
+      options.data = options.data.call(this.$element, params);
     }
 
     function request () {
@@ -3764,6 +3780,10 @@ S2.define('select2/dropdown',[
     this.$dropdown = $dropdown;
 
     return $dropdown;
+  };
+
+  Dropdown.prototype.bind = function () {
+    // Should be implemented in subclasses
   };
 
   Dropdown.prototype.position = function ($dropdown, $container) {
@@ -5239,6 +5259,10 @@ S2.define('select2/core',[
       'select': 'selecting',
       'unselect': 'unselecting'
     };
+    
+    if (args === undefined) {
+      args = {};
+    }
 
     if (name in preTriggerMap) {
       var preTriggerName = preTriggerMap[name];
@@ -5459,7 +5483,7 @@ S2.define('jquery.select2',[
 
         var args = Array.prototype.slice.call(arguments, 1);
 
-        var ret = instance[options](args);
+        var ret = instance[options].apply(instance, args);
 
         // Check if we should be returning `this`
         if ($.inArray(options, thisMethods) > -1) {
