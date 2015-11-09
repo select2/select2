@@ -18,9 +18,9 @@ define([
   AjaxAdapter.prototype._applyDefaults = function (options) {
     var defaults = {
       data: function (params) {
-        return {
+        return $.extend({}, params, {
           q: params.term
-        };
+        });
       },
       transport: function (params, success, failure) {
         var $request = $.ajax(params);
