@@ -85,6 +85,14 @@ define([
       }
     });
 
+    // Try to detect the IE version should the `documentMode` property that
+    // is stored on the document. This is only implemented in IE and is
+    // slightly cleaner than doing a user agent check.
+    // This property is not available in Edge, but Edge also doesn't have
+    // this bug.
+    var msie = document.documentMode;
+    var disableInputEvents = msie && msie <= 11;
+
     // Workaround for browsers which do not support the `input` event
     // This will prevent double-triggering of events for browsers which support
     // both the `keyup` and `input` events.
@@ -92,17 +100,10 @@ define([
       'input.searchcheck',
       '.select2-search--inline',
       function (evt) {
-        // Try to detect the IE version should the `documentMode` property that
-        // is stored on the document. This is only implemented in IE and is
-        // slightly cleaner than doing a user agent check.
-        // This property is not available in Edge, but Edge also doesn't have
-        // this bug.
-        var msie = document.documentMode;
-
         // IE will trigger the `input` event when a placeholder is used on a
         // search box. To get around this issue, we are forced to ignore all
         // `input` events in IE and keep using `keyup`.
-        if (msie && msie <= 11) {
+        if (disableInputEvents) {
           self.$selection.off('input.search input.searchcheck');
           return;
         }
@@ -116,6 +117,14 @@ define([
       'keyup.search input.search',
       '.select2-search--inline',
       function (evt) {
+        // IE will trigger the `input` event when a placeholder is used on a
+        // search box. To get around this issue, we are forced to ignore all
+        // `input` events in IE and keep using `keyup`.
+        if (disableInputEvents && evt.type === 'input') {
+          self.$selection.off('input.search input.searchcheck');
+          return;
+        }
+
         var key = evt.which;
 
         // We can freely ignore events from modifier keys
