@@ -18,6 +18,8 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap; }
+    .select2-container .select2-selection--single .select2-selection__clear {
+      position: relative; }
   .select2-container[dir="rtl"] .select2-selection--single .select2-selection__rendered {
     padding-right: 8px;
     padding-left: 20px; }
@@ -247,7 +249,8 @@
   background: transparent;
   border: none;
   outline: 0;
-  box-shadow: none; }
+  box-shadow: none;
+  -webkit-appearance: textfield; }
 
 .select2-container--default .select2-results > .select2-results__options {
   max-height: 200px;
