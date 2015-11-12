@@ -60,6 +60,7 @@ define([
       }
     }
 
+    this.$element.find('option[data-select2-tag]').remove();
     this.$element.val(this.placeholder.id).trigger('change');
 
     this.trigger('toggle', {});
