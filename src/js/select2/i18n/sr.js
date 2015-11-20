@@ -14,6 +14,9 @@ define(function () {
   }
 
   return {
+    errorLoading: function () {
+      return 'Preuzimanje nije uspelo.';
+    },
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;
 
