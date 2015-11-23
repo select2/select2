@@ -193,9 +193,8 @@ define([
       data: item
     });
 
-    this.trigger('open', {});
-
-    this.$search.val(item.text + ' ');
+    this.$search.val(item.text);
+    this.handleSearch();
   };
 
   Search.prototype.resizeSearch = function () {
