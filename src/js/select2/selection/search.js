@@ -12,7 +12,7 @@ define([
       '<li class="select2-search select2-search--inline">' +
         '<input class="select2-search__field" type="search" tabindex="-1"' +
         ' autocomplete="off" autocorrect="off" autocapitalize="off"' +
-        ' spellcheck="false" role="textbox" />' +
+        ' spellcheck="false" role="textbox" aria-autocomplete="list" />' +
       '</li>'
     );
 
@@ -37,6 +37,7 @@ define([
 
     container.on('close', function () {
       self.$search.val('');
+      self.$search.removeAttr('aria-activedescendant');
       self.$search.trigger('focus');
     });
 
@@ -52,6 +53,10 @@ define([
 
     container.on('focus', function (evt) {
       self.$search.trigger('focus');
+    });
+
+    container.on('results:focus', function (params) {
+      self.$search.attr('aria-activedescendant', params.id);
     });
 
     this.$selection.on('focusin', '.select2-search--inline', function (evt) {
@@ -85,6 +90,14 @@ define([
       }
     });
 
+    // Try to detect the IE version should the `documentMode` property that
+    // is stored on the document. This is only implemented in IE and is
+    // slightly cleaner than doing a user agent check.
+    // This property is not available in Edge, but Edge also doesn't have
+    // this bug.
+    var msie = document.documentMode;
+    var disableInputEvents = msie && msie <= 11;
+
     // Workaround for browsers which do not support the `input` event
     // This will prevent double-triggering of events for browsers which support
     // both the `keyup` and `input` events.
@@ -92,17 +105,10 @@ define([
       'input.searchcheck',
       '.select2-search--inline',
       function (evt) {
-        // Try to detect the IE version should the `documentMode` property that
-        // is stored on the document. This is only implemented in IE and is
-        // slightly cleaner than doing a user agent check.
-        // This property is not available in Edge, but Edge also doesn't have
-        // this bug.
-        var msie = document.documentMode;
-
         // IE will trigger the `input` event when a placeholder is used on a
         // search box. To get around this issue, we are forced to ignore all
         // `input` events in IE and keep using `keyup`.
-        if (msie && msie <= 11) {
+        if (disableInputEvents) {
           self.$selection.off('input.search input.searchcheck');
           return;
         }
@@ -116,6 +122,14 @@ define([
       'keyup.search input.search',
       '.select2-search--inline',
       function (evt) {
+        // IE will trigger the `input` event when a placeholder is used on a
+        // search box. To get around this issue, we are forced to ignore all
+        // `input` events in IE and keep using `keyup`.
+        if (disableInputEvents && evt.type === 'input') {
+          self.$selection.off('input.search input.searchcheck');
+          return;
+        }
+
         var key = evt.which;
 
         // We can freely ignore events from modifier keys
@@ -184,9 +198,8 @@ define([
       data: item
     });
 
-    this.trigger('open', {});
-
-    this.$search.val(item.text + ' ');
+    this.$search.val(item.text);
+    this.handleSearch();
   };
 
   Search.prototype.resizeSearch = function () {

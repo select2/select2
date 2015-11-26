@@ -1,40 +1,36 @@
 define(function () {
-  // Danish
+  // Arabic
   return {
     errorLoading: function () {
-      return 'Resultaterne kunne ikke indlæses.';
+      return 'لا يمكن تحميل النتائج';
     },
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;
 
-      var message = 'Angiv venligst ' + overChars + ' tegn mindre';
+      var message = 'الرجاء حذف ' + overChars + ' عناصر';
 
       return message;
     },
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
-      var message = 'Angiv venligst ' + remainingChars + ' tegn mere';
+      var message = 'الرجاء إضافة ' + remainingChars + ' عناصر';
 
       return message;
     },
     loadingMore: function () {
-      return 'Indlæser flere resultater…';
+      return 'جاري تحميل نتائج إضافية...';
     },
     maximumSelected: function (args) {
-      var message = 'Du kan kun vælge ' + args.maximum + ' emne';
-
-      if (args.maximum != 1) {
-        message += 'r';
-      }
+      var message = 'تستطيع إختيار ' + args.maximum + ' بنود فقط';
 
       return message;
     },
     noResults: function () {
-      return 'Ingen resultater fundet';
+      return 'لم يتم العثور على أي نتائج';
     },
     searching: function () {
-      return 'Søger…';
+      return 'جاري البحث…';
     }
   };
 });

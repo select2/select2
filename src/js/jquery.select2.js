@@ -17,25 +17,29 @@ define([
 
       if (typeof options === 'object') {
         this.each(function () {
-          var instanceOptions = $.extend({}, options, true);
+          var instanceOptions = $.extend(true, {}, options);
 
           var instance = new Select2($(this), instanceOptions);
         });
 
         return this;
       } else if (typeof options === 'string') {
-        var instance = this.data('select2');
+        var ret;
 
-        if (instance == null && window.console && console.error) {
-          console.error(
-            'The select2(\'' + options + '\') method was called on an ' +
-            'element that is not using Select2.'
-          );
-        }
+        this.each(function () {
+          var instance = $(this).data('select2');
 
-        var args = Array.prototype.slice.call(arguments, 1);
+          if (instance == null && window.console && console.error) {
+            console.error(
+              'The select2(\'' + options + '\') method was called on an ' +
+              'element that is not using Select2.'
+            );
+          }
 
-        var ret = instance[options].apply(instance, args);
+          var args = Array.prototype.slice.call(arguments, 1);
+
+          ret = instance[options].apply(instance, args);
+        });
 
         // Check if we should be returning `this`
         if ($.inArray(options, thisMethods) > -1) {
