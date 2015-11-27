@@ -24,7 +24,7 @@ define(function () {
       return message;
     },
     noResults: function () {
-      return 'ม่พบข้อมูล';
+      return 'ไม่พบข้อมูล';
     },
     searching: function () {
       return 'กำลังค้นข้อมูล…';
