@@ -1,5 +1,5 @@
 /*!
- * Select2 4.0.1-rc.1
+ * Select2 4.0.1
  * https://select2.github.io
  *
  * Released under the MIT license
@@ -4046,7 +4046,7 @@ S2.define('select2/dropdown/attachBody',[
   '../utils'
 ], function ($, Utils) {
   function AttachBody (decorated, $element, options) {
-    this.$dropdownParent = options.get('dropdownParent') || document.body;
+    this.$dropdownParent = options.get('dropdownParent') || $(document.body);
 
     decorated.call(this, $element, options);
   }
@@ -4200,6 +4200,14 @@ S2.define('select2/dropdown/attachBody',[
       top: container.bottom
     };
 
+    // Fix positioning with static parents
+    if (this.$dropdownParent[0].style.position !== 'static') {
+      var parentOffset = this.$dropdownParent.offset();
+
+      css.top -= parentOffset.top;
+      css.left -= parentOffset.left;
+    }
+
     if (!isCurrentlyAbove && !isCurrentlyBelow) {
       newDirection = 'below';
     }
@@ -4308,12 +4316,23 @@ S2.define('select2/dropdown/selectOnClose',[
   SelectOnClose.prototype._handleSelectOnClose = function () {
     var $highlightedResults = this.getHighlightedResults();
 
+    // Only select highlighted results
     if ($highlightedResults.length < 1) {
       return;
     }
 
+    var data = $highlightedResults.data('data');
+
+    // Don't re-select already selected resulte
+    if (
+      (data.element != null && data.element.selected) ||
+      (data.element == null && data.selected)
+    ) {
+      return;
+    }
+
     this.trigger('select', {
-        data: $highlightedResults.data('data')
+        data: data
     });
   };
 
@@ -5277,7 +5296,7 @@ S2.define('select2/core',[
       'select': 'selecting',
       'unselect': 'unselecting'
     };
-    
+
     if (args === undefined) {
       args = {};
     }
