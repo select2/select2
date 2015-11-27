@@ -58,5 +58,9 @@
     "grunt-jekyll": "^0.4.2",
     "grunt-sass": "^1.0.0",
     "grunt-saucelabs": "^8.6.0"
+  },
+  "dependencies": {
+    "almond": "~0.3.1",
+    "jquery-mousewheel": "~3.1.13"
   }
 }
