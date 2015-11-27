@@ -21,7 +21,10 @@ define([
     }
 
     this.trigger('select', {
-        data: $highlightedResults.data('data')
+      data: $highlightedResults.data('data'),
+      // Don't want CloseOnSelect to fire if we're already closing
+      // because it causes an infinte loop.
+      suppressCloseOnSelect: true
     });
   };
 
