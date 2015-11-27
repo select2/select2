@@ -357,7 +357,7 @@ define([
       'select': 'selecting',
       'unselect': 'unselecting'
     };
-    
+
     if (args === undefined) {
       args = {};
     }
