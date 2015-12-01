@@ -14,7 +14,7 @@ define([
 
   Results.prototype.render = function () {
     var $results = $(
-      '<ul class="select2-results__options" role="tree"></ul>'
+      '<ul class="select2-results__options" role="tree" aria-describedby="treeInstructions"></ul>'
     );
 
     if (this.options.get('multiple')) {
@@ -38,7 +38,8 @@ define([
 
     var $message = $(
       '<li role="treeitem" aria-live="assertive"' +
-      ' class="select2-results__option"></li>'
+      ' class="select2-results__option" aria-label="'+ params.args.text +'"' +
+      ' aria-describedby="" > </li>'
     );
 
     var message = this.options.get('translations').get(params.message);

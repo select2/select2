@@ -325,8 +325,27 @@ define([
             (key === KEYS.DOWN && evt.altKey)) {
           self.open();
 
-          evt.preventDefault();
-        }
+           evt.preventDefault();
+          }
+
+          if (key === KEYS.DOWN) {
+            var next = this.$element.find('option:selected').next();
+            if (next && next.val()) {
+              this.$element.val(next.val());
+              this.$element.trigger('change');
+            }
+            evt.preventDefault();
+           }
+
+          if (key === KEYS.UP) {
+            var prev = this.$element.find('option:selected').prev();
+            if (prev && prev.val()) {
+                this.$element.val(prev.val());
+                this.$element.trigger('change');
+            }
+            evt.preventDefault();
+          }
+
       }
     });
   };

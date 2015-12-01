@@ -208,7 +208,7 @@ module.exports = function (grunt) {
       }
     },
 
-    sass: {
+    /*sass: {
       dist: {
         options: {
           outputStyle: 'compressed'
@@ -231,7 +231,7 @@ module.exports = function (grunt) {
           ]
         }
       }
-    },
+    },*/
 
     symlink: {
       docs: {
@@ -337,16 +337,16 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-gh-pages');
   grunt.loadNpmTasks('grunt-jekyll');
   grunt.loadNpmTasks('grunt-saucelabs');
-  grunt.loadNpmTasks('grunt-sass');
+  //grunt.loadNpmTasks('grunt-sass');
 
   grunt.registerTask('default', ['compile', 'test', 'minify']);
 
   grunt.registerTask('compile', [
     'requirejs:dist', 'requirejs:dist.full', 'requirejs:i18n',
     'concat:dist', 'concat:dist.full',
-    'sass:dev'
+    /*'sass:dev'*/
   ]);
-  grunt.registerTask('minify', ['uglify', 'sass:dist']);
+  grunt.registerTask('minify', ['uglify'/*, 'sass:dist'*/]);
   grunt.registerTask('test', ['connect:tests', 'qunit', 'jshint']);
 
   var ciTasks = [];
