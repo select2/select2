@@ -50,7 +50,7 @@ test('templateSelection can addClass', function (assert) {
   );
 
   var $container = selection.selectionContainer();
-  
+
   var out = selection.display({
     text: 'test'
   }, $container);
@@ -58,7 +58,7 @@ test('templateSelection can addClass', function (assert) {
   assert.ok(called);
 
   assert.equal(out, 'test');
-  
+
   assert.ok($container.hasClass('testclass'));
 });
 
@@ -114,4 +114,36 @@ test('escapeMarkup is being used', function (assert) {
     unescapedText,
     'The text should be escaped by default to prevent injection'
   );
+});
+
+test('renderTitle renders title', function(assert) {
+  var selection = new SingleSelection(
+    $('#qunit-fixture .single'),
+    options
+  );
+
+  var $selection = selection.render();
+  var $rendered = $selection.find('.select2-selection__rendered');
+
+  selection.update([{
+    text: 'test'
+  }]);
+
+  assert.equal($rendered.attr('title'), 'test');
+});
+
+test('no renderTitle does not render any title', function(assert) {
+  var selection = new SingleSelection(
+    $('#qunit-fixture .single'),
+    new Options({ renderTitle: false })
+  );
+
+  var $selection = selection.render();
+  var $rendered = $selection.find('.select2-selection__rendered');
+
+  selection.update([{
+    text: 'test'
+  }]);
+
+  assert.equal($rendered.attr('title'), undefined);
 });
