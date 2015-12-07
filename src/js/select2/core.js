@@ -321,7 +321,9 @@ define([
           evt.preventDefault();
         }
       } else {
-        if (key === KEYS.ENTER || key === KEYS.SPACE ||
+        if (key === KEYS.ENTER && this.options.get('enterTriggerSubmit')) {
+            this.$element.trigger('submit');
+        } else if (key === KEYS.ENTER || key === KEYS.SPACE ||
             (key === KEYS.DOWN && evt.altKey)) {
           self.open();
 
