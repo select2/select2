@@ -194,6 +194,9 @@ define([
   };
 
   Search.prototype.searchRemoveChoice = function (decorated, item) {
+    if (item.locked) {
+      return;
+    }
     this.trigger('unselect', {
       data: item
     });

@@ -1606,12 +1606,13 @@ S2.define('select2/selection/multiple',[
     return escapeMarkup(template(data, container));
   };
 
-  MultipleSelection.prototype.selectionContainer = function () {
+  MultipleSelection.prototype.selectionContainer = function (locked) {
     var $container = $(
       '<li class="select2-selection__choice">' +
+      (locked ? '' :
         '<span class="select2-selection__choice__remove" role="presentation">' +
           '&times;' +
-        '</span>' +
+        '</span>') +
       '</li>'
     );
 
@@ -1630,7 +1631,7 @@ S2.define('select2/selection/multiple',[
     for (var d = 0; d < data.length; d++) {
       var selection = data[d];
 
-      var $selection = this.selectionContainer();
+      var $selection = this.selectionContainer(selection.locked);
       var formatted = this.display(selection, $selection);
 
       $selection.append(formatted);
@@ -1993,6 +1994,9 @@ S2.define('select2/selection/search',[
   };
 
   Search.prototype.searchRemoveChoice = function (decorated, item) {
+    if (item.locked) {
+      return;
+    }
     this.trigger('unselect', {
       data: item
     });
