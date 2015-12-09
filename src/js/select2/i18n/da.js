@@ -2,7 +2,7 @@ define(function () {
   // Danish
   return {
     errorLoading: function () {
-      return 'The results could not be loaded.';
+      return 'Resultaterne kunne ikke indlæses.';
     },
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;

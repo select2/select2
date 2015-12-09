@@ -25,7 +25,7 @@ define([
       return;
     }
 
-    this.trigger('close');
+    this.trigger('close', {});
   };
 
   return CloseOnSelect;

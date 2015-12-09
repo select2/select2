@@ -451,7 +451,7 @@ $request.then(function (data) {
     var item = data[d];
 
     // Create the DOM option that is pre-selected by default
-    var option = new Option(data.text, data.id, true, true);
+    var option = new Option(item.text, item.id, true, true);
 
     // Append it to the select
     $element.append(option);
@@ -685,7 +685,7 @@ var data = $.map([
         </p>
 
 <pre class="prettyprint linenums">
-&lt;select data-select2-tags="[{id: '1', text: 'One', id: '2', text: 'Two'}]"&gt;&lt;/select&gt;
+&lt;select data-select2-tags='[{"id": "1", "text": "One"}, {"id": "2", "text": "Two"}]'&gt;&lt;/select&gt;
 </pre>
 
         <p>
@@ -693,7 +693,7 @@ var data = $.map([
         </p>
 
 <pre class="prettyprint linenums">
-&lt;select data-data="[{id: '1', text: 'One', id: '2', text: 'Two'}]" data-tags="true"&gt;&lt;/select&gt;
+&lt;select data-data='[{"id": "1", "text": "One"}, {"id": "2", "text": "Two"}]' data-tags="true"&gt;&lt;/select&gt;
 </pre>
 
         <h2 id="removed-methods">Deprecated and removed methods</h2>

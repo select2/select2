@@ -1,0 +1,38 @@
+<section>
+  <h2 id="amd">
+    Can I use Select2 with my AMD or CommonJS loader?
+  </h2>
+
+  <p>
+    Yes, Select2 should work with most AMD or CommonJS loaders without any issues.
+  </p>
+
+  <h3>
+    How do I tell Select2 where to look for modules?
+  </h3>
+
+  <p>
+    For most AMD and CommonJS setups, the location of the data files used by Select2 will be automatically determined and handled without you needing to do anything.
+  </p>
+
+  <p>
+    If you are using Select2 in a build environment where preexisting module names are changed during a build step, Select2 may not be able to find optional dependencies or language files. You can manually set the prefixes to use for these files using the <code>amdBase</code> and <code>amdLanugageBase</code> options.
+  </p>
+
+<pre class="prettyprint">
+$.fn.select2.defaults.set('amdBase', 'select2/');
+$.fn.select2.defaults.set('amdLanguageBase', 'select2/i18n/');
+</pre>
+
+  <h3>
+    Select2 is being placed before jQuery in my JavaScript file
+  </h3>
+
+  <p>
+    Due to a bug in older versions of the r.js build tool, Select2 was sometimes placed before jQuery in then compiled build file. Because of this, Select2 will trigger an error because it won't be able to find or load jQuery.
+  </p>
+
+  <p>
+    You can fix this issue by upgrading to a newer version of the r.js build tool.
+  </p>
+</section>

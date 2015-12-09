@@ -3,11 +3,7 @@
 // Scrollspy and affixed enhanced navigation to
 // highlight sections and secondary sections of docs content`.
 
-// First level of nav
-.s2-docs-sidenav {
-  margin-top: 20px;
-  margin-bottom: 20px;
-
+.s2-docs-sidebar {
   // By default it is not affixed in mobile views, so undo that
   &.affix {
     position: static;
@@ -16,6 +12,12 @@
   @media (min-width: 768px) {
     padding-left: 20px;
   }
+}
+
+// First level of nav
+.s2-docs-sidenav {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 // All levels of nav
@@ -28,7 +30,7 @@
     font-weight: 500;
     color: #767676;
     border-left: 1px solid transparent;
-    transition: color .2s, border-color .2s, border-width .2s;
+    transition: color .2s, border-color .2s;
   }
 
   > li > a code {
@@ -38,7 +40,6 @@
 
   > li > a:hover,
   > li > a:focus {
-    padding-left: 19px;
     color: #428BCA;
     text-decoration: none;
     background-color: transparent;
@@ -48,7 +49,7 @@
   > .active > a,
   > .active:hover > a,
   > .active:focus > a {
-    padding-left: 18px;
+    padding-left: 19px;
     font-weight: bold;
     color: #428BCA;
     background-color: transparent;
@@ -77,7 +78,7 @@
   .nav > .active > a,
   .nav > .active:hover > a,
   .nav > .active:focus > a {
-    padding-left: 30px;
+    padding-left: 29px;
     font-weight: 400;
   }
 }
@@ -106,7 +107,6 @@
 
   // Undo the static from mobile first approach
   .s2-docs-sidebar.affix {
-
     position: fixed;
     top: 0px;
   }
