@@ -98,11 +98,7 @@ define([
   };
 
   Tags.prototype.insertTag = function (_, data, tag) {
-    if (this.options.options.tagsShownLast) {
-      data.push(tag);
-    } else {
-      data.unshift(tag);
-    }
+    data.unshift(tag);
   };
 
   Tags.prototype._removeOldTags = function (_) {
