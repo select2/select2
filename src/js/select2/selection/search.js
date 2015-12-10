@@ -194,7 +194,7 @@ define([
   };
 
   Search.prototype.searchRemoveChoice = function (decorated, item) {
-    var searchValue = item["text"];
+    var searchValue = item['text'];
     this.trigger('unselect', {
       data: item
     });
@@ -203,7 +203,7 @@ define([
       if (item[this.options.options.searchRemoveAttribute]) {
         searchValue = item[this.options.options.searchRemoveAttribute];
       } else {
-        searchValue = "";
+        searchValue = '';
       }
     }
 
