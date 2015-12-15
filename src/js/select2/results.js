@@ -159,77 +159,93 @@ define([
   };
 
   Results.prototype.option = function (data) {
-    var option = document.createElement('li');
-    option.className = 'select2-results__option';
+	var option, append = false;
+	  if (data.children) {
+		  option = $(".select2-results__option[aria-label='" + data.text + "']")[0];
+		  if ($(option).length == 0) {
+			  option = document.createElement('li');
+			  option.className = 'select2-results__option';
+		  }
+		  else {
+			  append = true;
+		  }
+	  }
+	  else {
+		  option = document.createElement('li');
+		  option.className = 'select2-results__option';
+	  }
+	  
 
-    var attrs = {
-      'role': 'treeitem',
-      'aria-selected': 'false'
-    };
+	  var attrs = {
+		  'role': 'treeitem',
+		  'aria-selected': 'false'
+	  };
 
-    if (data.disabled) {
-      delete attrs['aria-selected'];
-      attrs['aria-disabled'] = 'true';
-    }
+	  if (data.disabled) {
+		  delete attrs['aria-selected'];
+		  attrs['aria-disabled'] = 'true';
+	  }
 
-    if (data.id == null) {
-      delete attrs['aria-selected'];
-    }
+	  if (data.id == null) {
+		  delete attrs['aria-selected'];
+	  }
 
-    if (data._resultId != null) {
-      option.id = data._resultId;
-    }
+	  if (data._resultId != null) {
+		  option.id = data._resultId;
+	  }
 
-    if (data.title) {
-      option.title = data.title;
-    }
+	  if (data.title) {
+		  option.title = data.title;
+	  }
 
-    if (data.children) {
-      attrs.role = 'group';
-      attrs['aria-label'] = data.text;
-      delete attrs['aria-selected'];
-    }
+	  if (data.children) {
+		  attrs.role = 'group';
+		  attrs['aria-label'] = data.text;
+		  delete attrs['aria-selected'];
+	  }
 
-    for (var attr in attrs) {
-      var val = attrs[attr];
+	  for (var attr in attrs) {
+		  var val = attrs[attr];
 
-      option.setAttribute(attr, val);
-    }
+		  option.setAttribute(attr, val);
+	  }
 
-    if (data.children) {
-      var $option = $(option);
+	  if (data.children) {
+		  var $option = $(option);
 
-      var label = document.createElement('strong');
-      label.className = 'select2-results__group';
+		  var label = document.createElement('strong');
+		  label.className = 'select2-results__group';
 
-      var $label = $(label);
-      this.template(data, label);
+		  var $label = $(label);
+		  this.template(data, label);
 
-      var $children = [];
+		  var $children = [];
 
-      for (var c = 0; c < data.children.length; c++) {
-        var child = data.children[c];
+		  for (var c = 0; c < data.children.length; c++) {
+			  var child = data.children[c];
 
-        var $child = this.option(child);
+			  var $child = this.option(child);
 
-        $children.push($child);
-      }
+			  $children.push($child);
+		  }
 
-      var $childrenContainer = $('<ul></ul>', {
-        'class': 'select2-results__options select2-results__options--nested'
-      });
+		  var $childrenContainer = append ? $option.find('.select2-results__options--nested') : $('<ul></ul>', {
+			  'class': 'select2-results__options select2-results__options--nested'
+		  });
 
-      $childrenContainer.append($children);
+		  $childrenContainer.append($children);
+		  if (!append) {
+			  $option.append(label);
+			  $option.append($childrenContainer);
+		  }
+		 
+	  } else {
+		  this.template(data, option);
+	  }
 
-      $option.append(label);
-      $option.append($childrenContainer);
-    } else {
-      this.template(data, option);
-    }
+	  $.data(option, 'data', data);
 
-    $.data(option, 'data', data);
-
-    return option;
+	  return option;
   };
 
   Results.prototype.bind = function (container, $container) {
