@@ -313,8 +313,8 @@ the specific language governing permissions and limitations under the Apache Lic
             sizer.attr("class","select2-sizer");
             $(document.body).append(sizer);
         }
-        //White space width is not calculated when element is hidden/offscreen. so replace whitespaces with a random character
-        sizer.text(e.val().replace(/\s/g, "o"));
+        //White space width is not calculated when element is hidden/offscreen.
+        sizer.text(e.val().replace(/\s/g, "m"));
         return sizer.width();
     }
 
@@ -2715,6 +2715,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 _this.selectChoice($(this), e.shiftKey || e.ctrlKey);
             });
 
+
             // rewrite labels from original element to focusser
             this.search.attr("id", "s2id_autogen"+nextUid());
 
@@ -2722,6 +2723,14 @@ the specific language governing permissions and limitations under the Apache Lic
                 .text($("label[for='" + this.opts.element.attr("id") + "']").text())
                 .attr('for', this.search.attr('id'));
             this.opts.element.focus(this.bind(function () { this.focus(); }));
+
+            this.search.on("compositionstart", this.bind(function(ev) {
+                this.completedIME = false;
+            }));
+
+            this.search.on("compositionend", this.bind(function(ev) {
+                this.completedIME = true;
+            }));
 
             this.search.on("input paste", this.bind(function(ev) {
                 //reset search container position.
@@ -3039,6 +3048,10 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // multi
         tokenize: function() {
+            // Don't tokenize if the input is an incomplete IME input.
+            if(!this.completedIME) {
+                return;
+            }
             var input = this.search.val();
             input = this.opts.tokenizer.call(this, input, this.data(), this.bind(this.onSelect), this.opts);
             if (input != null && input != undefined) {
