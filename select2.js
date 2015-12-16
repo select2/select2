@@ -2724,10 +2724,13 @@ the specific language governing permissions and limitations under the Apache Lic
                 .attr('for', this.search.attr('id'));
             this.opts.element.focus(this.bind(function () { this.focus(); }));
 
+            // If the input is an IME input, then we need to set a flag to mark the start and the end of IME input composition.
+            // Set a flag to mark that an IME input compsition has started.
             this.search.on("compositionstart", this.bind(function(ev) {
                 this.completedIME = false;
             }));
 
+            // Set a flag to mark that an IME input composition has ended.
             this.search.on("compositionend", this.bind(function(ev) {
                 this.completedIME = true;
             }));
