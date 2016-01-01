@@ -61,7 +61,12 @@ test('appends to the dropdown parent', function (assert) {
 test('dropdown is positioned with static margins', function (assert) {
     var $ = require('jquery');
     var $select = $('<select></select>');
-    var $parent = $('<div style="position: static; margin-top: 5px; margin-left: 10px;"></div>');
+    var $parent = $('<div></div>');
+    $parent.css({
+        position: 'static',
+        marginTop: '5px',
+        marginLeft: '10px'
+    });
 
     var $container = $('<span></span>');
     var container = new MockContainer();
@@ -111,7 +116,12 @@ test('dropdown is positioned with static margins', function (assert) {
 test('dropdown is positioned with absolute offsets', function (assert) {
     var $ = require('jquery');
     var $select = $('<select></select>');
-    var $parent = $('<div style="position: absolute; top: 10px; left: 5px;"></div>');
+    var $parent = $('<div></div>');
+    $parent.css({
+        position: 'absolute',
+        top: '10px',
+        left: '5px'
+    });
 
     var $container = $('<span></span>');
     var container = new MockContainer();
