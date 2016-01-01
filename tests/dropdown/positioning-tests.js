@@ -57,3 +57,101 @@ test('appends to the dropdown parent', function (assert) {
         'The dropdown should be contained within the parent container'
     );
 });
+
+test('dropdown is positioned with static margins', function (assert) {
+    var $ = require('jquery');
+    var $select = $('<select></select>');
+    var $parent = $('<div style="position: static; margin-top: 5px; margin-left: 10px;"></div>');
+
+    var $container = $('<span></span>');
+    var container = new MockContainer();
+
+    $('#qunit-fixture').empty();
+
+    $parent.appendTo($('#qunit-fixture'));
+    $container.appendTo($parent);
+
+    var Utils = require('select2/utils');
+    var Options = require('select2/options');
+
+    var Dropdown = require('select2/dropdown');
+    var AttachBody = require('select2/dropdown/attachBody');
+
+    var DropdownAdapter = Utils.Decorate(Dropdown, AttachBody);
+
+    var dropdown = new DropdownAdapter($select, new Options({
+        dropdownParent: $parent
+    }));
+
+    var $dropdown = dropdown.render();
+
+    assert.equal(
+        $dropdown[0].style.top,
+        0,
+        'The drodpown should not have any offset before it is displayed'
+    );
+
+    dropdown.bind(container, $container);
+    dropdown.position($dropdown, $container);
+    dropdown._showDropdown();
+
+    assert.equal(
+        $dropdown.css('top'),
+        '5px',
+        'The offset should be 5px at the top'
+    );
+
+    assert.equal(
+        $dropdown.css('left'),
+        '10px',
+        'The offset should be 10px on the left'
+    );
+});
+
+test('dropdown is positioned with absolute offsets', function (assert) {
+    var $ = require('jquery');
+    var $select = $('<select></select>');
+    var $parent = $('<div style="position: absolute; top: 10px; left: 5px;"></div>');
+
+    var $container = $('<span></span>');
+    var container = new MockContainer();
+
+    $parent.appendTo($('#qunit-fixture'));
+    $container.appendTo($parent);
+
+    var Utils = require('select2/utils');
+    var Options = require('select2/options');
+
+    var Dropdown = require('select2/dropdown');
+    var AttachBody = require('select2/dropdown/attachBody');
+
+    var DropdownAdapter = Utils.Decorate(Dropdown, AttachBody);
+
+    var dropdown = new DropdownAdapter($select, new Options({
+        dropdownParent: $parent
+    }));
+
+    var $dropdown = dropdown.render();
+
+    assert.equal(
+        $dropdown[0].style.top,
+        0,
+        'The drodpown should not have any offset before it is displayed'
+    );
+
+    dropdown.bind(container, $container);
+    dropdown.position($dropdown, $container);
+    dropdown._showDropdown();
+
+    assert.equal(
+        $dropdown.css('top'),
+        '0px',
+        'There should not be an extra top offset'
+    );
+
+    assert.equal(
+        $dropdown.css('left'),
+        '0px',
+        'There should not be an extra left offset'
+    );
+});
