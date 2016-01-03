@@ -68,7 +68,7 @@ test('dropdown is positioned with static margins', function (assert) {
         marginLeft: '10px'
     });
 
-    var $container = $('<span></span>');
+    var $container = $('<span>test</span>');
     var container = new MockContainer();
 
     $('#qunit-fixture').empty();
@@ -101,8 +101,8 @@ test('dropdown is positioned with static margins', function (assert) {
     dropdown._showDropdown();
 
     assert.equal(
-        $dropdown.css('top'),
-        '5px',
+        $dropdown.css('top').substring(0, 2),
+        $container.outerHeight() + 5,
         'The offset should be 5px at the top'
     );
 
@@ -123,7 +123,7 @@ test('dropdown is positioned with absolute offsets', function (assert) {
         left: '5px'
     });
 
-    var $container = $('<span></span>');
+    var $container = $('<span>test</span>');
     var container = new MockContainer();
 
     $parent.appendTo($('#qunit-fixture'));
@@ -154,8 +154,8 @@ test('dropdown is positioned with absolute offsets', function (assert) {
     dropdown._showDropdown();
 
     assert.equal(
-        $dropdown.css('top'),
-        '0px',
+        $dropdown.css('top').substring(0, 2),
+        $container.outerHeight(),
         'There should not be an extra top offset'
     );
 
