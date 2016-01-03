@@ -288,3 +288,31 @@ test('optgroup tags have the right properties', function (assert) {
     'The <optgroup> should have one child under it'
   );
 });
+
+test('existing selections are respected on initialization', function (assert) {
+   var $select = $(
+     '<select>' +
+        '<option>First</option>' +
+        '<option selected>Second</option>' +
+      '</select>'
+    );
+
+    var options = new Options({
+      data: [
+        {
+          id: 'Second',
+          text: 'Second'
+        },
+        {
+          id: 'Third',
+          text: 'Third'
+        }
+      ]
+    });
+
+    assert.equal($select.val(), 'Second');
+
+    var data = new ArrayData($select, options);
+
+    assert.equal($select.val(), 'Second');
+});
