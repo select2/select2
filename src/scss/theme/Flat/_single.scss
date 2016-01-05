@@ -1,0 +1,42 @@
+/****** Single SCSS *******/
+.select2-container--flat{
+  .select2-selection--single{
+    background: $flat-theme-light-color;
+    border: 0px;
+    height:34px;
+    .select2-selection__rendered{
+      color: #fff;
+      line-height:34px;
+    }
+    .select2-selection__arrow{
+      height: 26px;
+      position: absolute;
+      top: 1px;
+      right: 1px;
+      width: 20px;
+      b {
+        border-color: #fff transparent transparent transparent;
+        top: 60%;
+        border-style: solid;
+        border-width: 5px 4px 0 4px;
+        height: 0;
+        left: 50%;
+        margin-left: -4px;
+        margin-top: -2px;
+        position: absolute;
+        width: 0;
+      }
+    }
+    .select2-selection__placeholder {
+      color: #fff;
+    }
+    .select2-selection__arrow b {
+
+    }
+    .select2-selection__clear {
+      cursor: pointer;
+      float: right;
+      font-weight: bold;
+    }
+  }
+}
