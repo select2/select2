@@ -80,7 +80,9 @@ define([
 
         callback(results);
       }, function () {
-        // TODO: Handle AJAX errors
+        self.trigger('results:message', {
+          message: 'errorLoading'
+        });
       });
 
       self._request = $request;
