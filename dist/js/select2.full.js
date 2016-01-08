@@ -1315,7 +1315,9 @@ S2.define('select2/selection/base',[
       this._tabindex = this.$element.attr('tabindex');
     }
 
-    $selection.attr('title', this.$element.attr('title'));
+    if (this.options.get('setTitle')) {
+      $selection.attr('title', this.$element.attr('title'));
+    }
     $selection.attr('tabindex', this._tabindex);
 
     this.$selection = $selection;
@@ -1533,7 +1535,9 @@ S2.define('select2/selection/single',[
     var formatted = this.display(selection, $rendered);
 
     $rendered.empty().append(formatted);
-    $rendered.prop('title', selection.title || selection.text);
+    if (this.options.get('setTitle')) {
+      $rendered.prop('title', selection.title || selection.text);
+    }
   };
 
   return SingleSelection;
@@ -1634,8 +1638,9 @@ S2.define('select2/selection/multiple',[
       var formatted = this.display(selection, $selection);
 
       $selection.append(formatted);
-      $selection.prop('title', selection.title || selection.text);
-
+      if (this.options.get('setTitle')) {
+        $selection.prop('title', selection.title || selection.text);
+      }
       $selection.data('data', selection);
 
       $selections.push($selection);
@@ -3332,7 +3337,7 @@ S2.define('select2/data/array',[
         var $existingOption = $existing.filter(onlyItem(item));
 
         var existingData = this.item($existingOption);
-        var newData = $.extend(true, {}, existingData, item);
+        var newData = $.extend(true, {}, item, existingData);
 
         var $newOption = this.option(newData);
 
@@ -3440,7 +3445,9 @@ S2.define('select2/data/ajax',[
 
         callback(results);
       }, function () {
-        // TODO: Handle AJAX errors
+        self.trigger('results:message', {
+          message: 'errorLoading'
+        });
       });
 
       self._request = $request;
@@ -3470,6 +3477,12 @@ S2.define('select2/data/tags',[
 
     if (createTag !== undefined) {
       this.createTag = createTag;
+    }
+
+    var insertTag = options.get('insertTag');
+
+    if (insertTag !== undefined) {
+        this.insertTag = insertTag;
     }
 
     decorated.call(this, $element, options);
@@ -4171,7 +4184,6 @@ S2.define('select2/dropdown/attachBody',[
 
     var newDirection = null;
 
-    var position = this.$container.position();
     var offset = this.$container.offset();
 
     offset.bottom = offset.top + this.$container.outerHeight(false);
@@ -4200,13 +4212,19 @@ S2.define('select2/dropdown/attachBody',[
       top: container.bottom
     };
 
-    // Fix positioning with static parents
-    if (this.$dropdownParent[0].style.position !== 'static') {
-      var parentOffset = this.$dropdownParent.offset();
+    // Determine what the parent element is to use for calciulating the offset
+    var $offsetParent = this.$dropdownParent;
 
-      css.top -= parentOffset.top;
-      css.left -= parentOffset.left;
+    // For statically positoned elements, we need to get the element
+    // that is determining the offset
+    if ($offsetParent.css('position') === 'static') {
+      $offsetParent = $offsetParent.offsetParent();
     }
+
+    var parentOffset = $offsetParent.offset();
+
+    css.top -= parentOffset.top;
+    css.left -= parentOffset.left;
 
     if (!isCurrentlyAbove && !isCurrentlyBelow) {
       newDirection = 'below';
@@ -4256,6 +4274,25 @@ S2.define('select2/dropdown/attachBody',[
   };
 
   return AttachBody;
+});
+
+S2.define('select2/dropdown/attachContainer',[
+
+], function () {
+  function AttachContainer (decorated, $element, options) {
+    decorated.call(this, $element, options);
+  }
+
+  AttachContainer.prototype.position =
+    function (decorated, $dropdown, $container) {
+    var $dropdownContainer = $container.find('.dropdown-wrapper');
+    $dropdownContainer.append($dropdown);
+
+    $dropdown.addClass('select2-dropdown--below');
+    $container.addClass('select2-container--below');
+  };
+
+  return AttachContainer;
 });
 
 S2.define('select2/dropdown/minimumResultsForSearch',[
@@ -4448,6 +4485,7 @@ S2.define('select2/defaults',[
   './dropdown/hidePlaceholder',
   './dropdown/infiniteScroll',
   './dropdown/attachBody',
+  './dropdown/attachContainer',
   './dropdown/minimumResultsForSearch',
   './dropdown/selectOnClose',
   './dropdown/closeOnSelect',
@@ -4466,7 +4504,8 @@ S2.define('select2/defaults',[
              MinimumInputLength, MaximumInputLength, MaximumSelectionLength,
 
              Dropdown, DropdownSearch, HidePlaceholder, InfiniteScroll,
-             AttachBody, MinimumResultsForSearch, SelectOnClose, CloseOnSelect,
+             AttachBody, AttachContainer, MinimumResultsForSearch,
+             SelectOnClose, CloseOnSelect,
 
              EnglishTranslation) {
   function Defaults () {
@@ -4599,7 +4638,7 @@ S2.define('select2/defaults',[
 
       options.dropdownAdapter = Utils.Decorate(
         options.dropdownAdapter,
-        AttachBody
+        (options.attachToContainer ? AttachContainer : AttachBody)
       );
     }
 
@@ -4784,6 +4823,8 @@ S2.define('select2/defaults',[
       maximumSelectionLength: 0,
       minimumResultsForSearch: 0,
       selectOnClose: false,
+      setTitle: false,
+      attachToContainer: false,
       sorter: function (data) {
         return data;
       },
@@ -5880,25 +5921,6 @@ S2.define('select2/compat/query',[
   };
 
   return Query;
-});
-
-S2.define('select2/dropdown/attachContainer',[
-
-], function () {
-  function AttachContainer (decorated, $element, options) {
-    decorated.call(this, $element, options);
-  }
-
-  AttachContainer.prototype.position =
-    function (decorated, $dropdown, $container) {
-    var $dropdownContainer = $container.find('.dropdown-wrapper');
-    $dropdownContainer.append($dropdown);
-
-    $dropdown.addClass('select2-dropdown--below');
-    $container.addClass('select2-container--below');
-  };
-
-  return AttachContainer;
 });
 
 S2.define('select2/dropdown/stopPropagation',[

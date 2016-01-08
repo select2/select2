@@ -27,7 +27,9 @@ define([
       this._tabindex = this.$element.attr('tabindex');
     }
 
-    $selection.attr('title', this.$element.attr('title'));
+    if (this.options.get('setTitle')) {
+      $selection.attr('title', this.$element.attr('title'));
+    }
     $selection.attr('tabindex', this._tabindex);
 
     this.$selection = $selection;
