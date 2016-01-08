@@ -29,6 +29,7 @@ define([
   './dropdown/hidePlaceholder',
   './dropdown/infiniteScroll',
   './dropdown/attachBody',
+  './dropdown/attachContainer',
   './dropdown/minimumResultsForSearch',
   './dropdown/selectOnClose',
   './dropdown/closeOnSelect',
@@ -47,7 +48,8 @@ define([
              MinimumInputLength, MaximumInputLength, MaximumSelectionLength,
 
              Dropdown, DropdownSearch, HidePlaceholder, InfiniteScroll,
-             AttachBody, MinimumResultsForSearch, SelectOnClose, CloseOnSelect,
+             AttachBody, AttachContainer, MinimumResultsForSearch,
+             SelectOnClose, CloseOnSelect,
 
              EnglishTranslation) {
   function Defaults () {
@@ -180,7 +182,7 @@ define([
 
       options.dropdownAdapter = Utils.Decorate(
         options.dropdownAdapter,
-        AttachBody
+        (options.attachToContainer ? AttachContainer : AttachBody)
       );
     }
 
