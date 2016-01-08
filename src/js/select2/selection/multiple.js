@@ -93,8 +93,9 @@ define([
       var formatted = this.display(selection, $selection);
 
       $selection.append(formatted);
-      $selection.prop('title', selection.title || selection.text);
-
+      if (this.options.get('setTitle')) {
+        $selection.prop('title', selection.title || selection.text);
+      }
       $selection.data('data', selection);
 
       $selections.push($selection);
