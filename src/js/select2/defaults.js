@@ -367,6 +367,8 @@ define([
       maximumSelectionLength: 0,
       minimumResultsForSearch: 0,
       selectOnClose: false,
+      setTitle: false,
+      attachToContainer: false,
       sorter: function (data) {
         return data;
       },
