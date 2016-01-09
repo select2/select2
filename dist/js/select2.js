@@ -3126,7 +3126,11 @@ S2.define('select2/data/select',[
     $options.each(function () {
       var $option = $(this);
 
-      if (!$option.is('option') && !$option.is('optgroup')) {
+      var optionData = $.data($option[0], 'data');
+
+      var hidden = optionData && optionData._hidden;
+
+      if (!$option.is('option') && !$option.is('optgroup') || hidden) {
         return;
       }
 
@@ -3151,17 +3155,16 @@ S2.define('select2/data/select',[
   SelectAdapter.prototype.option = function (data) {
     var option;
 
-    if (data.children) {
-      option = document.createElement('optgroup');
-      option.label = data.text;
-    } else {
-      option = document.createElement('option');
+    option = document.createElement('option');
 
-      if (option.textContent !== undefined) {
-        option.textContent = data.text;
-      } else {
-        option.innerText = data.text;
-      }
+    if (data.children) {
+      option.classList.add('select2-optgroup');
+    }
+
+    if (option.textContent !== undefined) {
+      option.textContent = data.text;
+    } else {
+      option.innerText = data.text;
     }
 
     if (data.id) {
@@ -3200,7 +3203,29 @@ S2.define('select2/data/select',[
       return data;
     }
 
-    if ($option.is('option')) {
+    if ($option.is('optgroup') || $option.hasClass('select2-optgroup')) {
+      data = {
+        text: $option.prop('label'),
+        children: [],
+        title: $option.prop('title')
+      };
+
+      data = this._normalizeItem(data);
+
+      var $children = this._findChildren($option);
+      var children = [];
+
+      for (var c = 0; c < $children.length; c++) {
+        var $child = $($children[c]);
+
+        var child = this.item($child);
+        child._parentId = data._resultId;
+
+        children.push(child);
+      }
+
+      data.children = children;
+    } else {
       data = {
         id: $option.val(),
         text: $option.text(),
@@ -3208,33 +3233,36 @@ S2.define('select2/data/select',[
         selected: $option.prop('selected'),
         title: $option.prop('title')
       };
-    } else if ($option.is('optgroup')) {
-      data = {
-        text: $option.prop('label'),
-        children: [],
-        title: $option.prop('title')
-      };
 
-      var $children = $option.children('option');
-      var children = [];
-
-      for (var c = 0; c < $children.length; c++) {
-        var $child = $($children[c]);
-
-        var child = this.item($child);
-
-        children.push(child);
-      }
-
-      data.children = children;
+      data = this._normalizeItem(data);
     }
 
-    data = this._normalizeItem(data);
     data.element = $option[0];
 
     $.data($option[0], 'data', data);
 
     return data;
+  };
+
+  SelectAdapter.prototype._findChildren = function ($parent) {
+
+    if ($parent.is('optgroup')) {
+       return $parent.children();
+    } else {
+      var parentData = $.data($parent[0], 'data');
+
+      var $options = this.$element.children();
+
+      return $options.map(function () {
+        var $option = $(this);
+
+        var optionData = $.data($option[0], 'data');
+
+        if (optionData._parentId == parentData._resultId) {
+          return $option;
+        }
+      });
+    }
   };
 
   SelectAdapter.prototype._normalizeItem = function (item) {
@@ -3288,7 +3316,11 @@ S2.define('select2/data/array',[
 
     ArrayAdapter.__super__.constructor.call(this, $element, options);
 
-    this.addOptions(this.convertToOptions(data));
+    for (var d = 0; d < data.length; d++) {
+      data[d]._root = true;
+    }
+
+    this.convertToOptions(data);
   }
 
   Utils.Extend(ArrayAdapter, SelectAdapter);
@@ -3326,13 +3358,14 @@ S2.define('select2/data/array',[
 
     for (var d = 0; d < data.length; d++) {
       var item = this._normalizeItem(data[d]);
+      item._hidden = !item._root;
 
       // Skip items which were pre-loaded, only merge the data
       if ($.inArray(item.id, existingIds) >= 0) {
         var $existingOption = $existing.filter(onlyItem(item));
 
         var existingData = this.item($existingOption);
-        var newData = $.extend(true, {}, existingData, item);
+        var newData = $.extend(true, {}, item, existingData);
 
         var $newOption = this.option(newData);
 
@@ -3344,15 +3377,13 @@ S2.define('select2/data/array',[
       var $option = this.option(item);
 
       if (item.children) {
-        var $children = this.convertToOptions(item.children);
-
-        Utils.appendMany($option, $children);
+        this.convertToOptions(item.children);
       }
 
       $options.push($option);
     }
 
-    return $options;
+    this.addOptions($options);
   };
 
   return ArrayAdapter;
@@ -3440,7 +3471,9 @@ S2.define('select2/data/ajax',[
 
         callback(results);
       }, function () {
-        // TODO: Handle AJAX errors
+        self.trigger('results:message', {
+          message: 'errorLoading'
+        });
       });
 
       self._request = $request;
@@ -3470,6 +3503,12 @@ S2.define('select2/data/tags',[
 
     if (createTag !== undefined) {
       this.createTag = createTag;
+    }
+
+    var insertTag = options.get('insertTag');
+
+    if (insertTag !== undefined) {
+        this.insertTag = insertTag;
     }
 
     decorated.call(this, $element, options);
@@ -4171,7 +4210,6 @@ S2.define('select2/dropdown/attachBody',[
 
     var newDirection = null;
 
-    var position = this.$container.position();
     var offset = this.$container.offset();
 
     offset.bottom = offset.top + this.$container.outerHeight(false);
@@ -4200,13 +4238,19 @@ S2.define('select2/dropdown/attachBody',[
       top: container.bottom
     };
 
-    // Fix positioning with static parents
-    if (this.$dropdownParent[0].style.position !== 'static') {
-      var parentOffset = this.$dropdownParent.offset();
+    // Determine what the parent element is to use for calciulating the offset
+    var $offsetParent = this.$dropdownParent;
 
-      css.top -= parentOffset.top;
-      css.left -= parentOffset.left;
+    // For statically positoned elements, we need to get the element
+    // that is determining the offset
+    if ($offsetParent.css('position') === 'static') {
+      $offsetParent = $offsetParent.offsetParent();
     }
+
+    var parentOffset = $offsetParent.offset();
+
+    css.top -= parentOffset.top;
+    css.left -= parentOffset.left;
 
     if (!isCurrentlyAbove && !isCurrentlyBelow) {
       newDirection = 'below';
