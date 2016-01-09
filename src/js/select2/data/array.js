@@ -8,7 +8,11 @@ define([
 
     ArrayAdapter.__super__.constructor.call(this, $element, options);
 
-    this.addOptions(this.convertToOptions(data));
+    for (var d = 0; d < data.length; d++) {
+      data[d]._root = true;
+    }
+
+    this.convertToOptions(data);
   }
 
   Utils.Extend(ArrayAdapter, SelectAdapter);
@@ -46,6 +50,7 @@ define([
 
     for (var d = 0; d < data.length; d++) {
       var item = this._normalizeItem(data[d]);
+      item._hidden = !item._root;
 
       // Skip items which were pre-loaded, only merge the data
       if ($.inArray(item.id, existingIds) >= 0) {
@@ -64,15 +69,13 @@ define([
       var $option = this.option(item);
 
       if (item.children) {
-        var $children = this.convertToOptions(item.children);
-
-        Utils.appendMany($option, $children);
+        this.convertToOptions(item.children);
       }
 
       $options.push($option);
     }
 
-    return $options;
+    this.addOptions($options);
   };
 
   return ArrayAdapter;

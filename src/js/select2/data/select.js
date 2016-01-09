@@ -132,7 +132,9 @@ define([
     $options.each(function () {
       var $option = $(this);
 
-      if (!$option.is('option') && !$option.is('optgroup')) {
+      var optionData = $.data($option[0], 'data');
+
+      if (!$option.is('option') && !$option.is('optgroup') || (optionData && optionData._hidden)) {
         return;
       }
 
@@ -157,17 +159,16 @@ define([
   SelectAdapter.prototype.option = function (data) {
     var option;
 
-    if (data.children) {
-      option = document.createElement('optgroup');
-      option.label = data.text;
-    } else {
-      option = document.createElement('option');
+    option = document.createElement('option');
 
-      if (option.textContent !== undefined) {
-        option.textContent = data.text;
-      } else {
-        option.innerText = data.text;
-      }
+    if (data.children) {
+      option.classList.add('select2-optgroup');
+    }
+
+    if (option.textContent !== undefined) {
+      option.textContent = data.text;
+    } else {
+      option.innerText = data.text;
     }
 
     if (data.id) {
@@ -206,7 +207,29 @@ define([
       return data;
     }
 
-    if ($option.is('option')) {
+    if ($option.is('optgroup') || $option.hasClass('select2-optgroup')) {
+      data = {
+        text: $option.prop('label'),
+        children: [],
+        title: $option.prop('title')
+      };
+
+      data = this._normalizeItem(data);
+
+      var $children = this._findChildren($option);
+      var children = [];
+
+      for (var c = 0; c < $children.length; c++) {
+        var $child = $($children[c]);
+
+        var child = this.item($child);
+        child._parentId = data._resultId;
+
+        children.push(child);
+      }
+
+      data.children = children;
+    } else {
       data = {
         id: $option.val(),
         text: $option.text(),
@@ -214,33 +237,31 @@ define([
         selected: $option.prop('selected'),
         title: $option.prop('title')
       };
-    } else if ($option.is('optgroup')) {
-      data = {
-        text: $option.prop('label'),
-        children: [],
-        title: $option.prop('title')
-      };
 
-      var $children = $option.children('option');
-      var children = [];
-
-      for (var c = 0; c < $children.length; c++) {
-        var $child = $($children[c]);
-
-        var child = this.item($child);
-
-        children.push(child);
-      }
-
-      data.children = children;
+      data = this._normalizeItem(data);
     }
 
-    data = this._normalizeItem(data);
     data.element = $option[0];
 
     $.data($option[0], 'data', data);
 
     return data;
+  };
+
+  SelectAdapter.prototype._findChildren = function ($parent) {
+    var parentData = $.data($parent[0], 'data');
+
+    var $options = this.$element.children();
+
+    return $options.map(function(){
+      var $option = $(this);
+
+      var optionData = $.data($option[0], 'data');
+
+      if (optionData._parentId == parentData._resultId) {
+        return $option;
+      }
+    });
   };
 
   SelectAdapter.prototype._normalizeItem = function (item) {
