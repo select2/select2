@@ -134,7 +134,9 @@ define([
 
       var optionData = $.data($option[0], 'data');
 
-      if (!$option.is('option') && !$option.is('optgroup') || (optionData && optionData._hidden)) {
+      var hidden = optionData && optionData._hidden;
+
+      if (!$option.is('option') && !$option.is('optgroup') || hidden) {
         return;
       }
 
@@ -249,19 +251,24 @@ define([
   };
 
   SelectAdapter.prototype._findChildren = function ($parent) {
-    var parentData = $.data($parent[0], 'data');
 
-    var $options = this.$element.children();
+    if ($parent.is('optgroup')) {
+       return $parent.children();
+    } else {
+      var parentData = $.data($parent[0], 'data');
 
-    return $options.map(function(){
-      var $option = $(this);
+      var $options = this.$element.children();
 
-      var optionData = $.data($option[0], 'data');
+      return $options.map(function () {
+        var $option = $(this);
 
-      if (optionData._parentId == parentData._resultId) {
-        return $option;
-      }
-    });
+        var optionData = $.data($option[0], 'data');
+
+        if (optionData._parentId == parentData._resultId) {
+          return $option;
+        }
+      });
+    }
   };
 
   SelectAdapter.prototype._normalizeItem = function (item) {

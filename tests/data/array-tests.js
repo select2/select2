@@ -251,41 +251,35 @@ test('option tags can receive new data', function(assert) {
   );
 });
 
-test('optgroup tags can also be generated', function (assert) {
+test('fake optgroup tags can also be generated', function (assert) {
   var $select = $('#qunit-fixture .single-empty');
 
   var data = new ArrayData($select, nestedOptions);
 
   assert.equal(
     $select.find('option').length,
-    1,
+    3,
     'An <option> element should be created for the one selectable object'
   );
 
   assert.equal(
-    $select.find('optgroup').length,
+    $select.find('option.select2-optgroup').length,
     2,
-    'An <optgroup> element should be created for the two with children'
+    'An fake <optgroup> element should be created for the two with children'
   );
 });
 
-test('optgroup tags have the right properties', function (assert) {
+test('fake optgroup tags have the right properties', function (assert) {
   var $select = $('#qunit-fixture .single-empty');
 
   var data = new ArrayData($select, nestedOptions);
 
-  var $group = $select.children('optgroup');
+  var $group = $select.children('option.select2-optgroup:first');
 
   assert.equal(
-    $group.prop('label'),
-    'Default',
-    'An `<optgroup>` label should match the text property'
-  );
-
-  assert.equal(
-    $group.children().length,
-    1,
-    'The <optgroup> should have one child under it'
+    $group.text(),
+    'Next',
+    'An fake <optgroup> label should match the text property'
   );
 });
 

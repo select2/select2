@@ -378,6 +378,8 @@ test('optgroup tags are marked with children', function (assert) {
 
   var data = new SelectData($select, selectOptions);
 
+  console.log(data);
+
   data.query({}, function (data) {
     assert.ok(
       'children' in data.results[0],
