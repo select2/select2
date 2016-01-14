@@ -34,6 +34,30 @@ $("select").select2({
 });
 </pre>
 
+
+  <h3>
+    How should <code>array</code> options be written?
+  </h3>
+
+  <p>
+    This means that if you declare your <code>&lt;select&gt;</code> tag as...
+  </p>
+
+<pre class="prettyprint">
+&lt;select data-tags="true" data-token-separators=",;" &gt;&lt;/select&gt;
+</pre>
+
+  <p>
+    Will be interpreted the same as initializing Select2 as...
+  </p>
+
+<pre class="prettyprint linenums">
+$("select").select2({
+  tags: "true",
+  tokenSeparators: "[',', ';']"
+});
+</pre>
+
   <h3>
     Are options with nested configurations supported?
   </h3>
