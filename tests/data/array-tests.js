@@ -39,13 +39,15 @@ var extraOptions = new Options ({
 var nestedOptions = new Options({
   data: [
     {
+      id: 1,
       text: 'Default',
       children: [
         {
+          id: 2,
           text: 'Next',
           children: [
             {
-              id: 'a',
+              id: 3,
               text: 'Option'
             }
           ]
@@ -251,7 +253,7 @@ test('option tags can receive new data', function(assert) {
   );
 });
 
-test('fake optgroup tags can also be generated', function (assert) {
+test('option tags should be generated', function (assert) {
   var $select = $('#qunit-fixture .single-empty');
 
   var data = new ArrayData($select, nestedOptions);
@@ -259,13 +261,13 @@ test('fake optgroup tags can also be generated', function (assert) {
   assert.equal(
     $select.find('option').length,
     3,
-    'An <option> element should be created for the one selectable object'
+    'Three <option> elements should be created for the one selectable object'
   );
 
   assert.equal(
     $select.find('option.select2-optgroup').length,
     2,
-    'An fake <optgroup> element should be created for the two with children'
+    'Two <option> elements should be created with class `select2-optgroup`'
   );
 });
 
@@ -274,12 +276,23 @@ test('fake optgroup tags have the right properties', function (assert) {
 
   var data = new ArrayData($select, nestedOptions);
 
-  var $group = $select.children('option.select2-optgroup:first');
+  var $group = $select.children('option.select2-optgroup').filter(function(){
+    var optionData = $.data(this, 'data');
+    return optionData.id == 1;
+  });
 
   assert.equal(
     $group.text(),
-    'Next',
-    'An fake <optgroup> label should match the text property'
+    'Default',
+    'The fake <optgroup> content should match the text'
+  );
+
+  var groupData = $.data($group[0], 'data');
+
+  assert.equal(
+      groupData.children.length,
+      1,
+      'The fake <optgroup> should have one child under it'
   );
 });
 
