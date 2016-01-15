@@ -18,10 +18,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/matjazgros/select2.git"
+    "url": "git://github.com/databox/select2.git"
   },
   "bugs": {
-    "url": "https://github.com/matjazgros/select2/issues"
+    "url": "https://github.com/databox/select2/issues"
   },
   "keywords": [
     "select",
