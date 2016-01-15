@@ -3,20 +3,32 @@
     Can Select2 be used with a <code>&lt;select&gt;</code> tag?
   </h2>
 
+  <p>
+    Select2 was designed to be a replacement for the standard <code>&lt;select&gt;</code> boxes that are displayed by the browser, so by default it supports all options and operations that are available in a standard select box, but with added flexibility. There is no special configuration required to make Select2 work with a <code>&lt;select&gt;</code> tag.
+  </p>
+
   <h3>
     Does Select2 support nesting options?
   </h3>
 
   <p>
-    Yes, just like in a standard <code>select</code>.
+    A standard <code>&lt;select&gt;</code> box can display nested options by wrapping them with in an <code>&lt;optgroup&gt;</code> tag.
   </p>
+
+<pre class="prettyprint">
+&lt;select&gt;
+  &lt;optgroup label="Group Name"&gt;
+    &lt;option&gt;Nested option&lt;/option&gt;
+  &lt;/optgroup&gt;
+&lt;/select&gt;
+</pre>
 
   <h3>
     How many levels of nesting can there be?
   </h3>
 
   <p>
-    Only a single level of nesting is allowed per the HTML specification.
+    Only a single level of nesting is allowed per the HTML specification. If you nest an <code>&lt;optgroup&gt;</code> within another <code>&lt;optgroup&gt;</code>, Select2 will not be able to detect the extra level of nesting and errors may be triggered as a result.
   </p>
 
   <h3>
@@ -24,7 +36,7 @@
   </h3>
 
   <p>
-    No. This is a limitation of the HTML specification and is not a limitation that Select2 can overcome.
+    No. This is a limitation of the HTML specification and is not a limitation that Select2 can overcome. You can emulate grouping by using an <code>&lt;option&gt;</code> instead of an <code>&lt;optgroup&gt;</code> and <a href="http://stackoverflow.com/q/30820215/359284#30948247">changing the style by using CSS</a>, but this is not recommended as it is not fully accessible.
   </p>
 
   <h3>
