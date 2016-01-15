@@ -7,11 +7,23 @@
     Can I select the highlighted result when the dropdown is closed?
   </h3>
 
+<pre class="prettyprint">
+$('select').select2({
+  selectOnClose: true
+});
+</pre>
+
   {% include options/not-written.html %}
 
   <h3>
     Can I prevent the dropdown from closing when a result is selected?
   </h3>
+
+<pre class="prettyprint">
+$('select').select2({
+  closeOnSelect: false
+});
+</pre>
 
   {% include options/not-written.html %}
 </section>
