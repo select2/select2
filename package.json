@@ -8,7 +8,7 @@
   "version": "3.5.4",
   "jspm": {
     "main": "select2",
-    "files": ["select2.js", "select2.png", "select2.css", "select2-spinner.gif"],
+    "files": ["select2.js", "select2.png", "select2x2.png", "select2.css", "select2-spinner.gif"],
     "shim": {
         "select2": {
             "imports": ["jquery", "./select2.css!"],
