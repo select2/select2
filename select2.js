@@ -1,7 +1,7 @@
 /*
 Copyright 2012 Igor Vaynberg
 
-Version: @@ver@@ Timestamp: @@timestamp@@
+Version: 3.5.4 Timestamp: Sun Aug 30 13:30:32 EDT 2015
 
 This software is licensed under the Apache License, Version 2.0 (the "Apache License") or the GNU
 General Public License version 2 (the "GPL License"). You may choose either license to govern your
@@ -18,6 +18,64 @@ Apache License or the GPL License is distributed on an "AS IS" BASIS, WITHOUT WA
 CONDITIONS OF ANY KIND, either express or implied. See the Apache License and the GPL License for
 the specific language governing permissions and limitations under the Apache License and the GPL License.
 */
+
+
+/*
+
+Modified by : futurist
+Date : 2015-09-25
+
+ZeptoJS polyfill for jQuery
+
+Config:
+1. ZeptoJS Core:
+    https://github.com/madrobby/zepto
+
+2. Zepto Selector extension
+    https://github.com/madrobby/zepto/blob/master/src/selector.js#files
+
+3. Zepto Data extension
+    https://github.com/madrobby/zepto/blob/master/src/data.js#files
+    
+NOTE:   Zepto $().data behavior is different with jQuery $().data, 
+        if your previous code has problem installing data extension, 
+        try to change the function name `data` to other say `data2`
+
+*/
+
+
+if(window.Zepto){
+
+    window.jQuery = window.Zepto;
+
+    ;(function($) {
+        $.fn.outerWidth = function() {
+            var offset= getRealOffset(this);
+            return offset.width;
+        }
+        $.fn.outerHeight = function() {
+            var offset= getRealOffset(this);
+            return offset.height;
+        }
+        $.data = function(obj, key, val){
+          if(val){
+            $(obj).data(key, val );
+          } else {
+            return $(obj).data(key);
+          }
+          return $(obj);
+        }
+        $.removeData = function(obj, key){
+
+          $(obj).data(key, null );
+          return $(obj);
+        }
+
+    })(window.Zepto||window.jQuery);
+
+}
+
+
 (function ($) {
     if(typeof $.fn.each2 == "undefined") {
         $.extend($.fn, {
@@ -1728,7 +1786,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // abstract
         findHighlightableChoices: function() {
-            return this.results.find(".select2-result-selectable:not(.select2-disabled):not(.select2-selected)");
+            return this.results.find(".select2-result-selectable").not('.select2-disabled').not('.select2-selected');
         },
 
         // abstract
@@ -1890,7 +1948,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     self.liveRegion.text(results.text());
                 }
                 else {
-                    self.liveRegion.text(self.opts.formatMatches(results.find('.select2-result-selectable:not(".select2-selected")').length));
+                    self.liveRegion.text(self.opts.formatMatches(results.find('.select2-result-selectable').not(".select2-selected").length));
                 }
             }
 
@@ -2886,7 +2944,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.selection = selection = this.container.find(selector);
 
             var _this = this;
-            this.selection.on("click", ".select2-container:not(.select2-container-disabled) .select2-search-choice:not(.select2-locked)", function (e) {
+            this.selection.on("click", $(".select2-container").not('.select2-container-disabled').find('.select2-search-choice').not('.select2-locked'), function (e) {
                 _this.search[0].focus();
                 _this.selectChoice($(this));
             });
@@ -2915,8 +2973,8 @@ the specific language governing permissions and limitations under the Apache Lic
 
                 ++this.keydowns;
                 var selected = selection.find(".select2-search-choice-focus");
-                var prev = selected.prev(".select2-search-choice:not(.select2-locked)");
-                var next = selected.next(".select2-search-choice:not(.select2-locked)");
+                var prev = selected.prev(".select2-search-choice").not(".select2-locked");
+                var next = selected.next(".select2-search-choice").not(".select2-locked");
                 var pos = getCursorInfo(this.search);
 
                 if (selected.length &&
@@ -2951,7 +3009,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 } else if (((e.which === KEY.BACKSPACE && this.keydowns == 1)
                     || e.which == KEY.LEFT) && (pos.offset == 0 && !pos.length)) {
 
-                    this.selectChoice(selection.find(".select2-search-choice:not(.select2-locked)").last());
+                    this.selectChoice(selection.find(".select2-search-choice").not(".select2-locked").last());
                     killEvent(e);
                     return;
                 } else {
@@ -3271,6 +3329,7 @@ the specific language governing permissions and limitations under the Apache Lic
                   killEvent(e);
                   this.close();
                   this.focusSearch();
+
               })).on("focus", this.bind(function () {
                   if (!this.isInterfaceEnabled()) return;
                   this.container.addClass("select2-container-active");
@@ -3345,7 +3404,7 @@ the specific language governing permissions and limitations under the Apache Lic
             compound.each2(function(i, choice) {
                 // hide an optgroup if it doesn't have any selectable children
                 if (!choice.is('.select2-result-selectable')
-                    && choice.find(".select2-result-selectable:not(.select2-selected)").length === 0) {
+                    && choice.find(".select2-result-selectable").not(".select2-selected").length === 0) {
                     choice.addClass("select2-selected");
                 }
             });
@@ -3355,7 +3414,7 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             //If all results are chosen render formatNoMatches
-            if(!this.opts.createSearchChoice && !choices.filter('.select2-result:not(.select2-selected)').length > 0){
+            if(!this.opts.createSearchChoice && !choices.filter('.select2-result').not('.select2-selected').length > 0){
                 if(!data || data && !data.more && this.results.find(".select2-no-results").length === 0) {
                     if (checkFormatter(self.opts.formatNoMatches, "formatNoMatches")) {
                         this.results.append("<li class='select2-no-results'>" + evaluate(self.opts.formatNoMatches, self.opts.element, self.search.val()) + "</li>");
@@ -3404,6 +3463,13 @@ the specific language governing permissions and limitations under the Apache Lic
             var val;
             if (this.select) {
                 val = this.select.val();
+                if(!val){
+                    val = $(this.select).find("option").filter( function(v) {
+                        return !! $(this).attr('selected');
+                    }).map( function() {
+                        return $(this).val()
+                    });
+                }
                 return val === null ? [] : val;
             } else {
                 val = this.opts.element.val();
@@ -3413,8 +3479,18 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // multi
         setVal: function (val) {
+
             if (this.select) {
-                this.select.val(val);
+                if($.type(val)=='array' ){
+
+                    $(this.select).find("option").removeAttr('selected').filter( function(v) {
+                        return val.indexOf( $(this).val() )>-1;
+                    }).attr('selected', 'selected');
+
+                }else{
+                    this.select.val(val);
+                }
+
             } else {
                 var unique = [], valMap = {};
                 // filter out duplicates
@@ -3727,3 +3803,5 @@ the specific language governing permissions and limitations under the Apache Lic
     };
 
 }(jQuery));
+
+
