@@ -1404,11 +1404,13 @@ the specific language governing permissions and limitations under the Apache Lic
                     return offset.left + viewPortRight + container.outerWidth(false)  > dropWidth;
                 },
                 aboveNow = $dropdown.hasClass("select2-drop-above"),
+                rightAlign = false,
                 bodyOffset,
                 above,
                 changeDirection,
                 css,
-                resultsListNode;
+                resultsListNode,
+                realDropWidth;
 
             // always prefer the current above/below alignment, unless there is not enough room
             if (aboveNow) {
@@ -1468,6 +1470,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             if (!enoughRoomOnRight() && enoughRoomOnLeft()) {
                 dropLeft = offset.left + this.container.outerWidth(false) - dropWidth;
+                rightAlign = true;
             }
 
             css =  {
@@ -1491,6 +1494,18 @@ the specific language governing permissions and limitations under the Apache Lic
             css = $.extend(css, evaluate(this.opts.dropdownCss, this.opts.element));
 
             $dropdown.css(css);
+
+            // css.left could be incorrect if max-width overrides width
+            if (rightAlign && this.opts.dropdownAutoWidth) {
+                // max-width is set
+                if ($dropdown.css('max-width') !== 'none') {
+                    realDropWidth = $dropdown.outerWidth(false);
+                    // max-width overrides new width value we've just set
+                    if (css.width > realDropWidth) {
+                        $dropdown.css('left', css.left + (css.width - realDropWidth));
+                    }
+                }
+            }
         },
 
         // abstract
