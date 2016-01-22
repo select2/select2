@@ -1682,7 +1682,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // abstract
         ensureHighlightVisible: function () {
-            var results = this.results, children, index, child, hb, rb, y, more, topOffset;
+            var results = this.results, children, index, child, hb, rb, y, more, topOffset, highlightableChoices;
 
             index = this.highlight();
 
@@ -1698,7 +1698,8 @@ the specific language governing permissions and limitations under the Apache Lic
                 return;
             }
 
-            children = this.findHighlightableChoices().find('.select2-result-label');
+            highlightableChoices = this.findHighlightableChoices();
+            children = highlightableChoices.find('.select2-result-label');
 
             child = $(children[index]);
 
@@ -1708,9 +1709,15 @@ the specific language governing permissions and limitations under the Apache Lic
 
             // if this is the last child lets also make sure select2-more-results is visible
             if (index === children.length - 1) {
-                more = results.find("li.select2-more-results");
-                if (more.length > 0) {
-                    hb = more.offset().top + more.outerHeight(true);
+                // Try to get element below the last highlightable child
+                var elementBelow = $(highlightableChoices[index]).next();
+
+                // If the elementBelow exists and has the 'select2-disabled' class, select2 shouldn't treat the child as the last element
+                if(!elementBelow || !elementBelow.hasClass('select2-disabled')) {
+                    more = results.find("li.select2-more-results");
+                    if (more.length > 0) {
+                        hb = more.offset().top + more.outerHeight(true);
+                    }
                 }
             }
 
