@@ -6,4 +6,68 @@
   <p>
     Select2 has an internal event system that works independently of the DOM event system. This internal event system is only accesssible from plugins and adapters that are connected to Select2.
   </p>
+  <h3>Select2:open</h3>
+  <p>Fired after the select2 dropdown has opened. Example:</p>
+  <div class="alert alert-info">
+    ```javascript
+     $('#example').on('select2:open', function (){
+     })
+     ```
+</div> 
+ <h3>Select2:opening</h3>
+  <p>Fired before select2 dropdown opens. Example:</p>
+  <div class="alert alert-info">
+    ```javascript
+     $('#example').on('select2:opening', function (){
+     })
+     ```
+</div> 
+ <h3>Select2:close</h3>
+  <p>Fired after select2 dropdown has closed. Example:</p>
+  <div class="alert alert-info">
+    ```javascript
+     $('#example').on('select2:close', function (){
+     })
+     ```
+</div> 
+ <h3>Select2:closing</h3>
+  <p>Fired while select2 dropdown is closing. Example:</p>
+  <div class="alert alert-info">
+    ```javascript
+     $('#example').on('select2:closing', function (){
+     })
+     ```
+</div> 
+ <h3>Select2:select</h3>
+  <p>Fired after selection has been made. Example:</p>
+  <div class="alert alert-info">
+    ```javascript
+     $('#example').on('select2:select', function (){
+     })
+     ```
+</div> 
+ <h3>Select2:selecting</h3>
+  <p>Fired after a selection is made. Primary use is for Multiple selections.  Example:</p>
+  <div class="alert alert-info">
+    ```javascript
+     $('#example').on('select2:selecting', function (){
+     })
+     ```
+</div> 
+<h3>Select2:unselect</h3>
+  <p>Fired after a selection is deselected. Primary use is for Multiple selection scenarios.  Example:</p>
+  <div class="alert alert-info">
+    ```javascript
+     $('#example').on('select2:unselect', function (){
+     })
+     ```
+</div> 
+<h3>Select2:unselecting</h3>
+  <p>Fired while a selection is being deselected. Primary use is for Multiple selection scenarios.  Example:</p>
+  <div class="alert alert-info">
+    ```javascript
+     $('#example').on('select2:unselecting', function (){
+     })
+     ```
+</div> 
 </section>
