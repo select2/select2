@@ -1090,6 +1090,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     var populate, id=this.opts.id, liveRegion=this.liveRegion;
 
                     populate=function(results, container, depth) {
+                        results = results || [];
 
                         var i, l, result, selectable, disabled, compound, node, label, innerContainer, formatted;
 
