@@ -94,7 +94,7 @@ define([
     if ($element.attr('id') != null) {
       id = $element.attr('id');
     } else if ($element.attr('name') != null) {
-      id = $element.attr('name').replace(/\[|\]/g, '')
+      id = $element.attr('name').replace(/\[|\]/g, '');
       id =  id + '-' + Utils.generateChars(2);
     } else {
       id = Utils.generateChars(4);
