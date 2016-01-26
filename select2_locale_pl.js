@@ -27,6 +27,9 @@
         },
         formatSearching: function() {
             return "Szukanie…";
+        },
+        formatAjaxError: function (jqXHR, textStatus, errorThrown) {
+            return "Błąd wczytywania";
         }
     };
 
