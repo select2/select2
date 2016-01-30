@@ -26,9 +26,8 @@
     </p>
   </div>
 
-  <pre data-fill-from=".js-code-data-array"></pre>
-
-<script type="text/x-example-code" class="js-code-data-array">
+{% highlight html linenos %}
+<script type="text/javascript">
 var data = [{ id: 0, text: 'enhancement' }, { id: 1, text: 'bug' }, { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, { id: 4, text: 'wontfix' }];
 
 $(".js-example-data-array").select2({
@@ -38,13 +37,14 @@ $(".js-example-data-array").select2({
 $(".js-example-data-array-selected").select2({
   data: data
 })
+</script>
 
 <select class="js-example-data-array"></select>
 
 <select class="js-example-data-array-selected">
   <option value="2" selected="selected">duplicate</option>
 </select>
-</script>
+{% endhighlight %}
 
   <h2 id="data-ajax" >Loading remote data</h2>
 
@@ -67,7 +67,11 @@ $(".js-example-data-array-selected").select2({
     that should be displayed.
   </p>
 
-  <pre data-fill-from=".js-code-data-ajax-html"></pre>
+{% highlight html linenos %}
+<select class="js-data-example-ajax">
+  <option value="3620194" selected="selected">select2/select2</option>
+</select>
+{% endhighlight %}
 
   <p>
     You can configure how Select2 searches for remote data using the
@@ -76,15 +80,7 @@ $(".js-example-data-array-selected").select2({
     <a href="options.html#ajax">options documentation for <code>ajax</code></a>.
   </p>
 
-  <pre data-fill-from=".js-code-data-ajax"></pre>
-
-  <p>
-    Select2 will pass any options in the <code>ajax</code> object to
-    jQuery's <code>$.ajax</code> function, or the <code>transport</code>
-    function you specify.
-  </p>
-
-<script type="text/x-example-code" class="js-code-data-ajax">
+{% highlight js linenos %}
 $(".js-data-example-ajax").select2({
   ajax: {
     url: "https://api.github.com/search/repositories",
@@ -117,12 +113,11 @@ $(".js-data-example-ajax").select2({
   templateResult: formatRepo, // omitted for brevity, see the source of this page
   templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
 });
-</script>
+{% endhighlight %}
 
-<script type="text/x-example-code" class="js-code-data-ajax-html">
-<select class="js-data-example-ajax">
-  <option value="3620194" selected="selected">select2/select2</option>
-</select>
-</script>
-
+  <p>
+    Select2 will pass any options in the <code>ajax</code> object to
+    jQuery's <code>$.ajax</code> function, or the <code>transport</code>
+    function you specify.
+  </p>
 </section>
