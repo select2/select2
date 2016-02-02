@@ -1698,6 +1698,8 @@ the specific language governing permissions and limitations under the Apache Lic
                 return;
             }
 
+            if (!this.opts.scrollToParentWhenChildHighlighted) return;
+
             children = this.findHighlightableChoices().find('.select2-result-label');
 
             child = $(children[index]);
@@ -3619,6 +3621,7 @@ the specific language governing permissions and limitations under the Apache Lic
         dropdownCss: {},
         containerCssClass: "",
         dropdownCssClass: "",
+        scrollToParentWhenChildHighlighted: true,
         formatResult: function(result, container, query, escapeMarkup) {
             var markup=[];
             markMatch(this.text(result), query.term, markup, escapeMarkup);
