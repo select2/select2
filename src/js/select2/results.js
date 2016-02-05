@@ -399,7 +399,7 @@ define([
 
         var bottom = (
           self.$results.get(0).scrollHeight -
-          self.$results.scrollTop() +
+          top +
           e.deltaY
         );
 
