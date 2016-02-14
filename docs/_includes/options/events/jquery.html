@@ -7,7 +7,38 @@
     What events will Select2 trigger?
   </h3>
 
-  {% include options/not-written.html %}
+  <p>
+    Select2 will trigger a few different events when different actions are taken using the component, allowing you to add custom hooks and perform actions.
+  </p>
+
+  <dl class="s2-docs-panels">
+    <dt>change</dt>
+    <dd>Triggered whenever an option is selected or removed.</dd>
+
+    <dt>select2:close</dt>
+    <dd>Triggered whenever the dropdown is closed.</dd>
+
+    <dt>select2:closing</dt>
+    <dd>Triggered before the dropdown is closed. This event can be prevented.</dd>
+
+    <dt>select2:open</dt>
+    <dd>Triggered whenever the dropdown is opened.</dd>
+
+    <dt>select2:opening</dt>
+    <dd>Triggered before the dropdown is opened. This event can be prevented.</dd>
+
+    <dt>select2:select</dt>
+    <dd>Triggered whenever a result is selected.</dd>
+
+    <dt>select2:selecting</dt>
+    <dd>Triggered before a result is selected. This event can be prevented.</dd>
+
+    <dt>select2:unselect</dt>
+    <dd>Triggered whenever a selection is removed.</dd>
+
+    <dt>select2:unselecting</dt>
+    <dd>Triggered before a selection is removed. This event can be prevented.</dd>
+  </dl>
 
   <h3>
     How can I attach listeners for these events?
