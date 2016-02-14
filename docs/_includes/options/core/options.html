@@ -7,19 +7,19 @@
     Select2 will register itself as a jQuery function if you use any of the distribution builds, so you can call <code>.select2()</code> on any jQuery element where you would like to initialize Select2.
   </p>
 
-<pre class="prettyprint">
+{% highlight js linenos %}
 $('select').select2();
-</pre>
+{% endhighlight %}
 
   <p>
     You can optionally pass an object containing all of the options that you would like to initialize Select2 with.
   </p>
 
-<pre class="prettyprint">
+{% highlight js linenos %}
 $('select').select2({
   placeholder: 'Select an option'
 });
-</pre>
+{% endhighlight %}
 
   <h3 id="setting-default-options">
     Can default options be set for all dropdowns?
@@ -45,9 +45,9 @@ $('select').select2({
     <code>$.fn.select2.defaults.set("key", "value")</code>.
   </p>
 
-<pre class="prettyprint">
+{% highlight js linenos %}
 $.fn.select2.defaults.set("theme", "classic");
-</pre>
+{% endhighlight %}
 
   <h3>
     How can I set a default value for a nested option?
@@ -62,9 +62,9 @@ $.fn.select2.defaults.set("theme", "classic");
     string.
   </p>
 
-<pre class="prettyprint">
+{% highlight js linenos %}
 $.fn.select2.defaults.set("ajax--cache", false);
-</pre>
+{% endhighlight %}
 
   <h3>
     How can I reset all of the global default options?
@@ -74,7 +74,7 @@ $.fn.select2.defaults.set("ajax--cache", false);
     You can reset the default options to their initial values by calling
   </p>
 
-<pre class="prettyprint">
+{% highlight js linenos %}
 $.fn.select2.defaults.reset();
-</pre>
+{% endhighlight %}
 </section>

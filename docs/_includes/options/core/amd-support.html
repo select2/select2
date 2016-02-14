@@ -19,10 +19,10 @@
     If you are using Select2 in a build environment where preexisting module names are changed during a build step, Select2 may not be able to find optional dependencies or language files. You can manually set the prefixes to use for these files using the <code>amdBase</code> and <code>amdLanugageBase</code> options.
   </p>
 
-<pre class="prettyprint">
+{% highlight js linenos %}
 $.fn.select2.defaults.set('amdBase', 'select2/');
 $.fn.select2.defaults.set('amdLanguageBase', 'select2/i18n/');
-</pre>
+{% endhighlight %}
 
   <h3>
     Select2 is being placed before jQuery in my JavaScript file

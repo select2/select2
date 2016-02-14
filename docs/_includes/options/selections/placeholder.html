@@ -7,11 +7,11 @@
     Select2 supports displaying a placeholder by default using the <code>placeholder</code> option. This can be either a data object matching the placeholder option, or a string to display as the placeholder if you are using a blank placeholder option.
   </p>
 
-<pre class="prettyprint">
+{% highlight js linenos %}
 $('select').select2({
   placeholder: 'Select an option'
 });
-</pre>
+{% endhighlight %}
 
   <h3>
     My first option is being displayed instead of my placeholder
@@ -41,14 +41,14 @@ $('select').select2({
     The <code>placeholder</code> option allows you to pass in a data object instead of just a string if you need more flexibility. The <code>id</code> of the data object should match the <code>value</code> of the placeholder option.
   </p>
 
-<pre class="prettyprint">
+{% highlight js linenos %}
 $('select').select2({
   placeholder: {
     id: '-1', // the value of the option
     text: 'Select an option'
   }
 });
-</pre>
+{% endhighlight %}
 
   <h3>
     Can I change how the placeholder looks?
@@ -58,7 +58,7 @@ $('select').select2({
     When using Select2 <strong>when only a single selection can be made</strong>, the placeholder option will be passed through the standard templating methods, incluidng the <code>templateSelection</code> option, so you are able to change how it is displayed.
   </p>
 
-<pre class="prettyprint">
+{% highlight js linenos %}
 $('select').select2({
   templateResult: function (data) {
     if (data.id === '') { // adjust for custom placeholder values
@@ -68,7 +68,7 @@ $('select').select2({
     return data.text;
   }
 });
-</pre>
+{% endhighlight %}
 
   <p>
     <strong>When multiple selections are allowed</strong>, the placeholder will be displayed using the <code>placeholder</code> attribute on the search box. You can cusotmize the display of this placholder using CSS, as explained in the following Stack Overflow answer: <a href="http://stackoverflow.com/q/2610497/359284">Change an input's HTML5 placeholder color with CSS</a>

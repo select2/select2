@@ -29,7 +29,7 @@
     You can use the <code>ajax.processResults</code> option to modify the data returned from the server before passing it to Select2.
   </p>
 
-<pre class="prettyprint">
+{% highlight js linenos %}
 $('select').select2({
   ajax: {
     url: '/example/api',
@@ -40,7 +40,7 @@ $('select').select2({
     }
   }
 });
-</pre>
+{% endhighlight %}
 
   <h3>
     A request is being triggered on every key stroke, can I delay this?
@@ -50,14 +50,14 @@ $('select').select2({
     By default, Select2 will trigger a new AJAX request whenever the user changes their search term. You can set a time limit for debouncing requests using the <code>ajax.delay</code> option.
   </p>
 
-<pre class="prettyprint">
+{% highlight js linenos %}
 $('select').select2({
   ajax: {
     url: '/example/api',
     delay: 250
   }
 });
-</pre>
+{% endhighlight %}
 
   <p>
     This will tell Select2 to wait 250 milliseconds before sending the request out to your API.
@@ -71,7 +71,7 @@ $('select').select2({
     By default, Select2 will send the query term as well as the pagination data as query parameters in requests. You can override the data that is sent to your API, or change any of the query paramters, by overriding the <code>ajax.data</codE> option.
   </p>
 
-<pre class="prettyprint">
+{% highlight js linenos %}
 $('select').select2({
   ajax: {
     data: function (params) {
@@ -85,7 +85,7 @@ $('select').select2({
     }
   }
 });
-</pre>
+{% endhighlight %}
 
   <h3>
     Can an AJAX plugin other than <code>jQuery.ajax</code> be used?
@@ -95,7 +95,7 @@ $('select').select2({
     Select2 uses the transport method defined in <code>ajax.transport</code> to send requests to your API. By default, this transport method is <code>jQuery.ajax</code> but this can be changed.
   </p>
 
-<pre class="prettyprint">
+{% highlight js linenos %}
 $('select').select2({
   ajax: {
     transport: function (params, success, failure) {
@@ -105,5 +105,5 @@ $('select').select2({
     }
   }
 });
-</pre>
+{% endhighlight %}
 </section>

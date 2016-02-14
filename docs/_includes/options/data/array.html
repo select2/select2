@@ -7,7 +7,7 @@
     While Select2 is designed to be used with a <code>&lt;select&gt;</code> tag, the data that is used to search through and display the results can be loaded from a JavaScript array using the <code>data</code> option. This option should be passed in during the initialization of Select2.
   </p>
 
-<pre class="prettyprint linenums">
+{% highlight js linenos %}
 $('select').select2({
   data: [
     {
@@ -17,7 +17,7 @@ $('select').select2({
     // ... more data objects ...
   ]
 });
-</pre>
+{% endhighlight %}
 
   <h3>
     What properties are required on the objects passed in to the array?
@@ -35,7 +35,7 @@ $('select').select2({
     Nested results should be specified using the <code>children</code> property on the data objects that are passed in. This <code>children</code> property should be an array of data objects that are grouped under this option, and the label for the group should be specified as the <code>text</code> property on the root data object.
   </p>
 
-<pre class="prettyprint linenums">
+{% highlight js linenos %}
 {
   text: 'Group label',
   children: [
@@ -46,7 +46,7 @@ $('select').select2({
     // ... more data objects ...
   ]
 }
-</pre>
+{% endhighlight %}
 
   <h3>
     How many levels of nesting are allowed?
