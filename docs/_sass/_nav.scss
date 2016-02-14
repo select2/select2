@@ -9,7 +9,8 @@
 
   .navbar-brand {
     font-weight: 500;
-    img {
+    > img {
+      display: inline;
       margin-right: 4px;
     }
   }
