@@ -2281,7 +2281,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.focusser.attr("id", "s2id_autogen"+idSuffix);
 
             elementLabel = $("label[for='" + this.opts.element.attr("id") + "']");
-            this.opts.element.on('focus.select2', this.bind(function () { this.focus(); }));
+            elementLabel.on('click.select2', this.bind(function () { this.focus(); }));
 
             this.focusser.prev()
                 .text(elementLabel.text())
@@ -2298,7 +2298,8 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.search.prev()
                 .text($("label[for='" + this.focusser.attr('id') + "']").text())
-                .attr('for', this.search.attr('id'));
+                .attr('for', this.search.attr('id'))
+                .on('click.select2', this.bind(function () { this.focus(); }));
 
             this.search.on("keydown", this.bind(function (e) {
                 if (!this.isInterfaceEnabled()) return;
