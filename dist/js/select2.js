@@ -1,5 +1,5 @@
 /*!
- * Select2 4.0.1
+ * Select2 4.0.2
  * https://select2.github.io
  *
  * Released under the MIT license
@@ -3057,6 +3057,15 @@ S2.define('select2/data/select',[
 
         self.$element.val(val);
         self.$element.trigger('change');
+
+        if (self.container && self.container.selection) {
+          // clear search input
+          if (self.container.selection.$search.val() !== '') {
+            self.container.selection.$search.val('');
+            self.container.trigger('close');
+          }
+          self.container.selection.$search.trigger('focus');
+        }
       });
     } else {
       var val = data.id;

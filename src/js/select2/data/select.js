@@ -58,6 +58,15 @@ define([
 
         self.$element.val(val);
         self.$element.trigger('change');
+
+        if (self.container && self.container.selection) {
+          // clear search input
+          if (self.container.selection.$search.val() !== '') {
+            self.container.selection.$search.val('');
+            self.container.trigger('close');
+          }
+          self.container.selection.$search.trigger('focus');
+        }
       });
     } else {
       var val = data.id;
