@@ -88,7 +88,7 @@ define([
       self._request = $request;
     }
 
-    if (this.ajaxOptions.delay && params.term !== '') {
+    if (this.ajaxOptions.delay && params.term !== undefined) {
       if (this._queryTimeout) {
         window.clearTimeout(this._queryTimeout);
       }
