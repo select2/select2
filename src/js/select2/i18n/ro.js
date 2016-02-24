@@ -37,7 +37,7 @@ define(function () {
       return message;
     },
     noResults: function () {
-      return 'Nu a fost găsite rezultate';
+      return 'Nu au fost găsite rezultate';
     },
     searching: function () {
       return 'Căutare…';
