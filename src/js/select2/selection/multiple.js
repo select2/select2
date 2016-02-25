@@ -50,10 +50,10 @@ define([
           originalEvent: evt,
           data: data
         });
+		
+		evt.stopPropagation();
       }
     );
-	
-	evt.stopPropagation();
   };
 
   MultipleSelection.prototype.clear = function () {
