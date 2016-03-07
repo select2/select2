@@ -181,7 +181,7 @@ define([
       });
     });
 
-    this.$element.parent("label").on("click", function(e) {
+    this.$element.parent('label').on('click', function (e) {
       e.preventDefault();
     });
     
