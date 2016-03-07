@@ -176,6 +176,26 @@ test('insertTag controls the tag location', function (assert) {
   });
 });
 
+test('insertTag can be controlled through the options', function (assert) {
+  var options = new Options({
+    insertTag: function (data, tag) {
+      data.push(tag);
+    }
+  });
+  var data = new SelectTags($('#qunit-fixture .single'), options);
+
+  data.query({
+    term: 'o'
+  }, function (data) {
+    assert.equal(data.results.length, 2);
+
+    var item = data.results[1];
+
+    assert.equal(item.id, 'o');
+    assert.equal(item.text, 'o');
+  });
+});
+
 test('createTag controls the tag object', function (assert) {
   var data = new SelectTags($('#qunit-fixture .single'), options);
 

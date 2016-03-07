@@ -1,5 +1,4 @@
 <section>
-
   <h1 id="matcher">Customizing how results are matched</h1>
 
   <p>
@@ -22,9 +21,7 @@
     </p>
   </div>
 
-  <pre data-fill-from=".js-code-matcher-start"></pre>
-
-<script type="text/x-example-code" class="js-code-matcher-start">
+{% highlight js linenos %}
 function matchStart (term, text) {
   if (text.toUpperCase().indexOf(term.toUpperCase()) == 0) {
     return true;
@@ -38,6 +35,5 @@ $.fn.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
     matcher: oldMatcher(matchStart)
   })
 });
-</script>
-
+{% endhighlight %}
 </section>

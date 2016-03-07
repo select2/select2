@@ -1,5 +1,4 @@
 <section>
-
   <h1 id="localization-rtl-diacritics" class="page-header">
     Localization, RTL and diacritics support
   </h1>
@@ -26,13 +25,11 @@
     </p>
   </div>
 
-  <pre data-fill-from=".js-code-language"></pre>
-
-<script type="text/x-example-code" class="js-code-language">
+{% highlight js linenos %}
 $(".js-example-language").select2({
   language: "es"
 });
-</script>
+{% endhighlight %}
 
   <h2 id="rtl">RTL support</h2>
 
@@ -48,13 +45,11 @@ $(".js-example-language").select2({
     </p>
   </div>
 
-  <pre data-fill-from=".js-code-rtl"></pre>
-
-<script type="text/x-example-code" class="js-code-rtl">
+{% highlight js linenos %}
 $(".js-example-rtl").select2({
   dir: "rtl"
 });
-</script>
+{% endhighlight %}
 
   <h2 id="diacritics">Diacritics support</h2>
 
@@ -81,10 +76,7 @@ $(".js-example-rtl").select2({
     </p>
   </div>
 
-  <pre data-fill-from=".js-code-diacritics"></pre>
-
-<script type="text/x-example-code" class="js-code-diacritics">
+{% highlight js linenos %}
 $(".js-example-diacritics").select2();
-</script>
-
+{% endhighlight %}
 </section>

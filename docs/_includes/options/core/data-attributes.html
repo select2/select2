@@ -15,24 +15,28 @@
   </h3>
 
   <p>
+    HTML data attributes are case-insensitive, so any options which contain capital letters will be parsed as if they were all lowercase. Because Select2 has many options which are camelCase, where words are separated by uppercase letters, you must write these options out with dashes instead. So an option that would normally be called <code>allowClear</code> should instead be defined as <code>allow-clear</code>.
+  </p>
+
+  <p>
     This means that if you declare your <code>&lt;select&gt;</code> tag as...
   </p>
 
-<pre class="prettyprint">
-&lt;select data-tags="true" data-placeholder="Select an option" data-allow-clear="true"&gt;&lt;/select&gt;
-</pre>
+{% highlight html linenos %}
+<select data-tags="true" data-placeholder="Select an option" data-allow-clear="true"></select>
+{% endhighlight %}
 
   <p>
     Will be interpreted the same as initializing Select2 as...
   </p>
 
-<pre class="prettyprint linenums">
+{% highlight js linenos %}
 $("select").select2({
   tags: "true",
   placeholder: "Select an option",
   allowClear: true
 });
-</pre>
+{% endhighlight %}
 
   <h3>
     Are options with nested configurations supported?
@@ -47,22 +51,22 @@ $("select").select2({
     <a href="https://github.com/select2/select2/issues/2969">do not work in jQuery 1.x</a>.
   </p>
 
-<pre class="prettyprint">
-&lt;select data-ajax--url="http://example.org/api/test" data-ajax--cache="true"&gt;&lt;/select&gt;
-</pre>
+{% highlight html linenos %}
+<select data-ajax--url="http://example.org/api/test" data-ajax--cache="true"></select>
+{% endhighlight %}
 
   <p>
     Which will be interpreted the same as initializing Select2 with...
   </p>
 
-<pre class="prettyprint linenums">
+{% highlight js linenos %}
 $("select").select2({
   ajax: {
     url: "http://example.org/api/test",
-    cache: "true"
+    cache: true
   }
 });
-</pre>
+{% endhighlight %}
 
   <p>
     The value of the option is subject to jQuery's

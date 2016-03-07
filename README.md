@@ -31,6 +31,10 @@ Browser compatibility
 * Safari 3+
 * Opera 10.6+
 
+Select2 is automatically tested on the following browsers.
+
+[![Sauce Labs Test Status][saucelabs-matrix]][saucelabs-status]
+
 Usage
 -----
 You can source Select2 directly from a CDN like [JSDliver][jsdelivr] or
@@ -39,19 +43,25 @@ the integrations below.
 
 Integrations
 ------------
-* [Wicket-Select2][wicket-select2] (Java / [Apache Wicket][wicket])
-* [select2-rails][select2-rails] (Ruby on Rails)
-* [AngularUI][angularui-select] ([AngularJS][angularjs])
-* [Django][django-select2]
-* [Symfony][symfony-select2]
-* [Symfony2][symfony2-select2]
-* [Bootstrap 2][bootstrap2-select2] and [Bootstrap 3][bootstrap3-select2]
-  (CSS skins)
-* [Meteor][meteor-select2] ([Bootstrap 3 skin][meteor-select2-bootstrap3])
-* [Meteor][meteor-select2-alt]
-* [Yii 2.x][yii2-select2]
-* [Yii 1.x][yii-select2]
-* [AtmosphereJS][atmospherejs-select2]
+Third party developers have create plugins for platforms which allow Select2 to be integrated more natively and quickly. For many platforms, additional plugins are not required because Select2 acts as a standard `<select>` box.
+
+Plugins
+
+* [Django]
+  - [django-easy-select2]
+  - [django-select2]
+* [Meteor] - [meteor-select2]
+* [Ruby on Rails][ruby-on-rails] - [select2-rails]
+* [Wicket] - [wicketstuff-select2]
+* [Yii 2][yii2] - [yii2-widget-select2]
+
+Themes
+
+- [Bootstrap 3][bootstrap3] - [select2-bootstrap-theme]
+- [Flat UI][flat-ui] - [select2-flat-theme]
+- [Metro UI][metro-ui] - [select2-metro]
+
+Missing an integration? Modify this `README` and make a pull request back here to Select2 on GitHub.
 
 Internationalization (i18n)
 ---------------------------
@@ -77,29 +87,35 @@ Copyright and license
 ---------------------
 The license is available within the repository in the [LICENSE][license] file.
 
-[angularjs]: https://angularjs.org/
-[angularui-select]: http://angular-ui.github.io/#ui-select
-[atmospherejs-select2]: https://atmospherejs.com/package/jquery-select2
-[bootstrap2-select2]: https://github.com/t0m/select2-bootstrap-css
-[bootstrap3-select2]: https://github.com/t0m/select2-bootstrap-css/tree/bootstrap3
 [cdnjs]: http://www.cdnjs.com/libraries/select2
 [community]: https://select2.github.io/community.html
-[django-select2]: https://github.com/applegrew/django-select2
 [documentation]: https://select2.github.io/
 [documentation-folder]: https://github.com/select2/select2/tree/master/docs
 [freenode]: https://freenode.net/
 [jsdelivr]: http://www.jsdelivr.com/#!select2
 [license]: LICENSE.md
-[meteor-select2]: https://github.com/nate-strauser/meteor-select2
-[meteor-select2-alt]: https://jquery-select2.meteor.com
-[meteor-select2-bootstrap3]: https://github.com/zimme/meteor-select2-bootstrap3-css/
 [releases]: https://github.com/select2/select2/releases
-[select2-rails]: https://github.com/argerim/select2-rails
-[symfony-select2]: https://github.com/19Gerhard85/sfSelect2WidgetsPlugin
-[symfony2-select2]: https://github.com/avocode/FormExtensions
-[travis-ci-image]: https://travis-ci.org/select2/select2.svg?branch=master
+[saucelabs-matrix]: https://saucelabs.com/browser-matrix/select2.svg
+[saucelabs-status]: https://saucelabs.com/u/select2
+[travis-ci-image]: https://img.shields.io/travis/select2/select2/master.svg
 [travis-ci-status]: https://travis-ci.org/select2/select2
-[wicket]: http://wicket.apache.org
-[wicket-select2]: https://github.com/ivaynberg/wicket-select2
-[yii-select2]: https://github.com/tonybolzan/yii-select2
-[yii2-select2]: http://demos.krajee.com/widgets#select2
+
+[bootstrap3]: https://getbootstrap.com/
+[django]: https://www.djangoproject.com/
+[django-easy-select2]: https://github.com/asyncee/django-easy-select2
+[django-select2]: https://github.com/applegrew/django-select2
+[flat-ui]: http://designmodo.github.io/Flat-UI/
+[meteor]: https://www.meteor.com/
+[meteor-select2]: https://github.com/nate-strauser/meteor-select2
+[metro-ui]: http://metroui.org.ua/
+[select2-metro]: http://metroui.org.ua/select2.html
+[ruby-on-rails]: http://rubyonrails.org/
+[select2-bootstrap-theme]: https://github.com/select2/select2-bootstrap-theme
+[select2-flat-theme]: https://github.com/techhysahil/select2-Flat_Theme
+[select2-rails]: https://github.com/argerim/select2-rails
+[vue.js]: http://vuejs.org/
+[select2-vue]: http://vuejs.org/examples/select2.html
+[wicket]: https://wicket.apache.org/
+[wicketstuff-select2]: https://github.com/wicketstuff/core/tree/master/select2-parent
+[yii2]: http://www.yiiframework.com/
+[yii2-widget-select2]: https://github.com/kartik-v/yii2-widget-select2

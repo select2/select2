@@ -27,9 +27,7 @@
     </p>
   </div>
 
-  <pre data-fill-from=".js-code-theme"></pre>
-
-<script type="text/x-example-code" class="js-code-theme">
+{% highlight js linenos %}
 $(".js-example-theme-single").select2({
   theme: "classic"
 });
@@ -37,7 +35,7 @@ $(".js-example-theme-single").select2({
 $(".js-example-theme-multiple").select2({
   theme: "classic"
 });
-</script>
+{% endhighlight %}
 
 <h2 id="templating">Templating</h2>
 
@@ -61,9 +59,7 @@ $(".js-example-theme-multiple").select2({
   </p>
 </div>
 
-<pre data-fill-from=".js-code-templating"></pre>
-
-<script type="text/x-example-code" class="js-code-templating">
+{% highlight js linenos %}
 function formatState (state) {
   if (!state.id) { return state.text; }
   var $state = $(
@@ -75,7 +71,7 @@ function formatState (state) {
 $(".js-example-templating").select2({
   templateResult: formatState
 });
-</script>
+{% endhighlight %}
 
 <h2 id="responsive">Responsive design - Percent width</h2>
 
@@ -94,7 +90,10 @@ $(".js-example-templating").select2({
   </p>
 </div>
 
-<pre data-fill-from=".js-code-responsive"></pre>
+{% highlight html linenos %}
+<select class="js-example-responsive" style="width: 50%"></select>
+<select class="js-example-responsive" multiple="multiple" style="width: 75%"></select>
+{% endhighlight %}
 
 <div class="alert alert-warning">
   Select2 will do its best to resolve the percent width specified via a
@@ -102,10 +101,4 @@ $(".js-example-templating").select2({
   Select2 is using a percent based width is to inline the
   <code>style</code> declaration into the tag.
 </div>
-
-<script type="text/x-example-code" class="js-code-responsive">
-<select class="js-example-responsive" style="width: 50%"></select>
-<select class="js-example-responsive" multiple="multiple" style="width: 75%"></select>
-</script>
-
 </section>

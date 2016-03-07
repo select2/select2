@@ -22,19 +22,19 @@
     </p>
   </div>
 
-  <pre class="code" data-fill-from=".js-code-basic"></pre>
-
-<script type="text/x-example-code" class="js-code-basic">
+{% highlight html linenos %}
+<script type="text/javascript">
 $(document).ready(function() {
   $(".js-example-basic-single").select2();
 });
+</script>
 
 <select class="js-example-basic-single">
   <option value="AL">Alabama</option>
     ...
   <option value="WY">Wyoming</option>
 </select>
-</script>
+{% endhighlight %}
 
   <h2 id="multiple">Multiple select boxes</h2>
 
@@ -48,18 +48,17 @@ $(document).ready(function() {
     </p>
   </div>
 
-  <pre data-fill-from=".js-code-multiple"></pre>
-
-<script type="text/x-example-code" class="js-code-multiple">
+{% highlight html linenos %}
+<script type="text/javascript">
 $(".js-example-basic-multiple").select2();
+</script>
 
 <select class="js-example-basic-multiple" multiple="multiple">
   <option value="AL">Alabama</option>
     ...
   <option value="WY">Wyoming</option>
 </select>
-</script>
-
+{% endhighlight %}
 </section>
 
 </section>

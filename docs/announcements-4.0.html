@@ -152,9 +152,9 @@ slug: announcements-4.0
           options that looked like…
         </p>
 
-<pre class="prettyprint linenums">
-&lt;input type="hidden" name="select-boxes" value="1,2,4,6" /&gt;
-</pre>
+{% highlight html linenos %}
+<input type="hidden" name="select-boxes" value="1,2,4,6" />
+{% endhighlight %}
 
         <p>
           It will need to be recreated as a <code>&lt;select&gt;</code> element with
@@ -162,14 +162,14 @@ slug: announcements-4.0
           attributes that match the old value.
         </p>
 
-<pre class="prettyprint linenums">
-&lt;select name="select-boxes" multiple="multiple"&gt;
-  &lt;option value="1" selected="selected"&gt;Select2&lt;/option&gt;
-  &lt;option value="2" selected="selected"&gt;Chosen&lt;/option&gt;
-  &lt;option value="4" selected="selected"&gt;selectize.js&lt;/option&gt;
-  &lt;option value="6" selected="selected"&gt;typeahead.js&lt;/option&gt;
-&lt;/select&gt;
-</pre>
+{% highlight html linenos %}
+<select name="select-boxes" multiple="multiple">
+  <option value="1" selected="selected">Select2</option>
+  <option value="2" selected="selected">Chosen</option>
+  <option value="4" selected="selected">selectize.js</option>
+  <option value="6" selected="selected">typeahead.js</option>
+</select>
+{% endhighlight %}
 
         <p>
           The options that you create should have <code>selected="selected"</code>
@@ -210,7 +210,7 @@ slug: announcements-4.0
           started with the term that was entered, it would look something like…
         </p>
 
-<pre class="prettyprint linenums">
+{% highlight js linenos %}
 function matchStart (term, text) {
   if (text.toUpperCase().indexOf(term.toUpperCase()) == 0) {
     return true;
@@ -222,7 +222,7 @@ function matchStart (term, text) {
 $("select").select2({
   matcher: matchStart
 })
-</pre>
+{% endhighlight %}
 
         <p>
           Then in Select2 4.0, you would need to wrap the <code>matchStart</code>
@@ -230,7 +230,7 @@ $("select").select2({
           <code>oldMatcher</code> method that we have created.
         </p>
 
-<pre class="prettyprint linenums">
+{% highlight js linenos %}
 function matchStart (term, text) {
   if (text.toUpperCase().indexOf(term.toUpperCase()) == 0) {
     return true;
@@ -244,7 +244,7 @@ $.fn.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
     matcher: oldMatcher(matchStart)
   })
 });
-</pre>
+{% endhighlight %}
 
         <p>
           This will work for any matchers that only took in the search term and the
@@ -280,12 +280,12 @@ $.fn.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
           value of <code>-1</code>) is the placeholder option…
         </p>
 
-<pre class="prettyprint linenums">
-&lt;select&gt;
-  &lt;option value="-1" selected="selected"&gt;Select an option&lt;/option&gt;
-  &lt;option value="1"&gt;Something else&lt;/option&gt;
-&lt;/select&gt;
-</pre>
+{% highlight html linenos %}
+<select>
+  <option value="-1" selected="selected">Select an option</option>
+  <option value="1">Something else</option>
+</select>
+{% endhighlight %}
 
         <p>
           You would have previously had to get the placeholder option through the
@@ -293,14 +293,14 @@ $.fn.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
           <code>placeholder</code> option by setting an <code>id</code>.
         </p>
 
-<pre class="prettyprint linenums">
+{% highlight js linenos %}
 $("select").select2({
   placeholder: {
     id: "-1",
     placeholder: "Select an option"
   }
 })
-</pre>
+{% endhighlight %}
 
         <p>
           And Select2 will automatically display the placeholder when the value of
@@ -359,15 +359,17 @@ $("select").select2({
           the <code>id</code> and <code>text</code> matching the selected value.
         </p>
 
-<pre class="prettyprint linenums">
-initSelection : function (element, callback) {
-  var data = [];
-  $(element.val()).each(function () {
-    data.push({id: this, text: this});
-  });
-  callback(data);
+{% highlight js linenos %}
+{
+  initSelection : function (element, callback) {
+    var data = [];
+    $(element.val()).each(function () {
+      data.push({id: this, text: this});
+    });
+    callback(data);
+  }
 }
-</pre>
+{% endhighlight %}
 
         <p>
           When using the new <code>current</code> method of the custom data adapter,
@@ -378,7 +380,7 @@ initSelection : function (element, callback) {
           remote data source).
         </p>
 
-<pre class="prettyprint linenums">
+{% highlight js linenos %}
 $.fn.select2.amd.require([
   'select2/data/array',
   'select2/utils'
@@ -411,7 +413,7 @@ $.fn.select2.amd.require([
     dataAdapter: CustomData
   });
 }
-</pre>
+{% endhighlight %}
 
         <p>
           The new <code>current</code> method of the data adapter works in a similar
@@ -436,7 +438,7 @@ $.fn.select2.amd.require([
           the changes.
         </p>
 
-<pre class="prettyprint linenums">
+{% highlight js linenos %}
 var $element = $('select').select2(); // the select element you are working with
 
 var $request = $.ajax({
@@ -460,7 +462,7 @@ $request.then(function (data) {
   // Update the selected options that are displayed
   $element.trigger('change');
 });
-</pre>
+{% endhighlight %}
 
         <h3 id="query-to-data-adapter">
           Custom data adapters instead of <code>query</code>
@@ -487,17 +489,19 @@ $request.then(function (data) {
           number of times.
         </p>
 
-<pre class="prettyprint linenums">
-query: function (query) {
-  var data = {results: []}, i, j, s;
-  for (i = 1; i < 5; i++) {
-    s = "";
-    for (j = 0; j < i; j++) {s = s + query.term;}
-    data.results.push({id: query.term + i, text: s});
+{% highlight js linenos %}
+{
+  query: function (query) {
+    var data = {results: []}, i, j, s;
+    for (i = 1; i < 5; i++) {
+      s = "";
+      for (j = 0; j < i; j++) {s = s + query.term;}
+      data.results.push({id: query.term + i, text: s});
+    }
+    query.callback(data);
   }
-  query.callback(data);
 }
-</pre>
+{% endhighlight %}
 
         <p>
           This has been replaced by custom data adapters which define a similarly
@@ -505,7 +509,7 @@ query: function (query) {
           below as an example.
         </p>
 
-<pre class="prettyprint linenums">
+{% highlight js linenos %}
 $.fn.select2.amd.require([
   'select2/data/array',
   'select2/utils'
@@ -541,7 +545,7 @@ $.fn.select2.amd.require([
     dataAdapter: CustomData
   });
 }
-</pre>
+{% endhighlight %}
 
         <p>
           The new <code>query</code> method of the data adapter is very similar to
@@ -602,7 +606,7 @@ $.fn.select2.amd.require([
           <code>text</code> and <code>id</code> properties to the new ones.
         </p>
 
-<pre class="prettyprint linenums">
+{% highlight js linenos %}
 var data = $.map([
   {
     pk: 1,
@@ -618,7 +622,7 @@ var data = $.map([
 
   return obj;
 });
-</pre>
+{% endhighlight %}
 
         <p>
           This will result in an array of data objects that have the <code>id</code>
@@ -684,17 +688,17 @@ var data = $.map([
           If you previously declared the list of tags as…
         </p>
 
-<pre class="prettyprint linenums">
-&lt;select data-select2-tags='[{"id": "1", "text": "One"}, {"id": "2", "text": "Two"}]'&gt;&lt;/select&gt;
-</pre>
+{% highlight html linenos %}
+<select data-select2-tags='[{"id": "1", "text": "One"}, {"id": "2", "text": "Two"}]'></select>
+{% endhighlight %}
 
         <p>
           …then you should now declare it as…
         </p>
 
-<pre class="prettyprint linenums">
-&lt;select data-data='[{"id": "1", "text": "One"}, {"id": "2", "text": "Two"}]' data-tags="true"&gt;&lt;/select&gt;
-</pre>
+{% highlight html linenos %}
+<select data-data='[{"id": "1", "text": "One"}, {"id": "2", "text": "Two"}]' data-tags="true"></select>
+{% endhighlight %}
 
         <h2 id="removed-methods">Deprecated and removed methods</h2>
 
@@ -719,9 +723,9 @@ var data = $.map([
           <code>.trigger("change")</code> on the element.
         </p>
 
-<pre class="prettyprint linenums">
+{% highlight js linenos %}
 $("select").val("1").trigger("change"); // instead of $("select").select2("val", "1");
-</pre>
+{% endhighlight %}
 
         <h3>.select2("enable")</h3>
 
@@ -733,9 +737,9 @@ $("select").val("1").trigger("change"); // instead of $("select").select2("val",
           completely removed in Select2 4.1.
         </p>
 
-<pre class="prettyprint linenums">
+{% highlight js linenos %}
 $("select").prop("disabled", true); // instead of $("select").enable(false);
-</pre>
+{% endhighlight %}
 
       </section>
     </div>
@@ -746,7 +750,3 @@ $("select").prop("disabled", true); // instead of $("select").enable(false);
     </div>
   </div>
 </div>
-
-<script type="text/javascript">
-  prettyPrint();
-</script>
