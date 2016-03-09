@@ -34,6 +34,26 @@ $('select').select2({
   </p>
 
   <h3>
+    Do the <code>id</code> properties have to be strings?
+  </h3>
+
+  <p>
+    Because the <code>value</code> attributes on a <code>&gt;select&lt;</code>
+    tag must be strings, the <code>id</code> property on the data objects must
+    also be strings. Select2 will attempt to convert anything that is not a
+    string to a string, which will work for most situations, but it is
+    recommended to force all of your ids to strings ahead of time.
+  </p>
+
+  <h3>
+    I can't select results with blank ids or an id of <code>0</code>!
+  </h3>
+
+  <p>
+    See <a href="#do-the-id-properties-have-to-be-strings">Do the <code>id</code> properties have to be strings?</a>.
+  </p>
+
+  <h3>
     How should nested results be formatted?
   </h3>
 
