@@ -22,7 +22,7 @@ define(function () {
       return 'កំពុងទាញយកទិន្នន័យបន្ថែម...';
     },
     maximumSelected: function (args) {
-      var message = 'អ្នកអាចជ្រើសរើសបានត្រឹមតែ ' + args.maximum + ' ជម្រើសតែប៉ុណ្ណោះ';
+      var message = 'អ្នកអាចជ្រើសរើសបានតែ ' + args.maximum + ' ជម្រើសប៉ុណ្ណោះ';
 
       return message;
     },
