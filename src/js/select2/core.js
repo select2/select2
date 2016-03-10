@@ -195,13 +195,38 @@ define([
     if (observer != null) {
       this._observer = new observer(function (mutations) {
         $.each(mutations, self._sync);
+
+        if (! self.$element.multiple) {
+          $.each(mutations, function() {
+            if (this.addedNodes.length != 1) {
+              return;
+            }
+
+            if (! this.addedNodes[0].selected) {
+              return;
+            }
+
+            self.$container.text(this.addedNodes[0].innerHTML);
+          });
+        }
       });
       this._observer.observe(this.$element[0], {
         attributes: true,
+        childList: true,
         subtree: false
       });
     } else if (this.$element[0].addEventListener) {
       this.$element[0].addEventListener('DOMAttrModified', self._sync, false);
+
+      if (! this.$element[0].multiple) {
+        this.$element[0].addEventListener('DOMSubtreeModified', function(e) {
+          $(e.target.children).each(function() {
+            if (this.selected) {
+              self.$container.text(this.innerHTML);
+            }
+          });
+        });
+      }
     }
   };
 

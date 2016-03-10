@@ -1,3 +1,4 @@
+/* globals start, stop, setTimeout */
 module('select2(data)');
 
 var $ = require('jquery');
@@ -136,4 +137,38 @@ test('multiple value matches the jquery value', function (assert) {
     $select.val(),
     'The values should match the jquery values'
   );
+});
+
+test('adding a selected option changes container text', function(assert) {
+  var $select = $(
+    '<select>' +
+      '<option>One</option>' +
+      '<option>Two</option>' +
+      '<option value="3" selected>Three</option>' +
+    '</select>'
+  );
+  var options = new Options({});
+
+  var select = new Select2($select, options);
+
+  $select.append('<option value="4" selected>Four</option>');
+
+  var value = select.val();
+
+  assert.equal(
+    value,
+    '4',
+    'The value should have been updated'
+  );
+
+  // That wait is a bit boring, but absolutely necessary
+  stop();
+  setTimeout(function() {
+    assert.equal(
+      select.$container.text(),
+      'Four',
+      'The container text should have been updated'
+    );
+    start();
+  }, 100);
 });
