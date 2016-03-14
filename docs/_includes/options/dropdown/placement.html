@@ -25,6 +25,21 @@ $('select').select2({
     I&apos;m using a Bootstrap modal and I can&apos;t use the search box
   </h3>
 
+<p>This is easily solved by removing the <code>tabindex="-1"</code> when creating your modal and then overriding the <code>enforceFocus</code> function for the modal.</p>
+
+{% highlight html linenos %}
+<div id="myModal" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Panel</h3>
+  </div>
+  <div class="modal-body" style="max-height: 800px">
+{% endhighlight %}
+
+{% highlight js linenos %}
+$.fn.modal.Constructor.prototype.enforceFocus = function() {};
+{% endhighlight %}
+
   {% include options/not-written.html %}
 
   <h3>
