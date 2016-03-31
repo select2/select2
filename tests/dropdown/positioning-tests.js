@@ -154,14 +154,24 @@ test('dropdown is positioned with absolute offsets', function (assert) {
     dropdown._showDropdown();
 
     assert.equal(
-        $dropdown.css('top').substring(0, 2),
-        $container.outerHeight(),
-        'There should not be an extra top offset'
-    );
-
-    assert.equal(
         $dropdown.css('left'),
         '0px',
         'There should not be an extra left offset'
+    );
+
+    $container.addClass('select2-dropdown--below');
+
+    assert.equal(
+        $dropdown.css('top').substring(0, 2),
+        $container.outerHeight(),
+        'There should not be an extra top offset when direction is below'
+    );
+
+    $container.addClass('select2-dropdown--above');
+
+    assert.equal(
+        $dropdown.css('top').substring(0, 2),
+        $container.outerHeight(),
+        'There should not be an extra top offset when direction is above'
     );
 });
