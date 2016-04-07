@@ -87,6 +87,7 @@ define([
 
     $rendered.empty().append(formatted);
     $rendered.prop('title', selection.title || selection.text);
+    $rendered.attr('aria-live', 'assertive');
   };
 
   return SingleSelection;
