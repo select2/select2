@@ -2280,6 +2280,12 @@ the specific language governing permissions and limitations under the Apache Lic
             // rewrite labels from original element to focusser
             this.focusser.attr("id", "s2id_autogen"+idSuffix);
 
+            // Move required attribute to focusser for transparent HTML5 validation
+            if (this.opts.element.prop("required")) {
+                this.focusser.prop("required", this.opts.element.prop("required"));
+                this.opts.element.removeProp("required");
+            }
+
             elementLabel = $("label[for='" + this.opts.element.attr("id") + "']");
             this.opts.element.on('focus.select2', this.bind(function () { this.focus(); }));
 
