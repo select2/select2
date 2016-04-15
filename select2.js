@@ -2280,10 +2280,10 @@ the specific language governing permissions and limitations under the Apache Lic
             // rewrite labels from original element to focusser
             this.focusser.attr("id", "s2id_autogen"+idSuffix);
 
-            // Move required attribute to focusser for transparent HTML5 validation
-            if (this.opts.element.prop("required")) {
-                this.focusser.prop("required", this.opts.element.prop("required"));
-                this.opts.element.removeProp("required");
+            // Move required attribute to focusser (.select2-focusser) for transparent HTML5 validation on single selection
+            if (this.opts.element.attr("required")) {
+                this.focusser.attr("required", this.opts.element.prop("required"));
+                this.opts.element.removeAttr("required");
             }
 
             elementLabel = $("label[for='" + this.opts.element.attr("id") + "']");
@@ -2467,6 +2467,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
                 var placeholderOption = this.getPlaceholderOption();
                 this.opts.element.val(placeholderOption ? placeholderOption.val() : "");
+                this.focusser.val("");
                 this.selection.find(".select2-chosen").empty();
                 this.selection.removeData("select2-data");
                 this.setPlaceholder();
@@ -2628,6 +2629,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 oldData = this.data();
 
             this.opts.element.val(this.id(data));
+            this.focusser.val(this.opts.element.val());
             this.updateSelection(data);
 
             this.opts.element.trigger({ type: "select2-selected", val: this.id(data), choice: data });
@@ -2724,6 +2726,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     throw new Error("cannot call val() if initSelection() is not defined");
                 }
                 this.opts.element.val(val);
+                this.focusser.val(val);
                 this.opts.initSelection(this.opts.element, function(data){
                     self.opts.element.val(!data ? "" : self.id(data));
                     self.updateSelection(data);
@@ -2766,6 +2769,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 } else {
                     data = this.data();
                     this.opts.element.val(!value ? "" : this.id(value));
+                    this.opts.element.val(this.opts.element.val());
                     this.updateSelection(value);
                     if (triggerChange) {
                         this.triggerChange({added: value, removed:data});
@@ -2899,6 +2903,15 @@ the specific language governing permissions and limitations under the Apache Lic
 
             // rewrite labels from original element to focusser
             this.search.attr("id", "s2id_autogen"+nextUid());
+
+            // Move required attribute to search (.select2-input) for transparent HTML5 validation on multi-choices
+            if (this.opts.element.attr("required")) {
+                this.search.attr("required", this.opts.element.attr("required"));
+                this.opts.element.removeAttr("required");
+
+                // For multiple selection, only the first choice is required, so we need a marker to restore "required" property for cleared choice
+                this.search.addClass("select2-input-required");
+            }
 
             this.search.prev()
                 .text($("label[for='" + this.opts.element.attr("id") + "']").text())
@@ -3431,6 +3444,17 @@ the specific language governing permissions and limitations under the Apache Lic
                     }
                 });
                 this.opts.element.val(unique.length === 0 ? "" : unique.join(this.opts.separator));
+                
+                // Synchronize the 'required' attribute
+                if (this.search && this.search.hasClass('select2-input-required')) {
+                    if (unique.length ===0) {
+                        // The 'required' need to be restored
+                        this.search.attr("required", true);
+                    } else {
+                       // The 'required' need to be removed, minimal selection is there
+                        this.search.removeAttr('required');
+                    }
+                }
             }
         },
 
