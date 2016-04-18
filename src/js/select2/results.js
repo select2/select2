@@ -237,6 +237,13 @@ define([
 
     var id = container.id + '-results';
 
+    var getOptions = function() {
+      if (self.options.get('hideOptionsWhenSelected')) {
+        return self.$results.find('[aria-selected=false]');
+      }
+      return self.$results.find('[aria-selected]');
+    };
+
     this.$results.attr('id', id);
 
     container.on('results:all', function (params) {
@@ -245,6 +252,10 @@ define([
 
       if (container.isOpen()) {
         self.setClasses();
+      }
+
+      if (self.options.get('hideOptionsWhenSelected')) {
+        self.hideOptionsWhenSelected(); 
       }
     });
 
@@ -324,7 +335,7 @@ define([
     container.on('results:previous', function () {
       var $highlighted = self.getHighlightedResults();
 
-      var $options = self.$results.find('[aria-selected]');
+      var $options = getOptions();
 
       var currentIndex = $options.index($highlighted);
 
@@ -358,7 +369,7 @@ define([
     container.on('results:next', function () {
       var $highlighted = self.getHighlightedResults();
 
-      var $options = self.$results.find('[aria-selected]');
+      var $options = getOptions();
 
       var currentIndex = $options.index($highlighted);
 
@@ -506,6 +517,10 @@ define([
     } else {
       $(container).append(content);
     }
+  };
+
+  Results.prototype.hideOptionsWhenSelected = function() {
+    this.$results.find('[aria-selected=true]').css({'display': 'none'});
   };
 
   return Results;
