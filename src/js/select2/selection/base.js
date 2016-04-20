@@ -38,9 +38,6 @@ define([
   BaseSelection.prototype.bind = function (container, $container) {
     var self = this;
 
-    var id = container.id + '-container';
-    var resultsId = container.id + '-results';
-
     this.container = container;
 
     this.$selection.on('focus', function (evt) {
@@ -59,10 +56,6 @@ define([
       }
     });
 
-    container.on('results:focus', function (params) {
-      self.$selection.attr('aria-activedescendant', params.data._resultId);
-    });
-
     container.on('selection:update', function (params) {
       self.update(params.data);
     });
@@ -70,7 +63,6 @@ define([
     container.on('open', function () {
       // When the dropdown is open, aria-expanded="true"
       self.$selection.attr('aria-expanded', 'true');
-      self.$selection.attr('aria-owns', resultsId);
 
       self._attachCloseHandler(container);
     });
