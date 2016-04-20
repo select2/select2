@@ -181,6 +181,10 @@ define([
       });
     });
 
+    this.$element.parent('label').on('click', function (e) {
+      e.preventDefault();
+    });
+    
     this._sync = Utils.bind(this._syncAttributes, this);
 
     if (this.$element[0].attachEvent) {
