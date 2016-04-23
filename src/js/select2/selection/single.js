@@ -54,6 +54,12 @@ define([
       // User exits the container
     });
 
+    container.on('focus', function (evt) {
+      if (!container.isOpen()) {
+        self.$selection.focus();
+      }
+    });
+
     container.on('selection:update', function (params) {
       self.update(params.data);
     });

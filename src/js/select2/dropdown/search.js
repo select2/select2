@@ -62,6 +62,12 @@ define([
       self.$search.val('');
     });
 
+    container.on('focus', function () {
+      if (container.isOpen()) {
+        self.$search.focus();
+      }
+    });
+
     container.on('results:all', function (params) {
       if (params.query.term == null || params.query.term === '') {
         var showSearch = self.showSearch(params);
