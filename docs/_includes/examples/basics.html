@@ -59,6 +59,39 @@ $(".js-example-basic-multiple").select2();
   <option value="WY">Wyoming</option>
 </select>
 {% endhighlight %}
-</section>
 
+  <h2>Select boxes with labels</h2>
+
+  <p>
+    You can, and should, use a <code>&lt;label&gt;</code> with Select2, just like any other <code>&lt;select&gt</code> element.
+  </p>
+
+  <div class="s2-example">
+    <p>
+      <label for="id_label_single">
+        Click this to highlight the single select element
+        <select class="js-example-basic-single js-states form-control" id="id_label_single"></select>
+      </label>
+    </p>
+    <p>
+      <label for="id_label_multiple">
+        Click this to highlight the multiple select element
+        <select class="js-example-basic-multiple js-states form-control" id="id_label_multiple" multiple="multiple"></select>
+      </label>
+    </p>
+  </div>
+
+{% highlight html linenos %}
+<label for="id_label_single">
+  Click this to highlight the single select element
+
+  <select class="js-example-basic-single js-states form-control" id="id_label_single"></select>
+</label>
+
+<label for="id_label_multiple">
+  Click this to highlight the multiple select element
+
+  <select class="js-example-basic-multiple js-states form-control" id="id_label_multiple" multiple="multiple"></select>
+</label>
+{% endhighlight %}
 </section>
