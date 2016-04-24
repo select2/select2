@@ -64,6 +64,36 @@ $('select').select2({
   </p>
 
   <h3>
+    How do I tell Select2 which URL to get the results from?
+  </h3>
+
+  <p>
+    When connecting Select2 to a remote data source, you have the option of using either a single endpoint (a single page which handles all requests) or a dynamic endpoint (one of many pages). You can point Select2 to a single endpoint during initialization by specifying a string for the <code>ajax.url</code> option.
+  </p>
+
+{% highlight js linenos %}
+$('select').select2({
+  ajax: {
+    url: '/path/to/search/endpoint'
+  }
+});
+{% endhighlight %}
+
+  <p>
+    If there isn't a single url for your search results, or you need to call a function to determine the url to use, you can specify a function for the <code>ajax.url</code> option, and this will be used instead. The query parameters will be passed in through the <code>params</code> option.
+  </p>
+
+{% highlight js linenos %}
+$('select').select2({
+  ajax: {
+    url: function (params) {
+      return '/some/url/' + params.term;
+    }
+  }
+});
+{% endhighlight %}
+
+  <h3>
     I want to add more query parameters to the request, where can this be done?
   </h3>
 
@@ -86,6 +116,14 @@ $('select').select2({
   }
 });
 {% endhighlight %}
+
+  <h3>
+    The results that I am seeing never change
+  </h3>
+
+  <p>
+    Select2 expects that the results that are returned from the remote endpoint are already filtered ahead of time based on the search term. If your remote endpoint just returns the list of all possible options, you may be interested in using Select2's <a href="examples.html#data-array">support for data arrays</a>.
+  </p>
 
   <h3>
     Can an AJAX plugin other than <code>jQuery.ajax</code> be used?
