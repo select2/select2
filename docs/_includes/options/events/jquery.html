@@ -41,8 +41,20 @@
   </dl>
 
   <h3>
+    Does Select2 include extra information in these events?
+  </h3>
+
+  {% include options/not-written.html %}
+
+  <h3>
     How can I attach listeners for these events?
   </h3>
+
+{% highlight js linenos %}
+$('select').on('select2:select', function (evt) {
+  // Do something
+});
+{% endhighlight %}
 
   {% include options/not-written.html %}
 

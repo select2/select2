@@ -58,7 +58,7 @@ test('appends to the dropdown parent', function (assert) {
     );
 });
 
-test('dropdown is positioned with static margins', function (assert) {
+test('dropdown is positioned down with static margins', function (assert) {
     var $ = require('jquery');
     var $select = $('<select></select>');
     var $parent = $('<div></div>');
@@ -100,6 +100,11 @@ test('dropdown is positioned with static margins', function (assert) {
     dropdown.position($dropdown, $container);
     dropdown._showDropdown();
 
+    assert.ok(
+        dropdown.$dropdown.hasClass('select2-dropdown--below'),
+        'The dropdown should be forced down'
+    );
+
     assert.equal(
         $dropdown.css('top').substring(0, 2),
         $container.outerHeight() + 5,
@@ -113,7 +118,7 @@ test('dropdown is positioned with static margins', function (assert) {
     );
 });
 
-test('dropdown is positioned with absolute offsets', function (assert) {
+test('dropdown is positioned down with absolute offsets', function (assert) {
     var $ = require('jquery');
     var $select = $('<select></select>');
     var $parent = $('<div></div>');
@@ -152,6 +157,11 @@ test('dropdown is positioned with absolute offsets', function (assert) {
     dropdown.bind(container, $container);
     dropdown.position($dropdown, $container);
     dropdown._showDropdown();
+
+    assert.ok(
+        dropdown.$dropdown.hasClass('select2-dropdown--below'),
+        'The dropdown should be forced down'
+    );
 
     assert.equal(
         $dropdown.css('top').substring(0, 2),

@@ -1,6 +1,9 @@
 define(function () {
   // Norwegian (Bokmål)
   return {
+    errorLoading: function () {
+      return 'Kunne ikke hente resultater.';
+    },
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;
 
