@@ -132,7 +132,7 @@ define([
 
         var $element = $this.data('element');
 
-        $element.select2('close');
+        self.trigger('close');
       });
     });
   };
