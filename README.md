@@ -54,6 +54,7 @@ Plugins
 * [Ruby on Rails][ruby-on-rails] - [select2-rails]
 * [Wicket] - [wicketstuff-select2]
 * [Yii 2][yii2] - [yii2-widget-select2]
+* [Angularjs][angularjs] - [mdr-angular-select2]
 
 Themes
 
@@ -119,3 +120,5 @@ The license is available within the repository in the [LICENSE][license] file.
 [wicketstuff-select2]: https://github.com/wicketstuff/core/tree/master/select2-parent
 [yii2]: http://www.yiiframework.com/
 [yii2-widget-select2]: https://github.com/kartik-v/yii2-widget-select2
+[angularjs]: https://angularjs.org/
+[mdr-angular-select2]: https://github.com/modulr/mdr-angular-select2
