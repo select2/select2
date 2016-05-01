@@ -1,0 +1,40 @@
+<section>
+  <h2 id="selection-api-access">
+    How to programmatically access a selection data?
+  </h2>
+
+  <p>
+    There are few ways to programmatically access the selection data. Calling <code>select2('data')</code> will return the JavaScript array of an objects representing the current selection. Each object will have properties/values which was in the source data objects passed through <code>processResults</code> and <code>templateResult</code> functions (as in <a href="#data">Loading data from an array</a> and <a href="#ajax">Connecting to a remote data source</a>).
+  </p>
+
+{% highlight js linenos %}
+$('select').select2('data');
+{% endhighlight %}
+
+  <p>
+    As Select2 uses the HTML <code>&lt;SELECT&gt;</code> element to store the selection result, the selection data are represented by <code>&lt;OPTION&gt;</code> elements and can be accessed in the plain jQuery/DOM manner. The resulting elements will have properties/values from the source data objects, stored by the means of jQuery <code>data()</code> method and accessible by key <code>'data'</code>:
+  </p>
+
+{% highlight js linenos %}
+// Retrieve source data object's data of the first selected element
+$('select').find(':selected').data('data');
+{% endhighlight %}
+
+  <p>
+    Another technique is not to rely on jQuery's <code>data()</code> method but to extend the <code>&lt;OPTION&gt;</code> elements representing selection with the HTML data-* attributes containing arbitrary data from the source data objects:
+  </p>
+
+{% highlight js linenos %}
+$('select').select2({
+  // ...
+  templateSelection: function (data, container) {
+    $(data.element).attr('data-custom-attribute', data.customValue);
+    return data.text;
+  }
+});
+
+// Retrieve custom attribute value of the first selected element
+$('select').find(':selected').attr('data-custom-attribute')
+{% endhighlight %}
+
+</section>
