@@ -37,4 +37,14 @@ $('select').select2({
 $('select').find(':selected').attr('data-custom-attribute')
 {% endhighlight %}
 
+  <p>
+    In addition, properties/values from source data objects can ba accessed from within event handler:
+  </p>
+
+{% highlight js linenos %}
+$('select').on('select2:select', function (event) {
+  console.log(event.params.data)
+});
+{% endhighlight %}
+
 </section>
