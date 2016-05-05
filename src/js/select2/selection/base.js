@@ -21,10 +21,10 @@ define([
 
     this._tabindex = 0;
 
-    if (this.$element.data('old-tabindex') != null) {
-      this._tabindex = this.$element.data('old-tabindex');
-    } else if (this.$element.attr('tabindex') != null) {
-      this._tabindex = this.$element.attr('tabindex');
+    if (Utils.GetData(this.$element[0], 'old-tabindex') != null) {
+        this._tabindex = Utils.GetData(this.$element[0], 'old-tabindex');
+    } else if (Utils.GetData(this.$element[0], 'tabindex') != null) {
+        this._tabindex = Utils.GetData(this.$element[0], 'tabindex');
     }
 
     $selection.attr('title', this.$element.attr('title'));
@@ -130,7 +130,7 @@ define([
           return;
         }
 
-        var $element = $this.data('element');
+        var $element = Utils.GetData(this, 'element');
 
         $element.select2('close');
       });

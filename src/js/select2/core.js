@@ -5,9 +5,9 @@ define([
   './keys'
 ], function ($, Options, Utils, KEYS) {
   var Select2 = function ($element, options) {
-    if ($element.data('select2') != null) {
-      $element.data('select2').destroy();
-    }
+	if (Utils.GetData($element[0], 'select2') != null) {
+	    Utils.GetData($element[0], 'select2').destroy();
+	}
 
     this.$element = $element;
 
@@ -22,7 +22,7 @@ define([
     // Set up the tabindex
 
     var tabindex = $element.attr('tabindex') || 0;
-    $element.data('old-tabindex', tabindex);
+    Utils.StoreData($element[0], 'old-tabindex', tabindex);
     $element.attr('tabindex', '-1');
 
     // Set up containers and adapters
@@ -83,7 +83,7 @@ define([
     // Synchronize any monitored attributes
     this._syncAttributes();
 
-    $element.data('select2', this);
+    Utils.StoreData($element[0], 'select2', this);
   };
 
   Utils.Extend(Select2, Utils.Observable);
@@ -510,11 +510,12 @@ define([
     this._sync = null;
 
     this.$element.off('.select2');
-    this.$element.attr('tabindex', this.$element.data('old-tabindex'));
+    this.$element.attr('tabindex', 
+					   Utils.GetData(this.$element[0], 'old-tabindex'));
 
     this.$element.removeClass('select2-hidden-accessible');
     this.$element.attr('aria-hidden', 'false');
-    this.$element.removeData('select2');
+    Utils.RemoveData(this.$element[0]);
 
     this.dataAdapter.destroy();
     this.selection.destroy();
@@ -541,7 +542,7 @@ define([
 
     this.$container.addClass('select2-container--' + this.options.get('theme'));
 
-    $container.data('element', this.$element);
+    Utils.StoreData($container[0], 'element', this.$element);
 
     return $container;
   };
