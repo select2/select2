@@ -23,8 +23,8 @@ define([
 
     if (Utils.GetData(this.$element[0], 'old-tabindex') != null) {
         this._tabindex = Utils.GetData(this.$element[0], 'old-tabindex');
-    } else if (Utils.GetData(this.$element[0], 'tabindex') != null) {
-        this._tabindex = Utils.GetData(this.$element[0], 'tabindex');
+    } else if (this.$element.attr('tabindex') != null) {
+        this._tabindex = this.$element.attr('tabindex');
     }
 
     $selection.attr('title', this.$element.attr('title'));
