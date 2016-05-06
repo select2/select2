@@ -303,11 +303,13 @@ define([
     var id = Utils.GetUniqueElementId(element);
     if (name) {
         if (Utils.__cache[id]) {
-            return Utils.__cache[id][name];
+            return Utils.__cache[id][name] != null ? 
+			       Utils.__cache[id][name]:
+				   $(element).data(name); // Fallback to HTML5 data attribs.
         }
-        return null;
+        return $(element).data(name); // Fallback to HTML5 data attribs.
     } else {
-        return Utils.__cache[id];
+        return Utils.__cache[id];			   
     }
   };
 
