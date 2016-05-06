@@ -90,9 +90,9 @@ define([
 
     var $watchers = this.$container.parents().filter(Utils.hasScroll);
     $watchers.each(function () {
-	  Utils.StoreData(this, 'select2-scroll-position', {
-		  x: $(this).scrollLeft(),
-		  y: $(this).scrollTop()
+      Utils.StoreData(this, 'select2-scroll-position', {
+        x: $(this).scrollLeft(),
+        y: $(this).scrollTop()
 	  });
     });
 

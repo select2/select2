@@ -118,7 +118,7 @@ define([
 
   InputData.prototype.addOptions = function (_, $options) {
     var options = $.map($options, function ($option) {      
-	  return Utils.GetData($option[0], 'data');
+      return Utils.GetData($option[0], 'data');
     });
 
     this._currentData.push.apply(this._currentData, options);

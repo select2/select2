@@ -238,7 +238,7 @@ test('option tags can receive new data', function(assert) {
   });
 
   assert.ok(
-     Utils.GetData($select.find(':selected')[0], 'data').extra,
+    Utils.GetData($select.find(':selected')[0], 'data').extra,
     '<option> default should have new data'
   );
 
@@ -247,7 +247,7 @@ test('option tags can receive new data', function(assert) {
   });
 
   assert.ok(
-     Utils.GetData($select.find(':selected')[0], 'data').extra,
+    Utils.GetData($select.find(':selected')[0], 'data').extra,
     '<option> One should have new data'
   );
 });

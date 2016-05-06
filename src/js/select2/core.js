@@ -5,9 +5,9 @@ define([
   './keys'
 ], function ($, Options, Utils, KEYS) {
   var Select2 = function ($element, options) {
-	if (Utils.GetData($element[0], 'select2') != null) {
-	    Utils.GetData($element[0], 'select2').destroy();
-	}
+    if (Utils.GetData($element[0], 'select2') != null) {
+        Utils.GetData($element[0], 'select2').destroy();
+    }
 
     this.$element = $element;
 
@@ -511,7 +511,7 @@ define([
 
     this.$element.off('.select2');
     this.$element.attr('tabindex', 
-					   Utils.GetData(this.$element[0], 'old-tabindex'));
+    Utils.GetData(this.$element[0], 'old-tabindex'));
 
     this.$element.removeClass('select2-hidden-accessible');
     this.$element.attr('aria-hidden', 'false');
