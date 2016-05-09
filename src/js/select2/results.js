@@ -245,6 +245,7 @@ define([
 
       if (container.isOpen()) {
         self.setClasses();
+        self.ensureHighlightVisible();
       }
     });
 
@@ -283,7 +284,6 @@ define([
       self.$results.attr('aria-hidden', 'false');
 
       self.setClasses();
-      self.ensureHighlightVisible();
     });
 
     container.on('close', function () {
