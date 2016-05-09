@@ -27,7 +27,8 @@ test('multiple elements with arguments works', function (assert) {
   );
 });
 
-test('initializes correctly when jQuery $.data contains cyclic reference object', function (assert) {
+test('initializes when jQuery $.data contains' +
+  ' cyclic reference', function (assert) {
   var $ = require('jquery');
   require('jquery.select2');
 
