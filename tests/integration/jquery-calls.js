@@ -42,7 +42,7 @@ test('initializes correctly when jQuery $.data contains cyclic reference object'
   // Add a circular reference object using jQuery.
   var recursiveObject = {};
 
-  recursiveObject['same'] =  recursiveObject;
+  recursiveObject.same =  recursiveObject;
 
   $select.data('same', recursiveObject);
 
