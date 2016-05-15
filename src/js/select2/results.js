@@ -97,8 +97,7 @@ define([
     return sorter(data);
   };
 
-  Results.prototype.focusFirstItem = function () {
-
+  Results.prototype.highlightFirstItem = function () {
     var $options = this.$results
       .find('.select2-results__option[aria-selected]');
 
@@ -114,6 +113,7 @@ define([
       $options.first().trigger('mouseenter');
     }
 
+    this.ensureHighlightVisible();
   };
 
   Results.prototype.setClasses = function () {
@@ -253,7 +253,7 @@ define([
 
       if (container.isOpen()) {
         self.setClasses();
-        self.focusFirstItem();
+        self.highlightFirstItem();
       }
     });
 
@@ -276,7 +276,7 @@ define([
       }
 
       self.setClasses();
-      self.focusFirstItem();
+      self.highlightFirstItem();
     });
 
     container.on('unselect', function () {
@@ -285,7 +285,7 @@ define([
       }
 
       self.setClasses();
-      self.focusFirstItem();
+      self.highlightFirstItem();
     });
 
     container.on('open', function () {
