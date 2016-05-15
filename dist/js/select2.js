@@ -606,8 +606,22 @@ S2.define('select2/utils',[
 
   Observable.prototype.trigger = function (event) {
     var slice = Array.prototype.slice;
+    var params = slice.call(arguments, 1);
 
     this.listeners = this.listeners || {};
+
+    // Params should always come in as an array
+    if (params == null) {
+      params = [];
+    }
+
+    // If there are no arguments to the event, use a temporary object
+    if (params.length === 0) {
+      params.push({});
+    }
+
+    // Set the `_type` of the first object to the event
+    params[0]._type = event;
 
     if (event in this.listeners) {
       this.invoke(this.listeners[event], slice.call(arguments, 1));
@@ -842,6 +856,25 @@ S2.define('select2/results',[
     return sorter(data);
   };
 
+  Results.prototype.highlightFirstItem = function () {
+    var $options = this.$results
+      .find('.select2-results__option[aria-selected]');
+
+    var $selected = $options.filter('[aria-selected=true]');
+
+    // Check if there are any selected options
+    if ($selected.length > 0) {
+      // If there are selected options, highlight the first
+      $selected.first().trigger('mouseenter');
+    } else {
+      // If there are no selected options, highlight the first option
+      // in the dropdown
+      $options.first().trigger('mouseenter');
+    }
+
+    this.ensureHighlightVisible();
+  };
+
   Results.prototype.setClasses = function () {
     var self = this;
 
@@ -869,17 +902,6 @@ S2.define('select2/results',[
         }
       });
 
-      var $selected = $options.filter('[aria-selected=true]');
-
-      // Check if there are any selected options
-      if ($selected.length > 0) {
-        // If there are selected options, highlight the first
-        $selected.first().trigger('mouseenter');
-      } else {
-        // If there are no selected options, highlight the first option
-        // in the dropdown
-        $options.first().trigger('mouseenter');
-      }
     });
   };
 
@@ -990,6 +1012,7 @@ S2.define('select2/results',[
 
       if (container.isOpen()) {
         self.setClasses();
+        self.highlightFirstItem();
       }
     });
 
@@ -1012,6 +1035,7 @@ S2.define('select2/results',[
       }
 
       self.setClasses();
+      self.highlightFirstItem();
     });
 
     container.on('unselect', function () {
@@ -1020,6 +1044,7 @@ S2.define('select2/results',[
       }
 
       self.setClasses();
+      self.highlightFirstItem();
     });
 
     container.on('open', function () {
@@ -3456,7 +3481,7 @@ S2.define('select2/data/ajax',[
       self._request = $request;
     }
 
-    if (this.ajaxOptions.delay && params.term !== '') {
+    if (this.ajaxOptions.delay && params.term != null) {
       if (this._queryTimeout) {
         window.clearTimeout(this._queryTimeout);
       }
@@ -4359,12 +4384,22 @@ S2.define('select2/dropdown/selectOnClose',[
 
     decorated.call(this, container, $container);
 
-    container.on('close', function () {
-      self._handleSelectOnClose();
+    container.on('close', function (params) {
+      self._handleSelectOnClose(params);
     });
   };
 
-  SelectOnClose.prototype._handleSelectOnClose = function () {
+  SelectOnClose.prototype._handleSelectOnClose = function (_, params) {
+    if (params && params.originalSelect2Event != null) {
+      var event = params.originalSelect2Event;
+
+      // Don't select an item if the close event was triggered from a select or
+      // unselect event
+      if (event._type === 'select' || event._type === 'unselect') {
+        return;
+      }
+    }
+
     var $highlightedResults = this.getHighlightedResults();
 
     // Only select highlighted results
@@ -4417,7 +4452,10 @@ S2.define('select2/dropdown/closeOnSelect',[
       return;
     }
 
-    this.trigger('close', {});
+    this.trigger('close', {
+      originalEvent: originalEvent,
+      originalSelect2Event: evt
+    });
   };
 
   return CloseOnSelect;
