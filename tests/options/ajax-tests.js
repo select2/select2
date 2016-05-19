@@ -34,7 +34,7 @@ test('options are merged recursively with default options', function (assert) {
 test('more than one default option can be changed via set()', function(assert) {
   var defaults = require('select2/defaults');
   var ajaxDelay = 123;
-  var dataDataType = 'xml'
+  var dataDataType = 'xml';
   defaults.set('ajax--delay', ajaxDelay);
   defaults.set('ajax--data-type', dataDataType);
 
