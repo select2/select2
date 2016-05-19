@@ -36,11 +36,11 @@ test('more than one default option can be changed via set()', function(assert) {
   var ajaxDelay = 123;
   var dataDataType = 'xml'
   defaults.set('ajax--delay', ajaxDelay);
-  defaults.set('ajax--dataType', dataDataType);
+  defaults.set('ajax--data-type', dataDataType);
 
   assert.equal(
       defaults.defaults.ajax.delay,
-      ajaxDelay
+      ajaxDelay,
       'Both ajax.delay and ajax.dataType present in defaults');
   assert.equal(
     defaults.defaults.ajax.dataType,
