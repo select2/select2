@@ -93,7 +93,7 @@ test('options can be unselected individually', function (assert) {
 });
 
 test('default values can be set', function (assert) {
-  expect(4);
+  assert.expect(4);
 
   var options = new Options({
     data: [
@@ -128,7 +128,7 @@ test('default values can be set', function (assert) {
 });
 
 test('no default value', function (assert) {
-  expect(2);
+  assert.expect(2);
 
   var options = new Options({
     data: [

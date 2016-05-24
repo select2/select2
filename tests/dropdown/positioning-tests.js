@@ -1,7 +1,7 @@
 module('Dropdown - attachBody - positioning');
 
 test('appends to the dropdown parent', function (assert) {
-    expect(4);
+    assert.expect(4);
 
     var $ = require('jquery');
 

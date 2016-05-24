@@ -17,7 +17,7 @@ var options = new Options({
 });
 
 test('will not trigger if no results were given', function (assert) {
-  expect(0);
+  assert.expect(0);
 
   var $element = $('<select></select>');
   var select = new ModifiedResults($element, options, new SelectData($element));
@@ -35,7 +35,7 @@ test('will not trigger if no results were given', function (assert) {
 });
 
 test('will not trigger if the results list is empty', function (assert) {
-  expect(1);
+  assert.expect(1);
 
   var $element = $('<select></select>');
   var select = new ModifiedResults($element, options, new SelectData($element));
@@ -63,7 +63,7 @@ test('will not trigger if the results list is empty', function (assert) {
 });
 
 test('will not trigger if no results here highlighted', function (assert) {
-  expect(2);
+  assert.expect(2);
 
   var $element = $('<select></select>');
   var select = new ModifiedResults($element, options, new SelectData($element));
@@ -102,7 +102,7 @@ test('will not trigger if no results here highlighted', function (assert) {
 });
 
 test('will trigger if there is a highlighted result', function (assert) {
-  expect(2);
+  assert.expect(2);
 
   var $element = $('<select></select>');
   var select = new ModifiedResults($element, options, new SelectData($element));

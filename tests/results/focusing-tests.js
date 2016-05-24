@@ -1,7 +1,7 @@
 module('Results - highlighting results');
 
 test('results:all with no data skips results:focus', function (assert) {
-  expect(0);
+  assert.expect(0);
 
   var $ = require('jquery');
 
@@ -43,7 +43,7 @@ test('results:all with no data skips results:focus', function (assert) {
 });
 
 test('results:all triggers results:focus on the first item', function (assert) {
-  expect(2);
+  assert.expect(2);
 
   var $ = require('jquery');
 
@@ -91,7 +91,7 @@ test('results:all triggers results:focus on the first item', function (assert) {
 });
 
 test('results:append does not trigger results:focus', function (assert) {
-  expect(0);
+  assert.expect(0);
 
   var $ = require('jquery');
 
