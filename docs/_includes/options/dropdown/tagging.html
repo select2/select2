@@ -19,17 +19,56 @@ $('select').select2({
     Does tagging work with a single select?
   </h3>
 
+  <p>
+    Yes.
+  </p>
+
   {% include options/not-written.html %}
 
   <h3>
     How do I add extra properties to the tag?
   </h3>
 
+{% highlight js linenos %}
+$('select').select2({
+  createTag: function (params) {
+    var term = $.trim(params.term);
+
+    if (term === '') {
+      return null;
+    }
+
+    return {
+      id: term,
+      text: term,
+      newTag: true // add additional parameters
+    }
+  }
+});
+{% endhighlight %}
+
   {% include options/not-written.html %}
 
   <h3>
     Can I control when tags are created?
   </h3>
+
+{% highlight js linenos %}
+$('select').select2({
+  createTag: function (params) {
+    // Don't offset to create a tag if there is no @ symbol
+    if (params.term.indexOf('@') === -1) {
+      // Return null to disable tag creation
+      return null;
+    }
+
+    return {
+      id: params.term,
+      text: params.term
+    }
+  }
+});
+{% endhighlight %}
 
   {% include options/not-written.html %}
 
