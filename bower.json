@@ -1,0 +1,19 @@
+{
+  "name": "kmarques-select2",
+  "main": "select2.js",
+  "homepage": "https://github.com/kmarques/select2",
+  "authors": [
+    "Karl Marques <kmarques@hi-media.com>"
+  ],
+  "description": "",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
