@@ -251,8 +251,9 @@ define([
       self.clear();
       self.append(params.data);
 
-
-      container.$element.trigger('results:rendered');
+      if (container.$element !== undefined) {
+        container.$element.trigger('results:rendered');
+      }
       if (container.isOpen()) {
         self.setClasses();
         self.highlightFirstItem();
