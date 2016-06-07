@@ -60,6 +60,7 @@ define([
       self.$search.attr('tabindex', -1);
 
       self.$search.val('');
+      this.$selection.focus();
     });
 
     container.on('focus', function () {
