@@ -436,15 +436,7 @@ define([
       var data = $this.data('data');
 
       if ($this.attr('aria-selected') === 'true') {
-        if (self.options.get('multiple')) {
-          self.trigger('unselect', {
-            originalEvent: evt,
-            data: data
-          });
-        } else {
-          self.trigger('close', {});
-        }
-
+        self.trigger('close', {});
         return;
       }
 
