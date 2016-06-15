@@ -66,5 +66,8 @@
   "dependencies": {
     "almond": "~0.3.1",
     "jquery-mousewheel": "~3.1.13"
+  },
+  "scripts": {
+    "start": "grunt compile; grunt minify"
   }
 }
