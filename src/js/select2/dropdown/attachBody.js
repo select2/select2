@@ -198,9 +198,10 @@ define([
   };
 
   AttachBody.prototype._resizeDropdown = function () {
-    var css = {
-      width: this.$container.outerWidth(false) + 'px'
-    };
+    var rect = this.$container.get(0).getBoundingClientRect(),
+      css = {
+        width: (rect.width ? rect.width : (rect.right - rect.left)) + 'px'
+      };
 
     if (this.options.get('dropdownAutoWidth')) {
       css.minWidth = css.width;
