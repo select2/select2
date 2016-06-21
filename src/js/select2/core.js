@@ -329,7 +329,9 @@ define([
           evt.preventDefault();
         } else if (key === KEYS.DOWN || key === KEYS.UP) {
             var options = this.$element.find('option:selected');
-            options = key === KEYS.DOWN ? options.prevAll(":enabled") : options.prevAll(":enabled");
+            options = key === KEYS.DOWN ? 
+                options.nextAll(':enabled') :
+                options.prevAll(':enabled');
 
             var val = options.first.val();
             if (undefined !== val) {
