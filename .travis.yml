@@ -4,6 +4,9 @@ sudo: false
 
 node_js:
   - 0.10
+  - 0.12
+  - 4
+  - 6
 
 env:
   global:
