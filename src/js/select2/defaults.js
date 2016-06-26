@@ -340,7 +340,7 @@ define([
       }
 
       var original = stripDiacritics(data.text).toUpperCase();
-      var term = stripDiacritics(params.term).toUpperCase();
+      var term = stripDiacritics($.trim(params.term)).toUpperCase();
 
       // Check if the text contains the term
       if (original.indexOf(term) > -1) {
