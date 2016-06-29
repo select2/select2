@@ -248,6 +248,10 @@ define([
     this.$results.attr('id', id);
 
     container.on('results:all', function (params) {
+      if (params.query && self.lastParams &&
+          params.query.term !== self.lastParams.term) {
+        return;
+      }
       self.clear();
       self.append(params.data);
 
@@ -266,6 +270,7 @@ define([
     });
 
     container.on('query', function (params) {
+      self.lastParams = params;
       self.hideMessages();
       self.showLoading(params);
     });
