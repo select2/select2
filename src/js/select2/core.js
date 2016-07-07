@@ -22,8 +22,8 @@ define([
     // Set up the tabindex
 
     var tabindex = $element.attr('tabindex') || 0;
-    $element.data('old-tabindex', tabindex);
-    $element.attr('tabindex', '-1');
+    $element.data('old-tabindex', tabindex)
+            .attr('tabindex', '-1');
 
     // Set up containers and adapters
 
@@ -77,8 +77,8 @@ define([
     });
 
     // Hide the original select
-    $element.addClass('select2-hidden-accessible');
-    $element.attr('aria-hidden', 'true');
+    $element.addClass('select2-hidden-accessible')
+            .attr('aria-hidden', 'true');
 
     // Synchronize any monitored attributes
     this._syncAttributes();
@@ -147,7 +147,7 @@ define([
 
       var attrs = style.split(';');
 
-      for (var i = 0, l = attrs.length; i < l; i = i + 1) {
+      for (var i = 0, l = attrs.length; i < l; i++) {
         var attr = attrs[i].replace(/\s/g, '');
         var matches = attr.match(WIDTH);
 
@@ -499,7 +499,7 @@ define([
       );
     }
 
-    if (args == null || args.length === 0) {
+    if (args == null || !args.length) {
       args = [true];
     }
 
@@ -534,7 +534,7 @@ define([
       );
     }
 
-    if (args == null || args.length === 0) {
+    if (args == null || !args.length) {
       return this.$element.val();
     }
 
