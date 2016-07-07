@@ -99,7 +99,7 @@ define([
       id = Utils.generateChars(4);
     }
 
-    id = id.replace(/(:|\.|\[|\]|,)/g, '');
+    id = id.replace(/[:.[\],]+/g, '');
     id = 'select2-' + id;
 
     return id;
@@ -116,7 +116,7 @@ define([
   };
 
   Select2.prototype._resolveWidth = function ($element, method) {
-    var WIDTH = /^width:(([-+]?([0-9]*\.)?[0-9]+)(px|em|ex|%|in|cm|mm|pt|pc))/i;
+    var WIDTH = /^width:(([-+]?(\d*\.)?\d+)(px|em|ex|%|in|cm|mm|pt|pc))/i;
 
     if (method == 'resolve') {
       var styleWidth = this._resolveWidth($element, 'style');
@@ -148,7 +148,7 @@ define([
       var attrs = style.split(';');
 
       for (var i = 0, l = attrs.length; i < l; i = i + 1) {
-        var attr = attrs[i].replace(/\s/g, '');
+        var attr = attrs[i].replace(/\s+/g, '');
         var matches = attr.match(WIDTH);
 
         if (matches !== null && matches.length >= 1) {
