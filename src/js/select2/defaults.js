@@ -206,7 +206,7 @@ define([
         );
       }
 
-      if (options.multiple) {
+      if (options.multiple && !options.disableSelectionSearch) {
         options.selectionAdapter = Utils.Decorate(
           options.selectionAdapter,
           SelectionSearch
