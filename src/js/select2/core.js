@@ -25,6 +25,12 @@ define([
     $element.data('old-tabindex', tabindex);
     $element.attr('tabindex', '-1');
 
+    // Set up the accesskey
+
+    var accesskey = $element.attr('accesskey') || '';
+    $element.data('old-accesskey', accesskey);
+    $element.attr('accesskey', '');
+
     // Set up containers and adapters
 
     var DataAdapter = this.options.get('dataAdapter');
@@ -573,6 +579,7 @@ define([
 
     this.$element.off('.select2');
     this.$element.attr('tabindex', this.$element.data('old-tabindex'));
+    this.$element.attr('accesskey', this.$element.data('old-accesskey'));
 
     this.$element.removeClass('select2-hidden-accessible');
     this.$element.attr('aria-hidden', 'false');

@@ -27,8 +27,15 @@ define([
       this._tabindex = this.$element.attr('tabindex');
     }
 
+    if (this.$element.data('old-accesskey') != null) {
+      this._accesskey = this.$element.data('old-accesskey');
+    } else if (this.$element.attr('accesskey') != null) {
+      this._accesskey = this.$element.attr('accesskey');
+    }
+
     $selection.attr('title', this.$element.attr('title'));
     $selection.attr('tabindex', this._tabindex);
+    $selection.attr('accesskey', this._accesskey);
 
     this.$selection = $selection;
 
