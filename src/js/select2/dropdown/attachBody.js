@@ -194,7 +194,7 @@ define([
         .addClass('select2-container--' + newDirection);
     }
 
-    this.$dropdownContainer.css(css);
+    this.$dropdownContainer.offset(css);
   };
 
   AttachBody.prototype._resizeDropdown = function () {
