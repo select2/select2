@@ -1944,6 +1944,16 @@ S2.define('select2/selection/search',[
       }
     );
 
+    this.$selection.on('keyup', 
+      function (evt) {
+        // if event was produced by handled 'keypress' prevent it from bubbling
+		if (self._keyUpPrevented) {
+		  evt.stopPropagation();
+		  return;
+		}
+      }
+    );
+
     this.$selection.on(
       'keyup.search input.search',
       '.select2-search--inline',
@@ -1968,7 +1978,7 @@ S2.define('select2/selection/search',[
           return;
         }
 
-        // if the event was processed as 'keypress' (see 'keydown' handler) prevent it from leaving 
+        // if event was produced by handled 'keypress' prevent it from bubbling
 		if (self._keyUpPrevented) {
 		  evt.stopPropagation();
 		  return;
@@ -5388,7 +5398,8 @@ S2.define('select2/core',[
       self._keyUpPrevented = evt.isDefaultPrevented();
     });
 
-    this.on('keypress', function (evt) {
+    this.on('keyup', function (evt) {
+      // if event was produced by handled 'keypress' prevent it from bubbling
       if (self._keyUpPrevented) {
         evt.stopPropagation();
         self._keyUpPrevented = false;
