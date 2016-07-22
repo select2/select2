@@ -118,6 +118,16 @@ define([
       }
     );
 
+    this.$selection.on('keyup', 
+      function (evt) {
+        // if event was produced by handled 'keypress' prevent it from bubbling
+		if (self._keyUpPrevented) {
+		  evt.stopPropagation();
+		  return;
+		}
+      }
+    );
+
     this.$selection.on(
       'keyup.search input.search',
       '.select2-search--inline',
@@ -141,6 +151,12 @@ define([
         if (key == KEYS.TAB) {
           return;
         }
+
+        // if event was produced by handled 'keypress' prevent it from bubbling
+		if (self._keyUpPrevented) {
+		  evt.stopPropagation();
+		  return;
+		}
 
         self.handleSearch(evt);
       }

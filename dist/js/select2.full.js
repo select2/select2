@@ -1968,6 +1968,12 @@ S2.define('select2/selection/search',[
           return;
         }
 
+        // if the event was processed as 'keypress' (see 'keydown' handler) prevent it from leaving 
+		if (self._keyUpPrevented) {
+		  evt.stopPropagation();
+		  return;
+		}
+
         self.handleSearch(evt);
       }
     );
@@ -5378,7 +5384,17 @@ S2.define('select2/core',[
           evt.preventDefault();
         }
       }
+
+      self._keyUpPrevented = evt.isDefaultPrevented();
     });
+
+    this.on('keypress', function (evt) {
+      if (self._keyUpPrevented) {
+        evt.stopPropagation();
+        self._keyUpPrevented = false;
+      }
+    });
+
   };
 
   Select2.prototype._syncAttributes = function () {

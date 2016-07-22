@@ -350,7 +350,18 @@ define([
           evt.preventDefault();
         }
       }
+
+      self._keyUpPrevented = evt.isDefaultPrevented();
     });
+
+    this.on('keyup', function (evt) {
+      // if event was produced by handled 'keypress' prevent it from bubbling
+      if (self._keyUpPrevented) {
+        evt.stopPropagation();
+        self._keyUpPrevented = false;
+      }
+    });
+
   };
 
   Select2.prototype._syncAttributes = function () {
