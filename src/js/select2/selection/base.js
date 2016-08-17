@@ -115,8 +115,12 @@ define([
 
   BaseSelection.prototype._attachCloseHandler = function (container) {
     var self = this;
+    var eventName = [
+          'touchstart.select2.' + container.id,
+          'mousedown.select2.' + container.id
+        ].join(' ');
 
-    $(document.body).on('touchstart.select2.' + container.id + ' mousedown.select2.' + container.id, function (e) {
+    $(document.body).on(eventName, function (e) {
       var $target = $(e.target);
 
       var $select = $target.closest('.select2');
