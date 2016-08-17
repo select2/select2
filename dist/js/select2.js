@@ -3223,6 +3223,11 @@ S2.define('select2/data/select',[
       // always update the value of `disabled` property of the option element
       data.disabled = $option.prop('disabled');
 
+      // all children of an option group need to be updated too
+      if ($option.is('optgroup')) {
+        data.children = this._getChildrenItems($option);
+      }
+
       return data;
     }
 
@@ -3237,22 +3242,9 @@ S2.define('select2/data/select',[
     } else if ($option.is('optgroup')) {
       data = {
         text: $option.prop('label'),
-        children: [],
+        children: this._getChildrenItems($option, !!$option.prop('disabled')),
         title: $option.prop('title')
       };
-
-      var $children = $option.children('option');
-      var children = [];
-
-      for (var c = 0; c < $children.length; c++) {
-        var $child = $($children[c]);
-
-        var child = this.item($child);
-
-        children.push(child);
-      }
-
-      data.children = children;
     }
 
     data = this._normalizeItem(data);
@@ -3261,6 +3253,25 @@ S2.define('select2/data/select',[
     $.data($option[0], 'data', data);
 
     return data;
+  };
+
+  SelectAdapter.prototype._getChildrenItems = function($optgroup, isDisabled) {
+    var $children = $optgroup.children('option');
+    var children = [];
+
+    for (var c = 0; c < $children.length; c++) {
+      var $child = $($children[c]);
+
+      var child = this.item($child);
+
+      // If the option group is disabled, all children options are disabled.
+      // Otherwise, we keep the value of the `disabled` property of the child.
+      child.disable = isDisabled || children.disable;
+
+      children.push(child);
+    }
+
+    return children;
   };
 
   SelectAdapter.prototype._normalizeItem = function (item) {

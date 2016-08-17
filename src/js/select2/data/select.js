@@ -253,6 +253,8 @@ define([
 
       children.push(child);
     }
+
+    return children;
   };
 
   SelectAdapter.prototype._normalizeItem = function (item) {
