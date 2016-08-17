@@ -3242,6 +3242,7 @@ S2.define('select2/data/select',[
     } else if ($option.is('optgroup')) {
       data = {
         text: $option.prop('label'),
+        disabled: $option.prop('disabled'),
         children: this._getChildrenItems($option, !!$option.prop('disabled')),
         title: $option.prop('title')
       };
