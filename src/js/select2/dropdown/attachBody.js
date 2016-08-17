@@ -39,7 +39,7 @@ define([
       self._detachPositioningHandler(container);
     });
 
-    this.$dropdownContainer.on('mousedown', function (evt) {
+    this.$dropdownContainer.on('touchstart mousedown', function (evt) {
       evt.stopPropagation();
     });
   };
