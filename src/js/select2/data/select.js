@@ -203,6 +203,9 @@ define([
     data = $.data($option[0], 'data');
 
     if (data != null) {
+      // always update the value of `disabled` property of the option element
+      data.disabled = $option.prop('disabled');
+
       return data;
     }
 
