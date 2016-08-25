@@ -88,4 +88,6 @@
 
 .s2-example + .s2-event-log {
   margin-top: -15px;
+  max-height: 400px;
+  overflow-y: scroll;
 }
