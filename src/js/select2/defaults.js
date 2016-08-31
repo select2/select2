@@ -357,6 +357,7 @@ define([
       closeOnSelect: true,
       debug: false,
       dropdownAutoWidth: false,
+      dropdownLocation : 'both',
       escapeMarkup: Utils.escapeMarkup,
       language: EnglishTranslation,
       matcher: matcher,
@@ -364,6 +365,7 @@ define([
       maximumInputLength: 0,
       maximumSelectionLength: 0,
       minimumResultsForSearch: 0,
+      multipleOnBackspaceChoice : 'text',
       selectOnClose: false,
       sorter: function (data) {
         return data;
