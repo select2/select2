@@ -14,7 +14,8 @@ define(function () {
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
-      var message = 'ჷთხოვთ აკრიფოთ ' + remainingChars + ' ან მეტი სიმბოლო';
+      var message = 'ჷთხოვთ აკრიფოთ ' + remainingChars +
+        ' ან მეტი სიმბოლო';
 
       return message;
     },
@@ -22,7 +23,8 @@ define(function () {
       return 'შედეგები იტვირთება…';
     },
     maximumSelected: function (args) {
-      var message = 'თქვენ შეგიძლიათ მხოლოდ ' + args.maximum + '  ელემენტის არჩევა';
+      var message = 'თქვენ შეგიძლიათ მხოლოდ ' + args.maximum +
+        '  ელემენტის არჩევა';
 
       return message;
     },
