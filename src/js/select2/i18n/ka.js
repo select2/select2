@@ -9,10 +9,6 @@ define(function () {
 
       var message = 'გთხოვთ წაშალოთ ' + overChars + ' სიმბოლო';
 
-      if (overChars != 1) {
-        message += 's';
-      }
-
       return message;
     },
     inputTooShort: function (args) {
@@ -27,10 +23,6 @@ define(function () {
     },
     maximumSelected: function (args) {
       var message = 'თქვენ შეგიძლიათ მხოლოდ ' + args.maximum + '  ელემენტის არჩევა';
-
-      if (args.maximum != 1) {
-        message += 's';
-      }
 
       return message;
     },
