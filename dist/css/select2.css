@@ -64,7 +64,8 @@
 .select2-results__options {
   list-style: none;
   margin: 0;
-  padding: 0; }
+  padding: 0;
+  -webkit-overflow-scrolling: touch; }
 
 .select2-results__option {
   padding: 6px;
