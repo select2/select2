@@ -1443,6 +1443,16 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.focusSearch();
             }
 
+            // cal actual width
+            var rect = container[0].getBoundingClientRect();
+            if (rect.width) {
+              // 'width' is available for IE9+
+              width = rect.width;
+            } else {
+              // Calculate width for IE8 and below
+              width = rect.right - rect.left;
+            }
+
             if (this.opts.dropdownAutoWidth) {
                 resultsListNode = $('.select2-results', $dropdown)[0];
                 $dropdown.addClass('select2-drop-auto-width');
