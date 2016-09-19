@@ -10,9 +10,13 @@ define(function () {
       var message = 'Prosim zbrišite ' + overChars + ' znak';
 
       if (overChars == 2)
+      {
         message += 'a';
+      }
       else if (overChars != 1) 
+      {
         message += 'e';
+      }
 
       return message;
     },
@@ -21,9 +25,13 @@ define(function () {
 
       var message = 'Prosim vpišite še ' + remainingChars + ' znak';
       if (remainingChars == 2)
+      {
         message += 'a';
+      }
       else if (remainingChars != 1)
+      {
         message += 'e';
+      }
 
       return message;
     },
@@ -34,9 +42,13 @@ define(function () {
       var message = 'Označite lahko največ ' + args.maximum + ' predmet';
 
       if (args.maximum == 2)
+      {
         message += 'a';
+      }
       else if (args.maximum != 1)
+      {
         message += 'e';
+      }
 
       return message;
     },
