@@ -106,8 +106,11 @@ define([
   };
 
   Select2.prototype._placeContainer = function ($container) {
-    if (this.options.get('insertBefore')) $container.insertBefore(this.$element);
-    else $container.insertAfter(this.$element);
+    if (this.options.get('insertBefore')) {
+      $container.insertBefore(this.$element);
+    } else {
+      $container.insertAfter(this.$element);
+    }
 
     var width = this._resolveWidth(this.$element, this.options.get('width'));
 
