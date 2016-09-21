@@ -48,6 +48,7 @@ Third party developers have create plugins for platforms which allow Select2 to 
 Plugins
 
 * [Django]
+  - [django-autocomplete-light]
   - [django-easy-select2]
   - [django-select2]
 * [Meteor] - [meteor-select2]
@@ -102,6 +103,7 @@ The license is available within the repository in the [LICENSE][license] file.
 
 [bootstrap3]: https://getbootstrap.com/
 [django]: https://www.djangoproject.com/
+[django-autocomplete-light]: https://github.com/yourlabs/django-autocomplete-light
 [django-easy-select2]: https://github.com/asyncee/django-easy-select2
 [django-select2]: https://github.com/applegrew/django-select2
 [flat-ui]: http://designmodo.github.io/Flat-UI/
