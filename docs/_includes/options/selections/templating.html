@@ -27,7 +27,20 @@ $('select').select2({
     I am using HTML in my selection template but it isn't displaying it
   </h3>
 
-  {% include options/not-written.html %}
+  <p>
+    If you want to use HTML in your selection template, you will need to return a jQuery object. Otherwise, Select2 will assume that your template only returns text and will escape it.
+  </p>
+
+{% highlight js linenos %}
+function template(data, container) {
+  return $('<strong></strong>')
+    .text(data.text);
+}
+
+$('select').select2({
+  templateSelection: template
+});
+{% endhighlight %}
 
   <h3>
     How can I access the container where the selection is displayed?
