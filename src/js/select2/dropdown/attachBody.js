@@ -32,6 +32,15 @@ define([
           self._resizeDropdown();
         });
       }
+
+	  function repositionOnSelectionChange() {
+	    if (!this.options.get('closeOnSelect')) {
+		  self._positionDropdown();
+	    }
+	  };
+	  container.on("select", repositionOnSelectionChange);
+	  container.on("unselect", repositionOnSelectionChange);
+
     });
 
     container.on('close', function () {
