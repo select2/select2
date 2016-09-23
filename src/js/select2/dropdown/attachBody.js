@@ -170,14 +170,19 @@ define([
     css.top -= parentOffset.top;
     css.left -= parentOffset.left;
 
-    if (!isCurrentlyAbove && !isCurrentlyBelow) {
-      newDirection = 'below';
-    }
+    if (this.options.get('dropdownPosition') == 'above' || 
+        this.options.get('dropdownPosition') == 'below') {
+      newDirection = this.options.get('dropdownPosition');
+    } else {
+      if (!isCurrentlyAbove && !isCurrentlyBelow) {
+        newDirection = 'below';
+      }
 
-    if (!enoughRoomBelow && enoughRoomAbove && !isCurrentlyAbove) {
-      newDirection = 'above';
-    } else if (!enoughRoomAbove && enoughRoomBelow && isCurrentlyAbove) {
-      newDirection = 'below';
+      if (!enoughRoomBelow && enoughRoomAbove && !isCurrentlyAbove) {
+        newDirection = 'above';
+      } else if (!enoughRoomAbove && enoughRoomBelow && isCurrentlyAbove) {
+        newDirection = 'below';
+      }
     }
 
     if (newDirection == 'above' ||

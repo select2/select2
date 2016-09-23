@@ -14,4 +14,23 @@
   <p>
     Yes, Select2 will automatically map the value of the <code>multiple</code> attribute to the <code>multiple</code> option during initialization.
   </p>
+  
+  <h3 id="multipleOnBackspaceChoice">
+    Can I change the event produce on backspace hitting ?
+  </h3>
+
+  <p>
+    You could choice between this options :
+  </p>
+  <ul>
+    <li><code>text</code> : transform the tag option to text (by default)</li>
+    <li><code>unselect</code> : remove the tag which represent the option</li>
+    <li><code>none</code> : do nothing, ignore the event</li>
+  </ul>
+
+{% highlight js linenos %}
+$('select').select2({
+  multipleOnBackspaceChoice: 'none'
+});
+{% endhighlight %}
 </section>
