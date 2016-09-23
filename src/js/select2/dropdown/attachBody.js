@@ -37,9 +37,9 @@ define([
 	    if (!this.options.get('closeOnSelect')) {
 		  self._positionDropdown();
 	    }
-	  };
-	  container.on("select", repositionOnSelectionChange);
-	  container.on("unselect", repositionOnSelectionChange);
+	  }
+	  container.on('select', repositionOnSelectionChange);
+	  container.on('unselect', repositionOnSelectionChange);
 
     });
 
