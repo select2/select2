@@ -1,6 +1,9 @@
 define(function () {
   // German
   return {
+    errorLoading: function () {
+      return 'Ergebnisse konnten nicht geladen werden';
+    },
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;
 
