@@ -472,14 +472,15 @@ test('select option construction accepts id=0 (zero) value', function (assert) {
   // If was "Zero Value"", then it ignored id property
   assert.equal(
     optionElem[0].value,
-    "0",
+    '0',
     'Built option value should be "0" (zero as a string).'
   );
 });
 
 
 
-test('select option construction accepts id="" (empty string) value', function (assert) {
+test('select option construction accepts id="" (empty string) value',
+  function (assert) {
   var $select = $('#qunit-fixture .single');
 
   var selectOptions = [{ id: '', text: 'Empty String'}];
@@ -489,7 +490,7 @@ test('select option construction accepts id="" (empty string) value', function (
   
   assert.equal(
     optionElem[0].value,
-    "",
+    '',
     'Built option value should be an empty string.'
   );
 });
