@@ -31,7 +31,8 @@ $('select').select2({
   
 {% highlight js linenos %}
 function template(data, container) {
-  return $('<span>' + data.text + '</span>');
+  return $('<span></span>')
+    .text(data.text);
 }
 
 $('select').select2({
