@@ -53,7 +53,8 @@ define([
           }, true)
         );
 
-        var checkText = option.text === params.term;
+        //NOTE removing extra spaces from params
+        var checkText = option.text === $.trim(params.term);
 
         if (checkText || checkChildren) {
           if (child) {
