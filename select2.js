@@ -1154,7 +1154,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             if ($.isArray(opts.element.data("select2Tags"))) {
                 if ("tags" in opts) {
-                    throw "tags specified as both an attribute 'data-select2-tags' and in options of Select2 " + opts.element.attr("id");
+                    throw new Error("tags specified as both an attribute 'data-select2-tags' and in options of Select2 " + opts.element.attr("id"));
                 }
                 opts.tags=opts.element.data("select2Tags");
             }
@@ -1229,7 +1229,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
             }
             if (typeof(opts.query) !== "function") {
-                throw "query function not defined for Select2 " + opts.element.attr("id");
+                throw new Error("query function not defined for Select2 " + opts.element.attr("id"));
             }
 
             if (opts.createSearchChoicePosition === 'top') {
@@ -1239,7 +1239,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 opts.createSearchChoicePosition = function(list, item) { list.push(item); };
             }
             else if (typeof(opts.createSearchChoicePosition) !== "function")  {
-                throw "invalid createSearchChoicePosition option must be 'top', 'bottom' or a custom function";
+                throw new Error("invalid createSearchChoicePosition option must be 'top', 'bottom' or a custom function");
             }
 
             return opts;
@@ -3292,7 +3292,7 @@ the specific language governing permissions and limitations under the Apache Lic
             selected = selected.closest(".select2-search-choice");
 
             if (selected.length === 0) {
-                throw "Invalid argument: " + selected + ". Must be .select2-search-choice";
+                throw new Error("Invalid argument: " + selected + ". Must be .select2-search-choice");
             }
 
             data = selected.data("select2-data");
@@ -3579,7 +3579,7 @@ the specific language governing permissions and limitations under the Apache Lic
             } else if (typeof(args[0]) === "string") {
 
                 if (indexOf(args[0], allowedMethods) < 0) {
-                    throw "Unknown method: " + args[0];
+                    throw new Error("Unknown method: " + args[0]);
                 }
 
                 value = undefined;
@@ -3602,7 +3602,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     return false; // abort the iteration, ready to return first matched value
                 }
             } else {
-                throw "Invalid arguments to select2 plugin: " + args;
+                throw new Error("Invalid arguments to select2 plugin: " + args);
             }
         });
         return (value === undefined) ? this : value;
