@@ -36,4 +36,23 @@ $('select').select2({
   </h3>
 
   {% include options/not-written.html %}
+  
+  <h3 id="dropdownPosition">
+    Can I force the dropdown positionning ?
+  </h3>
+
+  <p>
+    You could choice between this options : 
+  </p>
+  <ul>
+    <li><code>both</code> : dropdown choice the best place between below and above (by default)</li>
+    <li><code>below</code> : dropdown is always below</li>
+    <li><code>above</code> : dropdown is always above</li>
+  </ul>
+
+{% highlight js linenos %}
+$('select').select2({
+  dropdownPosition: 'above'
+});
+{% endhighlight %}
 </section>
