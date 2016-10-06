@@ -194,9 +194,19 @@ define([
   };
 
   Search.prototype.searchRemoveChoice = function (decorated, item) {
+    // if we do nothing
+    if (this.options.get('multipleOnBackspaceChoice') == 'none') {
+      return;
+    }
+    
     this.trigger('unselect', {
       data: item
     });
+    
+    // if we only unselect the option
+    if (this.options.get('multipleOnBackspaceChoice') == 'unselect') {
+      return;
+    }
 
     this.$search.val(item.text);
     this.handleSearch();
