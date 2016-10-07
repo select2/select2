@@ -315,15 +315,23 @@ define([
     });
 
     container.on('results:select', function () {
-      var $highlighted = self.getHighlightedResults();
+      var searchText = this.selection.$search.val();
+      var $selected = $('.select2-results__option', self.$results)
+	    .filter(function() {return $(this).text() === searchText;});
 
-      if ($highlighted.length === 0) {
-        return;
+      if ($selected.length !== 1) {
+        var $highlighted = self.getHighlightedResults();
+
+        if ($highlighted.length === 0) {
+          return;
+        } else {
+          $selected = $highlighted;
+        }
       }
 
-      var data = $highlighted.data('data');
+      var data = $selected.data('data');
 
-      if ($highlighted.attr('aria-selected') == 'true') {
+      if ($selected.attr('aria-selected') == 'true') {
         self.trigger('close', {});
       } else {
         self.trigger('select', {
