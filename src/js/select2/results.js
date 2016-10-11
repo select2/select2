@@ -276,7 +276,8 @@ define([
       }
 
       self.setClasses();
-      if (!(self.options.get('multiple') && !self.options.get('closeOnSelect'))) {
+      if (!(self.options.get('multiple') &&
+          !self.options.get('closeOnSelect'))) {
         self.highlightFirstItem();
       }
     });
