@@ -3183,7 +3183,6 @@ the specific language governing permissions and limitations under the Apache Lic
             // keep track of the search's value before it gets cleared
             this.lastSearchTerm = this.search.val();
 
-            this.clearSearch();
             this.updateResults();
 
             if (this.select || !this.opts.closeOnSelect) this.postprocessResults(data, false, this.opts.closeOnSelect===true);
