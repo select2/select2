@@ -66,7 +66,9 @@ define([
   };
 
   SingleSelection.prototype.clear = function () {
-    this.$selection.find('.select2-selection__rendered').empty().removeAttr('title');
+    this.$selection.find('.select2-selection__rendered')
+      .empty()
+      .removeAttr('title');
   };
 
   SingleSelection.prototype.display = function (data, container) {

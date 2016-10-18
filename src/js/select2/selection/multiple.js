@@ -55,7 +55,9 @@ define([
   };
 
   MultipleSelection.prototype.clear = function () {
-    this.$selection.find('.select2-selection__rendered').empty().removeAttr('title');
+    this.$selection.find('.select2-selection__rendered')
+      .empty()
+      .removeAttr('title');
   };
 
   MultipleSelection.prototype.display = function (data, container) {
