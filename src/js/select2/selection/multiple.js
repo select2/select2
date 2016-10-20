@@ -26,8 +26,14 @@ define([
 
     MultipleSelection.__super__.bind.apply(this, arguments);
 
+    this.$selection.on('click', function (evt) {
+      self.trigger('toggle', {
+        originalEvent: evt
+      });
+    });
+
     this.$selection.on(
-      'click',
+      'mousedown',
       '.select2-selection__choice__remove',
       function (evt) {
         // Ignore the event if it is disabled
@@ -46,12 +52,6 @@ define([
         });
       }
     );
-
-    this.$selection.on('click', function (evt) {
-      self.trigger('toggle', {
-        originalEvent: evt
-      });
-    });
   };
 
   MultipleSelection.prototype.clear = function () {
