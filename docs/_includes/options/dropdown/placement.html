@@ -29,7 +29,11 @@ $('select').select2({
     Use the <code>dropdownParent</code> option, setting it to the modal.
   </p>
 
-  {% include options/not-written.html %}
+  <p>
+    Just make sure the div that contains the modal, <code><div class="modal fade" role="dialog" 
+   aria-labelledby="myResultsModal" id="myResultsModal"></div></code> doesn't contain a <code>tabindex = '-1'</code>
+   
+  </p>
 
   <h3>
     I&apos;m using jQuery UI and I can&apos;t use the search box
