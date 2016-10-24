@@ -36,7 +36,7 @@ define([
     if ($(data.element).is('option')) {
       data.element.selected = true;
 
-      this.$element.trigger('change');
+      this.$element.trigger('input').trigger('change');
 
       return;
     }
@@ -57,13 +57,13 @@ define([
         }
 
         self.$element.val(val);
-        self.$element.trigger('change');
+        self.$element.trigger('input').trigger('change');
       });
     } else {
       var val = data.id;
 
       this.$element.val(val);
-      this.$element.trigger('change');
+      this.$element.trigger('input').trigger('change');
     }
   };
 
@@ -79,7 +79,7 @@ define([
     if ($(data.element).is('option')) {
       data.element.selected = false;
 
-      this.$element.trigger('change');
+      this.$element.trigger('input').trigger('change');
 
       return;
     }
@@ -97,7 +97,7 @@ define([
 
       self.$element.val(val);
 
-      self.$element.trigger('change');
+      self.$element.trigger('input').trigger('change');
     });
   };
 
