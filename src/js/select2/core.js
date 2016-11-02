@@ -278,19 +278,33 @@ define([
       }
 
       this.dataAdapter.query(params, function (data) {
-        self.trigger('results:all', {
-          data: data,
-          query: params
-        });
+        if (self.options.get('resultTabs')) {
+          self.trigger('tabresults:all', {
+            data: data,
+            query: params
+          });
+        } else {
+          self.trigger('results:all', {
+            data: data,
+            query: params
+          });
+        }
       });
     });
 
     this.on('query:append', function (params) {
       this.dataAdapter.query(params, function (data) {
-        self.trigger('results:append', {
-          data: data,
-          query: params
-        });
+        if (self.options.get('resultTabs')) {
+          self.trigger('tabresults:append', {
+            data: data,
+            query: params
+          });
+        } else {
+          self.trigger('results:append', {
+            data: data,
+            query: params
+          });
+        }
       });
     });
 
