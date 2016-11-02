@@ -24,6 +24,11 @@ define([
       this.minimumResultsForSearch = Infinity;
     }
 
+    // always show search if tabbed
+    if (options.get('resultTabs')) {
+      this.minimumResultsForSearch = 0;
+    }
+
     decorated.call(this, $element, options, dataAdapter);
   }
 

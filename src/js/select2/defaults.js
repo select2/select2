@@ -26,6 +26,7 @@ define([
 
   './dropdown',
   './dropdown/search',
+  './dropdown/tabs',
   './dropdown/hidePlaceholder',
   './dropdown/infiniteScroll',
   './dropdown/attachBody',
@@ -47,7 +48,7 @@ define([
              SelectData, ArrayData, AjaxData, Tags, Tokenizer,
              MinimumInputLength, MaximumInputLength, MaximumSelectionLength,
 
-             Dropdown, DropdownSearch, HidePlaceholder, InfiniteScroll,
+             Dropdown, DropdownSearch, DropdownTabs, HidePlaceholder, InfiniteScroll,
              AttachBody, AttachContainer, MinimumResultsForSearch,
              SelectOnClose, CloseOnSelect,
 
@@ -149,8 +150,12 @@ define([
         options.dropdownAdapter = Dropdown;
       } else {
         var SearchableDropdown = Utils.Decorate(Dropdown, DropdownSearch);
-
-        options.dropdownAdapter = SearchableDropdown;
+        if (options.resultTabs) {
+          var TabbedDropdown = Utils.Decorate(SearchableDropdown, DropdownTabs);
+          options.dropdownAdapter = TabbedDropdown;
+        } else {
+          options.dropdownAdapter = SearchableDropdown;
+        }
       }
 
       if (options.minimumResultsForSearch !== 0) {

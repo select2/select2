@@ -30,7 +30,7 @@
 var S2;(function () { if (!S2 || !S2.requirejs) {
 if (!S2) { S2 = {}; } else { require = S2; }
 /**
- * @license almond 0.3.2 Copyright jQuery Foundation and other contributors.
+ * @license almond 0.3.3 Copyright jQuery Foundation and other contributors.
  * Released under MIT license, http://github.com/requirejs/almond/LICENSE
  */
 //Going sloppy to avoid 'use strict' string cost, but strict practices should
@@ -226,32 +226,39 @@ var requirejs, require, define;
         return [prefix, name];
     }
 
+    //Creates a parts array for a relName where first part is plugin ID,
+    //second part is resource ID. Assumes relName has already been normalized.
+    function makeRelParts(relName) {
+        return relName ? splitPrefix(relName) : [];
+    }
+
     /**
      * Makes a name map, normalizing the name, and using a plugin
      * for normalization if necessary. Grabs a ref to plugin
      * too, as an optimization.
      */
-    makeMap = function (name, relName) {
+    makeMap = function (name, relParts) {
         var plugin,
             parts = splitPrefix(name),
-            prefix = parts[0];
+            prefix = parts[0],
+            relResourceName = relParts[1];
 
         name = parts[1];
 
         if (prefix) {
-            prefix = normalize(prefix, relName);
+            prefix = normalize(prefix, relResourceName);
             plugin = callDep(prefix);
         }
 
         //Normalize according
         if (prefix) {
             if (plugin && plugin.normalize) {
-                name = plugin.normalize(name, makeNormalize(relName));
+                name = plugin.normalize(name, makeNormalize(relResourceName));
             } else {
-                name = normalize(name, relName);
+                name = normalize(name, relResourceName);
             }
         } else {
-            name = normalize(name, relName);
+            name = normalize(name, relResourceName);
             parts = splitPrefix(name);
             prefix = parts[0];
             name = parts[1];
@@ -298,13 +305,14 @@ var requirejs, require, define;
     };
 
     main = function (name, deps, callback, relName) {
-        var cjsModule, depName, ret, map, i,
+        var cjsModule, depName, ret, map, i, relParts,
             args = [],
             callbackType = typeof callback,
             usingExports;
 
         //Use name if no relName
         relName = relName || name;
+        relParts = makeRelParts(relName);
 
         //Call the callback to define the module, if necessary.
         if (callbackType === 'undefined' || callbackType === 'function') {
@@ -313,7 +321,7 @@ var requirejs, require, define;
             //Default to [require, exports, module] if no deps
             deps = !deps.length && callback.length ? ['require', 'exports', 'module'] : deps;
             for (i = 0; i < deps.length; i += 1) {
-                map = makeMap(deps[i], relName);
+                map = makeMap(deps[i], relParts);
                 depName = map.f;
 
                 //Fast path CommonJS standard dependencies.
@@ -369,7 +377,7 @@ var requirejs, require, define;
             //deps arg is the module name, and second arg (if passed)
             //is just the relName.
             //Normalize module name, if it contains . or ..
-            return callDep(makeMap(deps, callback).f);
+            return callDep(makeMap(deps, makeRelParts(callback)).f);
         } else if (!deps.splice) {
             //deps is a config object, not an array.
             config = deps;
@@ -3922,6 +3930,145 @@ S2.define('select2/dropdown/search',[
   return Search;
 });
 
+S2.define('select2/dropdown/tabs',[
+  'jquery',
+  '../utils'
+], function ($, Utils) {
+  function Tabs () { }
+
+  Tabs.prototype.render = function (decorated) {
+    var $rendered = decorated.call(this);
+
+    var resultTabs = '';
+    var allTabs = this.options.get('resultTabs');
+
+    $.each(allTabs, function(k, tabData){
+      var tab = '<a href="#" class="tab-link" data-id="' +
+            tabData.id + '"><span class="tab-name">' +
+            tabData.text + '</span><small class="tab-count">0</small></a>';
+      resultTabs += tab;
+    });
+
+    var $tabs = $(
+      '<span class="select2-tabs select2-tabs--dropdown tabs-count-' + allTabs.length + '">' +
+        resultTabs +
+      '</span>'
+    );
+
+    this.$tabsContainer = $tabs;
+
+    $rendered.find('.select2-results').before($tabs);
+
+    return $rendered;
+  };
+
+  Tabs.prototype.bind = function (decorated, container, $container) {
+    var self = this;
+
+    decorated.call(this, container, $container);
+
+    this.$tabsContainer.find('a').on('click', function(evt) {
+      var el = $(this);
+      var id = el.data('id');
+
+      self.selectTab(id);
+
+      evt.preventDefault();
+    });
+
+    container.on('open', function () {
+      var tabId = self.$tabsContainer.find('a:first-child').data('id');
+      try {
+        tabId = self.options.options.data[0].tabId;
+      } catch (e) {}
+      self.selectTab(tabId);
+    });
+
+    container.on('close', function () {
+      self.$tabsContainer.find('a').removeClass('tab-selected');
+      self.selectedTab = null;
+    });
+
+    // intercept results events so we can first filter out the items for the correct tab
+    container.on('tabresults:all', function(params) {
+      self.tabResults = params;
+      self.fillTab('results:all');
+      self.updateCount();
+    });
+
+    container.on('tabresults:append', function(params) {
+        self.tabResults.data = self.tabResults.data.concat(params.data);
+        self.fillTab('results:append');
+        self.updateCount();
+    });
+
+  };
+
+  Tabs.prototype.selectTab = function (_, tabId) {
+    this.selectedTab = tabId;
+    this.$tabsContainer.find('a').removeClass('tab-selected');
+    this.$tabsContainer.find('a[data-id="' + tabId + '"]').addClass('tab-selected');
+    this.fillTab('results:all');
+  };
+
+  Tabs.prototype.fillTab = function (_, eventName) {
+
+    if (!this.tabResults) {
+      return;
+    }
+
+    var params = this.tabResults || {};
+    var tabId = this.selectedTab;
+    var results = [];
+    var counts = {};
+
+    // filter out the results for this specific tab
+    $.each(params.data.results || [], function(k, res){
+      if (res.tabId === tabId) {
+        results.push(res);
+      }
+    });
+
+    this.trigger(eventName, {
+      data: {
+        more: params.data.more,
+        results: results
+      },
+      query: params.query
+    });
+
+  };
+
+  Tabs.prototype.updateCount = function () {
+
+    if (!this.tabResults) {
+      return;
+    }
+
+    var counts = {};
+
+    // filter out the results for this specific tab
+    $.each(this.tabResults.data.results || [], function(k, res){
+      if (typeof counts[res.tabId] === 'undefined') {
+        counts[res.tabId] = 0;
+      }
+      if (!res.isSpecial) {
+        counts[res.tabId]++;
+      }
+    });
+
+    this.$tabsContainer.find('a').each(function(){
+      var el = $(this);
+      var id = el.data('id');
+
+      el.find('small').text(counts[id] || 0);
+    });
+
+  };
+
+  return Tabs;
+});
+
 S2.define('select2/dropdown/hidePlaceholder',[
 
 ], function () {
@@ -4322,6 +4469,11 @@ S2.define('select2/dropdown/minimumResultsForSearch',[
       this.minimumResultsForSearch = Infinity;
     }
 
+    // always show search if tabbed
+    if (options.get('resultTabs')) {
+      this.minimumResultsForSearch = 0;
+    }
+
     decorated.call(this, $element, options, dataAdapter);
   }
 
@@ -4483,6 +4635,7 @@ S2.define('select2/defaults',[
 
   './dropdown',
   './dropdown/search',
+  './dropdown/tabs',
   './dropdown/hidePlaceholder',
   './dropdown/infiniteScroll',
   './dropdown/attachBody',
@@ -4504,7 +4657,7 @@ S2.define('select2/defaults',[
              SelectData, ArrayData, AjaxData, Tags, Tokenizer,
              MinimumInputLength, MaximumInputLength, MaximumSelectionLength,
 
-             Dropdown, DropdownSearch, HidePlaceholder, InfiniteScroll,
+             Dropdown, DropdownSearch, DropdownTabs, HidePlaceholder, InfiniteScroll,
              AttachBody, AttachContainer, MinimumResultsForSearch,
              SelectOnClose, CloseOnSelect,
 
@@ -4606,8 +4759,12 @@ S2.define('select2/defaults',[
         options.dropdownAdapter = Dropdown;
       } else {
         var SearchableDropdown = Utils.Decorate(Dropdown, DropdownSearch);
-
-        options.dropdownAdapter = SearchableDropdown;
+        if (options.resultTabs) {
+          var TabbedDropdown = Utils.Decorate(SearchableDropdown, DropdownTabs);
+          options.dropdownAdapter = TabbedDropdown;
+        } else {
+          options.dropdownAdapter = SearchableDropdown;
+        }
       }
 
       if (options.minimumResultsForSearch !== 0) {
@@ -5259,19 +5416,33 @@ S2.define('select2/core',[
       }
 
       this.dataAdapter.query(params, function (data) {
-        self.trigger('results:all', {
-          data: data,
-          query: params
-        });
+        if (self.options.get('resultTabs')) {
+          self.trigger('tabresults:all', {
+            data: data,
+            query: params
+          });
+        } else {
+          self.trigger('results:all', {
+            data: data,
+            query: params
+          });
+        }
       });
     });
 
     this.on('query:append', function (params) {
       this.dataAdapter.query(params, function (data) {
-        self.trigger('results:append', {
-          data: data,
-          query: params
-        });
+        if (self.options.get('resultTabs')) {
+          self.trigger('tabresults:append', {
+            data: data,
+            query: params
+          });
+        } else {
+          self.trigger('results:append', {
+            data: data,
+            query: params
+          });
+        }
       });
     });
 
