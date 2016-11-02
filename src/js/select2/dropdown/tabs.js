@@ -120,7 +120,9 @@ define([
       if (typeof counts[res.tabId] === 'undefined') {
         counts[res.tabId] = 0;
       }
-      counts[res.tabId]++;
+      if (!res.isSpecial) {
+        counts[res.tabId]++;
+      }
     });
 
     this.$tabsContainer.find('a').each(function(){
