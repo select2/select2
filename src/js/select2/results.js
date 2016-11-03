@@ -493,9 +493,14 @@ define([
     var currentOffset = this.$results.offset().top;
     var nextTop = $highlighted.offset().top;
     var nextOffset = this.$results.scrollTop() + (nextTop - currentOffset);
+    var closeOnSelect = this.options.get('closeOnSelect');
 
     var offsetDelta = nextTop - currentOffset;
     nextOffset -= $highlighted.outerHeight(false) * 2;
+
+    if (!closeOnSelect) {
+      return;
+    }
 
     if (currentIndex <= 2) {
       this.$results.scrollTop(0);
