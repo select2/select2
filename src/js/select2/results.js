@@ -276,7 +276,10 @@ define([
       }
 
       self.setClasses();
-      self.highlightFirstItem();
+      if (!(self.options.get('multiple') &&
+          !self.options.get('closeOnSelect'))) {
+        self.highlightFirstItem();
+      }
     });
 
     container.on('unselect', function () {
