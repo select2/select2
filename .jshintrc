@@ -14,7 +14,8 @@
     "QUnit": false,
     "require": false,
     "test": false,
-    "window": false
+    "window": false,
+    "CustomEvent": false
   },
   "indent": 2,
   "maxlen": 80,

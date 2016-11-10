@@ -453,7 +453,8 @@ define([
         data: data
       };
       
-      self.$element[0].dispatchEvent(new CustomEvent('change', { detail: payload }));
+      self.$element[0].dispatchEvent(
+        new CustomEvent('change', { detail: payload }));
       
       self.trigger('select', payload);
     });
