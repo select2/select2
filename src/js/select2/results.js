@@ -448,10 +448,14 @@ define([
         return;
       }
 
-      self.trigger('select', {
+      var payload = {
         originalEvent: evt,
         data: data
-      });
+      };
+      
+      self.$element[0].dispatchEvent(new CustomEvent('change', { detail: payload }));
+      
+      self.trigger('select', payload);
     });
 
     this.$results.on('mouseenter', '.select2-results__option[aria-selected]',
