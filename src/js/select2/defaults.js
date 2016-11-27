@@ -57,112 +57,94 @@ define([
   Defaults.prototype.apply = function (options) {
     options = $.extend(true, {}, this.defaults, options);
 
-    if (options.dataAdapter == null) {
+    function constructAdapter (type, loadDefaultAdapters) {
+      var adapterName = type + 'Adapter';
+      var AdapterClass = options[adapterName];
+      var chains = [];
+
+      if (AdapterClass == null) {
+        loadDefaultAdapters(chains);
+        AdapterClass = chains.shift();
+      }
+
+      $.each(chains, function (i, DecoratorClass) {
+        AdapterClass = Utils.Decorate(AdapterClass, DecoratorClass);
+      });
+
+      options[adapterName] = AdapterClass;
+    }
+
+    constructAdapter('data', function (chains) {
       if (options.ajax != null) {
-        options.dataAdapter = AjaxData;
+        chains.push(AjaxData);
       } else if (options.data != null) {
-        options.dataAdapter = ArrayData;
+        chains.push(ArrayData);
       } else {
-        options.dataAdapter = SelectData;
+        chains.push(SelectData);
       }
 
       if (options.minimumInputLength > 0) {
-        options.dataAdapter = Utils.Decorate(
-          options.dataAdapter,
-          MinimumInputLength
-        );
+        chains.push(MinimumInputLength);
       }
 
       if (options.maximumInputLength > 0) {
-        options.dataAdapter = Utils.Decorate(
-          options.dataAdapter,
-          MaximumInputLength
-        );
+        chains.push(MaximumInputLength);
       }
 
       if (options.maximumSelectionLength > 0) {
-        options.dataAdapter = Utils.Decorate(
-          options.dataAdapter,
-          MaximumSelectionLength
-        );
+        chains.push(MaximumSelectionLength);
       }
 
       if (options.tags) {
-        options.dataAdapter = Utils.Decorate(options.dataAdapter, Tags);
+        chains.push(Tags);
       }
 
       if (options.tokenSeparators != null || options.tokenizer != null) {
-        options.dataAdapter = Utils.Decorate(
-          options.dataAdapter,
-          Tokenizer
-        );
+        chains.push(Tokenizer);
       }
 
       if (options.query != null) {
         var Query = require(options.amdBase + 'compat/query');
 
-        options.dataAdapter = Utils.Decorate(
-          options.dataAdapter,
-          Query
-        );
+        chains.push(Query);
       }
 
       if (options.initSelection != null) {
         var InitSelection = require(options.amdBase + 'compat/initSelection');
 
-        options.dataAdapter = Utils.Decorate(
-          options.dataAdapter,
-          InitSelection
-        );
+        chains.push(InitSelection);
       }
-    }
+    });
 
-    if (options.resultsAdapter == null) {
-      options.resultsAdapter = ResultsList;
+    constructAdapter('results', function (chains) {
+      chains.push(ResultsList);
 
       if (options.ajax != null) {
-        options.resultsAdapter = Utils.Decorate(
-          options.resultsAdapter,
-          InfiniteScroll
-        );
+        chains.push(InfiniteScroll);
       }
 
       if (options.placeholder != null) {
-        options.resultsAdapter = Utils.Decorate(
-          options.resultsAdapter,
-          HidePlaceholder
-        );
+        chains.push(HidePlaceholder);
       }
 
       if (options.selectOnClose) {
-        options.resultsAdapter = Utils.Decorate(
-          options.resultsAdapter,
-          SelectOnClose
-        );
+        chains.push(SelectOnClose);
       }
-    }
+    });
 
-    if (options.dropdownAdapter == null) {
-      if (options.multiple) {
-        options.dropdownAdapter = Dropdown;
-      } else {
-        var SearchableDropdown = Utils.Decorate(Dropdown, DropdownSearch);
+    constructAdapter('dropdown', function (chains) {
+      chains.push(Dropdown);
 
-        options.dropdownAdapter = SearchableDropdown;
+      if (!options.multiple) {
+        chains.push(DropdownSearch);
       }
 
       if (options.minimumResultsForSearch !== 0) {
-        options.dropdownAdapter = Utils.Decorate(
-          options.dropdownAdapter,
-          MinimumResultsForSearch
-        );
+        chains.push(MinimumResultsForSearch);
       }
 
       if (options.closeOnSelect) {
-        options.dropdownAdapter = Utils.Decorate(
-          options.dropdownAdapter,
-          CloseOnSelect
-        );
+        chains.push(CloseOnSelect);
       }
 
       if (
@@ -172,45 +154,30 @@ define([
       ) {
         var DropdownCSS = require(options.amdBase + 'compat/dropdownCss');
 
-        options.dropdownAdapter = Utils.Decorate(
-          options.dropdownAdapter,
-          DropdownCSS
-        );
+        chains.push(DropdownCSS);
       }
 
-      options.dropdownAdapter = Utils.Decorate(
-        options.dropdownAdapter,
-        AttachBody
-      );
-    }
+      chains.push(AttachBody);
+    });
 
-    if (options.selectionAdapter == null) {
+    constructAdapter('selection', function (chains) {
       if (options.multiple) {
-        options.selectionAdapter = MultipleSelection;
+        chains.push(MultipleSelection);
       } else {
-        options.selectionAdapter = SingleSelection;
+        chains.push(SingleSelection);
       }
 
       // Add the placeholder mixin if a placeholder was specified
       if (options.placeholder != null) {
-        options.selectionAdapter = Utils.Decorate(
-          options.selectionAdapter,
-          Placeholder
-        );
+        chains.push(Placeholder);
       }
 
       if (options.allowClear) {
-        options.selectionAdapter = Utils.Decorate(
-          options.selectionAdapter,
-          AllowClear
-        );
+        chains.push(AllowClear);
       }
 
       if (options.multiple) {
-        options.selectionAdapter = Utils.Decorate(
-          options.selectionAdapter,
-          SelectionSearch
-        );
+        chains.push(SelectionSearch);
       }
 
       if (
@@ -220,17 +187,11 @@ define([
       ) {
         var ContainerCSS = require(options.amdBase + 'compat/containerCss');
 
-        options.selectionAdapter = Utils.Decorate(
-          options.selectionAdapter,
-          ContainerCSS
-        );
+        chains.push(ContainerCSS);
       }
 
-      options.selectionAdapter = Utils.Decorate(
-        options.selectionAdapter,
-        EventRelay
-      );
-    }
+      chains.push(EventRelay);
+    });
 
     if (typeof options.language === 'string') {
       // Check if the language is specified with a region
