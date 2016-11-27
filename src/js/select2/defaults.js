@@ -67,6 +67,11 @@ define([
         AdapterClass = chains.shift();
       }
 
+      var decorator = options[type + 'Decorator'];
+      if (decorator != null) {
+        chains.push(decorator);
+      }
+
       $.each(chains, function (i, DecoratorClass) {
         AdapterClass = Utils.Decorate(AdapterClass, DecoratorClass);
       });
