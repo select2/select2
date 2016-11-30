@@ -57,99 +57,98 @@ define([
   Defaults.prototype.apply = function (options) {
     options = $.extend(true, {}, this.defaults, options);
 
-    function constructAdapter (type, loadDefaultAdapters) {
+    function constructAdapter (type, getBase, loadDecorators) {
       var adapterName = type + 'Adapter';
       var AdapterClass = options[adapterName];
-      var chains = [];
+      var decorators = [];
 
       if (AdapterClass == null) {
-        loadDefaultAdapters(chains);
-        AdapterClass = chains.shift();
+        AdapterClass = getBase();
+        loadDecorators(decorators);
       }
 
       var decorator = options[type + 'Decorator'];
       if (decorator != null) {
-        chains.push(decorator);
+        decorators.push(decorator);
       }
 
-      $.each(chains, function (i, DecoratorClass) {
+      $.each(decorators, function (i, DecoratorClass) {
         AdapterClass = Utils.Decorate(AdapterClass, DecoratorClass);
       });
 
       options[adapterName] = AdapterClass;
     }
 
-    constructAdapter('data', function (chains) {
-      if (options.ajax != null) {
-        chains.push(AjaxData);
-      } else if (options.data != null) {
-        chains.push(ArrayData);
-      } else {
-        chains.push(SelectData);
-      }
+    constructAdapter('data', function () {
+      return options.ajax != null ? AjaxData :
+        options.data != null ? ArrayData :
+          SelectData;
+    }, function (decorators) {
 
       if (options.minimumInputLength > 0) {
-        chains.push(MinimumInputLength);
+        decorators.push(MinimumInputLength);
       }
 
       if (options.maximumInputLength > 0) {
-        chains.push(MaximumInputLength);
+        decorators.push(MaximumInputLength);
       }
 
       if (options.maximumSelectionLength > 0) {
-        chains.push(MaximumSelectionLength);
+        decorators.push(MaximumSelectionLength);
       }
 
       if (options.tags) {
-        chains.push(Tags);
+        decorators.push(Tags);
       }
 
       if (options.tokenSeparators != null || options.tokenizer != null) {
-        chains.push(Tokenizer);
+        decorators.push(Tokenizer);
       }
 
       if (options.query != null) {
         var Query = require(options.amdBase + 'compat/query');
 
-        chains.push(Query);
+        decorators.push(Query);
       }
 
       if (options.initSelection != null) {
         var InitSelection = require(options.amdBase + 'compat/initSelection');
 
-        chains.push(InitSelection);
+        decorators.push(InitSelection);
       }
     });
 
-    constructAdapter('results', function (chains) {
-      chains.push(ResultsList);
+    constructAdapter('results', function () {
+      return ResultsList;
+    }, function (decorators) {
 
       if (options.ajax != null) {
-        chains.push(InfiniteScroll);
+        decorators.push(InfiniteScroll);
       }
 
       if (options.placeholder != null) {
-        chains.push(HidePlaceholder);
+        decorators.push(HidePlaceholder);
       }
 
       if (options.selectOnClose) {
-        chains.push(SelectOnClose);
+        decorators.push(SelectOnClose);
       }
     });
 
-    constructAdapter('dropdown', function (chains) {
-      chains.push(Dropdown);
+    constructAdapter('dropdown', function () {
+      return Dropdown;
+    }, function (decorators) {
 
       if (!options.multiple) {
-        chains.push(DropdownSearch);
+        decorators.push(DropdownSearch);
       }
 
       if (options.minimumResultsForSearch !== 0) {
-        chains.push(MinimumResultsForSearch);
+        decorators.push(MinimumResultsForSearch);
       }
 
       if (options.closeOnSelect) {
-        chains.push(CloseOnSelect);
+        decorators.push(CloseOnSelect);
       }
 
       if (
@@ -159,30 +158,27 @@ define([
       ) {
         var DropdownCSS = require(options.amdBase + 'compat/dropdownCss');
 
-        chains.push(DropdownCSS);
+        decorators.push(DropdownCSS);
       }
 
-      chains.push(AttachBody);
+      decorators.push(AttachBody);
     });
 
-    constructAdapter('selection', function (chains) {
-      if (options.multiple) {
-        chains.push(MultipleSelection);
-      } else {
-        chains.push(SingleSelection);
-      }
+    constructAdapter('selection', function () {
+      return options.multiple ? MultipleSelection : SingleSelection;
+    }, function (decorators) {
 
       // Add the placeholder mixin if a placeholder was specified
       if (options.placeholder != null) {
-        chains.push(Placeholder);
+        decorators.push(Placeholder);
       }
 
       if (options.allowClear) {
-        chains.push(AllowClear);
+        decorators.push(AllowClear);
       }
 
       if (options.multiple) {
-        chains.push(SelectionSearch);
+        decorators.push(SelectionSearch);
       }
 
       if (
@@ -192,10 +188,10 @@ define([
       ) {
         var ContainerCSS = require(options.amdBase + 'compat/containerCss');
 
-        chains.push(ContainerCSS);
+        decorators.push(ContainerCSS);
       }
 
-      chains.push(EventRelay);
+      decorators.push(EventRelay);
     });
 
     if (typeof options.language === 'string') {
