@@ -3979,7 +3979,13 @@ S2.define('select2/dropdown/tabs',[
     container.on('open', function () {
       var tabId = self.$tabsContainer.find('a:first-child').data('id');
       try {
-        tabId = self.options.options.data[0].tabId;
+        var val = self.$element.val();
+        $.each(self.options.options.data, function(k, d) {
+          if (d.id === val) {
+            tabId = d.tabId;
+            return false;
+          }
+        });
       } catch (e) {}
       self.selectTab(tabId);
     });
