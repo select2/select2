@@ -126,6 +126,58 @@ $("#e6").select2({
 });
 </script>
 
+<script>
+
+    function tvshowFormatResult(tvshow) {
+        var markup = "<table class='tvshow-result'><tr>";
+        markup += "<td class='tvshow-image'><img src='" + tvshow.image.replace('http://', '//') + "' /></td>";
+        markup += "<td class='tvshow-info'><div class='tvshow-title'>" + tvshow._highlightResult.show_name.value + "</div>";
+        markup += "</td></tr></table>";
+        return markup;
+    }
+
+    function tvshowFormatSelection(movie) {
+        return movie.title;
+    }
+
+</script>
+
+<script id="script_e25">
+$(document).ready(function() {
+var algolia = new AlgoliaSearch('latency', '6be0576ff61c053d5f9a3225e2a90f76');
+var index = algolia.initIndex('tvshows_tae_followers');
+$("#e25").select2({
+    placeholder: "Search for a TV show",
+    minimumInputLength: 1,
+    ajax: {
+        // Custom transport to call Algolia's API
+        transport: function(params) {
+            var q = params.data.query;
+            delete params.data.query;
+            index.search(q, function(success, content) {
+                if (success) {
+                    params.success(content);
+                }
+            }, params.data);
+        },
+        // build Algolia's query parameters
+        data: function(term, page) {
+            // Algolia's pagination starts at 0, filter results on 'show' only
+            return { query: term, hitsPerPage: 10, page: (page - 1), tags: "show" };
+        },
+        results: function(data, page) {
+            return { results: data.hits };
+        }
+    },
+    formatResult: tvshowFormatResult, // omitted for brevity, see the source of this page
+    formatSelection: tvshowFormatSelection,  // omitted for brevity, see the source of this page
+    dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
+    escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
+});
+});
+</script>
+
+
 <script id="script_e7">
 $(document).ready(function() {
 $("#e7").select2({
@@ -563,6 +615,12 @@ $("#e19").select2({ maximumSelectionSize: 3 });
                <h3>Example Code</h3>
               <pre class="prettyprint linenums" id="code_e6"></pre>
               <p>Select2 uses jQuery's <code>$.ajax</code> function to execute the remote call by default. An alternative <code>transport</code> function can be specified in the ajax settings, or an entirely custom implementation can be built by providing a custom <code>query</code> function instead of using the <code>ajax</code> helper.</p>
+              <p>In this example we will search for a TV show using Algolia's Search API:</p>
+              <p>
+                  <input type="hidden" class="bigdrop" id="e25" style="width:600px" value="16340"/>
+              </p>
+               <h3>Example Code With Custom Transport</h3>
+              <pre class="prettyprint linenums" id="code_e25"></pre>
            </div>
         </article>
         <article class="row" id="infinite">
