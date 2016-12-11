@@ -505,10 +505,15 @@ define([
   };
 
   Results.prototype.template = function (result, container) {
+    var content;
     var template = this.options.get('templateResult');
     var escapeMarkup = this.options.get('escapeMarkup');
 
-    var content = template(result, container);
+    if (typeof window[template] == 'function') {
+        content = window[template](result, container);
+    } else {
+        content = template(result, container);
+    }
 
     if (content == null) {
       container.style.display = 'none';
