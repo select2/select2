@@ -354,7 +354,8 @@ define([
                   .addClass('select2-treeview-down');
 
           var dHeight = $('.select2-search--dropdown').outerHeight();
-          var hHeight = $('.select2-results__option--highlighted').outerHeight();
+          var hHeight = $('.select2-results__option--highlighted')
+                        .outerHeight();
           
           var scrollheight = highlighted[0].offsetTop - dHeight - hHeight;
           self.$results.scrollTop(scrollheight);
