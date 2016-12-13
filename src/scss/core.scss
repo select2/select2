@@ -46,3 +46,28 @@
 
 @import "theme/default/layout";
 @import "theme/classic/layout";
+
+//TreeView css
+.select2-treeview .select2-treeview-triangle{
+    border-style: solid;
+    width: 0px;
+    height: 0px;
+    display: inline-block;
+    margin-right: 5px;
+    margin-left: 5px;
+    position: relative;
+}
+.select2-treeview .select2-treeview-down{
+    border-width: 7px 5px 0 5px;
+    border-color: #888 transparent transparent transparent;
+}
+
+.select2-treeview .select2-treeview-right{
+    border-color: transparent transparent transparent #888;
+    border-width: 5px 0px 5px 7px;
+    margin-right: 8px;
+}
+
+.select2-treeview-item{
+    margin-left: 15px;
+}
