@@ -312,6 +312,14 @@ define([
         return data;
       }
 
+      var original = stripDiacritics(data.text).toUpperCase();
+      var term = stripDiacritics(params.term).toUpperCase();
+
+      // Check if the text contains the term
+      if (original.indexOf(term) > -1) {
+        return data;
+      }
+
       // Do a recursive check for options with children
       if (data.children && data.children.length > 0) {
         // Clone the data object if there are children
@@ -337,14 +345,6 @@ define([
 
         // If there were no matching children, check just the plain object
         return matcher(params, match);
-      }
-
-      var original = stripDiacritics(data.text).toUpperCase();
-      var term = stripDiacritics(params.term).toUpperCase();
-
-      // Check if the text contains the term
-      if (original.indexOf(term) > -1) {
-        return data;
       }
 
       // If it doesn't contain the term, don't return anything
