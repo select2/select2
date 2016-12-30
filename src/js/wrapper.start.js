@@ -11,7 +11,21 @@
     define(['jquery'], factory);
   } else if (typeof exports === 'object') {
     // Node/CommonJS
-    factory(require('jquery'));
+    module.exports = function (root, $) {
+      if (!root) {
+        // CommonJS environments without a window global must pass a
+        // root. This will give an error otherwise
+        root = window;
+      }
+
+      if (!$) {
+        $ = typeof window !== 'undefined' ? // jQuery's factory checks for a global window
+            require('jquery') :
+            require('jquery')(root);
+      }
+
+      return factory($, root, root.document);
+    };
   } else {
     // Browser globals
     factory(jQuery);
