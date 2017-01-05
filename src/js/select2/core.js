@@ -129,7 +129,7 @@ define([
     }
 
     if (method == 'element') {
-      var elementWidth = $element.outerWidth(false);
+      var elementWidth = $element[0].getBoundingClientRect().width;
 
       if (elementWidth <= 0) {
         return 'auto';
