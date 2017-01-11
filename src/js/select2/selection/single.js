@@ -67,8 +67,9 @@ define([
 
   SingleSelection.prototype.clear = function () {
 
-    this.$selection.find('.select2-selection__rendered').empty();
-    this.$selection.find('.select2-selection__rendered').attr('title',''); // clear tooltip on empty
+    var $rendered = this.$selection.find('.select2-selection__rendered');
+    $rendered.empty();
+    $rendered.attr('title',''); // clear tooltip on empty
   };
 
   SingleSelection.prototype.display = function (data, container) {
