@@ -60,7 +60,11 @@ define([
       }
     }
 
-    this.$element.val(this.placeholder.id).trigger('change');
+    if (typeof this.placeholder !== 'undefined') {
+        this.$element.val(this.placeholder.id).trigger('change');
+    } else {
+        this.$element.val('').trigger('change');
+    }
 
     this.trigger('toggle', {});
   };
