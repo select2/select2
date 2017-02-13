@@ -142,7 +142,7 @@ pull request will be familiar with the problem it is fixing.
 be able to be merged. If you're breaking existing tests, make sure that you
 aren't causing any breaking changes.
 5. Only include source changes. While it's not required, only including changes
-from the `src` directory will prevent merge conflicts from occuring. Making
+from the `src` directory will prevent merge conflicts from occurring. Making
 this happen can be as a simple as not committing changes from the `dist`
 directory.
 
