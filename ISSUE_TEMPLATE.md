@@ -42,5 +42,5 @@ Libraries
 
 - [ ] This bug happens [on the examples page](https://select2.github.io/examples.html)
 - [ ] The bug happens consistently across all tested browsers
-- [ ] This bug happens when using Select2 without other pluigns
+- [ ] This bug happens when using Select2 without other plugins
 - [ ] I can reproduce this bug in [a jsbin](https://jsbin.com/)
