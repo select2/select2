@@ -10,7 +10,7 @@ define([
       'close', 'closing',
       'select', 'selecting',
       'unselect', 'unselecting'
-    ];
+    ].concat(this.options.get('relayablePluginsEvents'));
 
     var preventableEvents = ['opening', 'closing', 'selecting', 'unselecting'];
 
