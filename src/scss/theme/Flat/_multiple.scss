@@ -1,0 +1,34 @@
+/****** Multiple SCSS *******/
+.select2-container--flat{
+  .select2-selection--multiple{
+    border: 1px solid $flat-theme-dark-color;
+    .select2-selection__choice__remove:hover{
+      color: $flat-theme-dark-color;
+      cursor: pointer;
+    }
+    .select2-selection__rendered {
+      box-sizing: border-box;
+      list-style: none;
+      margin: 0;
+      padding: 0 5px;
+      width: 100%;
+    }
+    .select2-selection__choice{
+      background-color: $flat-theme-light-color;
+      color: #fff;
+      border: 1px solid $flat-theme-light-color;
+      border-radius: 0px;
+      padding: 3px 5px;
+      cursor: default;
+      float: left;
+      margin-right: 5px;
+      margin-top: 5px;
+    }
+    .select2-selection__choice__remove{
+      color: $flat-theme-dark-color;
+      margin-right: 6px;
+      margin-left: 6px;
+      float: right;
+    }
+  }
+}
