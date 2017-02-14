@@ -386,6 +386,19 @@ test('optgroup tags are marked with children', function (assert) {
   });
 });
 
+test('optgroup backreference in children', function (assert) {
+  var $select = $('#qunit-fixture .groups');
+
+  var data = new SelectData($select, selectOptions);
+
+  data.query({}, function (data) {
+    assert.ok(
+      'optgroup' in data.results[0].children[0],
+      'The option in a optgroup element should have a reference to its parent'
+    );
+  });
+});
+
 test('empty optgroups are still shown when queried', function (assert) {
   var $select = $('#qunit-fixture .groups');
 

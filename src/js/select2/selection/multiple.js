@@ -97,6 +97,10 @@ define([
 
       $selection.data('data', selection);
 
+      if (selection.optgroup) {
+        $selection.data('optgroup-label', selection.optgroup.label);
+      }
+
       $selections.push($selection);
     }
 

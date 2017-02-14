@@ -197,7 +197,7 @@ define([
     return $option;
   };
 
-  SelectAdapter.prototype.item = function ($option) {
+  SelectAdapter.prototype.item = function ($option, $optgroup) {
     var data = {};
 
     data = $.data($option[0], 'data');
@@ -214,6 +214,9 @@ define([
         selected: $option.prop('selected'),
         title: $option.prop('title')
       };
+      if ($optgroup && $optgroup.is('optgroup')) {
+        data.optgroup = $optgroup;
+      }
     } else if ($option.is('optgroup')) {
       data = {
         text: $option.prop('label'),
@@ -226,8 +229,7 @@ define([
 
       for (var c = 0; c < $children.length; c++) {
         var $child = $($children[c]);
-
-        var child = this.item($child);
+        var child = this.item($child, $option);
 
         children.push(child);
       }
