@@ -46,6 +46,9 @@ define([
 
         var data = $selection.data('data');
 
+        // Stop bubbling up to selection
+        evt.stopPropagation();
+
         self.trigger('unselect', {
           originalEvent: evt,
           data: data
