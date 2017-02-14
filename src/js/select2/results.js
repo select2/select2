@@ -466,6 +466,12 @@ define([
         element: $(this)
       });
     });
+    
+    if (self.options.get('multiple')) {
+    	this.$results.on('mouseup','.select2-results__group',function (evt) {
+    		$(this).next().children().trigger('mouseup');
+    	});
+    }
   };
 
   Results.prototype.getHighlightedResults = function () {
