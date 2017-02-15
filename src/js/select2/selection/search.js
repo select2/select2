@@ -10,9 +10,10 @@ define([
   Search.prototype.render = function (decorated) {
     var $search = $(
       '<li class="select2-search select2-search--inline">' +
-        '<input class="select2-search__field" type="search" tabindex="-1"' +
+        '<textarea class="select2-search__field" type="search" tabindex="-1"' +
         ' autocomplete="off" autocorrect="off" autocapitalize="off"' +
-        ' spellcheck="false" role="textbox" aria-autocomplete="list" />' +
+        ' spellcheck="false" role="textbox" aria-autocomplete="list" >' +
+        '</textarea>' +
       '</li>'
     );
 
