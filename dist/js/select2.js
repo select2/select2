@@ -1574,7 +1574,8 @@ S2.define('select2/selection/single',[
     var formatted = this.display(selection, $rendered);
 
     $rendered.empty().append(formatted);
-    $rendered.prop('title', selection.title || selection.text);
+    $rendered.prop('title', selection.title || selection.text)
+        .html(selection.title || selection.text);
   };
 
   return SingleSelection;
