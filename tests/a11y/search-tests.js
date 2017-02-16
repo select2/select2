@@ -20,7 +20,7 @@ test('aria-autocomplete attribute is present', function (assert) {
   selection.update([]);
 
   assert.equal(
-    $selection.find('input').attr('aria-autocomplete'),
+    $selection.find('textarea').attr('aria-autocomplete'),
     'list',
     'The search box is marked as autocomplete'
   );

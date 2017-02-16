@@ -38,7 +38,7 @@ test('backspace will remove a choice', function (assert) {
     }
   ]);
 
-  var $search = $selection.find('input');
+  var $search = $selection.find('textarea');
   var $choices = $selection.find('.select2-selection__choice');
 
   assert.equal($search.length, 1, 'The search was visible');
@@ -75,7 +75,7 @@ test('backspace will set the search text', function (assert) {
     }
   ]);
 
-  var $search = $selection.find('input');
+  var $search = $selection.find('textarea');
   var $choices = $selection.find('.select2-selection__choice');
 
   assert.equal($search.length, 1, 'The search was visible');
@@ -115,7 +115,7 @@ test('updating selection does not shift the focus', function (assert) {
   // Make it visible so the browser can place focus on the search
   $container.append($selection);
 
-  var $search = $selection.find('input');
+  var $search = $selection.find('textarea');
   $search.trigger('focus');
 
   assert.equal($search.length, 1, 'The search was not visible');
@@ -165,7 +165,7 @@ test('the focus event shifts the focus', function (assert) {
 
   // The search should not be automatically focused
 
-  var $search = $selection.find('input');
+  var $search = $selection.find('textarea');
 
   assert.notEqual(
     document.activeElement,

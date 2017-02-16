@@ -18,7 +18,7 @@ define([
     );
 
     this.$searchContainer = $search;
-    this.$search = $search.find('input');
+    this.$search = $search.find('textarea');
 
     var $rendered = decorated.call(this);
 
