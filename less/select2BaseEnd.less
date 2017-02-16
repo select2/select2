@@ -1,0 +1,52 @@
+﻿// Select2 style defaults placed at the bottom of the combined less file
+
+.select2-locked {
+    padding: 3px 5px 3px 5px !important;
+}
+
+.select2-default {
+    color: @select2-default-color !important;
+}
+
+.select2-offscreen, 
+.select2-offscreen:focus {
+    clip: rect(0 0 0 0) !important;
+    width: 1px !important;
+    height: 1px !important;
+    border: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    position: absolute !important;
+    outline: 0 !important;
+    left: 0px !important;
+    top: 0px !important;
+}
+
+.select2-display-none {
+    display: none;
+}
+
+.select2-measure-scrollbar {
+    position: absolute;
+    top: -10000px;
+    left: -10000px;
+    width: 100px;
+    height: 100px;
+    overflow: scroll;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-resolution: 2dppx) {
+   .select2-search input,
+   .select2-search-choice-close,
+   .select2-container .select2-choice abbr,
+   .select2-container .select2-choice .select2-arrow b {
+      background-image: url('@{select2-image-path}select2x2.png') !important;
+      background-repeat: no-repeat !important;
+      background-size: 60px 40px !important;
+   }
+
+   .select2-search input {
+      background-position: 100% -21px !important;
+   }
+}
