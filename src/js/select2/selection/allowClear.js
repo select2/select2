@@ -90,7 +90,12 @@ define([
     );
     $remove.data('data', data);
 
-    this.$selection.find('.select2-selection__rendered').prepend($remove);
+    // Clear element sometimes doesn't get added to the DOM due to
+    // race-conditions of parent not being drawn yet, therefore wait a cycle.
+    setTimeout(function() {
+      this.$selection.find('.select2-selection__rendered').prepend($remove)
+    }.bind(this), 0);
+
   };
 
   return AllowClear;
