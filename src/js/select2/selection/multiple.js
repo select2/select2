@@ -52,6 +52,8 @@ define([
         });
       }
     );
+	
+	evt.stopPropagation();
   };
 
   MultipleSelection.prototype.clear = function () {
