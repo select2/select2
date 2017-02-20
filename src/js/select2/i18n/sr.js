@@ -20,7 +20,7 @@ define(function () {
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;
 
-      var message = 'Obrišite ' + overChars + ' simbol';
+      var message = 'Обришите ' + overChars + ' симбол';
 
       message += ending(overChars, '', 'a', 'a');
 
@@ -29,27 +29,27 @@ define(function () {
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
-      var message = 'Ukucajte bar još ' + remainingChars + ' simbol';
+      var message = 'Укуцајте бар још ' + remainingChars + ' симбол';
 
       message += ending(remainingChars, '', 'a', 'a');
 
       return message;
     },
     loadingMore: function () {
-      return 'Preuzimanje još rezultata…';
+      return 'Преузимање још резултата...';
     },
     maximumSelected: function (args) {
-      var message = 'Možete izabrati samo ' + args.maximum + ' stavk';
+      var message = 'Можете изабрати само ' + args.maximum + ' ставк';
 
-      message += ending(args.maximum, 'u', 'e', 'i');
+      message += ending(args.maximum, 'у', 'е', 'и');
 
       return message;
     },
     noResults: function () {
-      return 'Ništa nije pronađeno';
+      return 'Ништа није пронађено';
     },
     searching: function () {
-      return 'Pretraga…';
+      return 'Претрага...';
     }
   };
 });
