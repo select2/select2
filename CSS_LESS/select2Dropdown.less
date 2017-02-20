@@ -1,0 +1,46 @@
+﻿// Select2 styling for dropdown
+
+.select2-dropdown-open {
+    .select2-choice {
+        border-bottom-color: transparent;
+        -webkit-box-shadow: 0 1px 0 @select2-background-color inset;
+        box-shadow: 0 1px 0 @select2-background-color inset;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        background-color: @select2-bkimage-twoColor-Color2;
+        background-image: -webkit-linear-gradient(center bottom, @select2-bkimage-twoColor-Color1 0%, @select2-bkimage-twoColor-Color2 50%);
+        background-image: linear-gradient(to top, @select2-bkimage-twoColor-Color1 0%, @select2-bkimage-twoColor-Color2 50%);
+
+        .select2-arrow {
+            background: transparent;
+            border-left: none;
+            filter: none;
+            b {
+                background-position: -18px 1px;
+            }
+        }
+    }
+}
+
+html[dir="rtl"] .select2-dropdown-open {
+   .select2-choice {
+
+      .select2-arrow {
+         border-right: none;
+
+         b {
+            background-position: -16px 1px;
+         }
+      }
+   }
+}
+
+.select2-dropdown-open.select2-drop-above .select2-choice,
+.select2-dropdown-open.select2-drop-above .select2-choices {
+    border: @select2-border-width solid @select2-border-color-active;
+    border-top-color: transparent;
+    background-color: @select2-bkimage-twoColor-Color2;
+    background-image: -webkit-linear-gradient(center top, @select2-bkimage-twoColor-Color1 0%, @select2-bkimage-twoColor-Color2 50%);
+    background-image: linear-gradient(to bottom, @select2-bkimage-twoColor-Color1 0%, @select2-bkimage-twoColor-Color2 50%);
+}
+

@@ -1,0 +1,66 @@
+﻿// Select2 styling for search
+
+.select2-search {
+    display: inline-block;
+    width: 100%;
+    min-height: @select2-height;
+    margin: 0;
+    padding-left: 4px;
+    padding-right: 4px;
+    position: relative;
+    z-index: 10000;
+    white-space: nowrap;
+
+    input {
+        width: 100%;
+        height: auto !important;
+        min-height: @select2-height;
+        padding: 4px 20px 4px 5px;
+        margin: 0;
+        outline: 0;
+        font-size: @select2-font-size;
+        border: @select2-border-width solid @select2-border-color;
+        border-radius: 0;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        background-color: @select2-bkimage-twoColor-Color2;
+        background: @select2-bkimage-twoColor-Color1 url('@{select2-image-path}select2.png') no-repeat 100% -22px;
+        background: url('@{select2-image-path}select2.png') no-repeat 100% -22px, -webkit-linear-gradient(center bottom, @select2-bkimage-twoColor-Color1 85%, @select2-bkimage-twoColor-Color2 99%);
+        background: url('@{select2-image-path}select2.png') no-repeat 100% -22px, linear-gradient(to bottom, @select2-bkimage-twoColor-Color1 85%, @select2-bkimage-twoColor-Color2 99%) 0 0;
+    }
+
+    input.select2-active {
+        background: @select2-bkimage-twoColor-Color1 url('@{select2-image-path}select2-spinner.gif') no-repeat 100%;
+        background: url('@{select2-image-path}select2-spinner.gif') no-repeat 100%, -webkit-linear-gradient(center bottom, @select2-bkimage-twoColor-Color1 85%, @select2-bkimage-twoColor-Color2 99%);
+        background: url('@{select2-image-path}select2-spinner.gif') no-repeat 100%, linear-gradient(to bottom, @select2-bkimage-twoColor-Color1 85%, @select2-bkimage-twoColor-Color2 99%) 0 0;
+    }
+}
+
+html[dir="rtl"] .select2-search {
+
+   input {
+      padding: 4px 5px 4px 20px;
+
+      background-color: @select2-bkimage-twoColor-Color2;
+      background: @select2-bkimage-twoColor-Color1 url('@{select2-image-path}select2.png') no-repeat -37px -22px;
+      background: url('@{select2-image-path}select2.png') no-repeat -37px -22px, -webkit-linear-gradient(center bottom, @select2-bkimage-twoColor-Color1 85%, @select2-bkimage-twoColor-Color2 99%);
+      background: url('@{select2-image-path}select2.png') no-repeat -37px -22px, linear-gradient(to bottom, @select2-bkimage-twoColor-Color1 85%, @select2-bkimage-twoColor-Color2 99%) 0 0;
+   }
+}
+
+.select2-search-choice-close {
+    display: block;
+    width: 12px;
+    height: 13px;
+    position: absolute;
+    right: 3px;
+    top: 4px;
+    font-size: 1px;
+    outline: none;
+    background: url('@{select2-image-path}select2.png') right top no-repeat;
+}
+
+html[dir="rtl"] .select2-search-choice-close {
+    right: auto;
+    left: 3px;
+}

@@ -1,0 +1,49 @@
+Using the Select2 LESS Files
+
+Reminder - The goal of LESS files is dynamically generate the CSS files through the use of variables and something 
+LESS calls mixins.  The advantage of LESS, is you can have much more consistency between parts of your CSS file
+because the values are all hooked to the same LESS variables.  Things like colors, padding and margins can all be 
+consistent and only have to be changed in one location.  The other major advantage, if a user needs to adjust 
+any of the values to match their theme or styles, it can be easily done by setting the variable to a different 
+value.
+
+
+How to use LESS to generate standard Select2.css
+
+1) LESS compile the select2.less file - There are many standard tools to do this and tools like Visual Studio will
+	automatically do this when adding a less file
+2) Compiled LESS file generates a select2.css
+3) Look inside the select2.less and you see all it is an import of the variables and the separate LESS files
+
+
+How to use LESS to generate a Select2.css that integrates with Bootstrap
+
+1) LESS compile the select2-bootstrap.less file - This file is very much like the select2.less, but includes
+	the bootstrap related variables, bootstrap select2 variable overrides and some additional mark up to take
+	advantage of the bootstrap framework.
+	
+
+How to add your own styling to select2.less or select2-bootstrap.less
+
+1) Duplicate the LESS file you wish to override (select2.less or select2-bootstrap.less) and name it "file".less
+2) Edit new file and add your own variable less file or directly add variables to the file after the other
+	"variables".less files, but before select2container.less
+3) LESS compile "file".less into a "file".css to be used by your site
+
+
+Example of changing the background color from the default white to green for "file".less using select2.less
+
+"file".less contents -----
+
+@import "./select2Variables.less";
+
+@select2-background-color: green; 
+
+@import "./select2Container.less";
+@import "./select2Drop.less";
+@import "./select2Search.less";
+@import "./select2DropDown.less";
+@import "./select2Results.less";
+@import "./select2ContMulti.less";
+@import "./select2BaseEnd.less";
+
