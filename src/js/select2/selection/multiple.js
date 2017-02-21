@@ -90,6 +90,11 @@ define([
       var selection = data[d];
 
       var $selection = this.selectionContainer();
+      
+      if(selection.disabled){
+        $selection.find('.select2-selection__choice__remove').remove();
+      }
+      
       var formatted = this.display(selection, $selection);
 
       $selection.append(formatted);
