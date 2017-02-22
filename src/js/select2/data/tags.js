@@ -9,6 +9,12 @@ define([
     if (createTag !== undefined) {
       this.createTag = createTag;
     }
+    
+    var insertTag = options.get('insertTag');
+
+    if (insertTag !== undefined) {
+      this.insertTag = insertTag;
+    }
 
     var insertTag = options.get('insertTag');
 
