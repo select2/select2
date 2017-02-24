@@ -176,7 +176,7 @@ define([
 
     if (!enoughRoomBelow && enoughRoomAbove && !isCurrentlyAbove) {
       newDirection = 'above';
-    } else if (!enoughRoomAbove && enoughRoomBelow && isCurrentlyAbove) {
+    } else if (enoughRoomBelow && isCurrentlyAbove) {
       newDirection = 'below';
     }
 
