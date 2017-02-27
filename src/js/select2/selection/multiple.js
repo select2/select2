@@ -50,6 +50,7 @@ define([
           originalEvent: evt,
           data: data
         });
+        return false;
       }
     );
   };
