@@ -4015,6 +4015,7 @@ S2.define('select2/dropdown/tabs',[
     this.$tabsContainer.find('a').removeClass('tab-selected');
     this.$tabsContainer.find('a[data-id="' + tabId + '"]').addClass('tab-selected');
     this.fillTab('results:all');
+    this.$search.focus();
   };
 
   Tabs.prototype.fillTab = function (_, eventName) {
