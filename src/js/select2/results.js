@@ -144,19 +144,34 @@ define([
 
     scrollFn = function(el) {
       var text = el.find('>div'),
-        mustScroll = text.width() > el.width(),
-        left;
-      if (mustScroll && el.hasClass('focused')) {
-        left = parseInt(text.css('left'), 10) - 1;
-        if (text.width() + 10 < (-1 * left)) {
-          left = el.outerWidth(); // loop around
+        ctWidth = el.width(),
+        textWidth = text.width(),
+        direction = text.data('scrollDirection') || 'left',
+        timeout = 20,
+        leftPos;
+
+      if (textWidth > ctWidth && el.hasClass('focused')) {
+        leftPos = parseInt(text.css('left'), 10);
+
+        // go left til end fits, then go back right, repeat
+        if (leftPos + textWidth === ctWidth && direction === 'left') {
+          direction = 'right';
+          timeout = 300;
         }
+        if (leftPos === 0 && direction === 'right') {
+          direction = 'left';
+          timeout = 300;
+        }
+
+        leftPos = leftPos + (direction === 'right' ? 1 : -1);
+        text.data('scrollDirection', direction);
+
         text.css({
-          left: left
+          left: leftPos
         });
         setTimeout(function(){
           scrollFn(el);
-        }, 20);
+        }, timeout);
       }
     };
 
@@ -168,12 +183,12 @@ define([
         // but at this small interval leads to unsync bugs
         setTimeout(function(){
           scrollFn(el);
-        }, 30);
+        }, 20);
       })
       .on('mouseleave', function() {
         var el = $(this);
         el.removeClass('focused');
-        el.find('>div').css({
+        el.find('>div').data('scrollDirection', null).css({
           left: 0
         });
       });
