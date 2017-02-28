@@ -138,6 +138,47 @@ define([
     });
   };
 
+  Results.prototype.bindHorizontalScrolling = function () {
+    var self = this,
+      scrollFn;
+
+    scrollFn = function(el) {
+      var text = el.find('>div'),
+        mustScroll = text.width() > el.width(),
+        left;
+      if (mustScroll && el.hasClass('focused')) {
+        left = parseInt(text.css('left'), 10) - 1;
+        if (text.width() + 10 < (-1 * left)) {
+          left = el.outerWidth(); // loop around
+        }
+        text.css({
+          left: left
+        });
+        setTimeout(function(){
+          scrollFn(el);
+        }, 20);
+      }
+    };
+
+    this.$results.find('.select2-results__option')
+      .on('mouseenter', function() {
+        var el = $(this);
+        el.addClass('focused');
+        // setInterval is more logical here,
+        // but at this small interval leads to unsync bugs
+        setTimeout(function(){
+          scrollFn(el);
+        }, 30);
+      })
+      .on('mouseleave', function() {
+        var el = $(this);
+        el.removeClass('focused');
+        el.find('>div').css({
+          left: 0
+        });
+      });
+  };
+
   Results.prototype.showLoading = function (params) {
     this.hideLoading();
 
@@ -246,6 +287,8 @@ define([
       if (container.isOpen()) {
         self.setClasses();
       }
+
+      self.bindHorizontalScrolling();
     });
 
     container.on('results:append', function (params) {
@@ -342,6 +385,7 @@ define([
 
       var $next = $options.eq(nextIndex);
 
+      $highlighted.trigger('mouseleave');
       $next.trigger('mouseenter');
 
       var currentOffset = self.$results.offset().top;
@@ -371,6 +415,7 @@ define([
 
       var $next = $options.eq(nextIndex);
 
+      $highlighted.trigger('mouseleave');
       $next.trigger('mouseenter');
 
       var currentOffset = self.$results.offset().top +
