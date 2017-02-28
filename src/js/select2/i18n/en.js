@@ -26,7 +26,7 @@ define(function () {
       return 'Loading more results…';
     },
     maximumSelected: function (args) {
-      var message = 'You can only select ' + args.maximum + ' item';
+      var message = 'You can only select up to ' + args.maximum + ' item';
 
       if (args.maximum != 1) {
         message += 's';
