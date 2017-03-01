@@ -19,7 +19,33 @@
     What should the results returned to Select2 look like?
   </h3>
 
-  {% include options/not-written.html %}
+  <p>
+    In short a JSON object with this structure should be returned:
+  <p>
+
+{% highlight json %}
+{
+  error: null,
+  results: [
+    {
+      "text": "First item",
+      "id":"item-1"
+    },
+    {
+      "text": "Second item",
+      "id": "2.0"
+    },
+    {
+      "text": "Third item",
+      "id":"1235"
+    }
+  ]
+}
+{% endhighlight %}
+
+  <p>
+    If you need more info about the data that should be returned, see the section about <a href="#how-are-option-and-optgroup-tags-serialized-into-data-objects">data objects</a>
+  </p>
 
   <h3>
     Is there a way to modify the response before passing it back to Select2?
