@@ -175,7 +175,8 @@ define([
       'aria-selected': 'false'
     };
 
-    if (data.disabled) {
+    if ((data.element != null && data.element.disabled)
+        || (data.element == null && data.disabled)) {
       delete attrs['aria-selected'];
       attrs['aria-disabled'] = 'true';
     }
