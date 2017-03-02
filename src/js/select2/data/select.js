@@ -174,6 +174,10 @@ define([
       option.value = data.id;
     }
 
+    if (data.name) {
+      option.innerHTML = data.name;
+    }
+
     if (data.disabled) {
       option.disabled = true;
     }
