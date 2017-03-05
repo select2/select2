@@ -1,3 +1,5 @@
+@import "mixins/span_z_index";
+
 .select2-selection--single {
   box-sizing: border-box;
 
@@ -9,7 +11,10 @@
   user-select: none;
   -webkit-user-select: none;
 
+  @include span-z-index(3);
+
   .select2-selection__rendered {
+    @include span-z-index(4);
     display: block;
     padding-left: 8px;
     padding-right: 20px;
@@ -17,6 +22,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    .select2-selection__clear {
+      @include span-z-index(5 !important);
+    }
   }
 
   .select2-selection__clear {
