@@ -903,7 +903,7 @@ S2.define('select2/results',[
         leftPos = parseInt(text.css('left'), 10);
 
         // go left til end fits, then go back right, repeat
-        if (leftPos + textWidth === ctWidth && direction === 'left') {
+        if (leftPos + textWidth <= ctWidth && direction === 'left') {
           direction = 'right';
           timeout = 300;
         }
