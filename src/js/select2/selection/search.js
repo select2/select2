@@ -90,6 +90,11 @@ define([
       }
     });
 
+    this.$selection.on('clear.search', function(){
+      self.$search.val('');
+      self.handleSearch();
+    });
+
     // Try to detect the IE version should the `documentMode` property that
     // is stored on the document. This is only implemented in IE and is
     // slightly cleaner than doing a user agent check.
