@@ -9,16 +9,35 @@
     Note that when tagging is enabled the user can select from pre-existing
     options or create a new tag by picking the first choice, which is what
     the user has typed into the search box so far.
-    To enable a multiple tags select, don't forget the <code>multiple</code>
-    attribute.
   </p>
 
   <div class="s2-example">
     <p>
-      <select class="js-example-tags form-control" multiple="multiple">
+      <select class="js-example-tags-multiple form-control" multiple="multiple">
         <option selected="selected">orange</option>
         <option>white</option>
         <option selected="selected">purple</option>
+      </select>
+    </p>
+  </div>
+
+{% highlight js linenos %}
+$(".js-example-tags-multiple").select2({
+  tags: true
+})
+{% endhighlight %}
+  
+  <p>
+    Tagging can also be used on a single select element. Simply remove the
+    <code>multiple="multiple"</code> attribute from your HTML markup.
+  </p>
+  
+  <div class="s2-example">
+    <p>
+      <select class="js-example-tags form-control">
+        <option selected="selected">orange</option>
+        <option>white</option>
+        <option>purple</option>
       </select>
     </p>
   </div>
@@ -28,4 +47,5 @@ $(".js-example-tags").select2({
   tags: true
 })
 {% endhighlight %}
+  
 </section>
