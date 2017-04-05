@@ -67,11 +67,7 @@ define([
 
   MultipleSelection.prototype.selectionContainer = function () {
     var $container = $(
-      '<li class="select2-selection__choice">' +
-        '<span class="select2-selection__choice__remove" role="presentation">' +
-          '&times;' +
-        '</span>' +
-      '</li>'
+      '<li class="select2-selection__choice"></li>'
     );
 
     return $container;
@@ -90,9 +86,16 @@ define([
       var selection = data[d];
 
       var $selection = this.selectionContainer();
-      var formatted = this.display(selection, $selection);
+      var removeArrow = $(
+        '<span class="select2-selection__choice__remove" role="presentation">' +
+          '&times;' +
+        '</span>'
+      )
+      $selection.append(removeArrow);
 
+      var formatted = this.display(selection, $selection);
       $selection.append(formatted);
+
       $selection.prop('title', selection.title || selection.text);
 
       $selection.data('data', selection);
