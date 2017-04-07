@@ -175,7 +175,7 @@ define([
 
     this.resizeSearch();
     if (searchHadFocus) {
-      this.$search.focus();
+      this.$element.focus();
     }
   };
 
