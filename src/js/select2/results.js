@@ -112,8 +112,6 @@ define([
       // in the dropdown
       $options.first().trigger('mouseenter');
     }
-
-    this.ensureHighlightVisible();
   };
 
   Results.prototype.setClasses = function () {
