@@ -197,7 +197,7 @@ define([
     return $option;
   };
 
-  SelectAdapter.prototype.item = function ($option) {
+  SelectAdapter.prototype.item = function ($option, disabledParent) {
     var data = {};
 
     data = $.data($option[0], 'data');
@@ -205,12 +205,14 @@ define([
     if (data != null) {
       return data;
     }
+    
+    var disabled = disabledParent || $option.prop('disabled');
 
     if ($option.is('option')) {
       data = {
         id: $option.val(),
         text: $option.text(),
-        disabled: $option.prop('disabled'),
+        disabled: disabled,
         selected: $option.prop('selected'),
         title: $option.prop('title')
       };
@@ -218,6 +220,7 @@ define([
       data = {
         text: $option.prop('label'),
         children: [],
+        disabled: disabled,
         title: $option.prop('title')
       };
 
@@ -227,7 +230,7 @@ define([
       for (var c = 0; c < $children.length; c++) {
         var $child = $($children[c]);
 
-        var child = this.item($child);
+        var child = this.item($child, disabled);
 
         children.push(child);
       }
