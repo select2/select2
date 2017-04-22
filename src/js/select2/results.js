@@ -276,7 +276,6 @@ define([
       }
 
       self.setClasses();
-      self.highlightFirstItem();
     });
 
     container.on('unselect', function () {
@@ -285,7 +284,6 @@ define([
       }
 
       self.setClasses();
-      self.highlightFirstItem();
     });
 
     container.on('open', function () {
