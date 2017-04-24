@@ -16,7 +16,7 @@ define([
     $selection.addClass('select2-selection--single');
 
     $selection.html(
-      '<span class="select2-selection__rendered" role="textbox" aria-readonly="true"></span>' +
+      '<span class="select2-selection__rendered"></span>' +
       '<span class="select2-selection__arrow" role="presentation">' +
         '<b role="presentation"></b>' +
       '</span>'
@@ -32,7 +32,10 @@ define([
 
     var id = container.id + '-container';
 
-    this.$selection.find('.select2-selection__rendered').attr('id', id);
+    this.$selection.find('.select2-selection__rendered')
+      .attr('id', id)
+      .attr('role', 'textbox')
+      .attr('aria-readonly', 'true');
     this.$selection.attr('aria-labelledby', id);
 
     this.$selection.on('mousedown', function (evt) {
