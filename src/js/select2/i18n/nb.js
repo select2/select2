@@ -15,12 +15,12 @@ define(function () {
       var message = 'Vennligst skriv inn ';
 
       if (remainingChars > 1) {
-        message += ' flere tegn';
+        message += remainingChars;
       } else {
-        message += ' tegn til';
+        message += 'ett';
       }
 
-      return message;
+      return message + ' tegn til';
     },
     loadingMore: function () {
       return 'Laster flere resultater…';
