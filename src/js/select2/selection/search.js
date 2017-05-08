@@ -206,16 +206,19 @@ define([
     this.$search.css('width', '25px');
 
     var width = '';
+    var widthParent = '';
 
     if (this.$search.attr('placeholder') !== '') {
-      width = this.$selection.find('.select2-selection__rendered').innerWidth();
+      width = '100%';
+      widthParent = '100%';
     } else {
       var minimumWidth = this.$search.val().length + 1;
-
       width = (minimumWidth * 0.75) + 'em';
+      widthParent = 'auto';
     }
 
     this.$search.css('width', width);
+    this.$search.closest('.select2-search--inline').css('width', widthParent);
   };
 
   return Search;
