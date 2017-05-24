@@ -43,7 +43,7 @@ the integrations below.
 
 Integrations
 ------------
-Third party developers have create plugins for platforms which allow Select2 to be integrated more natively and quickly. For many platforms, additional plugins are not required because Select2 acts as a standard `<select>` box.
+Third party developers have created plugins for platforms which allow Select2 to be integrated more natively and quickly. For many platforms, additional plugins are not required because Select2 acts as a standard `<select>` box.
 
 Plugins
 
