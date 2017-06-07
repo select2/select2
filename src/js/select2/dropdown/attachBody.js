@@ -88,11 +88,13 @@ define([
     var resizeEvent = 'resize.select2.' + container.id;
     var orientationEvent = 'orientationchange.select2.' + container.id;
     
-    if (!this.attached_containers) this.attached_containers = [];
+    if (!this.attachedContainers) {
+      this.attachedContainers = [];
+    }
 
     var $watchers = this.$container.parents().filter(Utils.hasScroll);
     $watchers.each(function () {
-      self.attached_containers.push(this);
+      self.attachedContainers.push(this);
       $(this).data('select2-scroll-position', {
         x: $(this).scrollLeft(),
         y: $(this).scrollTop()
@@ -117,8 +119,10 @@ define([
     var resizeEvent = 'resize.select2.' + container.id;
     var orientationEvent = 'orientationchange.select2.' + container.id;
 
-    if (this.attached_containers) $(this.attached_containers).off(scrollEvent);
-    this.attached_containers = null;
+    if (this.attachedContainers) {
+      $(this.attachedContainers).off(scrollEvent);
+    }
+    this.attachedContainers = null;
 
     $(window).off(scrollEvent + ' ' + resizeEvent + ' ' + orientationEvent);
   };
