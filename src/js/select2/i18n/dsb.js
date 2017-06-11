@@ -22,7 +22,8 @@ define(function () {
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;
 
-      return 'Pšosym lašuj ' + overChars + ' ' + pluralWord(overChars, charsWords);
+      return 'Pšosym lašuj ' + overChars + ' ' + 
+        pluralWord(overChars, charsWords);
     },
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
