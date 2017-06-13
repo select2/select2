@@ -303,7 +303,10 @@ define([
         self.setClasses();
       }
 
-      self.bindHorizontalScrolling();
+      if (self.options.options.enableHorizontalScroll) {
+        self.bindHorizontalScrolling();
+      }
+
     });
 
     container.on('results:append', function (params) {
