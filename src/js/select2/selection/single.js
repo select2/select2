@@ -50,6 +50,13 @@ define([
       // User focuses on the container
     });
 
+    this.$selection.on('keydown', function (evt) {
+      // If user starts typing an alphanumeric key on the keyboard, open if not opened.
+      if (!container.isOpen() && evt.which >= 48 && evt.which <= 90) {
+        container.open();
+      }
+    });
+
     this.$selection.on('blur', function (evt) {
       // User exits the container
     });
