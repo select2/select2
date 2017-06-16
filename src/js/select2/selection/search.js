@@ -174,8 +174,13 @@ define([
                    .append(this.$searchContainer);
 
     this.resizeSearch();
-    if (searchHadFocus) {
+    var isTagInput = this.$element.find('[data-select2-tag]').length;
+
+    if (!isTagInput && searchHadFocus) {
       this.$search.focus();
+    } else if (isTagInput && searchHadFocus) {
+      // fix IE11 bug where tag input lost focus
+      this.$element.focus();
     }
   };
 
