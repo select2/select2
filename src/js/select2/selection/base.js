@@ -81,7 +81,11 @@ define([
       self.$selection.removeAttr('aria-activedescendant');
       self.$selection.removeAttr('aria-owns');
 
-      self.$selection.focus();
+      // This needs to be delayed as the active element is the body when the
+      // key is pressed.
+      window.setTimeout(function () {
+        self.$selection.focus();
+      }, 1);
 
       self._detachCloseHandler(container);
     });
