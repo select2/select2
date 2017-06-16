@@ -4,3 +4,4 @@ components
 composer.lock
 dist/js/i18n/build.txt
 .sass-cache
+.DS_Store
