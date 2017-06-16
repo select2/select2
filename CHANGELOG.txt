@@ -5,3 +5,4 @@
 * Improvement - Register selectWoo as select2 if possible, so that existing applications don't have to change usage.
 * Fix - Tabbing/Cancelling after opening a select without making a selection now tabs to the next element instead of the top of the page.
 * Fix - Open selections if the user starts typing to mimic select2 v3 functionality.
+* Improvement/Fix - Included fixes/improvements merged since v4.0.3 was released.
