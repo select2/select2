@@ -1,0 +1,7 @@
+== Changelog ==
+
+= 4.0.4 - 2017-06-XX =
+* Improvement - Added namespace so that selectWoo can run concurrently alongside select2 (including select2 v3).
+* Improvement - Register selectWoo as select2 if possible, so that existing applications don't have to change usage.
+* Fix - Tabbing/Cancelling after opening a select without making a selection now tabs to the next element instead of the top of the page.
+* Fix - Open selections if the user starts typing to mimic select2 v3 functionality.
