@@ -1,3 +1,4 @@
+/* jslint maxlen: 87 */
 define(function () {
   // Pashto (پښتو)
   return {
