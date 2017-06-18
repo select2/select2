@@ -8,7 +8,7 @@ define(function () {
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;
 
-      var message = 'د مهربانۍ لمخي ' + overChars + ' توری لږ کړئ';
+      var message = 'د مهربانۍ لمخي ' + overChars + ' توری ړنګ کړئ';
 
       if (overChars != 1) {
         message = message.replace('توری', 'توري');
@@ -19,7 +19,7 @@ define(function () {
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
-      var message = 'د مهربانۍ لمخي ' + remainingChars + ' يا ډېر توري زيات کړئ';
+      var message = 'لږ تر لږه ' + remainingChars + ' يا ډېر توري وليکئ';
 
       return message;
     },
