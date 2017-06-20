@@ -791,7 +791,7 @@ S2.define('select2/results',[
 
   Results.prototype.render = function () {
     var $results = $(
-      '<ul class="select2-results__options" role="tree"></ul>'
+      '<ul class="select2-results__options" role="listbox"></ul>'
     );
 
     if (this.options.get('multiple')) {
@@ -814,7 +814,7 @@ S2.define('select2/results',[
     this.hideLoading();
 
     var $message = $(
-      '<li role="treeitem" aria-live="assertive"' +
+      '<li role="alert" aria-live="assertive"' +
       ' class="select2-results__option"></li>'
     );
 
@@ -948,7 +948,7 @@ S2.define('select2/results',[
     option.className = 'select2-results__option';
 
     var attrs = {
-      'role': 'treeitem',
+      'role': 'option',
       'aria-selected': 'false'
     };
 
@@ -1367,6 +1367,7 @@ S2.define('select2/selection/base',[
 
     var id = container.id + '-container';
     var resultsId = container.id + '-results';
+    var searchHidden = this.options.get('minimumResultsForSearch') === Infinity;
 
     this.container = container;
 
@@ -1387,7 +1388,9 @@ S2.define('select2/selection/base',[
     });
 
     container.on('results:focus', function (params) {
-      self.$selection.attr('aria-activedescendant', params.data._resultId);
+      if (searchHidden) {
+        self.$selection.attr('aria-activedescendant', params.data._resultId);
+      }
     });
 
     container.on('selection:update', function (params) {
@@ -1397,7 +1400,9 @@ S2.define('select2/selection/base',[
     container.on('open', function () {
       // When the dropdown is open, aria-expanded="true"
       self.$selection.attr('aria-expanded', 'true');
-      self.$selection.attr('aria-owns', resultsId);
+      if (searchHidden) {
+        self.$selection.attr('aria-owns', resultsId);
+      }
 
       self._attachCloseHandler(container);
     });
@@ -1883,16 +1888,19 @@ S2.define('select2/selection/search',[
 
   Search.prototype.bind = function (decorated, container, $container) {
     var self = this;
+    var resultsId = container.id + '-results';
 
     decorated.call(this, container, $container);
 
     container.on('open', function () {
+      self.$search.attr('aria-owns', resultsId);
       self.$search.trigger('focus');
     });
 
     container.on('close', function () {
       self.$search.val('');
       self.$search.removeAttr('aria-activedescendant');
+      self.$search.removeAttr('aria-owns');
       self.$search.trigger('focus');
     });
 
@@ -1911,7 +1919,7 @@ S2.define('select2/selection/search',[
     });
 
     container.on('results:focus', function (params) {
-      self.$search.attr('aria-activedescendant', params.id);
+      self.$search.attr('aria-activedescendant', params.data._resultId);
     });
 
     this.$selection.on('focusin', '.select2-search--inline', function (evt) {
@@ -3919,9 +3927,9 @@ S2.define('select2/dropdown/search',[
 
     var $search = $(
       '<span class="select2-search select2-search--dropdown">' +
-        '<input class="select2-search__field" type="search" tabindex="-1"' +
+        '<input class="select2-search__field" type="text" tabindex="-1"' +
         ' autocomplete="off" autocorrect="off" autocapitalize="none"' +
-        ' spellcheck="false" role="textbox" />' +
+        ' spellcheck="false" role="combobox" arial-autocomplete="list" />' +
       '</span>'
     );
 
@@ -3935,6 +3943,7 @@ S2.define('select2/dropdown/search',[
 
   Search.prototype.bind = function (decorated, container, $container) {
     var self = this;
+    var resultsId = container.id + '-results';
 
     decorated.call(this, container, $container);
 
@@ -3958,7 +3967,7 @@ S2.define('select2/dropdown/search',[
 
     container.on('open', function () {
       self.$search.attr('tabindex', 0);
-
+      self.$search.attr('aria-owns', resultsId);
       self.$search.focus();
 
       window.setTimeout(function () {
@@ -3968,7 +3977,8 @@ S2.define('select2/dropdown/search',[
 
     container.on('close', function () {
       self.$search.attr('tabindex', -1);
-
+      self.$search.removeAttr('aria-activedescendant');
+      self.$search.removeAttr('aria-owns');
       self.$search.val('');
     });
 
@@ -3988,6 +3998,10 @@ S2.define('select2/dropdown/search',[
           self.$searchContainer.addClass('select2-search--hide');
         }
       }
+    });
+
+    container.on('results:focus', function (params) {
+      self.$search.attr('aria-activedescendant', params.data._resultId);
     });
   };
 
@@ -4130,7 +4144,7 @@ S2.define('select2/dropdown/infiniteScroll',[
     var $option = $(
       '<li ' +
       'class="select2-results__option select2-results__option--load-more"' +
-      'role="treeitem" aria-disabled="true"></li>'
+      'role="option" aria-disabled="true"></li>'
     );
 
     var message = this.options.get('translations').get('loadingMore');

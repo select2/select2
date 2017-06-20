@@ -28,16 +28,19 @@ define([
 
   Search.prototype.bind = function (decorated, container, $container) {
     var self = this;
+    var resultsId = container.id + '-results';
 
     decorated.call(this, container, $container);
 
     container.on('open', function () {
+      self.$search.attr('aria-owns', resultsId);
       self.$search.trigger('focus');
     });
 
     container.on('close', function () {
       self.$search.val('');
       self.$search.removeAttr('aria-activedescendant');
+      self.$search.removeAttr('aria-owns');
       self.$search.trigger('focus');
     });
 
@@ -56,7 +59,7 @@ define([
     });
 
     container.on('results:focus', function (params) {
-      self.$search.attr('aria-activedescendant', params.id);
+      self.$search.attr('aria-activedescendant', params.data._resultId);
     });
 
     this.$selection.on('focusin', '.select2-search--inline', function (evt) {

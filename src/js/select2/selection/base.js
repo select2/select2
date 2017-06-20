@@ -40,6 +40,7 @@ define([
 
     var id = container.id + '-container';
     var resultsId = container.id + '-results';
+    var searchHidden = this.options.get('minimumResultsForSearch') === Infinity;
 
     this.container = container;
 
@@ -60,7 +61,9 @@ define([
     });
 
     container.on('results:focus', function (params) {
-      self.$selection.attr('aria-activedescendant', params.data._resultId);
+      if (searchHidden) {
+        self.$selection.attr('aria-activedescendant', params.data._resultId);
+      }
     });
 
     container.on('selection:update', function (params) {
@@ -70,7 +73,9 @@ define([
     container.on('open', function () {
       // When the dropdown is open, aria-expanded="true"
       self.$selection.attr('aria-expanded', 'true');
-      self.$selection.attr('aria-owns', resultsId);
+      if (searchHidden) {
+        self.$selection.attr('aria-owns', resultsId);
+      }
 
       self._attachCloseHandler(container);
     });

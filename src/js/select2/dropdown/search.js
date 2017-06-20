@@ -9,9 +9,9 @@ define([
 
     var $search = $(
       '<span class="select2-search select2-search--dropdown">' +
-        '<input class="select2-search__field" type="search" tabindex="-1"' +
+        '<input class="select2-search__field" type="text" tabindex="-1"' +
         ' autocomplete="off" autocorrect="off" autocapitalize="none"' +
-        ' spellcheck="false" role="textbox" />' +
+        ' spellcheck="false" role="combobox" arial-autocomplete="list" />' +
       '</span>'
     );
 
@@ -25,6 +25,7 @@ define([
 
   Search.prototype.bind = function (decorated, container, $container) {
     var self = this;
+    var resultsId = container.id + '-results';
 
     decorated.call(this, container, $container);
 
@@ -48,7 +49,7 @@ define([
 
     container.on('open', function () {
       self.$search.attr('tabindex', 0);
-
+      self.$search.attr('aria-owns', resultsId);
       self.$search.focus();
 
       window.setTimeout(function () {
@@ -58,7 +59,8 @@ define([
 
     container.on('close', function () {
       self.$search.attr('tabindex', -1);
-
+      self.$search.removeAttr('aria-activedescendant');
+      self.$search.removeAttr('aria-owns');
       self.$search.val('');
     });
 
@@ -78,6 +80,10 @@ define([
           self.$searchContainer.addClass('select2-search--hide');
         }
       }
+    });
+
+    container.on('results:focus', function (params) {
+      self.$search.attr('aria-activedescendant', params.data._resultId);
     });
   };
 
