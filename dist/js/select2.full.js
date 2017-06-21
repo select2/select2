@@ -1177,7 +1177,7 @@ S2.define('select2/results',[
       self.displayMessage(params);
     });
 
-    if ($.fn.mousewheel) {
+    if (this.options.get('enableMousewheel') && $.fn.mousewheel) {
       this.$results.on('mousewheel', function (e) {
         var top = self.$results.scrollTop();
 
@@ -4900,7 +4900,8 @@ S2.define('select2/defaults',[
         return selection.text;
       },
       theme: 'default',
-      width: 'resolve'
+      width: 'resolve',
+      enableMousewheel: true
     };
   };
 

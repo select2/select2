@@ -404,7 +404,7 @@ define([
       self.displayMessage(params);
     });
 
-    if ($.fn.mousewheel) {
+    if (this.options.get('enableMousewheel') && $.fn.mousewheel) {
       this.$results.on('mousewheel', function (e) {
         var top = self.$results.scrollTop();
 
