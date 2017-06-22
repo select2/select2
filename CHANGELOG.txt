@@ -1,6 +1,7 @@
 == Changelog ==
 
 = 5.0.0 - 2017-06-XX =
+* Improvement - Also compile as selectWoo.
 * Improvement - Use data-selected to mark selected items and aria-selected to mark highlighted item, as per accessibility guidelines.
 * Improvement - Add aria-activedescendant.
 * Fix - Single selects work properly on screen readers.
