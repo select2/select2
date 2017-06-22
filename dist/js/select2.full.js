@@ -791,7 +791,7 @@ S2.define('select2/results',[
 
   Results.prototype.render = function () {
     var $results = $(
-      '<ul class="select2-results__options" role="listbox" aria-live="assertive"></ul>'
+      '<ul class="select2-results__options" role="listbox"></ul>'
     );
 
     if (this.options.get('multiple')) {
@@ -970,7 +970,6 @@ S2.define('select2/results',[
     }
 
     if (data.children) {
-      attrs.role = 'group';
       attrs['aria-label'] = data.text;
       delete attrs['aria-selected'];
     }
