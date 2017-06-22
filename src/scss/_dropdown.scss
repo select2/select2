@@ -32,7 +32,7 @@
   user-select: none;
   -webkit-user-select: none;
 
-  &[aria-selected] {
+  &[data-selected] {
     cursor: pointer;
   }
 }

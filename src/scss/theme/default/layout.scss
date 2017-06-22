@@ -46,7 +46,7 @@
       color: #999;
     }
 
-    &[aria-selected=true] {
+    &[data-selected=true] {
       background-color: #ddd;
     }
 
@@ -84,7 +84,7 @@
     }
   }
 
-  .select2-results__option--highlighted[aria-selected] {
+  .select2-results__option--highlighted[data-selected] {
     background-color: #5897fb;
     color: white;
   }

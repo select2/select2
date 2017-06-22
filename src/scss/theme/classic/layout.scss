@@ -47,7 +47,7 @@
     }
   }
 
-  .select2-results__option--highlighted[aria-selected] {
+  .select2-results__option--highlighted[data-selected] {
     background-color: $results-choice-bg-hover-color;
     color: $results-choice-fg-hover-color;
   }
