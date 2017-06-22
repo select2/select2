@@ -1,6 +1,8 @@
 == Changelog ==
 
 = 5.0.0 - 2017-06-XX =
+* Improvement - Add aria-activedescendant.
+* Fix - Single selects work properly on screen readers.
 * Fix - Include PR #4881 to fix invalid aria.
 * Fix - Include PR #4348 for better screen reader support.
 * Improvement - Added namespace so that selectWoo can run concurrently alongside select2 (including select2 v3).

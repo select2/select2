@@ -1174,6 +1174,7 @@ S2.define('select2/results',[
 
     container.on('results:focus', function (params) {
       params.element.addClass('select2-results__option--highlighted');
+      self.$results.attr('aria-activedescendant', params.element.attr('id'));
     });
 
     container.on('results:message', function (params) {
