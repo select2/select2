@@ -862,6 +862,10 @@ S2.define('select2/results',[
 
         var item = $.data(this, 'data');
 
+        if (!item) {
+          return;
+        }
+
         // id needs to be converted to a string when comparing
         var id = '' + item.id;
 
