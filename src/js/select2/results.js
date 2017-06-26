@@ -113,6 +113,10 @@ define([
 
         var item = $.data(this, 'data');
 
+        if (!item) {
+          return;
+        }
+
         // id needs to be converted to a string when comparing
         var id = '' + item.id;
 
