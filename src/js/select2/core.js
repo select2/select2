@@ -277,19 +277,21 @@ define([
         self.trigger('open', {});
       }
 
-      this.dataAdapter.query(params, function (data) {
-        if (self.options.get('resultTabs')) {
-          self.trigger('tabresults:all', {
-            data: data,
-            query: params
-          });
-        } else {
-          self.trigger('results:all', {
-            data: data,
-            query: params
-          });
-        }
-      });
+      if (this.dataAdapter) {
+        this.dataAdapter.query(params, function (data) {
+          if (self.options.get('resultTabs')) {
+            self.trigger('tabresults:all', {
+              data: data,
+              query: params
+            });
+          } else {
+            self.trigger('results:all', {
+              data: data,
+              query: params
+            });
+          }
+        });
+      }
     });
 
     this.on('query:append', function (params) {
