@@ -24,8 +24,15 @@ define([
   };
 
   BaseAdapter.prototype.generateResultId = function (container, data) {
-    var id = container.id + '-result-';
+    var id = '';
 
+    if (container != null) {
+      id += container.id
+    } else {
+      id += Utils.generateChars(4);
+    }
+
+    id += '-result-';
     id += Utils.generateChars(4);
 
     if (data.id != null) {

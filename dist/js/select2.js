@@ -3045,8 +3045,15 @@ S2.define('select2/data/base',[
   };
 
   BaseAdapter.prototype.generateResultId = function (container, data) {
-    var id = container.id + '-result-';
+    var id = '';
 
+    if (container != null) {
+      id += container.id
+    } else {
+      id += Utils.generateChars(4);
+    }
+
+    id += '-result-';
     id += Utils.generateChars(4);
 
     if (data.id != null) {
@@ -3330,7 +3337,7 @@ S2.define('select2/data/select',[
       item.text = item.text.toString();
     }
 
-    if (item._resultId == null && item.id && this.container != null) {
+    if (item._resultId == null && item.id) {
       item._resultId = this.generateResultId(this.container, item);
     }
 
