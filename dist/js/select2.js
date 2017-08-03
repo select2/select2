@@ -1342,7 +1342,7 @@ S2.define('select2/selection/base',[
 
   BaseSelection.prototype.render = function () {
     var $selection = $(
-      '<span class="select2-selection" role="combobox" ' +
+      '<span class="select2-selection" ' +
       ' aria-haspopup="true" aria-expanded="false">' +
       '</span>'
     );
@@ -3940,7 +3940,7 @@ S2.define('select2/dropdown/search',[
       '<span class="select2-search select2-search--dropdown">' +
         '<input class="select2-search__field" type="text" tabindex="-1"' +
         ' autocomplete="off" autocorrect="off" autocapitalize="none"' +
-        ' spellcheck="false" role="combobox" arial-autocomplete="list" />' +
+        ' spellcheck="false" role="textbox" aria-autocomplete="list" />' +
       '</span>'
     );
 
