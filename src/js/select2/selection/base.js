@@ -61,9 +61,7 @@ define([
     });
 
     container.on('results:focus', function (params) {
-      if (searchHidden) {
-        self.$selection.attr('aria-activedescendant', params.data._resultId);
-      }
+      self.$selection.attr('aria-activedescendant', params.data._resultId);
     });
 
     container.on('selection:update', function (params) {
@@ -73,9 +71,7 @@ define([
     container.on('open', function () {
       // When the dropdown is open, aria-expanded="true"
       self.$selection.attr('aria-expanded', 'true');
-      if (searchHidden) {
-        self.$selection.attr('aria-owns', resultsId);
-      }
+      self.$selection.attr('aria-owns', resultsId);
 
       self._attachCloseHandler(container);
     });

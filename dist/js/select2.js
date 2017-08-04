@@ -1389,9 +1389,7 @@ S2.define('select2/selection/base',[
     });
 
     container.on('results:focus', function (params) {
-      if (searchHidden) {
-        self.$selection.attr('aria-activedescendant', params.data._resultId);
-      }
+      self.$selection.attr('aria-activedescendant', params.data._resultId);
     });
 
     container.on('selection:update', function (params) {
@@ -1401,9 +1399,7 @@ S2.define('select2/selection/base',[
     container.on('open', function () {
       // When the dropdown is open, aria-expanded="true"
       self.$selection.attr('aria-expanded', 'true');
-      if (searchHidden) {
-        self.$selection.attr('aria-owns', resultsId);
-      }
+      self.$selection.attr('aria-owns', resultsId);
 
       self._attachCloseHandler(container);
     });
@@ -1533,6 +1529,9 @@ S2.define('select2/selection/single',[
       .attr('role', 'textbox')
       .attr('aria-readonly', 'true');
     this.$selection.attr('aria-labelledby', id);
+
+    // This makes single non-search selects work in screen readers. If it causes problems elsewhere, remove.
+    this.$selection.attr('role', 'combobox');
 
     this.$selection.on('mousedown', function (evt) {
       // Only respond to left clicks
@@ -1874,7 +1873,7 @@ S2.define('select2/selection/search',[
   Search.prototype.render = function (decorated) {
     var $search = $(
       '<li class="select2-search select2-search--inline">' +
-        '<input class="select2-search__field" type="search" tabindex="-1"' +
+        '<input class="select2-search__field" type="text" tabindex="-1"' +
         ' autocomplete="off" autocorrect="off" autocapitalize="none"' +
         ' spellcheck="false" role="textbox" aria-autocomplete="list" />' +
       '</li>'

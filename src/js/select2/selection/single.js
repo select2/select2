@@ -38,6 +38,9 @@ define([
       .attr('aria-readonly', 'true');
     this.$selection.attr('aria-labelledby', id);
 
+    // This makes single non-search selects work in screen readers. If it causes problems elsewhere, remove.
+    this.$selection.attr('role', 'combobox');
+
     this.$selection.on('mousedown', function (evt) {
       // Only respond to left clicks
       if (evt.which !== 1) {
