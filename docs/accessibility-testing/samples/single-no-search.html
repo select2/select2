@@ -1,0 +1,24 @@
+<head>
+    <title>Single select with no search</title>
+
+    <link href="../../../dist/css/select2.min.css" type="text/css" rel="stylesheet" />
+
+    <script type="text/javascript" src="../../vendor/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../dist/js/select2.full.js"></script>
+</head>
+
+<body>
+    <h2>Single select with no search</h2>
+
+    <select name="woocommerce_ship_to_countries" id="woocommerce_ship_to_countries" style="" class="wc-enhanced-select">
+        <option value="" >Ship to all countries you sell to</option>
+        <option value="all"  selected='selected'>Ship to all countries</option>
+        <option value="specific" >Ship to specific countries only</option>
+        <option value="disabled" >Disable shipping &amp; shipping calculations</option>
+    </select>       
+    <script>
+        $( '#woocommerce_ship_to_countries' ).select2({ minimumResultsForSearch: 10 });
+    </script>
+</body>
+
+

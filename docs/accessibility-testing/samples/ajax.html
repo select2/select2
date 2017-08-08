@@ -1,0 +1,48 @@
+<head>
+    <title>Single select with ajax</title>
+
+    <link href="../../../dist/css/select2.min.css" type="text/css" rel="stylesheet" />
+
+    <script type="text/javascript" src="../../vendor/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../dist/js/select2.full.js"></script>
+</head>
+
+<body>
+    <h2>Single select with ajax</h2>
+
+    <select class="js-data-example-ajax" style="width:600px">
+        <option value="3620194" selected="selected">select2/select2</option>
+    </select>
+
+    <script>
+        $(".js-data-example-ajax").select2({
+          ajax: {
+            url: "https://api.github.com/search/repositories",
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+              return {
+                q: params.term, // search term
+                page: params.page
+              };
+            },
+            processResults: function (data, params) {
+                var terms = [];
+                if ( data ) {
+                    $.each( data.items, function( id, text ) {
+                        terms.push( { id: id, text: text.full_name } );
+                    });
+                }
+                return {
+                    results: terms
+                };
+            },
+            cache: true
+          },
+          escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+          minimumInputLength: 1
+        });    
+    </script>
+</body>
+
+
