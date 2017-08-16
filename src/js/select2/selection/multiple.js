@@ -89,14 +89,12 @@ define([
       atext = a.text.toLowerCase();
       btext = b.text.toLowerCase();
 
-      if ( atext > btext ) {
+      if (atext > btext) {
         return 1;
       }
-
-      if ( atext < btext ) {
+      if (atext < btext) {
         return -1;
       }
-
       return 0;
     });
 
