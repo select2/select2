@@ -791,7 +791,7 @@ S2.define('select2/results',[
 
   Results.prototype.render = function () {
     var $results = $(
-      '<ul class="select2-results__options" role="listbox"></ul>'
+      '<ul class="select2-results__options" role="listbox" tabindex="-1"></ul>'
     );
 
     if (this.options.get('multiple')) {
@@ -949,7 +949,8 @@ S2.define('select2/results',[
 
     var attrs = {
       'role': 'option',
-      'data-selected': 'false'
+      'data-selected': 'false',
+      'tabindex': -1
     };
 
     if (data.disabled) {

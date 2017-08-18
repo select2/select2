@@ -14,7 +14,7 @@ define([
 
   Results.prototype.render = function () {
     var $results = $(
-      '<ul class="select2-results__options" role="listbox"></ul>'
+      '<ul class="select2-results__options" role="listbox" tabindex="-1"></ul>'
     );
 
     if (this.options.get('multiple')) {
@@ -172,7 +172,8 @@ define([
 
     var attrs = {
       'role': 'option',
-      'data-selected': 'false'
+      'data-selected': 'false',
+      'tabindex': -1
     };
 
     if (data.disabled) {
