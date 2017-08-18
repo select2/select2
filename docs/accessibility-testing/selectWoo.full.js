@@ -1689,20 +1689,6 @@ S2.define('select2/selection/multiple',[
       return;
     }
 
-    // Sort selected elements alphabetically by text.
-    data.sort(function(a, b){
-      atext = a.text.toLowerCase();
-      btext = b.text.toLowerCase();
-
-      if (atext > btext) {
-        return 1;
-      }
-      if (atext < btext) {
-        return -1;
-      }
-      return 0;
-    });
-
     var $selections = [];
 
     for (var d = 0; d < data.length; d++) {
