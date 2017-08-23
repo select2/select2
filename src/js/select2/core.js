@@ -316,7 +316,7 @@ define([
       });
     });
 
-    this.on('keypress', function (evt) {
+    $(document).on('keydown', function (evt) {
       var key = evt.which;
 
       if (self.isOpen()) {
@@ -342,7 +342,17 @@ define([
 
           evt.preventDefault();
         }
-      } else {
+
+        // Move the focus to the selected element on keyboard navigation.
+        // Required for screen readers to work properly.
+        if (key === KEYS.DOWN || key === KEYS.UP) {
+          self.$results.find('li[aria-selected="true"]').focus();
+        // Focus back on the search if user starts typing.
+        } else {
+          $('.select2-search__field').focus();
+        }
+
+      } else if (self.hasFocus()) {
         if (key === KEYS.ENTER || key === KEYS.SPACE ||
             (key === KEYS.DOWN && evt.altKey)) {
           self.open();

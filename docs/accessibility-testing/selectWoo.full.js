@@ -5401,7 +5401,7 @@ S2.define('select2/core',[
       });
     });
 
-    this.on('keypress', function (evt) {
+    $(document).on('keydown', function (evt) {
       var key = evt.which;
 
       if (self.isOpen()) {
@@ -5427,7 +5427,16 @@ S2.define('select2/core',[
 
           evt.preventDefault();
         }
-      } else {
+
+        // Move the focus to the selected element on keyboard navigation.
+        // Required for screen readers to work properly.
+        if (key === KEYS.DOWN || key === KEYS.UP) {
+          self.$results.find('li[aria-selected="true"]').focus();
+        } else {
+          $('.select2-search__field').focus();
+        }
+
+      } else if (self.hasFocus()) {
         if (key === KEYS.ENTER || key === KEYS.SPACE ||
             (key === KEYS.DOWN && evt.altKey)) {
           self.open();
