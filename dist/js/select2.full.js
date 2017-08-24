@@ -5401,9 +5401,16 @@ S2.define('select2/core',[
       });
     });
 
+    this.on('open', function(){
+      // Focus on the active element when opening dropdown.
+      // Needs 1 ms delay because of other 1ms setTimeouts when rendering.
+      setTimeout(function(){
+        self.focusOnActiveElement();
+      },1);
+    });
+
     $(document).on('keydown', function (evt) {
       var key = evt.which;
-
       if (self.isOpen()) {
         if (key === KEYS.ESC || key === KEYS.TAB ||
             (key === KEYS.UP && evt.altKey)) {
@@ -5431,21 +5438,29 @@ S2.define('select2/core',[
         // Move the focus to the selected element on keyboard navigation.
         // Required for screen readers to work properly.
         if (key === KEYS.DOWN || key === KEYS.UP) {
-          self.$results.find('li[aria-selected="true"]').focus();
-        // Focus back on the search if user starts typing.
+            self.focusOnActiveElement();
         } else {
+          // Focus on the search if user starts typing.
           $('.select2-search__field').focus();
+          // Focus back to active selection when finished typing.
+          // Small delay so typed character can be read by screen reader.
+          setTimeout(function(){
+              self.focusOnActiveElement();
+          }, 1000);
         }
 
       } else if (self.hasFocus()) {
         if (key === KEYS.ENTER || key === KEYS.SPACE ||
             (key === KEYS.DOWN && evt.altKey)) {
           self.open();
-
           evt.preventDefault();
         }
       }
     });
+  };
+
+  Select2.prototype.focusOnActiveElement = function () {
+    this.$results.find('li.select2-results__option--highlighted').focus();
   };
 
   Select2.prototype._syncAttributes = function () {
