@@ -212,6 +212,7 @@ define([
 
       var $label = $(label);
       this.template(data, label);
+      $label.attr('role', 'presentation');
 
       var $children = [];
 
@@ -224,10 +225,11 @@ define([
       }
 
       var $childrenContainer = $('<ul></ul>', {
-        'class': 'select2-results__options select2-results__options--nested'
+        'class': 'select2-results__options select2-results__options--nested',
+        'role': 'listbox'      
       });
-
       $childrenContainer.append($children);
+      $option.attr('role', 'list');
 
       $option.append(label);
       $option.append($childrenContainer);
