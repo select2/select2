@@ -2,6 +2,9 @@
 
 ## 4.0.6
 
+### New features/improvements
+- Add style property to package.json (#5019)
+
 ### Bug fixes
 - Add `;` before beginning of factory wrapper (#5089)
 - Clear tooltip from `select2-selection__rendered` when selection is cleared (#4746)
