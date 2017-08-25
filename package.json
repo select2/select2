@@ -34,6 +34,7 @@
     "src",
     "dist"
   ],
+  "style": "dist/css/select2.css",
   "version": "4.0.3",
   "jspm": {
     "main": "js/select2",
