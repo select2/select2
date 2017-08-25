@@ -30,11 +30,11 @@
   ],
   "license": "MIT",
   "main": "dist/js/select2.js",
+  "style": "dist/css/select2.css",
   "files": [
     "src",
     "dist"
   ],
-  "style": "dist/css/select2.css",
   "version": "4.0.3",
   "jspm": {
     "main": "js/select2",
