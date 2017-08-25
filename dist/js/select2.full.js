@@ -5405,7 +5405,7 @@ S2.define('select2/core',[
 
     this.on('open', function(){
       // Focus on the active element when opening dropdown.
-      // Needs 1 ms delay because of other 1ms setTimeouts when rendering.
+      // Needs 1 ms delay because of other 1 ms setTimeouts when rendering.
       setTimeout(function(){
         self.focusOnActiveElement();
       },1);
@@ -5443,7 +5443,11 @@ S2.define('select2/core',[
             self.focusOnActiveElement();
         } else {
           // Focus on the search if user starts typing.
-          $('.select2-search__field').focus();
+          var $searchField = self.$dropdown.find('.select2-search__field');
+          if (! $searchField.length) {
+            $searchField = self.$container.find('.select2-search__field');
+          }
+          $searchField.focus();
           // Focus back to active selection when finished typing.
           // Small delay so typed character can be read by screen reader.
           setTimeout(function(){
