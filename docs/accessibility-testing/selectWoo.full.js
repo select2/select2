@@ -772,6 +772,14 @@ S2.define('select2/utils',[
     $element.append($nodes);
   };
 
+  // Determine whether the browser is on a touchscreen device.
+  Utils.isTouchscreen = function() {
+    if ('undefined' === typeof Utils._isTouchscreenCache) {
+      Utils._isTouchscreenCache = 'ontouchstart' in document.documentElement;
+    }
+    return Utils._isTouchscreenCache;
+  }
+
   return Utils;
 });
 
@@ -5466,7 +5474,10 @@ S2.define('select2/core',[
   };
 
   Select2.prototype.focusOnActiveElement = function () {
-    this.$results.find('li.select2-results__option--highlighted').focus();
+    // Don't mess with the focus on touchscreens because it causes havoc with on-screen keyboards.
+    if (! Utils.isTouchscreen()) {
+      this.$results.find('li.select2-results__option--highlighted').focus();
+    }
   };
 
   Select2.prototype._syncAttributes = function () {

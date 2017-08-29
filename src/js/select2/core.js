@@ -379,7 +379,10 @@ define([
   };
 
   Select2.prototype.focusOnActiveElement = function () {
-    this.$results.find('li.select2-results__option--highlighted').focus();
+    // Don't mess with the focus on touchscreens because it causes havoc with on-screen keyboards.
+    if (! Utils.isTouchscreen()) {
+      this.$results.find('li.select2-results__option--highlighted').focus();
+    }
   };
 
   Select2.prototype._syncAttributes = function () {
