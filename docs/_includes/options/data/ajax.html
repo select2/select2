@@ -19,7 +19,28 @@
     What should the results returned to Select2 look like?
   </h3>
 
-  {% include options/not-written.html %}
+  <p>
+    A result object with two select options and more available via pagination would look like this:
+  </p>
+
+{% highlight json linenos %}
+{
+  "results": [
+    {
+      "id": "1",
+      "text": "Option 1"
+    },
+    {
+      "id": "2",
+      "text": "Option 2"
+    }
+  ],
+  "pagination": {
+    "more": true
+  },
+  "status" : 200
+}
+{% endhighlight %}
 
   <h3>
     Is there a way to modify the response before passing it back to Select2?
