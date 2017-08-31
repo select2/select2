@@ -19,7 +19,24 @@
     What should the results returned to Select2 look like?
   </h3>
 
-  {% include options/not-written.html %}
+  <p>The returned data should look this way in json:</p>
+  
+{% highlight js linenos %}
+  
+{
+	"results": [{
+		"id": 1,
+		"text": "test1"
+	}, {
+		"id": 2,
+		"text": "test2"
+	}, {
+		"id": 3,
+		"text": "test3"
+	}]
+}
+  
+{% endhighlight %}
 
   <h3>
     Is there a way to modify the response before passing it back to Select2?
