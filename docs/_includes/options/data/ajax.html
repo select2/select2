@@ -20,15 +20,30 @@
   </h3>
 
   <p>
-  When you aren't using custom formatting functions (<code>templateResult</code> and <code>templateSelection</code> or <code>formatResults</code>) the data returned by the data provider or by <code>processResults</code> should be a list of objects. The objects should contain an <code>id</code> and a <code>text</code> property. The text property will be displayed. See <a href="#what-properties-are-required-on-the-objects-passed-in-to-the-ar">What properties are required on the objects passed in to the array?</a>.
+  The data returned by the data provider or by <code>processResults</code> should be a JSON object containing an array of objects keyed by the <code>results</code> key.
   </p>
-
-{% highlight js linenos %}
-[
-  {id: 'id1', text: 'option1'},
-  {id: 'id2', text: 'option2'},
-  {id: 'id3', text: 'option3'},
-]
+  <p>
+  Each object should contain, <em>at a minimum</em>, an <code>id</code> and a <code>text</code> property. The text property will be displayed by default, unless you are using <code>templateResult</code> and <code>templateSelection</code> to customize the way options and selections are rendered.
+  </p>
+  <p>
+  The response object may also contain <a href="examples.html#data-ajax">pagination data</a>, if you would like to use the "infinite scroll" feature.  See <a href="#what-properties-are-required-on-the-objects-passed-in-to-the-ar">"What properties are required on the objects passed in to the array?"</a> for more information.  A complete example is as follows:
+  </p>
+{% highlight json linenos %}
+{
+  "results": [
+    {
+      "id": "1",
+      "text": "Option 1"
+    },
+    {
+      "id": "2",
+      "text": "Option 2"
+    }
+  ],
+  "pagination": {
+    "more": true
+  }
+}
 {% endhighlight %}
 
   <h3>
