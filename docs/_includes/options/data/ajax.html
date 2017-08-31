@@ -19,7 +19,17 @@
     What should the results returned to Select2 look like?
   </h3>
 
-  {% include options/not-written.html %}
+  <p>
+  When you aren't using custom formatting functions (<code>templateResult</code> and <code>templateSelection</code> or <code>formatResults</code>) the data returned by the data provider or by <code>processResults</code> should be a list of objects. The objects should contain an <code>id</code> and a <code>text</code> property. The text property will be displayed. See <a href="#what-properties-are-required-on-the-objects-passed-in-to-the-ar">What properties are required on the objects passed in to the array?</a>.
+  </p>
+
+{% highlight js linenos %}
+[
+  {id: 'id1', text: 'option1'},
+  {id: 'id2', text: 'option2'},
+  {id: 'id3', text: 'option3'},
+]
+{% endhighlight %}
 
   <h3>
     Is there a way to modify the response before passing it back to Select2?
