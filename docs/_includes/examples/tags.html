@@ -2,36 +2,9 @@
   <h1 id="tags">Tagging support</h1>
 
   <p>
-    Select2 can be used to quickly set up fields used for tagging. 
+    In addition to the dropdown menu of options, Select2 can also allow free-text responses.  This feature is called "tagging".  To enable free-text responses, set the <code>tags</code> option to <code>true</code>:
   </p>
 
-  <p>
-    Note that when tagging is enabled the user can select from pre-existing
-    options or create a new tag by picking the first choice, which is what
-    the user has typed into the search box so far.
-  </p>
-
-  <div class="s2-example">
-    <p>
-      <select class="js-example-tags-multiple form-control" multiple="multiple">
-        <option selected="selected">orange</option>
-        <option>white</option>
-        <option selected="selected">purple</option>
-      </select>
-    </p>
-  </div>
-
-{% highlight js linenos %}
-$(".js-example-tags-multiple").select2({
-  tags: true
-})
-{% endhighlight %}
-  
-  <p>
-    Tagging can also be used on a single select element. Simply remove the
-    <code>multiple="multiple"</code> attribute from your HTML markup.
-  </p>
-  
   <div class="s2-example">
     <p>
       <select class="js-example-tags form-control">
@@ -47,5 +20,28 @@ $(".js-example-tags").select2({
   tags: true
 })
 {% endhighlight %}
+
+  <p>
+    Note that when tagging is enabled the user can select from the pre-existing options or create a new option by picking the first choice, which is what the user has typed into the search box so far.
+  </p>
+
+  <h2>Tagging with multi-value select boxes</h2>
+
+  <p>
+    Tagging can also be used in multi-value select boxes. In the example below, we set the <code>multiple="multiple"</code> attribute on a Select2 control that also has <code>tags: true</code> enabled:
+  </p>
   
+  <div class="s2-example">
+    <p>
+      <select class="js-example-tags form-control" multiple="multiple">
+        <option selected="selected">orange</option>
+        <option>white</option>
+        <option selected="selected">purple</option>
+      </select>
+    </p>
+  </div>
+
+  <p>
+    Try entering a value that isn't listed in the dropdown - you'll be able to add it as a new option!
+  </p>
 </section>
