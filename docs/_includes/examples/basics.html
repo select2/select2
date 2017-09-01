@@ -50,7 +50,9 @@ $(document).ready(function() {
 
 {% highlight html linenos %}
 <script type="text/javascript">
-$(".js-example-basic-multiple").select2();
+$(document).ready(function() {
+  $(".js-example-basic-multiple").select2();
+});
 </script>
 
 <select class="js-example-basic-multiple" multiple="multiple">
