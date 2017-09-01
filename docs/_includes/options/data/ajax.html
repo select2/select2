@@ -94,7 +94,10 @@
   <p>
     You can use the <code>ajax.processResults</code> option to modify the data returned from the server before passing it to Select2.  The data structure returned by <code>processResults</code> should match the format as specified above.
   </p>
-
+  <p>
+    Have a look at the section: <strong>data adapters</strong> to verify how the data should look like in return: List of objects containing id, text and element values.
+  </p>
+  
 {% highlight js linenos %}
 $('select').select2({
   ajax: {
