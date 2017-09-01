@@ -29,6 +29,16 @@ $('select').select2({
   <h3>
     Can users remove all of their selections in a multiple select at once?
   </h3>
-  
-  <p>Yes, see: <a href="examples.html#programmatic">https://select2.github.io/examples.html#programmatic</a></p>
+
+  <p>
+    Yes, by setting the value of the control to <code>null</code>:
+  </p>
+
+{% highlight js linenos %}
+$('select').val(null).trigger('change');
+{% endhighlight %}
+
+  <p>
+    See <a href="examples.html#programmatic">https://select2.github.io/examples.html#programmatic</a> for a working example.
+  </p>
 </section>
