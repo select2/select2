@@ -45,9 +45,9 @@ function formatState (state) {
   if (!state.id) {
     return state.text;
   }
-  var baseUrl = "{{ url('images/flags/') }}";
+  var baseUrl = "{{ url('user://pages/images/flags') }}";
   var $state = $(
-    '<span><img src="' + baseUrl + state.element.value.toLowerCase() + '.png" class="img-flag" /> ' + state.text + '</span>'
+    '<span><img src="' + baseUrl + '/' + state.element.value.toLowerCase() + '.png" class="img-flag" /> ' + state.text + '</span>'
   );
   return $state;
 };
