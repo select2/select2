@@ -1,0 +1,66 @@
+#header {
+    background: $header-bg;
+    color: $white;
+    text-align: center;
+
+    padding: 1rem;
+
+    a {
+        display: inline-block;
+    }
+
+    #logo-svg {
+        @extend .default-animation;
+        width: $logo-width;
+        height: $logo-height;
+
+        path {
+            @extend .default-animation;
+            fill: $white;
+        }
+    }
+}
+
+.searchbox {
+    margin-top: 0.5rem;
+    position: relative;
+
+    border: 1px solid lighten($header-bg, 5%);
+    background: darken($header-bg,5%);
+    border-radius: 4px;
+
+    label {
+        color: rgba($white, 0.8);
+        position: absolute;
+        left: 10px;
+        top: 3px;
+    }
+
+    span {
+        color: rgba($white, 0.6);
+        position: absolute;
+        right: 10px;
+        top: 3px;
+        cursor: pointer;
+
+        &:hover {
+            color: rgba($white, 0.9);
+        }
+    }
+
+    input {
+        display: inline-block;
+        color: $white;
+        width: 100%;
+        height: 30px;
+        background: transparent;
+        border: 0;
+        padding: 0 25px 0 30px;
+        margin: 0;
+        font-weight: $font-weight-regular;
+
+        @include placeholder {
+            color: rgba($white, 0.6);
+        }
+    }
+}

@@ -1,0 +1,21 @@
+%button {
+	display: inline-block;
+	padding: 7px 12px;
+	&:active {
+		margin: 2px 0 -2px 0;
+	}
+}
+
+@mixin button-color($color) {
+	background: $color;
+	color: $white;
+	box-shadow: 0 3px 0 darken($color, 6%);
+	&:hover {
+		background: darken($color, 6%);
+		box-shadow: 0 3px 0 darken($color, 12%);
+		color: $white;
+	}
+	&:active {
+		box-shadow: 0 1px 0 darken($color, 12%);
+	}
+}

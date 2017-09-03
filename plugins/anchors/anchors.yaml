@@ -1,0 +1,8 @@
+enabled: true                 # enable or disable the plugin
+active: true                  # active by default, if false then you must activate per-page
+selectors: 'h1,h2,h3,h4'      # css elements to activate on.  Uses jQuery style selectors
+placement: right              # either "left" or "right"
+visible: hover                # Active on "hover" or "always" visible
+icon:                         # default link or a specific character like: #, ¶, ❡, and §.
+class:                        # adds the provided class to the anchor html
+truncate: 64                  # truncates the generated ID to the specified character length

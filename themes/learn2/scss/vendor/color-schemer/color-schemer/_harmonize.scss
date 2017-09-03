@@ -1,0 +1,59 @@
+@function cs-harmonize($background, $foreground: $cs-harmonize-color, $mode: $cs-harmonize-mode, $amount: $cs-harmonize-amount) {
+  $blend: null;
+  @if ($mode == normal) {
+    $blend: blend-normal($foreground, $background); }
+  @else if ($mode == multiply) {
+    $blend: blend-multiply($foreground, $background); }
+  @else if ($mode == lighten) {
+    $blend: blend-lighten($foreground, $background); }
+  @else if ($mode == darken) {
+    $blend: blend-darken($foreground, $background); }
+  @else if ($mode == darkercolor) {
+    $blend: blend-darkercolor($foreground, $background); }
+  @else if ($mode == lightercolor) {
+    $blend: blend-lightercolor($foreground, $background); }
+  @else if ($mode == lineardodge) {
+    $blend: blend-lineardodge($foreground, $background); }
+  @else if ($mode == linearburn) {
+    $blend: blend-linearburn($foreground, $background); }
+  @else if ($mode == difference) {
+    $blend: blend-difference($foreground, $background); }
+  @else if ($mode == screen) {
+    $blend: blend-screen($foreground, $background); }
+  @else if ($mode == exclusion) {
+    $blend: blend-exclusion($foreground, $background); }
+  @else if ($mode == overlay) {
+    $blend: blend-overlay($foreground, $background); }
+  @else if ($mode == softlight) {
+    $blend: blend-softlight($foreground, $background); }
+  @else if ($mode == hardlight) {
+    $blend: blend-hardlight($foreground, $background); }
+  @else if ($mode == colordodge) {
+    $blend: blend-colordodge($foreground, $background); }
+  @else if ($mode == colorburn) {
+    $blend: blend-colorburn($foreground, $background); }
+  @else if ($mode == linearlight) {
+    $blend: blend-linearlight($foreground, $background); }
+  @else if ($mode == vividlight) {
+    $blend: blend-vividlight($foreground, $background); }
+  @else if ($mode == pinlight) {
+    $blend: blend-pinlight($foreground, $background); }
+  @else if ($mode == hardmix) {
+    $blend: blend-hardmix($foreground, $background); }
+  @else if ($mode == colorblend) {
+    $blend: blend-colorblend($foreground, $background); }
+  @else if ($mode == dissolve) {
+    $blend: blend-dissolve($foreground, $background); }
+  @else if ($mode == divide) {
+    $blend: blend-divide($foreground, $background); }
+  @else if ($mode == hue) {
+    $blend: blend-hue($foreground, $background); }
+  @else if ($mode == luminosity) {
+    $blend: blend-luminosity($foreground, $background); }
+  @else if ($mode == saturation) {
+    $blend: blend-saturation($foreground, $background); }
+  @else if ($mode == subtract) {
+    $blend: blend-subtract($foreground, $background); }
+  $mixed: mix($blend, $background, $amount);
+  @return $mixed;
+}

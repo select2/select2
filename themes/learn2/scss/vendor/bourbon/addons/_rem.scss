@@ -1,0 +1,33 @@
+@mixin rem($property, $size, $base: $em-base) {
+  @if not unitless($base) {
+    $base: strip-units($base);
+  }
+
+  $unitless_values: ();
+  @each $num in $size {
+    @if not unitless($num) {
+      @if unit($num) == "em" {
+        $num: $num * $base;
+      }
+
+      $num: strip-units($num);
+    }
+
+    $unitless_values: append($unitless_values, $num);
+  }
+  $size: $unitless_values;
+
+  $pixel_values: ();
+  $rem_values: ();
+  @each $value in $pxval {
+    $pixel_value: $value * 1px;
+    $pixel_values: append($pixel_values, $pixel_value);
+
+    $rem_value: ($value / $base) * 1rem;
+    $rem_values: append($rem_values, $rem_value);
+  }
+
+  #{$property}: $pixel_values;
+  #{$property}: $rem_values;
+}
+

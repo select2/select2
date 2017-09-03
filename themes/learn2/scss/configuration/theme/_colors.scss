@@ -1,0 +1,60 @@
+// Core
+$core-text:						#555;
+$core-accent:					#1694CA;
+$secondary-link:				#F8B450;
+$white:							#fff;
+$black:							#000;
+$light-gray:					#ddd;
+
+// Borders
+$core-border-color:				$light-gray;
+$core-border-color-hover: 		darken($core-border-color, 10);
+$core-border-color-focus: 		$core-accent;
+
+// Shadows
+$core-box-shadow: 				inset 0 1px 3px hsla(0, 0%, 0%, 0.06);
+$core-box-shadow-focus: 		$core-box-shadow, 0 0 5px rgba(darken($core-border-color-focus, 5), 0.7);
+
+// Background
+$page-bg:						#fff;
+
+// Header
+$header-text:					#aaa;
+
+// Nav
+$nav-link:						#aaa;
+
+// Showcase
+$showcase-bg:					lighten($core-accent, 6%);
+$showcase-text:					#fff;
+
+// Feature
+$feature-bg:					#fff;
+
+// Main Body
+$main-bg:						#f7f7f7;
+$body-border:					darken($main-bg, 5%);
+
+// Sidebar
+$sidebar-text:					#aaa;
+
+// Bottom
+$bottom-bg:						#f7f7f7;
+$bottom-text:					$core-text;
+
+// Footer
+$footer-bg:						#404040;
+$footer-text:					#ccc;
+
+$rule-color: 					#F0F2F4;
+$code-text:						#c7254e;
+$code-bg:						#f9f2f4;
+$pre-text:						#237794;
+$pre-bg:						#f6f6f6;
+
+// Dark Contrast variation
+$dark-navbar-text:				#999;
+$dark-sidebar:					#222;
+$dark-sidebar-text:				#999;
+$dark-main-bg:					#333;
+$dark-body-border:				#666;

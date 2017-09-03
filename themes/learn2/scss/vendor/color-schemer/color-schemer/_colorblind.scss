@@ -1,0 +1,29 @@
+@function cs-colorblind($color, $mode: $cs-colorblind) {
+
+  // Refrence: http://www.w3.org/TR/AERT#color-contrast
+
+  // Deuteranopia
+  @if $mode == deuteranopia {
+    @return $color;
+  }
+
+  // Protanopia
+  @if $mode == protanopia {
+    @return $color;
+  }
+
+  // Tritanopia
+  @if $mode == tritanopia {
+    @return $color;
+  }
+
+
+  // Return color if no color blind mode.
+  @else {
+    @return $color;
+  }
+}
+
+@function cs-cb($color, $mode: $cs-colorblind) {
+  @return cs-colorblind($color, $mode);
+}
