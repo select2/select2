@@ -51,7 +51,7 @@ release's documentation</a> should cover the gaps here for the time being.
         typically doesn't need to be changed, but is available for situations where module names
         may change as a result of certain build environments.</p>
 
-        <p>Default value: <strong>&quot;./&quot;</strong></p>
+        <p>Default value: `select2/`</p>
       </td>
     </tr>
     <tr id="amdLanguageBase">
@@ -62,7 +62,7 @@ release's documentation</a> should cover the gaps here for the time being.
         option typically doesn't need to be changed, but is available for situations where module
         names may change as a result of certain build environments.</p>
 
-        <p>Default value: <strong>&quot;./i18n/&quot;</strong></p>
+        <p>Default value: `select2/i18n/`</p>
       </td>
     </tr>
       <tr id="closeOnSelect">
@@ -73,7 +73,7 @@ release's documentation</a> should cover the gaps here for the time being.
         making it easy to quickly select multiple items. <em>Note that this option is only
         applicable to multi-select controls</em>.</p>
 
-              <p>Default value: <strong>true</strong></p>
+              <p>Default value: `true`</p>
           </td>
       </tr>
     <tr id="containerCss">
@@ -132,7 +132,7 @@ release's documentation</a> should cover the gaps here for the time being.
     </tr>
       <tr id="dropdownParent">
           <td>dropdownParent</td>
-          <td></td>
+          <td>jQuery selector or DOM node</td>
           <td></td>
       </tr>
     <tr id="escapeMarkup">
@@ -147,12 +147,13 @@ release's documentation</a> should cover the gaps here for the time being.
     </tr>
       <tr id="language">
           <td>language</td>
-          <td></td>
+          <td>string or object</td>
           <td></td>
       </tr>
     <tr id="matcher">
       <td>matcher</td>
-      <td></td>
+      <td>A callback taking search <code>params</code> and the
+      <code>data</code> object.</td>
       <td></td>
     </tr>
       <tr id="maximumInputLength">
@@ -198,14 +199,14 @@ release's documentation</a> should cover the gaps here for the time being.
       </tr>
     <tr id="multiple">
       <td>multiple</td>
-      <td></td>
+      <td>boolean</td>
       <td>
         This option enables multi-select (pillbox) mode.  Select2 will automatically map the value of the `multiple` HTML attribute to this option during initialization.
       </td>
     </tr>
       <tr id="placeholder">
           <td>placeholder</td>
-          <td></td>
+          <td>string or object</td>
           <td></td>
       </tr>
     <tr id="query">
@@ -237,17 +238,17 @@ release's documentation</a> should cover the gaps here for the time being.
     </tr>
       <tr id="tags">
           <td>tags</td>
-          <td></td>
+          <td>boolean / array of objects</td>
           <td></td>
       </tr>
       <tr id="templateResult">
           <td>templateResult</td>
-          <td>function</td>
+          <td>callback</td>
           <td></td>
       </tr>
       <tr id="templateSelection">
           <td>templateSelection</td>
-          <td>function</td>
+          <td>callback</td>
           <td></td>
       </tr>
       <tr id="theme">
