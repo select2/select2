@@ -20,9 +20,15 @@ In addition to a prepopulated menu of options, Select2 can also allow free-text 
 </div>
 
 ```
+<select class="form-control">
+  <option selected="selected">orange</option>
+  <option>white</option>
+  <option>purple</option>
+</select>
+
 $(".js-example-tags").select2({
   tags: true
-})
+});
 ```
 
 Note that when tagging is enabled the user can select from the pre-existing options or create a new option by picking the first choice, which is what the user has typed into the search box so far.
@@ -40,6 +46,22 @@ Tagging can also be used in multi-value select boxes. In the example below, we s
     </select>
   </p>
 </div>
+
+```
+<select class="form-control" multiple="multiple">
+  <option selected="selected">orange</option>
+  <option>white</option>
+  <option selected="selected">purple</option>
+</select>
+```
+
+<script type="text/javascript">
+
+$(".js-example-tags").select2({
+  tags: true
+});
+
+</script>
 
 Try entering a value that isn't listed in the dropdown - you'll be able to add it as a new option!
 
@@ -63,12 +85,16 @@ options.
 </p>
 </div>
 
-```
+<pre data-fill-from=".js-code-example-tokenizer"></pre>
+
+<script type="text/javascript" class="js-code-example-tokenizer">
+
 $(".js-example-tokenizer").select2({
     tags: true,
     tokenSeparators: [',', ' ']
 })
-```
+
+</script>
 
 ## Customizing tag creation
 
