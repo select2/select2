@@ -118,24 +118,6 @@ You can, and should, use a `<label>` with Select2, just like any other `<select>
 
 Select2 will try to match the width of the original element as closely as possible. Sometimes this isn't perfect, in which case you may manually set the `width` [configuration option](/configuration):
 
-<dl class="dl-horizontal">
-
-<dt>element</dt>
-
-<dd>Uses the computed element width from any applicable CSS rules.</dd>
-
-<dt>resolve</dt>
-
-<dd>Uses the `style` attribute value if available, falling back to the computed element width as necessary.</dd>
-
-<dt>style</dt>
-
-<dd>Width is determined from the `select` element's `style` attribute. If no `style` attribute is found, null is returned as the width.</dd>
-
-<dt>_{width_value}_</dt>
-
-<dd>Valid CSS values can be passed as a string (i.e. `80%`).</dd>
-
 <table class="table table-striped table-bordered">
   <thead>
     <tr>
@@ -147,35 +129,33 @@ Select2 will try to match the width of the original element as closely as possib
     <tr>
       <td><code>"element"</code></td>
       <td>
-        Uses javascript to calculate the width of the source element.
+        Uses the computed element width from any applicable CSS rules.
       </td>
     </tr>
     <tr>
       <td><code>"style"</code></td>
       <td>
-        Copies the value of the width <code>style</code> attribute set on the source element.
+        Width is determined from the <code>select</code> element's <code>style</code> attribute. If no <code>style</code> attribute is found, null is returned as the width.
       </td>
     </tr>
     <tr>
       <td><code>"resolve"</code></td>
       <td>
-        Tries to use <code>style</code> to determine the width, falling back to <code>element</code>.
+        Uses the <code>style</code> attribute value if available, falling back to the computed element width as necessary.
       </td>
     </tr>
     <tr>
-      <td>Anything else</td>
+      <td><code>{width_value}</code></td>
       <td>
-        The value of the <code>width</code> option is directly set as the width of the container.
+        Valid CSS values can be passed as a string (i.e. <code>80%</code>).
       </td>
     </tr>
   </tbody>
 </table>
 
-## Responsive design - Percent width
+### Example
 
-Select2's width can be set to a percentage of its parent to support
-responsive design. The two Select2 boxes below are styled to 50% and 75%
-width respectively.
+The two Select2 boxes below are styled to `50%` and `75%` width respectively to support responsive design:
 
 <div class="s2-example">
   <p>

@@ -14,14 +14,6 @@ The results adapter can be overridden by assigning a custom adapter to the `resu
 
 ## Decorators
 
-### `Tags`
-
-This decorator implements the [tagging](/tagging) feature.
-
-**AMD Modules:**
-
-`select2/data/tags`
-
 ### `SelectOnClose`
 
 This decorator implements [automatic selection](/dropdown#automatic-selection) of the highlighted option when the dropdown is closed.

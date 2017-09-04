@@ -62,7 +62,7 @@ $('select').select2({
 
 ## Forcing the dropdown to remain open after selection
 
-You may use the `closeOnSelect` option to prevent the dropdown from closing when a result is selected:
+Select2 will automatically close the dropdown when an element is selected, similar to what is done with a normal select box.  You may use the `closeOnSelect` option to prevent the dropdown from closing when a result is selected:
 
 ```
 $('select').select2({
@@ -70,11 +70,19 @@ $('select').select2({
 });
 ```
 
->>> Note that this option is only applicable to multi-select controls.
+Note that this option is only applicable to multi-select controls.
+
+>>> If the [`CloseOnSelect` decorator](/advanced/default-adapters/dropdown#closeonselect) is not used (or `closeOnSelect` is set to <code>false</code>), the dropdown will not automatically close when a result is selected.  The dropdown will also never close if the <kbd>ctrl</kbd> key is held down when the result is selected.
 
 ## Dropdown placement
 
-The `dropdownParent` option allows you to pick an element for the dropdown to be appended to:
+>>>>> Attention [Harvest Chosen](https://harvesthq.github.io/chosen/) migrators!  If you are migrating to Select2 from Chosen, this option will cause Select2 to position the dropdown in a similar way.
+
+By default, Select2 will attach the dropdown to the end of the body and will absolutely position it to appear above or below the selection container.
+
+Select2 will display the dropdown above the container if there is not enough space below the container, but there is enough space above it.
+
+The `dropdownParent` option allows you to pick an alternative element for the dropdown to be appended to:
 
 ```
 $('select').select2({
@@ -82,6 +90,6 @@ $('select').select2({
 });
 ```
 
-### Using a Select2 control inside a Bootstrap modal
+This is useful when attempting to render Select2 correctly inside of modals and other small containers.  If you're having trouble using the search box inside a Bootstrap modal, for example, trying setting the `dropdownParent` option to the modal element.
 
-If you're having trouble using the search box inside a Bootstrap modal, trying setting the `dropdownParent` option to the modal element.
+>>>> This will cause DOM events to be raised outside of the standard Select2 DOM container. This can cause issues with third-party components such as modals.

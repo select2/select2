@@ -43,7 +43,7 @@ With the new [matcher function](/searching), only the root-level options are mat
 
 For backwards compatibility, a wrapper function has been created that allows old-style matcher functions to be converted to the new style. 
 
-This custom matcher uses a [compatibility function](/configuration/deprecated) that is only bundled in the [full version of Select2](/getting-started/builds).  You can retrieve the function from the `select2/compat/matcher` module, which should just wrap the old matcher function.
+This wrapper function is only bundled in the [full version of Select2](/getting-started/builds-and-modules).  You can retrieve the function from the `select2/compat/matcher` module, which should just wrap the old matcher function.
 
 <div class="s2-example">
     <select class="js-example-matcher-compat js-states form-control"></select>

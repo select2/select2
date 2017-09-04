@@ -17,6 +17,7 @@ The following is an attempt to provide a comprehensive list of all configuration
 | `closeOnSelect` | boolean | `true` | Controls whether the dropdown is [closed after a selection is made](/dropdown#forcing-the-dropdown-to-remain-open-after-selection). |
 | `containerCss` | | | |
 | `containerCssClass` | | | |
+| `data` | array of objects | `null` | |
 | `dataAdapter` | | `SelectAdapter` | Used to override the built-in [DataAdapter](/advanced/default-adapters/data). |
 | `debug` | boolean | | |
 | `dir` | | |

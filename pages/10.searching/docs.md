@@ -7,7 +7,7 @@ process:
 never_cache_twig: true
 ---
 
-The appearance and behavior of the search control can be easily customized with Select2.
+A search box is added to the top of the dropdown automatically for select boxes where only a single option can be selected. The behavior and appearance of the search box can be easily customized with Select2.
 
 ## Customizing how results are matched
 
@@ -93,7 +93,7 @@ $(".js-example-matcher-start").select2({
 
 </script>
 
->>> A [compatibility module]() exists for using v3-style matcher callbacks.
+>>> A [compatibility module](/upgrading/migrating-from-35#wrapper-for-old-style-matcher-callbacks) exists for using v3-style matcher callbacks.
 
 ## Minimum search term length
 

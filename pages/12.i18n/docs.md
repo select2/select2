@@ -11,7 +11,7 @@ never_cache_twig: true
 
 ## Message translations
 
-When necessary, Select2 displays certain messages to the user.  For example, a message will appear when no search results were found or more characters need to be entered in order for a search to be made. These messages have been <a href="community.html#translations">translated into many languages</a> by contributors to Select2, but you can also provide your own translations.
+When necessary, Select2 displays certain messages to the user.  For example, a message will appear when no search results were found or more characters need to be entered in order for a search to be made. These messages have been translated into many languages by contributors to Select2, but you can also provide your own translations.
 
 ### Language files
 
