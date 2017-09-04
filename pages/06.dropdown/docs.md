@@ -70,6 +70,8 @@ $('select').select2({
 });
 ```
 
+>>> Note that this option is only applicable to multi-select controls.
+
 ## Dropdown placement
 
 The `dropdownParent` option allows you to pick an element for the dropdown to be appended to:

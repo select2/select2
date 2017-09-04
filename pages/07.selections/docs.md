@@ -70,7 +70,7 @@ $(".js-example-basic-multiple-limit").select2({
 
 ## Clearable selections
 
-You can allow users to clear their current selections with the `allowClear` option when initializing Select2. Setting this option to `true` will enable an "x" icon that will reset the selection to the placeholder.
+When set to `true`, causes a clear button ("x" icon) to appear on the select box when a value is selected. Clicking the clear button will clear the selected value, effectively resetting the select box back to its placeholder value.
 
 ```
 $('select').select2({

@@ -118,6 +118,24 @@ You can, and should, use a `<label>` with Select2, just like any other `<select>
 
 Select2 will try to match the width of the original element as closely as possible. Sometimes this isn't perfect, in which case you may manually set the `width` [configuration option](/configuration):
 
+<dl class="dl-horizontal">
+
+<dt>element</dt>
+
+<dd>Uses the computed element width from any applicable CSS rules.</dd>
+
+<dt>resolve</dt>
+
+<dd>Uses the `style` attribute value if available, falling back to the computed element width as necessary.</dd>
+
+<dt>style</dt>
+
+<dd>Width is determined from the `select` element's `style` attribute. If no `style` attribute is found, null is returned as the width.</dd>
+
+<dt>_{width_value}_</dt>
+
+<dd>Valid CSS values can be passed as a string (i.e. `80%`).</dd>
+
 <table class="table table-striped table-bordered">
   <thead>
     <tr>
@@ -185,7 +203,7 @@ $(".js-example-responsive").select2({
 
 >>>> Select2 will do its best to resolve the percent width specified via a CSS class, but it is not always possible. The best way to ensure that Select2 is using a percent based width is to inline the `style` declaration into the tag.
 
-## Theme support
+## Themes
 
 Select2 supports custom themes using the `theme` option so you can style Select2 to match the rest of your application.
 

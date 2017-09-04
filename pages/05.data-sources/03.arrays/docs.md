@@ -59,3 +59,10 @@ $(".js-example-data-array-selected").select2({
   data: data
 })
 </script>
+
+## Backwards compatibility with the `tags` option
+
+In Select2 v3.5, this option was called `tags`.  However in version 4.0, `tags` now handles the [tagging feature](/tagging).
+
+For backwards compatibility the `tags` option can still accept an array of objects, in which case they will be handled in the same manner as the `data` option.
+  

@@ -67,13 +67,9 @@ Try entering a value that isn't listed in the dropdown - you'll be able to add i
 
 ## Automatic tokenization into tags
 
-Select2 supports ability to add choices automatically as the user is
-typing into the search field. Try typing in the search field below and
-entering a space or a comma.
+Select2 supports ability to add choices automatically as the user is typing into the search field. Try typing in the search field below and entering a space or a comma.
 
-The separators that should be used when tokenizing can be specified
-using the <a href="options.html#tokenSeparators">tokenSeparators</a>
-options.
+The separators that should be used when tokenizing can be specified using the `tokenSeparators` options.
 
 <div class="s2-example">
 <p>

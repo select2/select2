@@ -1,10 +1,10 @@
 ---
-title: Via data-* attributes
+title: data-* attributes
 taxonomy:
     category: docs
 ---
 
-It is recommended that you declare your configuration options by [passing in an object](/options/initializing) when initializing Select2.  However, you may also define your configuration options by using the HTML5 `data-*` attributes, which will override any options set when initializing Select2 and any [defaults](/options/initializing/defaults).
+It is recommended that you declare your configuration options by [passing in an object](/configuration) when initializing Select2.  However, you may also define your configuration options by using the HTML5 `data-*` attributes, which will override any options set when initializing Select2 and any [defaults](/configuration/defaults).
 
 ```
 <select data-placeholder="Select a state">

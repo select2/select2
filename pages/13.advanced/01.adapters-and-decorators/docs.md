@@ -6,7 +6,7 @@ taxonomy:
 
 Starting in version 4.0, Select2 uses the [Adapter pattern](https://en.wikipedia.org/wiki/Adapter_pattern) as a powerful means of extending its features and behavior.
 
-Most of the built-in features, such as those described in the previous chapters, are implemented via one of the [built-in adapters](/default-adapters).  You may further extend the functionality of Select2 by implementing your own adapters.
+Most of the built-in features, such as those described in the previous chapters, are implemented via one of the [built-in adapters](/advanced/default-adapters).  You may further extend the functionality of Select2 by implementing your own adapters.
 
 ## Adapter interfaces
 
@@ -127,4 +127,4 @@ $.fn.select2.amd.require(
 
 ## AMD Compatibility
 
-You can find more information on how to integrate Select2 with your existing AMD-based project by <a href="announcements-4.0.html#builds">viewing the 4.0 release notes</a>.  Select2 automatically loads some modules when the adapters are being automatically constructed, so those who are using Select2 with a custom AMD build using their own system may need to specify the paths that are generated to the Select2 modules.
+You can find more information on how to integrate Select2 with your existing AMD-based project [here](/getting-started/builds-and-modules).  Select2 automatically loads some modules when the adapters are being automatically constructed, so those who are using Select2 with a custom AMD build using their own system may need to specify the paths that are generated to the Select2 modules.
