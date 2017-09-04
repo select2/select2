@@ -35,15 +35,16 @@ To write these options as `data-*` attributes, each level of nesting should be s
 </select>
 ```
 
-The value of the option is subject to jQuery's <a href="https://api.jquery.com/data/#data-html5">parsing rules</a> for HTML5 data attributes.
+The value of the option is subject to jQuery's [parsing rules](https://api.jquery.com/data/#data-html5) for HTML5 data attributes.
 
->>> Due to <a href="https://github.com/jquery/jquery/issues/2070">a jQuery bug</a>, nested options using <code>data-*</code> attributes <a href="https://github.com/select2/select2/issues/2969">do not work in jQuery 1.x</a>.
+>>> Due to [a jQuery bug](https://github.com/jquery/jquery/issues/2070), nested options using `data-*` attributes [do not work in jQuery 1.x](https://github.com/select2/select2/issues/2969).
 
 ## `camelCase` options
 
-HTML data attributes are case-insensitive, so any options which contain capital letters will be parsed as if they were all lowercase. Because Select2 has many options which are camelCase, where words are separated by uppercase letters, you must write these options out with dashes instead. So an option that would normally be called <code>allowClear</code> should instead be defined as `allow-clear`.
+HTML data attributes are case-insensitive, so any options which contain capital letters will be parsed as if they were all lowercase. Because Select2 has many options which are camelCase, where words are separated by uppercase letters, you must write these options out with dashes instead. So an option that would normally be called `allowClear` should instead be defined as `allow-clear`.
 
-This means that if you declare your <code>&lt;select&gt;</code> tag as...
+This means that declaring your `<select>` tag as...
+
 ```
 <select data-tags="true" data-placeholder="Select an option" data-allow-clear="true">
     ...

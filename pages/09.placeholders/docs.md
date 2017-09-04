@@ -39,7 +39,7 @@ The most common situation is to use a string of text as your placeholder value.
     });
 </script>
 
->>> Select2 uses the `placeholder` attribute on multiple select boxes, which requires IE 10+. You can support it in older versions with <a href="https://github.com/jamesallardice/Placeholders.js">the Placeholders.js polyfill</a>.
+>>> Select2 uses the `placeholder` attribute on multiple select boxes, which requires IE 10+. You can support it in older versions with [the Placeholders.js polyfill](https://github.com/jamesallardice/Placeholders.js).
 
 ## Default selection placeholders
 

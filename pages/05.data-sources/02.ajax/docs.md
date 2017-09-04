@@ -21,7 +21,7 @@ When using Select2 with remote data, the HTML required for the `select` is the s
 </select>
 ```
 
-You can configure how Select2 searches for remote data using the `ajax` option. More information on the individual options that Select2 handles can be found in the [options documentation for `ajax`](/configuration).
+You can configure how Select2 searches for remote data using the `ajax` option:
 
 <pre data-fill-from=".js-code-placeholder"></pre>
 
@@ -105,7 +105,7 @@ $('select').select2({
 
 ## Transforming response data
 
-You can use the <code>ajax.processResults</code> option to transform the data returned by your API into the format expected by Select2:
+You can use the `ajax.processResults` option to transform the data returned by your API into the format expected by Select2:
 
 ```
 $('select').select2({

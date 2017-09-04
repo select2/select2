@@ -94,4 +94,4 @@ function log (name, evt) {
 
 ## Internal Select2 events
 
-Select2 has an internal event system that works independently of the DOM event system. This internal event system is only accessible from plugins and adapters that are connected to Select2.
+Select2 has an [internal event system](/advanced/default-adapters/selection#eventrelay) that works independently of the DOM event system. This internal event system is only accessible from plugins and adapters that are connected to Select2.
