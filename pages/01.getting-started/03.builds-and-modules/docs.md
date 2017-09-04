@@ -2,6 +2,8 @@
 title: Builds and modules
 taxonomy:
     category: docs
+process:
+    twig: true
 ---
 
 ## The different Select2 builds
@@ -33,11 +35,7 @@ should read over the list below.
         Full (<code>select2.full.js</code> / <code>select2.full.min.js</code>)
       </td>
       <td>
-        You should only use this build if you need the additional features
-        from Select2, like the
-        <a href="options.html#compatibility">compatibility modules</a> or
-        recommended includes like
-        <a href="https://github.com/jquery/jquery-mousewheel">jquery.mousewheel</a>
+        You should only use this build if you need the additional features from Select2, like the <a href="{{base_url_absolute}}/upgrading/migrating-from-35">compatibility modules</a> or recommended includes like <a href="https://github.com/jquery/jquery-mousewheel">jquery.mousewheel</a>
       </td>
     </tr>
   </tbody>

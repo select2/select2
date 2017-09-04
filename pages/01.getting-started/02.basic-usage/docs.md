@@ -1,5 +1,5 @@
 ---
-title: Basic Usage
+title: Basic usage
 taxonomy:
     category: docs
 process:

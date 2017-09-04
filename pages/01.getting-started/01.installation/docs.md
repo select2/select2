@@ -17,8 +17,7 @@ you to quickly include Select2 on your website.
 
 ### Include the assets
 
-Include the following lines of code in the <code>&lt;head&gt;</code>
-section of your HTML.
+Include the following lines of code in the `<head>` section of your HTML.
 
 ```
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
@@ -30,17 +29,13 @@ section of your HTML.
 
 ### Initialize Select2
 
-Initialize Select2 on the <code>&lt;select&gt;</code> element that you want to make awesome.
+Initialize Select2 on the `<select>` element that you want to make awesome.
 
 ```
 <script type="text/javascript">
     $('select').select2();
 </script>
 ```
-
-### Read the docs
-
-Check out the <a href="/examples">examples chapter</a> to start using the additional features of Select2.
 
 ## Downloading the code locally
 
@@ -61,7 +56,3 @@ Include the following lines of code in the `<head>` section of your HTML.
 <link href="path/to/select2.min.css" rel="stylesheet" />
 <script src="path/to/select2.min.js"></script>
 ```
-
-### Read the docs
-
-Check out the <a href="/examples">examples chapter</a> to start using the additional features of Select2.

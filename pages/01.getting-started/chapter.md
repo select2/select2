@@ -2,6 +2,9 @@
 title: Getting Started
 taxonomy:
     category: docs
+process:
+    twig: true
+twig_first: true
 ---
 
 ![Select2 logo](/images/logo.png)
@@ -19,9 +22,9 @@ Select2 gives you a customizable select box with support for searching, tagging,
           <h4>In your language</h4>
           <p>
             Select2 comes with support for
-            <a href="examples.html#rtl">RTL environments</a>,
-            <a href="examples.html#diacritics">searching with diacritics</a> and
-            <a href="examples.html#language">over 40 languages</a> built-in.
+            <a href="{{base_url_absolute}}/i18n#rtl-support">RTL environments</a>,
+            <a href="{{base_url_absolute}}/i18n#diacritics">searching with diacritics</a> and
+            <a href="{{base_url_absolute}}/i18n#">over 40 languages</a> built-in.
           </p>
       </div>
 
@@ -29,7 +32,7 @@ Select2 gives you a customizable select box with support for searching, tagging,
           <i class="fa fa-database fa-4x"></i>
           <h4>Remote data support</h4>
           <p>
-            <a href="examples.html#data-ajax">Using AJAX</a> you can efficiently
+            <a href="{{base_url_absolute}}/data-sources/ajax">Using AJAX</a> you can efficiently
             search large lists of items.
           </p>
       </div>
@@ -49,7 +52,7 @@ Select2 gives you a customizable select box with support for searching, tagging,
         <i class="fa fa-plug fa-4x"></i>
         <h4>Fully extensible</h4>
         <p>
-          The <a href="announcements-4.0.html#plugin-system">plugin system</a>
+          The <a href="{{base_url_absolute}}/advanced">plugin system</a>
           allows you to easily customize Select2 to work exactly how you want it
           to.
         </p>
@@ -60,7 +63,7 @@ Select2 gives you a customizable select box with support for searching, tagging,
         <h4>Dynamic item creation</h4>
         <p>
           Allow users to type in a new option and
-          <a href="examples.html#tags">add it on the fly</a>.
+          <a href="{{base_url_absolute}}/tagging">add it on the fly</a>.
         </p>
       </div>
 
