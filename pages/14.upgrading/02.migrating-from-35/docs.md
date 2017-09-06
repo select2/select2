@@ -315,7 +315,7 @@ In previous versions of Select2, the default messages provided to users could be
 
 ### Declaring options using `data-*` attributes
 
-In the past, Select2 has only supported declaring a subset of options using `data-*` attributes. Select2 now supports declaring all options using the attributes, using [the format specified in the documentation](/configuration/initializing/data-attributes).
+In the past, Select2 has only supported declaring a subset of options using `data-*` attributes. Select2 now supports declaring all options using the attributes, using [the format specified in the documentation](/configuration/data-attributes).
 
 You could previously declare the URL that was used for AJAX requests using the `data-ajax-url` attribute. While Select2 still allows for this, the new attribute that should be used is the `data-ajax--url` attribute. Support for the old attribute will be removed in Select2 4.1.
 

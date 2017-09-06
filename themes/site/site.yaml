@@ -8,5 +8,5 @@ streams:
          - user/themes/learn2
 github:
     position: top                                   # top | bottom | off
-    tree: https://github.com/userfrosting/learn/blob/develop/
-    commits: https://github.com/userfrosting/learn/commits/develop/
+    tree: https://github.com/select2/docs/blob/develop/
+    commits: https://github.com/select2/docs/commits/develop/
