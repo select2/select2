@@ -6,6 +6,7 @@ streams:
        '':
          - user/themes/site
          - user/themes/learn2
+google_analytics_code: UA-37689257-7
 github:
     position: top                                   # top | bottom | off
     tree: https://github.com/select2/docs/blob/develop/
