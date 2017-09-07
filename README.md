@@ -1,59 +1,47 @@
-# RTFM Skeleton
+# select2.org
 
-![RTFM Screenshot](assets/rtfm-screenshot.png)
+https://select2.org
 
-This is a sample skeleton site that mimics the official Grav documentation: http://learn.getgrav.org.  This skeleton uses the [learn2 theme](https://github.com/getgrav/grav-theme-learn2)
+This is the repository for the documentation for Select2.  It is built with the flat-file CMS [Grav](http://getgrav.org), using their [RTFM skeleton](https://github.com/getgrav/grav-skeleton-rtfm-site#rtfm-skeleton).
 
-# Features
+## Local installation
 
-* Lightweight and minimal for optimal performance
-* Fully responsive with off-page mobile navigation
-* SCSS based CSS source files for easy customization
-* Built specifically for providing easy to read documentation
-* [Font Awesome](http://fontawesome.io/) icon support
-* Viewed page tracking
-* Integrated support for documentation content sourced/maintained via GitHub
+### Step 1 - Install Grav
 
->> If you want more information about using Grav with GitHub, check out [part 1](http://getgrav.org/blog/developing-with-github-part-1) and [part 2](http://getgrav.org/blog/developing-with-github-part-2) of our guide called *Grav Development with Github*.
+This application uses the [Grav](https://learn.getgrav.org/) CMS.  This repository does not contain a full Grav installation - rather, it just contains the contents of Grav's `user` directory, which is where all of our content, themes, and assets live.  This was done as per the [recommendation on Grav's blog](https://getgrav.org/blog/developing-with-github-part-2), to make it easier to deploy changes to the live server.
 
-# Supported Page Templates
+To install this website on your computer, first [install grav core](https://getgrav.org/downloads) in a project folder called `select2-docs` under your webserver's document root folder. Then, find the `user` folder inside of your project folder.  Delete the contents of the `user` folder and clone this repository directly into the user folder.
 
-* "Docs" template
-* "Chapter" template
-* Error view template
-
-# Configuration
+When you're done it might look something like this:
 
 ```
-top_level_version: false
-home_url:
-github:
-    enabled: true
-    position: top
-    tree: https://github.com/getgrav/grav-skeleton-rtfm-site/blob/develop/
-    commits: https://github.com/getgrav/grav-skeleton-rtfm-site/commits/develop/
+htdocs/
+└── select2-docs/
+   ├── assets/
+   ├── ...
+   ├── user/
+       ├── .git
+       ├── accounts/
+       ├── assets/
+       ├── config/
+       └── ...
+   └── ...
+
 ```
 
-| Setting           | Child Setting | Description                                                                                                            |
-| :-----            | :-----        | :-----                                                                                                                 |
-| top_level_version |               | When set to `true`, displays level icons and numbered lists.                                                           |
-| home_url          |               | Enables you to enter a different URL link from the logo (ex: http://google.com)                                        |
-| github            | enabled       | Can be set to `true` or `false`. When set to `true`, it generates the **Edit this page** link to GitHub for each page. |
-| github            | position      | Sets the position for the GitHub edit link. Can be set to `top` or `bottom`.                                           |
-| github            | tree          | Sets the tree by which your site's content is based. Generally the repo your site's content is pulled from.            |
-| github            | commits       | Sets the link to the commits page for the site's content repo.                                                         |
+### Step 2
 
-## Basic Setup for a New Grav Site
+Grav needs your webserver to be able to write to certain directories.  In OSX with XAMPP installed, this won't work by default.  To deal with this:
 
-The simplest way to install the learn2 theme with RTFM content for Grav is to download and install the RTFM Skeleton package:
+Add default webserver user `daemon` to OSX's `staff` group (which already has the necessary permissions for writing to files/directories):
 
-1. [Download RTFM Skeleton](http://getgrav.org/downloads/skeletons#extras)
-2. Unzip the package into your web root folder.
-3. Point your browser at the folder.
-4. Job done!
+`sudo dseditgroup -o edit -a daemon -t user staff`
 
-**TIP:** Check out the [general Grav Installation Instructions](http://learn.getgrav.org/basics/installation) for more details on this process.
+### Step 3
 
----
+Visit the local installation in your browser!  For example, http://localhost/select2-docs.
 
+## Credits
+
+Favicons were generated with https://realfavicongenerator.net/
 
