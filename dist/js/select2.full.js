@@ -1011,7 +1011,7 @@ S2.define('select2/results',[
 
       var $childrenContainer = $('<ul></ul>', {
         'class': 'select2-results__options select2-results__options--nested',
-        'role': 'listbox'      
+        'role': 'listbox'
       });
       $childrenContainer.append($children);
       $option.attr('role', 'list');
@@ -3288,7 +3288,7 @@ S2.define('select2/data/select',[
     if ($option.is('option')) {
       data = {
         id: $option.val(),
-        text: $option.text(),
+        text: $option.text().trim(),
         disabled: $option.prop('disabled'),
         selected: $option.prop('selected'),
         title: $option.prop('title')
