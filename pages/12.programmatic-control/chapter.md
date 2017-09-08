@@ -1,7 +1,7 @@
 ---
-title: Programmatic control
+title: Methods and Events
 taxonomy:
     category: docs
 ---
 
-# Programmatic Control
+# Methods and Events
