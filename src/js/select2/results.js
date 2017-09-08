@@ -141,6 +141,12 @@ define([
         } else {
           $option.attr('aria-selected', 'false');
         }
+        
+        if (item.element != null && item.element.disabled) {
+          $option.attr('aria-disabled', 'true');
+        } else {
+          $option.attr('aria-disabled', 'false');
+        }
       });
 
     });
