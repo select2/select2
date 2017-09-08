@@ -1706,7 +1706,7 @@ S2.define('select2/selection/multiple',[
       var selection = data[d];
 
       var $selection = this.selectionContainer();
-      var formatted = this.display(selection, $selection);
+      var formatted = this.display(selection, $selection).trim();
 
       $selection.append(formatted);
       $selection.prop('title', selection.title || selection.text);
@@ -3288,7 +3288,7 @@ S2.define('select2/data/select',[
     if ($option.is('option')) {
       data = {
         id: $option.val(),
-        text: $option.text().trim(),
+        text: $option.text(),
         disabled: $option.prop('disabled'),
         selected: $option.prop('selected'),
         title: $option.prop('title')

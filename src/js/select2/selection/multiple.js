@@ -90,7 +90,7 @@ define([
       var selection = data[d];
 
       var $selection = this.selectionContainer();
-      var formatted = this.display(selection, $selection);
+      var formatted = this.display(selection, $selection).trim();
 
       $selection.append(formatted);
       $selection.prop('title', selection.title || selection.text);

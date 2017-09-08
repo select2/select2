@@ -209,7 +209,7 @@ define([
     if ($option.is('option')) {
       data = {
         id: $option.val(),
-        text: $option.text().trim(),
+        text: $option.text(),
         disabled: $option.prop('disabled'),
         selected: $option.prop('selected'),
         title: $option.prop('title')
