@@ -26,7 +26,7 @@ Select2 will trigger a few different events when different actions are taken usi
 All public events are relayed using the jQuery event system, and they are triggered on the `<select>` element that Select2 is attached to. You can attach to them using the [`.on` method](https://api.jquery.com/on/) provided by jQuery:
 
 ```
-$('select').on('select2:select', function (e) {
+$('#mySelect2').on('select2:select', function (e) {
   // Do something
 });
 ```
@@ -36,8 +36,40 @@ $('select').on('select2:select', function (e) {
 When `select2:select` is triggered, data from the selection can ba accessed via the `params.data` property:
 
 ```
-$('select').on('select2:select', function (e) {
-  console.log(e.params.data)
+$('#mySelect2').on('select2:select', function (e) {
+    var data = e.params.data;
+    console.log(data);
+});
+```
+
+`e.params.data` will return an object containing the selection properties.  Any additional data for the selection that was provided in the [data source](/data-sources/formats) will be included in this object as well.  For example:
+
+```
+{
+  "id": 1,
+  "text": "Tyto alba",
+  "genus": "Tyto",
+  "species": "alba"
+}
+```
+
+## Triggering events
+
+You can manually trigger events on a Select2 control using the jQuery [`trigger`](http://api.jquery.com/trigger/) method.  However, if you want to pass some data to any handlers for the event, you need to construct a new [jQuery `Event` object](http://api.jquery.com/category/events/event-object/) and trigger on that:
+
+```
+var data = {
+  "id": 1,
+  "text": "Tyto alba",
+  "genus": "Tyto",
+  "species": "alba"
+};
+
+$('#mySelect2').trigger({
+    type: 'select2:select',
+    params: {
+        data: data
+    }
 });
 ```
 
