@@ -31,15 +31,20 @@ and turn it into this...
 
 <script type="text/javascript" class="js-code-example-basic-single">
 $(document).ready(function() {
-  $(".js-example-basic-single").select2();
+    $('.js-example-basic-single').select2();
 });
 </script>
 
 Select2 will register itself as a jQuery function if you use any of the distribution builds, so you can call `.select2()` on any jQuery selector where you would like to initialize Select2.
 
 ```
-$('.js-example-basic-single').select2();
+// In your Javascript (external .js resource or <script> tag)
+$(document).ready(function() {
+    $('.js-example-basic-single').select2();
+});
 ```
+
+>>>>>> The DOM cannot be safely manipulated until it is "ready".  To make sure that your DOM is ready before the browser initializes the Select2 control, wrap your code in a [`$(document).ready()`](https://learn.jquery.com/using-jquery-core/document-ready/) block.  Only one `$(document).ready()` block is needed per page.
 
 ## Multi-select boxes (pillbox)
 
@@ -51,16 +56,22 @@ Select2 also supports multi-value select boxes. The select below is declared wit
   </p>
 </div>
 
-```
-<script type="text/javascript">
-$(".js-example-basic-multiple").select2();
-</script>
+**In your HTML:**
 
+```
 <select class="js-example-basic-multiple" multiple="multiple">
   <option value="AL">Alabama</option>
     ...
   <option value="WY">Wyoming</option>
 </select>
+```
+
+**In your Javascript (external `.js` resource or `<script>` tag):**
+
+```
+$(document).ready(function() {
+    $('.js-example-basic-multiple').select2();
+});
 ```
 
 <script type="text/javascript">
