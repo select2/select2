@@ -71,7 +71,7 @@ Methods handled directly by Select2 can be invoked by passing the name of the me
 The `open` method will cause the dropdown menu to open, displaying the selectable options:
 
 ```
-$('select').select2('open');
+$('#mySelect2').select2('open');
 ```
 
 ## Closing the dropdown
@@ -79,15 +79,27 @@ $('select').select2('open');
 The `close` method will cause the dropdown menu to close, hiding the selectable options:
 
 ```
-$('select').select2('close');
+$('#mySelect2').select2('close');
 ```
+
+## Checking if the plugin is initialized
+
+To test whether Select2 has been initialized on a particular DOM element, you can check for the `select2-hidden-accessible` class:
+
+```
+if ($('#mySelect2').hasClass("select2-hidden-accessible")) {
+    // Select2 has been initialized
+}
+```
+
+See [this Stack Overflow answer](https://stackoverflow.com/a/29854133/2970321)).
 
 ## Destroying the Select2 control
 
 The `destroy` method will remove the Select2 widget from the target element.  It will revert back to a standard `select` control:
   
 ```
-$('select').select2('destroy');
+$('#mySelect2').select2('destroy');
 ```
 
 ## Clearing selections
@@ -95,7 +107,7 @@ $('select').select2('destroy');
 You may clear all current selections in a Select2 control by setting the value of the control to `null`:
 
 ```
-$('select').val(null).trigger('change');
+$('#mySelect2').val(null).trigger('change');
 ```
 
 ## Examples
