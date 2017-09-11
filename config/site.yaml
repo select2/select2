@@ -6,3 +6,5 @@ taxonomies: [category,tag]
 summary:
   size: 300
 
+redirects:
+    /getting-help: /troubleshooting/getting-help

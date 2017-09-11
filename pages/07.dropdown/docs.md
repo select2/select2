@@ -55,7 +55,7 @@ If you need to render HTML with your result template, you must wrap your rendere
 Select2 can be configured to automatically select the currently highlighted result when the dropdown is closed by using the `selectOnClose` option:
 
 ```
-$('select').select2({
+$('#mySelect2').select2({
   selectOnClose: true
 });
 ```
@@ -65,7 +65,7 @@ $('select').select2({
 Select2 will automatically close the dropdown when an element is selected, similar to what is done with a normal select box.  You may use the `closeOnSelect` option to prevent the dropdown from closing when a result is selected:
 
 ```
-$('select').select2({
+$('#mySelect2').select2({
   closeOnSelect: false
 });
 ```
@@ -85,8 +85,8 @@ Select2 will display the dropdown above the container if there is not enough spa
 The `dropdownParent` option allows you to pick an alternative element for the dropdown to be appended to:
 
 ```
-$('select').select2({
-  dropdownParent: $('#my_amazing_modal')
+$('#mySelect2').select2({
+  dropdownParent: $('#myModal')
 });
 ```
 
