@@ -1,5 +1,7 @@
 ---
 title: Events
+metadata:
+    description: Listening to Select2's built-in events, and manually triggering events on the Select2 component.
 taxonomy:
     category: docs
 process:
