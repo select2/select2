@@ -60,6 +60,8 @@ $(".js-example-data-array-selected").select2({
 })
 </script>
 
+Unlike the case of items supplied by [AJAX data sources](/data-sources/ajax), items supplied as an array will be immediately rendered as `<option>` elements in the target `<select>` control.
+
 ## Backwards compatibility with the `tags` option
 
 In Select2 v3.5, this option was called `tags`.  However in version 4.0, `tags` now handles the [tagging feature](/tagging).
