@@ -4,9 +4,7 @@ taxonomy:
     category: docs
 ---
 
-Select2 can render programmatically supplied data from an array or remote data source (AJAX) as dropdown options. These will be rendered as actual `<option>` elements in the target `<select>` control.
-
-In order to accomplish this, Select2 expects a very specific data format.  This format consists of a JSON object containing an array of objects keyed by the `results` key.
+Select2 can render programmatically supplied data from an array or remote data source (AJAX) as dropdown options.  In order to accomplish this, Select2 expects a very specific data format.  This format consists of a JSON object containing an array of objects keyed by the `results` key.
 
 ```
 {
@@ -29,6 +27,33 @@ In order to accomplish this, Select2 expects a very specific data format.  This 
 Each object should contain, _at a minimum_, an `id` and a `text` property.  Any additional parameters passed in with data objects will be included on the data objects that Select2 exposes.
 
 The response object may also contain pagination data, if you would like to use the "infinite scroll" feature.  This should be specified under the `pagination` key.
+
+## Selected and disabled options
+
+You can also supply the `selected` and `disabled` properties for the options in this data structure.  For example:
+
+```
+{
+  "results": [
+    {
+      "id": 1,
+      "text": "Option 1"
+    },
+    {
+      "id": 2,
+      "text": "Option 2",
+      "selected": true
+    },
+    {
+      "id": 3,
+      "text": "Option 3",
+      "disabled": true
+    }
+  ]
+}
+```
+
+In this case, Option 2 will be pre-selected, and Option 3 will be [disabled](/options#disabling-options).
 
 ## Transforming data into the required format
 
