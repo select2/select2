@@ -42,7 +42,7 @@ $(".js-example-matcher").select2({
 });
 ```
 
->>>> When a remote data set is used, Select2 expects that the returned results have already been filtered.
+>>>> `matcher` only works with **locally supplied data** (e.g., via an [array](/data-sources/arrays)!  When a remote data set is used, Select2 expects that the returned results have already been filtered on the server side.
 
 ### Matching grouped options
 
