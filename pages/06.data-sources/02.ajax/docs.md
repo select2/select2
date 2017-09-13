@@ -282,7 +282,6 @@ function formatRepo (repo) {
 }
 
 function formatRepoSelection (repo) {
-  console.log(repo);
   return repo.full_name || repo.text;
 }
 </script>

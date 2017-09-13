@@ -39,3 +39,9 @@ img.img-flag {
     height: 15px;
     width: 18px;
 }
+
+/* Override some styles for Select2 component elements */
+input.select2-search__field {
+    margin-bottom: 0;
+    line-height: inherit;
+}
