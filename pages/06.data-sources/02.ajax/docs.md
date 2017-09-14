@@ -51,14 +51,14 @@ Sometimes, you may need to add additional query parameters to the request.  You 
 ```
 $('#mySelect2').select2({
   ajax: {
-    url: 'https://api.github.com/search/repositories',
+    url: 'https://api.github.com/orgs/select2/repos',
     data: function (params) {
       var query = {
         search: params.term,
-        page: params.page
+        type: 'public'
       }
 
-      // Query parameters will be ?search=[term]&page=[page]
+      // Query parameters will be ?search=[term]&type=public
       return query;
     }
   }
@@ -98,6 +98,64 @@ To provide default selections, you may include an `<option>` for each selection 
 ```
 
 To achieve this programmatically, you will need to [create and append a new `Option`](/programmatic-control/add-select-clear-items).
+
+## Pagination
+
+Select2 supports pagination ("infinite scrolling") for remote data sources out of the box.  To use this feature, your remote data source must be able to respond to paginated requests (server-side frameworks like [Laravel](https://laravel.com/docs/5.5/pagination) and [UserFrosting](https://learn.userfrosting.com/database/data-sprunjing) have this built-in).
+
+To use pagination, you must tell Select2 to add any necessary pagination parameters to the request by overriding the `ajax.data` setting.  The current page to be retrieved is stored in the `params.page` property.
+
+```
+$('#mySelect2').select2({
+  ajax: {
+    url: 'https://api.github.com/search/repositories',
+    data: function (params) {
+      var query = {
+        search: params.term,
+        page: params.page || 1
+      }
+
+      // Query parameters will be ?search=[term]&page=[page]
+      return query;
+    }
+  }
+});
+```
+
+Select2 will expect a `pagination.more` value in the response.  The value of `more` should be `true` or `false`, which tells Select2 whether or not there are more pages of results available for retrieval:
+
+```
+{
+  "results": [
+    {
+      "id": 1,
+      "text": "Option 1"
+    },
+    {
+      "id": 2,
+      "text": "Option 2"
+    }
+  ],
+  "pagination": {
+    "more": true
+  }
+}
+```
+
+If your server-side code does not generate the `pagination.more` property in the response, you can use `processResults` to generate this value from other information that is available.  For example, suppose your API returns a `count_filtered` value that tells you how many total (unpaginated) results are available in the data set.  If you know that your paginated API returns 10 results at a time, you can use this along with the value of `count_filtered` to compute the value of `pagination.more`:
+
+```
+processResults: function (data, params) {
+    params.page = params.page || 1;
+
+    return {
+        results: data.results,
+        pagination: {
+            more: (params.page * 10) < data.count_filtered
+        }
+    };
+}
+```
 
 ## Rate-limiting requests
 
