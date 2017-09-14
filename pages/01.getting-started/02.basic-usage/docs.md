@@ -22,7 +22,7 @@ and turn it into this...
 </div>
 
 ```
-<select class="js-example-basic-single">
+<select class="js-example-basic-single" name="state">
   <option value="AL">Alabama</option>
     ...
   <option value="WY">Wyoming</option>
@@ -59,7 +59,7 @@ Select2 also supports multi-value select boxes. The select below is declared wit
 **In your HTML:**
 
 ```
-<select class="js-example-basic-multiple" multiple="multiple">
+<select class="js-example-basic-multiple" name="states[]" multiple="multiple">
   <option value="AL">Alabama</option>
     ...
   <option value="WY">Wyoming</option>
