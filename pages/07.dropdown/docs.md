@@ -92,4 +92,11 @@ $('#mySelect2').select2({
 
 This is useful when attempting to render Select2 correctly inside of modals and other small containers.  If you're having trouble using the search box inside a Bootstrap modal, for example, trying setting the `dropdownParent` option to the modal element.
 
->>>> This will cause DOM events to be raised outside of the standard Select2 DOM container. This can cause issues with third-party components such as modals.
+If you run into positioning issues while using the default `body` attachment, you may find it helpful to use your browser console to inspect the values of:
+
+- `document.body.style.position`
+- `$(document.body).offset()`
+
+See [this issue](https://github.com/select2/select2/issues/3970#issuecomment-160496724).
+
+>>>> `dropdownParent` will cause DOM events to be raised outside of the standard Select2 DOM container. This can cause issues with third-party components such as modals.
