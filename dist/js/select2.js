@@ -1924,7 +1924,7 @@ S2.define('select2/selection/search',[
           var item = $previousChoice.data('data');
 
           self.searchRemoveChoice(item);
-
+          self.$search.val("").blur().focus();
           evt.preventDefault();
         }
       }
