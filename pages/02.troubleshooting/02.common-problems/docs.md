@@ -40,3 +40,9 @@ $.fn.modal.Constructor.prototype.enforceFocus = function() {};
 ```
 
 See [this answer](https://stackoverflow.com/questions/18487056/select2-doesnt-work-when-embedded-in-a-bootstrap-modal/19574076#19574076) for more information.
+
+### The dropdown becomes misaligned/displaced when using pinch-zoom.
+
+See https://github.com/select2/select2/issues/5048.  The problem is that some browsers' implementations of pinch-zoom affect the `body` element, which [Select2 attaches to by default](https://select2.org/dropdown#dropdown-placement), causing it to render incorrectly.
+
+The solution is to use `dropdownParent` to attach the dropdown to a more specific element.
