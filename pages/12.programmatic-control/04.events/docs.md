@@ -137,7 +137,7 @@ function log (name, evt) {
 
 ## Preventing events
 
-See https://stackoverflow.com/a/26706695/2970321.
+See [https://stackoverflow.com/a/26706695/2970321](https://stackoverflow.com/a/26706695/2970321).
 
 ## Internal Select2 events
 
