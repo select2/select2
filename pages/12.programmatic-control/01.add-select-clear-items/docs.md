@@ -85,15 +85,6 @@ $.ajax({
 
 Notice that we manually trigger the `select2:select` event and pass along the entire `data` object.  This allows other handlers to [access additional properties of the selected item](/programmatic-control/events#triggering-events).
 
-### Limiting the scope of the `change` event
-
-It's common for other components to be listening to the `change` event, or for custom event handlers to be attached that may have side effects.  To limit the scope to **only** notify Select2 of the change, use the `.select2` event namespace:
-
-```
-$('#mySelect2').val('US'); // Change the value or make some change to the internal state
-$('#mySelect2').trigger('change.select2'); // Notify only Select2 of changes
-```
-
 ## Clearing selections
 
 You may clear all current selections in a Select2 control by setting the value of the control to `null`:

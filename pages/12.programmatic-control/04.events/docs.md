@@ -9,19 +9,20 @@ process:
 never_cache_twig: true
 ---
 
-Select2 will trigger a few different events when different actions are taken using the component, allowing you to add custom hooks and perform actions.
+Select2 will trigger a few different events when different actions are taken using the component, allowing you to add custom hooks and perform actions.  You may also manually trigger these events on a Select2 control using `.trigger`.
 
 | Event | Description |
 | ----- | ----------- |
 | `change` | Triggered whenever an option is selected or removed. |
+| `change.select2` | Scoped version of `change`.  See [below](#limiting-the-scope-of-the-change-event) for more details. |
 | `select2:closing` | Triggered before the dropdown is closed. This event can be prevented. |
-| `select2:close` | Triggered whenever the dropdown is closed. <code>select2:closing</code> is fired before this and can be prevented. |
+| `select2:close` | Triggered whenever the dropdown is closed. `select2:closing` is fired before this and can be prevented. |
 | `select2:opening` | Triggered before the dropdown is opened. This event can be prevented. |
-| `select2:open` | Triggered whenever the dropdown is opened. <code>select2:opening</code> is fired before this and can be prevented. |
+| `select2:open` | Triggered whenever the dropdown is opened. `select2:opening` is fired before this and can be prevented. |
 | `select2:selecting` | Triggered before a result is selected. This event can be prevented. |
-| `select2:select` | Triggered whenever a result is selected. <code>select2:selecting</code> is fired before this and can be prevented. |
+| `select2:select` | Triggered whenever a result is selected. `select2:selecting` is fired before this and can be prevented. |
 | `select2:unselecting` | Triggered before a selection is removed. This event can be prevented. |
-| `select2:unselect` | Triggered whenever a selection is removed. <code>select2:unselecting</code> is fired before this and can be prevented. |
+| `select2:unselect` | Triggered whenever a selection is removed. `select2:unselecting` is fired before this and can be prevented. |
 
 ## Listening for events
 
@@ -75,8 +76,14 @@ $('#mySelect2').trigger({
 });
 ```
 
-### What events can be prevented? How can I prevent a selection from being made?
+### Limiting the scope of the `change` event
 
+It's common for other components to be listening to the `change` event, or for custom event handlers to be attached that may have side effects.  To limit the scope to **only** notify Select2 of the change, use the `.select2` event namespace:
+
+```
+$('#mySelect2').val('US'); // Change the value or make some change to the internal state
+$('#mySelect2').trigger('change.select2'); // Notify only Select2 of changes
+```
 
 ## Examples
 
@@ -127,6 +134,10 @@ function log (name, evt) {
   });
 }
 </script>
+
+## Preventing events
+
+See https://stackoverflow.com/a/26706695/2970321.
 
 ## Internal Select2 events
 
