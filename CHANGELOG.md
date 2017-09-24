@@ -1,5 +1,11 @@
 # Change Log
 
+## 4.0.5
+
+### Translations
+- Spanish translation: Update the 'errorLoading' message (#5032)
+
+
 ## 4.0.4
 
 ### New features / Improvements
