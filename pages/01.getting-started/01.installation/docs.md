@@ -20,8 +20,8 @@ you to quickly include Select2 on your website.
 Include the following lines of code in the `<head>` section of your HTML.
 
 ```
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
 ```
 
 >>> <i class="fa fa-info-circle"></i> Immediately following a new release, it takes some time for CDNs to
