@@ -24,6 +24,8 @@ define(function () {
         message += 's';
       }
 
+      message += ' ou plus';
+
       return message;
     },
     loadingMore: function () {
