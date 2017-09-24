@@ -7,6 +7,7 @@
 - Support selecting options with blank or `0` option values [https://github.com/select2/select2/commit/16b4840c0e2df0461998e3b464ee0a546173950d, https://github.com/select2/select2/commit/0358ee528765157234643d289bce6b8ca5889c72]
 
 ### Bug fixes
+- Fix issue with entire form losing focus when tabbing away from a Select2 control (#4419)
 - Fix UMD support for CommonJS [https://github.com/select2/select2/commit/45a877345482956021161203ac789c25f40a7d5e]
 
 ### Documentation
