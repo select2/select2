@@ -57,7 +57,10 @@
     "grunt-gh-pages": "^0.9.1",
     "grunt-jekyll": "^0.4.2",
     "grunt-sass": "^1.0.0",
-    "grunt-saucelabs": "^9.0.0"
+    "grunt-saucelabs": "^9.0.0",
+    "node-sass": "^4.5.3",
+    "request": "<=2.81.0",
+    "shrinkwrap": "^0.4.0"
   },
   "dependencies": {
     "almond": "~0.3.1",
