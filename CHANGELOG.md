@@ -9,6 +9,7 @@
 - Updates to Slovak (#4915)
 - Fixed Norwegian `inputTooShort` message (#4896)
 - Add Bosnian translation (`bs`) (#4504)
+- Improve French translation (#4988)
 
 ## 4.0.4
 
