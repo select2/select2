@@ -1,1 +1,44 @@
-!function(){if(jQuery&&jQuery.fn&&jQuery.fn.select2&&jQuery.fn.select2.amd)var e=jQuery.fn.select2.amd;return e.define("select2/i18n/af",[],function(){return{errorLoading:function(){return"Die resultate kon nie gelaai word."},inputTooLong:function(e){var n=e.input.length-e.maximum,r="Verwyders asseblief "+n+" karakter";return 1!=n&&(r+="s"),r},inputTooShort:function(e){var n=e.minimum-e.input.length,r="Voer asseblief "+n+" of meer karakters";return r},loadingMore:function(){return"Meer resultate word gelaai…"},maximumSelected:function(e){var n="Kies asseblief net "+e.maximum+" item";return 1!=e.maximum&&(n+="s"),n},noResults:function(){return"Geen resultate gevind"},searching:function(){return"Besig…"}}}),{define:e.define,require:e.require}}();
+define(function () {
+  // English
+  return {
+    errorLoading: function () {
+      return 'Die resultate kon nie gelaai word nie.';
+    },
+    inputTooLong: function (args) {
+      var overChars = args.input.length - args.maximum;
+
+      var message = 'Verwyders asseblief ' + overChars + ' character';
+
+      if (overChars != 1) {
+        message += 's';
+      }
+
+      return message;
+    },
+    inputTooShort: function (args) {
+      var remainingChars = args.minimum - args.input.length;
+
+      var message = 'Voer asseblief ' + remainingChars + ' of meer karakters';
+
+      return message;
+    },
+    loadingMore: function () {
+      return 'Meer resultate word gelaai…';
+    },
+    maximumSelected: function (args) {
+      var message = 'Kies asseblief net ' + args.maximum + ' item';
+
+      if (args.maximum != 1) {
+        message += 's';
+      }
+
+      return message;
+    },
+    noResults: function () {
+      return 'Geen resultate gevind';
+    },
+    searching: function () {
+      return 'Besig…';
+    }
+  };
+});
