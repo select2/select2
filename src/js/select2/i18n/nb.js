@@ -12,13 +12,7 @@ define(function () {
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
-      var message = 'Vennligst skriv inn ';
-
-      if (remainingChars > 1) {
-        message += remainingChars;
-      } else {
-        message += 'ett';
-      }
+      var message = 'Vennligst skriv inn ' + remainingChars + ' tegn til';
 
       return message + ' tegn til';
     },

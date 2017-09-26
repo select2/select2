@@ -7,7 +7,7 @@
 - Fix typo in Romanian (#5005)
 - Add translations for lower and upper Sorbian (`dsb` and `hsb`) (#4949)
 - Updates to Slovak (#4915)
-- Fixed Norwegian `inputTooShort` message (#4896)
+- Fixed Norwegian `inputTooShort` message (#4817, 4896)
 - Add Bosnian translation (`bs`) (#4504)
 - Improve French translation (#4988)
 
