@@ -43,7 +43,7 @@ test('clear is not displayed for single placeholder', function (assert) {
 
 test('clear is not displayed for multiple placeholder', function (assert) {
   var selection = new AllowClearPlaceholder(
-    $('#qunit-fixture .single-with-placeholder'),
+    $('#qunit-fixture .multiple'),
     allowClearOptions
   );
 
@@ -90,7 +90,7 @@ test('clicking clear will set the placeholder value', function (assert) {
 
   var $selection = selection.render();
 
-  selection.bind(container, $('<div></div'));
+  selection.bind(container, $('<div></div>'));
 
   $element.val('One');
   selection.update([{
@@ -109,7 +109,7 @@ test('clicking clear will set the placeholder value', function (assert) {
 });
 
 test('clicking clear will trigger the unselect event', function (assert) {
-  assert.expect(3);
+  assert.expect(4);
 
   var $element = $('#qunit-fixture .single-with-placeholder');
 
@@ -121,7 +121,7 @@ test('clicking clear will trigger the unselect event', function (assert) {
 
   var $selection = selection.render();
 
-  selection.bind(container, $('<div></div'));
+  selection.bind(container, $('<div></div>'));
 
   $element.val('One');
   selection.update([{
@@ -143,15 +143,19 @@ test('clicking clear will trigger the unselect event', function (assert) {
     assert.equal(
       ev.data.id,
       'One',
-      'The previous object should be unselected'
+      'The data should be the unselected object'
+    );
+
+    assert.equal(
+      $element.val(),
+      'placeholder',
+      'The previous value should be unselected'
     );
   });
 
   var $remove = $selection.find('.select2-selection__clear');
   $remove.trigger('mousedown');
 });
-
-
 
 test('preventing the unselect event cancels the clearing', function (assert) {
   var $element = $('#qunit-fixture .single-with-placeholder');
@@ -164,7 +168,7 @@ test('preventing the unselect event cancels the clearing', function (assert) {
 
   var $selection = selection.render();
 
-  selection.bind(container, $('<div></div'));
+  selection.bind(container, $('<div></div>'));
 
   $element.val('One');
   selection.update([{
@@ -197,7 +201,7 @@ test('clear does not work when disabled', function (assert) {
 
   var $selection = selection.render();
 
-  selection.bind(container, $('<div></div'));
+  selection.bind(container, $('<div></div>'));
 
   selection.update([{
     id: 'One',
