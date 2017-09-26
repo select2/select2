@@ -190,6 +190,94 @@ test('preventing the unselect event cancels the clearing', function (assert) {
   );
 });
 
+test('clicking clear will trigger the clear event', function (assert) {
+  assert.expect(5);
+
+  var $element = $('#qunit-fixture .single-with-placeholder');
+
+  var selection = new AllowClearPlaceholder(
+    $element,
+    allowClearOptions
+  );
+  var container = new MockContainer();
+
+  var $selection = selection.render();
+
+  selection.bind(container, $('<div></div>'));
+
+  $element.val('One');
+  selection.update([{
+    id: 'One',
+    text: 'One'
+  }]);
+
+  selection.on('clear', function (ev) {
+    assert.ok(
+      'data' in ev && ev.data,
+      'The event should have been triggered with the data property'
+    );
+
+    assert.ok(
+      $.isArray(ev.data),
+      'The data should be an array'
+    );
+
+    assert.equal(
+      ev.data.length,
+      1,
+      'The data should contain one item for each value'
+    );
+
+    assert.equal(
+      ev.data[0].id,
+      'One',
+      'The data should contain unselected objects'
+    );
+
+    assert.equal(
+      $element.val(),
+      'placeholder',
+      'The previous value should be unselected'
+    );
+  });
+
+  var $remove = $selection.find('.select2-selection__clear');
+  $remove.trigger('mousedown');
+});
+
+test('preventing the clear event cancels the clearing', function (assert) {
+  var $element = $('#qunit-fixture .single-with-placeholder');
+
+  var selection = new AllowClearPlaceholder(
+    $element,
+    allowClearOptions
+  );
+  var container = new MockContainer();
+
+  var $selection = selection.render();
+
+  selection.bind(container, $('<div></div>'));
+
+  $element.val('One');
+  selection.update([{
+    id: 'One',
+    text: 'One'
+  }]);
+
+  selection.on('clear', function (ev) {
+    ev.prevented = true;
+  });
+
+  var $remove = $selection.find('.select2-selection__clear');
+  $remove.trigger('mousedown');
+
+  assert.equal(
+    $element.val(),
+    'One',
+    'The placeholder should not have been set'
+  );
+});
+
 test('clear does not work when disabled', function (assert) {
   var $element = $('#qunit-fixture .single-with-placeholder');
 
