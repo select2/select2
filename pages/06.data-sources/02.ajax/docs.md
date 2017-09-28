@@ -22,7 +22,7 @@ Select2 comes with AJAX support built in, using jQuery's AJAX methods. In this e
 **In your Javascript:**
 
 ```
-$('.js-example-data-ajax').select2({
+$('.js-data-example-ajax').select2({
   ajax: {
     url: 'https://api.github.com/search/repositories',
     dataType: 'json'
