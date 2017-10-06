@@ -1612,7 +1612,7 @@ S2.define('select2/selection/multiple',[
 
     MultipleSelection.__super__.bind.apply(this, arguments);
 
-    this.$selection.on('click', function (evt) {
+    this.$selection.on('click.select2Toggle', function (evt) {
       self.trigger('toggle', {
         originalEvent: evt
       });
