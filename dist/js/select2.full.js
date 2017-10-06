@@ -1521,7 +1521,7 @@ S2.define('select2/selection/single',[
     this.$selection.find('.select2-selection__rendered').attr('id', id);
     this.$selection.attr('aria-labelledby', id);
 
-    this.$selection.on('click', function (evt) {
+    this.$selection.on('click.select2Single', function (evt) {
       // Only respond to left clicks
       if (evt.which !== 1) {
         return;
