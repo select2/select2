@@ -1522,6 +1522,7 @@ S2.define('select2/selection/single',[
     this.$selection.attr('aria-labelledby', id);
 
     this.$selection.on('click.select2Single', function (evt) {
+      console.log('click.select2Single');
       // Only respond to left clicks
       if (evt.which !== 1) {
         return;
@@ -1613,6 +1614,7 @@ S2.define('select2/selection/multiple',[
     MultipleSelection.__super__.bind.apply(this, arguments);
 
     this.$selection.on('click.select2Toggle', function (evt) {
+      console.log('click.select2Toggle');
       self.trigger('toggle', {
         originalEvent: evt
       });
@@ -1622,6 +1624,7 @@ S2.define('select2/selection/multiple',[
       'click.select2MultipleRemove',
       '.select2-selection__choice__remove',
       function (evt) {
+        console.log('click.select2MultipleRemove');
         // Ignore the event if it is disabled
         if (self.options.get('disabled')) {
           return;
