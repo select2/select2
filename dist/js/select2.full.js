@@ -1619,7 +1619,7 @@ S2.define('select2/selection/multiple',[
     });
 
     this.$selection.on(
-      'click',
+      'click.select2MultipleRemove',
       '.select2-selection__choice__remove',
       function (evt) {
         // Ignore the event if it is disabled
