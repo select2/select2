@@ -1,6 +1,7 @@
 Select2
 =======
 [![Build Status][travis-ci-image]][travis-ci-status]
+[![jsDelivr Hits][jsdelivr-badge]][jsdelivr-hits]
 
 Select2 is a jQuery-based replacement for select boxes. It supports searching,
 remote data sets, and pagination of results.
@@ -94,6 +95,8 @@ The license is available within the repository in the [LICENSE][license] file.
 [documentation-folder]: https://github.com/select2/select2/tree/master/docs
 [freenode]: https://freenode.net/
 [jsdelivr]: http://www.jsdelivr.com/#!select2
+[jsdelivr-badge]: https://data.jsdelivr.com/v1/package/npm/select2/badge?style=rounded
+[jsdelivr-hits]: https://www.jsdelivr.com/package/npm/select2
 [license]: LICENSE.md
 [releases]: https://github.com/select2/select2/releases
 [saucelabs-matrix]: https://saucelabs.com/browser-matrix/select2.svg
