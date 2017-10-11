@@ -83,7 +83,7 @@ $('#mySelect2').select2({
 });
 ```
 
->>> Select2 expects results from the remote endpoint to be filtered on the **server side**. If server-side filtering is not possible, you may be interested in using Select2's [support for data arrays](/data-sources/arrays) instead.
+>>> Select2 expects results from the remote endpoint to be filtered on the **server side**. See [this comment](https://github.com/select2/select2/issues/2321#issuecomment-42749687) for an explanation of why this implementation choice was made. If server-side filtering is not possible, you may be interested in using Select2's [support for data arrays](/data-sources/arrays) instead.
 
 ## Default (pre-selected) values
 
