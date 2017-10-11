@@ -52,6 +52,13 @@ define([
           if (d.id === val) {
             tabId = d.tabId;
             return false;
+          } else if (d.children && d.children.length) {
+            $.each(d.children, function(i, c) {
+              if (c.id === val) {
+                tabId = c.tabId;
+                return false;
+              }
+            });
           }
         });
       } catch (e) {}
