@@ -125,7 +125,7 @@ You may limit the maximum length of search terms by using the `maximumInputLengt
 
 ```
 $('select').select2({
-  maximumInputLength: 20 // only allow terms up to 20 characters long
+    maximumInputLength: 20 // only allow terms up to 20 characters long
 });
 ```
 
@@ -137,24 +137,48 @@ This option is useful for cases where local data is used with a small result set
 
 ```
 $('select').select2({
-  minimumResultsForSearch: 20 // at least 20 results must be displayed
+    minimumResultsForSearch: 20 // at least 20 results must be displayed
 });
 ```
 
 ## Hiding the search box
 
-Select2 allows you to hide the search box depending on the number of options which are displayed. In this example, we use the value `Infinity` to tell Select2 to never display the search box.
+### Single select
+
+For single selects, Select2 allows you to hide the search box using the `minimumResultsForSearch` configuration option. In this example, we use the value `Infinity` to tell Select2 to never display the search box.
 
 <div class="s2-example">
-    <select class="js-example-basic-hide-search js-states form-control"></select>
+    <select id="js-example-basic-hide-search" class="js-states form-control"></select>
 </div>
 
-<pre data-fill-from=".js-code-example-basic-hide-search"></pre>
+<pre data-fill-from="#js-code-example-basic-hide-search"></pre>
 
-<script type="text/javascript" class="js-code-example-basic-hide-search">
+<script type="text/javascript" id="js-code-example-basic-hide-search">
 
-$(".js-example-basic-hide-search").select2({
-  minimumResultsForSearch: Infinity
+$("#js-example-basic-hide-search").select2({
+    minimumResultsForSearch: Infinity
 });
 
 </script>
+
+### Multi-select
+
+For multi-select boxes, there is no distinct search control. So, to disable search for multi-select boxes, you will need to set the `disabled` property to true whenever the dropdown is opened or closed:
+
+<div class="s2-example">
+    <select id="js-example-basic-hide-search-multi" class="js-states form-control" multiple="multiple"></select>
+</div>
+
+<pre data-fill-from="#js-code-example-basic-hide-search-multi"></pre>
+
+<script type="text/javascript" id="js-code-example-basic-hide-search-multi">
+
+$('#js-example-basic-hide-search-multi').select2();
+
+$('#js-example-basic-hide-search-multi').on('select2:opening select2:closing', function( event ) {
+    var $searchfield = $(this).parent().find('.select2-search__field');
+    $searchfield.prop('disabled', true);
+});
+</script>
+
+See [this issue](https://github.com/select2/select2/issues/4797) for the source of this solution.
