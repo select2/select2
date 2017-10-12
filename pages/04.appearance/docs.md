@@ -127,27 +127,27 @@ Select2 will try to match the width of the original element as closely as possib
   </thead>
   <tbody>
     <tr>
-      <td><code>"element"</code></td>
+      <td><code>'element'</code></td>
       <td>
         Uses the computed element width from any applicable CSS rules.
       </td>
     </tr>
     <tr>
-      <td><code>"style"</code></td>
+      <td><code>'style'</code></td>
       <td>
         Width is determined from the <code>select</code> element's <code>style</code> attribute. If no <code>style</code> attribute is found, null is returned as the width.
       </td>
     </tr>
     <tr>
-      <td><code>"resolve"</code></td>
+      <td><code>'resolve'</code></td>
       <td>
         Uses the <code>style</code> attribute value if available, falling back to the computed element width as necessary.
       </td>
     </tr>
     <tr>
-      <td><code>{width_value}</code></td>
+      <td><code>'&lt;value&gt;'</code></td>
       <td>
-        Valid CSS values can be passed as a string (i.e. <code>80%</code>).
+        Valid CSS values can be passed as a string (e.g. <code>width: '80%'</code>).
       </td>
     </tr>
   </tbody>
