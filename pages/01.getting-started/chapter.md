@@ -74,3 +74,5 @@ Select2 gives you a customizable select box with support for searching, tagging,
       </div>
     </div>
 </div>
+
+>>>>> <p style="text-align: left;">Looking for the documentation for Select2 3.5.3?  That can still be found <a href="http://select2.github.io/select2/">here</a>.</p>
