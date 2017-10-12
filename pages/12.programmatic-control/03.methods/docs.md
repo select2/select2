@@ -49,6 +49,26 @@ The `destroy` method will remove the Select2 widget from the target element.  It
 $('#mySelect2').select2('destroy');
 ```
 
+### Event unbinding
+
+When you destroy a Select2 control, Select2 will only unbind the events that were automatically bound by the plugin.  Any events that you bind in your own code, **including any [Select2 events](/programmatic-control/events) that you explicitly bind,** will need to be unbound manually using the `.off` jQuery method:
+
+```
+// Set up a Select2 control
+$('#example').select2();
+
+// Bind an event
+$('#example').on('select2:select', function (e) { 
+    console.log('select event');
+});
+
+// Destroy Select2
+$('#example').select2('destroy');
+
+// Unbind the event
+$('#example').off('select2:select');
+```
+
 ## Examples
 
 <div class="s2-example">
