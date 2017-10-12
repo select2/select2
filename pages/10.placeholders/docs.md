@@ -13,7 +13,7 @@ Select2 supports displaying a placeholder value using the `placeholder` configur
 
 The most common situation is to use a string of text as your placeholder value.
 
-**In order for a string placeholder value to appear**, you must have a blank `<option>` as the first option in your `<select>` control.  This is because the browser tries to select the first option by default. If your first option were non-empty, the browser would display this instead of the placeholder. Note that this issue does not apply to multiple selects.
+### Single select placeholders
 
 <div class="s2-example">
   <p>
@@ -21,22 +21,41 @@ The most common situation is to use a string of text as your placeholder value.
       <option></option>
     </select>
   </p>
-  <p>
-    <select class="js-example-placeholder-multiple js-states form-control" multiple="multiple"></select>
-  </p>
 </div>
 
-<pre data-fill-from=".js-code-placeholder"></pre>
+```html
+<select class="js-example-placeholder-single js-states form-control">
+  <option></option>
+</select>
+```
 
-<script type="text/javascript" class="js-code-placeholder">
-    $(".js-example-placeholder-single").select2({
-      placeholder: "Select a state",
-      allowClear: true
-    });
-    
-    $(".js-example-placeholder-multiple").select2({
-      placeholder: "Select a state"
-    });
+<pre data-fill-from="#example-placeholder-single-select"></pre>
+
+<script type="text/javascript" id="example-placeholder-single-select" class="js-code-placeholder">
+$(".js-example-placeholder-single").select2({
+    placeholder: "Select a state",
+    allowClear: true
+});
+</script>
+
+>>> **For single selects only**, in order for the placeholder value to appear, you must have a blank `<option>` as the first option in your `<select>` control.  This is because the browser tries to select the first option by default. If your first option were non-empty, the browser would display this instead of the placeholder.
+
+### Multi-select placeholders
+
+For multi-selects, you must **not** have an empty `<option>` element:
+
+<select class="js-example-placeholder-multiple js-states form-control" multiple="multiple"></select>
+
+```html
+<select class="js-example-placeholder-multiple js-states form-control" multiple="multiple"></select>
+```
+
+<pre data-fill-from="#example-placeholder-multi-select"></pre>
+
+<script type="text/javascript" id="example-placeholder-multi-select" class="js-code-placeholder">
+$(".js-example-placeholder-multiple").select2({
+    placeholder: "Select a state"
+});
 </script>
 
 >>> Select2 uses the `placeholder` attribute on multiple select boxes, which requires IE 10+. You can support it in older versions with [the Placeholders.js polyfill](https://github.com/jamesallardice/Placeholders.js).
