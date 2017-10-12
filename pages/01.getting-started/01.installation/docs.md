@@ -4,53 +4,45 @@ taxonomy:
     category: docs
 ---
 
-In order to use Select2, you must include the JavaScript and CSS file on
-your website. You can get these files built for you from many different
-locations.
+In order to use Select2, you must include the compiled JavaScript and CSS files on your website. There are multiple options for including these pre-compiled files, also known as a **distribution**, in your website or application.
 
 ## Using Select2 from a CDN
 
-Select2 is hosted on both the
-<a href="https://cdnjs.com/libraries/select2">cdnjs</a> and
-<a href="https://www.jsdelivr.com/#!select2">jsDelivr</a> CDNs, allowing
-you to quickly include Select2 on your website.
+A CDN (content delivery network) is the fastest way to get up and running with Select2!
 
-### Include the assets
-
-Include the following lines of code in the `<head>` section of your HTML.
+Select2 is hosted on both the [cdnjs](https://cdnjs.com/libraries/select2) and [jsDelivr](https://www.jsdelivr.com/#!select2) CDNs. Simply include the following lines of code in the `<head>` section of your page:
 
 ```
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
 ```
 
->>> <i class="fa fa-info-circle"></i> Immediately following a new release, it takes some time for CDNs to
-  catch up and get the new versions live on the CDN.
+>>> <i class="fa fa-info-circle"></i> Immediately following a new release, it takes some time for CDNs to catch up and get the new versions live on the CDN.
 
-### Initialize Select2
+## Installing with Bower
 
-Initialize Select2 on the `<select>` element that you want to make awesome.
+Select2 is available on Bower.  Add the following to your `bower.json` file and then run `bower install`:
 
 ```
-<script type="text/javascript">
-    $('select').select2();
-</script>
+"dependencies": {
+    "select2": "~4.0"
+}
 ```
 
-## Downloading the code locally
+Or, run `bower install select2` from your project directory.
 
-In some situations, you can't use Select2 from a CDN and you must include the files through your own static file servers.
+The precompiled distribution files will be available in `vendor/select2/dist/css/` and `vendor/select2/dist/js/`, relative to your project directory. Include them in your page:
 
-### Download the code
+```
+<link href="vendor/select2/dist/css/select2.min.css" rel="stylesheet" />
+<script src="vendor/select2/dist/js/select2.min.js"></script>
+```
 
-<a href="https://github.com/select2/select2/tags">
-  Download the code
-</a>
-from GitHub and copy the `dist` directory to your project.
+## Manual installation
 
-### Include the assets
+We strongly recommend that you use either a CDN or a package manager like Bower or npm. This will make it easier for you to deploy your project in different environments, and easily update Select2 when new versions are released. Nonetheless if you prefer to integrate Select2 into your project manually, you can [download the release of your choice](https://github.com/select2/select2/tags) from GitHub and copy the files from the `dist` directory into your project.
 
-Include the following lines of code in the `<head>` section of your HTML.
+Include the compiled files in your page:
 
 ```
 <link href="path/to/select2.min.css" rel="stylesheet" />
