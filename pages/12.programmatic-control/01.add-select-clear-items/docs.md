@@ -38,12 +38,19 @@ if ($('#mySelect2').find("option[value='" + data.id + "']").length) {
 } 
 ```
 
-## Selecting an option
+## Selecting options
 
 To programmatically select an option/item for a Select2 control, use the jQuery `.val()` method:
 
 ```
-$('#mySelect2').val('US'); // Select the option with a value of 'US'
+$('#mySelect2').val('1'); // Select the option with a value of '1'
+$('#mySelect2').trigger('change'); // Notify any JS components that the value changed
+```
+
+You can also pass an array to `val` make multiple selections:
+
+```
+$('#mySelect2').val(['1', '2']);
 $('#mySelect2').trigger('change'); // Notify any JS components that the value changed
 ```
 
