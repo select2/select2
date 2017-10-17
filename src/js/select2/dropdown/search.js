@@ -42,10 +42,12 @@ define([
       $(this).off('keyup');
     });
 
-    var timeout = parseInt(this.options.get('searchTimeout'));
+    //var timeout = parseInt(this.options.get('searchTimeout'));
+    //this.timeout = parseInt(this.options.get('searchTimeout'));
 
-    this.$search.on('keyup input', function (evt, timeout) {
-        //var timeout = this.options.get('searchTimeout');
+    this.$search.on('keyup input', function (evt, options) {
+        var timeout = options;
+        timeout = 1000;
         if (timeout > 0) {
             if (this.SearchTimeout != null) {
                 clearTimeout(this.SearchTimeout);
@@ -57,7 +59,7 @@ define([
             };
             this.SearchTimeout = setTimeout(s2Timeout.bind(param), timeout);
         } else {
-            this.self.handleSearch(this.evt);
+            self.handleSearch(evt);
         }
     });
 
