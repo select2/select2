@@ -3,7 +3,8 @@
 ## 4.0.5
 
 ### Translations
-- Spanish translation: Update the 'errorLoading' message (#5032)
+- Czech: Add missing commas and periods (#5052)
+- Spanish: Update the 'errorLoading' message (#5032)
 - Fix typo in Romanian (#5005)
 - Add translations for lower and upper Sorbian (`dsb` and `hsb`) (#4949)
 - Updates to Slovak (#4915)
