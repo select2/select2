@@ -13,6 +13,12 @@ twig_first: true
 
 The jQuery replacement for select boxes 
 
+<div class="s2-docs-featurette">
+    <a class="button" href="https://forums.select2.org">Forums</a>
+    <a class="button" href="https://github.com/select2/select2">GitHub</a>
+    <a class="button" href="https://webchat.freenode.net/?channels=select2">IRC Chat</a>
+</div>
+
 Select2 gives you a customizable select box with support for searching, tagging, remote data sets, infinite scrolling, and many other highly used options.
 
 <div class="s2-docs-featurette">
