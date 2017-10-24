@@ -16,7 +16,7 @@ var data = {
     text: 'Barn owl'
 };
 
-var newOption = new Option(data.name, data.id, false, false);
+var newOption = new Option(data.text, data.id, false, false);
 $('#mySelect2').append(newOption).trigger('change');
 ```
 
@@ -32,7 +32,7 @@ if ($('#mySelect2').find("option[value='" + data.id + "']").length) {
     $('#mySelect2').val(data.id).trigger('change');
 } else { 
     // Create a DOM Option and pre-select by default
-    var newOption = new Option(data.name, data.id, true, true);
+    var newOption = new Option(data.text, data.id, true, true);
     // Append it to the select
     $('#mySelect2').append(newOption).trigger('change');
 } 
