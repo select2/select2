@@ -1,10 +1,13 @@
 define(function () {
-  // Vietnamese
+  // English
   return {
+    errorLoading: function () {
+      return 'Die resultate kon nie gelaai word nie.';
+    },
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;
 
-      var message = 'Vui lòng nhập ít hơn ' + overChars + ' ký tự';
+      var message = 'Verwyders asseblief ' + overChars + ' character';
 
       if (overChars != 1) {
         message += 's';
@@ -15,23 +18,27 @@ define(function () {
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
-      var message = 'Vui lòng nhập nhiều hơn ' + remainingChars + ' ký tự';
+      var message = 'Voer asseblief ' + remainingChars + ' of meer karakters';
 
       return message;
     },
     loadingMore: function () {
-      return 'Đang lấy thêm kết quả…';
+      return 'Meer resultate word gelaai…';
     },
     maximumSelected: function (args) {
-      var message = 'Chỉ có thể chọn được ' + args.maximum + ' lựa chọn';
+      var message = 'Kies asseblief net ' + args.maximum + ' item';
+
+      if (args.maximum != 1) {
+        message += 's';
+      }
 
       return message;
     },
     noResults: function () {
-      return 'Không tìm thấy kết quả';
+      return 'Geen resultate gevind';
     },
     searching: function () {
-      return 'Đang tìm…';
+      return 'Besig…';
     }
   };
 });
