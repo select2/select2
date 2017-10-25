@@ -4,12 +4,12 @@ var ArrayData = require('select2/data/array');
 var $ = require('jquery');
 var Options = require('select2/options');
 
-var UserDefinedType = function( id, text ){
-  var self=this;
+var UserDefinedType = function (id, text) {
+  var self = this;
 
-  self.id=id;
-  self.text=text;
-  
+  self.id = id;
+  self.text = text;
+
   return self;
 };
 

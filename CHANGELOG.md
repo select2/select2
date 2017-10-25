@@ -2,6 +2,9 @@
 
 ## 4.0.5
 
+### Bug fixes
+- User-defined types not normalized properly when passed in as data (#4632)
+
 ### Translations
 - Czech: Add missing commas and periods (#5052)
 - Spanish: Update the 'errorLoading' message (#5032)

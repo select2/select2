@@ -244,7 +244,7 @@ define([
   };
 
   SelectAdapter.prototype._normalizeItem = function (item) {
-    if(item !== Object(item)){
+    if (item !== Object(item)) {
       item = {
         id: item,
         text: item
