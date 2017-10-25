@@ -6,6 +6,7 @@
 - Replace `autocapitalize=off` with `autocapitalize=none` (#4994)
 
 ### Translations
+- Vietnamese: remove an unnecessary quote mark (#5059)
 - Czech: Add missing commas and periods (#5052)
 - Spanish: Update the 'errorLoading' message (#5032)
 - Fix typo in Romanian (#5005)
@@ -14,6 +15,7 @@
 - Add translations for lower and upper Sorbian (`dsb` and `hsb`) (#4949)
 - Updates to Slovak (#4915)
 - Fixed Norwegian `inputTooShort` message (#4817, 4896)
+- Add Afrikaans translation (`af`) (#4850)
 - Add Bosnian translation (`bs`) (#4504)
 
 ## 4.0.4
