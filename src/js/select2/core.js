@@ -321,7 +321,7 @@ define([
       // Needs 1 ms delay because of other 1 ms setTimeouts when rendering.
       setTimeout(function(){
         self.focusOnActiveElement();
-      },1);
+      }, 1);
     });
 
     $(document).on('keydown', function (evt) {

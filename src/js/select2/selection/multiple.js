@@ -78,6 +78,7 @@ define([
   };
 
   MultipleSelection.prototype.update = function (data) {
+    var self = this;
     this.clear();
 
     if (data.length === 0) {
@@ -103,6 +104,14 @@ define([
     var $rendered = this.$selection.find('.select2-selection__rendered');
 
     Utils.appendMany($rendered, $selections);
+
+    // Return cursor to search field after updating.
+    // Needs 1 ms delay because of other 1 ms setTimeouts when rendering.
+    if ('undefined' !== typeof this.$search) {
+      setTimeout(function(){
+        self.$search.focus();
+      }, 1);
+    }
   };
 
   return MultipleSelection;
