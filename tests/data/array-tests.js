@@ -4,6 +4,15 @@ var ArrayData = require('select2/data/array');
 var $ = require('jquery');
 var Options = require('select2/options');
 
+var UserDefinedType = function( id, text ){
+  var self=this;
+
+  self.id=id;
+  self.text=text;
+  
+  return self;
+};
+
 var arrayOptions = new Options({
   data: [
     {
@@ -17,7 +26,8 @@ var arrayOptions = new Options({
     {
       id: '2',
       text: '2'
-    }
+    },
+    new UserDefinedType(1, 'aaaaaa')
   ]
 });
 
@@ -216,7 +226,7 @@ test('option tags are automatically generated', function (assert) {
 
   assert.equal(
     $select.find('option').length,
-    3,
+    4,
     'An <option> element should be created for each object'
   );
 });
