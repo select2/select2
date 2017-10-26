@@ -74,10 +74,10 @@ define([
     DecoratedClass.prototype = new ctr();
 
     for (var m = 0; m < superMethods.length; m++) {
-        var superMethod = superMethods[m];
+      var superMethod = superMethods[m];
 
-        DecoratedClass.prototype[superMethod] =
-          SuperClass.prototype[superMethod];
+      DecoratedClass.prototype[superMethod] =
+        SuperClass.prototype[superMethod];
     }
 
     var calledMethod = function (methodName) {
@@ -272,9 +272,8 @@ define([
     $element.append($nodes);
   };
 
-  // Cache objects in Utils.__cache instead of $.data
+  // Cache objects in Utils.__cache instead of $.data (see #4346)
   Utils.__cache = {};
-
 
   var id = 0;
   Utils.GetUniqueElementId = function (element) {
@@ -285,14 +284,14 @@ define([
 
     var select2Id = element.getAttribute('data-select2-id');
     if (select2Id == null) {
-        // If element has id, use it.
-        if (element.id) {
-            select2Id = element.id;
-            element.setAttribute('data-select2-id', select2Id);
-        } else {
-            element.setAttribute('data-select2-id', ++id);
-            select2Id = id.toString();
-        }
+      // If element has id, use it.
+      if (element.id) {
+        select2Id = element.id;
+        element.setAttribute('data-select2-id', select2Id);
+      } else {
+        element.setAttribute('data-select2-id', ++id);
+        select2Id = id.toString();
+      }
     }
     return select2Id;
   };
@@ -302,12 +301,11 @@ define([
     // name is the cache key.    
     var id = Utils.GetUniqueElementId(element);
     if (!Utils.__cache[id]) {
-        Utils.__cache[id] = {};
+      Utils.__cache[id] = {};
     }
 
     Utils.__cache[id][name] = value;
   };
-
 
   Utils.GetData = function (element, name) {
     // Retrieves a value from the cache by its key (name)
@@ -316,14 +314,14 @@ define([
     // and for a specified element.
     var id = Utils.GetUniqueElementId(element);
     if (name) {
-        if (Utils.__cache[id]) {
-            return Utils.__cache[id][name] != null ? 
-			       Utils.__cache[id][name]:
-				   $(element).data(name); // Fallback to HTML5 data attribs.
-        }
-        return $(element).data(name); // Fallback to HTML5 data attribs.
+      if (Utils.__cache[id]) {
+        return Utils.__cache[id][name] != null ? 
+	      Utils.__cache[id][name]:
+	      $(element).data(name); // Fallback to HTML5 data attribs.
+      }
+      return $(element).data(name); // Fallback to HTML5 data attribs.
     } else {
-        return Utils.__cache[id];			   
+      return Utils.__cache[id];			   
     }
   };
 
@@ -331,7 +329,7 @@ define([
     // Removes all cached items for a specified element.
     var id = Utils.GetUniqueElementId(element);
     if (Utils.__cache[id] != null) {
-        delete Utils.__cache[id];
+      delete Utils.__cache[id];
     }
   };
 

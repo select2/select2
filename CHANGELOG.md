@@ -13,6 +13,7 @@
 - User-defined types not normalized properly when passed in as data (#4632)
 - Perform deep merge for `Defaults.set()` (#4364)
 - Fix "the results could not be loaded" displaying during AJAX request (#4356)
+- Cache objects in `Utils.__cache` instead of using `$.data` (#4346)
 - Removing the double event binding registration of `selection:update` (#4306)
 
 #### Accessibility
