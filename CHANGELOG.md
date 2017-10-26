@@ -11,6 +11,7 @@
 - Clear tooltip from `select2-selection__rendered` when selection is cleared (#4640, #4746)
 - Fix keyboard not closing when closing dropdown on iOS 10 (#4680)
 - User-defined types not normalized properly when passed in as data (#4632)
+- Perform deep merge for `Defaults.set()` (#4364)
 - Fix "the results could not be loaded" displaying during AJAX request (#4356)
 
 ## 4.0.5
