@@ -3,6 +3,7 @@
 ## 4.0.6
 
 ### Bug fixes
+- Clear tooltip from `select2-selection__rendered` when selection is cleared (#4746)
 - Fix keyboard not closing when closing dropdown on iOS 10 (#4680)
 - User-defined types not normalized properly when passed in as data (#4632)
 
