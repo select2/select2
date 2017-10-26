@@ -4,6 +4,7 @@
 
 ### New features/improvements
 - Add style property to package.json (#5019)
+- Implement `clear` and `clearing` events (#5058)
 
 ### Bug fixes
 - Add `;` before beginning of factory wrapper (#5089)
