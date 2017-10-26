@@ -3,6 +3,7 @@ module('Data adapters - Array');
 var ArrayData = require('select2/data/array');
 var $ = require('jquery');
 var Options = require('select2/options');
+var Utils = require('select2/utils');
 
 var UserDefinedType = function (id, text) {
   var self = this;
@@ -247,7 +248,7 @@ test('option tags can receive new data', function(assert) {
   });
 
   assert.ok(
-    $select.find(':selected').data('data').extra,
+    Utils.GetData($select.find(':selected')[0], 'data').extra,
     '<option> default should have new data'
   );
 
@@ -256,7 +257,7 @@ test('option tags can receive new data', function(assert) {
   });
 
   assert.ok(
-    $select.find(':selected').data('data').extra,
+    Utils.GetData($select.find(':selected')[0], 'data').extra,
     '<option> One should have new data'
   );
 });
