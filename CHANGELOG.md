@@ -3,6 +3,7 @@
 ## 4.0.6
 
 ### Bug fixes
+- Fix keyboard not closing when closing dropdown on iOS 10 (#4680)
 - User-defined types not normalized properly when passed in as data (#4632)
 
 ## 4.0.5
