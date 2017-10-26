@@ -8,12 +8,15 @@
 
 ### Bug fixes
 - Add `;` before beginning of factory wrapper (#5089)
-- Add role and aria-readonly attributes to single selection dropdown value (#4881)
 - Clear tooltip from `select2-selection__rendered` when selection is cleared (#4640, #4746)
 - Fix keyboard not closing when closing dropdown on iOS 10 (#4680)
 - User-defined types not normalized properly when passed in as data (#4632)
 - Perform deep merge for `Defaults.set()` (#4364)
 - Fix "the results could not be loaded" displaying during AJAX request (#4356)
+
+#### Accessibility
+- Improve `.select2-hidden-accessible` (#4908)
+- Add role and aria-readonly attributes to single selection dropdown value (#4881)
 
 ## 4.0.5
 
