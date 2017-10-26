@@ -82,7 +82,7 @@ define([
       }, function () {
         // Attempt to detect if a request was aborted
         // Only works if the transport exposes a status property
-        if ($request.status && $request.status === '0') {
+        if ($request.hasOwnProperty('status') && $request.status == '0') {
           return;
         }
 
