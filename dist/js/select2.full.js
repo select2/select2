@@ -1668,6 +1668,13 @@ S2.define('select2/selection/multiple',[
         });
       }
     );
+
+    this.$selection.on('keydown', function (evt) {
+      // If user starts typing an alphanumeric key on the keyboard, open if not opened.
+      if (!container.isOpen() && evt.which >= 48 && evt.which <= 90) {
+        container.open();
+      }
+    });
   };
 
   MultipleSelection.prototype.clear = function () {
@@ -5455,16 +5462,17 @@ S2.define('select2/core',[
           evt.preventDefault();
         }
 
+        var $searchField = self.$dropdown.find('.select2-search__field');
+        if (! $searchField.length) {
+          $searchField = self.$container.find('.select2-search__field');
+        }
+
         // Move the focus to the selected element on keyboard navigation.
         // Required for screen readers to work properly.
         if (key === KEYS.DOWN || key === KEYS.UP) {
             self.focusOnActiveElement();
         } else {
           // Focus on the search if user starts typing.
-          var $searchField = self.$dropdown.find('.select2-search__field');
-          if (! $searchField.length) {
-            $searchField = self.$container.find('.select2-search__field');
-          }
           $searchField.focus();
           // Focus back to active selection when finished typing.
           // Small delay so typed character can be read by screen reader.
@@ -5472,6 +5480,14 @@ S2.define('select2/core',[
               self.focusOnActiveElement();
           }, 1000);
         }
+
+        // If focus is in the search field, select the current active element on Enter key.
+        $searchField.on('keydown', function (evt) {
+          if (evt.which === KEYS.ENTER) {
+            self.trigger('results:select', {});
+            evt.preventDefault();
+          }
+        });
 
       } else if (self.hasFocus()) {
         if (key === KEYS.ENTER || key === KEYS.SPACE ||
