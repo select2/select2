@@ -8,6 +8,7 @@
 
 ### Bug fixes
 - Add `;` before beginning of factory wrapper (#5089)
+- Fix IE11 issue with select losing focus after selecting an item (#4860)
 - Clear tooltip from `select2-selection__rendered` when selection is cleared (#4640, #4746)
 - Fix keyboard not closing when closing dropdown on iOS 10 (#4680)
 - User-defined types not normalized properly when passed in as data (#4632)
