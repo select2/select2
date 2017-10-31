@@ -1,29 +1,27 @@
-$remove-color: #888 !default;
-$remove-hover-color: #555 !default;
+$default-remove-color: #999 !default;
+$default-remove-hover-color: #333 !default;
 
-$selection-color: #444 !default;
+$default-selection-color: #444 !default;
 
-$border-color: #aaa !default;
-$border-radius: 4px !default;
+$default-border-color: #aaa !default;
+$default-border-radius: 4px !default;
 
-$focus-border-color: #5897fb !default;
+$default-focus-border-color: black !default;
 
-$container-height: 28px !default;
+$default-selection-arrow-height: $container-height - 2px !default;
+$default-selection-arrow-bg-color: #888 !default;
 
-$selection-arrow-height: $container-height - 2px !default;
-$selection-arrow-bg-color: #888 !default;
+$default-selection-bg-color: #fff !default;
 
-$selection-bg-color: #fff !default;
+$default-container-placeholder-color: #999 !default;
 
-$container-placeholder-color: #999 !default;
+$default-container-focus-border-color: blue !default;
 
-$container-focus-border-color: blue !default;
+$default-dropdown-bg-color: $default-selection-bg-color !default;
 
-$dropdown-bg-color: $selection-bg-color !default;
+$default-results-max-height: 200px !default;
 
-$results-max-height: 200px !default;
+$default-results-choice-bg-hover-color: #5897fb !default;
+$default-results-choice-fg-hover-color: white !default;
 
-$results-choice-bg-hover-color: #5897fb !default;
-$results-choice-fg-hover-color: white !default;
-
-$results-choice-fg-unselectable-color: grey !default;
+$default-results-choice-fg-unselectable-color: #999 !default;

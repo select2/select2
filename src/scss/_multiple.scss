@@ -4,7 +4,7 @@
   cursor: pointer;
   display: block;
 
-  min-height: 32px;
+  min-height: $selection-multiply-min-height;
 
   user-select: none;
   -webkit-user-select: none;

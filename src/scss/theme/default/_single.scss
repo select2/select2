@@ -1,10 +1,10 @@
 .select2-selection--single {
-  background-color: $selection-bg-color;
-  border: 1px solid $border-color;
-  border-radius: $border-radius;
+  background-color: $default-selection-bg-color;
+  border: 1px solid $default-border-color;
+  border-radius: $default-border-radius;
 
   .select2-selection__rendered {
-    color: $selection-color;
+    color: $default-selection-color;
     line-height: $container-height;
   }
 
@@ -15,11 +15,11 @@
   }
 
   .select2-selection__placeholder {
-    color: $container-placeholder-color;
+    color: $default-container-placeholder-color;
   }
 
   .select2-selection__arrow {
-    height: $selection-arrow-height;
+    height: $default-selection-arrow-height;
 
     position: absolute;
 
@@ -29,7 +29,7 @@
     width: 20px;
 
     b {
-      border-color: $selection-arrow-bg-color transparent transparent transparent;
+      border-color: $default-selection-arrow-bg-color transparent transparent transparent;
       border-style: solid;
       border-width: 5px 4px 0 4px;
 
