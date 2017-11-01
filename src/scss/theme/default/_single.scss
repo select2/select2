@@ -5,7 +5,7 @@
 
   .select2-selection__rendered {
     color: $default-selection-color;
-    line-height: $container-height;
+    line-height: $container-height - 2px;
   }
 
   .select2-selection__clear {

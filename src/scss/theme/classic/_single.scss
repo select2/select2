@@ -13,7 +13,7 @@
 
   .select2-selection__rendered {
     color: $classic-selection-color;
-    line-height: $container-height;
+    line-height: $container-height - 2px;
   }
 
   .select2-selection__clear {
