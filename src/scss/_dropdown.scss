@@ -27,7 +27,7 @@
 }
 
 .select2-results__option {
-  padding: 6px;
+  padding: $dropdown-results-option-pardding-vertical $dropdown-results-option-pardding-horizontal;
 
   user-select: none;
   -webkit-user-select: none;
@@ -55,7 +55,7 @@
 
 .select2-search--dropdown {
   display: block;
-  padding: 4px;
+  padding: $search-dropdown-padding-vertical $search-dropdown-padding-horizontal;
 
   .select2-search__field {
     padding: 4px;

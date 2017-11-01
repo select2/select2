@@ -12,7 +12,7 @@
   .select2-selection__rendered {
     display: inline-block;
     overflow: hidden;
-    padding-left: 8px;
+    padding-left: $selection-padding-left;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
