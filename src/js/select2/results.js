@@ -398,6 +398,7 @@ define([
 
     container.on('results:focus', function (params) {
       params.element.addClass('select2-results__option--highlighted');
+      params.element.css('width', this.$container[0].getBoundingClientRect().width + 'px');
     });
 
     container.on('results:message', function (params) {
