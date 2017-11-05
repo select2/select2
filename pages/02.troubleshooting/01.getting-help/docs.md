@@ -21,7 +21,7 @@ Having trouble getting Select2 working on your website? Is it not working togeth
 Found a problem with Select2? Feel free to open a ticket on the Select2 repository on GitHub, but you should keep a few things in mind:
 
 1. Use the [GitHub issue search](https://github.com/select2/select2/search?q=&type=Issues) to check if your issue has already been reported.
-2. Try to isolate your problem as much as possible.  Use [JS Bin](http://jsbin.com/goqiqolete/edit?html,js,console,output) to create a [minimal, verifiable, and complete](https://stackoverflow.com/help/mcve) example of the problem.
+2. Try to isolate your problem as much as possible.  Use [JS Bin](http://jsbin.com/goqagokoye/edit?html,js,output) to create a [minimal, verifiable, and complete](https://stackoverflow.com/help/mcve) example of the problem.
 3. Once you are sure the issue is with Select2, and not a third party library, [open an issue](https://github.com/select2/select2/issues/new) with a description of the bug, and link to your jsbin example.
 
 You can find more information on reporting bugs in the [contributing guide,](https://github.com/select2/select2/blob/master/CONTRIBUTING.md#reporting-bugs-with-select2) including tips on what information to include.
