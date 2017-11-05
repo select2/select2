@@ -82,6 +82,10 @@ define([
       self.$selection.removeAttr('aria-owns');
 
       self.$selection.focus();
+      // fix Chrome bug - lost focus after selecting a value
+      window.setTimeout(function () {
+        self.$selection.focus();
+      }, 0);
 
       self._detachCloseHandler(container);
     });
