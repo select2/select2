@@ -203,13 +203,16 @@ define([
 
     data = $.data($option[0], 'data');
 
-    if (data != null) {
-      // always update the value of `disabled` property of the option element
+    // If the `disabled` property of the cached data is different from the
+    // current value of that property, we should update the value for `disabled`
+    // property of the current item and its children
+    if (data != null && (data.disabled != isDisabled)) {
       data.disabled = isDisabled;
 
-      // all children of an option group need to be updated too
       if ($option.is('optgroup')) {
-        data.children = this._getChildrenItems($option, isDisabled);
+        data.children.forEach(function(e) {
+          e.disabled = isDisabled;
+        });
       }
 
       return data;
