@@ -455,3 +455,48 @@ test('data objects use the text of the option', function (assert) {
   assert.equal(item.id, '&');
   assert.equal(item.text, '&');
 });
+
+test('data objects see changes in optgroup elements', function (assert) {
+  var $select = $('#qunit-fixture .duplicates');
+
+  var data = new SelectData($select, selectOptions);
+
+  var $optgroup = $('<optgroup></optgroup>')
+    .attr('label', '&')
+    .append($('<option>1</option>'));
+
+  var item = data.item($optgroup);
+
+  assert.equal(item.text, '&');
+  assert.equal(item.children.length, 1);
+  assert.equal(item.children[0].text, 1);
+
+  // Update the optgroup children and see changes in the output data object
+  $optgroup.empty()
+    .append($('<option>2</option>'));
+  item = data.item($optgroup);
+
+  assert.equal(item.children.length, 1);
+  assert.equal(item.children[0].text, 2);
+});
+
+test('data objects see changes in the disabled attribute of optgroup elements', function (assert) {
+  var $select = $('#qunit-fixture .duplicates');
+
+  var data = new SelectData($select, selectOptions);
+
+  var $optgroup = $('<optgroup></optgroup>')
+    .attr('label', '&')
+    .prop('disabled', true)
+    .append($('<option>1</option>'));
+
+  var item = data.item($optgroup);
+
+  assert.equal(item.disabled, true);
+  assert.equal(item.children[0].disabled, true);
+
+  $optgroup.prop('disabled', false);
+  item = data.item($optgroup);
+  assert.equal(item.disabled, false);
+  assert.equal(item.children[0].disabled, false);
+});

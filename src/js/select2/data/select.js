@@ -199,16 +199,17 @@ define([
 
   SelectAdapter.prototype.item = function ($option) {
     var data = {};
+    var isDisabled = !!$option.prop('disabled');
 
     data = $.data($option[0], 'data');
 
     if (data != null) {
       // always update the value of `disabled` property of the option element
-      data.disabled = $option.prop('disabled');
+      data.disabled = isDisabled;
 
       // all children of an option group need to be updated too
       if ($option.is('optgroup')) {
-        data.children = this._getChildrenItems($option);
+        data.children = this._getChildrenItems($option, isDisabled);
       }
 
       return data;
@@ -226,7 +227,7 @@ define([
       data = {
         text: $option.prop('label'),
         disabled: $option.prop('disabled'),
-        children: this._getChildrenItems($option, !!$option.prop('disabled')),
+        children: this._getChildrenItems($option, isDisabled),
         title: $option.prop('title')
       };
     }
@@ -250,7 +251,7 @@ define([
 
       // If the option group is disabled, all children options are disabled.
       // Otherwise, we keep the value of the `disabled` property of the child.
-      child.disable = isDisabled || children.disable;
+      child.disabled = isDisabled || child.disabled;
 
       children.push(child);
     }
