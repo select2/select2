@@ -512,7 +512,7 @@ test('data objects see changes in optgroup elements', function (assert) {
   assert.equal(item.children[0].text, 2);
 });
 
-test('data objects see changes in the disabled attribute of optgroup elements', function (assert) {
+test('data objects see changes in the disabled attribute', function (assert) {
   var $select = $('#qunit-fixture .duplicates');
 
   var data = new SelectData($select, selectOptions);
