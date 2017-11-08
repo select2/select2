@@ -52,7 +52,7 @@
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-concat": "^0.4.0",
     "grunt-contrib-connect": "^0.9.0",
-    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-jshint": "^1.1.0",
     "grunt-contrib-nodeunit": "~0.3.3",
     "grunt-contrib-qunit": "~0.4.0",
     "grunt-contrib-requirejs": "^0.4.4",
@@ -70,5 +70,13 @@
   "dependencies": {
     "almond": "~0.3.1",
     "jquery-mousewheel": "~3.1.13"
+  },
+  "scripts": {
+    "_comment": "Use 'npm run <scriptName> to run a script. 'npm run grunt <cmd>' will run that grunt command with the prescribed version of grunt, not your global grunt installation.",
+    "clean": "rm -rf dist",
+    "compile": "npm install && grunt compile",
+    "build": "npm run clean && npm run compile && grunt test && grunt minify",
+    "hostDocs": "npm run compile && grunt docs",
+    "grunt": "grunt"
   }
 }
