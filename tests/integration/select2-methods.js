@@ -1,4 +1,8 @@
-module('select2(data)');
+module('select2(api)', {
+  afterEach: function() {
+    $('body > .select2-container').remove();
+  }
+});
 
 var $ = require('jquery');
 var Select2 = require('select2/core');
@@ -136,4 +140,87 @@ test('multiple value matches the jquery value', function (assert) {
     $select.val(),
     'The values should match the jquery values'
   );
+});
+
+test('open focuses search input', function (assert) {
+  var done = assert.async();
+
+  var $ = require('jquery');
+  require('jquery.select2');
+
+  var  $fixture = $('#qunit-fixture');
+
+  var $selectOrig = $(
+    '<select>' +
+      '<option>1</option>' +
+      '<option>2</option>' +
+    '</select>'
+  );
+  $fixture.append($selectOrig);
+
+  $(function() {
+    $selectOrig.select2({minimumResultsForSearch: 1});
+
+    var activeElement = document.activeElement;
+    assert.equal($selectOrig.has(':focus').length, 0, 'Original select field should not be focused. Focused element was ' + activeElement);
+    assert.equal($fixture.find('.select2').has(':focus').length, 0, 'Select2 elements should not be focused. Focused element was ' + activeElement);
+
+    $selectOrig.select2('open');
+
+    setTimeout(function() {
+      var $search = $('body .select2-container input.select2-search__field');
+      assert.equal($search.length, 1, 'Search input should exist.');
+      var searchElem = $search[0];
+
+      assert.ok($.contains(document.documentElement, $search[0]), 'Search input should be in DOM.');
+      assert.ok($search.is(':visible'), 'Search input should be visible.');
+
+      assert.equal(searchElem, searchElem.ownerDocument.activeElement, 'Search input should be focused. Focused element was ' + document.activeElement);
+
+      done();
+    });
+  });
+});
+
+test('open focuses something reasonable when search input is invisible.', function (assert) {
+  var done = assert.async();
+
+  var $ = require('jquery');
+  require('jquery.select2');
+
+  var  $fixture = $('#qunit-fixture');
+
+  var $selectOrig = $(
+    '<select>' +
+      '<option>1</option>' +
+      '<option>2</option>' +
+    '</select>'
+  );
+  $fixture.append($selectOrig);
+
+  $(function() {
+    $selectOrig.select2({minimumResultsForSearch: 99});
+
+    var activeElement = document.activeElement;
+    assert.equal($selectOrig.has(':focus').length, 0, 'Original select field should not be focused. Focused element was ' + activeElement);
+    assert.equal($fixture.find('.select2').has(':focus').length, 0, 'Select2 elements should not be focused. Focused element was ' + activeElement);
+
+    $selectOrig.select2('open');
+
+    setTimeout(function() {
+      var $hidden = $('body .select2-search--dropdown.select2-search--hide');
+      assert.equal($hidden.length, 1, 'A container for search should be hidden.');
+      assert.ok($hidden.is(':hidden'), 'Hidden section should be hidden.');
+      assert.equal($hidden.css('display'), 'none', 'Hidden section should have display:none.');
+
+      var $container = $('body .select2-container');
+      var $search = $container.find('input.select2-search__field');
+      assert.ok($search.is(':hidden'), 'Select2 dropdown should not have a visible search field.');
+
+      activeElement = document.activeElement;
+      assert.ok($.contains($container[0], activeElement), 'Something in the dropdown should be focused. Focused element was ' + activeElement);
+
+      done();
+    });
+  });
 });
