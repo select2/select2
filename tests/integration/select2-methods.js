@@ -160,10 +160,7 @@ test('open focuses search input', function (assert) {
 
   $(function() {
     $selectOrig.select2({minimumResultsForSearch: 1});
-
-    var activeElement = document.activeElement;
-    assert.equal($selectOrig.has(':focus').length, 0, 'Original select field should not be focused. Focused element was ' + activeElement);
-    assert.equal($fixture.find('.select2').has(':focus').length, 0, 'Select2 elements should not be focused. Focused element was ' + activeElement);
+    assertSelectyStuffIsNotFocused(assert, $selectOrig, $fixture);
 
     $selectOrig.select2('open');
 
@@ -200,10 +197,7 @@ test('open focuses something reasonable when search input is invisible.', functi
 
   $(function() {
     $selectOrig.select2({minimumResultsForSearch: 99});
-
-    var activeElement = document.activeElement;
-    assert.equal($selectOrig.has(':focus').length, 0, 'Original select field should not be focused. Focused element was ' + activeElement);
-    assert.equal($fixture.find('.select2').has(':focus').length, 0, 'Select2 elements should not be focused. Focused element was ' + activeElement);
+    assertSelectyStuffIsNotFocused(assert, $selectOrig, $fixture);
 
     $selectOrig.select2('open');
 
@@ -224,3 +218,10 @@ test('open focuses something reasonable when search input is invisible.', functi
     });
   });
 });
+
+function assertSelectyStuffIsNotFocused(assert, $selectOrig, $fixture) {
+    var activeElement = document.activeElement;
+    assert.equal($selectOrig.has(':focus').length, 0, 'Original select field should not be focused. Focused element was ' + activeElement);
+    assert.equal($fixture.find('.select2').has(':focus').length, 0, 'Select2 elements should not be focused. Focused element was ' + activeElement);
+}
+
