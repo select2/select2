@@ -49,10 +49,12 @@ define([
     container.on('open', function () {
       self.$search.attr('tabindex', 0);
 
-      self.$search.focus();
-
       window.setTimeout(function () {
-        self.$search.focus();
+        if(self.$searchContainer.hasClass('select2-search--hide')) {
+          self.$container.find('.select2-selection').focus();
+        } else {
+          self.$search.focus();
+        }
       }, 0);
     });
 
@@ -75,6 +77,9 @@ define([
         if (showSearch) {
           self.$searchContainer.removeClass('select2-search--hide');
         } else {
+          if(self.$search.is(':focus')) {
+            self.$container.find('.select2-selection').focus();
+          }
           self.$searchContainer.addClass('select2-search--hide');
         }
       }
