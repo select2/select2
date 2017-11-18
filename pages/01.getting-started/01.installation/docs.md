@@ -13,8 +13,8 @@ A CDN (content delivery network) is the fastest way to get up and running with S
 Select2 is hosted on both the [cdnjs](https://cdnjs.com/libraries/select2) and [jsDelivr](https://www.jsdelivr.com/#!select2) CDNs. Simply include the following lines of code in the `<head>` section of your page:
 
 ```
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 ```
 
 >>> <i class="fa fa-info-circle"></i> Immediately following a new release, it takes some time for CDNs to catch up and get the new versions live on the CDN.
