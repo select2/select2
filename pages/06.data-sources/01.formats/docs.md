@@ -104,7 +104,7 @@ When options are to be generated in `<optgroup>` sections, options should be nes
         {
             "id": 1,
             "text": "Option 1.1"
-        }
+        },
         {
             "id": 2,
             "text": "Option 1.2"
@@ -117,7 +117,7 @@ When options are to be generated in `<optgroup>` sections, options should be nes
         {
             "id": 3,
             "text": "Option 2.1"
-        }
+        },
         {
             "id": 4,
             "text": "Option 2.2"
