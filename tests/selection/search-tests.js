@@ -10,7 +10,7 @@ var Utils = require('select2/utils');
 var options = new Options({});
 
 test('backspace will remove a choice', function (assert) {
-  expect(3);
+  assert.expect(3);
 
   var KEYS = require('select2/keys');
 
@@ -52,7 +52,7 @@ test('backspace will remove a choice', function (assert) {
 });
 
 test('backspace will set the search text', function (assert) {
-  expect(3);
+  assert.expect(3);
 
   var KEYS = require('select2/keys');
 
@@ -94,7 +94,7 @@ test('updating selection does not shift the focus', function (assert) {
   // Check for IE 8, which triggers a false negative during testing
   if (window.attachEvent && !window.addEventListener) {
     // We must expect 0 assertions or the test will fail
-    expect(0);
+    assert.expect(0);
     return;
   }
 
@@ -142,7 +142,7 @@ test('the focus event shifts the focus', function (assert) {
   // Check for IE 8, which triggers a false negative during testing
   if (window.attachEvent && !window.addEventListener) {
     // We must expect 0 assertions or the test will fail
-    expect(0);
+    assert.expect(0);
     return;
   }
 

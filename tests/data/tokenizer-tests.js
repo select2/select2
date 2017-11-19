@@ -1,7 +1,7 @@
 module('Data adaptor - Tokenizer');
 
 test('triggers the select event', function (assert) {
-  expect(2);
+  assert.expect(2);
 
   var SelectData = require('select2/data/select');
   var Tokenizer = require('select2/data/tokenizer');
@@ -43,7 +43,7 @@ test('triggers the select event', function (assert) {
 });
 
 test('createTag can return null', function (assert) {
-  expect(3);
+  assert.expect(3);
 
   var SelectData = require('select2/data/select');
   var Tokenizer = require('select2/data/tokenizer');
@@ -92,7 +92,7 @@ test('createTag can return null', function (assert) {
 });
 
 test('createTag returning null does not cut the term', function (assert) {
-  expect(4);
+  assert.expect(4);
 
   var SelectData = require('select2/data/select');
   var Tokenizer = require('select2/data/tokenizer');
@@ -171,7 +171,7 @@ test('createTag returning null does not cut the term', function (assert) {
 });
 
 test('works with multiple tokens given', function (assert) {
-  expect(4);
+  assert.expect(4);
 
   var SelectData = require('select2/data/select');
   var Tokenizer = require('select2/data/tokenizer');

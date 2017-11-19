@@ -9,9 +9,9 @@
     "console": false,
     "define": false,
     "document": false,
-    "expect": false,
     "MockContainer": false,
     "module": false,
+    "QUnit": false,
     "require": false,
     "test": false,
     "window": false
