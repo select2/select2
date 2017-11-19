@@ -84,6 +84,9 @@ define([
     this._syncAttributes();
 
     Utils.StoreData($element[0], 'select2', this);
+
+    // Ensure backwards compatibility with $element.data('select2').
+    $element.data('select2', this);
   };
 
   Utils.Extend(Select2, Utils.Observable);
@@ -579,6 +582,7 @@ define([
     this.$element.removeClass('select2-hidden-accessible');
     this.$element.attr('aria-hidden', 'false');
     Utils.RemoveData(this.$element[0]);
+    this.$element.removeData('select2');
 
     this.dataAdapter.destroy();
     this.selection.destroy();
