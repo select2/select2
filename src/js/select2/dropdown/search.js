@@ -63,7 +63,7 @@ define([
     });
 
     container.on('focus', function () {
-      if (!container.isOpen()) {
+      if (!container.hasFocus()) {
         self.$search.focus();
       }
     });
