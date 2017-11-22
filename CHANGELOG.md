@@ -7,6 +7,7 @@
 - Implement `clear` and `clearing` events (#5058)
 
 ### Bug fixes
+- Fix up arrow error when there are no options in dropdown (#5127)
 - Add `;` before beginning of factory wrapper (#5089)
 - Fix IE11 issue with select losing focus after selecting an item (#4860)
 - Clear tooltip from `select2-selection__rendered` when selection is cleared (#4640, #4746)
@@ -20,6 +21,13 @@
 #### Accessibility
 - Improve `.select2-hidden-accessible` (#4908)
 - Add role and aria-readonly attributes to single selection dropdown value (#4881)
+
+### Translations
+- Add Turkmen translations (`tk`) (#5125)
+- Fix error in French translations (#5122)
+
+### Miscellaneous
+-  Remove duplicate CSS selector in classic theme (#5115)
 
 ## 4.0.5
 

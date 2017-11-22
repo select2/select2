@@ -1,5 +1,5 @@
 /*!
- * Select2 4.0.6-rc.0
+ * Select2 4.0.6-rc.1
  * https://select2.github.io
  *
  * Released under the MIT license
@@ -1178,7 +1178,8 @@ S2.define('select2/results',[
       var currentIndex = $options.index($highlighted);
 
       // If we are already at te top, don't move further
-      if (currentIndex === 0) {
+      // If no options, currentIndex will be -1
+      if (currentIndex <= 0) {
         return;
       }
 
@@ -1470,6 +1471,9 @@ S2.define('select2/selection/base',[
       self.$selection.removeAttr('aria-owns');
 
       self.$selection.focus();
+      window.setTimeout(function () {
+        self.$selection.focus();
+      }, 0);
 
       self._detachCloseHandler(container);
     });
@@ -2097,7 +2101,13 @@ S2.define('select2/selection/search',[
 
     this.resizeSearch();
     if (searchHadFocus) {
-      this.$search.focus();
+      var isTagInput = this.$element.find('[data-select2-tag]').length;
+      if (isTagInput) {
+        // fix IE11 bug where tag input lost focus
+        this.$element.focus();
+      } else {
+        this.$search.focus();
+      }
     }
   };
 
@@ -5217,6 +5227,9 @@ S2.define('select2/core',[
     this._syncAttributes();
 
     Utils.StoreData($element[0], 'select2', this);
+
+    // Ensure backwards compatibility with $element.data('select2').
+    $element.data('select2', this);
   };
 
   Utils.Extend(Select2, Utils.Observable);
@@ -5712,6 +5725,7 @@ S2.define('select2/core',[
     this.$element.removeClass('select2-hidden-accessible');
     this.$element.attr('aria-hidden', 'false');
     Utils.RemoveData(this.$element[0]);
+    this.$element.removeData('select2');
 
     this.dataAdapter.destroy();
     this.selection.destroy();
