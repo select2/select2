@@ -4,7 +4,7 @@ module.exports = function (grunt) {
     'jquery.select2',
     'almond',
 
-    'jquery.mousewheel' // shimmed for non-full builds
+    'jquery-mousewheel' // shimmed for non-full builds
   ];
 
   fullIncludes = [
@@ -130,23 +130,29 @@ module.exports = function (grunt) {
           build: testBuildNumber,
           tags: ['tests', 'qunit'],
           urls: testUrls,
+          testTimeout: 8000,
           testname: 'QUnit test for Select2',
           browsers: [
             {
               browserName: 'internet explorer',
-              version: '8'
+              version: '8',
+              platform: 'Windows 7'
             },
             {
               browserName: 'internet explorer',
-              version: '9'
+              version: '9',
+              platform: 'Windows 7'
             },
             {
               browserName: 'internet explorer',
-              version: '10'
+              version: '10',
+              platform: 'Windows 7'
             },
+
             {
               browserName: 'internet explorer',
-              version: '11'
+              version: '11',
+              platform: 'Windows 10'
             },
 
             {
@@ -155,7 +161,8 @@ module.exports = function (grunt) {
             },
 
             {
-              browserName: 'chrome'
+              browserName: 'chrome',
+              platform: 'linux'
             },
 
             {
@@ -256,9 +263,9 @@ module.exports = function (grunt) {
           include: includes,
           namespace: 'S2',
           paths: {
-            almond: '../../vendor/almond-0.2.9',
-            jquery: 'jquery.shim',
-            'jquery.mousewheel': 'jquery.mousewheel.shim'
+            'almond': require.resolve('almond').slice(0, -3),
+            'jquery': 'jquery.shim',
+            'jquery-mousewheel': 'jquery.mousewheel.shim'
           },
           wrap: {
             startFile: 'src/js/banner.start.js',
@@ -275,9 +282,9 @@ module.exports = function (grunt) {
           include: fullIncludes,
           namespace: 'S2',
           paths: {
-            almond: '../../vendor/almond-0.2.9',
-            jquery: 'jquery.shim',
-            'jquery.mousewheel': '../../vendor/jquery.mousewheel'
+            'almond': require.resolve('almond').slice(0, -3),
+            'jquery': 'jquery.shim',
+            'jquery-mousewheel': require.resolve('jquery-mousewheel').slice(0, -3)
           },
           wrap: {
             startFile: 'src/js/banner.start.js',
@@ -351,13 +358,16 @@ module.exports = function (grunt) {
 
   var ciTasks = [];
 
-  ciTasks.push('compile')
+  ciTasks.push('compile');
   ciTasks.push('connect:tests');
 
+  /*
+  // grunt-saucelabs appears to be broken with Travis altogether now.
   // Can't run Sauce Labs tests in pull requests
   if (process.env.TRAVIS_PULL_REQUEST == 'false') {
     ciTasks.push('saucelabs-qunit');
   }
+  */
 
   ciTasks.push('qunit');
   ciTasks.push('jshint');

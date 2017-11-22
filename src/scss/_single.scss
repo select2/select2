@@ -18,6 +18,10 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+
+  .select2-selection__clear {
+    position: relative;
+  }
 }
 
 &[dir="rtl"] {

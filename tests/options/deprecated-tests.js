@@ -4,7 +4,7 @@ var $ = require('jquery');
 var Options = require('select2/options');
 
 test('converted into dataAdapter.current', function (assert) {
-  expect(5);
+  assert.expect(5);
 
   var $test = $('<select></select>');
   var called = false;
@@ -51,7 +51,7 @@ test('converted into dataAdapter.current', function (assert) {
 });
 
 test('single option converted to array automatically', function (assert) {
-  expect(2);
+  assert.expect(2);
 
   var $test = $('<select></select>');
   var called = false;
@@ -81,7 +81,7 @@ test('single option converted to array automatically', function (assert) {
 });
 
 test('only called once', function (assert) {
-  expect(8);
+  assert.expect(8);
 
   var $test = $('<select><option value="3" selected>4</option></select>');
   var called = 0;
@@ -160,7 +160,7 @@ test('only called once', function (assert) {
 module('Options - Deprecated - query');
 
 test('converted into dataAdapter.query automatically', function (assert) {
-  expect(6);
+  assert.expect(6);
 
   var $test = $('<select></select>');
   var called = false;
