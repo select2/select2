@@ -18,7 +18,7 @@ define([
 
     if (this.showLoadingMore(data)) {
       this.$results.append(this.$loadingMore);
-      this.$results.scroll();
+      this.loadMoreIfLoadingMoreVisible();
     }
   };
 
@@ -37,25 +37,7 @@ define([
       self.loading = true;
     });
 
-    this.$results.on('scroll', function () {
-      var isLoadMoreVisible = $.contains(
-        document.documentElement,
-        self.$loadingMore[0]
-      );
-
-      if (self.loading || !isLoadMoreVisible) {
-        return;
-      }
-
-      var currentOffset = self.$results.offset().top +
-        self.$results.outerHeight(false);
-      var loadingMoreOffset = self.$loadingMore.offset().top +
-        self.$loadingMore.outerHeight(false);
-
-      if (currentOffset + 50 >= loadingMoreOffset) {
-        self.loadMore();
-      }
-    });
+    this.$results.on('scroll', this.loadMoreIfLoadingMoreVisible.bind(this));
   };
 
   InfiniteScroll.prototype.loadMore = function () {
@@ -67,6 +49,26 @@ define([
 
     this.trigger('query:append', params);
   };
+
+  InfiniteScroll.prototype.loadMoreIfLoadingMoreVisible = function () {
+    var isLoadMoreVisible = $.contains(
+      document.documentElement,
+      this.$loadingMore[0]
+    );
+
+    if (this.loading || !isLoadMoreVisible) {
+      return;
+    }
+
+    var currentOffset = this.$results.offset().top +
+      this.$results.outerHeight(false);
+    var loadingMoreOffset = this.$loadingMore.offset().top +
+      this.$loadingMore.outerHeight(false);
+
+    if (currentOffset + 50 >= loadingMoreOffset) {
+      this.loadMore();
+    }
+};
 
   InfiniteScroll.prototype.showLoadingMore = function (_, data) {
     return data.pagination && data.pagination.more;
