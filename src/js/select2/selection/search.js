@@ -90,6 +90,11 @@ define([
 
           evt.preventDefault();
         }
+      } else if (evt.which === KEYS.ENTER) {
+        if ( ! self.isOpen() ) {
+         self.open();
+        }
+        evt.preventDefault();
       }
     });
 

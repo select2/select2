@@ -368,18 +368,9 @@ define([
               self.focusOnActiveElement();
           }, 1000);
         }
-
-        // If focus is in the search field, select the current active element on Enter key.
-        $searchField.on('keydown', function (evt) {
-          if (evt.which === KEYS.ENTER) {
-            self.trigger('results:select', {});
-            evt.preventDefault();
-          }
-        });
-
       } else if (self.hasFocus()) {
         if (key === KEYS.ENTER || key === KEYS.SPACE ||
-            (key === KEYS.DOWN && evt.altKey)) {
+            key === KEYS.DOWN) {
           self.open();
           evt.preventDefault();
         }
@@ -389,7 +380,7 @@ define([
 
   Select2.prototype.focusOnActiveElement = function () {
     // Don't mess with the focus on touchscreens because it causes havoc with on-screen keyboards.
-    if (! Utils.isTouchscreen()) {
+    if (this.isOpen() && ! Utils.isTouchscreen()) {
       this.$results.find('li.select2-results__option--highlighted').focus();
     }
   };

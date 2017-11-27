@@ -1675,6 +1675,11 @@ S2.define('select2/selection/multiple',[
         container.open();
       }
     });
+
+    // Focus on the search field when the container is focused instead of the main container.
+    container.on( 'focus', function(){
+      self.focusOnSearch();
+    });
   };
 
   MultipleSelection.prototype.clear = function () {
@@ -1700,8 +1705,24 @@ S2.define('select2/selection/multiple',[
     return $container;
   };
 
-  MultipleSelection.prototype.update = function (data) {
+  /**
+   * Focus on the search field instead of the main multiselect container.
+   */
+  MultipleSelection.prototype.focusOnSearch = function() {
     var self = this;
+
+    if ('undefined' !== typeof self.$search) {
+      // Needs 1 ms delay because of other 1 ms setTimeouts when rendering.
+      setTimeout(function(){
+        // Prevent the dropdown opening again when focused from this.
+        self._keyUpPrevented = true;
+
+        self.$search.focus();
+      }, 1);
+    }
+  }
+
+  MultipleSelection.prototype.update = function (data) {
     this.clear();
 
     if (data.length === 0) {
@@ -1727,14 +1748,6 @@ S2.define('select2/selection/multiple',[
     var $rendered = this.$selection.find('.select2-selection__rendered');
 
     Utils.appendMany($rendered, $selections);
-
-    // Return cursor to search field after updating.
-    // Needs 1 ms delay because of other 1 ms setTimeouts when rendering.
-    if ('undefined' !== typeof this.$search) {
-      setTimeout(function(){
-        self.$search.focus();
-      }, 1);
-    }
   };
 
   return MultipleSelection;
@@ -1980,6 +1993,11 @@ S2.define('select2/selection/search',[
 
           evt.preventDefault();
         }
+      } else if (evt.which === KEYS.ENTER) {
+        if ( ! self.isOpen() ) {
+         self.open();
+        }
+        evt.preventDefault();
       }
     });
 
@@ -5482,16 +5500,20 @@ S2.define('select2/core',[
         }
 
         // If focus is in the search field, select the current active element on Enter key.
-        $searchField.on('keydown', function (evt) {
+/*        $searchField.on('keydown', function (evt) {
           if (evt.which === KEYS.ENTER) {
-            self.trigger('results:select', {});
+            if ( self.isOpen() ) {
+              self.trigger('results:select', {});
+            } else {
+              self.open();
+            }
             evt.preventDefault();
           }
-        });
+        });*/
 
       } else if (self.hasFocus()) {
         if (key === KEYS.ENTER || key === KEYS.SPACE ||
-            (key === KEYS.DOWN && evt.altKey)) {
+            key === KEYS.DOWN) {
           self.open();
           evt.preventDefault();
         }
@@ -5501,7 +5523,7 @@ S2.define('select2/core',[
 
   Select2.prototype.focusOnActiveElement = function () {
     // Don't mess with the focus on touchscreens because it causes havoc with on-screen keyboards.
-    if (! Utils.isTouchscreen()) {
+    if (this.isOpen() && ! Utils.isTouchscreen()) {
       this.$results.find('li.select2-results__option--highlighted').focus();
     }
   };
