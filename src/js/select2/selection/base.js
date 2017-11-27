@@ -136,8 +136,14 @@ define([
         }
 
         var $element = $this.data('element');
-
         $element.select2('close');
+
+        // Remove any focus when dropdown is closed by clicking outside the select area.
+        // Timeout of 1 required for close to finish wrapping up.
+        setTimeout(function(){
+         $this.find('*:focus').blur();
+         $target.focus();
+        }, 1);
       });
     });
   };

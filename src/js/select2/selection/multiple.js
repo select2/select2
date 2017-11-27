@@ -99,6 +99,7 @@ define([
       // Needs 1 ms delay because of other 1 ms setTimeouts when rendering.
       setTimeout(function(){
         // Prevent the dropdown opening again when focused from this.
+        // This gets reset automatically when focus is triggered.
         self._keyUpPrevented = true;
 
         self.$search.focus();

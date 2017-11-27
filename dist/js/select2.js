@@ -1475,8 +1475,14 @@ S2.define('select2/selection/base',[
         }
 
         var $element = $this.data('element');
-
         $element.select2('close');
+
+        // Remove any focus when dropdown is closed by clicking outside the select area.
+        // Timeout of 1 required for close to finish wrapping up.
+        setTimeout(function(){
+         $this.find('*:focus').blur();
+         $target.focus();
+        }, 1);
       });
     });
   };
@@ -1715,6 +1721,7 @@ S2.define('select2/selection/multiple',[
       // Needs 1 ms delay because of other 1 ms setTimeouts when rendering.
       setTimeout(function(){
         // Prevent the dropdown opening again when focused from this.
+        // This gets reset automatically when focus is triggered.
         self._keyUpPrevented = true;
 
         self.$search.focus();
@@ -1994,9 +2001,7 @@ S2.define('select2/selection/search',[
           evt.preventDefault();
         }
       } else if (evt.which === KEYS.ENTER) {
-        if ( ! self.isOpen() ) {
-         self.open();
-        }
+        container.open();
         evt.preventDefault();
       }
     });
