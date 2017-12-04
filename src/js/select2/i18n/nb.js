@@ -14,7 +14,7 @@ define(function () {
 
       var message = 'Vennligst skriv inn ' + remainingChars + ' tegn til';
 
-      return message + ' tegn til';
+      return message;
     },
     loadingMore: function () {
       return 'Laster flere resultater…';
