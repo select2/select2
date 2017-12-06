@@ -365,7 +365,7 @@ define([
       maximumSelectionLength: 0,
       minimumResultsForSearch: 0,
       selectOnClose: false,
-      scrollOnSelect: true,
+      scrollAfterSelect: true,
       sorter: function (data) {
         return data;
       },
