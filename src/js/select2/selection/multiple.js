@@ -36,6 +36,8 @@ define([
       'click',
       '.select2-selection__choice__remove',
       function (evt) {
+        evt.stopPropagation();
+
         // Ignore the event if it is disabled
         if (self.options.get('disabled')) {
           return;

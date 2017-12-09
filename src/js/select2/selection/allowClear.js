@@ -30,6 +30,8 @@ define([
   };
 
   AllowClear.prototype._handleClear = function (_, evt) {
+    evt.stopPropagation();
+
     // Ignore the event if it is disabled
     if (this.options.get('disabled')) {
       return;
@@ -42,14 +44,13 @@ define([
       return;
     }
 
-    evt.stopPropagation();
-
     var data = Utils.GetData($clear[0], 'data');
 
     var previousVal = this.$element.val();
     this.$element.val(this.placeholder.id);
 
     var unselectData = {
+      originalEvent: evt,
       data: data
     };
     this.trigger('clear', unselectData);
@@ -75,8 +76,6 @@ define([
     }
 
     this.$element.trigger('change');
-
-    this.trigger('toggle', {});
   };
 
   AllowClear.prototype._handleKeyboardClear = function (_, evt, container) {
