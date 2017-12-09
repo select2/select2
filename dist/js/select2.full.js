@@ -1409,6 +1409,9 @@ S2.define('select2/selection/base',[
       self.$selection.removeAttr('aria-owns');
 
       self.$selection.focus();
+      window.setTimeout(function () {
+        self.$selection.focus();
+      }, 0);
 
       self._detachCloseHandler(container);
     });
@@ -1818,6 +1821,11 @@ S2.define('select2/selection/allowClear',[
 
     if (evt.which == KEYS.DELETE || evt.which == KEYS.BACKSPACE) {
       this._handleClear(evt);
+      evt.preventDefault();
+      var self = this;
+      window.setTimeout(function () {
+          self.$element.focus();
+      }, 0);
     }
   };
 
@@ -2019,7 +2027,13 @@ S2.define('select2/selection/search',[
 
     this.resizeSearch();
     if (searchHadFocus) {
-      this.$search.focus();
+      var isTagInput = this.$element.find('[data-select2-tag]').length;
+      if (isTagInput) {
+        // fix IE11 bug where tag input lost focus
+        this.$element.focus();
+      } else {
+        this.$search.focus();
+      }
     }
   };
 

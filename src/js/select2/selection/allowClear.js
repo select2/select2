@@ -72,6 +72,11 @@ define([
 
     if (evt.which == KEYS.DELETE || evt.which == KEYS.BACKSPACE) {
       this._handleClear(evt);
+      evt.preventDefault();
+      var self = this;
+      window.setTimeout(function () {
+          self.$element.focus();
+      }, 0);
     }
   };
 
