@@ -8,9 +8,12 @@ define([
   }
 
   Search.prototype.render = function (decorated) {
+    var id = this.$element.attr('id') + '-search__field';
+
     var $search = $(
       '<li class="select2-search select2-search--inline">' +
-        '<input class="select2-search__field" type="search" tabindex="-1"' +
+        '<input id="' + id + '" class="select2-search__field" ' +
+        ' type="search" tabindex="-1"' +
         ' autocomplete="off" autocorrect="off" autocapitalize="none"' +
         ' spellcheck="false" role="textbox" aria-autocomplete="list" />' +
       '</li>'
