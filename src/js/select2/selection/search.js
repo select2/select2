@@ -11,8 +11,8 @@ define([
     var $search = $(
       '<li class="select2-search select2-search--inline">' +
         '<textarea class="select2-search__field" type="search" tabindex="-1"' +
-        ' autocomplete="off" autocorrect="off" autocapitalize="off"' +
-        ' spellcheck="false" role="textbox" aria-autocomplete="list" >' +
+        ' autocomplete="off" autocorrect="off" autocapitalize="none"' +
+        ' spellcheck="false" role="textbox" aria-autocomplete="list" />' +
         '</textarea>' +
       '</li>'
     );
