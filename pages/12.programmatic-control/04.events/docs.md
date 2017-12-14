@@ -36,7 +36,7 @@ $('#mySelect2').on('select2:select', function (e) {
 
 ## Event data
 
-When `select2:select` is triggered, data from the selection can ba accessed via the `params.data` property:
+When `select2:select` is triggered, data from the selection can be accessed via the `params.data` property:
 
 ```
 $('#mySelect2').on('select2:select', function (e) {
