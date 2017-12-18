@@ -482,3 +482,11 @@
 
 .select2-container--classic.select2-container--open .select2-dropdown {
   border-color: #5897fb; }
+
+    .select2-close-mask {
+      z-index: 3099;
+    }
+
+   .select2-dropdown {
+        z-index: 3051;
+    }
