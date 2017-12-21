@@ -6,9 +6,21 @@ define([
 ], function (require, $, Defaults, Utils) {
   function Options (options, $element) {
     this.options = options;
+    this.jQuery1x = false;
+    this.elementData = null;
+    
+    // Html already attempted to be read from html5-* attribs.
+    this.attemptedHtml5DataItems = {};
 
     if ($element != null) {
+      // Override `options` with html5 data-* attribs if any.
       this.fromElement($element);
+      
+      // Prefetch properties. 
+      for(var propertyName in Defaults.defaults) {
+        this.get(propertyName);
+     }
+      
     }
 
     this.options = Defaults.apply(this.options);
@@ -87,6 +99,7 @@ define([
     // Prefer the element's `dataset` attribute if it exists
     // jQuery 1.x does not correctly handle data attributes with multiple dashes
     if ($.fn.jquery && $.fn.jquery.substr(0, 2) == '1.' && $e[0].dataset) {
+      this.jQuery1x = true;
       dataset = $.extend(true, {}, $e[0].dataset, Utils.GetData($e[0]));
     } else {
       dataset = Utils.GetData($e[0]);
@@ -108,10 +121,36 @@ define([
       }
     }
 
+    // Store normalized element data for later retrieval.
+    this.elementData = Utils._convertData($e.data());
+
     return this;
   };
 
   Options.prototype.get = function (key) {
+
+    if (!this.elementData || this.attemptedHtml5DataItems[key]) {
+      return this.options[key];
+    }
+    // If the option value is stored in html5 data-* attribs,
+    // fetch the value and store it for performance.
+    if (!this.jQuery1x) {      
+      // For jQuery 1.x, the html5 data-* attribs have already 
+      // been parsed above.
+      // Read all attribs that start with `key`.  
+      for (var dataKey in this.elementData) {
+        if (dataKey.indexOf(key) === 0) {
+          
+          if ($.isPlainObject(this.options[key])) {
+            $.extend(this.options[key], this.elementData[dataKey]);
+          } else {
+            this.options[key] = this.elementData[dataKey];
+          }
+        }
+      }
+    }
+    // Mark as attempted.
+    this.attemptedHtml5DataItems[key] = true; 
     return this.options[key];
   };
 

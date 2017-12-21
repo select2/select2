@@ -352,6 +352,14 @@ define([
     }
 
     this.defaults = {
+      ajax: null,
+      placeholder: null,
+      tags: false,
+      tokenSeparators: [],
+      multiple: false,
+      dropdownCssClass: null,
+      allowClear: false,
+      containerCssClass: null,
       amdBase: './',
       amdLanguageBase: './i18n/',
       closeOnSelect: true,

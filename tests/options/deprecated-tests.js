@@ -248,3 +248,27 @@ test('converted select2-tags to data/tags automatically', function (assert) {
     'The `data` key is created with the original data'
   );
 });
+
+test('parsed ajax--url to ajax--cache correctly', function (assert) {
+  var $test = $('<select data-ajax--url="test://url"' +
+                'data-ajax--cache="true"></select>');
+  var options = new Options({}, $test);
+    
+  assert.ok(
+    options.get('ajax'),
+    'The `ajax` key was automatically created'
+  );
+  assert.equal(
+    options.get('ajax').url,
+    'test://url',
+    'The `url` property for the `ajax` option was filled in correctly'
+  );
+
+  // NOTE: .dataset always returns a string, whereas .data can return
+  // a boolean directly, so account for the difference.
+  assert.equal(
+    options.get('ajax').cache,
+    $.fn.jquery && $.fn.jquery.substr(0, 2) == '1.' ? 'true' : true,
+    'The `cache` property for the `ajax` option was filled in correctly'
+  );  
+});
