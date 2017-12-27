@@ -22,8 +22,8 @@ define(function () {
       return 'მონაცემების ჩატვირთვა…';
     },
     maximumSelected: function (args) {
-      var message = 'თქვენ შეგიძლიათ აირჩიოთ არაუმეტეს ' + args.maximum
-        + ' ელემენტი';
+      var message = 'თქვენ შეგიძლიათ აირჩიოთ არაუმეტეს ' + args.maximum +
+        ' ელემენტი';
 
       return message;
     },
