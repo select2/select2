@@ -91,6 +91,7 @@ test('backspace will set the search text', function (assert) {
 });
 
 test('updating selection does not shift the focus', function (assert) {
+  var done = assert.async();
   // Check for IE 8, which triggers a false negative during testing
   if (window.attachEvent && !window.addEventListener) {
     // We must expect 0 assertions or the test will fail
@@ -131,11 +132,15 @@ test('updating selection does not shift the focus', function (assert) {
 
   assert.equal($search.length, 1, 'The search box disappeared');
 
+  setTimeout(function(){
   assert.equal(
-    document.activeElement,
-    $search[0],
-    'The search did not have focus after the selection was updated'
-  );
+      document.activeElement,
+      $search[0],
+      'The search did not have focus after the selection was updated'
+    );
+    done()
+ }, 20)
+  
 });
 
 test('the focus event shifts the focus', function (assert) {
