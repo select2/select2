@@ -175,10 +175,10 @@ define([
 
     this.resizeSearch();
     if (searchHadFocus) {
-       var searchEl = this.$search
-     	  setTimeout(function() {
+       var searchEl = this.$search;
+     	  window.setTimeout(function() {
      	        searchEl.focus();
-     	  },0)
+     	  },0);
     }
   };
 
