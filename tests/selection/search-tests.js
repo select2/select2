@@ -132,14 +132,14 @@ test('updating selection does not shift the focus', function (assert) {
 
   assert.equal($search.length, 1, 'The search box disappeared');
 
-  setTimeout(function(){
-  assert.equal(
+  window.setTimeout(function(){
+    assert.equal(
       document.activeElement,
       $search[0],
       'The search did not have focus after the selection was updated'
     );
-    done()
- }, 20)
+    done();
+ }, 20);
   
 });
 
