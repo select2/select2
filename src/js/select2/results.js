@@ -121,7 +121,7 @@ define([
 
     this.data.current(function (selected) {
       var selectedIds = $.map(selected, function (s) {
-        return s.id.toString();
+        return s && s.id && s.id.toString() || '';
       });
 
       var $options = self.$results
