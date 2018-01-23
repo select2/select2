@@ -1,0 +1,45 @@
+$("#select2_id").find( ".select2-container .selection .select2-selection ul" ).sortable({
+      start: function(event, ui) { 
+            started_from = ui.item.index();
+        },
+        update: function(event, ui) { 
+          
+            moved_to = ui.item.index();
+            setTimeout(function(){
+              $select = $("#select2_id");
+              var started_from_ahead = started_from + 1;
+              var option = '';
+              $select.find( ' option' ).each(function(){
+                var ind = $(this).index();
+                clone_ind = ind + 1;
+                // alert( ind );
+                var html2 = $select.find('option:nth-child('+clone_ind+')').clone().wrap("<div />").parent().html();
+                if(  started_from > moved_to ){
+                  // MOVE UP
+                  if(  ind == moved_to ){ // moved to
+                    var html1 = $select.find('option:nth-child('+started_from_ahead+')').clone().wrap("<div />").parent().html();
+                   option+= html1;
+                   option+= html2;
+                  }else if(  ind != started_from ){
+                   option+= html2;
+                  }
+                }else{
+                  // MOVE DOWN
+                  if(  ind == moved_to ){ // moved to
+                   option+= html2;
+                   option+= attach_html;
+                  }else if(  ind != started_from ){
+                   option+= html2;
+                  }else{
+                    attach_html = html2;
+                  }
+                }
+               });
+                // $('.js-example-basic-multiple').select2( 'data' ,bbbb );
+                $select.html( option );
+                $select.select2( );
+                $("#select2_id").find( ".select2-container .selection .select2-selection ul" ).sortable({});
+              
+            }, 200);
+        }
+    });
