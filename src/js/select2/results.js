@@ -339,8 +339,8 @@ define([
 
       var currentIndex = $options.index($highlighted);
 
-      // If we are already at te top, don't move further
-      if (currentIndex === 0) {
+      // If we are already at the top, don't move further
+      if (currentIndex <= 0) {
         return;
       }
 
