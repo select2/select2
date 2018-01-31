@@ -170,8 +170,10 @@ define([
 
     decorated.call(this, data);
 
-    if (!$.contains(document.body, this.$searchContainer[0]))
-      this.$selection.find('.select2-selection__rendered').append(this.$searchContainer);
+    if (!$.contains(document.body, this.$searchContainer[0])) {
+      var $rendered = this.$selection.find('.select2-selection__rendered');
+      $rendered.append(this.$searchContainer);
+    }
 
     this.resizeSearch();
     if (searchHadFocus) {
