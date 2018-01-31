@@ -83,14 +83,16 @@ define([
       return;
     }
 
-    var $remove = $(
-      '<span class="select2-selection__clear">' +
-        '&times;' +
-      '</span>'
-    );
+    var $remove = this.$selection.find('.select2-selection__clear');
+    if ($remove.length === 0) {
+      $remove = $(
+        '<span class="select2-selection__clear">' +
+          '&times;' +
+        '</span>'
+      );
+      this.$selection.find('.select2-selection__rendered').prepend($remove);
+    }
     $remove.data('data', data);
-
-    this.$selection.find('.select2-selection__rendered').prepend($remove);
   };
 
   return AllowClear;
