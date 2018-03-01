@@ -68,15 +68,37 @@ define([
   };
 
   MultipleSelection.prototype.selectionContainer = function () {
-    var $container = $(
-      '<li class="select2-selection__choice">' +
-        '<span class="select2-selection__choice__remove" role="presentation">' +
-          '&times;' +
+    var container =
+      '<li class="select2-selection__choice ' +
+       'select2-selection__choice__classlist ' +
+       'select2-selection__choice__remove__align">' +
+        '<span class="select2-selection__choice__remove ' +
+        'select2-selection__choice__remove__classlist" role="presentation">' +
+          'select2-selection__choice__remove__label' +
         '</span>' +
-      '</li>'
-    );
+      '</li>';
+      // Default values
+      var opts = {
+        'select2-selection__choice__classlist': '',
+        'select2-selection__choice__remove__classlist': '',
+        'select2-selection__choice__remove__label': '&times;',
+        'select2-selection__choice__remove__align': 'left'
+      };
 
-    return $container;
+    // Retrieve the user function (if any)
+    var templateContainerFn = this.options.get('templateContainer');
+    // Execute it and overwrite defaults with user-supplied values
+    if (typeof templateContainerFn === 'function'){
+      opts = $.extend(true, opts, templateContainerFn.call(this));
+    }
+    $.each(opts, function(k, v){
+      /* jshint laxbreak: true */
+      container = container.replace(new RegExp(k, 'i'),
+                                  v.constructor === Array
+                                    ? v.join(' ')
+                                    : v.toString());
+    });
+    return $(container);
   };
 
   MultipleSelection.prototype.update = function (data) {
@@ -94,12 +116,19 @@ define([
       var $selection = this.selectionContainer();
       var formatted = this.display(selection, $selection);
 
-      $selection.append(formatted);
+      /* Checks whether right/left class is present so that
+         labeling position can properly be configured.*/
+      /* jshint laxbreak: true */
+      var res = $selection.hasClass('right')
+        ? $selection.removeClass('right').prepend(formatted)
+        : $selection.removeClass('left').append(formatted);
       $selection.attr('title', selection.title || selection.text);
 
       Utils.StoreData($selection[0], 'data', selection);
 
       $selections.push($selection);
+
+      res = null;
     }
 
     var $rendered = this.$selection.find('.select2-selection__rendered');
