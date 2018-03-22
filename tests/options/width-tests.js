@@ -64,3 +64,39 @@ test('resolve falls back to element if there is no style', function (assert) {
 
   assert.equal(width, '500px');
 });
+
+test('resolve fails if parent element is invisible', function (assert) {
+  var $style = $(
+    '<style type="text/css">.css-set-width { width: 500px; }</style>'
+  );
+  var $test = $(
+    '<div style="display:none;">' +
+      '<select class="css-set-width"></select>' +
+    '</div>'
+  );
+
+  $('#qunit-fixture').append($style);
+  $('#qunit-fixture').append($test);
+
+  var width = select._resolveWidth($test.find('select'), 'resolve');
+
+  assert.notEqual(width, '500px');
+});
+
+test('computedstyle gets the style if parent is invisible', function (assert) {
+  var $style = $(
+    '<style type="text/css">.css-set-width { width: 500px; }</style>'
+  );
+  var $test = $(
+    '<div style="display:none;">' +
+      '<select class="css-set-width"></select>' +
+    '</div>'
+  );
+
+  $('#qunit-fixture').append($style);
+  $('#qunit-fixture').append($test);
+
+  var width = select._resolveWidth($test.find('select'), 'computedstyle');
+
+  assert.equal(width, '500px');
+});
