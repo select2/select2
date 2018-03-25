@@ -1,10 +1,10 @@
 ---
-title: Configuration API
+title: Options
 taxonomy:
     category: docs
 ---
 
-The following is an attempt to provide a comprehensive list of all configuration options available in Select2.
+This is a list of all the Select 2 configuration options.
 
 | Option | Type | Default | Description | 
 | ------ | ---- | ------- | ----------- |
