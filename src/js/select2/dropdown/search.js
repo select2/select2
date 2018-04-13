@@ -17,6 +17,7 @@ define([
 
     this.$searchContainer = $search;
     this.$search = $search.find('input');
+    this.isTyping = false;
 
     $rendered.prepend($search);
 
@@ -45,6 +46,23 @@ define([
     this.$search.on('keyup input', function (evt) {
       self.handleSearch(evt);
     });
+
+    this.$search.on(
+      'compositionstart',
+      '.select2-search__field',
+      function (evt) {
+        self.isTyping = true;
+      }
+    );
+
+    this.$search.on(
+      'compositionend',
+      '.select2-search__field',
+      function (evt) {
+        self.isTyping = false;
+        self.handleSearch();
+      }
+    );
 
     container.on('open', function () {
       self.$search.attr('tabindex', 0);
@@ -83,6 +101,7 @@ define([
   };
 
   Search.prototype.handleSearch = function (evt) {
+    if (this.isTyping) { return; }
     if (!this._keyUpPrevented) {
       var input = this.$search.val();
 
