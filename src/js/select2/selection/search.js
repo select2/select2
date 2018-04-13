@@ -18,6 +18,8 @@ define([
 
     this.$searchContainer = $search;
     this.$search = $search.find('input');
+    this.isTyping = false;
+
 
     var $rendered = decorated.call(this);
 
@@ -117,6 +119,23 @@ define([
         self.$selection.off('keyup.search');
       }
     );
+    
+    this.$selection.on(
+      'compositionstart',
+      '.select2-search--inline',
+      function (evt) {
+        self.isTyping = true;
+      }
+    );
+
+    this.$selection.on(
+      'compositionend',
+      '.select2-search--inline',
+      function (evt) {
+        self.isTyping = false;
+        self.handleSearch();
+      }
+    );
 
     this.$selection.on(
       'keyup.search input.search',
@@ -186,6 +205,7 @@ define([
   };
 
   Search.prototype.handleSearch = function () {
+    if (this.isTyping) { return; }
     this.resizeSearch();
 
     if (!this._keyUpPrevented) {
