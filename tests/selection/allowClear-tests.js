@@ -79,6 +79,26 @@ test('clear is displayed for placeholder', function (assert) {
   );
 });
 
+test('clear icon should have title displayed', function (assert) {
+  var selection = new AllowClearPlaceholder(
+    $('#qunit-fixture .single-with-placeholder'),
+    allowClearOptions
+  );
+
+  var $selection = selection.render();
+
+  selection.update([{
+    id: 'one',
+    test: 'one'
+  }]);
+
+  assert.equal(
+    $selection.find('.select2-selection__clear').attr('title'),
+    'Remove all items',
+    'The clear icon should have title displayed'
+  );
+});
+
 test('clicking clear will set the placeholder value', function (assert) {
   var $element = $('#qunit-fixture .single-with-placeholder');
 

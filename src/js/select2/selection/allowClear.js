@@ -98,7 +98,7 @@ define([
     }
 
     var $remove = $(
-      '<span class="select2-selection__clear">' +
+      '<span class="select2-selection__clear" title="Remove all items">' +
         '&times;' +
       '</span>'
     );
