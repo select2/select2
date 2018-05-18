@@ -3368,7 +3368,10 @@ S2.define('select2/data/select',[
     data = this._normalizeItem(data);
     data.element = $option[0];
 
-    Utils.StoreData($option[0], 'data', data);
+    // don't cache optgroups data, we need to catch changes inside its children
+    if($option.is('option')) {
+      Utils.StoreData($option[0], 'data', data);
+    }
 
     return data;
   };
