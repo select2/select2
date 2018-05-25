@@ -76,9 +76,7 @@
       border: none;
       border-right: 1px solid $border-color;
 
-      border-radius: 0;
-      border-top-left-radius: $border-radius;
-      border-bottom-left-radius: $border-radius;
+      border-radius: 4px 0 0 4px;
 
       left: 1px;
       right: auto;
