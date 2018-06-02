@@ -125,7 +125,7 @@ When options are to be generated in `<optgroup>` sections, options should be nes
       ]
     }
   ],
-  "paginate": {
+  "pagination": {
     "more": true
   }
 }
