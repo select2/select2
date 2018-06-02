@@ -15,7 +15,7 @@ This is a list of all the Select 2 configuration options.
 | `amdBase` | string | `./` | See [Using Select2 with AMD or CommonJS loaders](/builds-and-modules#using-select2-with-amd-or-commonjs-loaders). |
 | `amdLanguageBase` | string | `./i18n/` | See [Using Select2 with AMD or CommonJS loaders](/builds-and-modules#using-select2-with-amd-or-commonjs-loaders). |
 | `closeOnSelect` | boolean | `true` | Controls whether the dropdown is [closed after a selection is made](/dropdown#forcing-the-dropdown-to-remain-open-after-selection). |
-| `containerCss` | | | |
+| `containerCss` | object | null | Adds custom CSS to the container. Expects key-value pairs: `{ 'css-property': 'value' }` |
 | `containerCssClass` | string | `''` | |
 | `data` | array of objects | `null` | Allows rendering dropdown options from an [array](/data-sources/arrays). |
 | `dataAdapter` | | `SelectAdapter` | Used to override the built-in [DataAdapter](/advanced/default-adapters/data). |
@@ -24,7 +24,7 @@ This is a list of all the Select 2 configuration options.
 | `disabled` | boolean | `false` | When set to `true`, the select control will be disabled. |
 | `dropdownAdapter` | | `DropdownAdapter` | Used to override the built-in [DropdownAdapter](/advanced/default-adapters/dropdown) |
 | `dropdownAutoWidth` | boolean | `false` | |
-| `dropdownCss` | | | |
+| `dropdownCss` | object | null | Adds custom CSS to the dropdown. Expects key-value pairs: `{ 'css-property': 'value' }` |
 | `dropdownCssClass` | string | `''` | |
 | `dropdownParent` | jQuery selector or DOM node | `$(document.body)` | Allows you to [customize placement](/dropdown#dropdown-placement) of the dropdown. |
 | `escapeMarkup` | callback | `Utils.escapeMarkup` | Handles [automatic escaping of content rendered by custom templates](/dropdown#built-in-escaping). |
