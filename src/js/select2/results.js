@@ -459,14 +459,18 @@ define([
       function (evt) {
       var data = Utils.GetData(this, 'data');
 
-      self.getHighlightedResults()
-          .removeClass('select2-results__option--highlighted');
+      self.unhighlightResults();
 
       self.trigger('results:focus', {
         data: data,
         element: $(this)
       });
     });
+    
+    this.$results.on('mouseleave', '.select2-results__option[aria-selected]',
+      function (evt) {
+          self.unhighlightResults();
+      });
   };
 
   Results.prototype.getHighlightedResults = function () {
@@ -475,6 +479,11 @@ define([
 
     return $highlighted;
   };
+  
+  Results.prototype.unhighlightResults = function () {
+      this.getHighlightedResults()
+          .removeClass('select2-results__option--highlighted');
+  }
 
   Results.prototype.destroy = function () {
     this.$results.remove();
