@@ -483,7 +483,7 @@ define([
   Results.prototype.unhighlightResults = function () {
       this.getHighlightedResults()
           .removeClass('select2-results__option--highlighted');
-  }
+  };
 
   Results.prototype.destroy = function () {
     this.$results.remove();
