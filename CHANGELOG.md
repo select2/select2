@@ -1,5 +1,34 @@
 # Change Log
 
+## 4.0.6
+
+### New features/improvements
+- Add style property to package.json (#5019)
+- Implement `clear` and `clearing` events (#5058)
+
+### Bug fixes
+- Fix up arrow error when there are no options in dropdown (#5127)
+- Add `;` before beginning of factory wrapper (#5089)
+- Fix IE11 issue with select losing focus after selecting an item (#4860)
+- Clear tooltip from `select2-selection__rendered` when selection is cleared (#4640, #4746)
+- Fix keyboard not closing when closing dropdown on iOS 10 (#4680)
+- User-defined types not normalized properly when passed in as data (#4632)
+- Perform deep merge for `Defaults.set()` (#4364)
+- Fix "the results could not be loaded" displaying during AJAX request (#4356)
+- Cache objects in `Utils.__cache` instead of using `$.data` (#4346)
+- Removing the double event binding registration of `selection:update` (#4306)
+
+#### Accessibility
+- Improve `.select2-hidden-accessible` (#4908)
+- Add role and aria-readonly attributes to single selection dropdown value (#4881)
+
+### Translations
+- Add Turkmen translations (`tk`) (#5125)
+- Fix error in French translations (#5122)
+
+### Miscellaneous
+-  Remove duplicate CSS selector in classic theme (#5115)
+
 ## 4.0.5
 
 ### Bug fixes

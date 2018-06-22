@@ -34,11 +34,12 @@
   ],
   "license": "MIT",
   "main": "dist/js/select2.js",
+  "style": "dist/css/select2.css",
   "files": [
     "src",
     "dist"
   ],
-  "version": "4.0.5",
+  "version": "4.0.6-rc.1",
   "jspm": {
     "main": "js/select2",
     "directories": {
