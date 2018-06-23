@@ -8,6 +8,9 @@ define([
       if (params.term == null || $.trim(params.term) === '') {
         return match;
       }
+      else {
+        params.term = params.term.trim();
+      }
 
       if (data.children) {
         for (var c = data.children.length - 1; c >= 0; c--) {
