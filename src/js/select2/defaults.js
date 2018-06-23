@@ -311,6 +311,9 @@ define([
       if ($.trim(params.term) === '') {
         return data;
       }
+      else {
+        params.term = params.term.trim();
+      }
 
       // Do a recursive check for options with children
       if (data.children && data.children.length > 0) {
