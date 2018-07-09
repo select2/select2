@@ -18,8 +18,8 @@ define([
     this.$searchContainer = $search;
     this.$search = $search.find('input');
 
-    if (this.options.inputSearchPlaceholder) {
-      this.$search.attr('placeholder', this.options.inputSearchPlaceholder);
+    if (this.options.get('inputSearchPlaceholder')) {
+      this.$search.attr('placeholder', this.options.get('inputSearchPlaceholder'));
     }
 
     $rendered.prepend($search);

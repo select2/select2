@@ -19,8 +19,8 @@ define([
     this.$searchContainer = $search;
     this.$search = $search.find('input');
 
-    if (this.options.inputSearchPlaceholder) {
-      this.createPlaceholder(this.options.inputSearchPlaceholder);
+    if (this.options.get('inputSearchPlaceholder')) {
+      this.createPlaceholder(this.options.get('inputSearchPlaceholder'));
     }
 
     var $rendered = decorated.call(this);
