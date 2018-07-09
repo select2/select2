@@ -1890,6 +1890,8 @@ S2.define('select2/selection/search',[
     this.$searchContainer = $search;
     this.$search = $search.find('input');
 
+    this.createPlaceholder(null, "Placeholder for search.....");
+
     var $rendered = decorated.call(this);
 
     this._transferTabIndex();
