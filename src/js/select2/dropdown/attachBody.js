@@ -4,6 +4,7 @@ define([
 ], function ($, Utils) {
   function AttachBody (decorated, $element, options) {
     this.$dropdownParent = options.get('dropdownParent') || $(document.body);
+    this.$watchers = [];
 
     decorated.call(this, $element, options);
   }
@@ -88,7 +89,7 @@ define([
     var resizeEvent = 'resize.select2.' + container.id;
     var orientationEvent = 'orientationchange.select2.' + container.id;
 
-    var $watchers = this.$container.parents().filter(Utils.hasScroll);
+    var $watchers = this.getWatchers();
     $watchers.each(function () {
       Utils.StoreData(this, 'select2-scroll-position', {
         x: $(this).scrollLeft(),
@@ -114,8 +115,9 @@ define([
     var resizeEvent = 'resize.select2.' + container.id;
     var orientationEvent = 'orientationchange.select2.' + container.id;
 
-    var $watchers = this.$container.parents().filter(Utils.hasScroll);
+    var $watchers = this.getWatchers();
     $watchers.off(scrollEvent);
+    this.clearWatchers();
 
     $(window).off(scrollEvent + ' ' + resizeEvent + ' ' + orientationEvent);
   };
@@ -217,6 +219,18 @@ define([
     this._positionDropdown();
     this._resizeDropdown();
   };
+
+  AttachBody.prototype.getWatchers = function (decorated) {
+    if(this.$watchers.length >>> 0) {
+      return this.$watchers;
+    }
+
+    return this.$watchers = this.$container.parents().filter(Utils.hasScroll);
+  }
+
+  AttachBody.prototype.clearWatchers = function (decorated) {
+    this.$watchers = [];
+  }
 
   return AttachBody;
 });
