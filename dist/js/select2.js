@@ -4316,7 +4316,7 @@ S2.define('select2/dropdown/attachBody',[
     var resizeEvent = 'resize.select2.' + container.id;
     var orientationEvent = 'orientationchange.select2.' + container.id;
 
-    var $watchers = this.getWatchers();
+    var $watchers = this._getWatchers();
     $watchers.each(function () {
       Utils.StoreData(this, 'select2-scroll-position', {
         x: $(this).scrollLeft(),
@@ -4342,9 +4342,9 @@ S2.define('select2/dropdown/attachBody',[
     var resizeEvent = 'resize.select2.' + container.id;
     var orientationEvent = 'orientationchange.select2.' + container.id;
 
-    var $watchers = this.getWatchers();
+    var $watchers = this._getWatchers();
     $watchers.off(scrollEvent);
-    this.clearWatchers();
+    this._clearWatchers();
 
     $(window).off(scrollEvent + ' ' + resizeEvent + ' ' + orientationEvent);
   };
@@ -4447,17 +4447,19 @@ S2.define('select2/dropdown/attachBody',[
     this._resizeDropdown();
   };
 
-  AttachBody.prototype.getWatchers = function (decorated) {
-    if(this.$watchers.length >>> 0) {
+  AttachBody.prototype._getWatchers = function (decorated) {
+    if(this.$watchers.length > 0) {
       return this.$watchers;
     }
 
-    return this.$watchers = this.$container.parents().filter(Utils.hasScroll);
-  }
+    this.$watchers = this.$container.parents().filter(Utils.hasScroll);
 
-  AttachBody.prototype.clearWatchers = function (decorated) {
+    return this.$watchers;
+  };
+
+  AttachBody.prototype._clearWatchers = function (decorated) {
     this.$watchers = [];
-  }
+  };
 
   return AttachBody;
 });
