@@ -24,7 +24,7 @@ Select2 can render programmatically supplied data from an array or remote data s
 }
 ```
 
-Each object should contain, _at a minimum_, an `id` and a `text` property.  Any additional parameters passed in with data objects will be included on the data objects that Select2 exposes.
+Select2 requires that each object contain an `id` and a `text` property.  Additional parameters passed in with data objects will be included on the data objects that Select2 exposes.
 
 The response object may also contain pagination data, if you would like to use the "infinite scroll" feature.  This should be specified under the `pagination` key.
 
