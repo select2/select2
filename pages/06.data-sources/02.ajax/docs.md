@@ -37,7 +37,7 @@ You can configure how Select2 searches for remote data using the `ajax` option. 
 
 ## Request parameters
 
-Select2 will issue a request to the specified URL when the user opens the control (unless there is a `minimumInputLength` set), and again every time the user types in the search box.  By default, it will send the following as query string parameters:
+Select2 will issue a request to the specified URL when the user opens the control (unless there is a `minimumInputLength` set as a Select2 option), and again every time the user types in the search box.  By default, it will send the following as query string parameters:
 
 - `term` : The current search term in the search box.
 - `q`    : Contains the same contents as `term`.
