@@ -51,6 +51,7 @@ Plugins
   - [django-autocomplete-light]
   - [django-easy-select2]
   - [django-select2]
+* [Drupal] - [drupal-select2]
 * [Meteor] - [meteor-select2]
 * [Ruby on Rails][ruby-on-rails] - [select2-rails]
 * [Wicket] - [wicketstuff-select2]
@@ -106,6 +107,8 @@ The license is available within the repository in the [LICENSE][license] file.
 [django-autocomplete-light]: https://github.com/yourlabs/django-autocomplete-light
 [django-easy-select2]: https://github.com/asyncee/django-easy-select2
 [django-select2]: https://github.com/applegrew/django-select2
+[drupal]: https://www.drupal.org/
+[drupal-select2]: https://www.drupal.org/project/select2
 [flat-ui]: http://designmodo.github.io/Flat-UI/
 [meteor]: https://www.meteor.com/
 [meteor-select2]: https://github.com/nate-strauser/meteor-select2
