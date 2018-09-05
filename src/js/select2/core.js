@@ -280,9 +280,13 @@ define([
     this.on('focus', function () {
       self.$container.addClass('select2-container--focus');
 
-      if (!self.$container.hasClass('select2-container--disabled') && !self.isOpen()) {
+      if (!self.$container.hasClass('select2-container--disabled')
+          && !self.isOpen()) {
         if (self.options.get('multiple')) {
-          setTimeout(function () { self.open(); }, self.options.get('ajax') ? 300 : 100);
+          window.setTimeout(function () {
+            self.open();
+          },
+          self.options.get('ajax') ? 300 : 100);
         }
         else {
           self.open();
