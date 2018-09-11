@@ -275,6 +275,22 @@ Select2 previously provided multiple options for formatting the results list and
 
 You should refer to the updated documentation on templates for [results](/dropdown) and [selections](/selections) when migrating from previous versions of Select2.
 
+### Renamed `createSearchChoice`
+
+This method has been renamed to `createTag`. You should refer to the documentation on [option creation](/tagging#tag-properties) when migrating from previous versions of Select2.
+
+The `createSearchChoicePosition` option has been removed in favor of the `insertTag` function. New tags are added to the bottom of the list by default.
+```
+insertTag: function (data, tag) {
+  // Insert the tag at the end of the results
+  data.push(tag);
+}
+```
+
+### Renamed `selectOnBlur`
+
+This method has been renamed to `selectOnClose`.
+
 ### The `id` and `text` properties are strictly enforced
 
 When working with array and AJAX data in the past, Select2 allowed a custom `id` function or attribute to be set in various places, ranging from the initialization of Select2 to when the remote data was being returned. This allowed Select2 to better integrate with existing data sources that did not necessarily use the `id` attribute to indicate the unique identifier for an object.
