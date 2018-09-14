@@ -308,11 +308,9 @@ define([
 
     function matcher (params, data) {
       // Always return the object if there is nothing to compare
-      if ($.trim(params.term) === '') {
+	  params.term = $.trim(params.term);
+      if (params.term === '') {
         return data;
-      }
-      else {
-        params.term = params.term.trim();
       }
 
       // Do a recursive check for options with children

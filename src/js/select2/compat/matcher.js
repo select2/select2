@@ -5,11 +5,9 @@ define([
     function wrappedMatcher (params, data) {
       var match = $.extend(true, {}, data);
 
-      if (params.term == null || $.trim(params.term) === '') {
+	  params.term = $.trim(params.term);
+      if (params.term === '') {
         return match;
-      }
-      else {
-        params.term = params.term.trim();
       }
 
       if (data.children) {
