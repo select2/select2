@@ -41,7 +41,7 @@ define(function () {
       return 'Besig…';
     },
     removeAllItems: function () {
-      return "Verwyder alle items";
+      return 'Verwyder alle items';
     }
   };
 });
