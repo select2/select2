@@ -32,6 +32,9 @@ define(function () {
     },
     searching: function () {
       return 'Đang tìm…';
+    },
+    removeAllItems: function () {     
+      return 'Xóa tất cả các mục';
     }
   };
 });
