@@ -156,7 +156,7 @@ test('scrollAfterSelect triggers results:focus', function (assert) {
 
   var Results = require('select2/results');
 
-  var options = new Options({ scrollAfterSelect: false });
+  var options = new Options({ scrollAfterSelect: true });
   var results = new Results($select, options);
 
   // Fake the data adapter for the `setClasses` method
