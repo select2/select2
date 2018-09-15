@@ -137,7 +137,7 @@ test('results:append does not trigger results:focus', function (assert) {
   });
 });
 
-test('scrollAfterSelect triggers results:focus by default', function (assert) {
+test('scrollAfterSelect triggers results:focus', function (assert) {
   assert.expect(3);
 
   var $ = require('jquery');
@@ -156,7 +156,7 @@ test('scrollAfterSelect triggers results:focus by default', function (assert) {
 
   var Results = require('select2/results');
 
-  var options = new Options({});
+  var options = new Options({ scrollAfterSelect: false });
   var results = new Results($select, options);
 
   // Fake the data adapter for the `setClasses` method
