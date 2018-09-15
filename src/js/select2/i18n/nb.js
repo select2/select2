@@ -25,6 +25,9 @@ define(function () {
     },
     searching: function () {
       return 'Søker…';
+    },
+    removeAllItems: function () {
+      return 'Fjern alle elementer';
     }
   };
 });

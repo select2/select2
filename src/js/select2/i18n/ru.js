@@ -53,6 +53,9 @@ define(function () {
     },
     searching: function () {
       return 'Поиск…';
+    },
+    removeAllItems: function () {
+      return 'Удалить все элементы';
     }
   };
 });
