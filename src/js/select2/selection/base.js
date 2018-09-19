@@ -69,10 +69,11 @@ define([
 
     container.on('open', function () {
       // When the dropdown is open, aria-expanded="true"
+      self._closeOpenedHandler();
+      self._attachCloseHandler(container);
+
       self.$selection.attr('aria-expanded', 'true');
       self.$selection.attr('aria-owns', resultsId);
-
-      self._attachCloseHandler(container);
     });
 
     container.on('close', function () {
@@ -111,6 +112,14 @@ define([
 
       self.trigger('blur', evt);
     }, 1);
+  };
+
+  BaseSelection.prototype._closeOpenedHandler = function () {
+    var self = this;
+
+    $('.select2.select2-container--open').each(function () {
+      Utils.GetData(this, 'element').select2('close');
+    });
   };
 
   BaseSelection.prototype._attachCloseHandler = function (container) {
