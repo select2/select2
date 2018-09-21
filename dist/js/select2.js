@@ -856,8 +856,8 @@ S2.define('select2/results',[
       var item = data.results[d];
 
       var $option = this.option(item);
-
-      $options.push($option);
+      if ($option)
+        $options.push($option);
     }
 
     this.$results.append($options);
@@ -913,7 +913,7 @@ S2.define('select2/results',[
         var id = '' + item.id;
 
         if ((item.element != null && item.element.selected) ||
-            (item.element == null && $.inArray(id, selectedIds) > -1)) {
+          (item.element == null && $.inArray(id, selectedIds) > -1)) {
           $option.attr('aria-selected', 'true');
         } else {
           $option.attr('aria-selected', 'false');
@@ -988,7 +988,8 @@ S2.define('select2/results',[
       label.className = 'select2-results__group';
 
       var $label = $(label);
-      this.template(data, label);
+      if (!this.template(data, label))
+        return null;
 
       var $children = [];
 
@@ -996,8 +997,8 @@ S2.define('select2/results',[
         var child = data.children[c];
 
         var $child = this.option(child);
-
-        $children.push($child);
+        if (!$child)
+          $children.push($child);
       }
 
       var $childrenContainer = $('<ul></ul>', {
@@ -1009,7 +1010,8 @@ S2.define('select2/results',[
       $option.append(label);
       $option.append($childrenContainer);
     } else {
-      this.template(data, option);
+      if (!this.template(data, option))
+        return null;
     }
 
     $.data(option, 'data', data);
@@ -1214,22 +1216,22 @@ S2.define('select2/results',[
 
       if ($this.attr('aria-selected') === 'true') {
         if (self.options.get('multiple')) {
-          self.trigger('unselect', {
-            originalEvent: evt,
-            data: data
-          });
-        } else {
-          self.trigger('close', {});
+            self.trigger('unselect', {
+              originalEvent: evt,
+              data: data
+            });
+          } else {
+            self.trigger('close', {});
+          }
+
+          return;
         }
 
-        return;
-      }
-
-      self.trigger('select', {
-        originalEvent: evt,
-        data: data
+        self.trigger('select', {
+          originalEvent: evt,
+          data: data
+        });
       });
-    });
 
     this.$results.on('mouseenter', '.select2-results__option[aria-selected]',
       function (evt) {
@@ -1238,16 +1240,16 @@ S2.define('select2/results',[
       self.getHighlightedResults()
           .removeClass('select2-results__option--highlighted');
 
-      self.trigger('results:focus', {
-        data: data,
-        element: $(this)
+        self.trigger('results:focus', {
+          data: data,
+          element: $(this)
+        });
       });
-    });
   };
 
   Results.prototype.getHighlightedResults = function () {
     var $highlighted = this.$results
-    .find('.select2-results__option--highlighted');
+      .find('.select2-results__option--highlighted');
 
     return $highlighted;
   };
@@ -1288,17 +1290,18 @@ S2.define('select2/results',[
     var content = template(result, container);
 
     if (content == null) {
-      container.style.display = 'none';
+      return false;
     } else if (typeof content === 'string') {
       container.innerHTML = escapeMarkup(content);
     } else {
       $(container).append(content);
     }
+
+    return true;
   };
 
   return Results;
 });
-
 S2.define('select2/keys',[
 
 ], function () {
