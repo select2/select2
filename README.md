@@ -63,6 +63,7 @@ Plugins
 Themes
 
 - [Bootstrap 3][bootstrap3] - [select2-bootstrap-theme]
+- [Bootstrap 4][bootstrap4] 
 - [Flat UI][flat-ui] - [select2-flat-theme]
 - [Metro UI][metro-ui] - [select2-metro]
 
