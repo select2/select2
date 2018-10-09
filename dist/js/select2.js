@@ -1470,13 +1470,9 @@ S2.define('select2/selection/base',[
       self.$selection.removeAttr('aria-activedescendant');
       self.$selection.removeAttr('aria-owns');
 
-      // Only focus if preCloseFocus and afterCloseFocus are the same
-      // (selection or closing by keyboard)
-      var preCloseFocus = window.document.activeElement;
+      self.$selection.focus();
       window.setTimeout(function () {
-        if(preCloseFocus === window.document.activeElement) {
-          self.$selection.focus();
-        }
+        self.$selection.focus();
       }, 0);
 
       self._detachCloseHandler(container);
