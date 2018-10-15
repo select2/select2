@@ -90,7 +90,7 @@ define([
       for (var d = 0; d < currentData.length; d++) {
         var id = currentData[d].id;
 
-        if (id !== data.id && $.inArray(id, val) === -1) {
+        if (id !== data.id.toString() && $.inArray(id, val) === -1) {
           val.push(id);
         }
       }
