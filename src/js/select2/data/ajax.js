@@ -79,11 +79,11 @@ define([
         }
 
         callback(results);
-      }, function () {
+      }, function ($req) {
         // Attempt to detect if a request was aborted
         // Only works if the transport exposes a status property
-        if ('status' in $request &&
-            ($request.status === 0 || $request.status === '0')) {
+        if ('status' in $req &&
+            ($req.status === 0 || $req.status === '0')) {
           return;
         }
 
