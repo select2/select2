@@ -32,6 +32,9 @@ define(function () {
     },
     searching: function () {
       return 'ძიება…';
+    },
+    removeAllItems: function () {
+      return 'ამოიღე ყველა ელემენტი';
     }
   };
 });

@@ -40,6 +40,9 @@ define(function () {
     },
     searching: function () {
       return 'Duke kërkuar…';
+    },
+    removeAllItems: function () {
+      return 'Hiq të gjitha sendet';
     }
   };
 });

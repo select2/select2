@@ -89,7 +89,7 @@ define([
           self.$selection.focus();
         }
       }, 0);
-
+    
       self._detachCloseHandler(container);
     });
 

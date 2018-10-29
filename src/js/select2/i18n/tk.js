@@ -31,6 +31,10 @@ define(function () {
     },
     searching: function () {
       return 'Gözlenýär…';
+    },
+    removeAllItems: function () {
+      // TO DO : add in turkmen,
+      return 'Remove all items';
     }
   };
 });
