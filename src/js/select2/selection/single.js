@@ -47,6 +47,9 @@ define([
       self.trigger('toggle', {
         originalEvent: evt
       });
+
+      // Stop propagation of event
+      return false;
     });
 
     this.$selection.on('focus', function (evt) {
