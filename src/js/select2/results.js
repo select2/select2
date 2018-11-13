@@ -308,6 +308,9 @@ define([
       self.$results.attr('aria-expanded', 'false');
       self.$results.attr('aria-hidden', 'true');
       self.$results.removeAttr('aria-activedescendant');
+
+      // remove aria-activedescendant from the search input for screen readers
+      this.dropdown.$search.removeAttr('aria-activedescendant');
     });
 
     container.on('results:toggle', function () {
@@ -360,6 +363,9 @@ define([
 
       var $next = $options.eq(nextIndex);
 
+      // update the search input's aria-activedescendant for screen readers
+	  this.dropdown.$search.attr('aria-activedescendant', $next.attr('id'));
+
       $next.trigger('mouseenter');
 
       var currentOffset = self.$results.offset().top;
@@ -388,6 +394,9 @@ define([
       }
 
       var $next = $options.eq(nextIndex);
+
+      // update the search input's aria-activedescendant for screen readers
+      this.dropdown.$search.attr('aria-activedescendant', $next.attr('id'));
 
       $next.trigger('mouseenter');
 
