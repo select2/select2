@@ -314,7 +314,9 @@ module.exports = function (grunt) {
           'tests/**/*.js'
         ],
         tasks: [
-          'compile'
+          'compile',
+          'test',
+          'minify'
         ]
       },
       css: {
