@@ -303,7 +303,7 @@ define([
 
     this.on('close', function () {
       self.$container.removeClass('select2-container--open');
-      clearTimeout(self._keySearchTimer);
+      window.clearTimeout(self._keySearchTimer);
       self._keySearchTimer = 0;
       self._searchQuery = '';
     });
