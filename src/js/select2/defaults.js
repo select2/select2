@@ -395,4 +395,3 @@ define([
 
   return defaults;
 });
-
