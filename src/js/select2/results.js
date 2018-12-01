@@ -403,6 +403,41 @@ define([
       }
     });
 
+    container.on('results:find', function (params) {
+      var charCode = String.fromCharCode(params.key);
+      var charRegexp = new RegExp('[a-z-A-Z-0-9\s]');
+
+      if(charRegexp.test(charCode)){
+        clearTimeout(self.data.container._keySearchTimer);
+        self.data.container._searchQuery += charCode;
+        var searchOption = '';
+        var $searchContent = container.isOpen()?self.$results.find('li'):self.$element.find('option');
+        var searchRegExp = new RegExp('^'+self.data.container._searchQuery ,'i');
+        $.each($searchContent, function (index, value) {
+          if(searchRegExp.test($.trim($(value).text()))){
+            searchOption = $(value);
+            return false;
+          }
+        });
+
+        if(searchOption !== '') {
+          if(container.isOpen()){
+            searchOption.trigger('mouseenter');
+            var currentOffset = self.$results.offset().top + self.$results.outerHeight(false);
+            var nextBottom = searchOption.offset().top + searchOption.outerHeight(false);
+            var nextOffset = self.$results.scrollTop() + nextBottom - currentOffset;
+            self.$results.scrollTop(nextOffset);
+          }else{
+            self.$element.val(searchOption.attr('value')).trigger('change');
+          }
+        }
+        self.data.container._keySearchTimer = setTimeout(function () {
+          self.data.container._searchQuery = '';
+          self.data.container._keySearchTimer = 0;
+        },2000);
+      }
+    });
+
     container.on('results:focus', function (params) {
       params.element.addClass('select2-results__option--highlighted');
     });

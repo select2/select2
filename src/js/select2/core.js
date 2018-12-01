@@ -87,6 +87,9 @@ define([
 
     // Ensure backwards compatibility with $element.data('select2').
     $element.data('select2', this);
+
+    this._keySearchTimer = 0;
+    this._searchQuery = '';
   };
 
   Utils.Extend(Select2, Utils.Observable);
@@ -276,7 +279,7 @@ define([
 
   Select2.prototype._registerEvents = function () {
     var self = this;
-    
+
     this.on('focus', function () {
       self.$container.addClass('select2-container--focus');
 
@@ -300,6 +303,9 @@ define([
 
     this.on('close', function () {
       self.$container.removeClass('select2-container--open');
+      clearTimeout(self._keySearchTimer);
+      self._keySearchTimer = 0;
+      self._searchQuery = '';
     });
 
     this.on('enable', function () {
@@ -361,7 +367,10 @@ define([
           self.trigger('results:next', {});
 
           evt.preventDefault();
+        }else if(self.options.get('minimumResultsForSearch') === Infinity){
+          self.trigger('results:find',{key:key});
         }
+
       } else {
         if (key === KEYS.ENTER || key === KEYS.SPACE ||
             (key === KEYS.DOWN && evt.altKey)) {
