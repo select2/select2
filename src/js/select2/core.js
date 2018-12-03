@@ -360,6 +360,8 @@ define([
           self.open();
 
           evt.preventDefault();
+        }else if(self.options.get('minimumResultsForSearch') === Infinity){
+          self.trigger('results:find',{key:key});
         }
       }
     });
