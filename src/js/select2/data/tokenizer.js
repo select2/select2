@@ -73,7 +73,7 @@ define([
 
     var enclosureOptions = (options.get('tokenEnclosures') || ['\"', '\'']);
     var enclosures = enclosureOptions.filter(function (token) {
-      return -1 === separators.indexOf(token)
+      return -1 === separators.indexOf(token);
     });
 
     var i = 0;
