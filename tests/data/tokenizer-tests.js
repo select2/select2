@@ -217,3 +217,112 @@ test('works with multiple tokens given', function (assert) {
     'The two new tags should have been created'
   );
 });
+
+
+test('works with default enclosure tokens', function (assert) {
+  assert.expect(5);
+
+  var SelectData = require('select2/data/select');
+  var Tokenizer = require('select2/data/tokenizer');
+  var Tags = require('select2/data/tags');
+
+  var Options = require('select2/options');
+  var Utils = require('select2/utils');
+
+  var $ = require('jquery');
+
+  var TokenizedSelect = Utils.Decorate(
+    Utils.Decorate(SelectData, Tags),
+    Tokenizer
+  );
+  var $select = $('#qunit-fixture .multiple');
+
+  var options = new Options({
+    tags: true,
+    tokenSeparators: [',']
+  });
+
+  var container = new MockContainer();
+  container.dropdown = container.selection = {};
+
+  var $container = $('<div></div>');
+
+  var data = new TokenizedSelect($select, options);
+  data.bind(container, $container);
+
+  data.on('select', function () {
+    assert.ok(true, 'The select event should be triggered');
+  });
+
+  // should tokenize into the following
+  // - first
+  // - second,third
+  // - four","five
+  // - six
+  data.query({
+    term: 'first,"second,third",\'four","five\',six'
+  }, function () {
+    assert.ok(true, 'The callback should have succeeded');
+  });
+
+  assert.equal(
+    $select.children('option').length,
+    3,
+    'The two new tags should have been created'
+  );
+});
+
+test('works with provided enclosure tokens', function (assert) {
+  assert.expect(6);
+
+  var SelectData = require('select2/data/select');
+  var Tokenizer = require('select2/data/tokenizer');
+  var Tags = require('select2/data/tags');
+
+  var Options = require('select2/options');
+  var Utils = require('select2/utils');
+
+  var $ = require('jquery');
+
+  var TokenizedSelect = Utils.Decorate(
+    Utils.Decorate(SelectData, Tags),
+    Tokenizer
+  );
+  var $select = $('#qunit-fixture .multiple');
+
+  var options = new Options({
+    tags: true,
+    tokenSeparators: [','],
+    tokenEnclosures: ['\'']
+  });
+
+  var container = new MockContainer();
+  container.dropdown = container.selection = {};
+
+  var $container = $('<div></div>');
+
+  var data = new TokenizedSelect($select, options);
+  data.bind(container, $container);
+
+  data.on('select', function () {
+    assert.ok(true, 'The select event should be triggered');
+  });
+
+  // should tokenize into the following
+  // - first
+  // - "second
+  // - third"
+  // - four","five
+  // - six
+  data.query({
+    term: 'first,"second,third",\'four","five\',six'
+  }, function () {
+    assert.ok(true, 'The callback should have succeeded');
+  });
+
+  assert.equal(
+    $select.children('option').length,
+    3,
+    'The two new tags should have been created'
+  );
+});
