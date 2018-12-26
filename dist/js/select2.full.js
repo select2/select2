@@ -1114,10 +1114,7 @@ S2.define('select2/results',[
       }
 
       self.setClasses();
-
-      if (self.options.get('scrollAfterSelect')) {
-        self.highlightFirstItem();
-      }
+      self.highlightFirstItem();
     });
 
     container.on('unselect', function () {
@@ -1126,10 +1123,7 @@ S2.define('select2/results',[
       }
 
       self.setClasses();
-
-      if (self.options.get('scrollAfterSelect')) {
-        self.highlightFirstItem();
-      }
+      self.highlightFirstItem();
     });
 
     container.on('open', function () {
@@ -1183,7 +1177,7 @@ S2.define('select2/results',[
 
       var currentIndex = $options.index($highlighted);
 
-      // If we are already at the top, don't move further
+      // If we are already at te top, don't move further
       // If no options, currentIndex will be -1
       if (currentIndex <= 0) {
         return;
@@ -1476,10 +1470,11 @@ S2.define('select2/selection/base',[
       self.$selection.removeAttr('aria-activedescendant');
       self.$selection.removeAttr('aria-owns');
 
+      self.$selection.focus();
       window.setTimeout(function () {
         self.$selection.focus();
       }, 0);
-    
+
       self._detachCloseHandler(container);
     });
 
@@ -1916,10 +1911,8 @@ S2.define('select2/selection/allowClear',[
       return;
     }
 
-    var removeAll = this.options.get('translations').get('removeAllItems');   
-
     var $remove = $(
-      '<span class="select2-selection__clear" title="' + removeAll() +'">' +
+      '<span class="select2-selection__clear">' +
         '&times;' +
       '</span>'
     );
@@ -2510,7 +2503,6 @@ S2.define('select2/diacritics',[
     '\u019F': 'O',
     '\uA74A': 'O',
     '\uA74C': 'O',
-    '\u0152': 'OE',
     '\u01A2': 'OI',
     '\uA74E': 'OO',
     '\u0222': 'OU',
@@ -2920,7 +2912,6 @@ S2.define('select2/diacritics',[
     '\uA74B': 'o',
     '\uA74D': 'o',
     '\u0275': 'o',
-    '\u0153': 'oe',
     '\u01A3': 'oi',
     '\u0223': 'ou',
     '\uA74F': 'oo',
@@ -3090,8 +3081,7 @@ S2.define('select2/diacritics',[
     '\u03CB': '\u03C5',
     '\u03B0': '\u03C5',
     '\u03C9': '\u03C9',
-    '\u03C2': '\u03C3',
-    '\u2019': '\''
+    '\u03C2': '\u03C3'
   };
 
   return diacritics;
@@ -3816,12 +3806,6 @@ S2.define('select2/data/tokenizer',[
   Tokenizer.prototype.tokenizer = function (_, params, options, callback) {
     var separators = options.get('tokenSeparators') || [];
     var term = params.term;
-
-    var enclosureOptions = (options.get('tokenEnclosures') || ['\"', '\'']);
-    var enclosures = enclosureOptions.filter(function (token) {
-      return -1 === separators.indexOf(token)
-    });
-
     var i = 0;
 
     var createTag = this.createTag || function (params) {
@@ -3831,26 +3815,10 @@ S2.define('select2/data/tokenizer',[
       };
     };
 
-    var enclosed = false;
-    var enclosedChar = null;
-
     while (i < term.length) {
       var termChar = term[i];
 
-      if ($.inArray(termChar, enclosures) !== -1) {
-        if(!enclosed) {
-          enclosedChar = termChar;
-          enclosed = true;
-        } else if (enclosedChar == termChar) {
-          enclosedChar = null;
-          enclosed = false;
-        }
-        i++;
-
-        continue;
-      }
-
-      if ($.inArray(termChar, separators) === -1 || enclosed) {
+      if ($.inArray(termChar, separators) === -1) {
         i++;
 
         continue;
@@ -4010,7 +3978,7 @@ S2.define('select2/dropdown',[
   };
 
   Dropdown.prototype.position = function ($dropdown, $container) {
-    // Should be implemented in subclasses
+    // Should be implmented in subclasses
   };
 
   Dropdown.prototype.destroy = function () {
@@ -4415,10 +4383,10 @@ S2.define('select2/dropdown/attachBody',[
       top: container.bottom
     };
 
-    // Determine what the parent element is to use for calculating the offset
+    // Determine what the parent element is to use for calciulating the offset
     var $offsetParent = this.$dropdownParent;
 
-    // For statically positioned elements, we need to get the element
+    // For statically positoned elements, we need to get the element
     // that is determining the offset
     if ($offsetParent.css('position') === 'static') {
       $offsetParent = $offsetParent.offsetParent();
@@ -4648,9 +4616,6 @@ S2.define('select2/i18n/en',[],function () {
     },
     searching: function () {
       return 'Searching…';
-    },
-    removeAllItems: function () {
-      return 'Remove all items';
     }
   };
 });
@@ -5022,7 +4987,6 @@ S2.define('select2/defaults',[
       maximumSelectionLength: 0,
       minimumResultsForSearch: 0,
       selectOnClose: false,
-      scrollAfterSelect: false,
       sorter: function (data) {
         return data;
       },
@@ -5455,23 +5419,6 @@ S2.define('select2/core',[
 
   Select2.prototype._registerEvents = function () {
     var self = this;
-    
-    this.on('focus', function () {
-      self.$container.addClass('select2-container--focus');
-
-      if (!self.$container.hasClass('select2-container--disabled') &&
-          !self.isOpen()) {
-        if (self.options.get('multiple')) {
-          window.setTimeout(function () {
-            self.open();
-          },
-          self.options.get('ajax') ? 300 : 100);
-        }
-        else {
-          self.open();
-        }
-      }
-    });
 
     this.on('open', function () {
       self.$container.addClass('select2-container--open');
