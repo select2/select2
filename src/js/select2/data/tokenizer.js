@@ -70,6 +70,12 @@ define([
   Tokenizer.prototype.tokenizer = function (_, params, options, callback) {
     var separators = options.get('tokenSeparators') || [];
     var term = params.term;
+
+    var enclosureOptions = (options.get('tokenEnclosures') || ['\"', '\'']);
+    var enclosures = enclosureOptions.filter(function (token) {
+      return -1 === separators.indexOf(token)
+    });
+
     var i = 0;
 
     var createTag = this.createTag || function (params) {
@@ -79,10 +85,26 @@ define([
       };
     };
 
+    var enclosed = false;
+    var enclosedChar = null;
+
     while (i < term.length) {
       var termChar = term[i];
 
-      if ($.inArray(termChar, separators) === -1) {
+      if ($.inArray(termChar, enclosures) !== -1) {
+        if(!enclosed) {
+          enclosedChar = termChar;
+          enclosed = true;
+        } else if (enclosedChar == termChar) {
+          enclosedChar = null;
+          enclosed = false;
+        }
+        i++;
+
+        continue;
+      }
+
+      if ($.inArray(termChar, separators) === -1 || enclosed) {
         i++;
 
         continue;
