@@ -60,9 +60,9 @@ define([
       }
     }
 
-    this.$element.val(this.placeholder.id).trigger('change');
+    this.$element.val(this.placeholder.id).text(this.placeholder.text).trigger('change');
 
-    this.trigger('toggle', {});
+//this.trigger('toggle', {});
   };
 
   AllowClear.prototype._handleKeyboardClear = function (_, evt, container) {
