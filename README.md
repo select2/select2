@@ -1,6 +1,8 @@
 Select2
 =======
 
+*Customized version of Select2 version 3. This is used in mockup patterns of Plone.*
+
 Select2 is a jQuery-based replacement for select boxes. It supports searching, remote data sets, and infinite scrolling of results.
 
 To get started, checkout examples and documentation at http://select2.github.io/select2/
