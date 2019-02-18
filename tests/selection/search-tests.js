@@ -165,7 +165,7 @@ test('the focus event shifts the focus', function (assert) {
 
   // The search should not be automatically focused
 
-  var $search = $selection.find('textarea');
+  var $search = $selection.find('textarea, input');
 
   assert.notEqual(
     document.activeElement,
