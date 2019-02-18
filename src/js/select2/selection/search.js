@@ -8,17 +8,23 @@ define([
   }
 
   Search.prototype.render = function (decorated) {
-    var $search = $(
-      '<li class="select2-search select2-search--inline">' +
-        '<textarea class="select2-search__field" type="search" tabindex="-1"' +
-        ' autocomplete="off" autocorrect="off" autocapitalize="off"' +
+    var tagString;
+    if(options.searchElement === 'textarea'){
+	tagString = '<textarea class="select2-search__field" type="search" tabindex="-1"' +
+        ' autocomplete="off" autocorrect="off" autocapitalize="none"' +
         ' spellcheck="false" role="textbox" aria-autocomplete="list" >' +
-        '</textarea>' +
-      '</li>'
+        '</textarea>';
+    } else {
+        tagString = '<input class="select2-search__field" type="search" tabindex="-1"' +
+        ' autocomplete="off" autocorrect="off" autocapitalize="none"' +
+        ' spellcheck="false" role="textbox" aria-autocomplete="list" />';
+    }
+    var $search = $(
+      '<li class="select2-search select2-search--inline">' + tagString + '</li>'
     );
 
     this.$searchContainer = $search;
-    this.$search = $search.find('textarea');
+    this.$search = $search.find('input, textarea');
 
     var $rendered = decorated.call(this);
 
