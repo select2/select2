@@ -10,12 +10,14 @@ define([
   Search.prototype.render = function (decorated) {
     var tagString;
     if(this.options.searchElement === 'textarea'){
-	tagString = '<textarea class="select2-search__field" type="search" tabindex="-1"' +
+	tagString = '<textarea class="select2-search__field"'+
+        ' type="search" tabindex="-1"' +
         ' autocomplete="off" autocorrect="off" autocapitalize="none"' +
         ' spellcheck="false" role="textbox" aria-autocomplete="list" >' +
         '</textarea>';
     } else {
-        tagString = '<input class="select2-search__field" type="search" tabindex="-1"' +
+        tagString = '<input class="select2-search__field"'+
+        ' type="search" tabindex="-1"' +
         ' autocomplete="off" autocorrect="off" autocapitalize="none"' +
         ' spellcheck="false" role="textbox" aria-autocomplete="list" />';
     }
