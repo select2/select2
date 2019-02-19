@@ -9,7 +9,7 @@ define([
 
   Search.prototype.render = function (decorated) {
     var tagString;
-    if(options.searchElement === 'textarea'){
+    if(this.options.searchElement === 'textarea'){
 	tagString = '<textarea class="select2-search__field" type="search" tabindex="-1"' +
         ' autocomplete="off" autocorrect="off" autocapitalize="none"' +
         ' spellcheck="false" role="textbox" aria-autocomplete="list" >' +
