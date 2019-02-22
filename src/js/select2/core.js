@@ -276,7 +276,7 @@ define([
 
   Select2.prototype._registerEvents = function () {
     var self = this;
-    
+
     this.on('focus', function () {
       self.$container.addClass('select2-container--focus');
 
@@ -346,7 +346,12 @@ define([
 
           evt.preventDefault();
         } else if (key === KEYS.ENTER) {
-          self.trigger('results:select', {});
+
+          if (self.options.get('unselectByEnter')) {
+            self.trigger('results:toggle', {});
+          } else {
+            self.trigger('results:select', {});
+          }
 
           evt.preventDefault();
         } else if ((key === KEYS.SPACE && evt.ctrlKey)) {
