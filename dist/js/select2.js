@@ -1810,8 +1810,9 @@ S2.define('select2/selection/allowClear',[
     }
 
     this.$element.val(this.placeholder.id).trigger('change');
-
-    this.trigger('toggle', {});
+    // This toggle was commented to fix issue with inability to clear selected value of optional single mode select without placeholder. 
+    // Not opening the dropdown is also more correct from a business perspective. By clicking the x, the user has opted to clear a value, not to also change the value or add another value.
+    //this.trigger('toggle', {});
   };
 
   AllowClear.prototype._handleKeyboardClear = function (_, evt, container) {
