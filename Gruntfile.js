@@ -62,10 +62,6 @@ module.exports = function (grunt) {
   grunt.initConfig({
     package: grunt.file.readJSON('package.json'),
 
-    clean: {
-      docs: ['docs/_site']
-    },
-
     concat: {
       'dist': {
         options: {
@@ -240,19 +236,6 @@ module.exports = function (grunt) {
       }
     },
 
-    symlink: {
-      docs: {
-        cwd: 'dist',
-        expand: true,
-        overwrite: false,
-        src: [
-          '*'
-        ],
-        dest: 'docs/dist',
-        filter: 'isDirectory'
-      }
-    },
-
     requirejs: {
       'dist': {
         options: {
@@ -331,18 +314,14 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
-  grunt.loadNpmTasks('grunt-contrib-symlink');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
-  grunt.loadNpmTasks('grunt-gh-pages');
-  grunt.loadNpmTasks('grunt-jekyll');
   grunt.loadNpmTasks('grunt-saucelabs');
   grunt.loadNpmTasks('grunt-sass');
 
@@ -373,8 +352,4 @@ module.exports = function (grunt) {
   ciTasks.push('jshint');
 
   grunt.registerTask('ci', ciTasks);
-
-  grunt.registerTask('docs', ['symlink:docs', 'jekyll:serve']);
-
-  grunt.registerTask('docs-release', ['default', 'clean:docs', 'gh-pages']);
 };
