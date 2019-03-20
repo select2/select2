@@ -120,85 +120,6 @@ module.exports = function (grunt) {
       }
     },
 
-    'saucelabs-qunit': {
-      all: {
-        options: {
-          build: testBuildNumber,
-          tags: ['tests', 'qunit'],
-          urls: testUrls,
-          testTimeout: 8000,
-          testname: 'QUnit test for Select2',
-          browsers: [
-            {
-              browserName: 'internet explorer',
-              version: '8',
-              platform: 'Windows 7'
-            },
-            {
-              browserName: 'internet explorer',
-              version: '9',
-              platform: 'Windows 7'
-            },
-            {
-              browserName: 'internet explorer',
-              version: '10',
-              platform: 'Windows 7'
-            },
-
-            {
-              browserName: 'internet explorer',
-              version: '11',
-              platform: 'Windows 10'
-            },
-
-            {
-              browserName: 'firefox',
-              platform: 'linux'
-            },
-
-            {
-              browserName: 'chrome',
-              platform: 'linux'
-            },
-
-            {
-              browserName: 'opera',
-              version: '12',
-              platform: 'linux'
-            }
-          ]
-        }
-      }
-    },
-
-    'gh-pages': {
-      options: {
-        base: 'docs',
-        branch: 'master',
-        clone: 'node_modules/grunt-gh-pages/repo',
-        message: 'Updated docs with master',
-        push: true,
-        repo: 'git@github.com:select2/select2.github.io.git'
-      },
-      src: '**'
-    },
-
-    jekyll: {
-      options: {
-        src: 'docs',
-        dest: 'docs/_site'
-      },
-      build: {
-        d: null
-      },
-      serve: {
-        options: {
-          serve: true,
-          watch: true
-        }
-      }
-    },
-
     jshint: {
       options: {
         jshintrc: true
@@ -322,7 +243,6 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
-  grunt.loadNpmTasks('grunt-saucelabs');
   grunt.loadNpmTasks('grunt-sass');
 
   grunt.registerTask('default', ['compile', 'test', 'minify']);
@@ -335,21 +255,5 @@ module.exports = function (grunt) {
   grunt.registerTask('minify', ['uglify', 'sass:dist']);
   grunt.registerTask('test', ['connect:tests', 'qunit', 'jshint']);
 
-  var ciTasks = [];
-
-  ciTasks.push('compile');
-  ciTasks.push('connect:tests');
-
-  /*
-  // grunt-saucelabs appears to be broken with Travis altogether now.
-  // Can't run Sauce Labs tests in pull requests
-  if (process.env.TRAVIS_PULL_REQUEST == 'false') {
-    ciTasks.push('saucelabs-qunit');
-  }
-  */
-
-  ciTasks.push('qunit');
-  ciTasks.push('jshint');
-
-  grunt.registerTask('ci', ciTasks);
+  grunt.registerTask('ci', ['compile', 'test']);
 };
