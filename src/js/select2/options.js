@@ -37,8 +37,8 @@ define([
     if (this.options.language == null) {
       if ($e.prop('lang')) {
         this.options.language = $e.prop('lang').toLowerCase();
-      } else if (typeof $.fn.select2.defaults.defaults.language !== 'string' 
-                 && $e.closest('[lang]').prop('lang')) {
+      } else if (typeof $.fn.select2.defaults.defaults.language !== 'string' &&
+                 $e.closest('[lang]').prop('lang')) {
         this.options.language = $e.closest('[lang]').prop('lang');
       }
     }
