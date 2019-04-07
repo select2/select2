@@ -29,7 +29,8 @@ define([
         $request.fail(failure);
 
         return $request;
-      }
+      },
+      fetchAll: false
     };
 
     return $.extend({}, defaults, options, true);
@@ -42,6 +43,20 @@ define([
   AjaxAdapter.prototype.query = function (params, callback) {
     var matches = [];
     var self = this;
+
+    if (typeof(self.cachedResults) !== 'undefined') {
+      var results = $.extend({}, self.cachedResults);
+
+      var matchedResults = [];
+      for (var i = 0; i < results.results.length; ++i) {
+        var data = results.results[i];
+        if (self.matches(params, data) !== null)
+          matchedResults.push(data);
+      }
+      results.results = matchedResults;
+      callback(results);
+      return;
+    }
 
     if (this._request != null) {
       // JSONP requests cannot always be aborted
@@ -64,6 +79,16 @@ define([
       options.data = options.data.call(this.$element, params);
     }
 
+    if (options.fetchAll) {
+      // Make the request with no search term to fetch everything, but remember
+      // the original params so we can then search our cache with them after
+      // we've filled it.
+      orgParams = $.extend({}, params);
+      params.term = null;
+    } else {
+      orgParams = params;
+    }
+
     function request () {
       var $request = options.transport(options, function (data) {
         var results = self.processResults(data, params);
@@ -78,7 +103,12 @@ define([
           }
         }
 
-        callback(results);
+        if (options.fetchAll) {
+            self.cachedResults = results;
+            return self.query(orgParams, callback)
+        } else {
+          callback(results);
+        }
       }, function () {
         // Attempt to detect if a request was aborted
         // Only works if the transport exposes a status property
