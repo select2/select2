@@ -195,6 +195,7 @@
   .select2-container--default .select2-selection--multiple .select2-selection__clear {
     cursor: pointer;
     float: right;
+    border: 1px solid transparent;
     font-weight: bold;
     margin-top: 5px;
     margin-right: 10px; }
