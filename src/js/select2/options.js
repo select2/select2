@@ -79,20 +79,43 @@ define([
 
       $e.attr('ajax--url', Utils.GetData($e[0], 'ajaxUrl'));
       Utils.StoreData($e[0], 'ajax-Url', Utils.GetData($e[0], 'ajaxUrl'));
-	  
     }
 
     var dataset = {};
 
+    function upperCaseLetter(_, letter) {
+      return letter.toUpperCase();
+    }
+
+    // Pre-load all of the attributes which are prefixed with `data-`
+    for (var attr = 0; attr < $e[0].attributes.length; attr++) {
+      var attributeName = $e[0].attributes[attr].name;
+      var prefix = 'data-';
+
+      if (attributeName.substr(0, prefix.length) == prefix) {
+        // Get the contents of the attribute after `data-`
+        var dataName = attributeName.substring(prefix.length);
+
+        // Get the data contents from the consistent source
+        // This is more than likely the jQuery data helper
+        var dataValue = Utils.GetData($e[0], dataName);
+
+        // camelCase the attribute name to match the spec
+        var camelDataName = dataName.replace(/-([a-z])/g, upperCaseLetter);
+
+        // Store the data attribute contents into the dataset since
+        dataset[camelDataName] = dataValue;
+      }
+    }
+
     // Prefer the element's `dataset` attribute if it exists
     // jQuery 1.x does not correctly handle data attributes with multiple dashes
     if ($.fn.jquery && $.fn.jquery.substr(0, 2) == '1.' && $e[0].dataset) {
-      dataset = $.extend(true, {}, $e[0].dataset, Utils.GetData($e[0]));
-    } else {
-      dataset = Utils.GetData($e[0]);
+      dataset = $.extend(true, {}, $e[0].dataset, dataset);
     }
 
-    var data = $.extend(true, {}, dataset);
+    // Prefer our internal data cache if it exists
+    var data = $.extend(true, {}, Utils.GetData($e[0]), dataset);
 
     data = Utils._convertData(data);
 
