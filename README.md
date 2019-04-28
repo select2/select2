@@ -1,6 +1,8 @@
 Select2
 =======
 [![Build Status][travis-ci-image]][travis-ci-status]
+[![cdnjs](https://img.shields.io/cdnjs/v/select2.svg)](https://cdnjs.com/libraries/select2)
+[![jsdelivr](https://data.jsdelivr.com/v1/package/npm/select2/badge)](https://www.jsdelivr.com/package/npm/select2)
 
 Select2 is a jQuery-based replacement for select boxes. It supports searching,
 remote data sets, and pagination of results.
@@ -51,10 +53,12 @@ Plugins
   - [django-autocomplete-light]
   - [django-easy-select2]
   - [django-select2]
+* [Drupal] - [drupal-select2]
 * [Meteor] - [meteor-select2]
 * [Ruby on Rails][ruby-on-rails] - [select2-rails]
 * [Wicket] - [wicketstuff-select2]
 * [Yii 2][yii2] - [yii2-widget-select2]
+* [Angularjs][angularjs] - [mdr-angular-select2]
 
 Themes
 
@@ -106,6 +110,8 @@ The license is available within the repository in the [LICENSE][license] file.
 [django-autocomplete-light]: https://github.com/yourlabs/django-autocomplete-light
 [django-easy-select2]: https://github.com/asyncee/django-easy-select2
 [django-select2]: https://github.com/applegrew/django-select2
+[drupal]: https://www.drupal.org/
+[drupal-select2]: https://www.drupal.org/project/select2
 [flat-ui]: http://designmodo.github.io/Flat-UI/
 [meteor]: https://www.meteor.com/
 [meteor-select2]: https://github.com/nate-strauser/meteor-select2
@@ -121,3 +127,5 @@ The license is available within the repository in the [LICENSE][license] file.
 [wicketstuff-select2]: https://github.com/wicketstuff/core/tree/master/select2-parent
 [yii2]: http://www.yiiframework.com/
 [yii2-widget-select2]: https://github.com/kartik-v/yii2-widget-select2
+[angularjs]: https://angularjs.org/
+[mdr-angular-select2]: https://github.com/modulr/mdr-angular-select2
