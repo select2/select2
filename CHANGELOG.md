@@ -1,5 +1,16 @@
 # Change Log
 
+## 4.0.7
+
+### New features/improvements
+- Do not close on select if Ctrl or Meta (Cmd) keys being held (#5222)
+
+### Bug fixes
+- Fixed issue where single select boxes would automatically reopen when they were closed (#5490, #5492)
+
+### Miscellaneous
+- Move almost and jquery-mousewheel to devDependencies (#5489)
+
 ## 4.0.6
 
 ### New features/improvements
