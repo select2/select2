@@ -1,5 +1,5 @@
 /*!
- * Select2 4.0.6
+ * Select2 4.0.7-rc.0
  * https://select2.github.io
  *
  * Released under the MIT license
@@ -4573,7 +4573,7 @@ S2.define('select2/dropdown/closeOnSelect',[
     var originalEvent = evt.originalEvent;
 
     // Don't close if the control key is being held
-    if (originalEvent && originalEvent.ctrlKey) {
+    if (originalEvent && (originalEvent.ctrlKey || originalEvent.metaKey)) {
       return;
     }
 
@@ -5457,23 +5457,6 @@ S2.define('select2/core',[
 
   Select2.prototype._registerEvents = function () {
     var self = this;
-    
-    this.on('focus', function () {
-      self.$container.addClass('select2-container--focus');
-
-      if (!self.$container.hasClass('select2-container--disabled') &&
-          !self.isOpen()) {
-        if (self.options.get('multiple')) {
-          window.setTimeout(function () {
-            self.open();
-          },
-          self.options.get('ajax') ? 300 : 100);
-        }
-        else {
-          self.open();
-        }
-      }
-    });
 
     this.on('open', function () {
       self.$container.addClass('select2-container--open');
