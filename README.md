@@ -63,6 +63,7 @@ Plugins
 Themes
 
 - [Bootstrap 3][bootstrap3] - [select2-bootstrap-theme]
+- [Bootstrap 4][bootstrap4] - [select2-bootstrap4-theme]
 - [Flat UI][flat-ui] - [select2-flat-theme]
 - [Metro UI][metro-ui] - [select2-metro]
 
@@ -106,6 +107,7 @@ The license is available within the repository in the [LICENSE][license] file.
 [travis-ci-status]: https://travis-ci.org/select2/select2
 
 [bootstrap3]: https://getbootstrap.com/
+[bootstrap4]: https://getbootstrap.com/
 [django]: https://www.djangoproject.com/
 [django-autocomplete-light]: https://github.com/yourlabs/django-autocomplete-light
 [django-easy-select2]: https://github.com/asyncee/django-easy-select2
@@ -119,6 +121,7 @@ The license is available within the repository in the [LICENSE][license] file.
 [select2-metro]: http://metroui.org.ua/select2.html
 [ruby-on-rails]: http://rubyonrails.org/
 [select2-bootstrap-theme]: https://github.com/select2/select2-bootstrap-theme
+[select2-bootstrap4-theme]: https://github.com/ttskch/select2-bootstrap4-theme
 [select2-flat-theme]: https://github.com/techhysahil/select2-Flat_Theme
 [select2-rails]: https://github.com/argerim/select2-rails
 [vue.js]: http://vuejs.org/
