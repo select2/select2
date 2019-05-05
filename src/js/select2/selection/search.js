@@ -214,7 +214,9 @@ define([
     var width = '';
 
     if (this.$search.attr('placeholder') !== '') {
-      width = this.$selection.find('.select2-selection__rendered').innerWidth();
+
+      //Default to 100% if the width is 0, which may happen if the element is hidden due to its parent.
+      width = this.$selection.find('.select2-selection__rendered').innerWidth() || "100%";
     } else {
       var minimumWidth = this.$search.val().length + 1;
 

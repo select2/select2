@@ -135,7 +135,9 @@ define([
       var elementWidth = $element.outerWidth(false);
 
       if (elementWidth <= 0) {
-        return 'auto';
+
+        //May happen if the element is hidden, due to its parent.
+        return '100%';
       }
 
       return elementWidth + 'px';
