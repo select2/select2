@@ -37,11 +37,27 @@ Select2 is automatically tested on the following browsers.
 
 [![Sauce Labs Test Status][saucelabs-matrix]][saucelabs-status]
 
-Usage
------
+Instalation
+-----------
+
 You can source Select2 directly from a CDN like [JSDliver][jsdelivr] or
 [CDNJS][cdnjs], [download it from this GitHub repo][releases], or use one of
 the integrations below.
+
+##### Install using Bower or npm/yarn
+
+You may install select2 with [Bower](https://bower.io/), [npm](https://www.npmjs.com/) or [Yarn](https://yarnpkg.com/):
+
+```shell
+// Bower
+bower install select2
+
+// npm
+npm install select2
+
+// yarn
+yarn add select2
+```
 
 Integrations
 ------------
