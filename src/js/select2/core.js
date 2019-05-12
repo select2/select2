@@ -325,7 +325,7 @@ define([
       if (self.isOpen()) {
         if (key === KEYS.ESC || key === KEYS.TAB ||
             (key === KEYS.UP && evt.altKey)) {
-          self.close();
+          self.close(key);
 
           evt.preventDefault();
         } else if (key === KEYS.ENTER) {
@@ -468,12 +468,12 @@ define([
     this.trigger('query', {});
   };
 
-  Select2.prototype.close = function () {
+  Select2.prototype.close = function (key) {
     if (!this.isOpen()) {
       return;
     }
 
-    this.trigger('close', {});
+    this.trigger('close', { key: key });
   };
 
   Select2.prototype.isOpen = function () {
