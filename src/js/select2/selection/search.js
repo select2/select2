@@ -214,7 +214,7 @@ define([
     var width = '';
 
     if (this.$search.attr('placeholder') !== '') {
-      width = this.$selection.find('.select2-selection__rendered').innerWidth();
+      width = this.$selection.find('.select2-selection__rendered').width();
     } else {
       var minimumWidth = this.$search.val().length + 1;
 
