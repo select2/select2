@@ -178,7 +178,7 @@ define([
       var isTagInput = this.$element.find('[data-select2-tag]').length;
       if (isTagInput) {
         // fix IE11 bug where tag input lost focus
-        this.$element.focus();
+        this.$element[0].focus();
       } else {
         this.$search.focus();
       }
