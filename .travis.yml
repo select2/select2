@@ -3,7 +3,7 @@ language: node_js
 sudo: false
 
 node_js:
-  - 0.10
+  - 8
 
 env:
   global:
