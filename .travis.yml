@@ -6,6 +6,9 @@ node_js:
 script:
   - grunt
 
+notifications:
+  email: false
+
 deploy:
   - provider: npm
     email:
