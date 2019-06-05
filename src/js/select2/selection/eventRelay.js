@@ -41,6 +41,26 @@ define([
       }
 
       params.prevented = evt.isDefaultPrevented();
+
+      /*
+       * Display the corresponding message when maximumSelectionLength is
+       * reached. This will prevent the user from adding too many items by
+       * holding the ctrl key or when closeOnSelect is false.
+       * This fixes #3514 and #3860.
+       */
+      var maximumSelectionLength = self.options.get('maximumSelectionLength');
+      var values = self.$element.val() || [];
+  
+      if (!params.prevented && name === 'selecting' &&
+        maximumSelectionLength > 0 &&
+        values.length+1 >= maximumSelectionLength) {
+          self.trigger('results:message', {
+            message: 'maximumSelected',
+            args: {
+              maximum: maximumSelectionLength
+            }
+        });
+      }
     });
   };
 
