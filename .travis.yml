@@ -9,7 +9,7 @@ env:
     - secure: BU5BPRx6H4O3WJ509YPixjUxg+hDF3z2BVJX6NiGmKWweqvCEYFfiiHLwDEgp/ynRcF9vGVi1V4Ly1jq7f8NIajbDZ5q443XchZFYFg78K/EwD5mK6LYt16zb7+Jn0KbzwHeGRGzc9AvcEYlW6i634cSCm4n3BnqtF5PpogSzdw=
 
 script:
-  - grunt ci
+  - grunt
 
 deploy:
   - provider: npm
