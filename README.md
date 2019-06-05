@@ -33,10 +33,6 @@ Browser compatibility
 * Safari 3+
 * Opera 10.6+
 
-Select2 is automatically tested on the following browsers.
-
-[![Sauce Labs Test Status][saucelabs-matrix]][saucelabs-status]
-
 Usage
 -----
 You can source Select2 directly from a CDN like [JSDliver][jsdelivr] or
@@ -101,8 +97,6 @@ The license is available within the repository in the [LICENSE][license] file.
 [jsdelivr]: https://www.jsdelivr.com/package/npm/select2
 [license]: LICENSE.md
 [releases]: https://github.com/select2/select2/releases
-[saucelabs-matrix]: https://saucelabs.com/browser-matrix/select2.svg
-[saucelabs-status]: https://saucelabs.com/u/select2
 [travis-ci-image]: https://img.shields.io/travis/select2/select2/master.svg
 [travis-ci-status]: https://travis-ci.org/select2/select2
 
