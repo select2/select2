@@ -101,9 +101,29 @@ test('creates option if text is same but createTagOnMatch is true', function (as
   var data = new SelectTags($('#qunit-fixture .single'), options_createTagOnMatch);
 
   data.query({
-    term: 'one'
-  }, function (data) {
+    term: 'One'
+  }, function (data, bbb, ccc, ddd, eee) {
     console.log('=== inside query results ===');
+    if ( typeof bbb !== 'undefined' ) {
+      console.log('typeof bbb', typeof bbb);
+      console.log('bbb');
+      console.log(bbb);
+    }
+    if ( typeof ccc !== 'undefined' ) {
+      console.log('typeof ccc', typeof ccc);
+      console.log('ccc');
+      console.log(ccc);
+    }
+    if ( typeof ddd !== 'undefined' ) {
+      console.log('typeof ddd', typeof ddd);
+      console.log('ddd');
+      console.log(ddd);
+    }
+    if ( typeof eee !== 'undefined' ) {
+      console.log('typeof eee', typeof eee);
+      console.log('eee');
+      console.log(eee);
+    }
     console.log('data.results.length');
     console.log(data.results.length);
 
