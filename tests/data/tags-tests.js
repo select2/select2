@@ -82,7 +82,20 @@ test('does not create option if text is same but lowercase', function (assert) {
 test('creates option if text is same but createTagOnMatch is true', function (assert) {
   var options = new Options({
     tags: true,
-    createTagOnMatch: true
+    createTagOnMatch: 1,
+    createTag: function (params) {
+      var term = $.trim(params.term);
+
+      if (term === '') {
+        return null;
+      }
+
+      return {
+        id: '_' + term + '_',
+        text: '*' + term + '*',
+        newTag: true
+      }
+    }
   });
   var data = new SelectTags($('#qunit-fixture .single'), options);
 
@@ -93,7 +106,7 @@ test('creates option if text is same but createTagOnMatch is true', function (as
     console.log('data.results.length');
     console.log(data.results.length);
 
-    assert.equal(data.results.length, 2);
+    assert.equal(data.results.length, 1);
 
     var item0 = data.results[0],
         item1 = data.results[1];
@@ -108,8 +121,8 @@ test('creates option if text is same but createTagOnMatch is true', function (as
       console.log('item1[' + k + ']', item1[k]);
     }
         
-    assert.equal(item.id, 'one');
-    assert.equal(item.text, 'one');
+    assert.equal(item0.id, 'one');
+    assert.equal(item0.text, 'one');
   });
 });
 
