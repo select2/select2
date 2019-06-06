@@ -90,14 +90,24 @@ test('creates option if text is same but createTagOnMatch is true', function (as
     term: 'one'
   }, function (data) {
     console.log('inside test');
-    console.log('data.results');
-    console.log(data.results);
     console.log('data.results.length');
     console.log(data.results.length);
-    assert.equal(data.results.length, 1);
 
-    var item = data.results[0];
+    assert.equal(data.results.length, 2);
 
+    var item0 = data.results[0],
+        item1 = data.results[1];
+    console.log('item0');
+    console.log(item0);
+    for ( var k in item0 ) {
+      console.log('item0[' + k + ']', item0[k]);
+    }
+    console.log('item1');
+    console.log(item1);
+    for ( var k in item1 ) {
+      console.log('item1[' + k + ']', item1[k]);
+    }
+        
     assert.equal(item.id, 'one');
     assert.equal(item.text, 'one');
   });
