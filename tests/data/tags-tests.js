@@ -80,6 +80,8 @@ test('does not create option if text is same but lowercase', function (assert) {
 });
 
 test('creates option if text is same but createTagOnMatch is true', function (assert) {
+  assert.expect(8);
+
   console.log('=== inside test ===');
   var options_createTagOnMatch = new Options({
     tags: true,
@@ -100,34 +102,24 @@ test('creates option if text is same but createTagOnMatch is true', function (as
   });
   var data = new SelectTags($('#qunit-fixture .single'), options_createTagOnMatch);
 
+  var num_query_answers = 0;
   data.query({
     term: 'One'
-  }, function (data, bbb, ccc, ddd, eee) {
+  }, function (data) {
+    num_query_answers += 1;
+
     console.log('=== inside query results ===');
-    if ( typeof bbb !== 'undefined' ) {
-      console.log('typeof bbb', typeof bbb);
-      console.log('bbb');
-      console.log(bbb);
-    }
-    if ( typeof ccc !== 'undefined' ) {
-      console.log('typeof ccc', typeof ccc);
-      console.log('ccc');
-      console.log(ccc);
-    }
-    if ( typeof ddd !== 'undefined' ) {
-      console.log('typeof ddd', typeof ddd);
-      console.log('ddd');
-      console.log(ddd);
-    }
-    if ( typeof eee !== 'undefined' ) {
-      console.log('typeof eee', typeof eee);
-      console.log('eee');
-      console.log(eee);
-    }
     console.log('data.results.length');
     console.log(data.results.length);
 
-    assert.equal(data.results.length, 1);
+    if ( num_query_answers == 1 ) {
+      assert.equal(data.results.length, 1);
+      return;
+    } else if ( num_query_answers == 2 ) {
+      assert.equal(data.results.length, 2);
+    } else {
+      assert.equal(true, false);
+    }
 
     var item0 = data.results[0],
         item1 = data.results[1];
@@ -141,9 +133,13 @@ test('creates option if text is same but createTagOnMatch is true', function (as
     for ( var k in item1 ) {
       console.log('item1[' + k + ']', item1[k]);
     }
-        
-    assert.equal(item0.id, 'one');
-    assert.equal(item0.text, 'one');
+    
+    assert.equal(item0.id, '_One_');
+    assert.equal(item0.text, '*One*');
+    assert.equal(item0.newTag, true);
+    assert.equal(item1.id, 'One');
+    assert.equal(item1.text, 'One');
+    assert.equal(typeof item1.newTag, 'undefined');
   });
 });
 
