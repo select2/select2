@@ -79,6 +79,30 @@ test('does not create option if text is same but lowercase', function (assert) {
   });
 });
 
+test('creates option if text is same but createTagOnMatch is true', function (assert) {
+  var options = new Options({
+    tags: true,
+    createTagOnMatch: true
+  });
+  var data = new SelectTags($('#qunit-fixture .single'), options);
+
+  data.query({
+    term: 'one'
+  }, function (data) {
+    console.log('inside test');
+    console.log('data.results');
+    console.log(data.results);
+    console.log('data.results.length');
+    console.log(data.results.length);
+    assert.equal(data.results.length, 1);
+
+    var item = data.results[0];
+
+    assert.equal(item.id, 'one');
+    assert.equal(item.text, 'one');
+  });
+});
+
 test('does not trigger for additional pages', function (assert) {
   var data = new SelectTags($('#qunit-fixture .single'), options);
 
