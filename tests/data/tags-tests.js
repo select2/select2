@@ -79,11 +79,10 @@ test('does not create option if text is same but lowercase', function (assert) {
   });
 });
 
-test('creates option if text is same but createTagOnMatch is true', function (assert) {
+test('creates option if createTagOnMatch is true', function (assert) {
   assert.expect(8);
 
-  console.log('=== inside test ===');
-  var options_createTagOnMatch = new Options({
+  var optionsCreateTagOnMatch = new Options({
     tags: true,
     createTagOnMatch: 1,
     createTag: function (params) {
@@ -100,17 +99,15 @@ test('creates option if text is same but createTagOnMatch is true', function (as
       }
     }
   });
-  var data = new SelectTags($('#qunit-fixture .single'), options_createTagOnMatch);
+
+  var data = new SelectTags($('#qunit-fixture .single'), optionsCreateTagOnMatch);
 
   var num_query_answers = 0;
+
   data.query({
     term: 'One'
   }, function (data) {
     num_query_answers += 1;
-
-    console.log('=== inside query results ===');
-    console.log('data.results.length');
-    console.log(data.results.length);
 
     if ( num_query_answers == 1 ) {
       assert.equal(data.results.length, 1);
@@ -118,25 +115,15 @@ test('creates option if text is same but createTagOnMatch is true', function (as
     } else if ( num_query_answers == 2 ) {
       assert.equal(data.results.length, 2);
     } else {
-      assert.equal(true, false);
+      assert.equal(true, false, 'The query should never return more than 2 answers.');
     }
 
-    var item0 = data.results[0],
-        item1 = data.results[1];
-    console.log('item0');
-    console.log(item0);
-    for ( var k in item0 ) {
-      console.log('item0[' + k + ']', item0[k]);
-    }
-    console.log('item1');
-    console.log(item1);
-    for ( var k in item1 ) {
-      console.log('item1[' + k + ']', item1[k]);
-    }
-    
+    var item0 = data.results[0];
     assert.equal(item0.id, '_One_');
     assert.equal(item0.text, '*One*');
     assert.equal(item0.newTag, true);
+    
+    var item1 = data.results[1];
     assert.equal(item1.id, 'One');
     assert.equal(item1.text, 'One');
     assert.equal(typeof item1.newTag, 'undefined');
