@@ -115,7 +115,7 @@ test('creates option if createTagOnMatch is true', function (assert) {
     } else if ( numQueryAnswers == 2 ) {
       assert.equal(data.results.length, 2);
     } else {
-      assert.equal(true, false, "Query should't return more than 2 answers.");
+      assert.equal(true, false, 'Query must return 2 answers.');
     }
 
     var item0 = data.results[0];
