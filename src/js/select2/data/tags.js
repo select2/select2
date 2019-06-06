@@ -10,6 +10,14 @@ define([
       this.createTag = createTag;
     }
 
+    this.createTagOnMatch = false;
+
+    var createTagOnMatch = options.get('createTagOnMatch');
+
+    if (createTagOnMatch !== undefined) {
+        this.createTagOnMatch = !!createTagOnMatch;
+    }
+
     var insertTag = options.get('insertTag');
 
     if (insertTag !== undefined) {
@@ -60,13 +68,17 @@ define([
 
         if (checkText || checkChildren) {
           if (child) {
-            return false;
+            if (!self.createTagOnMatch) {
+              return false;
+            }
           }
 
           obj.data = data;
           callback(obj);
 
-          return;
+          if (!self.createTagOnMatch) {
+            return;
+          }
         }
       }
 
