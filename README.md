@@ -1,134 +1,46 @@
-Select2
-=======
-[![Build Status][travis-ci-image]][travis-ci-status]
-[![cdnjs](https://img.shields.io/cdnjs/v/select2.svg)](https://cdnjs.com/libraries/select2)
-[![jsdelivr](https://data.jsdelivr.com/v1/package/npm/select2/badge)](https://www.jsdelivr.com/package/npm/select2)
+# SELECT 2
 
-Select2 is a jQuery-based replacement for select boxes. It supports searching,
-remote data sets, and pagination of results.
+This branch represents work-in-progress for the next (5.x) version of Select2.
 
-To get started, checkout examples and documentation at
-https://select2.org/
+Major features of this branch:
 
-Use cases
----------
-* Enhancing native selects with search.
-* Enhancing native selects with a better multi-select interface.
-* Loading data from JavaScript: easily load items via AJAX and have them
-  searchable.
-* Nesting optgroups: native selects only support one level of nesting. Select2
-  does not have this restriction.
-* Tagging: ability to add new items on the fly.
-* Working with large, remote datasets: ability to partially load a dataset based
-  on the search term.
-* Paging of large datasets: easy support for loading more pages when the results
-  are scrolled to the end.
-* Templating: support for custom rendering of results and selections.
+## ADA support
 
-Browser compatibility
----------------------
-* IE 8+
-* Chrome 8+
-* Firefox 10+
-* Safari 3+
-* Opera 10.6+
+ADA support has been lacking in previous versions of Select2 which made it difficult in incorporate into applications
+where ADA is a requirement. In order to support ADA Select2 had to be redesigned from scratch.
 
-Select2 is automatically tested on the following browsers.
+## Written in Preact
 
-[![Sauce Labs Test Status][saucelabs-matrix]][saucelabs-status]
+This version of Select2 is written in Preact. The reason behind this decision is that majority of bugs came from
+state updates being inconsistently applied to the DOM, by using Preact we get DOM updates for free.
 
-Usage
------
-You can source Select2 directly from a CDN like [JSDliver][jsdelivr] or
-[CDNJS][cdnjs], [download it from this GitHub repo][releases], or use one of
-the integrations below.
+## Native Bridge / Usage Outside Preact
 
-Integrations
-------------
-Third party developers have created plugins for platforms which allow Select2 to be integrated more natively and quickly. For many platforms, additional plugins are not required because Select2 acts as a standard `<select>` box.
+The fact that the core component is written in Preact does not preclude the usage of Select2 in other environments. To
+this end `select25.js` is provided and allows usage of the widget via native JavaScript.
 
-Plugins
+## TODO
 
-* [Django]
-  - [django-autocomplete-light]
-  - [django-easy-select2]
-  - [django-select2]
-* [Drupal] - [drupal-select2]
-* [Meteor] - [meteor-select2]
-* [Ruby on Rails][ruby-on-rails] - [select2-rails]
-* [Wicket] - [wicketstuff-select2]
-* [Yii 2][yii2] - [yii2-widget-select2]
-* [Angularjs][angularjs] - [mdr-angular-select2]
+-   So far this branch contains prototype implementations of the Multi-Select and Single-Select widgets. This branch will act as a proof of
+    concept. Once ADA compliance has been validated by the community the rest of the features will follow.
 
-Themes
+-   The visual design / initial theme is still incomplete
 
-- [Bootstrap 3][bootstrap3] - [select2-bootstrap-theme]
-- [Bootstrap 4][bootstrap4] - [select2-bootstrap4-theme]
-- [Flat UI][flat-ui] - [select2-flat-theme]
-- [Metro UI][metro-ui] - [select2-metro]
+-   Mobile design and testing
 
-Missing an integration? Modify this `README` and make a pull request back here to Select2 on GitHub.
+## Building
 
-Internationalization (i18n)
----------------------------
-Select2 supports multiple languages by simply including the right language JS
-file (`dist/js/i18n/it.js`, `dist/js/i18n/nl.js`, etc.) after
-`dist/js/select2.js`.
+`npm run dist`
 
-Missing a language? Just copy `src/js/select2/i18n/en.js`, translate it, and
-make a pull request back to Select2 here on GitHub.
+## Developing
 
-Documentation
--------------
-The documentation for Select2 is available
-[through GitHub Pages][documentation] and is located within this repository
-in the [`docs` folder][documentation-folder].
+`npm run dev` and open `http://localhost:1234`.
+Sources for dev playground are in `./dev/`
 
-Community
----------
-You can find out about the different ways to get in touch with the Select2
-community at the [Select2 community page][community].
+## Reporting Bugs
 
-Copyright and license
----------------------
-The license is available within the repository in the [LICENSE][license] file.
+Please tag GitHub issues and other threads using the `5.x` label
 
-[cdnjs]: http://www.cdnjs.com/libraries/select2
-[community]: https://select2.org/getting-help
-[documentation]: https://select2.org
-[documentation-folder]: https://github.com/select2/select2/tree/master/docs
-[freenode]: https://freenode.net/
-[jsdelivr]: http://www.jsdelivr.com/#!select2
-[license]: LICENSE.md
-[releases]: https://github.com/select2/select2/releases
-[saucelabs-matrix]: https://saucelabs.com/browser-matrix/select2.svg
-[saucelabs-status]: https://saucelabs.com/u/select2
-[travis-ci-image]: https://img.shields.io/travis/select2/select2/master.svg
-[travis-ci-status]: https://travis-ci.org/select2/select2
+## Copyright and License
 
-[bootstrap3]: https://getbootstrap.com/
-[bootstrap4]: https://getbootstrap.com/
-[django]: https://www.djangoproject.com/
-[django-autocomplete-light]: https://github.com/yourlabs/django-autocomplete-light
-[django-easy-select2]: https://github.com/asyncee/django-easy-select2
-[django-select2]: https://github.com/applegrew/django-select2
-[drupal]: https://www.drupal.org/
-[drupal-select2]: https://www.drupal.org/project/select2
-[flat-ui]: http://designmodo.github.io/Flat-UI/
-[meteor]: https://www.meteor.com/
-[meteor-select2]: https://github.com/nate-strauser/meteor-select2
-[metro-ui]: http://metroui.org.ua/
-[select2-metro]: http://metroui.org.ua/select2.html
-[ruby-on-rails]: http://rubyonrails.org/
-[select2-bootstrap-theme]: https://github.com/select2/select2-bootstrap-theme
-[select2-bootstrap4-theme]: https://github.com/ttskch/select2-bootstrap4-theme
-[select2-flat-theme]: https://github.com/techhysahil/select2-Flat_Theme
-[select2-rails]: https://github.com/argerim/select2-rails
-[vue.js]: http://vuejs.org/
-[select2-vue]: http://vuejs.org/examples/select2.html
-[wicket]: https://wicket.apache.org/
-[wicketstuff-select2]: https://github.com/wicketstuff/core/tree/master/select2-parent
-[yii2]: http://www.yiiframework.com/
-[yii2-widget-select2]: https://github.com/kartik-v/yii2-widget-select2
-[angularjs]: https://angularjs.org/
-[mdr-angular-select2]: https://github.com/modulr/mdr-angular-select2
+The license is available within the repository in the LICENSE file.

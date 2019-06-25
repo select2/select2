@@ -1,0 +1,311 @@
+$focus-color: #4d90fe;
+$item-bkg-color: #0073e6;
+$item-text-color: #fff;
+$remove-bkg-color: lighten($item-bkg-color, 50%);
+$border: 1px solid #ddd;
+$border-focus: 1px solid $focus-color;
+$border-radius: 5px;
+$dropdown-padding: 8px 10px;
+
+.s25-hidden-accessible {
+    border: 0 !important;
+    clip: rect(0 0 0 0) !important;
+    -webkit-clip-path: inset(50%) !important;
+    clip-path: inset(50%) !important;
+    height: 1px !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    position: absolute !important;
+    width: 1px !important;
+    white-space: nowrap !important;
+}
+
+.s25-hidden {
+    display: none;
+}
+
+.s25-search {
+    font-size: 100%;
+    line-height: 24px;
+
+    &:focus {
+        outline: 0;
+    }
+}
+
+.s25-control {
+    position: relative;
+    box-sizing: border-box;
+    min-height: 36px;
+    width: 100%;
+
+    border: $border;
+    background-color: #fff;
+    border-radius: $border-radius;
+
+    &.s25-focused {
+        border: $border-focus;
+
+        &.s25-open {
+            border-bottom: none;
+            border-radius: $border-radius $border-radius 0 0;
+        }
+    }
+
+    .s25-body {
+        margin: 3px;
+        margin-bottom: 0;
+    }
+
+    .s25-toggle {
+        &:focus {
+            outline: 0px;
+        }
+
+        svg {
+            display: inline-block;
+            margin: auto;
+        }
+    }
+
+    .s25-toggle {
+        display: flex;
+        box-sizing: border-box;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 30px;
+        width: 30px;
+        transition: right 0.2s;
+    }
+}
+
+.s25-control.s25-multi {
+    display: flex;
+    flex-wrap: nowrap;
+
+    .s25-body {
+        flex-grow: 1;
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: 60px;
+        width: calc(100% - 60px);
+    }
+
+    .s25-multi-values {
+        box-sizing: border-box;
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0;
+
+        .s25-item {
+            position: relative;
+            padding: 5px 12px 5px 18px;
+            border-radius: $border-radius;
+            background-color: $item-bkg-color;
+            color: $item-text-color;
+            margin-right: 3px;
+            margin-bottom: 3px;
+            transition: 0.2s;
+
+            &:hover {
+                background-color: darken($item-bkg-color, 5%);
+            }
+
+            &.s25-active {
+                box-shadow: inset 0 0 0 3px #67b3ff;
+            }
+
+            &.s25-item.s25-selected {
+                text-align: right;
+
+                &:before {
+                    content: '✓';
+                    position: absolute;
+                    left: 5px;
+                }
+            }
+        }
+
+        .s25-label {
+            color: rgb(34, 34, 34);
+            font-size: 85%;
+            border-radius: $border-radius;
+            padding: 3px 3px 3px 6px;
+        }
+    }
+
+    .s25-multi-values:focus {
+        outline: 0;
+    }
+
+    .s25-item {
+        cursor: pointer;
+        box-sizing: border-box;
+        align-items: center;
+    }
+
+    .s25-search {
+        max-width: 100%;
+        min-width: 75px;
+        border: none;
+
+        &:focus {
+            outline: 0;
+        }
+    }
+}
+
+.s25-single.s25-control {
+    height: 36px;
+
+    .s25-body {
+        cursor: pointer;
+        flex-grow: 1;
+        display: flex;
+        flex-wrap: wrap;
+        width: calc(100% - 30px);
+    }
+
+    .s25-value {
+        border: 0px;
+        line-height: 27px;
+        padding-left: 3px;
+
+        &:focus {
+            outline: 0px;
+        }
+    }
+}
+
+.s25-single.s25-dropdown {
+    .s25-search {
+        width: calc(100% - 16px);
+        padding: 6px;
+        margin: $dropdown-padding;
+        box-sizing: border-box;
+        border: $border;
+        outline: 0;
+    }
+}
+
+.s25-offscreen {
+    clip-path: inset(100%);
+    clip: rect(1px, 1px, 1px, 1px);
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+}
+
+.s25-dropdown {
+    position: absolute;
+    z-index: 1000000;
+    box-sizing: border-box;
+    border: $border-focus;
+    border-top: $border;
+    border-radius: 0 0 $border-radius $border-radius;
+    background-color: rgb(255, 255, 255);
+
+    .s25-body {
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
+
+    .s25-search-results {
+        width: 100%;
+        overflow-y: auto;
+        position: relative;
+        box-sizing: border-box;
+    }
+
+    .s25-options {
+        width: 100%;
+
+        .s25-item {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            cursor: pointer;
+
+            background-color: transparent;
+            color: inherit;
+            font-size: inherit;
+            padding: $dropdown-padding;
+        }
+
+        .s25-active {
+            background-color: lighten($item-bkg-color, 50%);
+        }
+    }
+
+    .s25-no-search-results {
+        padding: $dropdown-padding;
+    }
+
+    .s25-search-results-message {
+        padding: $dropdown-padding;
+    }
+
+    .s25-search-results-loading {
+        padding: $dropdown-padding;
+    }
+}
+
+.s25-remove {
+    border: 1px solid $remove-bkg-color;
+    border-radius: 0 $border-radius $border-radius 0;
+    margin: 0;
+    padding: 0 5px;
+    outline: none;
+    background-color: #f1f1f1;
+    transition: 0.2s, width 0.2s ease-out;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+
+    span svg {
+        fill: #ccc;
+        transition: fill 0.2s;
+    }
+
+    &:not(:disabled) {
+        background-color: $remove-bkg-color;
+
+        &:hover {
+            background-color: darken($remove-bkg-color, 5%);
+        }
+
+        span svg {
+            fill: $item-bkg-color;
+        }
+    }
+
+    &:not(.s25-offscreen) {
+        width: 30px;
+    }
+
+    &:focus {
+        border: $border-focus;
+    }
+
+    &:disabled {
+        cursor: default;
+    }
+
+    &:active {
+        border: 0px;
+    }
+}
+
+.s25-remove.s25-offscreen ~ .s25-toggle {
+    right: 0;
+}
+
+.s25-placeholder {
+    color: #ccc;
+}

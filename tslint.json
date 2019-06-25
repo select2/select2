@@ -1,0 +1,15 @@
+{
+    "defaultSeverity": "error",
+    "extends": ["tslint:recommended", "tslint-config-prettier"],
+    "jsRules": {},
+    "rules": {
+        "interface-over-type-literal": true,
+        "interface-name": false,
+        "max-classes-per-file": false,
+        "member-ordering": false
+    },
+    "rulesDirectory": [],
+    "linterOptions": {
+        "exclude": ["node_modules/**/*.ts", "dist/**/*.ts"]
+    }
+}

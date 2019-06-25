@@ -1,66 +1,78 @@
 {
-  "name": "select2",
-  "description": "Select2 is a jQuery based replacement for select boxes. It supports searching, remote data sets, and infinite scrolling of results.",
-  "homepage": "https://select2.org",
-  "author": {
-    "name": "Kevin Brown",
-    "url": "https://github.com/kevin-brown"
-  },
-  "contributors": [
-    {
-      "name": "Igor Vaynberg",
-      "url": "https://github.com/ivaynberg"
+    "name": "select2",
+    "version": "5.0.0-snapshot",
+    "description": "",
+    "main": "bridge/src/select25.tsx",
+    "scripts": {
+        "unit-tests": "jest --env=jsdom -c jest.unit.config.js",
+        "integration-tests": "jest -c jest.int.config.js",
+        "lint": "tslint '**/{src,test}/**/*.{ts,tsx}'",
+        "dev": "parcel dev/index.html -d dev/dist",
+        "dist": "rollup -c rollup.config.js"
     },
-    {
-      "name": "Alex Weissman",
-      "url": "https://github.com/alexweissman"
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/select2/select2.git"
+    },
+    "keywords": [],
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/select2/select2/issues"
+    },
+    "homepage": "https://github.com/select2/select2#readme",
+    "devDependencies": {
+        "@types/expect-puppeteer": "^3.3.1",
+        "@types/jest": "^24.0.13",
+        "@types/jest-environment-puppeteer": "^4.0.0",
+        "@types/puppeteer": "^1.12.4",
+        "babel-preset-env": "^1.7.0",
+        "babel-preset-preact": "^1.1.0",
+        "cssnano": "^4.1.10",
+        "husky": "^2.5.0",
+        "jest": "^24.8.0",
+        "jest-puppeteer": "^4.2.0",
+        "jest-serializer-html-string": "^1.0.1",
+        "lint-staged": "^8.1.7",
+        "npm-check-updates": "^3.1.10",
+        "parcel-bundler": "^1.12.3",
+        "preact-render-to-string": "^5.0.3",
+        "prettier": "^1.17.1",
+        "pretty": "^2.0.0",
+        "puppeteer": "^1.17.0",
+        "rollup-plugin-babel": "^4.3.2",
+        "rollup-plugin-commonjs": "^10.0.0",
+        "rollup-plugin-node-resolve": "^5.0.1",
+        "rollup-plugin-replace": "^2.2.0",
+        "rollup-plugin-scss": "^1.0.1",
+        "rollup-plugin-typescript": "^1.0.1",
+        "rollup-plugin-uglify": "^6.0.2",
+        "sass": "^1.20.1",
+        "ts-jest": "^24.0.2",
+        "tslib": "^1.9.3",
+        "tslint": "^5.17.0",
+        "tslint-config-prettier": "^1.18.0",
+        "typescript": "^3.5.1",
+        "typescript-tslint-plugin": "^0.4.0"
+    },
+    "dependencies": {
+        "preact": "^10.0.0-beta.3"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged && npm run dist"
+        }
+    },
+    "lint-staged": {
+        "*.{tsx,ts}": [
+            "tslint --fix",
+            "git add"
+        ],
+        "*.{tsx,ts,js,jsx}": [
+            "jest --env=jsdom --bail --findRelatedTests -c jest.unit.config.js"
+        ],
+        "*.{js,css,scss,json,md,jsx,tsx,ts}": [
+            "prettier --write",
+            "git add"
+        ]
     }
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/select2/select2.git"
-  },
-  "bugs": {
-    "url": "https://github.com/select2/select2/issues"
-  },
-  "keywords": [
-    "select",
-    "autocomplete",
-    "typeahead",
-    "dropdown",
-    "multiselect",
-    "tag",
-    "tagging"
-  ],
-  "license": "MIT",
-  "main": "dist/js/select2.js",
-  "style": "dist/css/select2.css",
-  "files": [
-    "src",
-    "dist"
-  ],
-  "version": "4.0.7",
-  "jspm": {
-    "main": "js/select2",
-    "directories": {
-      "lib": "dist"
-    }
-  },
-  "devDependencies": {
-    "almond": "~0.3.1",
-    "grunt": "^0.4.5",
-    "grunt-cli": "^0.1.13",
-    "grunt-contrib-concat": "^0.4.0",
-    "grunt-contrib-connect": "^0.9.0",
-    "grunt-contrib-jshint": "^0.10.0",
-    "grunt-contrib-qunit": "~0.4.0",
-    "grunt-contrib-requirejs": "^0.4.4",
-    "grunt-contrib-uglify": "~0.4.0",
-    "grunt-contrib-watch": "~0.6.0",
-    "grunt-sass": "^1.0.0",
-    "jquery-mousewheel": "~3.1.13",
-    "node-sass": "^4.5.3"
-  },
-  "dependencies": {
-  }
 }
