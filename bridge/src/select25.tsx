@@ -7,6 +7,7 @@ import '../../control/src/select25.scss';
 import { SingleSelect } from '../../control/src/single-select';
 import { extend } from '../../control/src/util';
 import { Ajax, createQueryFromAjax } from './ajax';
+import { DataFunction, createQueryFromData } from './data';
 import { Store } from './store';
 
 const forceImportOfH = h;
@@ -26,6 +27,7 @@ export interface Options {
     valueContent?: ItemRenderer;
     resultContent?: ItemRenderer;
     query?: QueryFunction;
+    data?: DataFunction;
     ajax?: Ajax;
     quiet?: number;
     minimumCharacters?: number;
@@ -74,6 +76,8 @@ const DEFAULT_OPTIONS = {
             return '';
         }
     },
+    itemId: 'id',
+    itemLabel: 'text',
     minimumCharacters: 0,
     multiple: false,
     openOnFocus: false
@@ -208,8 +212,12 @@ function create<T>(element: HTMLInputElement, options: Options) {
     const store = Store.getStore(element);
 
     options = extend({}, DEFAULT_OPTIONS, options);
-    if (!options.query && options.ajax) {
-        options.query = createQueryFromAjax(options.ajax);
+    if (!options.query) {
+        if (options.ajax) {
+            options.query = createQueryFromAjax(options.ajax);
+        } else if (options.data) {
+            options.query = createQueryFromData(options.data);
+        }
     }
 
     if (!options.tabIndex && element.tabIndex) {

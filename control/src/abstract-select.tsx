@@ -57,6 +57,8 @@ function MarkupRenderer({ markup }) {
 
 export const DEFAULT_PROPS: Partial<Props> = {
     allowDuplicates: false,
+    itemId: 'id',
+    itemLabel: 'text',
     minimumCharacters: 0,
     quiet: 50,
     tabIndex: 0

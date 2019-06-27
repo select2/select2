@@ -1,5 +1,6 @@
-import { QueryFunction, QueryResult } from '../../control/src/search-controller';
+import { QueryFunction, QueryResult } from '../../control/src/abstract-select';
 import { extend } from '../../control/src/util';
+
 export interface Ajax {
     url: string;
     params: (term: string, page: number) => object;

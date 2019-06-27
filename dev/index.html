@@ -32,6 +32,10 @@
     <p>
         <input type="text" value="focus grabber 3" />
     </p>
+    <section>
+        <input type="hidden" id="colors" s25-style="width:450px" />
+    </section>
+
     <p>
         <label for="select1">Select Single</label>
         <select id="select1">
@@ -132,8 +136,39 @@
 
             value: window.select2countries[0]
         },
-
     );
+
+    window.select25.create(
+        document.getElementById("colors"), {
+            multiple: true,
+            minimumCharacters: 0,
+            data: function (params) {
+                var term = params.term ? params.term.trim() : "";
+                var colors = ["Red", "Green", "Blue"];
+
+                if (term.length > 0) {
+                    var contains = colors.findIndex(c => c.toUpperCase() === term.toUpperCase());
+                    if (contains < 0) {
+                        colors.splice(0, 0, term);
+                    } else {
+                        // move matched element to the top so its selected
+                        var color = colors.splice(contains, 1);
+                        colors.splice(0, 0, color[0]);
+                    }
+                }
+
+                return {
+                    more: false,
+                    values: colors.map(c => {
+                        return {
+                            id: c.toUpperCase(),
+                            text: c
+                        }
+                    })
+                };
+            }
+        }
+    )
 </script>
 
 </html>

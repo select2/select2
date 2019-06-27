@@ -30,7 +30,7 @@ interface State extends AbstractSelectState {
     values: ValueListState;
 }
 
-const DEFAULT_PROPS = extend({}, ABSTRACT_DEFAULT_PROPS, {});
+const DEFAULT_PROPS = extend({}, ABSTRACT_DEFAULT_PROPS, { values: [] });
 
 export class MultiSelect extends AbstractSelect<Props, State> {
     private containerRef: RefObject<HTMLDivElement>;
