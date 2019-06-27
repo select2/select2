@@ -19,8 +19,11 @@
 .s25-search {
     font-size: 100%;
     line-height: 24px;
+    box-shadow: none;
+    outline: 0;
 }
 .s25-search:focus {
+    box-shadow: none;
     outline: 0;
 }
 
@@ -182,6 +185,7 @@
     overflow-y: auto;
     position: relative;
     box-sizing: border-box;
+    max-height: 175px;
 }
 .s25-dropdown .s25-options {
     width: 100%;

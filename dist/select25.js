@@ -1,3 +1,29 @@
+/**
+ * Copyright 2019 Igor Vaynberg and Select2 contributors
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit
+ * persons to whom the Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+ * Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * Bundle of select2
+ * Generated: 2019-06-27
+ * Version: 5.0.0-snapshot
+ * Dependencies:
+ *
+ * tslib -- 1.9.3
+ *
+ * preact -- 10.0.0-beta.3
+ */
+
 !(function(e, t) {
     'object' == typeof exports && 'undefined' != typeof module
         ? t(exports)
@@ -199,7 +225,7 @@
         var t = l(e.type, e.props, e.key, null);
         return (t.__e = e.__e), t;
     }
-    function x(e, t) {
+    function I(e, t) {
         (this.props = e), (this.context = t);
     }
     function s(e) {
@@ -216,7 +242,7 @@
         )
             e.__d && e.forceUpdate(!1);
     }
-    function I(e, t, n, o, r, s, a, i) {
+    function x(e, t, n, o, r, s, a, i) {
         var l,
             u,
             c,
@@ -326,7 +352,7 @@
                         ? (v = (c = t.__c = n.__c).__p = c.__E)
                         : (_.prototype && _.prototype.render
                               ? (t.__c = c = new _(m, y))
-                              : ((t.__c = c = new x(m, y)), (c.constructor = _), (c.render = O)),
+                              : ((t.__c = c = new I(m, y)), (c.constructor = _), (c.render = O)),
                           g && g.sub(c),
                           (c.props = m),
                           c.state || (c.state = {}),
@@ -379,7 +405,7 @@
                 for (
                     null != c.getChildContext && (o = S(S({}, o), c.getChildContext())),
                         p || null == c.getSnapshotBeforeUpdate || (h = c.getSnapshotBeforeUpdate(d, f)),
-                        I(e, t, n, o, r, s, a, l),
+                        x(e, t, n, o, r, s, a, l),
                         c.base = t.__e;
                     (u = c.__h.pop());
 
@@ -418,7 +444,7 @@
                                   null == s &&
                                   ((c && u && c.__html == u.__html) || (e.innerHTML = (c && c.__html) || '')),
                               d.multiple && (e.multiple = d.multiple),
-                              I(e, t, n, o, 'foreignObject' !== t.type && r, s, a, w),
+                              x(e, t, n, o, 'foreignObject' !== t.type && r, s, a, w),
                               (function(e, t, n, o) {
                                   var r,
                                       s,
@@ -545,12 +571,12 @@
         })(e, document.getElementById('s25-live-polite'));
     }
     (b = {}),
-        (x.prototype.setState = function(e, t) {
+        (I.prototype.setState = function(e, t) {
             var n = (this.__s !== this.state && this.__s) || (this.__s = S({}, this.state));
             ('function' == typeof e && !(e = e(n, this.props))) || S(n, e),
                 null != e && this.__v && (t && this.__h.push(t), s(this));
         }),
-        (x.prototype.forceUpdate = function(e) {
+        (I.prototype.forceUpdate = function(e) {
             var t,
                 n,
                 o,
@@ -593,7 +619,7 @@
                     })(r)),
                 e && e();
         }),
-        (x.prototype.render = k),
+        (I.prototype.render = k),
         (n = []),
         (r = 'function' == typeof Promise ? Promise.prototype.then.bind(Promise.resolve()) : setTimeout),
         (u = /[A-Z]/g),
@@ -642,20 +668,20 @@
     });
     var U,
         B,
-        H = function(t, e) {
+        j = function(t, e) {
             if (!e.length) return t;
             var n = e.shift();
             return (
                 void 0 === n ||
-                    (j(t) &&
-                        j(n) &&
+                    (H(t) &&
+                        H(n) &&
                         Object.keys(n).forEach(function(e) {
-                            j(n[e]) ? (t[e] || (t[e] = {}), H(t[e], [n[e]])) : (t[e] = n[e]);
+                            H(n[e]) ? (t[e] || (t[e] = {}), j(t[e], [n[e]])) : (t[e] = n[e]);
                         })),
-                H(t, e)
+                j(t, e)
             );
         },
-        j = function(e) {
+        H = function(e) {
             return (
                 (function(e) {
                     return null !== e && 'object' == typeof e;
@@ -704,7 +730,7 @@
     }
     var Y,
         G = { allowDuplicates: !1, itemId: 'id', itemLabel: 'text', minimumCharacters: 0, quiet: 50, tabIndex: 0 },
-        $ = (t(J, (Y = x)),
+        $ = (t(J, (Y = I)),
         Object.defineProperty(J.prototype, 'dictionary', {
             get: function() {
                 var e = this.props.dictionary;
@@ -714,7 +740,7 @@
             configurable: !0
         }),
         (J.prototype.updateState = function(e, t) {
-            var n = H(this.state, Array.isArray(e) ? e : [e]);
+            var n = j(this.state, Array.isArray(e) ? e : [e]);
             this.setState(n, t);
         }),
         (J.prototype.loadMore = function() {
@@ -926,7 +952,7 @@
         );
     }
     var Z,
-        Q = (t(ee, (Z = x)),
+        Q = (t(ee, (Z = I)),
         (ee.prototype.getChildContext = function() {
             return this.props.context;
         }),
@@ -943,7 +969,7 @@
         return f(D(Q, { context: this.context }, t), n), null;
     }
     var ne,
-        oe = (t(re, (ne = x)),
+        oe = (t(re, (ne = I)),
         (re.prototype.componentWillMount = function() {
             (this.container = document.createElement('div')),
                 this.props.class && (this.container.className = this.props.class),
@@ -1089,9 +1115,10 @@
         (le.searchResultsMinimumError = 's25-search-results-minimum-error'),
         (le.hiddenAccessible = 's25-hidden-accessible'),
         (le.hidden = 's25-hidden'),
-        (le.placeholder = 's25-placeholder');
+        (le.placeholder = 's25-placeholder'),
+        (le.scroll = 's25-scroll');
     var ue,
-        ce = (t(pe, (ue = x)),
+        ce = (t(pe, (ue = I)),
         (pe.prototype.getResultDomId = function(e) {
             return this.props.namespace + e;
         }),
@@ -1107,13 +1134,7 @@
                 { class: ie.body },
                 D(
                     'div',
-                    {
-                        ref: this.container,
-                        onScroll: this.onScroll,
-                        class: ie.searchResults,
-                        'aria-busy': i.loading,
-                        style: { maxHeight: '175px' }
-                    },
+                    { ref: this.container, onScroll: this.onScroll, class: ie.searchResults, 'aria-busy': i.loading },
                     i.loading &&
                         D(
                             'div',
@@ -1248,27 +1269,28 @@
                 s = e.tabIndex,
                 a = e.minimumCharacters,
                 i = e.valuesLabel,
-                l = (e.comboboxLabel, t.open),
-                c = t.loading,
-                p = t.focused,
-                d = t.search,
-                f = t.values,
-                h = f.active,
-                v = f.selected,
-                m = t.results,
-                g = this.dictionary,
-                y = q(ie.control, ie.multi, (((n = {})[ie.open] = l), n), (((o = {})[ie.focused] = p), o));
-            e.containerClass && 0 < e.containerClass.length && (y += ' ' + e.containerClass);
-            var _ = this.namespace + '-instructions',
-                b = this.namespace + '-results',
-                w = this.namespace + '-res-';
+                l = e.comboboxLabel,
+                c = t.open,
+                p = t.loading,
+                d = t.focused,
+                f = t.search,
+                h = t.values,
+                v = h.active,
+                m = h.selected,
+                g = t.results,
+                y = this.dictionary,
+                _ = q(ie.control, ie.multi, (((n = {})[ie.open] = c), n), (((o = {})[ie.focused] = d), o));
+            e.containerClass && 0 < e.containerClass.length && (_ += ' ' + e.containerClass);
+            var b = this.namespace + '-instructions',
+                w = this.namespace + '-results',
+                R = this.namespace + '-res-';
             return D(
                 k,
                 null,
                 D(
                     'div',
                     {
-                        class: y,
+                        class: _,
                         ref: this.containerRef,
                         onFocusCapture: this.onFocusIn,
                         onBlurCapture: this.onFocusOut,
@@ -1280,11 +1302,11 @@
                         { class: q(ie.body), ref: this.bodyRef, onClick: this.onBodyClick },
                         D(
                             'div',
-                            { id: _, class: q(ie.offscreen), style: { display: 'none' } },
-                            g.multiSelectInstructions()
+                            { id: b, class: q(ie.offscreen), style: { display: 'none' } },
+                            y.multiSelectInstructions()
                         ),
                         z(function() {
-                            var e = 0 <= h ? u.namespace + '-vl-' + h : void 0;
+                            var e = 0 <= v ? u.namespace + '-vl-' + v : void 0;
                             return r && 0 < r.length
                                 ? D(
                                       'div',
@@ -1297,15 +1319,15 @@
                                           'aria-multiselectable': 'true',
                                           'aria-activedescendant': e,
                                           'aria-label': i,
-                                          'aria-describedby': _,
+                                          'aria-describedby': b,
                                           onFocus: u.onValuesFocus,
                                           onBlur: u.onValuesBlur,
                                           onKeyDown: u.onValuesKeyDown
                                       },
                                       r.map(function(e, t) {
                                           var n,
-                                              o = v[t],
-                                              r = h === t,
+                                              o = m[t],
+                                              r = v === t,
                                               s = q(ie.item, (((n = {})[ie.selected] = o), (n[ie.active] = r), n)),
                                               a = u.namespace + '-vl-' + t,
                                               i = u.getItemLabel(e),
@@ -1331,7 +1353,7 @@
                         }),
                         z(function() {
                             var e,
-                                t = !v.find(function(e) {
+                                t = !m.find(function(e) {
                                     return !0 === e;
                                 });
                             return D(
@@ -1342,26 +1364,26 @@
                                     onFocus: u.onRemoveSelectedFocus,
                                     disabled: t,
                                     'aria-disabled': t,
-                                    title: g.removeButtonTitle()
+                                    title: y.removeButtonTitle()
                                 },
                                 D('span', null, D(ae, { width: 20, height: 20 }))
                             );
                         }),
-                        D('label', { htmlFor: void 0, className: ie.offscreen }, e.comboboxLabel),
+                        D('label', { htmlFor: void 0, className: ie.offscreen }, l),
                         D('input', {
                             type: 'text',
                             ref: this.searchRef,
-                            value: d,
+                            value: f,
                             class: q(ie.search),
                             role: 'combobox',
                             'aria-label': e.comboboxLabel,
                             'aria-autocomplete': 'list',
                             'aria-haspopup': 'true',
-                            'aria-owns': b,
-                            'aria-controls': b,
-                            'aria-expanded': l ? 'true' : 'false',
-                            'aria-activedescendant': 0 <= m.active ? w + m.active : void 0,
-                            'aria-busy': c,
+                            'aria-owns': w,
+                            'aria-controls': w,
+                            'aria-expanded': c ? 'true' : 'false',
+                            'aria-activedescendant': 0 <= g.active ? R + g.active : void 0,
+                            'aria-busy': p,
                             onInput: this.onSearchInput,
                             onKeyDown: this.onSearchKeyDown,
                             onFocus: this.onSearchFocus
@@ -1373,7 +1395,7 @@
                         )
                     )
                 ),
-                l &&
+                c &&
                     D(
                         oe,
                         {
@@ -1386,17 +1408,17 @@
                             ce,
                             C(
                                 {
-                                    namespace: w,
+                                    namespace: R,
                                     minimumCharacters: a,
                                     dictionary: this.dictionary,
                                     itemLabel: this.getItemLabel,
                                     renderItem: this.renderResult,
-                                    listboxDomId: b,
-                                    search: d
+                                    listboxDomId: w,
+                                    search: f
                                 },
                                 this.state.results,
                                 {
-                                    loading: c,
+                                    loading: p,
                                     onResultClicked: this.onResultClicked,
                                     onMouseMove: this.onResultMouseMove,
                                     onLoadMore: this.onLoadMoreResults
@@ -1882,7 +1904,7 @@
         n.initEvent('change', !1, !0), (n[t] = t), e.dispatchEvent(n);
     }
     var De,
-        ke = (t(Me, (De = x)),
+        ke = (t(Me, (De = I)),
         (Me.prototype.componentDidUpdate = function() {
             this.setHiddenValue(this.state.values);
         }),
@@ -1928,8 +1950,8 @@
             t
         );
     }
-    var xe,
-        Ie = (t(Le, (xe = x)),
+    var Ie,
+        xe = (t(Le, (Ie = I)),
         (Le.prototype.componentDidMount = function() {
             this.setHiddenValue(this.state.value);
         }),
@@ -1968,7 +1990,7 @@
         }),
         Le);
     function Le(e) {
-        var t = xe.call(this, e) || this;
+        var t = Ie.call(this, e) || this;
         return (
             (t.onChange = function(e) {
                 t.setState({ value: e }), t.setHiddenValue(e), Se(t.props.element, e);
@@ -2032,20 +2054,20 @@
                               };
                           })(t.data))),
                 !t.tabIndex && e.tabIndex && (t.tabIndex = e.tabIndex),
-                e.getAttribute('s25-style'))
+                e.getAttribute('data-s25-container-style'))
             ) {
                 var o = t.containerStyle || '';
-                0 < o.length && (o += ';'), (o += e.getAttribute('s25-style')), (t.containerStyle = o);
+                0 < o.length && (o += ';'), (o += e.getAttribute('data-s25-container-style')), (t.containerStyle = o);
             }
-            if (e.getAttribute('s25-class')) {
+            if (e.getAttribute('data-s25-container-class')) {
                 var r = t.containerClass || '';
-                0 < r.length && (r += ' '), (r += e.getAttribute('s25-class')), (t.containerClass = r);
+                0 < r.length && (r += ' '), (r += e.getAttribute('data-s25-container-class')), (t.containerClass = r);
             }
             var s = e.parentElement,
                 a = document.createElement('div');
             s.insertBefore(a, e),
                 n.set(be.targetElement, a),
-                t.multiple ? f(D(ke, { element: e, options: t }), s, a) : f(D(Ie, { element: e, options: t }), s, a);
+                t.multiple ? f(D(ke, { element: e, options: t }), s, a) : f(D(xe, { element: e, options: t }), s, a);
         },
         destroy: function(e) {
             if (we.hasStore(e)) {
