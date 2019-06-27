@@ -27,8 +27,10 @@ $dropdown-padding: 8px 10px;
 .s25-search {
     font-size: 100%;
     line-height: 24px;
-
+    box-shadow: none;
+    outline: 0;
     &:focus {
+        box-shadow: none;
         outline: 0;
     }
 }
