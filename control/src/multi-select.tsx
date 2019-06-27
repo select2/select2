@@ -270,7 +270,7 @@ export class MultiSelect extends AbstractSelect<Props, State> {
             focused
         });
         if (!focused) {
-            // this.closeIfOpen();
+            this.closeIfOpen();
         }
     };
 

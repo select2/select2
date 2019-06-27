@@ -703,7 +703,7 @@
         return D('div', { dangerouslySetInnerHTML: { __html: e.markup } }, ' ');
     }
     var Y,
-        G = { allowDuplicates: !1, minimumCharacters: 0, quiet: 50, tabIndex: 0 },
+        G = { allowDuplicates: !1, itemId: 'id', itemLabel: 'text', minimumCharacters: 0, quiet: 50, tabIndex: 0 },
         $ = (t(J, (Y = x)),
         Object.defineProperty(J.prototype, 'dictionary', {
             get: function() {
@@ -1235,7 +1235,7 @@
         );
     }
     var de,
-        fe = N({}, G, {}),
+        fe = N({}, G, { values: [] }),
         he = (t(ve, (de = $)),
         (ve.prototype.componentWillMount = function() {
             m();
@@ -1440,7 +1440,7 @@
                     n = a.containerRef.current,
                     o = a.dropdownRef.current,
                     r = n.contains(t) || (o && (o === t || o.contains(t)));
-                a.updateState({ focused: r });
+                a.updateState({ focused: r }), r || a.closeIfOpen();
             }),
             (a.onSearchFocus = function() {
                 var e = a.props.openOnFocus;
@@ -1871,6 +1871,8 @@
             }
             return e ? (Array.isArray(e) ? (0 < e.length ? e.map(n).join(',') : '') : n(e)) : '';
         },
+        itemId: 'id',
+        itemLabel: 'text',
         minimumCharacters: 0,
         multiple: !1,
         openOnFocus: !1
@@ -1979,47 +1981,56 @@
         create: function(e, t) {
             var n = we.getStore(e);
             if (
-                (!(t = N({}, Ce, t)).query &&
-                    t.ajax &&
-                    (t.query = (function(u) {
-                        return (
-                            (u = N({}, u, {
-                                params: function(e, t) {
-                                    return { term: e, page: t };
-                                },
-                                process: function(e) {
-                                    var t = JSON.parse(e);
-                                    return { more: t.more, values: t.values };
-                                }
-                            })),
-                            function(a, i, l) {
-                                return new Promise(function(t, n) {
-                                    var o = u.url,
-                                        e = u.params(a, i);
-                                    if (e) {
-                                        var r = 0 <= o.indexOf('?') ? '&' : '?';
-                                        Object.entries(e).forEach(function(e) {
-                                            var t = e[0],
-                                                n = e[1];
-                                            (o += r),
-                                                (r = '&'),
-                                                (o += encodeURIComponent(t) + '=' + encodeURIComponent(n));
-                                        });
-                                    }
-                                    var s = new XMLHttpRequest();
-                                    s.open('GET', o, !0),
-                                        (s.onload = function() {
-                                            if (200 <= s.status && s.status < 400) {
-                                                var e = u.process(s.responseText);
-                                                t({ values: e.values, more: e.more, token: l });
-                                            } else n();
-                                        }),
-                                        (s.onerror = n),
-                                        s.send();
-                                });
-                            }
-                        );
-                    })(t.ajax)),
+                ((t = N({}, Ce, t)).query ||
+                    (t.ajax
+                        ? (t.query = (function(u) {
+                              return (
+                                  (u = N({}, u, {
+                                      params: function(e, t) {
+                                          return { term: e, page: t };
+                                      },
+                                      process: function(e) {
+                                          var t = JSON.parse(e);
+                                          return { more: t.more, values: t.values };
+                                      }
+                                  })),
+                                  function(a, i, l) {
+                                      return new Promise(function(t, n) {
+                                          var o = u.url,
+                                              e = u.params(a, i);
+                                          if (e) {
+                                              var r = 0 <= o.indexOf('?') ? '&' : '?';
+                                              Object.entries(e).forEach(function(e) {
+                                                  var t = e[0],
+                                                      n = e[1];
+                                                  (o += r),
+                                                      (r = '&'),
+                                                      (o += encodeURIComponent(t) + '=' + encodeURIComponent(n));
+                                              });
+                                          }
+                                          var s = new XMLHttpRequest();
+                                          s.open('GET', o, !0),
+                                              (s.onload = function() {
+                                                  if (200 <= s.status && s.status < 400) {
+                                                      var e = u.process(s.responseText);
+                                                      t({ values: e.values, more: e.more, token: l });
+                                                  } else n();
+                                              }),
+                                              (s.onerror = n),
+                                              s.send();
+                                      });
+                                  }
+                              );
+                          })(t.ajax))
+                        : t.data &&
+                          (t.query = (function(s) {
+                              return function(n, o, r) {
+                                  return new Promise(function(e) {
+                                      var t = s({ term: n, page: o, selected: [] });
+                                      e({ values: t.values, more: t.more, token: r });
+                                  });
+                              };
+                          })(t.data))),
                 !t.tabIndex && e.tabIndex && (t.tabIndex = e.tabIndex),
                 e.getAttribute('s25-style'))
             ) {
