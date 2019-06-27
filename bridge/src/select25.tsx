@@ -1,6 +1,6 @@
 /** jsx:pragma h */
 import { Component, h, render } from 'preact';
-import { ItemRenderer, QueryFunction } from '../../control/src/abstract-select';
+import { DataItem, DataItemRenderer, QueryFunction } from '../../control/src/abstract-select';
 import { Dictionary } from '../../control/src/dictionary';
 import { MultiSelect } from '../../control/src/multi-select';
 import '../../control/src/select25.scss';
@@ -16,16 +16,12 @@ enum StoreKeys {
     targetElement = 'te'
 }
 
-export interface Options {
-    multiple: boolean;
+interface BaseSelectOptions {
     containerStyle?: string;
     containerClass?: string;
-    hiddenValue?: (values: any, options: Options) => string;
     tabIndex?: number;
-    itemId: ((item: any) => string) | string;
-    itemLabel: ((item: any) => string) | string;
-    valueContent?: ItemRenderer;
-    resultContent?: ItemRenderer;
+    valueContent?: DataItemRenderer;
+    resultContent?: DataItemRenderer;
     query?: QueryFunction;
     data?: DataFunction;
     ajax?: Ajax;
@@ -33,55 +29,50 @@ export interface Options {
     minimumCharacters?: number;
     openOnFocus?: boolean;
     dictionary?: string | Dictionary;
-
-    value: any;
-    values: any[];
-    allowClear?: boolean;
-    placeholder?: string;
-
-    /** Single Select Label */
-    label?: string;
-
-    /** Multi Select Selected Values Listbox Label */
-    valuesLabel?: string;
-    /** Multi Select Add Value Combobox Label */
-    comboboxLabel?: string;
-
-    allowDuplicates: boolean;
 }
 
-const DEFAULT_OPTIONS = {
-    allowClear: false,
-    dictionary: 'en_us',
-    hiddenValue: (values: any, options: Options) => {
-        const id = (item: any) => {
-            if (typeof options.itemId === 'function') {
-                return options.itemId(item);
-            } else {
-                return '' + item[options.itemId];
-            }
-        };
+interface MultiSelectOptions extends BaseSelectOptions {
+    hiddenValue?: (values: DataItem[], options: MultiSelectOptions) => string;
+    valuesLabel?: string;
+    comboboxLabel?: string;
+    allowDuplicates: boolean;
+    values: DataItem[];
+}
 
-        if (values) {
-            if (Array.isArray(values)) {
-                if (values.length > 0) {
-                    return values.map(id).join(',');
-                } else {
-                    return '';
-                }
-            } else {
-                return id(values);
-            }
+interface SingleSelectOptions extends BaseSelectOptions {
+    hiddenValue?: (value: DataItem, options: SingleSelectOptions) => string;
+    label?: string;
+    value: DataItem;
+    allowClear?: boolean;
+    placeholder?: string;
+}
+
+const BASE_DEFAULT_OPTIONS = {
+    dictionary: 'en_us',
+    minimumCharacters: 0,
+    openOnFocus: false
+};
+
+const DEFAULT_MULTI_SELECT_OPTIONS = extend({}, BASE_DEFAULT_OPTIONS, {
+    hiddenValue: (values: DataItem[], options: MultiSelectOptions) => {
+        if (values && values.length > 0) {
+            return values.map(item => item.id).join(',');
         } else {
             return '';
         }
-    },
-    itemId: 'id',
-    itemLabel: 'text',
-    minimumCharacters: 0,
-    multiple: false,
-    openOnFocus: false
-};
+    }
+});
+
+const DEFAULT_SINGLE_SELECT_OPTIONS = extend({}, BASE_DEFAULT_OPTIONS, {
+    allowClear: false,
+    hiddenValue: (value: DataItem, options: SingleSelectOptions) => {
+        if (value) {
+            return value.id;
+        } else {
+            return '';
+        }
+    }
+});
 
 function triggerOnChange(element: HTMLElement, data: any) {
     const event = document.createEvent('HTMLEvents');
@@ -93,13 +84,13 @@ function triggerOnChange(element: HTMLElement, data: any) {
 class MultiSelectWrapper extends Component<
     {
         element: HTMLInputElement;
-        options: Options;
+        options: MultiSelectOptions;
     },
-    { values: any }
+    { values?: DataItem[] }
 > {
     constructor(props) {
         super(props);
-        this.state = { values: props.options.values };
+        this.state = { values: props.options.values || [] };
     }
 
     public componentDidUpdate() {
@@ -118,8 +109,6 @@ class MultiSelectWrapper extends Component<
                 containerStyle={opts.containerStyle}
                 valuesLabel={opts.valuesLabel}
                 comboboxLabel={opts.comboboxLabel}
-                itemId={opts.itemId}
-                itemLabel={opts.itemLabel}
                 valueContent={opts.valueContent}
                 resultContent={opts.resultContent}
                 query={opts.query}
@@ -149,10 +138,10 @@ class MultiSelectWrapper extends Component<
 
 class SingleSelectWrapper extends Component<
     {
-        options: Options;
+        options: SingleSelectOptions;
         element: HTMLInputElement;
     },
-    { value: any }
+    { value?: DataItem }
 > {
     constructor(props) {
         super(props);
@@ -172,13 +161,10 @@ class SingleSelectWrapper extends Component<
         return (
             <SingleSelect
                 label={opts.label}
-                comboboxLabel={opts.comboboxLabel}
                 containerClass={opts.containerClass}
                 containerStyle={opts.containerStyle}
                 allowClear={opts.allowClear}
                 placeholder={opts.placeholder}
-                itemId={opts.itemId}
-                itemLabel={opts.itemLabel}
                 valueContent={opts.valueContent}
                 resultContent={opts.resultContent}
                 query={opts.query}
@@ -187,31 +173,55 @@ class SingleSelectWrapper extends Component<
                 openOnFocus={opts.openOnFocus} // TODO
                 dictionary={opts.dictionary}
                 tabIndex={opts.tabIndex}
-                allowDuplicates={opts.allowDuplicates}
                 value={this.state.value}
                 onChange={this.onChange}
             />
         );
     }
 
-    public onChange = (value: any) => {
+    public onChange = (value: DataItem) => {
         this.setState({ value });
         this.setHiddenValue(value);
         triggerOnChange(this.props.element, value);
     };
 
-    private setHiddenValue(value: any) {
+    private setHiddenValue(value: DataItem) {
         const { element, options } = this.props;
         element.value = options.hiddenValue(value, options);
     }
 }
 
-function create<T>(element: HTMLInputElement, options: Options) {
-    // TODO make sure we are attached to hidden input
+function createSingleSelect(element: HTMLInputElement, options: SingleSelectOptions) {
+    options = extend({}, DEFAULT_SINGLE_SELECT_OPTIONS, options);
+    fillBaseOptions(element, options);
 
     const store = Store.getStore(element);
 
-    options = extend({}, DEFAULT_OPTIONS, options);
+    // create placeholder element into which the control will be rendered
+    const parentElement = element.parentElement;
+    const targetElement = document.createElement('div');
+    parentElement.insertBefore(targetElement, element);
+    store.set(StoreKeys.targetElement, targetElement);
+
+    render(<SingleSelectWrapper element={element} options={options} />, parentElement, targetElement);
+}
+
+function createMultiSelect(element: HTMLInputElement, options: SingleSelectOptions) {
+    options = extend({}, DEFAULT_SINGLE_SELECT_OPTIONS, options);
+    fillBaseOptions(element, options);
+
+    const store = Store.getStore(element);
+
+    // create placeholder element into which the control will be rendered
+    const parentElement = element.parentElement;
+    const targetElement = document.createElement('div');
+    parentElement.insertBefore(targetElement, element);
+    store.set(StoreKeys.targetElement, targetElement);
+
+    render(<MultiSelectWrapper element={element} options={options} />, parentElement, targetElement);
+}
+
+function fillBaseOptions(element: HTMLInputElement, options: BaseSelectOptions) {
     if (!options.query) {
         if (options.ajax) {
             options.query = createQueryFromAjax(options.ajax);
@@ -241,20 +251,6 @@ function create<T>(element: HTMLInputElement, options: Options) {
         clazz += element.getAttribute('data-s25-container-class');
         options.containerClass = clazz;
     }
-
-    // create placeholder element into which the control will be rendered
-    const parentElement = element.parentElement;
-    const targetElement = document.createElement('div');
-    parentElement.insertBefore(targetElement, element);
-
-    store.set(StoreKeys.targetElement, targetElement);
-
-    // render the replacement
-    if (options.multiple) {
-        render(<MultiSelectWrapper element={element} options={options} />, parentElement, targetElement);
-    } else {
-        render(<SingleSelectWrapper element={element} options={options} />, parentElement, targetElement);
-    }
 }
 
 function destroy(element: HTMLElement) {
@@ -270,7 +266,8 @@ function destroy(element: HTMLElement) {
 }
 
 const select25 = {
-    create,
+    createMultiSelect,
+    createSingleSelect,
     destroy
 };
 

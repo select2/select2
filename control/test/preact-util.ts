@@ -18,7 +18,7 @@ export const query: QueryFunction = (search, page, token) =>
         const limit = 10;
         const offset = page * limit;
         for (const country of countries) {
-            if (country.name.toLowerCase().indexOf(search.toLowerCase()) >= 0) {
+            if (country.text.toLowerCase().indexOf(search.toLowerCase()) >= 0) {
                 if (count >= offset) {
                     results.push(country);
                 }

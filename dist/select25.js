@@ -225,7 +225,7 @@
         var t = l(e.type, e.props, e.key, null);
         return (t.__e = e.__e), t;
     }
-    function I(e, t) {
+    function x(e, t) {
         (this.props = e), (this.context = t);
     }
     function s(e) {
@@ -242,7 +242,7 @@
         )
             e.__d && e.forceUpdate(!1);
     }
-    function x(e, t, n, o, r, s, a, i) {
+    function I(e, t, n, o, r, s, a, i) {
         var l,
             u,
             c,
@@ -251,7 +251,7 @@
             f,
             h,
             v,
-            m = t.__k || L(t.props.children, (t.__k = []), M, !0),
+            m = t.__k || E(t.props.children, (t.__k = []), M, !0),
             g = (n && n.__k) || R,
             y = g.length;
         if (i == w)
@@ -292,13 +292,13 @@
         for (u = y; u--; ) null != g[u] && F(g[u], t);
         if (v) for (u = 0; u < v.length; u++) A(v[u], v[++u], t);
     }
-    function L(e, t, n, o) {
+    function E(e, t, n, o) {
         if ((null == t && (t = []), null == e || 'boolean' == typeof e)) o && t.push(null);
-        else if (Array.isArray(e)) for (var r = 0; r < e.length; r++) L(e[r], t, n, o);
+        else if (Array.isArray(e)) for (var r = 0; r < e.length; r++) E(e[r], t, n, o);
         else t.push(n ? n(e) : e);
         return t;
     }
-    function E(e, t, n, o, r) {
+    function L(e, t, n, o, r) {
         var s, a, i, l;
         if ('style' === (t = r ? ('className' === t ? 'class' : t) : 'class' === t ? 'className' : t))
             for (a in (s = S(S({}, o), n)))
@@ -352,7 +352,7 @@
                         ? (v = (c = t.__c = n.__c).__p = c.__E)
                         : (_.prototype && _.prototype.render
                               ? (t.__c = c = new _(m, y))
-                              : ((t.__c = c = new I(m, y)), (c.constructor = _), (c.render = O)),
+                              : ((t.__c = c = new x(m, y)), (c.constructor = _), (c.render = O)),
                           g && g.sub(c),
                           (c.props = m),
                           c.state || (c.state = {}),
@@ -390,7 +390,7 @@
                     (c.__v = t),
                     (c.__P = e);
                 try {
-                    L(
+                    E(
                         null != (u = c.render(c.props, c.state, c.context)) && u.type == k && null == u.key
                             ? u.props.children
                             : u,
@@ -405,7 +405,7 @@
                 for (
                     null != c.getChildContext && (o = S(S({}, o), c.getChildContext())),
                         p || null == c.getSnapshotBeforeUpdate || (h = c.getSnapshotBeforeUpdate(d, f)),
-                        x(e, t, n, o, r, s, a, l),
+                        I(e, t, n, o, r, s, a, l),
                         c.base = t.__e;
                     (u = c.__h.pop());
 
@@ -444,7 +444,7 @@
                                   null == s &&
                                   ((c && u && c.__html == u.__html) || (e.innerHTML = (c && c.__html) || '')),
                               d.multiple && (e.multiple = d.multiple),
-                              x(e, t, n, o, 'foreignObject' !== t.type && r, s, a, w),
+                              I(e, t, n, o, 'foreignObject' !== t.type && r, s, a, w),
                               (function(e, t, n, o) {
                                   var r,
                                       s,
@@ -453,8 +453,8 @@
                                       'children' === (s = a[r]) ||
                                           'key' === s ||
                                           (n && ('value' === s || 'checked' === s ? e : n)[s] === t[s]) ||
-                                          E(e, s, t[s], n[s], o);
-                                  for (r in n) 'children' === r || 'key' === r || r in t || E(e, r, null, n[r], o);
+                                          L(e, s, t[s], n[s], o);
+                                  for (r in n) 'children' === r || 'key' === r || r in t || L(e, r, null, n[r], o);
                               })(e, d, p, r)),
                         e
                     );
@@ -571,12 +571,12 @@
         })(e, document.getElementById('s25-live-polite'));
     }
     (b = {}),
-        (I.prototype.setState = function(e, t) {
+        (x.prototype.setState = function(e, t) {
             var n = (this.__s !== this.state && this.__s) || (this.__s = S({}, this.state));
             ('function' == typeof e && !(e = e(n, this.props))) || S(n, e),
                 null != e && this.__v && (t && this.__h.push(t), s(this));
         }),
-        (I.prototype.forceUpdate = function(e) {
+        (x.prototype.forceUpdate = function(e) {
             var t,
                 n,
                 o,
@@ -619,7 +619,7 @@
                     })(r)),
                 e && e();
         }),
-        (I.prototype.render = k),
+        (x.prototype.render = k),
         (n = []),
         (r = 'function' == typeof Promise ? Promise.prototype.then.bind(Promise.resolve()) : setTimeout),
         (u = /[A-Z]/g),
@@ -729,8 +729,8 @@
         return D('div', { dangerouslySetInnerHTML: { __html: e.markup } }, ' ');
     }
     var Y,
-        G = { allowDuplicates: !1, itemId: 'id', itemLabel: 'text', minimumCharacters: 0, quiet: 50, tabIndex: 0 },
-        $ = (t(J, (Y = I)),
+        G = { allowDuplicates: !1, minimumCharacters: 0, quiet: 50, tabIndex: 0 },
+        $ = (t(J, (Y = x)),
         Object.defineProperty(J.prototype, 'dictionary', {
             get: function() {
                 var e = this.props.dictionary;
@@ -831,12 +831,10 @@
         var f = Y.call(this, e) || this;
         return (
             (f.getItemId = function(e) {
-                var t = f.props.itemId;
-                return 'function' == typeof t ? t(e) : '' + e[t];
+                return e.id;
             }),
             (f.getItemLabel = function(e) {
-                var t = f.props.itemLabel;
-                return 'function' == typeof t ? t(e) : '' + e[t];
+                return e.text;
             }),
             (f.renderValue = function(e) {
                 return f.renderItem(e, 'valueContent');
@@ -952,7 +950,7 @@
         );
     }
     var Z,
-        Q = (t(ee, (Z = I)),
+        Q = (t(ee, (Z = x)),
         (ee.prototype.getChildContext = function() {
             return this.props.context;
         }),
@@ -969,7 +967,7 @@
         return f(D(Q, { context: this.context }, t), n), null;
     }
     var ne,
-        oe = (t(re, (ne = I)),
+        oe = (t(re, (ne = x)),
         (re.prototype.componentWillMount = function() {
             (this.container = document.createElement('div')),
                 this.props.class && (this.container.className = this.props.class),
@@ -1118,7 +1116,7 @@
         (le.placeholder = 's25-placeholder'),
         (le.scroll = 's25-scroll');
     var ue,
-        ce = (t(pe, (ue = I)),
+        ce = (t(pe, (ue = x)),
         (pe.prototype.getResultDomId = function(e) {
             return this.props.namespace + e;
         }),
@@ -1887,14 +1885,19 @@
     var Ce = {
         allowClear: !((be || (be = {})).targetElement = 'te'),
         dictionary: 'en_us',
-        hiddenValue: function(e, t) {
-            function n(e) {
-                return 'function' == typeof t.itemId ? t.itemId(e) : '' + e[t.itemId];
-            }
-            return e ? (Array.isArray(e) ? (0 < e.length ? e.map(n).join(',') : '') : n(e)) : '';
+        hiddenValue: function(e) {
+            return e
+                ? Array.isArray(e)
+                    ? 0 < e.length
+                        ? e
+                              .map(function(e) {
+                                  return e.id;
+                              })
+                              .join(',')
+                        : ''
+                    : e.id
+                : '';
         },
-        itemId: 'id',
-        itemLabel: 'text',
         minimumCharacters: 0,
         multiple: !1,
         openOnFocus: !1
@@ -1904,7 +1907,7 @@
         n.initEvent('change', !1, !0), (n[t] = t), e.dispatchEvent(n);
     }
     var De,
-        ke = (t(Me, (De = I)),
+        ke = (t(Me, (De = x)),
         (Me.prototype.componentDidUpdate = function() {
             this.setHiddenValue(this.state.values);
         }),
@@ -1918,8 +1921,6 @@
                 containerStyle: e.containerStyle,
                 valuesLabel: e.valuesLabel,
                 comboboxLabel: e.comboboxLabel,
-                itemId: e.itemId,
-                itemLabel: e.itemLabel,
                 valueContent: e.valueContent,
                 resultContent: e.resultContent,
                 query: e.query,
@@ -1950,15 +1951,15 @@
             t
         );
     }
-    var Ie,
-        xe = (t(Le, (Ie = I)),
-        (Le.prototype.componentDidMount = function() {
+    var xe,
+        Ie = (t(Ee, (xe = x)),
+        (Ee.prototype.componentDidMount = function() {
             this.setHiddenValue(this.state.value);
         }),
-        (Le.prototype.componentDidUpdate = function() {
+        (Ee.prototype.componentDidUpdate = function() {
             this.setHiddenValue(this.state.value);
         }),
-        (Le.prototype.render = function() {
+        (Ee.prototype.render = function() {
             var e = this.props.options;
             return D(ye, {
                 label: e.label,
@@ -1967,8 +1968,6 @@
                 containerStyle: e.containerStyle,
                 allowClear: e.allowClear,
                 placeholder: e.placeholder,
-                itemId: e.itemId,
-                itemLabel: e.itemLabel,
                 valueContent: e.valueContent,
                 resultContent: e.resultContent,
                 query: e.query,
@@ -1982,15 +1981,15 @@
                 onChange: this.onChange
             });
         }),
-        (Le.prototype.setHiddenValue = function(e) {
+        (Ee.prototype.setHiddenValue = function(e) {
             var t = this.props,
                 n = t.element,
                 o = t.options;
             n.value = o.hiddenValue(e, o);
         }),
-        Le);
-    function Le(e) {
-        var t = Ie.call(this, e) || this;
+        Ee);
+    function Ee(e) {
+        var t = xe.call(this, e) || this;
         return (
             (t.onChange = function(e) {
                 t.setState({ value: e }), t.setHiddenValue(e), Se(t.props.element, e);
@@ -1999,7 +1998,7 @@
             t
         );
     }
-    var Ee = {
+    var Le = {
         create: function(e, t) {
             var n = we.getStore(e);
             if (
@@ -2067,7 +2066,7 @@
                 a = document.createElement('div');
             s.insertBefore(a, e),
                 n.set(be.targetElement, a),
-                t.multiple ? f(D(ke, { element: e, options: t }), s, a) : f(D(xe, { element: e, options: t }), s, a);
+                t.multiple ? f(D(ke, { element: e, options: t }), s, a) : f(D(Ie, { element: e, options: t }), s, a);
         },
         destroy: function(e) {
             if (we.hasStore(e)) {
@@ -2077,6 +2076,6 @@
             }
         }
     };
-    (window.select25 = Ee), (e.select25 = Ee), Object.defineProperty(e, '__esModule', { value: !0 });
+    (window.select25 = Le), (e.select25 = Le), Object.defineProperty(e, '__esModule', { value: !0 });
 });
 //# sourceMappingURL=select25.js.map

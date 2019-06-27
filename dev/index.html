@@ -57,6 +57,11 @@
 
 </body>
 <script>
+
+    function countryToDataItem(c) {
+        return {id:c.code, text:c.name};
+    }
+
     var query = (function () {
         // local implementation of query that simulates network delay
         var countries = window.select2countries;
@@ -93,7 +98,7 @@
                     previousTimeout = undefined;
                     previousReject = undefined;
                     resolve({
-                        values: results,
+                        values: results.map(countryToDataItem),
                         more: results.length >= limit,
                         token: token
                     });
@@ -106,17 +111,14 @@
         console.log("onchange fired on countries1", event);
     })
 
-    window.select25.create(
+    window.select25.createMultiSelect(
         document.getElementById('countries1'), {
             valuesLabel: "Selected Countries",
             comboboxLabel: "Add Country",
-            itemId: 'code',
-            itemLabel: 'name',
             minimumCharacters: 2,
-            multiple: true,
             query: query,
             quiet: 100,
-            values: [window.select2countries[0], window.select2countries[1], window.select2countries[1]],
+            values: [window.select2countries[0], window.select2countries[1], window.select2countries[1]].map(countryToDataItem),
         },
     );
 
@@ -124,23 +126,20 @@
         window.select25.destroy(document.getElementById("countries1"));
     });
 
-    window.select25.create(
+    window.select25.createSingleSelect(
         document.getElementById('countries2'), {
             allowClear: true,
             placeholder: "Select Country",
-            itemId: 'code',
-            itemLabel: 'name',
             minimumCharacters: 2,
             query: query,
             quiet: 100,
 
-            value: window.select2countries[0]
+            value: countryToDataItem(window.select2countries[0])
         },
     );
 
-    window.select25.create(
+    window.select25.createMultiSelect(
         document.getElementById("colors"), {
-            multiple: true,
             minimumCharacters: 0,
             data: function (params) {
                 var term = params.term ? params.term.trim() : "";

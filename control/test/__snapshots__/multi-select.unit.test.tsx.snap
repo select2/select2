@@ -35,14 +35,14 @@ exports[`MultiSelect renders with values 1`] = `
       <div class="s25-multi-values" tabIndex="0"
       role="listbox" aria-orientation="vertical" aria-multiselectable="true"
       aria-label="Selected Values" aria-describedby="s25-1-instructions">
-        <div id="s25-1-vl-0" class="s25-item" role="option" aria-label="undefined">
+        <div id="s25-1-vl-0" class="s25-item" role="option" aria-label="United States">
           <div class="s25-content">
-            <MarkupRenderer markup="undefined"></MarkupRenderer>
+            <MarkupRenderer markup="United States"></MarkupRenderer>
           </div>
         </div>
-        <div id="s25-1-vl-1" class="s25-item" role="option" aria-label="undefined">
+        <div id="s25-1-vl-1" class="s25-item" role="option" aria-label="Mexico">
           <div class="s25-content">
-            <MarkupRenderer markup="undefined"></MarkupRenderer>
+            <MarkupRenderer markup="Mexico"></MarkupRenderer>
           </div>
         </div>
       </div>

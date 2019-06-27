@@ -9,13 +9,11 @@ describe('MultiSelect', () => {
     it('renders with empty values', () => {
         const tree = shallow(
             <MultiSelect
-                itemId='id'
-                itemLabel='text'
                 valuesLabel='Selected Values'
                 comboboxLabel='Add Value'
                 values={[]}
                 query={query}
-                onChange={() => {
+                onChange={values => {
                     /* noop */
                 }}
             />
@@ -26,13 +24,11 @@ describe('MultiSelect', () => {
     it('renders with values', () => {
         const tree = shallow(
             <MultiSelect
-                itemId='id'
-                itemLabel='text'
                 valuesLabel='Selected Values'
                 comboboxLabel='Add Value'
                 values={[countries[0], countries[1]]}
                 query={query}
-                onChange={() => {
+                onChange={values => {
                     /* noop */
                 }}
             />

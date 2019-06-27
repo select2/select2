@@ -6,12 +6,17 @@ const forceImportOfH = h;
 
 type ToString = (item: any) => string;
 
-export type ItemRenderer = (string) | ((item: any, h: typeof createElement) => ComponentChild);
+export type DataItemRenderer = (string) | ((item: any, h: typeof createElement) => ComponentChild);
 
 export type QueryFunction = (search: string, page: number, token: string) => Promise<QueryResult>;
 
+export interface DataItem {
+    id: any;
+    text: string;
+}
+
 export interface QueryResult {
-    values: any[];
+    values: DataItem[];
     more: boolean;
     token: string;
 }
@@ -38,10 +43,8 @@ export interface Props {
     containerStyle?: string;
     containerClass?: string;
     tabIndex?: number;
-    itemId: ToString | string;
-    itemLabel: ToString | string;
-    valueContent?: ItemRenderer;
-    resultContent?: ItemRenderer;
+    valueContent?: DataItemRenderer;
+    resultContent?: DataItemRenderer;
 
     query: QueryFunction;
     quiet?: number;
@@ -57,8 +60,6 @@ function MarkupRenderer({ markup }) {
 
 export const DEFAULT_PROPS: Partial<Props> = {
     allowDuplicates: false,
-    itemId: 'id',
-    itemLabel: 'text',
     minimumCharacters: 0,
     quiet: 50,
     tabIndex: 0
@@ -91,34 +92,25 @@ export abstract class AbstractSelect<P extends Props, S extends State> extends C
         };
     }
 
-    public getItemId = (item: any): string => {
-        const id = this.props.itemId;
-        if (typeof id === 'function') {
-            return (id as ToString)(item);
-        } else {
-            return '' + item[id];
-        }
+    public getItemId = (item: DataItem): string => {
+        return item.id;
     };
 
-    public getItemLabel = (item: any): string => {
-        const label = this.props.itemLabel;
-        if (typeof label === 'function') {
-            return (label as ToString)(item);
-        } else {
-            return '' + item[label];
-        }
+    public getItemLabel = (item: DataItem): string => {
+        const label = item.text;
+        return item.text;
     };
 
-    public renderValue = (item: any): ComponentChild => {
+    public renderValue = (item: DataItem): ComponentChild => {
         return this.renderItem(item, 'valueContent');
     };
 
-    public renderResult = (item: any): ComponentChild => {
+    public renderResult = (item: DataItem): ComponentChild => {
         return this.renderItem(item, 'resultContent');
     };
 
-    private renderItem = (item: any, rendererName: keyof Props): ComponentChild => {
-        const renderer = this.props[rendererName] as ItemRenderer;
+    private renderItem = (item: DataItem, rendererName: (keyof Props) & DataItemRenderer): ComponentChild => {
+        const renderer = this.props[rendererName] as DataItemRenderer;
         if (renderer) {
             if (typeof renderer === 'function') {
                 const render = renderer(item, createElement);

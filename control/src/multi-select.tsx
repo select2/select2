@@ -1,6 +1,7 @@
 import { createRef, Fragment, h, RefObject } from 'preact';
 import {
     AbstractSelect,
+    DataItem,
     DEFAULT_PROPS as ABSTRACT_DEFAULT_PROPS,
     Props as SearchControllerProps,
     State as AbstractSelectState
@@ -17,8 +18,8 @@ const forceImportOfH = h;
 export interface Props extends SearchControllerProps {
     valuesLabel: string;
     comboboxLabel: string;
-    values: any[];
-    onChange: (values: any[]) => void;
+    values: DataItem[];
+    onChange: (values: DataItem[]) => void;
 }
 
 interface ValueListState {
@@ -115,7 +116,7 @@ export class MultiSelect extends AbstractSelect<Props, State> {
                                         onBlur={this.onValuesBlur}
                                         onKeyDown={this.onValuesKeyDown}
                                     >
-                                        {values.map((value: any, index: number) => {
+                                        {values.map((value: DataItem, index: number) => {
                                             const isSelected = selected[index];
                                             const isActive = active === index;
                                             const css = cn(style.item, {
