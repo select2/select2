@@ -166,7 +166,7 @@ export class MultiSelect extends AbstractSelect<Props, State> {
                             );
                         })}
                         <label htmlFor={undefined} className={style.offscreen}>
-                            {props.comboboxLabel}
+                            {comboboxLabel}
                         </label>
                         <input
                             type='text'

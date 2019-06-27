@@ -7,7 +7,7 @@ import '../../control/src/select25.scss';
 import { SingleSelect } from '../../control/src/single-select';
 import { extend } from '../../control/src/util';
 import { Ajax, createQueryFromAjax } from './ajax';
-import { DataFunction, createQueryFromData } from './data';
+import { createQueryFromData, DataFunction } from './data';
 import { Store } from './store';
 
 const forceImportOfH = h;
@@ -224,21 +224,21 @@ function create<T>(element: HTMLInputElement, options: Options) {
         options.tabIndex = element.tabIndex;
     }
 
-    if (element.getAttribute('s25-style')) {
+    if (element.getAttribute('data-s25-container-style')) {
         let style = options.containerStyle || '';
         if (style.length > 0) {
             style += ';';
         }
-        style += element.getAttribute('s25-style');
+        style += element.getAttribute('data-s25-container-style');
         options.containerStyle = style;
     }
 
-    if (element.getAttribute('s25-class')) {
+    if (element.getAttribute('data-s25-container-class')) {
         let clazz = options.containerClass || '';
         if (clazz.length > 0) {
             clazz += ' ';
         }
-        clazz += element.getAttribute('s25-class');
+        clazz += element.getAttribute('data-s25-container-class');
         options.containerClass = clazz;
     }
 

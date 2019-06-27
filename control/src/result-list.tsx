@@ -59,7 +59,6 @@ export class ResultList extends Component<Props> {
                     onScroll={this.onScroll}
                     class={style.searchResults}
                     aria-busy={props.loading}
-                    style={{ maxHeight: '175px' }}
                 >
                     {props.loading && (
                         <div class={cn(style.searchResultsLoading, style.searchResultsMessage)}>

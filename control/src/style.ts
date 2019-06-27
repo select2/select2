@@ -27,5 +27,6 @@ export const enum style {
     searchResultsMinimumError = 's25-search-results-minimum-error',
     hiddenAccessible = 's25-hidden-accessible',
     hidden = 's25-hidden',
-    placeholder = 's25-placeholder'
+    placeholder = 's25-placeholder',
+    scroll = 's25-scroll'
 }
