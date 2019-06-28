@@ -207,7 +207,7 @@ function createSingleSelect(element: HTMLInputElement, options: SingleSelectOpti
 }
 
 function createMultiSelect(element: HTMLInputElement, options: SingleSelectOptions) {
-    options = extend({}, DEFAULT_SINGLE_SELECT_OPTIONS, options);
+    options = extend({}, DEFAULT_MULTI_SELECT_OPTIONS, options);
     fillBaseOptions(element, options);
 
     const store = Store.getStore(element);
