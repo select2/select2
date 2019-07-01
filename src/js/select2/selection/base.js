@@ -81,10 +81,8 @@ define([
       self.$selection.removeAttr('aria-activedescendant');
       self.$selection.removeAttr('aria-owns');
 
-      window.setTimeout(function () {
-        self.$selection.focus();
-      }, 0);
-    
+      self.$selection[0].focus();
+
       self._detachCloseHandler(container);
     });
 
