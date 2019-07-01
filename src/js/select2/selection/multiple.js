@@ -27,6 +27,10 @@ define([
     MultipleSelection.__super__.bind.apply(this, arguments);
 
     this.$selection.on('click', function (evt) {
+      // Do not close the dropdown when input element is clicked
+      if (evt.target.tagName === 'INPUT' && self.container.isOpen()) {
+        return;
+      }
       self.trigger('toggle', {
         originalEvent: evt
       });
