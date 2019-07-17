@@ -65,7 +65,7 @@ export class MultiSelect extends AbstractSelect<Props, State> {
     }
 
     public render(props, state) {
-        const { values, tabIndex, minimumCharacters, valuesLabel, comboboxLabel } = props;
+        const { values, tabIndex, minimumCharacters, valuesLabel, comboboxLabel, placeholder } = props;
         const {
             open,
             loading,
@@ -186,6 +186,7 @@ export class MultiSelect extends AbstractSelect<Props, State> {
                             onInput={this.onSearchInput}
                             onKeyDown={this.onSearchKeyDown}
                             onFocus={this.onSearchFocus}
+                            placeholder={placeholder}
                         />
                         <div className={cn(style.toggle)} aria-hidden={true} tabIndex={-1} onClick={this.onToggleClick}>
                             <Toggle height={20} width={20} />

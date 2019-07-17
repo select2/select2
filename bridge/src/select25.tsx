@@ -19,6 +19,7 @@ enum StoreKeys {
 interface BaseSelectOptions {
     containerStyle?: string;
     containerClass?: string;
+    placeholder?: string;
     tabIndex?: number;
     valueContent?: DataItemRenderer;
     resultContent?: DataItemRenderer;
@@ -44,7 +45,6 @@ interface SingleSelectOptions extends BaseSelectOptions {
     label?: string;
     value: DataItem;
     allowClear?: boolean;
-    placeholder?: string;
 }
 
 const BASE_DEFAULT_OPTIONS = {
@@ -107,6 +107,7 @@ class MultiSelectWrapper extends Component<
             <MultiSelect
                 containerClass={opts.containerClass}
                 containerStyle={opts.containerStyle}
+                placeholder={opts.placeholder}
                 valuesLabel={opts.valuesLabel}
                 comboboxLabel={opts.comboboxLabel}
                 valueContent={opts.valueContent}
