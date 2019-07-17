@@ -188,7 +188,13 @@ export class MultiSelect extends AbstractSelect<Props, State> {
                             onFocus={this.onSearchFocus}
                             placeholder={placeholder}
                         />
-                        <div className={cn(style.toggle)} aria-hidden={true} tabIndex={-1} onClick={this.onToggleClick}>
+                        <div
+                            className={cn(style.toggle)}
+                            aria-hidden={true}
+                            tabIndex={-1}
+                            onClick={this.onToggleClick}
+                            title={dictionary.expandButtonTitle()}
+                        >
                             <Toggle height={20} width={20} />
                         </div>
                     </div>

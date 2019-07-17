@@ -17,7 +17,7 @@ exports[`MultiSelect renders with empty values 1`] = `
       <input type="text" value class="s25-search" role="combobox"
       aria-label="Add Value" aria-autocomplete="list" aria-haspopup="true" aria-owns="s25-0-results"
       aria-controls="s25-0-results" aria-expanded="false" />
-      <div class="s25-toggle" aria-hidden tabIndex="-1">
+      <div class="s25-toggle" aria-hidden tabIndex="-1" title="Expand">
         <Toggle height="20" width="20"></Toggle>
       </div>
     </div>
@@ -55,7 +55,7 @@ exports[`MultiSelect renders with values 1`] = `
       <input type="text" value class="s25-search" role="combobox"
       aria-label="Add Value" aria-autocomplete="list" aria-haspopup="true" aria-owns="s25-1-results"
       aria-controls="s25-1-results" aria-expanded="false" />
-      <div class="s25-toggle" aria-hidden tabIndex="-1">
+      <div class="s25-toggle" aria-hidden tabIndex="-1" title="Expand">
         <Toggle height="20" width="20"></Toggle>
       </div>
     </div>

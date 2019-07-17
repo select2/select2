@@ -128,7 +128,7 @@ export class SingleSelect extends AbstractSelect<Props, State> {
                                 </button>
                             );
                         })}
-                        <div className={style.toggle} aria-hidden={true}>
+                        <div className={style.toggle} aria-hidden={true} title={dictionary.expandButtonTitle()}>
                             <Toggle height={20} width={20} />
                         </div>
                     </div>

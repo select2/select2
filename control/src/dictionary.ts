@@ -1,3 +1,4 @@
+// TODO make it so keys can be strings in addition to functions
 export interface Dictionary {
     valueAdded(itemLabel: string): string;
     noSearchResults(): string;
@@ -6,6 +7,7 @@ export interface Dictionary {
     clearButtonTitle(): string;
     minimumCharactersMessage(len: number, min: number): string;
     multiSelectInstructions(): string;
+    expandButtonTitle(): string;
 }
 
 const EN_US: Dictionary = {
@@ -36,6 +38,10 @@ const EN_US: Dictionary = {
 
     multiSelectInstructions(): string {
         return "Items can be removed from this list box by selecting them and activating 'Remove selected values' button. Items can be added by selecting them in the adjacent combobox.";
+    },
+
+    expandButtonTitle(): string {
+        return 'Expand';
     }
 };
 
