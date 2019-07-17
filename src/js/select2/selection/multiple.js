@@ -14,8 +14,14 @@ define([
 
     $selection.addClass('select2-selection--multiple');
 
+    var id = function () {
+      return Math.random().toString(36).substr(2, 9);
+    };
+
     $selection.html(
-      '<ul class="select2-selection__rendered"></ul>'
+      '<ul class="select2-selection__rendered"' +
+      'id="select2-selection__'+ id() +'">' +
+      '</ul>'
     );
 
     return $selection;
@@ -106,6 +112,6 @@ define([
 
     Utils.appendMany($rendered, $selections);
   };
-
+  
   return MultipleSelection;
 });

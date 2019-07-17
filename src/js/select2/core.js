@@ -87,6 +87,9 @@ define([
 
     // Ensure backwards compatibility with $element.data('select2').
     $element.data('select2', this);
+
+    var id = $container.find('.select2-selection__rendered').attr('id');
+    $container.find('.select2-search__field').attr('aria-labelledby', id);
   };
 
   Utils.Extend(Select2, Utils.Observable);
