@@ -346,23 +346,32 @@ export class MultiSelect extends AbstractSelect<Props, State> {
     };
 
     public onSearchKeyDown = (event: KeyboardEvent) => {
-        if (this.handleResultNavigationKeyDown(event)) {
-            return;
-        }
-
         const { open } = this.state;
 
-        if (open && this.hasSearchResults) {
+        if (open) {
+            if (this.handleResultNavigationKeyDown(event)) {
+                return;
+            }
+            if (this.hasSearchResults) {
+                switch (event.key) {
+                    case Key.Enter:
+                        this.selectActiveResult();
+                        event.preventDefault();
+                        break;
+                    case Key.Escape:
+                        if (open) {
+                            this.close();
+                        }
+                        event.preventDefault();
+                        break;
+                }
+            }
+        } else {
             switch (event.key) {
+                case Key.ArrowDown:
+                case Key.Down:
                 case Key.Enter:
-                    this.selectActiveResult();
-                    event.preventDefault();
-                    break;
-                case Key.Escape:
-                    if (open) {
-                        this.close();
-                    }
-                    event.preventDefault();
+                    this.search('', this.props.values, { open: true });
                     break;
             }
         }
