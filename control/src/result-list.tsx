@@ -98,7 +98,7 @@ export class ResultList extends Component<Props> {
                                         onClick={this.onResultClicked(result)}
                                         onMouseMove={this.onMouseMove(index)}
                                         aria-posinset={index + 1}
-                                        aria-setsize={showLoadMoreResults ? results.length + 1 : results}
+                                        aria-setsize={showLoadMoreResults ? results.length + 1 : results.length}
                                         aria-selected={active}
                                         aria-label={label}
                                     >
