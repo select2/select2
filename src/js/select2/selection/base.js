@@ -82,7 +82,7 @@ define([
       self.$selection.removeAttr('aria-owns');
 
       window.setTimeout(function () {
-        self.$selection.focus();
+        self.$selection.trigger('focus');
       }, 0);
     
       self._detachCloseHandler(container);
