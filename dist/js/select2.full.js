@@ -6411,7 +6411,7 @@ S2.define('select2/selection/stopPropagation',[
             deltaY = 0;
         }
 
-        // Set delta to be deltaY or deltaX if deltaY is 0 for backwards compatabilitiy
+        // Set delta to be deltaY or deltaX if deltaY is 0 for backwards compatibility
         delta = deltaY === 0 ? deltaX : deltaY;
 
         // New school wheel delta (wheel event)
