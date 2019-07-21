@@ -125,3 +125,28 @@ test('triggers when >= 1 selection' , function (assert) {
     assert.ok(false, 'The results should not be queried');
   });
 });
+
+test('triggers after selection' , function (assert) {
+  assert.expect(1);
+
+  var $select = $('#qunit-fixture .multiple');
+
+  var maxOfOneOptions = new Options({
+    maximumSelectionLength: 1
+  });
+
+  var container = new MockContainer();
+  var data = new MaximumSelectionData($select, maxOfOneOptions);
+
+  data.bind(container, null);
+
+  data.on('results:message', function () {
+    assert.ok(true, 'The message should be displayed');
+  });
+
+  $select.val(['One']);
+
+  container.trigger('select', {
+    data: {}
+  });
+});
