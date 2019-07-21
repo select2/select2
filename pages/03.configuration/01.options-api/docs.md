@@ -1,10 +1,10 @@
 ---
-title: Configuration API
+title: Options
 taxonomy:
     category: docs
 ---
 
-The following is an attempt to provide a comprehensive list of all configuration options available in Select2.
+This is a list of all the Select 2 configuration options.
 
 | Option | Type | Default | Description | 
 | ------ | ---- | ------- | ----------- |
@@ -15,7 +15,7 @@ The following is an attempt to provide a comprehensive list of all configuration
 | `amdBase` | string | `./` | See [Using Select2 with AMD or CommonJS loaders](/builds-and-modules#using-select2-with-amd-or-commonjs-loaders). |
 | `amdLanguageBase` | string | `./i18n/` | See [Using Select2 with AMD or CommonJS loaders](/builds-and-modules#using-select2-with-amd-or-commonjs-loaders). |
 | `closeOnSelect` | boolean | `true` | Controls whether the dropdown is [closed after a selection is made](/dropdown#forcing-the-dropdown-to-remain-open-after-selection). |
-| `containerCss` | | | |
+| `containerCss` | object | null | Adds custom CSS to the container. Expects key-value pairs: `{ 'css-property': 'value' }` |
 | `containerCssClass` | string | `''` | |
 | `data` | array of objects | `null` | Allows rendering dropdown options from an [array](/data-sources/arrays). |
 | `dataAdapter` | | `SelectAdapter` | Used to override the built-in [DataAdapter](/advanced/default-adapters/data). |
@@ -24,7 +24,7 @@ The following is an attempt to provide a comprehensive list of all configuration
 | `disabled` | boolean | `false` | When set to `true`, the select control will be disabled. |
 | `dropdownAdapter` | | `DropdownAdapter` | Used to override the built-in [DropdownAdapter](/advanced/default-adapters/dropdown) |
 | `dropdownAutoWidth` | boolean | `false` | |
-| `dropdownCss` | | | |
+| `dropdownCss` | object | null | Adds custom CSS to the dropdown. Expects key-value pairs: `{ 'css-property': 'value' }` |
 | `dropdownCssClass` | string | `''` | |
 | `dropdownParent` | jQuery selector or DOM node | `$(document.body)` | Allows you to [customize placement](/dropdown#dropdown-placement) of the dropdown. |
 | `escapeMarkup` | callback | `Utils.escapeMarkup` | Handles [automatic escaping of content rendered by custom templates](/dropdown#built-in-escaping). |
@@ -49,3 +49,4 @@ The following is an attempt to provide a comprehensive list of all configuration
 | `tokenizer` | callback | | A callback that handles [automatic tokenization of free-text entry](/tagging#automatic-tokenization-into-tags). |
 | `tokenSeparators` | array | `[]` | The list of characters that should be used as token separators. |
 | `width` | string | `resolve` | Supports [customization of the container width](/appearance#container-width). |
+| `scrollAfterSelect` | boolean | `false` | If `true`, resolves issue for multiselects using `closeOnSelect: false` that caused the list of results to scroll to the first selection after each select/unselect (see https://github.com/select2/select2/pull/5150). This behaviour was intentional to deal with infinite scroll UI issues (if you need this behavior, set `false`) but it created an issue with multiselect dropdown boxes of fixed length. This pull request adds a configurable option to toggle between these two desirable behaviours. |

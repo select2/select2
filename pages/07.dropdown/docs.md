@@ -92,6 +92,22 @@ $('#mySelect2').select2({
 
 This is useful when attempting to render Select2 correctly inside of modals and other small containers.  If you're having trouble using the search box inside a Bootstrap modal, for example, trying setting the `dropdownParent` option to the modal element.
 
+If you are rendering a Select2 inside of a modal (Bootstrap 3.x) that has not yet been rendered or opened, you may need to bind to the `shown.bs.modal` event:
+
+```
+$('body').on('shown.bs.modal', '.modal', function() {
+  $(this).find('select').each(function() {
+    var dropdownParent = $(document.body);
+    if ($(this).parents('.modal.in:first').length !== 0)
+      dropdownParent = $(this).parents('.modal.in:first');
+    $(this).select2({
+      dropdownParent: dropdownParent
+      // ...
+    });
+  });
+});
+```
+
 If you run into positioning issues while using the default `body` attachment, you may find it helpful to use your browser console to inspect the values of:
 
 - `document.body.style.position`

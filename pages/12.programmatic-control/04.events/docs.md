@@ -23,6 +23,8 @@ Select2 will trigger a few different events when different actions are taken usi
 | `select2:select` | Triggered whenever a result is selected. `select2:selecting` is fired before this and can be prevented. |
 | `select2:unselecting` | Triggered before a selection is removed. This event can be prevented. |
 | `select2:unselect` | Triggered whenever a selection is removed. `select2:unselecting` is fired before this and can be prevented. |
+| `select2:clearing` | Triggered before all selections are cleared. This event can be prevented. |
+| `select2:clear` | Triggered whenever all selections are cleared. `select2:clearing` is fired before this and can be prevented. |
 
 ## Listening for events
 

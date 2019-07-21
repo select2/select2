@@ -37,7 +37,7 @@ You can configure how Select2 searches for remote data using the `ajax` option. 
 
 ## Request parameters
 
-Select2 will issue a request to the specified URL when the user opens the control (unless there is a `minimumInputLength` set), and again every time the user types in the search box.  By default, it will send the following as query string parameters:
+Select2 will issue a request to the specified URL when the user opens the control (unless there is a `minimumInputLength` set as a Select2 option), and again every time the user types in the search box.  By default, it will send the following as query string parameters:
 
 - `term` : The current search term in the search box.
 - `q`    : Contains the same contents as `term`.
@@ -74,7 +74,7 @@ $('#mySelect2').select2({
   ajax: {
     url: '/example/api',
     processResults: function (data) {
-      // Tranforms the top-level key of the response object from 'items' to 'results'
+      // Transforms the top-level key of the response object from 'items' to 'results'
       return {
         results: data.items
       };
@@ -309,7 +309,6 @@ $(".js-example-data-ajax").select2({
     cache: true
   },
   placeholder: 'Search for a repository',
-  escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
   minimumInputLength: 1,
   templateResult: formatRepo,
   templateSelection: formatRepoSelection
@@ -320,23 +319,28 @@ function formatRepo (repo) {
     return repo.text;
   }
 
-  var markup = "<div class='select2-result-repository clearfix'>" +
-    "<div class='select2-result-repository__avatar'><img src='" + repo.owner.avatar_url + "' /></div>" +
-    "<div class='select2-result-repository__meta'>" +
-      "<div class='select2-result-repository__title'>" + repo.full_name + "</div>";
+  var $container = $(
+    "<div class='select2-result-repository clearfix'>" +
+      "<div class='select2-result-repository__avatar'><img src='" + repo.owner.avatar_url + "' /></div>" +
+      "<div class='select2-result-repository__meta'>" +
+        "<div class='select2-result-repository__title'></div>" +
+        "<div class='select2-result-repository__description'></div>" +
+        "<div class='select2-result-repository__statistics'>" +
+          "<div class='select2-result-repository__forks'><i class='fa fa-flash'></i> </div>" +
+          "<div class='select2-result-repository__stargazers'><i class='fa fa-star'></i> </div>" +
+          "<div class='select2-result-repository__watchers'><i class='fa fa-eye'></i> </div>" +
+        "</div>" +
+      "</div>" +
+    "</div>"
+  );
 
-  if (repo.description) {
-    markup += "<div class='select2-result-repository__description'>" + repo.description + "</div>";
-  }
+  $container.find(".select2-result-repository__title").text(repo.full_name);
+  $container.find(".select2-result-repository__description").text(repo.description);
+  $container.find(".select2-result-repository__forks").append(repo.forks_count + " Forks");
+  $container.find(".select2-result-repository__stargazers").append(repo.stargazers_count + " Stars");
+  $container.find(".select2-result-repository__watchers").append(repo.watchers_count + " Watchers");
 
-  markup += "<div class='select2-result-repository__statistics'>" +
-    "<div class='select2-result-repository__forks'><i class='fa fa-flash'></i> " + repo.forks_count + " Forks</div>" +
-    "<div class='select2-result-repository__stargazers'><i class='fa fa-star'></i> " + repo.stargazers_count + " Stars</div>" +
-    "<div class='select2-result-repository__watchers'><i class='fa fa-eye'></i> " + repo.watchers_count + " Watchers</div>" +
-  "</div>" +
-  "</div></div>";
-
-  return markup;
+  return $container;
 }
 
 function formatRepoSelection (repo) {
