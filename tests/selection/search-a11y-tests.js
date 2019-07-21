@@ -9,6 +9,26 @@ var Utils = require('select2/utils');
 var Options = require('select2/options');
 var options = new Options({});
 
+test('role attribute is set to searchbox', function (assert) {
+  var $select = $('#qunit-fixture .multiple');
+
+  var CustomSelection = Utils.Decorate(MultipleSelection, InlineSearch);
+  var selection = new CustomSelection($select, options);
+  var $selection = selection.render();
+
+  var container = new MockContainer();
+  selection.bind(container, $('<span></span>'));
+
+  // Update the selection so the search is rendered
+  selection.update([]);
+
+  assert.equal(
+    $selection.find('input').attr('role'),
+    'searchbox',
+    'The search box is marked as a search box'
+  );
+});
+
 test('aria-autocomplete attribute is present', function (assert) {
   var $select = $('#qunit-fixture .multiple');
 

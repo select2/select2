@@ -13,6 +13,22 @@ var $ = require('jquery');
 var Options = require('select2/options');
 var options = new Options({});
 
+test('role attribute is set to searchbox', function (assert) {
+  var $select = $('#qunit-fixture .single');
+
+  var dropdown = new DropdownSearch($select, options);
+  var $dropdown = dropdown.render();
+
+  var container = new MockContainer();
+  dropdown.bind(container, $('<span></span>'));
+
+  assert.equal(
+    $dropdown.find('input').attr('role'),
+    'searchbox',
+    'The search box is marked as a search box'
+  );
+});
+
 test('aria-autocomplete attribute is present', function (assert) {
   var $select = $('#qunit-fixture .single');
 
