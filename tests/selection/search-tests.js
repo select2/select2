@@ -275,3 +275,31 @@ test('search box with text should not close dropdown', function (assert) {
   $search.val('test');
   $search.trigger('click');
 });
+
+test('search box should be cleared after select', function (assert) {
+  assert.expect(1);
+
+  var $container = $('#qunit-fixture .event-container');
+  var container = new MockContainer();
+
+  var CustomSelection = Utils.Decorate(MultipleSelection, InlineSearch);
+
+  var $element = $('#qunit-fixture .multiple');
+  var selection = new CustomSelection($element, options);
+
+  var $selection = selection.render();
+  selection.bind(container, $container);
+
+  // Update the selection so the search is rendered
+  selection.update([]);
+
+  // Make it visible so the browser can place focus on the search
+  $container.append($selection);
+
+  var $search = $selection.find('input');
+  $search.val('test');
+
+  container.trigger('select', {});
+
+  assert.equal($search.val(), '', 'The search text should be empty');
+});
