@@ -55,6 +55,10 @@ define([
       self.$search.trigger('focus');
     });
 
+    container.on('select', function () {
+      self.$search.val('');
+    });
+
     container.on('results:focus', function (params) {
       self.$search.attr('aria-activedescendant', params.id);
     });
