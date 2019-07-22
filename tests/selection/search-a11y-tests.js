@@ -148,7 +148,7 @@ test('aria-activedescendant should be removed when closed', function (assert) {
   );
 });
 
-test('aria-owns should not be set initiailly', function (assert) {
+test('aria-controls should not be set initiailly', function (assert) {
   var $select = $('#qunit-fixture .multiple');
 
   var CustomSelection = Utils.Decorate(MultipleSelection, InlineSearch);
@@ -164,12 +164,12 @@ test('aria-owns should not be set initiailly', function (assert) {
   var $search = $selection.find('input');
 
   assert.ok(
-    !$search.attr('aria-owns'),
+    !$search.attr('aria-controls'),
     'The search box should not point to the results when it is first rendered'
   );
 });
 
-test('aria-owns should be set when opened', function (assert) {
+test('aria-controls should be set when opened', function (assert) {
   var $select = $('#qunit-fixture .multiple');
 
   var CustomSelection = Utils.Decorate(MultipleSelection, InlineSearch);
@@ -187,12 +187,12 @@ test('aria-owns should be set when opened', function (assert) {
   container.trigger('open');
 
   assert.ok(
-    $search.attr('aria-owns'),
+    $search.attr('aria-controls'),
     'The search should point to the results when it is opened'
   );
 });
 
-test('aria-owns should be removed when closed', function (assert) {
+test('aria-controls should be removed when closed', function (assert) {
   var $select = $('#qunit-fixture .multiple');
 
   var CustomSelection = Utils.Decorate(MultipleSelection, InlineSearch);
@@ -206,12 +206,12 @@ test('aria-owns should be removed when closed', function (assert) {
   selection.update([]);
 
   var $search = $selection.find('input');
-  $search.attr('aria-owns', 'something');
+  $search.attr('aria-controls', 'something');
 
   container.trigger('close');
 
   assert.ok(
-    !$search.attr('aria-owns'),
+    !$search.attr('aria-controls'),
     'There are no results for the search box to point to when it is closed'
   );
 });

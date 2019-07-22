@@ -50,7 +50,7 @@ define([
 
     container.on('open', function () {
       self.$search.attr('tabindex', 0);
-      self.$search.attr('aria-owns', resultsId);
+      self.$search.attr('aria-controls', resultsId);
 
       self.$search.trigger('focus');
 
@@ -61,7 +61,7 @@ define([
 
     container.on('close', function () {
       self.$search.attr('tabindex', -1);
-      self.$search.removeAttr('aria-owns');
+      self.$search.removeAttr('aria-controls');
       self.$search.removeAttr('aria-activedescendant');
 
       self.$search.val('');

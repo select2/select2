@@ -34,13 +34,13 @@ define([
     decorated.call(this, container, $container);
 
     container.on('open', function () {
-      self.$search.attr('aria-owns', resultsId);
+      self.$search.attr('aria-controls', resultsId);
       self.$search.trigger('focus');
     });
 
     container.on('close', function () {
       self.$search.val('');
-      self.$search.removeAttr('aria-owns');
+      self.$search.removeAttr('aria-controls');
       self.$search.removeAttr('aria-activedescendant');
       self.$search.trigger('focus');
     });
