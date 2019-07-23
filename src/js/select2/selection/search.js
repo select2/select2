@@ -90,6 +90,12 @@ define([
       }
     });
 
+    this.$selection.on('click', '.select2-search--inline', function (evt) {
+      if (self.$search.val()) {
+        evt.stopPropagation();
+      }
+    });
+
     // Try to detect the IE version should the `documentMode` property that
     // is stored on the document. This is only implemented in IE and is
     // slightly cleaner than doing a user agent check.

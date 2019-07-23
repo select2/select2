@@ -1,202 +1,152 @@
 module('Data adapters - Maximum selection length');
 
+var SelectData = require('select2/data/select');
 var MaximumSelectionLength = require('select2/data/maximumSelectionLength');
 
 var $ = require('jquery');
 var Options = require('select2/options');
 var Utils = require('select2/utils');
 
-function MaximumSelectionStub () {
-  this.called = false;
-  this.currentData = [];
-}
-
-MaximumSelectionStub.prototype.current = function (callback) {
-  callback(this.currentData);
-};
-
-MaximumSelectionStub.prototype.val = function (val) {
-  this.currentData.push(val);
-};
-
-MaximumSelectionStub.prototype.query = function (params, callback) {
-  this.called = true;
-};
-
-var MaximumSelectionData = Utils.Decorate(
-  MaximumSelectionStub,
-  MaximumSelectionLength
-);
+var MaximumSelectionData = Utils.Decorate(SelectData, MaximumSelectionLength);
 
 test('0 never displays the notice', function (assert) {
+  assert.expect(3);
+
+  var $select = $('#qunit-fixture .multiple');
+
   var zeroOptions = new Options({
     maximumSelectionLength: 0
   });
 
-  var data = new MaximumSelectionData(null, zeroOptions);
+  var container = new MockContainer();
+  var data = new MaximumSelectionData($select, zeroOptions);
 
-  data.trigger = function () {
-    assert.ok(false, 'No events should be triggered');
-  };
+  data.bind(container, null);
+
+  data.on('results:message', function () {
+    assert.ok(false, 'The message should not be displayed');
+  });
 
   data.query({
     term: ''
+  }, function () {
+    assert.ok(true, 'The results should be queried');
   });
 
-  assert.ok(data.called);
-
-  data = new MaximumSelectionData(null, zeroOptions);
-
-  data.trigger = function () {
-    assert.ok(false, 'No events should be triggered');
-  };
-
-  data.val('1');
+  $select.val(['One']);
 
   data.query({
     term: ''
+  }, function () {
+    assert.ok(true, 'The results should be queried');
   });
 
-  assert.ok(data.called);
-
-  data = new MaximumSelectionData(null, zeroOptions);
-
-  data.trigger = function () {
-    assert.ok(false, 'No events should be triggered');
-  };
-
-  data.val('1');
-  data.val('2');
+  $select.val(['One', 'Two']);
 
   data.query({
     term: ''
+  }, function () {
+    assert.ok(true, 'The results should be queried');
   });
-
-  assert.ok(data.called);
 });
 
 test('< 0 never displays the notice', function (assert) {
+  assert.expect(3);
+
+  var $select = $('#qunit-fixture .multiple');
+
   var negativeOptions = new Options({
     maximumSelectionLength: -1
   });
 
-  var data = new MaximumSelectionData(null, negativeOptions);
+  var container = new MockContainer();
+  var data = new MaximumSelectionData($select, negativeOptions);
 
-  data.trigger = function () {
-    assert.ok(false, 'No events should be triggered');
-  };
+  data.bind(container, null);
+
+  data.on('results:message', function () {
+    assert.ok(false, 'The message should not be displayed');
+  });
 
   data.query({
     term: ''
+  }, function () {
+    assert.ok(true, 'The results should be queried');
   });
 
-  assert.ok(data.called);
-
-  data = new MaximumSelectionData(null, negativeOptions);
-
-  data.trigger = function () {
-    assert.ok(false, 'No events should be triggered');
-  };
-
-  data.val('1');
+  $select.val(['One']);
 
   data.query({
     term: ''
+  }, function () {
+    assert.ok(true, 'The results should be queried');
   });
 
-  assert.ok(data.called);
-
-  data = new MaximumSelectionData(null, negativeOptions);
-
-  data.trigger = function () {
-    assert.ok(false, 'No events should be triggered');
-  };
-
-  data.val('1');
-  data.val('2');
+  $select.val(['One', 'Two']);
 
   data.query({
     term: ''
+  }, function () {
+    assert.ok(true, 'The results should be queried');
   });
-
-  assert.ok(data.called);
 });
 
 test('triggers when >= 1 selection' , function (assert) {
+  assert.expect(2);
+
+  var $select = $('#qunit-fixture .multiple');
+
   var maxOfOneOptions = new Options({
     maximumSelectionLength: 1
   });
-  var data = new MaximumSelectionData(null, maxOfOneOptions);
 
-  data.trigger = function () {
-    assert.ok(false, 'No events should be triggered');
-  };
+  var container = new MockContainer();
+  var data = new MaximumSelectionData($select, maxOfOneOptions);
+
+  data.bind(container, null);
+
+  data.on('results:message', function () {
+    assert.ok(true, 'The message should be displayed');
+  });
+
+  $select.val(['One']);
 
   data.query({
     term: ''
+  }, function () {
+    assert.ok(false, 'The results should not be queried');
   });
 
-  assert.ok(data.called);
-
-  data = new MaximumSelectionData(null, maxOfOneOptions);
-
-  data.trigger = function () {
-    assert.ok(true, 'The event should be triggered.');
-  };
-
-  data.val('1');
+  $select.val(['One', 'Two']);
 
   data.query({
     term: ''
+  }, function () {
+    assert.ok(false, 'The results should not be queried');
   });
-
-  assert.ok(!data.called);
-
 });
 
-test('triggers when >= 2 selections' , function (assert) {
-  var maxOfTwoOptions = new Options({
-    maximumSelectionLength: 2
-  });
-  var data = new MaximumSelectionData(null, maxOfTwoOptions);
+test('triggers after selection' , function (assert) {
+  assert.expect(1);
 
-  data.trigger = function () {
-    assert.ok(false, 'No events should be triggered');
-  };
+  var $select = $('#qunit-fixture .multiple');
 
-  data.query({
-    term: ''
+  var maxOfOneOptions = new Options({
+    maximumSelectionLength: 1
   });
 
-  assert.ok(data.called);
+  var container = new MockContainer();
+  var data = new MaximumSelectionData($select, maxOfOneOptions);
 
-  data = new MaximumSelectionData(null, maxOfTwoOptions);
+  data.bind(container, null);
 
-  data.trigger = function () {
-    assert.ok(false, 'No events should be triggered');
-  };
-
-  data.val('1');
-
-  data.query({
-    term: ''
+  data.on('results:message', function () {
+    assert.ok(true, 'The message should be displayed');
   });
 
-  assert.ok(data.called);
+  $select.val(['One']);
 
-  data = new MaximumSelectionData(null, maxOfTwoOptions);
-
-  data.trigger = function () {
-    assert.ok(true, 'The event should be triggered.');
-  };
-
-  data.val('1');
-  data.val('2');
-
-  data.query({
-    term: ''
+  container.trigger('select', {
+    data: {}
   });
-
-  assert.ok(!data.called);
-
 });
