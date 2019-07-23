@@ -165,7 +165,15 @@ define([
       $offsetParent = $offsetParent.offsetParent();
     }
 
-    var parentOffset = $offsetParent.offset();
+    // As of jQuery 3.0, .offset() only works for elements that are currently
+    // in the document. In earlier versions, this would return the value below
+    // but in jQuery 3.0 this throws an error.
+    var parentOffset = {top: 0, left: 0};
+
+    // If the element is in the document we are safe to use .offset()
+    if(document.body.contains($offsetParent[0])) {
+      parentOffset = $offsetParent.offset();
+    }
 
     css.top -= parentOffset.top;
     css.left -= parentOffset.left;
