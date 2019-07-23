@@ -131,6 +131,38 @@ test('a custom tabindex is copied', function (assert) {
   );
 });
 
+test('aria-disabled should reflected disabled state', function (assert) {
+  var $select = $('#qunit-fixture .single');
+
+  var selection = new BaseSelection($select, options);
+  var $selection = selection.render();
+
+  var container = new MockContainer();
+  selection.bind(container, $('<span></span>'));
+
+  assert.equal(
+    $selection.attr('aria-disabled'),
+    'false',
+    'The tab index should match the original tab index'
+  );
+
+  container.trigger('disable');
+
+  assert.equal(
+    $selection.attr('aria-disabled'),
+    'true',
+    'The selection should be dropped out of the tab order when disabled'
+  );
+
+  container.trigger('enable');
+
+  assert.equal(
+    $selection.attr('aria-disabled'),
+    'false',
+    'The tab index should be restored when re-enabled'
+  );
+});
+
 module('Accessibility - Single');
 
 test('aria-labelledby should match the rendered container', function (assert) {
