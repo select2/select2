@@ -31,6 +31,16 @@ define([
           self._positionDropdown();
           self._resizeDropdown();
         });
+
+        container.on('select', function () {
+          self._positionDropdown();
+          self._resizeDropdown();
+        });
+
+        container.on('unselect', function () {
+          self._positionDropdown();
+          self._resizeDropdown();
+        });
       }
     });
 
