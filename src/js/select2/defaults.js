@@ -232,8 +232,6 @@ define([
       );
     }
 
-    options.language = this._resolveLanguage(options.language);
-
     // Always fall back to English since it will always be complete
     options.language.push('en');
 
@@ -339,6 +337,24 @@ define([
       theme: 'default',
       width: 'resolve'
     };
+  };
+
+  Defaults.prototype.applyFromElement = function (options, $element) {
+    var optionLanguage = options.language;
+    var defaultLanguage = this.defaults.language;
+    var elementLanguage = $element.prop('lang');
+    var parentLanguage = $element.closest('[lang]').prop('lang');
+
+    var languages = Array.prototype.concat.call(
+      this._resolveLanguage(elementLanguage),
+      this._resolveLanguage(optionLanguage),
+      this._resolveLanguage(defaultLanguage),
+      this._resolveLanguage(parentLanguage)
+    );
+
+    options.language = languages;
+
+    return options;
   };
 
   Defaults.prototype._resolveLanguage = function (language) {
