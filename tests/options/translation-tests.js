@@ -122,6 +122,45 @@ test('partial dictionaries can be combined with defaults', function (assert) {
   );
 });
 
+test('partial dictionaries can used in fallback chains', function (assert) {
+  var $element = $('<select></select>');
+
+  var options = new Options({
+    language: [
+      {
+        searching: function () {
+          return 'Something';
+        }
+      },
+      {
+        test: function () {
+          return 'Testing';
+        }
+      }
+    ]
+  }, $element);
+
+  var translations = options.get('translations');
+
+  assert.equal(
+    translations.get('searching')(),
+    'Something',
+    'The partial dictionary still overrides translations'
+  );
+
+  assert.equal(
+    translations.get('test')(),
+    'Testing',
+    'The defaults were included in the fallback chain'
+  );
+
+  assert.equal(
+    translations.get('noResults')(),
+    'No results found',
+    'You can still get English translations for keys not passed in'
+  );
+});
+
 test('language can be set via the options', function (assert) {
   var $element = $('<select></select>');
 

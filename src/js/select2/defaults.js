@@ -232,6 +232,10 @@ define([
       );
     }
 
+    // If the defaults were not previously applied from an element, it is
+    // possible for the language option to have not been resolved
+    options.language = this._resolveLanguage(options.language);
+
     // Always fall back to English since it will always be complete
     options.language.push('en');
 
@@ -383,7 +387,7 @@ define([
     for (var l = 0; l < languages.length; l++) {
       resolvedLanguages.push(languages[l]);
 
-      if (languages[l].indexOf('-') > 0) {
+      if (typeof languages[l] === 'string' && languages[l].indexOf('-') > 0) {
         // Extract the region information if it is included
         var languageParts = languages[l].split('-');
         var baseLanguage = languageParts[0];
