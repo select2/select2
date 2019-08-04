@@ -237,6 +237,18 @@ define([
     // Always fall back to English since it will always be complete
     options.language.push('en');
 
+    var uniqueLanguages = [];
+
+    for (var l = 0; l < options.language.length; l++) {
+      var language = options.language[l];
+
+      if (uniqueLanguages.indexOf(language) === -1) {
+        uniqueLanguages.push(language);
+      }
+    }
+
+    options.language = uniqueLanguages;
+
     if ($.isArray(options.language)) {
       var languages = new Translation();
 
