@@ -234,9 +234,11 @@ define([
 
     options.language = this._resolveLanguage(options.language);
 
+    // Always fall back to English since it will always be complete
+    options.language.push('en');
+
     if ($.isArray(options.language)) {
       var languages = new Translation();
-      options.language.push('en');
 
       var languageNames = options.language;
 
