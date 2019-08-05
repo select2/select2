@@ -22,6 +22,12 @@
     font-weight: bold;
     margin-top: 5px;
     margin-right: 10px;
+
+    // This padding is to account for the bottom border for the first
+    // selection row and the top border of the second selection row.
+    // Without it, selections on the first row may be offset incorrectly
+    // and appear in their own row instead of going to the second row
+    padding: 1px;
   }
 
   .select2-selection__choice {
