@@ -39,7 +39,6 @@ define([
   BaseSelection.prototype.bind = function (container, $container) {
     var self = this;
 
-    var id = container.id + '-container';
     var resultsId = container.id + '-results';
 
     this.container = container;
@@ -117,7 +116,6 @@ define([
   };
 
   BaseSelection.prototype._attachCloseHandler = function (container) {
-    var self = this;
 
     $(document.body).on('mousedown.select2.' + container.id, function (e) {
       var $target = $(e.target);
@@ -127,8 +125,6 @@ define([
       var $all = $('.select2.select2-container--open');
 
       $all.each(function () {
-        var $this = $(this);
-
         if (this == $select[0]) {
           return;
         }
