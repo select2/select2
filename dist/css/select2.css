@@ -193,7 +193,8 @@
     float: right;
     font-weight: bold;
     margin-top: 5px;
-    margin-right: 10px; }
+    margin-right: 10px;
+    padding: 1px; }
   .select2-container--default .select2-selection--multiple .select2-selection__choice {
     background-color: #e4e4e4;
     border: 1px solid #aaa;
