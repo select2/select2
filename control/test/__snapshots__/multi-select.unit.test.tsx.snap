@@ -8,7 +8,7 @@ exports[`MultiSelect renders with empty values 1`] = `
         'Remove selected values' button. Items can be added by selecting them in
         the adjacent combobox.</div>
       <button class="s25-remove s25-offscreen" disabled
-      aria-disabled title="Remove selected values">
+      aria-disabled title="Remove selected values" type="button">
         <span>
           <Remove width="20" height="20"></Remove>
         </span>
@@ -46,7 +46,8 @@ exports[`MultiSelect renders with values 1`] = `
           </div>
         </div>
       </div>
-      <button class="s25-remove" disabled aria-disabled title="Remove selected values">
+      <button class="s25-remove" disabled aria-disabled title="Remove selected values"
+      type="button">
         <span>
           <Remove width="20" height="20"></Remove>
         </span>
