@@ -1,4 +1,4 @@
-module('Selection containers - Placeholders');
+QUnit.module('Selection containers - Placeholders');
 
 var Placeholder = require('select2/selection/placeholder');
 var SingleSelection = require('select2/selection/single');
@@ -16,7 +16,7 @@ var placeholderOptions = new Options({
   }
 });
 
-test('normalizing placeholder ignores objects', function (assert) {
+QUnit.test('normalizing placeholder ignores objects', function (assert) {
   var selection = new SinglePlaceholder(
     $('#qunit-fixture .single'),
     placeholderOptions
@@ -32,7 +32,7 @@ test('normalizing placeholder ignores objects', function (assert) {
   assert.equal(original, normalized);
 });
 
-test('normalizing placeholder gives object for string', function (assert) {
+QUnit.test('normalizing placeholder gives object for string', function (assert) {
   var selection = new SinglePlaceholder(
     $('#qunit-fixture .single'),
     placeholderOptions
@@ -45,7 +45,7 @@ test('normalizing placeholder gives object for string', function (assert) {
 });
 
 
-test('text is shown for placeholder option on single', function (assert) {
+QUnit.test('text is shown for placeholder option on single', function (assert) {
   var selection = new SinglePlaceholder(
     $('#qunit-fixture .single'),
     placeholderOptions
@@ -60,7 +60,7 @@ test('text is shown for placeholder option on single', function (assert) {
   assert.equal($selection.text(), 'This is the placeholder');
 });
 
-test('placeholder is shown when no options are selected', function (assert) {
+QUnit.test('placeholder is shown when no options are selected', function (assert) {
   var selection = new SinglePlaceholder(
     $('#qunit-fixture .multiple'),
     placeholderOptions

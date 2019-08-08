@@ -1,8 +1,8 @@
-module('select2(val)');
+QUnit.module('select2(val)');
 
 var Utils = require('select2/utils');
 
-test('multiple elements with arguments works', function (assert) {
+QUnit.test('multiple elements with arguments works', function (assert) {
   var $ = require('jquery');
   require('jquery.select2');
 
@@ -31,7 +31,7 @@ test('multiple elements with arguments works', function (assert) {
   );
 });
 
-test('initializes when jQuery $.data contains' +
+QUnit.test('initializes when jQuery $.data contains' +
   ' cyclic reference', function (assert) {
   var $ = require('jquery');
   require('jquery.select2');
@@ -60,7 +60,7 @@ test('initializes when jQuery $.data contains' +
   );
 });
 
-test('$element.data returns instance and options correctly', 
+QUnit.test('$element.data returns instance and options correctly',
   function (assert) {
   var $ = require('jquery');
   require('jquery.select2');
@@ -72,10 +72,10 @@ test('$element.data returns instance and options correctly',
     '<option value="3" selected>Three</option>' +
   '</select>'
   );
-  
+
   // Initialize.
   $select.select2({maximumSelectionLength: 2, multiple: true});
-  
+
   assert.equal(
     $select.val(),
     '3',
@@ -83,15 +83,15 @@ test('$element.data returns instance and options correctly',
   );
 
   // Try to resolve instance via .data('select2').
-  var $instance = $select.data('select2'); 
+  var $instance = $select.data('select2');
   assert.ok($instance);
   assert.ok($instance.options);
 
-  // Ensure $select.data('select2') is the same instance 
-  // created by .select2()   
-  assert.equal($instance, Utils.GetData($instance.$element[0], 
+  // Ensure $select.data('select2') is the same instance
+  // created by .select2()
+  assert.equal($instance, Utils.GetData($instance.$element[0],
                'select2'));
-   
+
   // Ensure initialized property matches.
   assert.equal($instance.options.options.maximumSelectionLength,
                2);

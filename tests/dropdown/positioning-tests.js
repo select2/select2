@@ -1,6 +1,6 @@
-module('Dropdown - attachBody - positioning');
+QUnit.module('Dropdown - attachBody - positioning');
 
-test('appends to the dropdown parent', function (assert) {
+QUnit.test('appends to the dropdown parent', function (assert) {
     assert.expect(4);
 
     var $ = require('jquery');
@@ -58,7 +58,7 @@ test('appends to the dropdown parent', function (assert) {
     );
 });
 
-test('dropdown is positioned down with static margins', function (assert) {
+QUnit.test('dropdown is positioned down with static margins', function (assert) {
     var $ = require('jquery');
     var $select = $('<select></select>');
     var $parent = $('<div></div>');
@@ -118,7 +118,7 @@ test('dropdown is positioned down with static margins', function (assert) {
     );
 });
 
-test('dropdown is positioned down with absolute offsets', function (assert) {
+QUnit.test('dropdown is positioned down with absolute offsets', function (assert) {
     var $ = require('jquery');
     var $select = $('<select></select>');
     var $parent = $('<div></div>');

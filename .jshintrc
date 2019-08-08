@@ -10,10 +10,8 @@
     "define": false,
     "document": false,
     "MockContainer": false,
-    "module": false,
     "QUnit": false,
     "require": false,
-    "test": false,
     "window": false
   },
   "indent": 2,

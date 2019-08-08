@@ -1,4 +1,4 @@
-module('Selection containers - Stoping event propagation');
+QUnit.module('Selection containers - Stoping event propagation');
 
 var SingleSelection = require('select2/selection/single');
 var StopPropagation = require('select2/selection/stopPropagation');
@@ -11,7 +11,7 @@ var CutomSelection = Utils.Decorate(SingleSelection, StopPropagation);
 
 var options = new Options();
 
-test('click event does not propagate', function (assert) {
+QUnit.test('click event does not propagate', function (assert) {
   assert.expect(1);
 
   var $container = $('#qunit-fixture .event-container');

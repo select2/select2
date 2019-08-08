@@ -1,3 +1,5 @@
+QUnit.module('Options - Translations');
+
 var $ = require('jquery');
 var Options = require('select2/options');
 var Defaults = require('select2/defaults');
@@ -58,7 +60,7 @@ test(
   }
 );
 
-test('partial dictionaries can be passed', function (assert) {
+QUnit.test('partial dictionaries can be passed', function (assert) {
   var $element = $('<select></select>');
 
   var options = new Options({

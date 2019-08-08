@@ -1,9 +1,9 @@
-module('Options - Deprecated - initSelection');
+QUnit.module('Options - Deprecated - initSelection');
 
 var $ = require('jquery');
 var Options = require('select2/options');
 
-test('converted into dataAdapter.current', function (assert) {
+QUnit.test('converted into dataAdapter.current', function (assert) {
   assert.expect(5);
 
   var $test = $('<select></select>');
@@ -50,7 +50,7 @@ test('converted into dataAdapter.current', function (assert) {
   assert.ok(called, 'initSelection should have been called');
 });
 
-test('single option converted to array automatically', function (assert) {
+QUnit.test('single option converted to array automatically', function (assert) {
   assert.expect(2);
 
   var $test = $('<select></select>');
@@ -80,7 +80,7 @@ test('single option converted to array automatically', function (assert) {
   assert.ok(called, 'initSelection should have been called');
 });
 
-test('only called once', function (assert) {
+QUnit.test('only called once', function (assert) {
   assert.expect(8);
 
   var $test = $('<select><option value="3" selected>4</option></select>');
@@ -157,9 +157,9 @@ test('only called once', function (assert) {
   );
 });
 
-module('Options - Deprecated - query');
+QUnit.module('Options - Deprecated - query');
 
-test('converted into dataAdapter.query automatically', function (assert) {
+QUnit.test('converted into dataAdapter.query automatically', function (assert) {
   assert.expect(6);
 
   var $test = $('<select></select>');
@@ -217,9 +217,9 @@ test('converted into dataAdapter.query automatically', function (assert) {
   assert.ok(called, 'The query function should have been called');
 });
 
-module('Options - deprecated - data-ajax-url');
+QUnit.module('Options - deprecated - data-ajax-url');
 
-test('converted ajax-url to ajax--url automatically', function (assert) {
+QUnit.test('converted ajax-url to ajax--url automatically', function (assert) {
   var $test = $('<select data-ajax-url="test://url"></select>');
   var options = new Options({}, $test);
 
@@ -234,7 +234,7 @@ test('converted ajax-url to ajax--url automatically', function (assert) {
   );
 });
 
-test('converted select2-tags to data/tags automatically', function (assert) {
+QUnit.test('converted select2-tags to data/tags automatically', function (assert) {
   var $test = $('<select data-select2-tags="original data"></select>');
   var options = new Options({}, $test);
 

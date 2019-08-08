@@ -1,4 +1,4 @@
-module('Selection containers - Managing focus');
+QUnit.module('Selection containers - Managing focus');
 
 var SingleSelection = require('select2/selection/single');
 
@@ -7,7 +7,7 @@ var Options = require('select2/options');
 
 var options = new Options({});
 
-test('close sets the focus to the selection', function (assert) {
+QUnit.test('close sets the focus to the selection', function (assert) {
   var $container = $('#qunit-fixture .event-container');
   var container = new MockContainer();
   var selection = new SingleSelection(

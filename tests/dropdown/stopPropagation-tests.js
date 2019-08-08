@@ -1,4 +1,4 @@
-module('Dropdown - Stoping event propagation');
+QUnit.module('Dropdown - Stoping event propagation');
 
 var Dropdown = require('select2/dropdown');
 var StopPropagation = require('select2/dropdown/stopPropagation');
@@ -11,7 +11,7 @@ var CustomDropdown = Utils.Decorate(Dropdown, StopPropagation);
 
 var options = new Options();
 
-test('click event does not propagate', function (assert) {
+QUnit.test('click event does not propagate', function (assert) {
   assert.expect(1);
 
   var $container = $('#qunit-fixture .event-container');

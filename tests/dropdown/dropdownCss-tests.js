@@ -1,4 +1,4 @@
-module('Dropdown - dropdownCssClass compatibility');
+QUnit.module('Dropdown - dropdownCssClass compatibility');
 
 var $ = require('jquery');
 var Utils = require('select2/utils');
@@ -10,7 +10,7 @@ var DropdownCSS = Utils.Decorate(
   require('select2/compat/dropdownCss')
 );
 
-test('all classes will be copied if :all: is used', function (assert) {
+QUnit.test('all classes will be copied if :all: is used', function (assert) {
   var $element = $('<select class="test copy works"></select>');
   var options = new Options({
     dropdownCssClass: ':all:'
@@ -25,7 +25,7 @@ test('all classes will be copied if :all: is used', function (assert) {
   assert.ok(!$dropdown.hasClass(':all:'));
 });
 
-test(':all: can be used with other classes', function (assert) {
+QUnit.test(':all: can be used with other classes', function (assert) {
   var $element = $('<select class="test copy works"></select>');
   var options = new Options({
     dropdownCssClass: ':all: other'
@@ -41,7 +41,7 @@ test(':all: can be used with other classes', function (assert) {
   assert.ok(!$dropdown.hasClass(':all:'));
 });
 
-test('classes can be passed in as a string', function (assert) {
+QUnit.test('classes can be passed in as a string', function (assert) {
   var $element = $('<select class="test copy works"></select>');
   var options = new Options({
     dropdownCssClass: 'other'
@@ -53,7 +53,7 @@ test('classes can be passed in as a string', function (assert) {
   assert.ok($dropdown.hasClass('other'));
 });
 
-test('a function can be used based on the element', function (assert){
+QUnit.test('a function can be used based on the element', function (assert){
   var $element = $('<select class="test"></select>');
   var options = new Options({
     dropdownCssClass: function ($element) {
@@ -68,7 +68,7 @@ test('a function can be used based on the element', function (assert){
   assert.ok(!$dropdown.hasClass('test'));
 });
 
-test(':all: works around custom adapters', function (assert) {
+QUnit.test(':all: works around custom adapters', function (assert) {
   var $element = $('<select class="test"></select>');
   var options = new Options({
     dropdownCssClass: ':all: something',
@@ -86,9 +86,9 @@ test(':all: works around custom adapters', function (assert) {
   assert.ok($dropdown.hasClass('test-modified'));
 });
 
-module('Dropdown - adaptDropdownCss compatibility');
+QUnit.module('Dropdown - adaptDropdownCss compatibility');
 
-test('only return when adapted', function (assert) {
+QUnit.test('only return when adapted', function (assert) {
   var $element = $('<select class="original"></select>');
   var options = new Options({
     adaptDropdownCssClass: function (clazz) {

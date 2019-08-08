@@ -1,4 +1,4 @@
-module('Data adapters - <input> compatibility');
+QUnit.module('Data adapters - <input> compatibility');
 
 var $ = require('jquery');
 
@@ -10,7 +10,7 @@ var InputData = require('select2/compat/inputData');
 
 var InputAdapter = Utils.Decorate(ArrayData, InputData);
 
-test('test that options can be selected', function (assert) {
+QUnit.test('test that options can be selected', function (assert) {
   var options = new Options({
     data: [
       {
@@ -37,7 +37,7 @@ test('test that options can be selected', function (assert) {
   );
 });
 
-test('unselect the single selected option clears the value', function (assert) {
+QUnit.test('unselect the single selected option clears the value', function (assert) {
   var options = new Options({
     data: [
       {
@@ -65,7 +65,7 @@ test('unselect the single selected option clears the value', function (assert) {
   );
 });
 
-test('options can be unselected individually', function (assert) {
+QUnit.test('options can be unselected individually', function (assert) {
   var options = new Options({
     data: [
       {
@@ -101,7 +101,7 @@ test('options can be unselected individually', function (assert) {
   );
 });
 
-test('default values can be set', function (assert) {
+QUnit.test('default values can be set', function (assert) {
   assert.expect(4);
 
   var options = new Options({
@@ -139,7 +139,7 @@ test('default values can be set', function (assert) {
   );
 });
 
-test('no default value', function (assert) {
+QUnit.test('no default value', function (assert) {
   assert.expect(2);
 
   var options = new Options({

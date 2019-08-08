@@ -1,9 +1,9 @@
-module('Utils - RemoveData');
+QUnit.module('Utils - RemoveData');
 
 var $ = require('jquery');
 var Utils = require('select2/utils');
 
-test('The data-select2-id attribute is removed', function (assert) {
+QUnit.test('The data-select2-id attribute is removed', function (assert) {
     var $element = $('<select data-select2-id="test"></select>');
 
     Utils.RemoveData($element[0]);
@@ -15,7 +15,7 @@ test('The data-select2-id attribute is removed', function (assert) {
     );
 });
 
-test('The internal cache for the element is cleared', function (assert) {
+QUnit.test('The internal cache for the element is cleared', function (assert) {
     var $element = $('<select data-select2-id="test"></select>');
 
     Utils.__cache.test = {
@@ -27,7 +27,7 @@ test('The internal cache for the element is cleared', function (assert) {
     assert.equal(Utils.__cache.test, null, 'The cache should now be empty');
 });
 
-test('Calling it on an element without data works', function (assert) {
+QUnit.test('Calling it on an element without data works', function (assert) {
     assert.expect(0);
 
     var $element = $('<select></select>');

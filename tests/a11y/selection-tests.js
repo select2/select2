@@ -1,4 +1,4 @@
-module('Accessibility - All');
+QUnit.module('Accessibility - All');
 
 var BaseSelection = require('select2/selection/base');
 var SingleSelection = require('select2/selection/single');
@@ -9,7 +9,7 @@ var $ = require('jquery');
 var Options = require('select2/options');
 var options = new Options({});
 
-test('title is carried over from original element', function (assert) {
+QUnit.test('title is carried over from original element', function (assert) {
   var $select = $('#qunit-fixture .single');
 
   var selection = new BaseSelection($select, options);
@@ -22,32 +22,35 @@ test('title is carried over from original element', function (assert) {
   );
 });
 
-test('aria-expanded reflects the state of the container', function (assert) {
-  var $select = $('#qunit-fixture .single');
+QUnit.test(
+  'aria-expanded reflects the state of the container',
+  function (assert) {
+    var $select = $('#qunit-fixture .single');
 
-  var selection = new BaseSelection($select, options);
-  var $selection = selection.render();
+    var selection = new BaseSelection($select, options);
+    var $selection = selection.render();
 
-  var container = new MockContainer();
+    var container = new MockContainer();
 
-  selection.bind(container, $('<span></span>'));
+    selection.bind(container, $('<span></span>'));
 
-  assert.equal(
-    $selection.attr('aria-expanded'),
-    'false',
-    'The container should not be expanded when it is closed'
-  );
+    assert.equal(
+      $selection.attr('aria-expanded'),
+      'false',
+      'The container should not be expanded when it is closed'
+    );
 
-  container.trigger('open');
+    container.trigger('open');
 
-  assert.equal(
-    $selection.attr('aria-expanded'),
-    'true',
-    'The container should be expanded when it is opened'
-  );
-});
+    assert.equal(
+      $selection.attr('aria-expanded'),
+      'true',
+      'The container should be expanded when it is opened'
+    );
+  }
+);
 
-test('static aria attributes are present', function (assert) {
+QUnit.test('static aria attributes are present', function (assert) {
   var $select = $('#qunit-fixture .single');
 
   var selection = new BaseSelection($select, options);
@@ -66,7 +69,7 @@ test('static aria attributes are present', function (assert) {
   );
 });
 
-test('the container should be in the tab order', function (assert) {
+QUnit.test('the container should be in the tab order', function (assert) {
   var $select = $('#qunit-fixture .single');
 
   var selection = new BaseSelection($select, options);
@@ -98,7 +101,7 @@ test('the container should be in the tab order', function (assert) {
   );
 });
 
-test('a custom tabindex is copied', function (assert) {
+QUnit.test('a custom tabindex is copied', function (assert) {
   var $select = $('#qunit-fixture .single');
   $select.attr('tabindex', '999');
 
@@ -131,7 +134,7 @@ test('a custom tabindex is copied', function (assert) {
   );
 });
 
-test('aria-disabled should reflected disabled state', function (assert) {
+QUnit.test('aria-disabled should reflected disabled state', function (assert) {
   var $select = $('#qunit-fixture .single');
 
   var selection = new BaseSelection($select, options);
@@ -163,24 +166,27 @@ test('aria-disabled should reflected disabled state', function (assert) {
   );
 });
 
-module('Accessibility - Single');
+QUnit.module('Accessibility - Single');
 
-test('aria-labelledby should match the rendered container', function (assert) {
-  var $select = $('#qunit-fixture .single');
+QUnit.test(
+  'aria-labelledby should match the rendered container',
+  function (assert) {
+    var $select = $('#qunit-fixture .single');
 
-  var selection = new SingleSelection($select, options);
-  var $selection = selection.render();
+    var selection = new SingleSelection($select, options);
+    var $selection = selection.render();
 
-  var container = new MockContainer();
-  selection.bind(container, $('<span></span>'));
+    var container = new MockContainer();
+    selection.bind(container, $('<span></span>'));
 
-  var $rendered = $selection.find('.select2-selection__rendered');
+    var $rendered = $selection.find('.select2-selection__rendered');
 
-  assert.equal(
-    $selection.attr('aria-labelledby'),
-    $rendered.attr('id'),
-    'The rendered selection should label the container'
-  );
-});
+    assert.equal(
+      $selection.attr('aria-labelledby'),
+      $rendered.attr('id'),
+      'The rendered selection should label the container'
+    );
+  }
+);
 
-module('Accessibility - Multiple');
+QUnit.module('Accessibility - Multiple');
