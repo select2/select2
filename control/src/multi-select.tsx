@@ -76,6 +76,8 @@ export class MultiSelect extends AbstractSelect<Props, State> {
         } = state;
         const dictionary = this.dictionary;
 
+        const showPlaceholder = !values || values.length === 0;
+
         let classes = cn(style.control, style.multi, { [style.open]: open }, { [style.focused]: focused });
         if (props.containerClass && props.containerClass.length > 0) {
             classes += ' ' + props.containerClass;
@@ -187,7 +189,7 @@ export class MultiSelect extends AbstractSelect<Props, State> {
                             onInput={this.onSearchInput}
                             onKeyDown={this.onSearchKeyDown}
                             onFocus={this.onSearchFocus}
-                            placeholder={placeholder}
+                            placeholder={showPlaceholder ? placeholder : undefined}
                         />
                         <div
                             className={cn(style.toggle)}
