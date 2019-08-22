@@ -1,5 +1,34 @@
 # Change Log
 
+## 4.0.9
+
+### New features / improvements
+
+* Mirror disabled state through aria-disabled on selection (#5579)
+* Select2 now clears the internal ID when it is destroyed (#5587)
+* Set the main ARIA 1.1 roles and properties for comboboxes (#5582)
+* The `language` option now has a clearly defined fallback chain (#5602)
+
+### Bug fixes
+
+* Do not propagate click when search box is not empty (#5580)
+* Fix `maximumSelectionLength` being ignored by `closeOnSelect` (#5581)
+* Fix generated options not receiving result IDs (#5586)
+* Remove selection title attribute if text is empty (#5589)
+* Reposition dropdown whenever items are selected (#5590)
+* Fix dropdown positioning when displayed above with messages (#5592)
+* Fix search box expanding width of container (#5595)
+* `allowClear` no longer shifts selections to a new line (#5603)
+
+### Translations
+
+* Fix error in German translations (#5604)
+
+### Miscellaneous
+
+* Updated development grunt version so it no longer shows as vulnerable (#5597)
+* Remove unused variables (#5554)
+
 ## 4.0.8
 
 ### New features / improvements

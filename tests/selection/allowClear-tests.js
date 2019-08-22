@@ -4,6 +4,7 @@ var Placeholder = require('select2/selection/placeholder');
 var AllowClear = require('select2/selection/allowClear');
 
 var SingleSelection = require('select2/selection/single');
+var MultipleSelection = require('select2/selection/multiple');
 
 var $ = require('jquery');
 var Options = require('select2/options');
@@ -326,5 +327,74 @@ test('clear does not work when disabled', function (assert) {
     $element.val(),
     'One',
     'The placeholder should not have been set'
+  );
+});
+
+test('clear button doesnt visually break selected options', function (assert) {
+  var $element = $('<select></select>');
+
+  var Selection = Utils.Decorate(
+    Utils.Decorate(MultipleSelection, Placeholder),
+    AllowClear
+  );
+
+  var selection = new Selection(
+    $element,
+    allowClearOptions
+  );
+  var container = new MockContainer();
+
+  var $container = $(
+    '<span class="select2-container select2-container--default"></span>'
+  );
+  $('#qunit-fixture').append($container);
+
+  var $selection = selection.render();
+  $container.append($selection);
+  $container.css('width', '100px');
+
+  selection.bind(container, $container);
+
+  selection.update([{
+    id: '1',
+    text: '1'
+  }]);
+
+  var singleHeight = $container.height();
+
+  selection.update([
+    {
+      id: '10',
+      text: '10'
+    },
+    {
+      id: '20',
+      text: '20'
+    }
+  ]);
+
+  var doubleHeight = $container.height();
+
+  selection.update([
+    {
+      id: '1',
+      text: '1'
+    },
+    {
+      id: '2',
+      text: '2'
+    }
+  ]);
+
+  assert.notEqual(
+    singleHeight,
+    doubleHeight,
+    'The height of the two different rows should be different'
+  );
+
+  assert.equal(
+    $container.height(),
+    doubleHeight,
+    'There should be two full lines of selections'
   );
 });
