@@ -14,6 +14,8 @@ It is recommended that you declare your configuration options by [passing in an 
 </select>
 ```
 
+>>> Some options are not supported as `data-*`, for example `disabled` as it's not a Javascript option, but it's an HTML [attribute](/configuration/options-api).
+
 ## Nested (subkey) options
 
 Sometimes, you have options that are nested under a top-level option.  For example, the options under the `ajax` option:
