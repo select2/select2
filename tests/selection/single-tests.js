@@ -159,50 +159,56 @@ QUnit.test('update sets the title to the data title', function (assert) {
   );
 });
 
-QUnit.test('update should clear title for placeholder options', function (assert) {
-  var selection = new SingleSelection(
-    $('#qunit-fixture .single'),
-    options
-  );
+QUnit.test(
+  'update should clear title for placeholder options',
+  function (assert) {
+    var selection = new SingleSelection(
+      $('#qunit-fixture .single'),
+      options
+    );
 
-  var $selection = selection.render();
-  var $rendered = $selection.find('.select2-selection__rendered');
+    var $selection = selection.render();
+    var $rendered = $selection.find('.select2-selection__rendered');
 
-  $rendered.attr('title', 'testing');
+    $rendered.attr('title', 'testing');
 
-  selection.update([{
-    id: '',
-    text: ''
-  }]);
+    selection.update([{
+      id: '',
+      text: ''
+    }]);
 
-  assert.equal(
-    $rendered.attr('title'),
-    undefined,
-    'The title should be removed if a placeholder is rendered'
-  );
-});
+    assert.equal(
+      $rendered.attr('title'),
+      undefined,
+      'The title should be removed if a placeholder is rendered'
+    );
+  }
+);
 
-QUnit.test('update should clear title for options without text', function (assert) {
-  var selection = new SingleSelection(
-    $('#qunit-fixture .single'),
-    options
-  );
+QUnit.test(
+  'update should clear title for options without text',
+  function (assert) {
+    var selection = new SingleSelection(
+      $('#qunit-fixture .single'),
+      options
+    );
 
-  var $selection = selection.render();
-  var $rendered = $selection.find('.select2-selection__rendered');
+    var $selection = selection.render();
+    var $rendered = $selection.find('.select2-selection__rendered');
 
-  $rendered.attr('title', 'testing');
+    $rendered.attr('title', 'testing');
 
-  selection.update([{
-    id: ''
-  }]);
+    selection.update([{
+      id: ''
+    }]);
 
-  assert.equal(
-    $rendered.attr('title'),
-    undefined,
-    'The title should be removed if there is no text or title property'
-  );
-});
+    assert.equal(
+      $rendered.attr('title'),
+      undefined,
+      'The title should be removed if there is no text or title property'
+    );
+  }
+);
 
 QUnit.test('escapeMarkup is being used', function (assert) {
   var selection = new SingleSelection(

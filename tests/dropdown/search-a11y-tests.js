@@ -45,88 +45,100 @@ QUnit.test('aria-autocomplete attribute is present', function (assert) {
   );
 });
 
-QUnit.test('aria-activedescendant should not be set initiailly', function (assert) {
-  var $select = $('#qunit-fixture .single');
+QUnit.test(
+  'aria-activedescendant should not be set initiailly',
+  function (assert) {
+    var $select = $('#qunit-fixture .single');
 
-  var dropdown = new DropdownSearch($select, options);
-  var $dropdown = dropdown.render();
+    var dropdown = new DropdownSearch($select, options);
+    var $dropdown = dropdown.render();
 
-  var container = new MockContainer();
-  dropdown.bind(container, $('<span></span>'));
+    var container = new MockContainer();
+    dropdown.bind(container, $('<span></span>'));
 
-  var $search = $dropdown.find('input');
+    var $search = $dropdown.find('input');
 
-  assert.ok(
-    !$search.attr('aria-activedescendant'),
-    'The search box should not point to anything when it is first rendered'
-  );
-});
+    assert.ok(
+      !$search.attr('aria-activedescendant'),
+      'The search box should not point to anything when it is first rendered'
+    );
+  }
+);
 
-QUnit.test('aria-activedescendant should be set after highlight', function (assert) {
-  var $select = $('#qunit-fixture .single');
+QUnit.test(
+  'aria-activedescendant should be set after highlight',
+  function (assert) {
+    var $select = $('#qunit-fixture .single');
 
-  var dropdown = new DropdownSearch($select, options);
-  var $dropdown = dropdown.render();
+    var dropdown = new DropdownSearch($select, options);
+    var $dropdown = dropdown.render();
 
-  var container = new MockContainer();
-  dropdown.bind(container, $('<span></span>'));
+    var container = new MockContainer();
+    dropdown.bind(container, $('<span></span>'));
 
-  container.trigger('results:focus', {
-    data: {
-      _resultId: 'test'
-    }
-  });
+    container.trigger('results:focus', {
+      data: {
+        _resultId: 'test'
+      }
+    });
 
-  var $search = $dropdown.find('input');
+    var $search = $dropdown.find('input');
 
-  assert.equal(
-    $search.attr('aria-activedescendant'),
-    'test',
-    'The search is pointing to the focused result'
-  );
-});
+    assert.equal(
+      $search.attr('aria-activedescendant'),
+      'test',
+      'The search is pointing to the focused result'
+    );
+  }
+);
 
-QUnit.test('activedescendant should remove if there is no ID', function (assert) {
-  var $select = $('#qunit-fixture .single');
+QUnit.test(
+  'activedescendant should remove if there is no ID',
+  function (assert) {
+    var $select = $('#qunit-fixture .single');
 
-  var dropdown = new DropdownSearch($select, options);
-  var $dropdown = dropdown.render();
+    var dropdown = new DropdownSearch($select, options);
+    var $dropdown = dropdown.render();
 
-  var container = new MockContainer();
-  dropdown.bind(container, $('<span></span>'));
+    var container = new MockContainer();
+    dropdown.bind(container, $('<span></span>'));
 
-  var $search = $dropdown.find('input');
-  $search.attr('aria-activedescendant', 'test');
+    var $search = $dropdown.find('input');
+    $search.attr('aria-activedescendant', 'test');
 
-  container.trigger('results:focus', {
-    data: {}
-  });
+    container.trigger('results:focus', {
+      data: {}
+    });
 
-  assert.ok(
-    !$search.attr('aria-activedescendant'),
-    'There is no result for the search to be pointing to'
-  );
-});
+    assert.ok(
+      !$search.attr('aria-activedescendant'),
+      'There is no result for the search to be pointing to'
+    );
+  }
+);
 
-QUnit.test('aria-activedescendant should be removed when closed', function (assert) {
-  var $select = $('#qunit-fixture .single');
+QUnit.test(
+  'aria-activedescendant should be removed when closed',
+  function (assert) {
+    var $select = $('#qunit-fixture .single');
 
-  var dropdown = new DropdownSearch($select, options);
-  var $dropdown = dropdown.render();
+    var dropdown = new DropdownSearch($select, options);
+    var $dropdown = dropdown.render();
 
-  var container = new MockContainer();
-  dropdown.bind(container, $('<span></span>'));
+    var container = new MockContainer();
+    dropdown.bind(container, $('<span></span>'));
 
-  var $search = $dropdown.find('input');
-  $search.attr('aria-activedescendant', 'something');
+    var $search = $dropdown.find('input');
+    $search.attr('aria-activedescendant', 'something');
 
-  container.trigger('close');
+    container.trigger('close');
 
-  assert.ok(
-    !$search.attr('aria-activedescendant'),
-    'There is no active descendant when the dropdown is closed'
-  );
-});
+    assert.ok(
+      !$search.attr('aria-activedescendant'),
+      'There is no active descendant when the dropdown is closed'
+    );
+  }
+);
 
 QUnit.test('aria-controls should not be set initiailly', function (assert) {
   var $select = $('#qunit-fixture .single');

@@ -14,12 +14,15 @@ QUnit.test('role of results should be a listbox', function (assert) {
   assert.equal($results.attr('role'), 'listbox');
 });
 
-QUnit.test('multiple select should have aria-multiselectable', function (assert) {
-  var results = new Results($('<select></select>'), new Options({
-    multiple: true
-  }));
+QUnit.test(
+  'multiple select should have aria-multiselectable',
+  function (assert) {
+    var results = new Results($('<select></select>'), new Options({
+      multiple: true
+    }));
 
-  var $results = results.render();
+    var $results = results.render();
 
-  assert.equal($results.attr('aria-multiselectable'), 'true');
-});
+    assert.equal($results.attr('aria-multiselectable'), 'true');
+  }
+);

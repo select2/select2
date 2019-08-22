@@ -64,20 +64,23 @@ QUnit.test('white space is trimmed by default', function (assert) {
   });
 });
 
-QUnit.test('does not create option if text is same but lowercase', function (assert) {
-  var data = new SelectTags($('#qunit-fixture .single'), options);
+QUnit.test(
+  'does not create option if text is same but lowercase',
+  function (assert) {
+    var data = new SelectTags($('#qunit-fixture .single'), options);
 
-  data.query({
-    term: 'one'
-  }, function (data) {
-    assert.equal(data.results.length, 1);
+    data.query({
+      term: 'one'
+    }, function (data) {
+      assert.equal(data.results.length, 1);
 
-    var item = data.results[0];
+      var item = data.results[0];
 
-    assert.equal(item.id, 'One');
-    assert.equal(item.text, 'One');
-  });
-});
+      assert.equal(item.id, 'One');
+      assert.equal(item.text, 'One');
+    });
+  }
+);
 
 QUnit.test('does not trigger for additional pages', function (assert) {
   var data = new SelectTags($('#qunit-fixture .single'), options);
@@ -191,25 +194,28 @@ QUnit.test('insertTag controls the tag location', function (assert) {
   });
 });
 
-QUnit.test('insertTag can be controlled through the options', function (assert) {
-  var options = new Options({
-    insertTag: function (data, tag) {
-      data.push(tag);
-    }
-  });
-  var data = new SelectTags($('#qunit-fixture .single'), options);
+QUnit.test(
+  'insertTag can be controlled through the options',
+  function (assert) {
+    var options = new Options({
+      insertTag: function (data, tag) {
+        data.push(tag);
+      }
+    });
+    var data = new SelectTags($('#qunit-fixture .single'), options);
 
-  data.query({
-    term: 'o'
-  }, function (data) {
-    assert.equal(data.results.length, 2);
+    data.query({
+      term: 'o'
+    }, function (data) {
+      assert.equal(data.results.length, 2);
 
-    var item = data.results[1];
+      var item = data.results[1];
 
-    assert.equal(item.id, 'o');
-    assert.equal(item.text, 'o');
-  });
-});
+      assert.equal(item.id, 'o');
+      assert.equal(item.text, 'o');
+    });
+  }
+);
 
 QUnit.test('createTag controls the tag object', function (assert) {
   var data = new SelectTags($('#qunit-fixture .single'), options);

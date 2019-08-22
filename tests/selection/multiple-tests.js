@@ -144,29 +144,32 @@ QUnit.test('update sets the title to the data title', function (assert) {
   );
 });
 
-QUnit.test('update should clear title for placeholder options', function (assert) {
-  var selection = new MultipleSelection(
-    $('#qunit-fixture .multiple'),
-    options
-  );
+QUnit.test('update should clear title for placeholder options',
+function (assert) {
+    var selection = new MultipleSelection(
+      $('#qunit-fixture .multiple'),
+      options
+    );
 
-  var $selection = selection.render();
+    var $selection = selection.render();
 
-  selection.update([{
-    id: '',
-    text: ''
-  }]);
+    selection.update([{
+      id: '',
+      text: ''
+    }]);
 
-  var $rendered = $selection.find('.select2-selection__rendered li');
+    var $rendered = $selection.find('.select2-selection__rendered li');
 
-  assert.equal(
-    $rendered.attr('title'),
-    undefined,
-    'The title should be removed if a placeholder is rendered'
-  );
-});
+    assert.equal(
+      $rendered.attr('title'),
+      undefined,
+      'The title should be removed if a placeholder is rendered'
+    );
+  }
+);
 
-QUnit.test('update should clear title for options without text', function (assert) {
+QUnit.test(
+  'update should clear title for options without text', function (assert) {
   var selection = new MultipleSelection(
     $('#qunit-fixture .multiple'),
     options

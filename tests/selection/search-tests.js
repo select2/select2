@@ -218,34 +218,37 @@ QUnit.test('search box without text should propagate click', function (assert) {
   $search.trigger('click');
 });
 
-QUnit.test('search box with text should not propagate click', function (assert) {
-  assert.expect(0);
+QUnit.test(
+  'search box with text should not propagate click',
+  function (assert) {
+    assert.expect(0);
 
-  var $container = $('#qunit-fixture .event-container');
-  var container = new MockContainer();
+    var $container = $('#qunit-fixture .event-container');
+    var container = new MockContainer();
 
-  var CustomSelection = Utils.Decorate(MultipleSelection, InlineSearch);
+    var CustomSelection = Utils.Decorate(MultipleSelection, InlineSearch);
 
-  var $element = $('#qunit-fixture .multiple');
-  var selection = new CustomSelection($element, options);
+    var $element = $('#qunit-fixture .multiple');
+    var selection = new CustomSelection($element, options);
 
-  var $selection = selection.render();
-  selection.bind(container, $container);
+    var $selection = selection.render();
+    selection.bind(container, $container);
 
-  // Update the selection so the search is rendered
-  selection.update([]);
+    // Update the selection so the search is rendered
+    selection.update([]);
 
-  // Make it visible so the browser can place focus on the search
-  $container.append($selection);
+    // Make it visible so the browser can place focus on the search
+    $container.append($selection);
 
-  $selection.on('click', function () {
-    assert.ok(false, 'The click event should have been trapped');
-  });
+    $selection.on('click', function () {
+      assert.ok(false, 'The click event should have been trapped');
+    });
 
-  var $search = $selection.find('input');
-  $search.val('test');
-  $search.trigger('click');
-});
+    var $search = $selection.find('input');
+    $search.val('test');
+    $search.trigger('click');
+  }
+);
 
 QUnit.test('search box with text should not close dropdown', function (assert) {
   assert.expect(0);

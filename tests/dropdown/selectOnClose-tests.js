@@ -62,44 +62,49 @@ QUnit.test('will not trigger if the results list is empty', function (assert) {
   container.trigger('close');
 });
 
-QUnit.test('will not trigger if no results here highlighted', function (assert) {
-  assert.expect(2);
+QUnit.test(
+  'will not trigger if no results here highlighted',
+  function (assert) {
+    assert.expect(2);
 
-  var $element = $('<select></select>');
-  var select = new ModifiedResults($element, options, new SelectData($element));
+    var $element = $('<select></select>');
+    var select = new ModifiedResults(
+      $element, options, new SelectData($element)
+    );
 
-  var $dropdown = select.render();
+    var $dropdown = select.render();
 
-  var container = new MockContainer();
-  select.bind(container, $('<div></div>'));
+    var container = new MockContainer();
+    select.bind(container, $('<div></div>'));
 
-  select.on('select', function () {
-    assert.ok(false, 'The select event should not have been triggered');
-  });
+    select.on('select', function () {
+      assert.ok(false, 'The select event should not have been triggered');
+    });
 
-  select.append({
-    results: [
-      {
-        id: '1',
-        text: 'Test'
-      }
-    ]
-  });
+    select.append({
+      results: [
+        {
+          id: '1',
+          text: 'Test'
+        }
+      ]
+    });
 
-  assert.equal(
-    $dropdown.find('li').length,
-    1,
-    'There should be one result in the dropdown'
-  );
+    assert.equal(
+      $dropdown.find('li').length,
+      1,
+      'There should be one result in the dropdown'
+    );
 
-  assert.equal(
-    $.trim($dropdown.find('li').text()),
-    'Test',
-    'The result should be the same as the one we appended'
-  );
+    assert.equal(
+      $.trim($dropdown.find('li').text()),
+      'Test',
+      'The result should be the same as the one we appended'
+    );
 
-  container.trigger('close');
-});
+    container.trigger('close');
+  }
+);
 
 QUnit.test('will trigger if there is a highlighted result', function (assert) {
   assert.expect(2);

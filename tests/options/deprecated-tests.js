@@ -234,17 +234,20 @@ QUnit.test('converted ajax-url to ajax--url automatically', function (assert) {
   );
 });
 
-QUnit.test('converted select2-tags to data/tags automatically', function (assert) {
-  var $test = $('<select data-select2-tags="original data"></select>');
-  var options = new Options({}, $test);
+QUnit.test(
+  'converted select2-tags to data/tags automatically',
+  function (assert) {
+    var $test = $('<select data-select2-tags="original data"></select>');
+    var options = new Options({}, $test);
 
-  assert.ok(
-    options.get('tags'),
-    'The `tags` key is automatically set to true'
-  );
-  assert.equal(
-    options.get('data'),
-    'original data',
-    'The `data` key is created with the original data'
-  );
-});
+    assert.ok(
+      options.get('tags'),
+      'The `tags` key is automatically set to true'
+    );
+    assert.equal(
+      options.get('data'),
+      'original data',
+      'The `data` key is created with the original data'
+    );
+  }
+);

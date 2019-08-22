@@ -37,33 +37,36 @@ QUnit.test('test that options can be selected', function (assert) {
   );
 });
 
-QUnit.test('unselect the single selected option clears the value', function (assert) {
-  var options = new Options({
-    data: [
-      {
-        id: 'test',
-        text: 'Test',
-        selected: true
-      }
-    ]
-  });
-  var $element = $('<input />');
+QUnit.test(
+  'unselect the single selected option clears the value',
+  function (assert) {
+    var options = new Options({
+      data: [
+        {
+          id: 'test',
+          text: 'Test',
+          selected: true
+        }
+      ]
+    });
+    var $element = $('<input />');
 
-  var adapter = new InputAdapter($element, options);
+    var adapter = new InputAdapter($element, options);
 
-  var container = new MockContainer();
-  adapter.bind(container, $('<div></div>'));
+    var container = new MockContainer();
+    adapter.bind(container, $('<div></div>'));
 
-  adapter.unselect({
-    id: 'test'
-  });
+    adapter.unselect({
+      id: 'test'
+    });
 
-  assert.equal(
-    $element.val(),
-    '',
-    'The id should no longer be in the value'
-  );
-});
+    assert.equal(
+      $element.val(),
+      '',
+      'The id should no longer be in the value'
+    );
+  }
+);
 
 QUnit.test('options can be unselected individually', function (assert) {
   var options = new Options({

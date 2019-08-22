@@ -58,120 +58,126 @@ QUnit.test('appends to the dropdown parent', function (assert) {
     );
 });
 
-QUnit.test('dropdown is positioned down with static margins', function (assert) {
-    var $ = require('jquery');
-    var $select = $('<select></select>');
-    var $parent = $('<div></div>');
-    $parent.css({
-        position: 'static',
-        marginTop: '5px',
-        marginLeft: '10px'
-    });
+QUnit.test(
+    'dropdown is positioned down with static margins',
+    function (assert) {
+        var $ = require('jquery');
+        var $select = $('<select></select>');
+        var $parent = $('<div></div>');
+        $parent.css({
+            position: 'static',
+            marginTop: '5px',
+            marginLeft: '10px'
+        });
 
-    var $container = $('<span>test</span>');
-    var container = new MockContainer();
+        var $container = $('<span>test</span>');
+        var container = new MockContainer();
 
-    $('#qunit-fixture').empty();
+        $('#qunit-fixture').empty();
 
-    $parent.appendTo($('#qunit-fixture'));
-    $container.appendTo($parent);
+        $parent.appendTo($('#qunit-fixture'));
+        $container.appendTo($parent);
 
-    var Utils = require('select2/utils');
-    var Options = require('select2/options');
+        var Utils = require('select2/utils');
+        var Options = require('select2/options');
 
-    var Dropdown = require('select2/dropdown');
-    var AttachBody = require('select2/dropdown/attachBody');
+        var Dropdown = require('select2/dropdown');
+        var AttachBody = require('select2/dropdown/attachBody');
 
-    var DropdownAdapter = Utils.Decorate(Dropdown, AttachBody);
+        var DropdownAdapter = Utils.Decorate(Dropdown, AttachBody);
 
-    var dropdown = new DropdownAdapter($select, new Options({
-        dropdownParent: $parent
-    }));
+        var dropdown = new DropdownAdapter($select, new Options({
+            dropdownParent: $parent
+        }));
 
-    var $dropdown = dropdown.render();
+        var $dropdown = dropdown.render();
 
-    assert.equal(
-        $dropdown[0].style.top,
-        0,
-        'The drodpown should not have any offset before it is displayed'
-    );
+        assert.equal(
+            $dropdown[0].style.top,
+            0,
+            'The drodpown should not have any offset before it is displayed'
+        );
 
-    dropdown.bind(container, $container);
-    dropdown.position($dropdown, $container);
-    dropdown._showDropdown();
+        dropdown.bind(container, $container);
+        dropdown.position($dropdown, $container);
+        dropdown._showDropdown();
 
-    assert.ok(
-        dropdown.$dropdown.hasClass('select2-dropdown--below'),
-        'The dropdown should be forced down'
-    );
+        assert.ok(
+            dropdown.$dropdown.hasClass('select2-dropdown--below'),
+            'The dropdown should be forced down'
+        );
 
-    assert.equal(
-        $dropdown.css('top').replace(/\D+/, ''),
-        $container.outerHeight() + 5,
-        'The offset should be 5px at the top'
-    );
+        assert.equal(
+            $dropdown.css('top').replace(/\D+/, ''),
+            $container.outerHeight() + 5,
+            'The offset should be 5px at the top'
+        );
 
-    assert.equal(
-        $dropdown.css('left'),
-        '10px',
-        'The offset should be 10px on the left'
-    );
-});
+        assert.equal(
+            $dropdown.css('left'),
+            '10px',
+            'The offset should be 10px on the left'
+        );
+    }
+);
 
-QUnit.test('dropdown is positioned down with absolute offsets', function (assert) {
-    var $ = require('jquery');
-    var $select = $('<select></select>');
-    var $parent = $('<div></div>');
-    $parent.css({
-        position: 'absolute',
-        top: '10px',
-        left: '5px'
-    });
+QUnit.test(
+    'dropdown is positioned down with absolute offsets',
+    function (assert) {
+        var $ = require('jquery');
+        var $select = $('<select></select>');
+        var $parent = $('<div></div>');
+        $parent.css({
+            position: 'absolute',
+            top: '10px',
+            left: '5px'
+        });
 
-    var $container = $('<span>test</span>');
-    var container = new MockContainer();
+        var $container = $('<span>test</span>');
+        var container = new MockContainer();
 
-    $parent.appendTo($('#qunit-fixture'));
-    $container.appendTo($parent);
+        $parent.appendTo($('#qunit-fixture'));
+        $container.appendTo($parent);
 
-    var Utils = require('select2/utils');
-    var Options = require('select2/options');
+        var Utils = require('select2/utils');
+        var Options = require('select2/options');
 
-    var Dropdown = require('select2/dropdown');
-    var AttachBody = require('select2/dropdown/attachBody');
+        var Dropdown = require('select2/dropdown');
+        var AttachBody = require('select2/dropdown/attachBody');
 
-    var DropdownAdapter = Utils.Decorate(Dropdown, AttachBody);
+        var DropdownAdapter = Utils.Decorate(Dropdown, AttachBody);
 
-    var dropdown = new DropdownAdapter($select, new Options({
-        dropdownParent: $parent
-    }));
+        var dropdown = new DropdownAdapter($select, new Options({
+            dropdownParent: $parent
+        }));
 
-    var $dropdown = dropdown.render();
+        var $dropdown = dropdown.render();
 
-    assert.equal(
-        $dropdown[0].style.top,
-        0,
-        'The drodpown should not have any offset before it is displayed'
-    );
+        assert.equal(
+            $dropdown[0].style.top,
+            0,
+            'The drodpown should not have any offset before it is displayed'
+        );
 
-    dropdown.bind(container, $container);
-    dropdown.position($dropdown, $container);
-    dropdown._showDropdown();
+        dropdown.bind(container, $container);
+        dropdown.position($dropdown, $container);
+        dropdown._showDropdown();
 
-    assert.ok(
-        dropdown.$dropdown.hasClass('select2-dropdown--below'),
-        'The dropdown should be forced down'
-    );
+        assert.ok(
+            dropdown.$dropdown.hasClass('select2-dropdown--below'),
+            'The dropdown should be forced down'
+        );
 
-    assert.equal(
-        $dropdown.css('top').replace(/\D+/, ''),
-        $container.outerHeight(),
-        'There should not be an extra top offset'
-    );
+        assert.equal(
+            $dropdown.css('top').replace(/\D+/, ''),
+            $container.outerHeight(),
+            'There should not be an extra top offset'
+        );
 
-    assert.equal(
-        $dropdown.css('left'),
-        '0px',
-        'There should not be an extra left offset'
-    );
-});
+        assert.equal(
+            $dropdown.css('left'),
+            '0px',
+            'There should not be an extra left offset'
+        );
+    }
+);

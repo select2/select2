@@ -21,13 +21,16 @@ QUnit.test('width from style attribute', function (assert) {
   assert.equal(width, '50%');
 });
 
-QUnit.test('width from style returns null if nothing is found', function (assert) {
-  var $test = $('<select></selct>');
+QUnit.test(
+  'width from style returns null if nothing is found',
+  function (assert) {
+    var $test = $('<select></selct>');
 
-  var width = select._resolveWidth($test, 'style');
+    var width = select._resolveWidth($test, 'style');
 
-  assert.equal(width, null);
-});
+    assert.equal(width, null);
+  }
+);
 
 QUnit.test('width from computed element width', function (assert) {
   var $style = $(
@@ -51,34 +54,40 @@ QUnit.test('resolve gets the style if it is there', function (assert) {
   assert.equal(width, '20%');
 });
 
-QUnit.test('resolve falls back to element if there is no style', function (assert) {
-  var $style = $(
-    '<style type="text/css">.css-set-width { width: 500px; }</style>'
-  );
-  var $test = $('<select class="css-set-width"></select>');
+QUnit.test(
+  'resolve falls back to element if there is no style',
+  function (assert) {
+    var $style = $(
+      '<style type="text/css">.css-set-width { width: 500px; }</style>'
+    );
+    var $test = $('<select class="css-set-width"></select>');
 
-  $('#qunit-fixture').append($style);
-  $('#qunit-fixture').append($test);
+    $('#qunit-fixture').append($style);
+    $('#qunit-fixture').append($test);
 
-  var width = select._resolveWidth($test, 'resolve');
+    var width = select._resolveWidth($test, 'resolve');
 
-  assert.equal(width, '500px');
-});
+    assert.equal(width, '500px');
+  }
+);
 
-QUnit.test('computedstyle gets the style if parent is invisible', function (assert) {
-  var $style = $(
-    '<style type="text/css">.css-set-width { width: 500px; }</style>'
-  );
-  var $test = $(
-    '<div style="display:none;">' +
-      '<select class="css-set-width"></select>' +
-    '</div>'
-  );
+QUnit.test(
+  'computedstyle gets the style if parent is invisible',
+  function (assert) {
+    var $style = $(
+      '<style type="text/css">.css-set-width { width: 500px; }</style>'
+    );
+    var $test = $(
+      '<div style="display:none;">' +
+        '<select class="css-set-width"></select>' +
+      '</div>'
+    );
 
-  $('#qunit-fixture').append($style);
-  $('#qunit-fixture').append($test);
+    $('#qunit-fixture').append($style);
+    $('#qunit-fixture').append($test);
 
-  var width = select._resolveWidth($test.find('select'), 'computedstyle');
+    var width = select._resolveWidth($test.find('select'), 'computedstyle');
 
-  assert.equal(width, '500px');
-});
+    assert.equal(width, '500px');
+  }
+);

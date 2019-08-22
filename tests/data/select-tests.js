@@ -417,34 +417,37 @@ QUnit.test('empty optgroups are still shown when queried', function (assert) {
   });
 });
 
-QUnit.test('multiple options with the same value are returned', function (assert) {
-  var $select = $('#qunit-fixture .duplicates');
+QUnit.test(
+  'multiple options with the same value are returned',
+  function (assert) {
+    var $select = $('#qunit-fixture .duplicates');
 
-  var data = new SelectData($select, selectOptions);
+    var data = new SelectData($select, selectOptions);
 
-  data.query({}, function (data) {
-    assert.equal(
-      data.results.length,
-      3,
-      'The duplicate option should still be returned when queried'
-    );
+    data.query({}, function (data) {
+      assert.equal(
+        data.results.length,
+        3,
+        'The duplicate option should still be returned when queried'
+      );
 
-    var first = data.results[0];
-    var duplicate = data.results[2];
+      var first = data.results[0];
+      var duplicate = data.results[2];
 
-    assert.equal(
-      first.id,
-      duplicate.id,
-      'The duplicates should have the same id'
-    );
+      assert.equal(
+        first.id,
+        duplicate.id,
+        'The duplicates should have the same id'
+      );
 
-    assert.notEqual(
-      first.text,
-      duplicate.text,
-      'The duplicates do not have the same text'
-    );
-  });
-});
+      assert.notEqual(
+        first.text,
+        duplicate.text,
+        'The duplicates do not have the same text'
+      );
+    });
+  }
+);
 
 QUnit.test('data objects use the text of the option', function (assert) {
   var $select = $('#qunit-fixture .duplicates');
@@ -459,21 +462,24 @@ QUnit.test('data objects use the text of the option', function (assert) {
   assert.equal(item.text, '&');
 });
 
-QUnit.test('select option construction accepts id=0 (zero) value', function (assert) {
-  var $select = $('#qunit-fixture .single');
+QUnit.test(
+  'select option construction accepts id=0 (zero) value',
+  function (assert) {
+    var $select = $('#qunit-fixture .single');
 
-  var selectOptions = [{ id: 0, text: 'Zero Value'}];
-  var data = new SelectData($select, selectOptions);
+    var selectOptions = [{ id: 0, text: 'Zero Value'}];
+    var data = new SelectData($select, selectOptions);
 
-  var optionElem = data.option(selectOptions[0]);
+    var optionElem = data.option(selectOptions[0]);
 
-  // If was "Zero Value"", then it ignored id property
-  assert.equal(
-    optionElem[0].value,
-    '0',
-    'Built option value should be "0" (zero as a string).'
-  );
-});
+    // If was "Zero Value"", then it ignored id property
+    assert.equal(
+      optionElem[0].value,
+      '0',
+      'Built option value should be "0" (zero as a string).'
+    );
+  }
+);
 
 QUnit.test('select option construction accepts id="" (empty string) value',
   function (assert) {
