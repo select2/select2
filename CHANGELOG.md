@@ -1,5 +1,15 @@
 # Change Log
 
+## 4.0.10
+
+### New features / improvements
+
+* Support passing in a selector for `dropdownParent` option (#5622)
+
+### Bug fixes
+
+* Fix bug where dropdowns pointing upwards were incorrectly positioned (#5621)
+
 ## 4.0.9
 
 ### New features / improvements
