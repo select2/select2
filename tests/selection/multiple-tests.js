@@ -75,7 +75,116 @@ test('empty update clears the selection', function (assert) {
 
   selection.update([]);
 
-  assert.equal($rendered.text(), '');
+  assert.equal(
+    $rendered.text(),
+    '',
+    'There should have been nothing rendered'
+  );
+});
+
+test('empty update clears the selection title', function (assert) {
+  var selection = new MultipleSelection(
+    $('#qunit-fixture .multiple'),
+    options
+  );
+
+  var $selection = selection.render();
+
+  selection.update([]);
+
+  var $rendered = $selection.find('.select2-selection__rendered li');
+
+  assert.equal(
+    $rendered.attr('title'),
+    undefined,
+    'The title should be removed if nothing is rendered'
+  );
+});
+
+test('update sets the title to the data text', function (assert) {
+  var selection = new MultipleSelection(
+    $('#qunit-fixture .multiple'),
+    options
+  );
+
+  var $selection = selection.render();
+
+  selection.update([{
+    text: 'test'
+  }]);
+
+  var $rendered = $selection.find('.select2-selection__rendered li');
+
+  assert.equal(
+    $rendered.attr('title'),
+    'test',
+    'The title should have been set to the text'
+  );
+});
+
+test('update sets the title to the data title', function (assert) {
+  var selection = new MultipleSelection(
+    $('#qunit-fixture .multiple'),
+    options
+  );
+
+  var $selection = selection.render();
+
+  selection.update([{
+    text: 'test',
+    title: 'correct'
+  }]);
+
+  var $rendered = $selection.find('.select2-selection__rendered li');
+
+  assert.equal(
+    $rendered.attr('title'),
+    'correct',
+    'The title should have taken precedence over the text'
+  );
+});
+
+test('update should clear title for placeholder options', function (assert) {
+  var selection = new MultipleSelection(
+    $('#qunit-fixture .multiple'),
+    options
+  );
+
+  var $selection = selection.render();
+
+  selection.update([{
+    id: '',
+    text: ''
+  }]);
+
+  var $rendered = $selection.find('.select2-selection__rendered li');
+
+  assert.equal(
+    $rendered.attr('title'),
+    undefined,
+    'The title should be removed if a placeholder is rendered'
+  );
+});
+
+test('update should clear title for options without text', function (assert) {
+  var selection = new MultipleSelection(
+    $('#qunit-fixture .multiple'),
+    options
+  );
+
+  var $selection = selection.render();
+
+  selection.update([{
+    id: ''
+  }]);
+
+  var $rendered = $selection.find('.select2-selection__rendered li');
+
+  assert.equal(
+    $rendered.attr('title'),
+    undefined,
+    'The title should be removed if there is no text or title property'
+  );
 });
 
 test('escapeMarkup is being used', function (assert) {
