@@ -3,13 +3,16 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  build:
-    - uses: actions/checkout@v1
-    - name: Use Node.js 8
-      uses: actions/setup-node@v1
-      with:
-        node-version: 8
-    - name: "npm install"
-      run: npm install
-    - name: "Run Grunt"
-      run: grunt
+  tests:
+    name: "Tests"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js 8
+        uses: actions/setup-node@v1
+        with:
+          node-version: 8
+      - name: "npm install"
+        run: npm install
+      - name: "Run Grunt"
+        run: grunt
