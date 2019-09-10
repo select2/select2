@@ -3,8 +3,8 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  tests:
-    name: "Tests"
+  linting:
+    name: Linting
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -12,7 +12,49 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 8
-      - name: "npm install"
+      - name: npm install
         run: npm install
-      - name: "Run Grunt"
+      - name: Run linting
+        run: grunt compile lint
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js 8
+        uses: actions/setup-node@v1
+        with:
+          node-version: 8
+      - name: npm install
+        run: npm install
+      - name: Run tests
+        run: grunt compile test
+  minification:
+    name: Minification
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js 8
+        uses: actions/setup-node@v1
+        with:
+          node-version: 8
+      - name: npm install
+        run: npm install
+      - name: Run minification
+        run: grunt compile minify
+  deploy:
+    name: Deploy
+    needs: [linting, tests, minification]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js 8
+        uses: actions/setup-node@v1
+        with:
+          node-version: 8
+      - name: npm install
+        run: npm install
+      - name: Run linting, tests, minify
         run: grunt
+      - name: Deploy to NPM
+        run: "echo 'We made it here'"
