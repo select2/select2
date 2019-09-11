@@ -1,0 +1,14 @@
+// Base Sizes
+$core-font-size:				1.05rem !default;
+$core-line-height:				1.7 !default;
+
+// Heading Sizes
+$h1-font-size:                  $core-font-size + 2.20 !default;
+$h2-font-size:                  $core-font-size + 1.50 !default;
+$h3-font-size:                  $core-font-size + 1.10 !default;
+$h4-font-size:                  $core-font-size + 0.75 !default;
+$h5-font-size:                  $core-font-size + 0.35 !default;
+$h6-font-size:                  $core-font-size - 0.15 !default;
+
+// Spacing
+$leading-margin:				$core-line-height * 1rem !default;
