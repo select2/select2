@@ -58,9 +58,16 @@ jobs:
         run: npm install
       - name: Run linting, tests, minify
         run: grunt
-      - name: Deploy
+      - name: Deploy (release)
+        if: github.event_name == 'release'
+        run: npm publish --dry-run
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - name: Deploy (release candidate)
         if: github.event_name == 'push'
-        run: npm publish
+        run: |
+          npm --no-git-tag-version version prerelease
+          npm publish --tag next --dry-run
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
   deploy_npm:
@@ -80,7 +87,7 @@ jobs:
       - name: Run linting, tests, minify
         run: grunt
       - name: Deploy
-        if: github.event_name == 'release'
-        run: npm publish
+        if: github.event_name == 'push'
+        run: npm publish --dry-run
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
