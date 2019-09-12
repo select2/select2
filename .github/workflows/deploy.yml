@@ -50,7 +50,7 @@ jobs:
         run: npm install
       - name: Run linting, tests, minify
         run: grunt
-      - name: Deploy
+      - name: Deploy (release)
         if: github.event_name == 'release'
         run: npm publish
         env:
