@@ -16,5 +16,5 @@ jobs:
           HOST: ${{ secrets.DOCUMENTATION_SSH_HOST }}
           TARGET: "/var/www/select2-docs/user"
           SOURCE: "docs/*"
-        args:
-          "--strip.components 1"
+        with:
+          args: "--strip.components 1"
