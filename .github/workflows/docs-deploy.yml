@@ -1,6 +1,6 @@
 name: Documentation Deployment
 
-on: push
+on: release
 
 jobs:
   grav:
