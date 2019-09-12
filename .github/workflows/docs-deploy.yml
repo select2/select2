@@ -14,5 +14,5 @@ jobs:
           USERNAME: ${{ secrets.DOCUMENTATION_SSH_USERNAME }}
           KEY: ${{ secrets.DOCUMENTATION_SSH_KEY }}
           HOST: ${{ secrets.DOCUMENTATION_SSH_HOST }}
-          TARGET: "docs/"
-          SOURCE: "docs/"
+          TARGET: "docs"
+          SOURCE: "docs"
