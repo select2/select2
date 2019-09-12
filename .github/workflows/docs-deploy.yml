@@ -13,6 +13,7 @@ jobs:
         env:
           USERNAME: ${{ secrets.DOCUMENTATION_SSH_USERNAME }}
           SSH_PRIVATE_KEY: ${{ secrets.DOCUMENTATION_SSH_KEY }}
+          SSH_PUBLIC_KEY: not-needed
           HOST_NAME: ${{ secrets.DOCUMENTATION_SSH_HOST }}
         with:
           args: "docs/ $USERNAME@$HOST_NAME:/var/www/select2-docs/user/"
