@@ -1,6 +1,6 @@
 name: CI
 
-on: [push, pull_request, release]
+on: [push, pull_request]
 
 jobs:
   linting:
@@ -42,52 +42,3 @@ jobs:
         run: npm install
       - name: Run minification
         run: grunt compile minify
-  deploy_github:
-    name: Deploy to GitHub Package Registry
-    needs: [linting, tests, minification]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js 8
-        uses: actions/setup-node@v1
-        with:
-          node-version: 8
-          registry-url: https://npm.pkg.github.com/
-          scope: '@select2'
-      - name: npm install
-        run: npm install
-      - name: Run linting, tests, minify
-        run: grunt
-      - name: Deploy (release)
-        if: github.event_name == 'release'
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      - name: Deploy (release candidate)
-        if: github.event_name == 'push'
-        run: |
-          npm --no-git-tag-version version prerelease
-          npm publish --tag next
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-  deploy_npm:
-    name: Deploy to NPM
-    needs: [linting, tests, minification]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js 8
-        uses: actions/setup-node@v1
-        with:
-          node-version: 8
-          registry-url: https://npm.pkg.github.com/
-          scope: '@select2'
-      - name: npm install
-        run: npm install
-      - name: Run linting, tests, minify
-        run: grunt
-      - name: Deploy
-        if: github.event_name == 'release'
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
