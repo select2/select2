@@ -8,11 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Prepare documentation for copy
-        run: |
-          ls | grep -v docs | xargs rm -r
-          cp -r docs/* .
-          rm -r docs
       - name: SCP to documentation server
         uses: appleboy/scp-action@v0.0.1
         env:
@@ -20,4 +15,6 @@ jobs:
           KEY: ${{ secrets.DOCUMENTATION_SSH_KEY }}
           HOST: ${{ secrets.DOCUMENTATION_SSH_HOST }}
           TARGET: "/var/www/select2-docs/user"
-          SOURCE: "*"
+          SOURCE: "docs/*"
+        args:
+          "--strip.components 1"
