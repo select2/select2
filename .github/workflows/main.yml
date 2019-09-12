@@ -1,0 +1,44 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  linting:
+    name: Linting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js 8
+        uses: actions/setup-node@v1
+        with:
+          node-version: 8
+      - name: npm install
+        run: npm install
+      - name: Run linting
+        run: grunt compile lint
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js 8
+        uses: actions/setup-node@v1
+        with:
+          node-version: 8
+      - name: npm install
+        run: npm install
+      - name: Run tests
+        run: grunt compile test
+  minification:
+    name: Minification
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js 8
+        uses: actions/setup-node@v1
+        with:
+          node-version: 8
+      - name: npm install
+        run: npm install
+      - name: Run minification
+        run: grunt compile minify

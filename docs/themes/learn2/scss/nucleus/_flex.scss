@@ -1,0 +1,189 @@
+// Page Container
+.container {
+	width: $large-desktop-container;
+	margin: 0 auto;
+	padding: 0;
+	@include breakpoint(desktop-range) {
+		width: $desktop-container;
+	}
+	@include breakpoint(tablet-range) {
+		width: $tablet-container;
+	}
+	@include breakpoint(large-mobile-range) {
+		width: $large-mobile-container;
+	}
+	@include breakpoint(small-mobile-range) {
+		width: $mobile-container;
+	}
+}
+
+// Grid Row and Column Setup
+.grid {
+	@include display(flex);
+	@include flex-flow(row);
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	@include breakpoint(mobile-only) {
+		@include flex-flow(row wrap);
+	}
+}
+
+.block {
+	@include flex(1);
+    min-width: 0;
+    min-height: 0;
+	@include breakpoint(mobile-only) {
+		@include flex(0 100%);
+	}
+}
+
+// Content Block Spacing
+.content {
+	margin: $content-margin;
+	padding: $content-padding;
+}
+
+body [class*="size-"] {
+	@include breakpoint(mobile-only) {
+		@include flex(0 100%);
+	}
+}
+
+// Custom Size Modifiers
+.size-1-2 {
+	@include flex(0 percentage(1/2));
+}
+
+.size-1-3 {
+	@include flex(0 percentage(1/3));
+}
+
+.size-1-4 {
+	@include flex(0 percentage(1/4));
+}
+
+.size-1-5 {
+	@include flex(0 percentage(1/5));
+}
+
+.size-1-6 {
+	@include flex(0 percentage(1/6));
+}
+
+.size-1-7 {
+	@include flex(0 percentage(1/7));
+}
+
+.size-1-8 {
+	@include flex(0 percentage(1/8));
+}
+
+.size-1-9 {
+	@include flex(0 percentage(1/9));
+}
+
+.size-1-10 {
+	@include flex(0 percentage(1/10));
+}
+
+.size-1-11 {
+	@include flex(0 percentage(1/11));
+}
+
+.size-1-12 {
+	@include flex(0 percentage(1/12));
+}
+
+@include breakpoint(tablet-range) {
+	.size-tablet-1-2 {
+		@include flex(0 percentage(1/2));
+	}
+
+	.size-tablet-1-3 {
+		@include flex(0 percentage(1/3));
+	}
+
+	.size-tablet-1-4 {
+		@include flex(0 percentage(1/4));
+	}
+
+	.size-tablet-1-5 {
+		@include flex(0 percentage(1/5));
+	}
+
+	.size-tablet-1-6 {
+		@include flex(0 percentage(1/6));
+	}
+
+	.size-tablet-1-7 {
+		@include flex(0 percentage(1/7));
+	}
+
+	.size-tablet-1-8 {
+		@include flex(0 percentage(1/8));
+	}
+
+	.size-tablet-1-9 {
+		@include flex(0 percentage(1/9));
+	}
+
+	.size-tablet-1-10 {
+		@include flex(0 percentage(1/10));
+	}
+
+	.size-tablet-1-11 {
+		@include flex(0 percentage(1/11));
+	}
+
+	.size-tablet-1-12 {
+		@include flex(0 percentage(1/12));
+	}
+}
+
+// Fix for Firefox versions 27 and below
+@include breakpoint(mobile-only) {
+	@supports not (flex-wrap: wrap) {
+		.grid {
+			display: block;
+			@include flex-wrap(inherit);
+		}
+		.block {
+			display: block;
+			@include flex(inherit);
+		}
+	}
+}
+
+// Reordering
+.first-block {
+  -webkit-box-ordinal-group: 0;
+  -webkit-order: -1;
+  -ms-flex-order: -1;
+  order: -1;
+}
+
+.last-block {
+  -webkit-box-ordinal-group: 2;
+  -webkit-order: 1;
+  -ms-flex-order: 1;
+  order: 1;
+}
+
+// Fixed Grid Style
+.fixed-blocks {
+	@include flex-flow(row wrap);
+	.block {
+		@include flex(inherit);
+		width: $fixed-block-full;
+		@include breakpoint(desktop-range) {
+			width: $fixed-block-desktop;
+		}
+		@include breakpoint(tablet-range) {
+			width: $fixed-block-tablet;
+		}
+		@include breakpoint(mobile-only) {
+			width: 100%;
+		}
+	}
+}

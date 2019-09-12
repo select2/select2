@@ -1,0 +1,9 @@
+enabled: true
+root_page: 					                        # optional: set root page of documentation
+top_level_version: false                            # Use versions for top level navigation
+google_analytics_code:                              # Enter your `UA-XXXXXXXX-X` code here
+home_url:                                           # http://getgrav.org
+github:
+    position: top                                   # top | bottom | off
+    tree: https://github.com/getgrav/grav-skeleton-rtfm-site/blob/develop/
+    commits: https://github.com/getgrav/grav-skeleton-rtfm-site/commits/develop/

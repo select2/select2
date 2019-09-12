@@ -1,0 +1,44 @@
+.search-wrapper .search-input {
+	width: 80%;
+	display: inline-block;
+}
+
+.search-submit {
+	display: inline-block;
+	border-radius: 4px;
+	background: #eee;
+	border: 1px solid #ccc;
+	vertical-align: top;
+}
+
+.search-submit img {
+	width: 20px;
+	vertical-align: middle;
+}
+
+.search-image {
+	float: left;
+}
+
+.search-item {
+	margin-left: 130px;
+	margin-bottom: 50px;
+}
+
+.search-item p {
+	margin: 0;
+}
+
+.search-title h3 {
+	margin: 0;
+}
+
+.search-details {
+	font-size: 13px;
+}
+
+.search-row:last-child hr {
+		display: none;
+}
+
+
