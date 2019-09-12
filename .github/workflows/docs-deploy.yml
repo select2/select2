@@ -1,0 +1,18 @@
+name: Documentation Deployment
+
+on: push
+
+jobs:
+  grav:
+    name: Deploy Grav
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: SCP to documentation server
+        uses: appleboy/scp-action@v0.0.1
+        env:
+          USERNAME: ${{ secrets.DOCUMENTATION_SSH_USERNAME }}
+          KEY: ${{ secrets.DOCUMENTATION_SSH_KEY }}
+          HOST: ${{ secrets.DOCUMENTATION_SSH_HOST }}
+          TARGET: "docs/"
+          SOURCE: "docs/"
