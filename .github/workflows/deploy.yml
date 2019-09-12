@@ -1,10 +1,10 @@
 name: Package Deployment
 
 on:
-  push: ~
-    # branches:
-    #   - develop
-    #   - master
+  push:
+    branches:
+      - develop
+      - master
   release: ~
 
 jobs:
