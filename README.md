@@ -1,6 +1,6 @@
 Select2
 =======
-[![Build Status][travis-ci-image]][travis-ci-status]
+![Build Status][github-actions-image]
 [![cdnjs](https://img.shields.io/cdnjs/v/select2.svg)][cdnjs]
 [![jsdelivr](https://data.jsdelivr.com/v1/package/npm/select2/badge)][jsdelivr]
 
@@ -93,6 +93,7 @@ The license is available within the repository in the [LICENSE][license] file.
 [documentation]: https://select2.org
 [documentation-repository]: https://github.com/select2/docs
 [freenode]: https://freenode.net/
+[github-actions-image]: https://github.com/select2/select2/workflows/CI/badge.svg
 [jsdelivr]: https://www.jsdelivr.com/package/npm/select2
 [license]: LICENSE.md
 [releases]: https://github.com/select2/select2/releases
