@@ -15,5 +15,6 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.DOCUMENTATION_SSH_KEY }}
           SSH_PUBLIC_KEY: not-needed
           HOST_NAME: ${{ secrets.DOCUMENTATION_SSH_HOST }}
+          HOST_IP: not-needed
         with:
           args: "docs/ $USERNAME@$HOST_NAME:/var/www/select2-docs/user/"
