@@ -8,33 +8,33 @@ on:
   release: ~
 
 jobs:
-  deploy_github:
-    name: GitHub Package Registry
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js 8
-        uses: actions/setup-node@v1
-        with:
-          node-version: 8
-          registry-url: https://npm.pkg.github.com/
-          scope: '@select2'
-      - name: npm install
-        run: npm install
-      - name: Run linting, tests, minify
-        run: grunt
-      - name: Deploy (release)
-        if: github.event_name == 'release'
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      - name: Deploy (release candidate)
-        if: github.event_name == 'push'
-        run: |
-          npm --no-git-tag-version version prerelease
-          npm publish --tag next
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+  # deploy_github:
+  #   name: GitHub Package Registry
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v1
+  #     - name: Use Node.js 8
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: 8
+  #         registry-url: https://npm.pkg.github.com/
+  #         scope: '@select2'
+  #     - name: npm install
+  #       run: npm install
+  #     - name: Run linting, tests, minify
+  #       run: grunt
+  #     - name: Deploy (release)
+  #       if: github.event_name == 'release'
+  #       run: npm publish
+  #       env:
+  #         NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+  #     - name: Deploy (release candidate)
+  #       if: github.event_name == 'push'
+  #       run: |
+  #         npm --no-git-tag-version version prerelease
+  #         npm publish --tag next
+  #       env:
+  #         NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
   deploy_npm:
     name: NPM
     runs-on: ubuntu-latest
