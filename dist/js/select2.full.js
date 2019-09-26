@@ -5461,8 +5461,8 @@ S2.define('select2/core',[
     if (method == 'element') {
       var elementWidth = $element.outerWidth(false);
 
-      if (elementWidth <= 0) {
-        return 'auto';
+      if (elementWidth <= 1) {
+        return '100%';
       }
 
       return elementWidth + 'px';
