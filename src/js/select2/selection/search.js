@@ -30,6 +30,13 @@ define([
     var self = this;
 
     var resultsId = container.id + '-results';
+    // Try to detect the IE version should the `documentMode` property that
+    // is stored on the document. This is only implemented in IE and is
+    // slightly cleaner than doing a user agent check.
+    // This property is not available in Edge, but Edge also doesn't have
+    // this bug.
+    var msie = document.documentMode;
+    var disableInputEvents = msie && msie <= 11;
 
     decorated.call(this, container, $container);
 
@@ -72,7 +79,14 @@ define([
     });
 
     this.$selection.on('focusout', '.select2-search--inline', function (evt) {
-      self._handleBlur(evt);
+      // IE moves the focus to body at random moments, if that happens, refocus.
+      if(disableInputEvents &&
+          evt.relatedTarget && evt.relatedTarget.localName === 'body') {
+        evt.preventDefault();
+        self.$search.trigger('focus');
+      } else {
+        self._handleBlur(evt);
+      }
     });
 
     this.$selection.on('keydown', '.select2-search--inline', function (evt) {
