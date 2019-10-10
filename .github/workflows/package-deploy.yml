@@ -32,7 +32,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - name: Deploy (release candidate)
         if: github.event_name == 'push'
-        run: 'sed -i -E "s/\"version\": \"(.+)\",/\"version\": \"\1.commit-$GITHUB_SHA\",/" package.json && npm publish --tag next'
+        run: 'sed -i -E "s/\"version\": \"(.+)\",/\"version\": \"\1-commit-$GITHUB_SHA\",/" package.json && npm publish --tag next'
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
           GITHUB_SHA: ${{github.sha}}
