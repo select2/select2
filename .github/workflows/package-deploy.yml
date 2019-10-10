@@ -19,6 +19,8 @@ jobs:
           node-version: 8
           registry-url: https://npm.pkg.github.com/
           scope: '@select2'
+      - name: Rename package to include private scope
+        run: "sed -i -e 's#\"name\": \"select2\"#\"name\": \"@select2/select2\"#' package.json"
       - name: npm install
         run: npm install
       - name: Run linting, tests, minify
