@@ -39,6 +39,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
   deploy_npm:
     name: NPM
+    if: github.event_name == 'release'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -53,7 +54,6 @@ jobs:
       - name: Run linting, tests, minify
         run: grunt
       - name: Deploy (release)
-        if: github.event_name == 'release'
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
