@@ -19,7 +19,7 @@ define([
       }
     }
 
-    this.$selection.on('mousedown', '.select2-selection__clear',
+    this.$selection.on('touchend mousedown', '.select2-selection__clear',
       function (evt) {
         self._handleClear(evt);
     });
