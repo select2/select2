@@ -1,0 +1,76 @@
+$ryb-interpolation: #FF0000 #FF4900 #FF7400 #FF9200 #FFAA00 #FFBF00 #FFD300 #FFE800 #FFFF00 #CCF600 #9FEE00 #67E300 #00CC00 #00AF64 #009999 #0B61A4 #1240AB #1B1BB3 #3914AF #530FAD #7109AA #A600A6 #CD0074 #E40045;
+
+// RYB color interpolation
+@function find-ryb($hue) {
+
+  // remove units on $hue
+  @if unit($hue) == deg { $hue: $hue / 1deg; }
+
+  // return an interpolated hue
+  @return hue(cs-interpolate($hue));
+}
+
+// Find the RYB hue instead of RGB hue of a color.
+
+// map of the RYB offset
+$ryb-offset: 0 1 2 3 5 6 7 8 9 10 11 13 14 15 16 17 18 19 19 20 21 21 22 23 23 24 25 25 26 27 27 28 28 29 29 30 30 31 31 32 32 32 33 33 34 34 35 35 35 36 36 37 37 37 38 38 38 39 39 40 40 40 41 41 41 42 42 42 43 43 43 44 44 44 45 45 45 46 46 46 47 47 47 47 48 48 48 49 49 49 50 50 50 51 51 51 52 52 52 53 53 53 54 54 54 55 55 55 56 56 56 57 57 57 58 58 59 59 59 60 60 61 61 62 63 63 64 65 65 66 67 68 68 69 70 70 71 72 72 73 73 74 75 75 76 77 77 78 79 79 80 81 82 82 83 84 85 86 87 88 88 89 90 91 92 93 95 96 98 100 102 104 105 107 109 111 113 115 116 118 120 122 125 127 129 131 134 136 138 141 143 145 147 150 152 154 156 158 159 161 163 165 166 168 170 171 173 175 177 178 180 182 184 185 187 189 191 192 194 196 198 199 201 203 205 206 207 208 209 210 212 213 214 215 216 217 218 219 220 221 222 223 224 226 227 228 229 230 232 233 234 235 236 238 239 240 241 242 243 244 245 246 247 248 249 250 251 251 252 253 254 255 256 257 257 258 259 260 260 261 262 263 264 264 265 266 267 268 268 269 270 271 272 273 274 274 275 276 277 278 279 280 282 283 284 286 287 289 290 292 293 294 296 297 299 300 302 303 305 307 309 310 312 314 316 317 319 321 323 324 326 327 328 329 330 331 332 333 334 336 337 338 339 340 341 342 343 344 345 347 348 349 350 352 353 354 355 356 358 359 360;
+
+// loop through the map to find the matching hue.
+@function ryb-hue($color) {
+  @for $i from 1 through length($ryb-offset) {
+    @if nth($ryb-offset, $i) > hue($color) {
+      @return $i - 2deg;
+    }
+  }
+}
+
+// Changes the hue of a color.
+@function ryb-adjust-hue($color, $degrees) {
+
+  // Convert precentag to degrees.
+  @if unit($degrees) == "%" {
+    $degrees: 360 * ($degrees / 100%);
+  }
+
+  // Start at the current hue and loop in the adjustment.
+  $hue-adjust: (ryb-hue($color) + $degrees) / 1deg;
+
+  @return hsl(hue(cs-interpolate($hue-adjust)), saturation($color), lightness($color));
+}
+
+@function ryba($red, $yellow, $blue, $alpha) {
+  $hue: 0;
+  $saturation: 0;
+  $lightness: percentage(($red + $yellow + $blue) / (255 * 3));
+  @if $red == $yellow and $yellow == $blue {
+    @return hsla(0, 0, $lightness, $alpha);
+  }
+  @if $red >= $yellow and $red >= $blue {
+    $hue: 0;
+  }
+  @elseif $yellow >= $red and $yellow >= $blue {
+    $hue: 360 / 3;
+  }
+  @elseif $blue >= $red and $blue >= $yellow {
+    $hue: 360 / 3 * 2;
+  }
+  @return hsla(hue(cs-interpolate($hue)), 100%, 50%, 1);
+}
+
+@function ryb($red, $yellow, $blue) {
+  @return ryba($red, $yellow, $blue, 1);
+}
+
+@function set-ryb-hue($color, $hue) {
+  @return hsla(hue(cs-interpolate($hue)), saturation($color), lightness($color), alpha($color));
+}
+
+// Returns the complement of a color.
+@function ryb-complement($color) {
+  @return ryb-adjust-hue($color, 180deg);
+}
+
+// Returns the inverse of a color.
+@function ryb-invert($color) {
+  @return ryb-adjust-hue(hsl(hue($color), saturation(invert($color)), lightness(invert($color))), 180deg);
+}

@@ -1,0 +1,4 @@
+title: Docs
+'@extends':
+    type: default
+    context: blueprints://pages

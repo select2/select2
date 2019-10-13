@@ -1,0 +1,58 @@
+name: Package Deployment
+
+on:
+  push:
+    branches:
+      - develop
+      - master
+  release: ~
+
+jobs:
+  deploy_github:
+    name: GitHub Package Registry
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js 8
+        uses: actions/setup-node@v1
+        with:
+          node-version: 8
+          registry-url: https://npm.pkg.github.com/
+          scope: '@select2'
+      - name: Rename package to include private scope
+        run: "sed -i -e 's#\"name\": \"select2\"#\"name\": \"@select2/select2\"#' package.json"
+      - name: npm install
+        run: npm install
+      - name: Run linting, tests, minify
+        run: grunt
+      - name: Deploy (release)
+        if: github.event_name == 'release'
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - name: Deploy (release candidate)
+        if: github.event_name == 'push'
+        run: 'sed -i -E "s/\"version\": \"(.+)\",/\"version\": \"\1-commit-$GITHUB_SHA\",/" package.json && npm publish --tag next'
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_SHA: ${{github.sha}}
+  deploy_npm:
+    name: NPM
+    if: github.event_name == 'release'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js 8
+        uses: actions/setup-node@v1
+        with:
+          node-version: 8
+          registry-url: https://npm.pkg.github.com/
+          scope: '@select2'
+      - name: npm install
+        run: npm install
+      - name: Run linting, tests, minify
+        run: grunt
+      - name: Deploy (release)
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

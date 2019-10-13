@@ -1,6 +1,6 @@
 Select2
 =======
-[![Build Status][travis-ci-image]][travis-ci-status]
+![Build Status][github-actions-image]
 [![cdnjs](https://img.shields.io/cdnjs/v/select2.svg)][cdnjs]
 [![jsdelivr](https://data.jsdelivr.com/v1/package/npm/select2/badge)][jsdelivr]
 
@@ -77,7 +77,8 @@ make a pull request back to Select2 here on GitHub.
 Documentation
 -------------
 The documentation for Select2 is available
-[through GitHub Pages][documentation] and is located within the [separate `select2/docs` repository][documentation-repository].
+[online at the documentation website][documentation] and is located within the
+[`docs` directory of this repository][documentation-directory].
 
 Community
 ---------
@@ -91,13 +92,12 @@ The license is available within the repository in the [LICENSE][license] file.
 [cdnjs]: http://www.cdnjs.com/libraries/select2
 [community]: https://select2.org/getting-help
 [documentation]: https://select2.org
-[documentation-repository]: https://github.com/select2/docs
+[documentation-directory]: https://github.com/select2/select2/tree/develop/docs
 [freenode]: https://freenode.net/
+[github-actions-image]: https://github.com/select2/select2/workflows/CI/badge.svg
 [jsdelivr]: https://www.jsdelivr.com/package/npm/select2
 [license]: LICENSE.md
 [releases]: https://github.com/select2/select2/releases
-[travis-ci-image]: https://img.shields.io/travis/select2/select2/master.svg
-[travis-ci-status]: https://travis-ci.org/select2/select2
 
 [angularjs]: https://angularjs.org/
 [bootstrap3]: https://getbootstrap.com/
