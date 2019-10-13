@@ -7,7 +7,7 @@ process:
 never_cache_twig: true
 ---
 
-{% do assets.addJs('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/i18n/es.js', 90) %}
+{% do assets.addJs('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.11/js/i18n/es.js', 90) %}
 
 ## Message translations
 
