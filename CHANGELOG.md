@@ -1,5 +1,17 @@
 # Change Log
 
+## 4.0.11
+
+### Bug fixes
+
+* Fixes jQuery migrate error when getting offset when dropdownParent not in document (#5584)
+
+### Miscellaneous
+
+* Enable GitHub actions for CI (#5591)
+* Documentation has been moved into and is deployed from the code repository (#5638)
+* Remove Travis CI integration (#5665)
+
 ## 4.0.10
 
 ### New features / improvements
