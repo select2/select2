@@ -5697,6 +5697,11 @@ S2.define('select2/core',[
   };
 
   Select2.prototype._syncAttributes = function () {
+    this._syncDisabled();
+    this._syncAutocomplete();
+  };
+
+  Select2.prototype._syncDisabled = function () {
     this.options.set('disabled', this.$element.prop('disabled'));
 
     if (this.options.get('disabled')) {
@@ -5707,6 +5712,18 @@ S2.define('select2/core',[
       this.trigger('disable', {});
     } else {
       this.trigger('enable', {});
+    }
+  };
+
+  Select2.prototype._syncAutocomplete = function () {
+    this.options.set('autocomplete', this.$element.attr('autocomplete'));
+
+    var autocomplete = this.options.get('autocomplete');
+
+    if (autocomplete) {
+      this.$dropdown.find('input').attr('autocomplete', autocomplete);
+    } else {
+      this.$dropdown.find('input').attr('autocomplete', 'off');
     }
   };
 

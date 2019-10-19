@@ -76,6 +76,29 @@ test('multiple default selections returned', function (assert) {
   );
 });
 
+test('autocomplete attribute is copied from ' +
+  'select element to search input', function (assert) {
+  var $select = $(
+    '<select autocomplete="campaign-countries">' +
+    '<option>US</option>' +
+    '<option>CA</option>' +
+    '<option>AU</option>' +
+    '</select>'
+  );
+
+  var options = new Options({});
+
+  var select = new Select2($select, options);
+  var $dropdownInput = select.$dropdown.find('input');
+
+  assert.equal(
+    $dropdownInput.attr('autocomplete'),
+    'campaign-countries',
+    'The autocomplete attribute is copied from the ' +
+    'select element to the search input'
+  );
+});
+
 module('select2(val)');
 
 test('single value matches jquery value', function (assert) {
