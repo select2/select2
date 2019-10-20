@@ -15,12 +15,26 @@ var AllowClearPlaceholder = Utils.Decorate(
   AllowClear
 );
 
+var AllowClearPlaceholderMultiple = Utils.Decorate(
+  Utils.Decorate(MultipleSelection, Placeholder),
+  AllowClear
+);
+
 var allowClearOptions = new Options({
   placeholder: {
     id: 'placeholder',
     text: 'This is the placeholder'
   },
   allowClear: true
+});
+
+var allowClearOptionsMultiple = new Options({
+  placeholder: {
+    id: 'placeholder',
+    text: 'This is the placeholder'
+  },
+  allowClear: true,
+  multiple: true
 });
 
 test('clear is not displayed for single placeholder', function (assert) {
@@ -80,7 +94,30 @@ test('clear is displayed for placeholder', function (assert) {
   );
 });
 
-test('clear icon should have title displayed', function (assert) {
+test('clear icon should have "Remove all items" ' +
+  'title displayed for multiple select', function (assert) {
+  var selection = new AllowClearPlaceholderMultiple(
+    $('#qunit-fixture .multiple-with-placeholder'),
+    allowClearOptionsMultiple
+  );
+
+  var $selection = selection.render();
+
+  selection.update([{
+    id: 'one',
+    test: 'one'
+  }]);
+
+  assert.equal(
+    $selection.find('.select2-selection__clear').attr('title'),
+    'Remove all items',
+    'clear icon should have "Remove all items" ' +
+    'title displayed for multiple select'
+  );
+});
+
+test('clear icon should have "Remove item" ' +
+  'title displayed for single select', function (assert) {
   var selection = new AllowClearPlaceholder(
     $('#qunit-fixture .single-with-placeholder'),
     allowClearOptions
@@ -95,8 +132,9 @@ test('clear icon should have title displayed', function (assert) {
 
   assert.equal(
     $selection.find('.select2-selection__clear').attr('title'),
-    'Remove all items',
-    'The clear icon should have title displayed'
+    'Remove item',
+    'clear icon should have "Remove item" ' +
+    'title displayed for single select'
   );
 });
 

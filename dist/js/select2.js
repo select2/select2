@@ -1933,10 +1933,15 @@ S2.define('select2/selection/allowClear',[
       return;
     }
 
-    var removeAll = this.options.get('translations').get('removeAllItems');   
+    var remove;
+    if (this.options.get('multiple')) {
+      remove = this.options.get('translations').get('removeAllItems');
+    } else {
+      remove = this.options.get('translations').get('removeItem');
+    }
 
     var $remove = $(
-      '<span class="select2-selection__clear" title="' + removeAll() +'">' +
+      '<span class="select2-selection__clear" title="' + remove() +'">' +
         '&times;' +
       '</span>'
     );
@@ -4724,6 +4729,9 @@ S2.define('select2/i18n/en',[],function () {
     },
     searching: function () {
       return 'Searching…';
+    },
+    removeItem: function () {
+      return 'Remove item';
     },
     removeAllItems: function () {
       return 'Remove all items';

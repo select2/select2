@@ -49,7 +49,7 @@ define(function () {
       return 'Cercant…';
     },
     removeItem: function () {
-      return "Elimina l'element";
+      return 'Elimina l\'element';
     },
     removeAllItems: function () {
       return 'Treu tots els elements';

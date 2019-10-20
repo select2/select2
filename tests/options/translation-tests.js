@@ -52,6 +52,7 @@ test(
         'maximumSelected',
         'noResults',
         'searching',
+        'removeItem',
         'removeAllItems'
       ]
     );

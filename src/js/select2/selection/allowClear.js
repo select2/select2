@@ -97,10 +97,15 @@ define([
       return;
     }
 
-    var removeAll = this.options.get('translations').get('removeAllItems');   
+    var remove;
+    if (this.options.get('multiple')) {
+      remove = this.options.get('translations').get('removeAllItems');
+    } else {
+      remove = this.options.get('translations').get('removeItem');
+    }
 
     var $remove = $(
-      '<span class="select2-selection__clear" title="' + removeAll() +'">' +
+      '<span class="select2-selection__clear" title="' + remove() +'">' +
         '&times;' +
       '</span>'
     );
