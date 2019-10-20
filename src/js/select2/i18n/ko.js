@@ -32,6 +32,9 @@ define(function () {
     searching: function () {
       return '검색 중…';
     },
+    removeItem: function () {
+      return '아이템 제거';
+    },
     removeAllItems: function () {
       return '모든 항목 삭제';
     }

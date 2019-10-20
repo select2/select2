@@ -26,6 +26,9 @@ define(function () {
     searching: function () {
       return 'Haetaan…';
     },
+    removeItem: function () {
+      return 'Poista esine';
+    },
     removeAllItems: function () {
       return 'Poista kaikki kohteet';
     }

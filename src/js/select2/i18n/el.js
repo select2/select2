@@ -48,6 +48,9 @@ define(function () {
     searching: function () {
       return 'Αναζήτηση…';
     },
+    removeItem: function () {
+      return 'Κατάργηση στοιχείου';
+    },
     removeAllItems: function () {
       return 'Καταργήστε όλα τα στοιχεία';
     }

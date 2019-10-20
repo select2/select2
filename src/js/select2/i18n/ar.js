@@ -26,7 +26,10 @@ define(function () {
     searching: function () {
       return 'جاري البحث…';
     },
-     removeAllItems: function () {
+    removeItem: function () {
+      return 'إزالة بند';
+    },
+    removeAllItems: function () {
       return 'قم بإزالة كل العناصر';
     }
   };

@@ -47,6 +47,9 @@ define(function () {
     searching: function () {
       return 'Bilatzen…';
     },
+    removeItem: function () {
+      return 'Kendu elementua';
+    },
     removeAllItems: function () {
       return 'Kendu elementu guztiak';
     }

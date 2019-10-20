@@ -32,6 +32,9 @@ define(function () {
     searching: function () {
       return 'Søger…';
     },
+    removeItem: function () {
+      return 'Fjern emnet';
+    },
     removeAllItems: function () {
       return 'Fjern alle elementer';
     }

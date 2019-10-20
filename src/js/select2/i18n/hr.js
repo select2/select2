@@ -40,6 +40,9 @@ define(function () {
     searching: function () {
       return 'Pretraga…';
     },
+    removeItem: function () {
+      return 'Ukloni predmet';
+    },
     removeAllItems: function () {
       return 'Ukloni sve stavke';
     }

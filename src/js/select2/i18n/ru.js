@@ -54,6 +54,9 @@ define(function () {
     searching: function () {
       return 'Поиск…';
     },
+    removeItem: function () {
+      return 'Убрать предмет';
+    },
     removeAllItems: function () {
       return 'Удалить все элементы';
     }

@@ -40,6 +40,9 @@ define(function () {
     searching: function () {
       return 'Searching…';
     },
+    removeItem: function () {
+      return 'Remove item';
+    },
     removeAllItems: function () {
       return 'Remove all items';
     }

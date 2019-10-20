@@ -1,5 +1,5 @@
 define(function () {
-  // English
+  // Afrikaans
   return {
     errorLoading: function () {
       return 'Die resultate kon nie gelaai word nie.';
@@ -39,6 +39,9 @@ define(function () {
     },
     searching: function () {
       return 'Besig…';
+    },
+    removeItem: function () {
+      return 'Verwyder item';
     },
     removeAllItems: function () {
       return 'Verwyder alle items';

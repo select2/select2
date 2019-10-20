@@ -30,6 +30,9 @@ define(function () {
     searching: function () {
       return 'Đang tìm…';
     },
+    removeItem: function () {
+      return 'Loại bỏ mục';
+    },
     removeAllItems: function () {
       return 'Xóa tất cả các mục';
     }

@@ -37,6 +37,9 @@ define(function () {
     searching: function () {
       return 'Leita…';
     },
+    removeItem: function () {
+      return 'Fjarlægðu hlut';
+    },
     removeAllItems: function () {
       return 'Fjarlægðu öll atriði';
     }

@@ -32,6 +32,9 @@ define(function () {
     searching: function () {
       return '検索しています…';
     },
+    removeItem: function () {
+      return 'アイテムを削除';
+    },
     removeAllItems: function () {
       return 'すべてのアイテムを削除';
     }

@@ -39,6 +39,9 @@ define(function () {
     searching: function () {
       return 'Пошук…';
     },
+    removeItem: function () {
+      return 'Видаліть предмет';
+    },
     removeAllItems: function () {     
       return 'Видалити всі елементи';
     }

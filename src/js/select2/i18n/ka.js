@@ -33,6 +33,9 @@ define(function () {
     searching: function () {
       return 'ძიება…';
     },
+    removeItem: function () {
+      return 'ნივთის წაშლა';
+    },
     removeAllItems: function () {
       return 'ამოიღე ყველა ელემენტი';
     }

@@ -44,6 +44,10 @@ define(function () {
     searching: function () {
       return 'Pyta se…';
     },
+    removeItem: function () {
+      // To DO : in Lower Sorbian.
+      return 'Remove item';
+    },
     removeAllItems: function () {
       // To DO : in Lower Sorbian.
       return 'Remove all items';

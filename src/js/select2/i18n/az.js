@@ -23,7 +23,10 @@ define(function () {
     searching: function () {
       return 'Axtarılır…';
     },
-     removeAllItems: function () {
+    removeItem: function () {
+      return 'Elementi çıxarın';
+    },
+    removeAllItems: function () {
       return 'Bütün elementləri sil';
     }
   };

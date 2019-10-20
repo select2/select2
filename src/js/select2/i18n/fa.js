@@ -34,6 +34,9 @@ define(function () {
     searching: function () {
       return 'در حال جستجو...';
     },
+    removeItem: function () {
+      return 'حذف مورد';
+    },
     removeAllItems: function () {
       return 'همه موارد را حذف کنید';
     }

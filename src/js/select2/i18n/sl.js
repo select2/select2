@@ -50,6 +50,9 @@ define(function () {
     searching: function () {
       return 'Iščem…';
     },
+    removeItem: function () {
+      return 'Odstranite element';
+    },
     removeAllItems: function () {
       return 'Odstranite vse elemente';
     }

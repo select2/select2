@@ -43,6 +43,9 @@ define(function () {
     searching: function () {
       return 'Търсене…';
     },
+    removeItem: function () {
+      return 'Премахни артикул';
+    },
     removeAllItems: function () {
       return 'Премахнете всички елементи';
     }

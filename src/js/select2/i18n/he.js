@@ -52,6 +52,9 @@ define(function () {
     searching: function () {
       return 'מחפש…';
     },
+    removeItem: function () {
+      return 'הסר פריט';
+    },
     removeAllItems: function () {
       return 'הסר את כל הפריטים';
     }

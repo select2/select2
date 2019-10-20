@@ -32,6 +32,10 @@ define(function () {
     searching: function () {
       return 'Gözlenýär…';
     },
+    removeItem: function () {
+      // TO DO : add in turkmen,
+      return 'Remove item';
+    },
     removeAllItems: function () {
       // TO DO : add in turkmen,
       return 'Remove all items';

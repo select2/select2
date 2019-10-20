@@ -29,6 +29,9 @@ define(function () {
     searching: function () {
       return '搜尋中…';
     },
+    removeItem: function () {
+      return '除去項目';
+    },
     removeAllItems: function () {     
       return '刪除所有項目';
     }

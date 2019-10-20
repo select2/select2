@@ -42,6 +42,9 @@ define(function () {
     searching: function () {
       return 'Căutare…';
     },
+    removeItem: function () {
+      return 'Eliminați elementul';
+    },
     removeAllItems: function () {
       return 'Eliminați toate elementele';
     }

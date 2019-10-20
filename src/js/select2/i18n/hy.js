@@ -34,6 +34,9 @@ define(function () {
     searching: function () {
       return 'Որոնում․․․';
     },
+    removeItem: function () {
+      return 'Հեռացրեք տարրը';
+    },
     removeAllItems: function () {
       return 'Հեռացնել բոլոր տարրերը';
     }

@@ -41,6 +41,9 @@ define(function () {
     searching: function () {
       return 'Duke kërkuar…';
     },
+    removeItem: function () {
+      return 'Hiq sendin';
+    },
     removeAllItems: function () {
       return 'Hiq të gjitha sendet';
     }

@@ -26,6 +26,9 @@ define(function () {
     searching: function () {
       return 'Søker…';
     },
+    removeItem: function () {
+      return 'Fjerne gjenstand';
+    },
     removeAllItems: function () {
       return 'Fjern alle elementer';
     }

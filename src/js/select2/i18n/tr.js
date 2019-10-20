@@ -32,6 +32,9 @@ define(function () {
     searching: function () {
       return 'Aranıyor…';
     },
+    removeItem: function () {
+      return 'Öğeyi kaldırmak';
+    },
     removeAllItems: function () {     
       return 'Tüm öğeleri kaldır';
     }

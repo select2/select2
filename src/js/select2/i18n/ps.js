@@ -41,6 +41,9 @@ define(function () {
     searching: function () {
       return 'لټول کيږي...';
     },
+    removeItem: function () {
+      return 'توکی لرې کړئ';
+    },
     removeAllItems: function () {
       return 'ټول توکي لرې کړئ';
     }

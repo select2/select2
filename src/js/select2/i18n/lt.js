@@ -1,4 +1,5 @@
 define(function () {
+  // Lithuanian
   // rules from
   // http://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html#lt
   function ending(count, one, few, other) {
@@ -47,6 +48,9 @@ define(function () {
     },
     searching: function () {
       return 'Ieškoma…';
+    },
+    removeItem: function () {
+      return 'Pašalinti daiktą';
     },
     removeAllItems: function () {
       return 'Pašalinti visus elementus';

@@ -32,6 +32,9 @@ define(function () {
     searching: function () {
       return 'กำลังค้นข้อมูล…';
     },
+    removeItem: function () {
+      return 'ลบรายการ';
+    },
     removeAllItems: function () {
       return 'ลบรายการทั้งหมด';
     }

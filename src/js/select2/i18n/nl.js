@@ -39,6 +39,9 @@ define(function () {
     searching: function () {
       return 'Zoeken…';
     },
+    removeItem: function () {
+      return 'Verwijder voorwerp';
+    },
     removeAllItems: function () {
       return 'Verwijder alle items';
     }

@@ -47,6 +47,9 @@ define(function () {
     searching: function () {
       return 'Meklēšana…';
     },
+    removeItem: function () {
+      return 'Noņemt vienumu';
+    },
     removeAllItems: function () {
       return 'Noņemt visus vienumus';
     }

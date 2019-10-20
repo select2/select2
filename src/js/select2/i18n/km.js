@@ -32,6 +32,9 @@ define(function () {
     searching: function () {
       return 'កំពុងស្វែងរក...';
     },
+    removeItem: function () {
+      return 'យកធាតុចេញ';
+    },
     removeAllItems: function () {
       return 'លុបធាតុទាំងអស់';
     }

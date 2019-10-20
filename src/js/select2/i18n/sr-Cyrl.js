@@ -51,6 +51,9 @@ define(function () {
     searching: function () {
       return 'Претрага…';
     },
+    removeItem: function () {
+      return 'Уклони ставку';
+    },
     removeAllItems: function () {
       return 'Уклоните све ставке';
     }

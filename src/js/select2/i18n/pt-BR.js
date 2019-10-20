@@ -42,6 +42,9 @@ define(function () {
     searching: function () {
       return 'Buscando…';
     },
+    removeItem: function () {
+      return 'Remover item';
+    },
     removeAllItems: function () {
       return 'Remover todos os itens';
     }

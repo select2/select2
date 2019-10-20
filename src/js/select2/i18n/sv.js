@@ -33,6 +33,9 @@ define(function () {
     searching: function () {
       return 'Söker…';
     },
+    removeItem: function () {
+      return 'Ta bort sak';
+    },
     removeAllItems: function () {
       return 'Ta bort alla objekt';
     }

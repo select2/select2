@@ -29,6 +29,9 @@ define(function () {
     searching: function () {
       return 'Recherche en cours…';
     },
+    removeItem: function () {
+      return "Retirer l'objet";
+    },
     removeAllItems: function () {
       return 'Supprimer tous les éléments';
     }

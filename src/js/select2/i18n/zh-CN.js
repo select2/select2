@@ -32,6 +32,9 @@ define(function () {
     searching: function () {
       return '搜索中…';
     },
+    removeItem: function () {
+      return '除去项目';
+    },
     removeAllItems: function () {     
       return '删除所有项目';
     }

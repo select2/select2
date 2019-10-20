@@ -42,6 +42,9 @@ define(function () {
       },
       searching: function () {
         return 'खोजि हुँदैछ…';
+      },
+      removeItem: function () {
+        return 'वस्तु हटाउनुहोस्';
       }
     };
   });

@@ -43,6 +43,9 @@ define(function () {
     searching: function () {
       return 'Пребарување…';
     },
+    removeItem: function () {
+      return 'Отстранете ја ставка';
+    },
     removeAllItems: function () {
       return 'Отстрани ги сите предмети';
     }

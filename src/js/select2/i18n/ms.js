@@ -26,6 +26,9 @@ define(function () {
     searching: function () {
       return 'Mencari…';
     },
+    removeItem: function () {
+      return 'Buang Item';
+    },
     removeAllItems: function () {
       return 'Keluarkan semua item';
     }

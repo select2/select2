@@ -35,6 +35,9 @@ define(function () {
     searching: function () {
       return 'Buscando…';
     },
+    removeItem: function () {
+      return 'Eliminar elemento';
+    },
     removeAllItems: function () {
       return 'Elimina todos os elementos';
     }

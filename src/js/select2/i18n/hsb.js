@@ -44,6 +44,10 @@ define(function () {
     searching: function () {
       return 'Pyta so…';
     },
+    removeItem: function () {
+      // To DO : in Upper Sorbian.
+      return 'Remove item';
+    },
     removeAllItems: function () {
       // To DO : in Upper Sorbian.
       return 'Remove all items';

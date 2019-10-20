@@ -49,6 +49,9 @@ define(function () {
     searching: function () {
       return 'Otsin…';
     },
+    removeItem: function () {
+      return 'Eemalda üksus';
+    },
     removeAllItems: function () {
       return 'Eemalda kõik esemed';
     }

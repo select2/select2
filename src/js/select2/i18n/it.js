@@ -44,6 +44,9 @@ define(function () {
     searching: function () {
       return 'Sto cercando…';
     },
+    removeItem: function () {
+      return 'Rimuovi oggetto';
+    },
     removeAllItems: function () {
       return 'Rimuovi tutti gli oggetti';
     }

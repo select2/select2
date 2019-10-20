@@ -55,6 +55,9 @@ define(function () {
     searching: function () {
       return 'Vyhľadávanie…';
     },
+    removeItem: function () {
+      return 'Odstrániť položku';
+    },
     removeAllItems: function () {
       return 'Odstráňte všetky položky';
     }

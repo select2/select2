@@ -37,6 +37,9 @@ define(function () {
       noResults: function () {
         return 'কোন ফলাফল পাওয়া যায়নি।';
       },
+      removeItem: function () {
+        return 'আইটেম অপসারণ';
+      },
       searching: function () {
         return 'অনুসন্ধান করা হচ্ছে ...';
       }

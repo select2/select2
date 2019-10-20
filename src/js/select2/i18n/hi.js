@@ -35,6 +35,9 @@ define(function () {
     searching: function () {
       return 'खोज रहा है...';
     },
+    removeItem: function () {
+      return 'वस्तु निकालो';
+    },
     removeAllItems: function () {
       return 'सभी वस्तुओं को हटा दें';
     }

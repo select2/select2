@@ -34,6 +34,9 @@ define(function () {
     searching: function () {
       return 'Suche…';
     },
+    removeItem: function () {
+      return 'Gegenstand entfernen';
+    },
     removeAllItems: function () {
       return 'Entferne alle Elemente';
     }
