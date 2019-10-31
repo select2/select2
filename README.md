@@ -35,8 +35,8 @@ Browser compatibility
 
 Usage
 -----
-You can source Select2 directly from a CDN like [JSDliver][jsdelivr] or
-[CDNJS][cdnjs], [download it from this GitHub repo][releases], or use one of
+You can source Select2 directly from a CDN like [jsDelivr][jsdelivr] or
+[cdnjs][cdnjs], [download it from this GitHub repo][releases], or use one of
 the integrations below.
 
 Integrations
