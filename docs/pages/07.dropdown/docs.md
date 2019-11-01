@@ -74,6 +74,18 @@ Note that this option is only applicable to multi-select controls.
 
 >>> If the [`CloseOnSelect` decorator](/advanced/default-adapters/dropdown#closeonselect) is not used (or `closeOnSelect` is set to <code>false</code>), the dropdown will not automatically close when a result is selected.  The dropdown will also never close if the <kbd>ctrl</kbd> key is held down when the result is selected.
 
+## Ordering the dropdown results
+
+By default select2 will leave the order the data is provided. Too change this order you can use the sorter option which allows you to specify a callback that will return the information in the desired order. Generally it is recomended if you are accessing a remote datasource to use any serverside sorting that might be available first. 
+
+```
+$('#mySelect2').select2({
+  sorter: function(argResults) {
+	  return argResults.sort();
+  }
+});
+```
+
 ## Dropdown placement
 
 >>>>> Attention [Harvest Chosen](https://harvesthq.github.io/chosen/) migrators!  If you are migrating to Select2 from Chosen, this option will cause Select2 to position the dropdown in a similar way.
