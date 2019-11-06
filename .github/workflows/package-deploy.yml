@@ -46,8 +46,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 8
-          registry-url: https://npm.pkg.github.com/
-          scope: '@select2'
+          registry-url: 'https://registry.npmjs.org'
       - name: npm install
         run: npm install
       - name: Run linting, tests, minify
