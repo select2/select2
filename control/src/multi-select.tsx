@@ -297,23 +297,6 @@ export class MultiSelect extends AbstractSelect<Props, State> {
         this.selectSearchResult(index);
     };
 
-    public selectActiveResult = () => {
-        this.selectResult(this.getSelectedSearchResult());
-    };
-
-    public selectResult = (result: any) => {
-        const { values, onChange } = this.props;
-        const next = values.slice();
-        next.push(result);
-
-        this.close();
-
-        const label = this.getItemLabel(result);
-        announce.politely(this.dictionary.valueAdded(label));
-
-        onChange(next);
-    };
-
     public toggleValue = (index: number) => {
         const {
             values: { selected }
@@ -358,8 +341,7 @@ export class MultiSelect extends AbstractSelect<Props, State> {
             if (this.hasSearchResults) {
                 switch (event.key) {
                     case Key.Enter:
-                        this.selectActiveResult();
-                        event.preventDefault();
+                        this.onActiveResultSelectedViaKeypress(event);
                         break;
                     case Key.Escape:
                         if (open) {
@@ -412,12 +394,15 @@ export class MultiSelect extends AbstractSelect<Props, State> {
         }
     }
 
-    public close = () => {
-        this.updateState({
-            open: false,
-            results: { results: undefined },
-            search: ''
-        });
+    public close = (callback?: () => void) => {
+        this.updateState(
+            {
+                open: false,
+                results: { results: undefined },
+                search: ''
+            },
+            callback
+        );
     };
 
     public onValuesBlur = (event: Event) => {
@@ -487,9 +472,47 @@ export class MultiSelect extends AbstractSelect<Props, State> {
     };
 
     public onResultClicked = (result: any, event: MouseEvent) => {
-        this.selectResult(result);
-        this.searchRef.current!.focus();
+        const { openOnFocus } = this.props;
+        const values = this.selectResult(result);
+
+        const focusSearchLater = () => {
+            window.setTimeout(() => {
+                this.searchRef.current!.focus();
+            }, 0);
+        };
+
+        if (openOnFocus) {
+            this.search('', values, {}, focusSearchLater);
+        } else {
+            this.close(focusSearchLater);
+        }
+
         event.preventDefault();
         event.stopPropagation();
+    };
+
+    public onActiveResultSelectedViaKeypress = (event: KeyboardEvent) => {
+        const { openOnFocus } = this.props;
+        const result = this.getSelectedSearchResult();
+        const values = this.selectResult(result);
+        if (openOnFocus) {
+            this.search('', values, { open: true });
+        } else {
+            this.close();
+        }
+
+        event.preventDefault();
+    };
+
+    public selectResult = (result: any) => {
+        const { values, onChange } = this.props;
+        const next = values.slice();
+        next.push(result);
+
+        const label = this.getItemLabel(result);
+        announce.politely(this.dictionary.valueAdded(label));
+
+        onChange(next);
+        return next;
     };
 }
