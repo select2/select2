@@ -39,7 +39,7 @@
     "src",
     "dist"
   ],
-  "version": "4.0.11",
+  "version": "4.0.12",
   "jspm": {
     "main": "js/select2",
     "directories": {

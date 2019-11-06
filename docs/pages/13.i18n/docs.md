@@ -7,7 +7,7 @@ process:
 never_cache_twig: true
 ---
 
-{% do assets.addJs('https://cdn.jsdelivr.net/npm/select2@4.0.10/dist/js/i18n/es.js', 90) %}
+{% do assets.addJs('https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/i18n/es.js', 90) %}
 
 ## Message translations
 
