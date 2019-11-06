@@ -1,5 +1,16 @@
 # Change Log
 
+## 4.0.12
+
+### Bug fixes
+
+* Fixes incorrect offset when using the Shadow DOM and styling the `<html>` element (#5682)
+
+### Miscellaneous
+
+* Replace cdnjs with jsDelivr in the documentation (#5687)
+* Fix incorrect provider for the automated NPM deployment (#5686)
+
 ## 4.0.11
 
 ### Bug fixes
