@@ -144,7 +144,8 @@
   border: 1px solid #4d90fe;
   border-top: 1px solid #ddd;
   border-radius: 0 0 5px 5px;
-  background-color: white; }
+  background-color: white;
+  outline: 0; }
   .s25-dropdown .s25-body {
     padding-top: 4px;
     padding-bottom: 4px; }
