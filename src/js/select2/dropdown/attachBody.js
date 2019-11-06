@@ -195,7 +195,10 @@ define([
       left: 0
     };
 
-    if ($.contains(document.body, $offsetParent[0])) {
+    if (
+      $.contains(document.body, $offsetParent[0]) ||
+      $offsetParent[0].isConnected
+      ) {
       parentOffset = $offsetParent.offset();
     }
 
