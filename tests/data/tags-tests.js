@@ -274,3 +274,46 @@ test('the createTag options customizes the function', function (assert) {
     assert.equal(item.tag, true);
   });
 });
+
+test('the createTag evaluates from data passed in', function (assert) {
+  var data = new SelectTags(
+    $('#qunit-fixture .single'),
+    new Options({
+      tags: true,
+      createTag: function (params, obj) {
+        if (obj && obj.results.length) {
+          return {
+            id: 'Test',
+            text: 'Test',
+            tag: true
+          };
+        }
+        return null;
+      }
+    })
+  );
+
+  data.query({
+      term: 'On'
+  }, function (data) {
+    assert.equal(data.results.length, 2);
+
+    var item = data.results[0];
+    assert.equal(item.id, 'Test');
+    assert.equal(item.text, 'Test');
+    assert.equal(item.tag, true);
+
+    item = data.results[1];
+    assert.equal(item.id, 'One');
+    assert.equal(item.text, 'One');
+    assert.equal(item.tag, null);
+  });
+
+  //query again, but don't add the created tag based on our new criteria
+  data.query({
+    term: 'test'
+  }, function (data) {
+    assert.equal(data.results.length, 0);
+  });
+
+});

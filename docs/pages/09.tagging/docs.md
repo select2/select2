@@ -137,6 +137,35 @@ $('select').select2({
 });
 ```
 
+You may also constrain tag creation based on the dataset.  
+
+```
+$('select').select2({
+  ajax: { 
+      processResults: function(data) {
+          return {
+              data: data,
+              pagination: true
+          }
+      }
+  }
+  createTag: function (params, data) {
+    var term = $.trim(params.term);
+
+    //If we have more data to load, dont show the tag creation option
+    if (data && data.pagination && data.pagination.more) {
+      return null;
+    }
+
+    return {
+      id: term,
+      text: term,
+      newTag: true // add additional parameters
+    }
+  }
+});
+```
+
 ## Customizing tag placement in the dropdown
 
 You may control the placement of the newly created option by defining a `insertTag` callback:

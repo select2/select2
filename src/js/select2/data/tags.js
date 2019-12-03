@@ -74,7 +74,7 @@ define([
         return true;
       }
 
-      var tag = self.createTag(params);
+      var tag = self.createTag(params, obj);
 
       if (tag != null) {
         var $option = self.option(tag);
