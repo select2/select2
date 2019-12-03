@@ -32,6 +32,11 @@
   user-select: none;
   -webkit-user-select: none;
 
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+
   &[aria-selected] {
     cursor: pointer;
   }
