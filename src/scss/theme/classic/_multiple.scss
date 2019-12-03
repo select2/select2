@@ -35,6 +35,11 @@
     margin-right: 5px;
     margin-top: 5px;
     padding: 0 5px;
+
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
   }
 
   .select2-selection__choice__remove {
