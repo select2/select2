@@ -407,13 +407,14 @@ define([
     } else if (Array.isArray(mutations)) {
       $.each(mutations, function(evt, mutation) {
         if (self._isChangeMutation(evt, mutation)) {
-          // We've found a change mutation, let's escape from the loop and continue
+          // We've found a change mutation.
+          // Let's escape from the loop and continue
           changed = true;
           return false;
         }
       });
     }
-    return changed
+    return changed;
   };
 
   Select2.prototype._syncSubtree = function (evt, mutations) {
