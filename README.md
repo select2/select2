@@ -130,7 +130,7 @@ The license is available within the repository in the [LICENSE][license] file.
 
 ### Code Contributors
 
-This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+This project exists thanks to all the people who contribute. [[Contribute](.github/CONTRIBUTING.md)].
 <a href="https://github.com/select2/select2/graphs/contributors"><img src="https://opencollective.com/select2/contributors.svg?width=890&button=false" /></a>
 
 ### Financial Contributors
