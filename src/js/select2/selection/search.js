@@ -212,7 +212,7 @@ define([
       data: item
     });
 
-    this.$search.val(item.text);
+    this.$search.val(this.options.get('clearTermOnBackspace') ? '' : item.text);
     this.handleSearch();
   };
 

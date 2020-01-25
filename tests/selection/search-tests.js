@@ -90,6 +90,56 @@ test('backspace will set the search text', function (assert) {
   assert.equal($search.val(), 'One', 'The search text was set');
 });
 
+test('backspace will remove the search text too with clearTermOnBackspace',
+  function (assert) {
+
+  assert.expect(4);
+
+  var KEYS = require('select2/keys');
+
+  var $container = $('#qunit-fixture .event-container');
+  var container = new MockContainer();
+
+  var backspaceOptions = new Options({
+    clearTermOnBackspace: true
+  });
+
+  var CustomSelection = Utils.Decorate(MultipleSelection, InlineSearch);
+
+  var $element = $('#qunit-fixture .multiple');
+  var selection = new CustomSelection($element, backspaceOptions);
+
+  var $selection = selection.render();
+  selection.bind(container, $container);
+
+  // The unselect event should be triggered at some point
+  selection.on('unselect', function () {
+    assert.ok(true, 'A choice was unselected');
+  });
+
+  // Add some selections and render the search
+  selection.update([
+    {
+      id: '1',
+      text: 'One'
+    }
+  ]);
+
+  var $search = $selection.find('input');
+  var $choices = $selection.find('.select2-selection__choice');
+
+  assert.equal($search.length, 1, 'The search was visible');
+  assert.equal($choices.length, 1, 'The choice was rendered');
+
+  // Trigger the backspace on the search
+  var backspace = $.Event('keydown', {
+    which: KEYS.BACKSPACE
+  });
+  $search.trigger(backspace);
+
+  assert.equal($search.val(), '', 'The search text was not set');
+});
+
 test('updating selection does not shift the focus', function (assert) {
   // Check for IE 8, which triggers a false negative during testing
   if (window.attachEvent && !window.addEventListener) {
