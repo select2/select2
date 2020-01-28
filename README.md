@@ -1,7 +1,7 @@
 Select2
 =======
 ![Build Status][github-actions-image]
-[![cdnjs](https://img.shields.io/cdnjs/v/select2.svg)][cdnjs]
+[![Financial Contributors on Open Collective](https://opencollective.com/select2/all/badge.svg?label=financial+contributors)](https://opencollective.com/select2) [![cdnjs](https://img.shields.io/cdnjs/v/select2.svg)][cdnjs]
 [![jsdelivr](https://data.jsdelivr.com/v1/package/npm/select2/badge)][jsdelivr]
 
 Select2 is a jQuery-based replacement for select boxes. It supports searching,
@@ -125,3 +125,33 @@ The license is available within the repository in the [LICENSE][license] file.
 [wicketstuff-select2]: https://github.com/wicketstuff/core/tree/master/select2-parent
 [yii2]: http://www.yiiframework.com/
 [yii2-widget-select2]: https://github.com/kartik-v/yii2-widget-select2
+
+## Contributors
+
+### Code Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](.github/CONTRIBUTING.md)].
+<a href="https://github.com/select2/select2/graphs/contributors"><img src="https://opencollective.com/select2/contributors.svg?width=890&button=false" /></a>
+
+### Financial Contributors
+
+Become a financial contributor and help us sustain our community. [[Contribute](https://opencollective.com/select2/contribute)]
+
+#### Individuals
+
+<a href="https://opencollective.com/select2"><img src="https://opencollective.com/select2/individuals.svg?width=890"></a>
+
+#### Organizations
+
+Support this project with your organization. Your logo will show up here with a link to your website. [[Contribute](https://opencollective.com/select2/contribute)]
+
+<a href="https://opencollective.com/select2/organization/0/website"><img src="https://opencollective.com/select2/organization/0/avatar.svg"></a>
+<a href="https://opencollective.com/select2/organization/1/website"><img src="https://opencollective.com/select2/organization/1/avatar.svg"></a>
+<a href="https://opencollective.com/select2/organization/2/website"><img src="https://opencollective.com/select2/organization/2/avatar.svg"></a>
+<a href="https://opencollective.com/select2/organization/3/website"><img src="https://opencollective.com/select2/organization/3/avatar.svg"></a>
+<a href="https://opencollective.com/select2/organization/4/website"><img src="https://opencollective.com/select2/organization/4/avatar.svg"></a>
+<a href="https://opencollective.com/select2/organization/5/website"><img src="https://opencollective.com/select2/organization/5/avatar.svg"></a>
+<a href="https://opencollective.com/select2/organization/6/website"><img src="https://opencollective.com/select2/organization/6/avatar.svg"></a>
+<a href="https://opencollective.com/select2/organization/7/website"><img src="https://opencollective.com/select2/organization/7/avatar.svg"></a>
+<a href="https://opencollective.com/select2/organization/8/website"><img src="https://opencollective.com/select2/organization/8/avatar.svg"></a>
+<a href="https://opencollective.com/select2/organization/9/website"><img src="https://opencollective.com/select2/organization/9/avatar.svg"></a>
