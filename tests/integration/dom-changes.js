@@ -290,7 +290,6 @@ test('searching tags does not loose focus', function (assert) {
 
 
 test('adding multiple options calls selection:update once', function (assert) {
-
   assert.expect(1);
 
   var asyncDone = assert.async();
