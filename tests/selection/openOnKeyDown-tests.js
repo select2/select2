@@ -4,19 +4,6 @@ var KEYS = require('select2/keys');
 var $ = require('jquery');
 
 /**
- * Fetching method to return the fixtures container to append new select
- * elements. Rendering/opening a select2 element that is not in the DOM will
- * result in the select2 container element being appened to the end of the
- * <body> resulting in those elements showing on the page rather than being
- * hidden or rendered far off the page.
- *
- * @return {jQuery} a jQuery selection to be appended to.
- */
-function $fixtures () {
-  return $(document.body).find('#qunit-fixture');
-}
-
-/**
  * Build a keydown event with the given key code and extra options.
  *
  * @param  {Number} keyCode     the keyboard code to be used for the 'which'
@@ -55,7 +42,7 @@ function testAbled(isEnabled, testName, keyCode, eventProps, fn) {
         '<option>two</option>' +
       '</select>'
     );
-    $fixtures().append($element);
+    $('#qunit-fixture').append($element);
     $element.select2({ disabled: !isEnabled });
 
     var select2 = $element.data('select2');
