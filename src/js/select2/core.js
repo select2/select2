@@ -404,7 +404,7 @@ define([
       }
     } else if (mutations.removedNodes && mutations.removedNodes.length > 0) {
       changed = true;
-    } else if (Array.isArray(mutations)) {
+    } else if ($.isArray(mutations)) {
       $.each(mutations, function(evt, mutation) {
         if (self._isChangeMutation(evt, mutation)) {
           // We've found a change mutation.
