@@ -31,7 +31,7 @@ define([
 
   AllowClear.prototype._handleClear = function (_, evt) {
     // Ignore the event if it is disabled
-    if (this.options.get('disabled')) {
+    if (this.isDisabled()) {
       return;
     }
 
