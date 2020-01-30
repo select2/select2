@@ -325,7 +325,7 @@ define([
       $highlighted.trigger('mouseup');
     });
 
-    container.on('results:select', function () {
+    container.on('results:select', function (evt) {
       var $highlighted = self.getHighlightedResults();
 
       if ($highlighted.length === 0) {
@@ -335,9 +335,12 @@ define([
       var data = Utils.GetData($highlighted[0], 'data');
 
       if ($highlighted.attr('aria-selected') == 'true') {
-        self.trigger('close', {});
+        self.trigger('close', {
+          originalEvent: evt
+        });
       } else {
         self.trigger('select', {
+          originalEvent: evt,
           data: data
         });
       }
