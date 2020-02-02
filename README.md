@@ -39,6 +39,9 @@ You can source Select2 directly from a CDN like [jsDelivr][jsdelivr] or
 [cdnjs][cdnjs], [download it from this GitHub repo][releases], or use one of
 the integrations below.
 
+NPM: npm install select2
+Yarn: yarn add select2
+
 Integrations
 ------------
 Third party developers have created plugins for platforms which allow Select2 to be integrated more natively and quickly. For many platforms, additional plugins are not required because Select2 acts as a standard `<select>` box.
