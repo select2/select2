@@ -40,6 +40,7 @@ define([
 
     container.on('close', function () {
       self.$search.val('');
+      self.resizeSearch();
       self.$search.removeAttr('aria-controls');
       self.$search.removeAttr('aria-activedescendant');
       self.$search.trigger('focus');
