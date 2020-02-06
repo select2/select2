@@ -336,11 +336,11 @@ define([
 
       if ($highlighted.attr('aria-selected') == 'true') {
         self.trigger('close', {
-          originalEvent: evt
+          originalEvent: evt.originalEvent
         });
       } else {
         self.trigger('select', {
-          originalEvent: evt,
+          originalEvent: evt.originalEvent,
           data: data
         });
       }

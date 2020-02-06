@@ -335,7 +335,9 @@ define([
 
           evt.preventDefault();
         } else if (key === KEYS.ENTER) {
-          self.trigger('results:select', evt);
+          self.trigger('results:select', {
+            originalEvent: evt
+          });
 
           evt.preventDefault();
         } else if ((key === KEYS.SPACE && evt.ctrlKey)) {
