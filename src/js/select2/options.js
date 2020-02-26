@@ -127,6 +127,19 @@ define([
       }
     }
 
+    if ($e.data('selected')) {
+      let selected = $e.data('selected');
+      if (!Array.isArray(selected)) {
+        selected = [selected];
+      }
+      selected.forEach(s => {
+        const index = this.options.data.findIndex(x => x.id === s);
+        if (index !== false) {
+          this.options.data[index].selected = true;
+        }
+      });
+    }
+    
     return this;
   };
 
