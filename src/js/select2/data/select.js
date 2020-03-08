@@ -14,15 +14,19 @@ define([
 
   SelectAdapter.prototype.current = function (callback) {
     var data = [];
-    var self = this;
 
-    this.$element.find(':selected').each(function () {
-      var $option = $(this);
+    var domElement = this.$element[0];
 
-      var option = self.item($option);
+    var selectedElements = domElement.querySelectorAll(':checked');
+
+    for (var index = 0; index < selectedElements.length; index++) {
+      var selectedElement = selectedElements[index];
+      var $option = $(selectedElement);
+
+      var option = this.item($option);
 
       data.push(option);
-    });
+    }
 
     callback(data);
   };
