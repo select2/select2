@@ -369,15 +369,4 @@ export class SingleSelect extends AbstractSelect<Props, State> {
         event.preventDefault();
         event.stopPropagation();
     };
-
-    static SingleSelectDropdown = class extends Dropdown {
-        constructor(props) {
-            super(props);
-        }
-
-        componentDidMount() {
-            super.componentDidMount();
-            this.props.controlRef.current.focus();
-        }
-    };
 }
