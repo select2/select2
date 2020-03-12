@@ -141,6 +141,7 @@ export class SingleSelect extends AbstractSelect<Props, State> {
                         controlRef={this.containerRef}
                         dropdownRef={this.dropdownRef}
                         onFocusOut={this.onFocusOut}
+                        onComponentDidMount={this.focusOnSearch}
                     >
                         <div>
                             <input
@@ -259,10 +260,12 @@ export class SingleSelect extends AbstractSelect<Props, State> {
     };
 
     private open(query: string = '') {
-        this.search(query, this.getValueAsArray(), { open: true }, () => {
-            this.searchRef.current.focus();
-        });
+        this.search(query, this.getValueAsArray(), { open: true });
     }
+
+    private focusOnSearch = () => {
+        this.searchRef.current.focus();
+    };
 
     private onSearchFocus = (event: FocusEvent) => {
         this.updateState({ focused: true });
@@ -365,5 +368,16 @@ export class SingleSelect extends AbstractSelect<Props, State> {
         this.selectResult(result);
         event.preventDefault();
         event.stopPropagation();
+    };
+
+    static SingleSelectDropdown = class extends Dropdown {
+        constructor(props) {
+            super(props);
+        }
+
+        componentDidMount() {
+            super.componentDidMount();
+            this.props.controlRef.current.focus();
+        }
     };
 }
