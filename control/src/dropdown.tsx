@@ -28,6 +28,7 @@ interface Props {
     onClick?: MouseEventListener;
     onMouseDown?: MouseEventListener;
     onFocusOut?: EventListener;
+    onComponentDidMount?: () => void;
 }
 
 export class Dropdown extends Component<Props> {
@@ -72,6 +73,10 @@ export class Dropdown extends Component<Props> {
             });
         });
         this.position();
+
+        if (this.props.onComponentDidMount) {
+            this.props.onComponentDidMount();
+        }
     }
 
     public componentWillUnmount() {
