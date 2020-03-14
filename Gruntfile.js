@@ -16,7 +16,6 @@ module.exports = function (grunt) {
     'select2/compat/dropdownCss',
 
     'select2/compat/initSelection',
-    'select2/compat/inputData',
     'select2/compat/matcher',
     'select2/compat/query',
 
