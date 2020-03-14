@@ -20,7 +20,7 @@
   .select2-selection__clear {
     cursor: pointer;
     float: right;
-    font-weight: bold;
+    font-weight: 700;
     margin-right: 10px;
   }
 
@@ -45,7 +45,7 @@
 
     width: 20px;
 
-    @include gradient-vertical(#eeeeee, #cccccc, 50%, 100%);
+    @include gradient-vertical(#eee, #ccc, 50%, 100%);
 
     b {
       border-color: #888 transparent transparent transparent;

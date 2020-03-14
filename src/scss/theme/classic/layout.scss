@@ -38,11 +38,11 @@
   }
 
   .select2-results__option {
-    &[role=group] {
+    &[role="group"] {
       padding: 0;
     }
 
-    &[aria-disabled=true] {
+    &[aria-disabled="true"] {
       color: $results-choice-fg-unselectable-color;
     }
   }

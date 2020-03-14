@@ -38,15 +38,15 @@
   }
 
   .select2-results__option {
-    &[role=group] {
+    &[role="group"] {
       padding: 0;
     }
 
-    &[aria-disabled=true] {
+    &[aria-disabled="true"] {
       color: #999;
     }
 
-    &[aria-selected=true] {
+    &[aria-selected="true"] {
       background-color: #ddd;
     }
 
@@ -86,7 +86,7 @@
 
   .select2-results__option--highlighted[aria-selected] {
     background-color: #5897fb;
-    color: white;
+    color: #fff;
   }
 
   .select2-results__group {
