@@ -97,15 +97,6 @@ define([
           Tokenizer
         );
       }
-
-      if (options.query != null) {
-        var Query = require(options.amdBase + 'compat/query');
-
-        options.dataAdapter = Utils.Decorate(
-          options.dataAdapter,
-          Query
-        );
-      }
     }
 
     if (options.resultsAdapter == null) {
