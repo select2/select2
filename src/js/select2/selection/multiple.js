@@ -109,7 +109,7 @@ define([
 
     var $rendered = this.$selection.find('.select2-selection__rendered');
 
-    Utils.appendMany($rendered, $selections);
+    $rendered.append($selections);
   };
 
   return MultipleSelection;

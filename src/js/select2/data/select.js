@@ -151,7 +151,7 @@ define([
   };
 
   SelectAdapter.prototype.addOptions = function ($options) {
-    Utils.appendMany(this.$element, $options);
+    this.$element.append($options);
   };
 
   SelectAdapter.prototype.option = function (data) {

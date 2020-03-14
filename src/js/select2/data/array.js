@@ -70,7 +70,7 @@ define([
       if (item.children) {
         var $children = this.convertToOptions(item.children);
 
-        Utils.appendMany($option, $children);
+        $option.append($children);
       }
 
       $options.push($option);
