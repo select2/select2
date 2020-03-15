@@ -1,7 +1,7 @@
 define([
   'jquery',
-  './utils'
-], function ($, CompatUtils) {
+  '../utils'
+], function ($, Utils) {
   // No-op CSS adapter that discards all classes by default
   function _containerAdapter (clazz) {
     return null;
@@ -44,7 +44,7 @@ define([
       containerCss = containerCss(this.$element);
     }
 
-    CompatUtils.syncCssClasses($container, this.$element, containerCssAdapter);
+    Utils.syncCssClasses($container, this.$element, containerCssAdapter);
 
     $container.css(containerCss);
     $container.addClass(containerCssClass);

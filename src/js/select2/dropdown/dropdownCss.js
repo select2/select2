@@ -1,7 +1,7 @@
 define([
   'jquery',
-  './utils'
-], function ($, CompatUtils) {
+  '../utils'
+], function ($, Utils) {
   // No-op CSS adapter that discards all classes by default
   function _dropdownAdapter (clazz) {
     return null;
@@ -44,7 +44,7 @@ define([
       dropdownCss = dropdownCss(this.$element);
     }
 
-    CompatUtils.syncCssClasses($dropdown, this.$element, dropdownCssAdapter);
+    Utils.syncCssClasses($dropdown, this.$element, dropdownCssAdapter);
 
     $dropdown.css(dropdownCss);
     $dropdown.addClass(dropdownCssClass);

@@ -7,7 +7,7 @@ var Options = require('select2/options');
 var Dropdown = require('select2/dropdown');
 var DropdownCSS = Utils.Decorate(
   Dropdown,
-  require('select2/compat/dropdownCss')
+  require('select2/dropdown/dropdownCss')
 );
 
 test('all classes will be copied if :all: is used', function (assert) {

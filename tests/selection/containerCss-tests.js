@@ -7,7 +7,7 @@ var Options = require('select2/options');
 var SingleSelection = require('select2/selection/single');
 var ContainerCSS = Utils.Decorate(
   SingleSelection,
-  require('select2/compat/containerCss')
+  require('select2/selection/selectionCss')
 );
 
 test('all classes will be copied if :all: is used', function (assert) {
