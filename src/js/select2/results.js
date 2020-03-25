@@ -102,9 +102,13 @@ define([
       .find('.select2-results__option--selectable');
 
     var $selected = $options.filter('.select2-results__option--selected');
+    var $unselected  = $options.filter('[aria-selected=false]');
 
-    // Check if there are any selected options
-    if ($selected.length > 0) {
+    // Check if there are any unselected options in tags mode
+    if ($unselected.length > 0 && this.options.get('tags')) {
+      $unselected.last().trigger('mouseenter');
+    } else if ($selected.length > 0) {
+      // Check if there are any selected options
       // If there are selected options, highlight the first
       $selected.first().trigger('mouseenter');
     } else {
