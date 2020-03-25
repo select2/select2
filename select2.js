@@ -1832,6 +1832,15 @@ the specific language governing permissions and limitations under the Apache Lic
                     // ignore a response if the select2 has been closed before it was received
                     if (!self.opened()) return;
 
+                    // handle ajax error
+                    if(data.hasError !== undefined && checkFormatter(self.opts.formatAjaxError, "formatAjaxError")) {
+                        if(results.find('.select2-ajax-error').length === 0) {
+                            results.append("<li class='select2-ajax-error'>" + evaluate(self.opts.formatAjaxError, self.opts.element, data.jqXHR, data.textStatus, data.errorThrown) + "</li>");
+                        }
+                        return;
+                    } else if (results.find('.select2-ajax-error').length > 0) {
+                        results.find('.select2-ajax-error').remove();
+                    }
 
                     self.opts.populateResults.call(this, results, data.results, {term: term, page: page, context:context});
                     self.postprocessResults(data, false, false);
