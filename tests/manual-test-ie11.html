@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Select2</title>
+    <script src="vendor/jquery-3.4.1.js" type="text/javascript"></script>
+    <link href="../dist/css/select2.css" type="text/css" rel="stylesheet"/>
+    <script src="../dist/js/select2.full.js" type="text/javascript"></script>
+</head>
+<body>
+        <div id="body-inner">
+            <div class="s2-example">
+                <p>
+                    Currently no automatic testing for IE11. This page allows you to manually test IE11.<br>
+                    The bug: After typing 1, 2, or 3 characters you will loose focus and can no longer continue typing.<br>
+                    <br>
+                    <select class="js-example-tags form-control" multiple="multiple" style="width:500px;">
+                        <option selected="selected">orange</option>
+                        <option>white</option>
+                        <option selected="selected">purple</option>
+                    </select>
+                </p>
+            </div>
+            <script type="text/javascript">
+                $(".js-example-tags").select2({ tags: true });
+            </script>
+        </div>
+</body>
+</html>
