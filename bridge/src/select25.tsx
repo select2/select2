@@ -262,7 +262,9 @@ function destroy(element: HTMLElement) {
     const targetElement = store.get(StoreKeys.targetElement);
     const parentElement = element.parentElement;
     render(null, parentElement, targetElement);
-    parentElement.removeChild(targetElement);
+    window.setTimeout(() => {
+        parentElement.removeChild(targetElement);
+    });
     Store.removeStore(element);
 }
 
