@@ -20,7 +20,7 @@ define(function () {
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
-      var message = 'Bonvolu enigi ' + remainingChars + ' aŭ pli multajn signojn';
+      var message = 'Bv. enigi ' + remainingChars + ' aŭ pli multajn signojn';
 
       return message;
     },
