@@ -41,7 +41,7 @@ export interface State {
 
 export interface Props {
     containerStyle?: string;
-    containerClass?: string;
+    cssClass?: string;
     tabIndex?: number;
     valueContent?: DataItemRenderer;
     resultContent?: DataItemRenderer;

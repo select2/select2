@@ -18,7 +18,7 @@ enum StoreKeys {
 
 interface BaseSelectOptions {
     containerStyle?: string;
-    containerClass?: string;
+    cssClass?: string;
     placeholder?: string;
     tabIndex?: number;
     valueContent?: DataItemRenderer;
@@ -105,7 +105,7 @@ class MultiSelectWrapper extends Component<
         const opts = this.props.options;
         return (
             <MultiSelect
-                containerClass={opts.containerClass}
+                cssClass={opts.cssClass}
                 containerStyle={opts.containerStyle}
                 placeholder={opts.placeholder}
                 valuesLabel={opts.valuesLabel}
@@ -162,7 +162,7 @@ class SingleSelectWrapper extends Component<
         return (
             <SingleSelect
                 label={opts.label}
-                containerClass={opts.containerClass}
+                cssClass={opts.cssClass}
                 containerStyle={opts.containerStyle}
                 allowClear={opts.allowClear}
                 placeholder={opts.placeholder}
@@ -245,12 +245,12 @@ function fillBaseOptions(element: HTMLInputElement, options: BaseSelectOptions) 
     }
 
     if (element.getAttribute('data-s25-container-class')) {
-        let clazz = options.containerClass || '';
+        let clazz = options.cssClass || '';
         if (clazz.length > 0) {
             clazz += ' ';
         }
         clazz += element.getAttribute('data-s25-container-class');
-        options.containerClass = clazz;
+        options.cssClass = clazz;
     }
 }
 

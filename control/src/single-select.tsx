@@ -58,10 +58,13 @@ export class SingleSelect extends AbstractSelect<Props, State> {
         const { minimumCharacters, tabIndex, label, allowClear, placeholder } = props;
         const { value, open, loading, focused, search, results } = state;
 
-        let classes = cn(style.control, style.single, { [style.open]: open }, { [style.focused]: focused });
-        if (props.containerClass && props.containerClass.length > 0) {
-            classes += ' ' + props.containerClass;
-        }
+        const classes = cn(
+            this.props.cssClass,
+            style.control,
+            style.single,
+            { [style.open]: open },
+            { [style.focused]: focused }
+        );
         const resultsDomId = this.namespace + '-results';
         const optionDomId = this.namespace + '-val';
         const resultsNamespace = this.namespace + '-res-';
@@ -136,7 +139,7 @@ export class SingleSelect extends AbstractSelect<Props, State> {
                 </div>
                 {open && (
                     <Dropdown
-                        class={cn(style.dropdown, style.single)}
+                        class={cn(style.dropdown, style.single, this.props.cssClass)}
                         onMouseDown={this.onDropdownMouseDown}
                         controlRef={this.containerRef}
                         dropdownRef={this.dropdownRef}

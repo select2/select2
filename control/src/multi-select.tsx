@@ -78,10 +78,13 @@ export class MultiSelect extends AbstractSelect<Props, State> {
 
         const showPlaceholder = !values || values.length === 0;
 
-        let classes = cn(style.control, style.multi, { [style.open]: open }, { [style.focused]: focused });
-        if (props.containerClass && props.containerClass.length > 0) {
-            classes += ' ' + props.containerClass;
-        }
+        const classes = cn(
+            this.props.cssClass,
+            style.control,
+            style.multi,
+            { [style.open]: open },
+            { [style.focused]: focused }
+        );
 
         const instructionsDomId = this.namespace + '-instructions';
         const resultsDomId = this.namespace + '-results';
@@ -204,7 +207,7 @@ export class MultiSelect extends AbstractSelect<Props, State> {
                 </div>
                 {open && (
                     <Dropdown
-                        class={cn(style.dropdown, style.multi)}
+                        class={cn(this.props.cssClass, style.dropdown, style.multi)}
                         onClick={this.onDropdownClick}
                         controlRef={this.containerRef}
                         dropdownRef={this.dropdownRef}

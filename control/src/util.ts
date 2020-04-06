@@ -61,7 +61,7 @@ export function cn(...values: any) {
     const hasOwnProperty = {}.hasOwnProperty;
 
     for (const value of values) {
-        if (typeof value === 'string') {
+        if (typeof value === 'string' && value.length > 0) {
             classes.push(value);
         } else if (typeof value === 'object') {
             for (const key in value as object) {
