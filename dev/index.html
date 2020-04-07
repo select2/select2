@@ -7,6 +7,13 @@
     <script src="../bridge/src/select25.tsx"></script>
     <script src="countries-data.js"></script>
     <link rel="stylesheet" href="../control/src/select25.scss" />
+    <style>
+        .customMultiCssClass {
+        }
+
+        .customSingleCssClass {
+        }
+    </style>
 </head>
 
 <body>
@@ -162,6 +169,7 @@
             valuesLabel: "Selected Countries",
             comboboxLabel: "Add Country",
             placeholder: "Add Country",
+            cssClass: 'customMultiCssClass',
             minimumCharacters: 2,
             query: query,
             quiet: 100,
@@ -177,6 +185,7 @@
         document.getElementById('countries2'), {
             allowClear: true,
             placeholder: "Select Country",
+            cssClass: 'customSingleCssClass',
             minimumCharacters: 2,
             query: query,
             quiet: 100,
