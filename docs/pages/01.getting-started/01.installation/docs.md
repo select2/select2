@@ -17,6 +17,12 @@ Select2 is hosted on both the [jsDelivr](https://www.jsdelivr.com/package/npm/se
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 ```
 
+Should messages be [translated](https://select2.org/i18n) then include a line such as the following (example for Portuguese):
+
+```
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/i18n/pt.js"></script>
+```
+
 >>> <i class="fa fa-info-circle"></i> Immediately following a new release, it takes some time for CDNs to catch up and get the new versions live on the CDN.
 
 ## Installing with Bower
@@ -38,6 +44,12 @@ The precompiled distribution files will be available in `vendor/select2/dist/css
 <script src="vendor/select2/dist/js/select2.min.js"></script>
 ```
 
+Should messages be [translated](https://select2.org/i18n) then include a line such as the following (example for Portuguese):
+
+```
+<script src="vendor/select2/dist/js/i18n/pt.js"></script>
+```
+
 ## Manual installation
 
 We strongly recommend that you use either a CDN or a package manager like Bower or npm. This will make it easier for you to deploy your project in different environments, and easily update Select2 when new versions are released. Nonetheless if you prefer to integrate Select2 into your project manually, you can [download the release of your choice](https://github.com/select2/select2/tags) from GitHub and copy the files from the `dist` directory into your project.
@@ -47,4 +59,10 @@ Include the compiled files in your page:
 ```
 <link href="path/to/select2.min.css" rel="stylesheet" />
 <script src="path/to/select2.min.js"></script>
+```
+
+Should messages be [translated](https://select2.org/i18n) then include a line such as the following (example for Portuguese):
+
+```
+<script src="path/to/pt.js"></script>
 ```
