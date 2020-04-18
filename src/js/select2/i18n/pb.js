@@ -16,9 +16,11 @@ define(function () {
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
-      var charCount = (remainingChars > 1) ? ' ਅੱਖਰਾਂ ' : ' ਅੱਖਰ ';
+      var message = 'ਕ੍ਰਿਪਾ ਕਰਕੇ ' + remainingChars + ' ਜਾਂ ' + remainingChars + ' ਤੋਂ ਵੱਧ ਅੱਖਰ ਵਰਤੋ ।';
 
-      var message = 'ਕ੍ਰਿਪਾ ਕਰਕੇ ' + remainingChars + ' ਜਾਂ ' + remainingChars + ' ਤੋਂ ਵੱਧ' + charCount + 'ਦਾ ਇਸਤੇਮਾਲ ਕਰੋ ।';
+      if(remainingChars > 1) {
+        message = 'ਕ੍ਰਿਪਾ ਕਰਕੇ ' + remainingChars + ' ਜਾਂ ' + remainingChars + ' ਤੋਂ ਵੱਧ ਅੱਖਰਾਂ ਦੀ ਵਰਤੋਂ ਕਰੋ ।';
+      }
 
       return message;
     },
@@ -26,9 +28,11 @@ define(function () {
       return 'ਹੋਰ ਨਤੀਜੇ ਲੋਡ ਹੋ ਰਹੇ ਹਨ ...।';
     },
     maximumSelected: function (args) {
-      var resultCount = (args.maximum != 1) ? ' ਨਤੀਜੇ ' : ' ਨਤੀਜਾ ';
+      var message = 'ਤੁਸੀਂ ਸਿਰਫ਼ ' + args.maximum + ' ਨਤੀਜਾ ਚੁਣ ਸਕਦੇ ਹੋ ।';
 
-      var message = 'ਤੁਸੀਂ ਸਿਰਫ਼ ' + args.maximum + resultCount + 'ਚੁਣ ਸਕਦੇ ਹੋ ।';
+      if(args.maximum != 1) {
+        message = 'ਤੁਸੀਂ ਸਿਰਫ਼ ' + args.maximum + ' ਨਤੀਜੇ ਚੁਣ ਸਕਦੇ ਹੋ ।';
+      }
 
       return message;
     },
