@@ -14,12 +14,13 @@ define(function () {
       return message;
     },
     inputTooShort: function (args) {
-      var remainingChars = args.minimum - args.input.length;
+      //  remainingChars <==> rChar
+      var rChar = args.minimum - args.input.length;
 
-      var message = 'ਕ੍ਰਿਪਾ ਕਰਕੇ ' + remainingChars + ' ਜਾਂ ' + remainingChars + ' ਤੋਂ ਵੱਧ ਅੱਖਰ ਵਰਤੋ ।';
+      var message = 'ਕ੍ਰਿਪਾ ਕਰਕੇ ' + rChar + ' ਜਾਂ ' + rChar + ' ਤੋਂ ਵੱਧ ਅੱਖਰ ਵਰਤੋ ।';
 
-      if(remainingChars > 1) {
-        message = 'ਕ੍ਰਿਪਾ ਕਰਕੇ ' + remainingChars + ' ਜਾਂ ' + remainingChars + ' ਤੋਂ ਵੱਧ ਅੱਖਰਾਂ ਦੀ ਵਰਤੋਂ ਕਰੋ ।';
+      if(rChar > 1) {
+        message = 'ਕ੍ਰਿਪਾ ਕਰਕੇ ' + rChar + ' ਜਾਂ ' + rChar + ' ਤੋਂ ਵੱਧ ਅੱਖਰਾਂ ਦੀ ਵਰਤੋਂ ਕਰੋ ।';
       }
 
       return message;
