@@ -14,14 +14,19 @@ define(function () {
       return message;
     },
     inputTooShort: function (args) {
-      //  remainingChars <==> rChar
-      var rChar = args.minimum - args.input.length;
+      var remainingChars = args.minimum - args.input.length;
 
-      var message = 'ਕ੍ਰਿਪਾ ਕਰਕੇ ' + rChar + ' ਜਾਂ ' + rChar + ' ਤੋਂ ਵੱਧ ਅੱਖਰ ਵਰਤੋ ।';
+      var charCount = (remainingChars > 1) ? ' ਅੱਖਰਾਂ ' : ' ਅੱਖਰ ';
 
-      if(rChar > 1) {
-        message = 'ਕ੍ਰਿਪਾ ਕਰਕੇ ' + rChar + ' ਜਾਂ ' + rChar + ' ਤੋਂ ਵੱਧ ਅੱਖਰਾਂ ਦੀ ਵਰਤੋਂ ਕਰੋ ।';
-      }
+      /**
+      * @param {string} repWords_n
+      * @description: reuse of repetative words
+      */
+      var repWords_1 = 'ਕ੍ਰਿਪਾ ਕਰਕੇ ';
+      var repWords_2 = remainingChars + ' ਜਾਂ ' + remainingChars;
+      var repWords_3 = ' ਤੋਂ ਵੱਧ' + charCount +'ਦੀ ਵਰਤੋਂ ਕਰੋ ।';
+
+      var message = repWords_1 + repWords_2 + repWords_3;
 
       return message;
     },
