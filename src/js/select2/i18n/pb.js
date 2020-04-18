@@ -22,11 +22,11 @@ define(function () {
       * @param {string} repWords_n
       * @description: reuse of repetative words
       */
-      var repWords_1 = 'ਕ੍ਰਿਪਾ ਕਰਕੇ ';
-      var repWords_2 = remainingChars + ' ਜਾਂ ' + remainingChars;
-      var repWords_3 = ' ਤੋਂ ਵੱਧ' + charCount +'ਦੀ ਵਰਤੋਂ ਕਰੋ ।';
+      var repWordsA = 'ਕ੍ਰਿਪਾ ਕਰਕੇ ';
+      var repWordsB = remainingChars + ' ਜਾਂ ' + remainingChars;
+      var repWordsC = ' ਤੋਂ ਵੱਧ' + charCount +'ਦੀ ਵਰਤੋਂ ਕਰੋ ।';
 
-      var message = repWords_1 + repWords_2 + repWords_3;
+      var message = repWordsA + repWordsB + repWordsC;
 
       return message;
     },
