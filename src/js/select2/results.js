@@ -409,7 +409,7 @@ define([
     });
 
     container.on('results:focus', function (params) {
-      params.element.addClass('select2-results__option--highlighted');
+      params.element[0].classList.add('select2-results__option--highlighted');
     });
 
     container.on('results:message', function (params) {
