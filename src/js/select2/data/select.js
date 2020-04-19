@@ -33,7 +33,9 @@ define([
     data.selected = true;
 
     // If data.element is a DOM node, use it instead
-    if ($(data.element).is('option')) {
+    if (
+      data.element != null && data.element.tagName.toLowerCase() === 'option'
+    ) {
       data.element.selected = true;
 
       this.$element.trigger('input').trigger('change');
@@ -76,7 +78,10 @@ define([
 
     data.selected = false;
 
-    if ($(data.element).is('option')) {
+    if (
+      data.element != null &&
+      data.element.tagName.toLowerCase() === 'option'
+    ) {
       data.element.selected = false;
 
       this.$element.trigger('input').trigger('change');
@@ -130,11 +135,14 @@ define([
     var $options = this.$element.children();
 
     $options.each(function () {
-      var $option = $(this);
-
-      if (!$option.is('option') && !$option.is('optgroup')) {
+      if (
+        this.tagName.toLowerCase() !== 'option' &&
+        this.tagName.toLowerCase() !== 'optgroup'
+      ) {
         return;
       }
+
+      var $option = $(this);
 
       var option = self.item($option);
 
@@ -186,15 +194,13 @@ define([
       option.title = data.title;
     }
 
-    var $option = $(option);
-
     var normalizedData = this._normalizeItem(data);
     normalizedData.element = option;
 
     // Override the option's data with the combined data
     Utils.StoreData(option, 'data', normalizedData);
 
-    return $option;
+    return $(option);
   };
 
   SelectAdapter.prototype.item = function ($option) {
@@ -206,7 +212,9 @@ define([
       return data;
     }
 
-    if ($option.is('option')) {
+    var option = $option[0];
+
+    if (option.tagName.toLowerCase() === 'option') {
       data = {
         id: $option.val(),
         text: $option.text(),
@@ -214,7 +222,7 @@ define([
         selected: $option.prop('selected'),
         title: $option.prop('title')
       };
-    } else if ($option.is('optgroup')) {
+    } else if (option.tagName.toLowerCase() === 'optgroup') {
       data = {
         text: $option.prop('label'),
         children: [],
