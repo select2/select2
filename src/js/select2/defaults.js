@@ -355,7 +355,7 @@ define([
 
     var languages;
 
-    if (!$.isArray(language)) {
+    if (!Array.isArray(language)) {
       languages = [language];
     } else {
       languages = language;

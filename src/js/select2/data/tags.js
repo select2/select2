@@ -18,7 +18,7 @@ define([
 
     decorated.call(this, $element, options);
 
-    if ($.isArray(tags)) {
+    if (Array.isArray(tags)) {
       for (var t = 0; t < tags.length; t++) {
         var tag = tags[t];
         var item = this._normalizeItem(tag);
