@@ -94,7 +94,11 @@ define([
   };
 
   Tags.prototype.createTag = function (decorated, params) {
-    var term = $.trim(params.term);
+    if (params.term == null) {
+      return null;
+    }
+
+    var term = params.term.trim();
 
     if (term === '') {
       return null;

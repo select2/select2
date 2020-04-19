@@ -251,7 +251,7 @@ define([
 
     function matcher (params, data) {
       // Always return the object if there is nothing to compare
-      if ($.trim(params.term) === '') {
+      if (params.term == null || params.term.trim() === '') {
         return data;
       }
 

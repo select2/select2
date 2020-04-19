@@ -322,7 +322,7 @@ define([
   Utils.copyNonInternalCssClasses = function ($dest, $src) {
     var classes, replacements = [], adapted;
 
-    classes = $.trim($dest.attr('class'));
+    classes = $dest.attr('class').trim();
 
     if (classes) {
       classes = '' + classes; // for IE which returns object
@@ -335,7 +335,7 @@ define([
       });
     }
 
-    classes = $.trim($src.attr('class'));
+    classes = $src.attr('class').trim();
 
     if (classes) {
       classes = '' + classes; // for IE which returns object
