@@ -19,14 +19,14 @@ define(function () {
       var charCount = (remainingChars > 1) ? ' ਅੱਖਰਾਂ ' : ' ਅੱਖਰ ';
 
       /**
-      * @param {string} repWords_n
-      * @description: reuse of repetative words
+      * @param {string} messageX [X:A-Z]
+      * @description: Sentence splitted into sub-parts
       */
-      var repWordsA = 'ਕ੍ਰਿਪਾ ਕਰਕੇ ';
-      var repWordsB = remainingChars + ' ਜਾਂ ' + remainingChars;
-      var repWordsC = ' ਤੋਂ ਵੱਧ' + charCount +'ਦੀ ਵਰਤੋਂ ਕਰੋ ।';
+      var subPartA = 'ਕ੍ਰਿਪਾ ਕਰਕੇ ';
+      var subPartB = remainingChars + ' ਜਾਂ ' + remainingChars;
+      var subPartC = ' ਤੋਂ ਵੱਧ' + charCount +'ਦੀ ਵਰਤੋਂ ਕਰੋ ।';
 
-      var message = repWordsA + repWordsB + repWordsC;
+      var message = subPartA + subPartB + subPartC;
 
       return message;
     },
