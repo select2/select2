@@ -197,42 +197,15 @@ define([
     this._syncA = Utils.bind(this._syncAttributes, this);
     this._syncS = Utils.bind(this._syncSubtree, this);
 
-    if (this.$element[0].attachEvent) {
-      this.$element[0].attachEvent('onpropertychange', this._syncA);
-    }
-
-    var observer = window.MutationObserver ||
-      window.WebKitMutationObserver ||
-      window.MozMutationObserver
-    ;
-
-    if (observer != null) {
-      this._observer = new observer(function (mutations) {
-        self._syncA();
-        self._syncS(null, mutations);
-      });
-      this._observer.observe(this.$element[0], {
-        attributes: true,
-        childList: true,
-        subtree: false
-      });
-    } else if (this.$element[0].addEventListener) {
-      this.$element[0].addEventListener(
-        'DOMAttrModified',
-        self._syncA,
-        false
-      );
-      this.$element[0].addEventListener(
-        'DOMNodeInserted',
-        self._syncS,
-        false
-      );
-      this.$element[0].addEventListener(
-        'DOMNodeRemoved',
-        self._syncS,
-        false
-      );
-    }
+    this._observer = new window.MutationObserver(function (mutations) {
+      self._syncA();
+      self._syncS(mutations);
+    });
+    this._observer.observe(this.$element[0], {
+      attributes: true,
+      childList: true,
+      subtree: false
+    });
   };
 
   Select2.prototype._registerDataEvents = function () {
@@ -376,49 +349,30 @@ define([
     }
   };
 
-  Select2.prototype._isChangeMutation = function (evt, mutations) {
-    var changed = false;
+  Select2.prototype._isChangeMutation = function (mutations) {
     var self = this;
 
-    // Ignore any mutation events raised for elements that aren't options or
-    // optgroups. This handles the case when the select element is destroyed
-    if (
-      evt && evt.target && (
-        evt.target.nodeName !== 'OPTION' && evt.target.nodeName !== 'OPTGROUP'
-      )
-    ) {
-      return;
-    }
-
-    if (!mutations) {
-      // If mutation events aren't supported, then we can only assume that the
-      // change affected the selections
-      changed = true;
-    } else if (mutations.addedNodes && mutations.addedNodes.length > 0) {
+    if (mutations.addedNodes && mutations.addedNodes.length > 0) {
       for (var n = 0; n < mutations.addedNodes.length; n++) {
         var node = mutations.addedNodes[n];
 
         if (node.selected) {
-          changed = true;
+          return true;
         }
       }
     } else if (mutations.removedNodes && mutations.removedNodes.length > 0) {
-      changed = true;
+      return true;
     } else if (Array.isArray(mutations)) {
-      $.each(mutations, function(evt, mutation) {
-        if (self._isChangeMutation(evt, mutation)) {
-          // We've found a change mutation.
-          // Let's escape from the loop and continue
-          changed = true;
-          return false;
-        }
+      return mutations.some(function (mutation) {
+        return self._isChangeMutation(mutation);
       });
     }
-    return changed;
+
+    return false;
   };
 
-  Select2.prototype._syncSubtree = function (evt, mutations) {
-    var changed = this._isChangeMutation(evt, mutations);
+  Select2.prototype._syncSubtree = function (mutations) {
+    var changed = this._isChangeMutation(mutations);
     var self = this;
 
     // Only re-pull the data if we think there is a change
@@ -602,21 +556,8 @@ define([
   Select2.prototype.destroy = function () {
     this.$container.remove();
 
-    if (this.$element[0].detachEvent) {
-      this.$element[0].detachEvent('onpropertychange', this._syncA);
-    }
-
-    if (this._observer != null) {
-      this._observer.disconnect();
-      this._observer = null;
-    } else if (this.$element[0].removeEventListener) {
-      this.$element[0]
-        .removeEventListener('DOMAttrModified', this._syncA, false);
-      this.$element[0]
-        .removeEventListener('DOMNodeInserted', this._syncS, false);
-      this.$element[0]
-        .removeEventListener('DOMNodeRemoved', this._syncS, false);
-    }
+    this._observer.disconnect();
+    this._observer = null;
 
     this._syncA = null;
     this._syncS = null;
