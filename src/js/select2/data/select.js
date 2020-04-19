@@ -13,20 +13,14 @@ define([
   Utils.Extend(SelectAdapter, BaseAdapter);
 
   SelectAdapter.prototype.current = function (callback) {
-    var data = [];
+    var self = this;
 
-    var domElement = this.$element[0];
-
-    var selectedElements = domElement.querySelectorAll(':checked');
-
-    for (var index = 0; index < selectedElements.length; index++) {
-      var selectedElement = selectedElements[index];
-      var $option = $(selectedElement);
-
-      var option = this.item($option);
-
-      data.push(option);
-    }
+    var data = Array.prototype.map.call(
+      this.$element[0].querySelectorAll(':checked'),
+      function (selectedElement) {
+        return self.item($(selectedElement));
+      }
+    );
 
     callback(data);
   };
