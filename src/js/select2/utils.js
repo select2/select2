@@ -336,7 +336,7 @@ define([
     element.removeAttribute('data-select2-id');
   };
 
-  Utils.syncCssClasses = function ($dest, $src, adapter) {
+  Utils.copyNonInternalCssClasses = function ($dest, $src) {
     var classes, replacements = [], adapted;
 
     classes = $.trim($dest.attr('class'));
@@ -360,11 +360,7 @@ define([
       $(classes.split(/\s+/)).each(function () {
         // Only adapt non-Select2 classes
         if (this.indexOf('select2-') !== 0) {
-          adapted = adapter(this);
-
-          if (adapted != null) {
-            replacements.push(adapted);
-          }
+          replacements.push(this);
         }
       });
     }

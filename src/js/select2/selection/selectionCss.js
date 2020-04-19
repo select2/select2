@@ -17,7 +17,7 @@ define([
       };
     }
 
-    Utils.syncCssClasses($selection, this.$element, selectionCssAdapter);
+    Utils.copyNonInternalCssClasses($selection, this.$element);
 
     $selection.addClass(selectionCssClass);
 

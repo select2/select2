@@ -17,7 +17,7 @@ define([
       };
     }
 
-    Utils.syncCssClasses($dropdown, this.$element, dropdownCssAdapter);
+    Utils.copyNonInternalCssClasses($dropdown, this.$element);
 
     $dropdown.addClass(dropdownCssClass);
 
