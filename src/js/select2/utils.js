@@ -319,32 +319,26 @@ define([
     element.removeAttribute('data-select2-id');
   };
 
-  Utils.copyNonInternalCssClasses = function ($dest, $src) {
-    var classes, replacements = [], adapted;
+  Utils.copyNonInternalCssClasses = function (dest, src) {
+    var classes;
 
-    classes = $dest.attr('class').trim();
+    var destinationClasses = dest.getAttribute('class').trim().split(/\s+/);
 
-    if (classes) {
-      $(classes.split(/\s+/)).each(function () {
-        // Save all Select2 classes
-        if (this.indexOf('select2-') === 0) {
-          replacements.push(this);
-        }
-      });
-    }
+    destinationClasses = destinationClasses.filter(function (clazz) {
+      // Save all Select2 classes
+      return clazz.indexOf('select2-') === 0;
+    });
 
-    classes = $src.attr('class').trim();
+    var sourceClasses = src.getAttribute('class').trim().split(/\s+/);
 
-    if (classes) {
-      $(classes.split(/\s+/)).each(function () {
-        // Only copy non-Select2 classes
-        if (this.indexOf('select2-') !== 0) {
-          replacements.push(this);
-        }
-      });
-    }
+    sourceClasses = sourceClasses.filter(function (clazz) {
+      // Only copy non-Select2 classes
+      return clazz.indexOf('select2-') !== 0;
+    });
 
-    $dest.attr('class', replacements.join(' '));
+    var replacements = destinationClasses.concat(sourceClasses);
+
+    dest.setAttribute('class', replacements.join(' '));
   };
 
   return Utils;
