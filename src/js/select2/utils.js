@@ -358,7 +358,7 @@ define([
       classes = '' + classes; // for IE which returns object
 
       $(classes.split(/\s+/)).each(function () {
-        // Only adapt non-Select2 classes
+        // Only copy non-Select2 classes
         if (this.indexOf('select2-') !== 0) {
           replacements.push(this);
         }

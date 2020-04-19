@@ -12,12 +12,8 @@ define([
     if (selectionCssClass.indexOf(':all:') !== -1) {
       selectionCssClass = selectionCssClass.replace(':all:', '');
 
-      selectionCssAdapter = function (clazz) {
-        return clazz;
-      };
+      Utils.copyNonInternalCssClasses($selection, this.$element);
     }
-
-    Utils.copyNonInternalCssClasses($selection, this.$element);
 
     $selection.addClass(selectionCssClass);
 

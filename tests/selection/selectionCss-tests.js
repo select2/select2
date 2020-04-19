@@ -51,4 +51,5 @@ test('classes can be passed in as a string', function (assert) {
   var $container = select.render();
 
   assert.ok($container.hasClass('other'));
+  assert.ok(!$container.hasClass('copy'));
 });

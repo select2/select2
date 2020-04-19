@@ -12,12 +12,8 @@ define([
     if (dropdownCssClass.indexOf(':all:') !== -1) {
       dropdownCssClass = dropdownCssClass.replace(':all:', '');
 
-      dropdownCssAdapter = function (clazz) {
-        return clazz;
-      };
+      Utils.copyNonInternalCssClasses($dropdown, this.$element);
     }
-
-    Utils.copyNonInternalCssClasses($dropdown, this.$element);
 
     $dropdown.addClass(dropdownCssClass);
 
