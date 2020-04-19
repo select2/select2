@@ -12,7 +12,7 @@ define([
   MultipleSelection.prototype.render = function () {
     var $selection = MultipleSelection.__super__.render.call(this);
 
-    $selection.addClass('select2-selection--multiple');
+    $selection[0].classList.add('select2-selection--multiple');
 
     $selection.html(
       '<ul class="select2-selection__rendered"></ul>'

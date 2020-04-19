@@ -1,7 +1,6 @@
 define([
-  'jquery',
   '../utils'
-], function ($, Utils) {
+], function (Utils) {
   function DropdownCSS () { }
 
   DropdownCSS.prototype.render = function (decorated) {
@@ -12,7 +11,7 @@ define([
     if (dropdownCssClass.indexOf(':all:') !== -1) {
       dropdownCssClass = dropdownCssClass.replace(':all:', '');
 
-      Utils.copyNonInternalCssClasses($dropdown, this.$element);
+      Utils.copyNonInternalCssClasses($dropdown[0], this.$element[0]);
     }
 
     $dropdown.addClass(dropdownCssClass);

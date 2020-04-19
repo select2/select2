@@ -1,7 +1,6 @@
 define([
-  'jquery',
   '../utils'
-], function ($, Utils) {
+], function (Utils) {
   function SelectionCSS () { }
 
   SelectionCSS.prototype.render = function (decorated) {
@@ -12,7 +11,7 @@ define([
     if (selectionCssClass.indexOf(':all:') !== -1) {
       selectionCssClass = selectionCssClass.replace(':all:', '');
 
-      Utils.copyNonInternalCssClasses($selection, this.$element);
+      Utils.copyNonInternalCssClasses($selection[0], this.$element[0]);
     }
 
     $selection.addClass(selectionCssClass);
