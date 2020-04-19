@@ -319,5 +319,37 @@ define([
     element.removeAttribute('data-select2-id');
   };
 
+  Utils.copyNonInternalCssClasses = function ($dest, $src) {
+    var classes, replacements = [], adapted;
+
+    classes = $.trim($dest.attr('class'));
+
+    if (classes) {
+      classes = '' + classes; // for IE which returns object
+
+      $(classes.split(/\s+/)).each(function () {
+        // Save all Select2 classes
+        if (this.indexOf('select2-') === 0) {
+          replacements.push(this);
+        }
+      });
+    }
+
+    classes = $.trim($src.attr('class'));
+
+    if (classes) {
+      classes = '' + classes; // for IE which returns object
+
+      $(classes.split(/\s+/)).each(function () {
+        // Only copy non-Select2 classes
+        if (this.indexOf('select2-') !== 0) {
+          replacements.push(this);
+        }
+      });
+    }
+
+    $dest.attr('class', replacements.join(' '));
+  };
+
   return Utils;
 });
