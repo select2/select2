@@ -18,8 +18,7 @@ define([
       dropdownCssClass = dropdownCssClass(this.$element);
     }
 
-    var dropdownCssAdapter = this.options.get('adaptDropdownCssClass');
-    dropdownCssAdapter = dropdownCssAdapter || _dropdownAdapter;
+    var dropdownCssAdapter = _dropdownAdapter;
 
     if (dropdownCssClass.indexOf(':all:') !== -1) {
       dropdownCssClass = dropdownCssClass.replace(':all:', '');
@@ -38,15 +37,8 @@ define([
       };
     }
 
-    var dropdownCss = this.options.get('dropdownCss') || {};
-
-    if ($.isFunction(dropdownCss)) {
-      dropdownCss = dropdownCss(this.$element);
-    }
-
     Utils.syncCssClasses($dropdown, this.$element, dropdownCssAdapter);
 
-    $dropdown.css(dropdownCss);
     $dropdown.addClass(dropdownCssClass);
 
     return $dropdown;

@@ -370,7 +370,7 @@ define([
     }
 
     $dest.attr('class', replacements.join(' '));
-  }
+  };
 
   return Utils;
 });

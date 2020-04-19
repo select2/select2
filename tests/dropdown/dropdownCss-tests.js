@@ -68,37 +68,3 @@ test('a function can be used based on the element', function (assert){
   assert.ok(!$dropdown.hasClass('test'));
 });
 
-test(':all: works around custom adapters', function (assert) {
-  var $element = $('<select class="test"></select>');
-  var options = new Options({
-    dropdownCssClass: ':all: something',
-    adaptDropdownCssClass: function (clazz) {
-      return clazz + '-modified';
-    }
-  });
-
-  var select = new DropdownCSS($element, options);
-  var $dropdown = select.render();
-
-  assert.ok($dropdown.hasClass('something'));
-
-  assert.ok($dropdown.hasClass('test'));
-  assert.ok($dropdown.hasClass('test-modified'));
-});
-
-module('Dropdown - adaptDropdownCss compatibility');
-
-test('only return when adapted', function (assert) {
-  var $element = $('<select class="original"></select>');
-  var options = new Options({
-    adaptDropdownCssClass: function (clazz) {
-      return 'modified';
-    }
-  });
-
-  var select = new DropdownCSS($element, options);
-  var $dropdown = select.render();
-
-  assert.ok(!$dropdown.hasClass('original'));
-  assert.ok($dropdown.hasClass('modified'));
-});
