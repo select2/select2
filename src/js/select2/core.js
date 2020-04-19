@@ -545,7 +545,7 @@ define([
     var newVal = args[0];
 
     if (Array.isArray(newVal)) {
-      newVal = $.map(newVal, function (obj) {
+      newVal = newVal.map(function (obj) {
         return obj.toString();
       });
     }
