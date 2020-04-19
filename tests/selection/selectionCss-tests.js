@@ -1,4 +1,4 @@
-module('Dropdown - containerCssClass compatibility');
+module('Dropdown - selectionCssClass');
 
 var $ = require('jquery');
 var Utils = require('select2/utils');
@@ -13,7 +13,7 @@ var ContainerCSS = Utils.Decorate(
 test('all classes will be copied if :all: is used', function (assert) {
   var $element = $('<select class="test copy works"></select>');
   var options = new Options({
-    containerCssClass: ':all:'
+    selectionCssClass: ':all:'
   });
 
   var select = new ContainerCSS($element, options);
@@ -28,7 +28,7 @@ test('all classes will be copied if :all: is used', function (assert) {
 test(':all: can be used with other classes', function (assert) {
   var $element = $('<select class="test copy works"></select>');
   var options = new Options({
-    containerCssClass: ':all: other'
+    selectionCssClass: ':all: other'
   });
 
   var select = new ContainerCSS($element, options);
@@ -44,7 +44,7 @@ test(':all: can be used with other classes', function (assert) {
 test('classes can be passed in as a string', function (assert) {
   var $element = $('<select class="test copy works"></select>');
   var options = new Options({
-    containerCssClass: 'other'
+    selectionCssClass: 'other'
   });
 
   var select = new ContainerCSS($element, options);

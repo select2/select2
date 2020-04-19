@@ -12,7 +12,7 @@ define([
   ContainerCSS.prototype.render = function (decorated) {
     var $container = decorated.call(this);
 
-    var containerCssClass = this.options.get('containerCssClass') || '';
+    var containerCssClass = this.options.get('selectionCssClass') || '';
 
     var containerCssAdapter = _containerAdapter;
 
