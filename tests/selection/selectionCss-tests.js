@@ -5,7 +5,7 @@ var Utils = require('select2/utils');
 var Options = require('select2/options');
 
 var SingleSelection = require('select2/selection/single');
-var ContainerCSS = Utils.Decorate(
+var SelectionCSS = Utils.Decorate(
   SingleSelection,
   require('select2/selection/selectionCss')
 );
@@ -16,7 +16,7 @@ test('all classes will be copied if :all: is used', function (assert) {
     selectionCssClass: ':all:'
   });
 
-  var select = new ContainerCSS($element, options);
+  var select = new SelectionCSS($element, options);
   var $container = select.render();
 
   assert.ok($container.hasClass('test'));
@@ -31,7 +31,7 @@ test(':all: can be used with other classes', function (assert) {
     selectionCssClass: ':all: other'
   });
 
-  var select = new ContainerCSS($element, options);
+  var select = new SelectionCSS($element, options);
   var $container = select.render();
 
   assert.ok($container.hasClass('test'));
@@ -47,7 +47,7 @@ test('classes can be passed in as a string', function (assert) {
     selectionCssClass: 'other'
   });
 
-  var select = new ContainerCSS($element, options);
+  var select = new SelectionCSS($element, options);
   var $container = select.render();
 
   assert.ok($container.hasClass('other'));

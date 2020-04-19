@@ -3,25 +3,25 @@ define([
   '../utils'
 ], function ($, Utils) {
   // No-op CSS adapter that discards all classes by default
-  function _containerAdapter (clazz) {
+  function _selectionAdapter (clazz) {
     return null;
   }
 
-  function ContainerCSS () { }
+  function SelectionCSS () { }
 
-  ContainerCSS.prototype.render = function (decorated) {
+  SelectionCSS.prototype.render = function (decorated) {
     var $container = decorated.call(this);
 
-    var containerCssClass = this.options.get('selectionCssClass') || '';
+    var selectionCssClass = this.options.get('selectionCssClass') || '';
 
-    var containerCssAdapter = _containerAdapter;
+    var selectionCssAdapter = _selectionAdapter;
 
-    if (containerCssClass.indexOf(':all:') !== -1) {
-      containerCssClass = containerCssClass.replace(':all:', '');
+    if (selectionCssClass.indexOf(':all:') !== -1) {
+      selectionCssClass = selectionCssClass.replace(':all:', '');
 
-      var _cssAdapter = containerCssAdapter;
+      var _cssAdapter = selectionCssAdapter;
 
-      containerCssAdapter = function (clazz) {
+      selectionCssAdapter = function (clazz) {
         var adapted = _cssAdapter(clazz);
 
         if (adapted != null) {
@@ -33,12 +33,12 @@ define([
       };
     }
 
-    Utils.syncCssClasses($container, this.$element, containerCssAdapter);
+    Utils.syncCssClasses($container, this.$element, selectionCssAdapter);
 
-    $container.addClass(containerCssClass);
+    $container.addClass(selectionCssClass);
 
     return $container;
   };
 
-  return ContainerCSS;
+  return SelectionCSS;
 });
