@@ -52,19 +52,3 @@ test('classes can be passed in as a string', function (assert) {
 
   assert.ok($dropdown.hasClass('other'));
 });
-
-test('a function can be used based on the element', function (assert){
-  var $element = $('<select class="test"></select>');
-  var options = new Options({
-    dropdownCssClass: function ($element) {
-      return 'function';
-    }
-  });
-
-  var select = new DropdownCSS($element, options);
-  var $dropdown = select.render();
-
-  assert.ok($dropdown.hasClass('function'));
-  assert.ok(!$dropdown.hasClass('test'));
-});
-

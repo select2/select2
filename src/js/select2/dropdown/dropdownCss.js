@@ -14,10 +14,6 @@ define([
 
     var dropdownCssClass = this.options.get('dropdownCssClass') || '';
 
-    if ($.isFunction(dropdownCssClass)) {
-      dropdownCssClass = dropdownCssClass(this.$element);
-    }
-
     var dropdownCssAdapter = _dropdownAdapter;
 
     if (dropdownCssClass.indexOf(':all:') !== -1) {

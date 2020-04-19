@@ -52,18 +52,3 @@ test('classes can be passed in as a string', function (assert) {
 
   assert.ok($container.hasClass('other'));
 });
-
-test('a function can be used based on the element', function (assert){
-  var $element = $('<select class="test"></select>');
-  var options = new Options({
-    containerCssClass: function ($element) {
-      return 'function';
-    }
-  });
-
-  var select = new ContainerCSS($element, options);
-  var $container = select.render();
-
-  assert.ok($container.hasClass('function'));
-  assert.ok(!$container.hasClass('test'));
-});

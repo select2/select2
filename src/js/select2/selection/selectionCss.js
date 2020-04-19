@@ -14,10 +14,6 @@ define([
 
     var containerCssClass = this.options.get('containerCssClass') || '';
 
-    if ($.isFunction(containerCssClass)) {
-      containerCssClass = containerCssClass(this.$element);
-    }
-
     var containerCssAdapter = _containerAdapter;
 
     if (containerCssClass.indexOf(':all:') !== -1) {
@@ -36,7 +32,6 @@ define([
         return clazz;
       };
     }
-
 
     Utils.syncCssClasses($container, this.$element, containerCssAdapter);
 
