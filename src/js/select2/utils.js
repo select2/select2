@@ -325,8 +325,6 @@ define([
     classes = $dest.attr('class').trim();
 
     if (classes) {
-      classes = '' + classes; // for IE which returns object
-
       $(classes.split(/\s+/)).each(function () {
         // Save all Select2 classes
         if (this.indexOf('select2-') === 0) {
@@ -338,8 +336,6 @@ define([
     classes = $src.attr('class').trim();
 
     if (classes) {
-      classes = '' + classes; // for IE which returns object
-
       $(classes.split(/\s+/)).each(function () {
         // Only copy non-Select2 classes
         if (this.indexOf('select2-') !== 0) {
