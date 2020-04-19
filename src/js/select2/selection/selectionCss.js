@@ -18,8 +18,7 @@ define([
       containerCssClass = containerCssClass(this.$element);
     }
 
-    var containerCssAdapter = this.options.get('adaptContainerCssClass');
-    containerCssAdapter = containerCssAdapter || _containerAdapter;
+    var containerCssAdapter = _containerAdapter;
 
     if (containerCssClass.indexOf(':all:') !== -1) {
       containerCssClass = containerCssClass.replace(':all:', '');
@@ -38,15 +37,9 @@ define([
       };
     }
 
-    var containerCss = this.options.get('containerCss') || {};
-
-    if ($.isFunction(containerCss)) {
-      containerCss = containerCss(this.$element);
-    }
 
     Utils.syncCssClasses($container, this.$element, containerCssAdapter);
 
-    $container.css(containerCss);
     $container.addClass(containerCssClass);
 
     return $container;

@@ -67,38 +67,3 @@ test('a function can be used based on the element', function (assert){
   assert.ok($container.hasClass('function'));
   assert.ok(!$container.hasClass('test'));
 });
-
-test(':all: works around custom adapters', function (assert) {
-  var $element = $('<select class="test"></select>');
-  var options = new Options({
-    containerCssClass: ':all: something',
-    adaptContainerCssClass: function (clazz) {
-      return clazz + '-modified';
-    }
-  });
-
-  var select = new ContainerCSS($element, options);
-  var $container = select.render();
-
-  assert.ok($container.hasClass('something'));
-
-  assert.ok($container.hasClass('test'));
-  assert.ok($container.hasClass('test-modified'));
-});
-
-module('Selection - adaptContainerCss compatibility');
-
-test('only return when adapted', function (assert) {
-  var $element = $('<select class="original"></select>');
-  var options = new Options({
-    adaptContainerCssClass: function (clazz) {
-      return 'modified';
-    }
-  });
-
-  var select = new ContainerCSS($element, options);
-  var $container = select.render();
-
-  assert.ok(!$container.hasClass('original'));
-  assert.ok($container.hasClass('modified'));
-});
