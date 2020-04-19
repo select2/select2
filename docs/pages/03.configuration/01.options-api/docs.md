@@ -4,13 +4,12 @@ taxonomy:
     category: docs
 ---
 
-This is a list of all the Select 2 configuration options.
+This is a list of all the Select2 configuration options.
 
 | Option | Type | Default | Description |
 | ------ | ---- | ------- | ----------- |
 | `ajax` | object | `null` | Provides support for [ajax data sources](/data-sources/ajax). |
 | `allowClear` | boolean | `false` | Provides support for [clearable selections](/selections#clearable-selections). |
-| `amdBase` | string | `./` | See [Using Select2 with AMD or CommonJS loaders](/builds-and-modules#using-select2-with-amd-or-commonjs-loaders). |
 | `amdLanguageBase` | string | `./i18n/` | See [Using Select2 with AMD or CommonJS loaders](/builds-and-modules#using-select2-with-amd-or-commonjs-loaders). |
 | `closeOnSelect` | boolean | `true` | Controls whether the dropdown is [closed after a selection is made](/dropdown#forcing-the-dropdown-to-remain-open-after-selection). |
 | `data` | array of objects | `null` | Allows rendering dropdown options from an [array](/data-sources/arrays). |

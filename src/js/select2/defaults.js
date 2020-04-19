@@ -295,7 +295,6 @@ define([
     }
 
     this.defaults = {
-      amdBase: './',
       amdLanguageBase: './i18n/',
       closeOnSelect: true,
       debug: false,
