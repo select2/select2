@@ -1,5 +1,37 @@
 # Change Log
 
+## 4.1.0 (unreleased)
+
+### Breaking changes
+
+* The minimum jQuery version supported is the latest version in the 1.x, 2.x, and 3.x series (#5225)
+* Removed support for legacy Internet Explorer (versions older than IE 11) (#5834)
+* Removed modules deprecated in 4.0.0 (#5815)
+  * Removed legacy support for `<input />` tags
+  * Removed legacy support for `initSelection`
+  * Removed legacy support for `query`
+  * Removed old `select2/compat/matcher` module
+* Removed undocumented CSS-related options (#5815)
+  * Removed `dropdownCss` option
+  * Removed `adaptDropdownCss` option
+  * Removed `containerCss` option
+  * Removed `adaptContainerCss` option
+* The `containerCssClass` option has been renamed to `selectionCssClass` (#5815)
+
+### New features / improvements
+
+* `dropdownCssClass` and `selectionCssClass` are now available in all builds of Select2 (#5815)
+* Calls to get the currently selected options are now considerably faster on large datasets (#5775)
+
+### Translations
+
+* Add Esperanto translation (`eo`) (#5823)
+* Add Punjabi translations (`pa`) (#5831)
+
+### Miscellaneous
+
+* The `amdLanguageBase` option no longer has an effect because the full build does not include any dynamically loaded modules (#5815)
+
 ## 4.0.13
 
 ### New features / improvements
