@@ -1,7 +1,6 @@
 define([
-  'jquery',
-  '../utils'
-], function ($, Utils) {
+  'jquery'
+], function ($) {
   function Search () { }
 
   Search.prototype.render = function (decorated) {
@@ -79,9 +78,9 @@ define([
         var showSearch = self.showSearch(params);
 
         if (showSearch) {
-          self.$searchContainer.removeClass('select2-search--hide');
+          self.$searchContainer[0].classList.remove('select2-search--hide');
         } else {
-          self.$searchContainer.addClass('select2-search--hide');
+          self.$searchContainer[0].classList.add('select2-search--hide');
         }
       }
     });
