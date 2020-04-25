@@ -275,3 +275,47 @@ test('search box with text should not close dropdown', function (assert) {
   $search.val('test');
   $search.trigger('click');
 });
+
+test('search box defaults autocomplete to off', function (assert) {
+  var $select = $('#qunit-fixture .multiple');
+
+  var CustomSelection = Utils.Decorate(MultipleSelection, InlineSearch);
+  var selection = new CustomSelection($select, options);
+  var $selection = selection.render();
+
+  var container = new MockContainer();
+  selection.bind(container, $('<span></span>'));
+
+  // Update the selection so the search is rendered
+  selection.update([]);
+
+  assert.equal(
+    $selection.find('input').attr('autocomplete'),
+    'off',
+    'The search box has autocomplete disabled'
+  );
+});
+
+test('search box sets autocomplete from options', function (assert) {
+  var $select = $('#qunit-fixture .multiple');
+
+  var autocompleteOptions = new Options({
+    autocomplete: 'country-name'
+  });
+
+  var CustomSelection = Utils.Decorate(MultipleSelection, InlineSearch);
+  var selection = new CustomSelection($select, autocompleteOptions);
+  var $selection = selection.render();
+
+  var container = new MockContainer();
+  selection.bind(container, $('<span></span>'));
+
+  // Update the selection so the search is rendered
+  selection.update([]);
+
+  assert.equal(
+    $selection.find('input').attr('autocomplete'),
+    'country-name',
+    'The search box sets the right autocomplete attribute'
+  );
+});

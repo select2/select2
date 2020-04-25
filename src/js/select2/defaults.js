@@ -296,6 +296,7 @@ define([
 
     this.defaults = {
       amdLanguageBase: './i18n/',
+      autocomplete: 'off',
       closeOnSelect: true,
       debug: false,
       dropdownAutoWidth: false,
