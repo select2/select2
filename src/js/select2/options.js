@@ -28,6 +28,10 @@ define([
       this.options.disabled = $e.prop('disabled');
     }
 
+    if (this.options.autocomplete == null && $e.prop('autocomplete')) {
+      this.options.autocomplete = $e.prop('autocomplete');
+    }
+
     if (this.options.dir == null) {
       if ($e.prop('dir')) {
         this.options.dir = $e.prop('dir');
