@@ -262,20 +262,25 @@ define([
   Utils.GetUniqueElementId = function (element) {
     // Get a unique element Id. If element has no id,
     // creates a new unique number, stores it in the id
-    // attribute and returns the new id.
-    // If an id already exists, it simply returns it.
+    // attribute and returns the new id with a prefix.
+    // If an id already exists, it simply returns it with a prefix.
 
     var select2Id = element.getAttribute('data-select2-id');
-    if (select2Id == null) {
-      // If element has id, use it.
-      if (element.id) {
-        select2Id = element.id;
-        element.setAttribute('data-select2-id', select2Id);
-      } else {
-        element.setAttribute('data-select2-id', ++id);
-        select2Id = id.toString();
-      }
+
+    if (select2Id != null) {
+      return select2Id;
     }
+
+    // If element has id, use it.
+    if (element.id) {
+      select2Id = 'select2-data-' + element.id;
+    } else {
+      select2Id = 'select2-data-' + (++id).toString() +
+        '-' + Utils.generateChars(4);
+    }
+
+    element.setAttribute('data-select2-id', select2Id);
+
     return select2Id;
   };
 
