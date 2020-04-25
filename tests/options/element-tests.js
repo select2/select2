@@ -83,6 +83,12 @@ test('multiple option is synchronized back', function (assert) {
 test('copies autocomplete attribute when set', function (assert) {
   var $test = $('<select autocomplete="country-name"></select>');
 
+  if ($test.prop('autocomplete') !== 'country-name') {
+    // Browser does not support the autocomplete attribute on a select
+    assert.ok(true);
+    return;
+  }
+
   var options = new Options({}, $test);
 
   assert.equal(options.get('autocomplete'), 'country-name');
