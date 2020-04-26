@@ -174,8 +174,7 @@ define([
     option.classList.add('select2-results__option--selectable');
 
     var attrs = {
-      'role': 'option',
-      'aria-selected': 'false'
+      'role': 'option'
     };
 
     var matches = window.Element.prototype.matches ||
@@ -184,7 +183,6 @@ define([
 
     if ((data.element != null && matches.call(data.element, ':disabled')) ||
         (data.element == null && data.disabled)) {
-      delete attrs['aria-selected'];
       attrs['aria-disabled'] = 'true';
 
       option.classList.remove('select2-results__option--selectable');
@@ -192,7 +190,6 @@ define([
     }
 
     if (data.id == null) {
-      delete attrs['aria-selected'];
       option.classList.remove('select2-results__option--selectable');
     }
 
@@ -207,7 +204,6 @@ define([
     if (data.children) {
       attrs.role = 'group';
       attrs['aria-label'] = data.text;
-      delete attrs['aria-selected'];
 
       option.classList.remove('select2-results__option--selectable');
       option.classList.add('select2-results__option--group');
@@ -419,6 +415,7 @@ define([
 
     container.on('results:focus', function (params) {
       params.element[0].classList.add('select2-results__option--highlighted');
+      params.element[0].setAttribute('aria-selected', 'true');
     });
 
     container.on('results:message', function (params) {
@@ -480,7 +477,8 @@ define([
       var data = Utils.GetData(this, 'data');
 
       self.getHighlightedResults()
-          .removeClass('select2-results__option--highlighted');
+          .removeClass('select2-results__option--highlighted')
+          .attr('aria-selected', 'false');
 
       self.trigger('results:focus', {
         data: data,
