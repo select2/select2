@@ -14,6 +14,12 @@
     list-style: none;
     padding: 0;
   }
+
+  .select2-selection__clear {
+    background-color: transparent;
+    border: none;
+    font-size: 1em;
+  }
 }
 
 .select2-search--inline {

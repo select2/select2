@@ -92,6 +92,8 @@ define([
   AllowClear.prototype.update = function (decorated, data) {
     decorated.call(this, data);
 
+    this.$selection.find('.select2-selection__clear').remove();
+
     if (this.$selection.find('.select2-selection__placeholder').length > 0 ||
         data.length === 0) {
       return;
@@ -100,13 +102,14 @@ define([
     var removeAll = this.options.get('translations').get('removeAllItems');
 
     var $remove = $(
-      '<span class="select2-selection__clear" title="' + removeAll() +'">' +
+      '<button class="select2-selection__clear" tabindex="-1">' +
         '&times;' +
-      '</span>'
+      '</button>'
     );
+    $remove.attr('title', removeAll());
     Utils.StoreData($remove[0], 'data', data);
 
-    this.$selection.find('.select2-selection__rendered').prepend($remove);
+    this.$selection.prepend($remove);
   };
 
   return AllowClear;
