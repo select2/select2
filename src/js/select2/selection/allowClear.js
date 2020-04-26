@@ -102,7 +102,7 @@ define([
     var removeAll = this.options.get('translations').get('removeAllItems');
 
     var $remove = $(
-      '<button class="select2-selection__clear" tabindex="-1">' +
+      '<button type="button" class="select2-selection__clear" tabindex="-1">' +
         '&times;' +
       '</button>'
     );
