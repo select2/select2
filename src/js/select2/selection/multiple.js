@@ -76,6 +76,7 @@ define([
         '<span class="select2-selection__choice__remove" role="presentation">' +
           '&times;' +
         '</span>' +
+        '<span class="select2-selection__choice__display"></span>' +
       '</li>'
     );
 
@@ -91,13 +92,28 @@ define([
 
     var $selections = [];
 
+    var selectionIdPrefix = this.$selection.find('.select2-selection__rendered')
+      .attr('id') + '-choice-';
+
     for (var d = 0; d < data.length; d++) {
       var selection = data[d];
 
       var $selection = this.selectionContainer();
       var formatted = this.display(selection, $selection);
 
-      $selection.append(formatted);
+      var selectionId = selectionIdPrefix + Utils.generateChars(4) + '-';
+
+      if (selection.id) {
+        selectionId += selection.id;
+      } else {
+        selectionId += Utils.generateChars(4);
+      }
+
+      $selection.find('.select2-selection__choice__display')
+        .append(formatted)
+        .attr('id', selectionId);
+      $selection.find('.select2-selection__choice__remove')
+        .attr('aria-describedby', selectionId);
 
       var title = selection.title || selection.text;
 
