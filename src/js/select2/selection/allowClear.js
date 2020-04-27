@@ -99,6 +99,9 @@ define([
       return;
     }
 
+    var selectionId = this.$selection.find('.select2-selection__rendered')
+      .attr('id');
+
     var removeAll = this.options.get('translations').get('removeAllItems');
 
     var $remove = $(
@@ -107,6 +110,7 @@ define([
       '</button>'
     );
     $remove.attr('title', removeAll());
+    $remove.attr('aria-describedby', selectionId);
     Utils.StoreData($remove[0], 'data', data);
 
     this.$selection.prepend($remove);
