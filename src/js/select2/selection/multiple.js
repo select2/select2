@@ -88,7 +88,7 @@ define([
       '<li class="select2-selection__choice">' +
         '<button type="button" class="select2-selection__choice__remove" ' +
         'tabindex="-1">' +
-          '&times;' +
+          '<span aria-hidden="true">&times;</span>' +
         '</button>' +
         '<span class="select2-selection__choice__display"></span>' +
       '</li>'

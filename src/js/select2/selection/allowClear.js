@@ -106,7 +106,7 @@ define([
 
     var $remove = $(
       '<button type="button" class="select2-selection__clear" tabindex="-1">' +
-        '&times;' +
+        '<span aria-hidden="true">&times;</span>' +
       '</button>'
     );
     $remove.attr('title', removeAll());
