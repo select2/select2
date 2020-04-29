@@ -1,0 +1,18 @@
+#breadcrumbs {
+    height: 3rem;
+    line-height: 3rem;
+    padding-left: 3rem;
+}
+#breadcrumbs span {
+    display: inline-block;
+    padding: 0 1rem;
+}
+#breadcrumbs span:first-child {
+    padding-left: 0;
+}
+#breadcrumbs i {
+    display: inline-block;
+    width: 20px;
+    text-align: center;
+}
+

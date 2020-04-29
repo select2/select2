@@ -2,6 +2,10 @@
 daysUntilStale: 60
 # Number of days of inactivity before a stale issue is closed
 daysUntilClose: 7
+# List of labels that will prevent an issue from going stale
+exemptLabels:
+  - "confirmed bug"
+  - "accessibility"
 # Issues with these labels will never be considered stale
 # Label to use when marking an issue as stale
 staleLabel: "status: stale"

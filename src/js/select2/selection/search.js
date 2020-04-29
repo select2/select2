@@ -12,13 +12,13 @@ define([
     if(this.options.get('searchElement') === 'textarea'){
 	tagString = '<textarea class="select2-search__field"'+
         ' type="search" tabindex="-1"' +
-        ' autocomplete="off" autocorrect="off" autocapitalize="none"' +
+        ' autocorrect="off" autocapitalize="none"' +
         ' spellcheck="false" role="searchbox" aria-autocomplete="list" >' +
         '</textarea>';
     } else {
         tagString = '<input class="select2-search__field"'+
         ' type="search" tabindex="-1"' +
-        ' autocomplete="off" autocorrect="off" autocapitalize="none"' +
+        ' autocorrect="off" autocapitalize="none"' +
         ' spellcheck="false" role="searchbox" aria-autocomplete="list" />';
     }
     var $search = $(
@@ -27,6 +27,8 @@ define([
 
     this.$searchContainer = $search;
     this.$search = $search.find('input, textarea');
+
+    this.$search.prop('autocomplete', this.options.get('autocomplete'));
 
     var $rendered = decorated.call(this);
 
@@ -49,6 +51,7 @@ define([
 
     container.on('close', function () {
       self.$search.val('');
+      self.resizeSearch();
       self.$search.removeAttr('aria-controls');
       self.$search.removeAttr('aria-activedescendant');
       self.$search.trigger('focus');

@@ -12,14 +12,6 @@ module.exports = function (grunt) {
   fullIncludes = [
     'jquery',
 
-    'select2/compat/containerCss',
-    'select2/compat/dropdownCss',
-
-    'select2/compat/initSelection',
-    'select2/compat/inputData',
-    'select2/compat/matcher',
-    'select2/compat/query',
-
     'select2/dropdown/attachContainer',
     'select2/dropdown/stopPropagation',
 
@@ -250,7 +242,7 @@ module.exports = function (grunt) {
 
   grunt.loadNpmTasks('grunt-sass');
 
-  grunt.registerTask('default', ['compile', 'test', 'minify']);
+  grunt.registerTask('default', ['compile', 'test', 'lint', 'minify']);
 
   grunt.registerTask('compile', [
     'requirejs:dist', 'requirejs:dist.full', 'requirejs:i18n',
@@ -258,5 +250,6 @@ module.exports = function (grunt) {
     'sass:dev'
   ]);
   grunt.registerTask('minify', ['uglify', 'sass:dist']);
-  grunt.registerTask('test', ['connect:tests', 'qunit', 'jshint']);
+  grunt.registerTask('lint', ['jshint']);
+  grunt.registerTask('test', ['connect:tests', 'qunit']);
 };

@@ -1,0 +1,133 @@
+name: SimpleSearch
+version: 1.13.0
+description: "Don't be fooled, the **SimpleSearch** plugin provides a **fast** and highly **configurable** way to search your content."
+icon: search
+author:
+  name: Team Grav
+  email: devs@getgrav.org
+  url: http://getgrav.org
+homepage: https://github.com/getgrav/grav-plugin-simplesearch
+demo: http://demo.getgrav.org/blog-skeleton
+keywords: simplesearch, plugin, search, page, content, find
+bugs: https://github.com/getgrav/grav-plugin-simplesearch/issues
+license: MIT
+
+form:
+  validation: strict
+  fields:
+    enabled:
+      type: toggle
+      label: PLUGIN_ADMIN.PLUGIN_STATUS
+      highlight: 1
+      default: 0
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+
+    search_content:
+      type: select
+      size: medium
+      classes: fancy
+      label: Search Content
+      default: rendered
+      options:
+        rendered: Rendered Content (Slower)
+        raw: Raw Markdown Content (Faster)
+
+    built_in_css:
+      type: toggle
+      label: Use built in CSS
+      highlight: 1
+      default: 1
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+
+    display_button:
+      type: toggle
+      label: Display Search Button
+      highlight: 0
+      default: 0
+      options:
+        1: Enabled
+        0: Disabled
+      validate:
+        type: bool
+
+    ignore_accented_characters:
+      type: toggle
+      label: Ignore accented characters
+      help: If enabled, search terms will match accented characters regardless to their diacritics i.e. search results will show up for "cafe" and "café" no matter how you typed it.
+      highlight: 0
+      default: 0
+      options:
+        1: Enabled
+        0: Disabled
+      validate:
+        type: bool
+
+    min_query_length:
+      type: text
+      size: x-small
+      label: Minimum query length
+      help: The mimimum number of characters needed before serach can be submitted
+      validate:
+        type: number
+        min: 0
+
+    route:
+      type: text
+      size: medium
+      label: Route
+      default: /random
+      help: Default route of the simplesearch plugin
+
+    template:
+      type: text
+      size: medium
+      label: Template
+      default: simplesearch_results
+      help: Name of the template for the search results
+
+    filters.category:
+      type: selectize
+      label: Category filter
+      help: Comma separated list of category names. Enter "@none" to search in all pages.
+      validate:
+        type: commalist
+
+    filter_combinator:
+      type: select
+      size: medium
+      classes: fancy
+      label: Filter Combinator
+      default: and
+      options:
+        and: And - Boolean &&
+        or: Or - Boolean ||
+
+    order.by:
+        type: select
+        size: long
+        classes: fancy
+        label: PLUGIN_ADMIN.DEFAULT_ORDERING
+        help: PLUGIN_ADMIN.DEFAULT_ORDERING_HELP
+        options:
+            default: PLUGIN_ADMIN.DEFAULT_ORDERING_DEFAULT
+            folder: PLUGIN_ADMIN.DEFAULT_ORDERING_FOLDER
+            title: PLUGIN_ADMIN.DEFAULT_ORDERING_TITLE
+            date: PLUGIN_ADMIN.DEFAULT_ORDERING_DATE
+
+    order.dir:
+        type: toggle
+        label: PLUGIN_ADMIN.DEFAULT_ORDER_DIRECTION
+        highlight: asc
+        default: desc
+        help: PLUGIN_ADMIN.DEFAULT_ORDER_DIRECTION_HELP
+        options:
+            asc: PLUGIN_ADMIN.ASCENDING
+            desc: PLUGIN_ADMIN.DESCENDING

@@ -1,0 +1,24 @@
+name: Documentation Deployment
+
+on: release
+
+jobs:
+  grav:
+    name: Deploy Grav
+    runs-on: ubuntu-latest
+    steps:
+      - uses: maddox/actions/sleep@master
+        with:
+          args: "60"
+      - uses: actions/checkout@v1
+      - name: Copy to documentation server
+        uses: maxheld83/rsync@v0.1.0
+        env:
+          USERNAME: ${{ secrets.DOCUMENTATION_SSH_USERNAME }}
+          SSH_PRIVATE_KEY: ${{ secrets.DOCUMENTATION_SSH_KEY }}
+          HOST_NAME: ${{ secrets.DOCUMENTATION_SSH_HOST }}
+          SSH_PUBLIC_KEY: not-needed
+          HOST_IP: not-needed
+          HOST_FINGERPRINT: not-needed
+        with:
+          args: "docs/ $USERNAME@$HOST_NAME:/var/www/select2-docs/user/"

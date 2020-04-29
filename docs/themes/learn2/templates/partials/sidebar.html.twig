@@ -1,0 +1,64 @@
+{% macro loop(page, parent_loop) %}
+    {% if parent_loop|length > 0 %}
+        {% set data_level = parent_loop %}
+    {% else %}
+        {% set data_level = 0 %}
+    {% endif %}
+    {% for p in page.children.visible %}
+        {% set parent_page = p.activeChild ? ' parent' : '' %}
+        {% set current_page = p.active ? ' active' : '' %}
+        <li class="dd-item{{ parent_page }}{{ current_page }}" data-nav-id="{{ p.route }}">
+            <a href="{{ p.url }}" {% if p.header.class %}class="{{ p.header.class }}"{% endif %}>
+                <i class="fa fa-check read-icon"></i>
+                <span><b>{% if data_level == 0 %}{{ loop.index }}. {% endif %}</b>{{ p.menu }}</span>
+            </a>
+            {% if p.children.count > 0 %}
+            <ul>
+                {{ _self.loop(p, parent_loop|default(0)+loop.index) }}
+            </ul>
+            {% endif %}
+        </li>
+    {% endfor %}
+{% endmacro %}
+
+{% macro version(p) %}
+    {% set parent_page = p.activeChild ? ' parent' : '' %}
+    {% set current_page = p.active ? ' active' : '' %}
+    <h5 class="{{ parent_page }}{{ current_page }}">
+        {% if p.activeChild or p.active %}
+        <i class="fa fa-chevron-down fa-fw"></i>
+        {% else %}
+        <i class="fa fa-plus fa-fw"></i>
+        {% endif %}
+        <a href="{{ p.url }}">{{ p.menu }}</a>
+    </h5>
+{% endmacro %}
+
+<div class="scrollbar-inner">
+    <div class="highlightable">
+        {% if theme_config.top_level_version %}
+            {% for slug, ver in pages.children %}
+                {{ _self.version(ver) }}
+                <ul id="{{ slug }}" class="topics">
+                {{ _self.loop(ver, '') }}
+                </ul>
+            {% endfor %}
+        {% else %}
+            <ul class="topics">
+                {% if theme_config.root_page %}
+                    {{ _self.loop(page.find(theme_config.root_page), '') }}
+                {% else %}
+            {{ _self.loop(pages, '') }}
+                {% endif %}
+            </ul>
+        {% endif %}
+        <hr />
+
+        <a class="padding" href="#" data-clear-history-toggle><i
+                    class="fa fa-fw fa-history"></i> {{ 'THEME_LEARN2_CLEAR_HISTORY'|t }}</a><br/>
+
+        <section id="footer">
+            <p>{{ 'THEME_LEARN2_BUILT_WITH_GRAV'|t }}</p>
+        </section>
+    </div>
+</div>

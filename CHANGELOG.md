@@ -1,5 +1,80 @@
 # Change Log
 
+## 4.1.0 (unreleased)
+
+### Breaking changes
+
+* The minimum jQuery version supported is the latest version in the 1.x, 2.x, and 3.x series (#5225)
+* Removed support for legacy Internet Explorer (versions older than IE 11) (#5834)
+* Removed modules deprecated in 4.0.0 (#5815)
+  * Removed legacy support for `<input />` tags
+  * Removed legacy support for `initSelection`
+  * Removed legacy support for `query`
+  * Removed old `select2/compat/matcher` module
+* Removed undocumented CSS-related options (#5815)
+  * Removed `dropdownCss` option
+  * Removed `adaptDropdownCss` option
+  * Removed `containerCss` option
+  * Removed `adaptContainerCss` option
+* The `containerCssClass` option has been renamed to `selectionCssClass` (#5815)
+
+### New features / improvements
+
+* `dropdownCssClass` and `selectionCssClass` are now available in all builds of Select2 (#5815)
+* Calls to get the currently selected options are now considerably faster on large datasets (#5775)
+
+### Translations
+
+* Add Esperanto translation (`eo`) (#5823)
+* Add Punjabi translations (`pa`) (#5831)
+
+### Miscellaneous
+
+* The `amdLanguageBase` option no longer has an effect because the full build does not include any dynamically loaded modules (#5815)
+
+## 4.0.13
+
+### New features / improvements
+
+* Trigger `input` event before `change` events (#4649)
+* Feed back the keypress code that was responsible for the 'close' event (#5513)
+* Only trigger `selection:update` once on DOM change events (#5734)
+
+### Bug fixes
+
+* Prevent opening of disabled elements (#5751)
+
+### Documentation
+
+* Fix "edit this page" links in docs (#5689)
+
+### Miscellaneous
+
+* Registered Select2 on Open Collective (#5700, #5721, #5741)
+
+## 4.0.12
+
+### Bug fixes
+
+* Fixes incorrect offset when using the Shadow DOM and styling the `<html>` element (#5682)
+
+### Miscellaneous
+
+* Replace cdnjs with jsDelivr in the documentation (#5687)
+* Fix incorrect provider for the automated NPM deployment (#5686)
+
+## 4.0.11
+
+### Bug fixes
+
+* Fixes jQuery migrate error when getting offset when dropdownParent not in document (#5584)
+
+### Miscellaneous
+
+* Enable GitHub actions for CI (#5591)
+* Documentation has been moved into and is deployed from the code repository (#5638)
+* Remove Travis CI integration (#5665)
+
 ## 4.0.10
 
 ### New features / improvements

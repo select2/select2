@@ -1,0 +1,62 @@
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  color: #4d4d4c;
+  padding: 0.5em;
+}
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-title {
+  color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-attribute,
+.hljs-tag,
+.hljs-regexp,
+.hljs-strong,
+.hljs-bullet {
+  color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-preprocessor,
+.hljs-pragma,
+.hljs-built_in,
+.hljs-literal,
+.hljs-params,
+.hljs-constant,
+.hljs-emphasis {
+  color: #f5871f;
+}
+
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-value,
+.hljs-inheritance,
+.hljs-header {
+  color: #718c00;
+}
+
+/* Tomorrow Aqua */
+.hljs-symbol,
+.hljs-link_label  {
+  color: #3e999f;
+}
+
+/* Tomorrow Blue */
+.hljs-function {
+  color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-link_url  {
+  color: #8959a8;
+}

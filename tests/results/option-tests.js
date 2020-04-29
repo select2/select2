@@ -71,7 +71,7 @@ test('options are not selected by default', function (assert) {
     element: $option[0]
   });
 
-  assert.equal(option.getAttribute('aria-selected'), 'false');
+  assert.notOk(option.classList.contains('select2-results__option--selected'));
 });
 
 test('options with children are given the group role', function(assert) {

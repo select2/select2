@@ -1,0 +1,13 @@
+streams:
+ schemes:
+   theme:
+     type: ReadOnlyStream
+     prefixes:
+       '':
+         - user/themes/site
+         - user/themes/learn2
+google_analytics_code: UA-57144786-2
+github:
+    position: top                                   # top | bottom | off
+    tree: https://github.com/select2/select2/blob/develop/docs/
+    commits: https://github.com/select2/select2/commits/develop/docs/

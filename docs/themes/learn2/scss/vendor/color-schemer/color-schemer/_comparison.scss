@@ -1,0 +1,15 @@
+//////////////////////////////
+// Color Is Dark
+//
+// Checks to see if the input color is a dark color taking into account both lightness and hue.
+// Suitable for determining, for instance, if a background should have a dark or light text color.
+//   @return true/false (boolean)
+//////////////////////////////
+
+@function cs-is-dark($color) {
+  @if (lightness($color) < 60% and (hue($color) >= 210 or hue($color) <= 27)) or (lightness($color) <= 32%)  {
+    @return true;
+  } @else {
+    @return false;
+  }
+}

@@ -1,0 +1,71 @@
+section#body {
+    padding-top: 3rem;
+}
+
+ul.problems {
+    list-style: none;
+    padding: 0;
+    margin-top: 3rem;
+}
+
+ul.problems li {
+    margin-bottom: 1rem;
+    padding: 1rem;
+}
+
+ul.problems li.success {
+    background: #F1F9F1;
+    border-left: 5px solid #5CB85C;
+    color: #3d8b3d;
+}
+
+ul.problems li.error {
+    background: #FDF7F7;
+    border-left: 5px solid #D9534F;
+    color: #b52b27;
+}
+
+ul.problems li.info {
+    background: #F4F8FA;
+    border-left: 5px solid #5bc0de;
+    color: #28a1c5;
+}
+
+ul.problems .fa {
+    font-size: 3rem;
+    vertical-align: middle;
+    margin-left: 1rem;
+    display: block;
+    float: left;
+}
+
+ul.problems p {
+    display: block;
+    margin: 0.5rem 0.5rem 0.5rem 5rem;
+}
+
+.button.big {
+    font-size: 1.2rem;
+}
+
+.center {
+    text-align: center;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.clearfix:after {
+     visibility: hidden;
+     display: block;
+     font-size: 0;
+     content: " ";
+     clear: both;
+     height: 0;
+     }
+.clearfix { display: inline-block; }
+/* start commented backslash hack \*/
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
+/* close commented backslash hack */

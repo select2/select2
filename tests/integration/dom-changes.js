@@ -1,3 +1,4 @@
+/*jshint browser: true */
 module('DOM integration');
 
 test('adding a new unselected option changes nothing', function (assert) {
@@ -285,4 +286,47 @@ test('searching tags does not loose focus', function (assert) {
 
   select.selection.trigger('query', {term: 'f'});
   select.selection.trigger('query', {term: 'ff'});
+});
+
+
+test('adding multiple options calls selection:update once', function (assert) {
+  assert.expect(1);
+
+  var asyncDone = assert.async();
+
+  var $ = require('jquery');
+  var Select2 = require('select2/core');
+
+  var content = '<select>';
+  var options = '';
+
+  for (var i = 0; i < 4000; i++) {
+    options += '<option>' + i + '</option>';
+  }
+
+  content += options;
+  content += '</select>';
+
+  var $select = $(content);
+
+  $('#qunit-fixture').append($select);
+
+  var select = new Select2($select);
+
+  var eventCalls = 0;
+
+  select.on('selection:update', function () {
+    eventCalls++;
+  });
+
+  $select.html(options);
+
+  setTimeout(function () {
+    assert.equal(
+      eventCalls,
+      1,
+      'selection:update was called more than once'
+    );
+    asyncDone();
+  }, 0);
 });

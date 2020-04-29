@@ -175,3 +175,52 @@ test('dropdown is positioned down with absolute offsets', function (assert) {
         'There should not be an extra left offset'
     );
 });
+
+test('dropdown is positioned even when not in document', function (assert) {
+    var $ = require('jquery');
+    var $select = $('<select></select>');
+
+    var $container = $('<span>test</span>');
+    var container = new MockContainer();
+
+    var Utils = require('select2/utils');
+    var Options = require('select2/options');
+
+    var Dropdown = require('select2/dropdown');
+    var AttachBody = require('select2/dropdown/attachBody');
+
+    var DropdownAdapter = Utils.Decorate(Dropdown, AttachBody);
+
+    var dropdown = new DropdownAdapter($select, new Options({
+        dropdownParent: $('html')
+    }));
+
+    var $dropdown = dropdown.render();
+
+    assert.equal(
+        $dropdown[0].style.top,
+        0,
+        'The drodpown should not have any offset before it is displayed'
+    );
+
+    dropdown.bind(container, $container);
+    dropdown.position($dropdown, $container);
+    dropdown._showDropdown();
+
+    assert.ok(
+        dropdown.$dropdown.hasClass('select2-dropdown--below'),
+        'The dropdown should be forced down'
+    );
+
+    assert.equal(
+        $dropdown.css('top'),
+        '0px',
+        'The offset should be 0px at the top'
+    );
+
+    assert.equal(
+        $dropdown.css('left'),
+        '0px',
+        'The offset should be 0px on the left'
+    );
+});

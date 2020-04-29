@@ -1,0 +1,232 @@
+@charset "UTF-8";
+
+// Your custom SCSS should be written here...
+
+//Fluidbox fixes
+.lightbox-active {
+	#body {
+		overflow: visible;
+		.padding {
+			overflow: visible;
+		}
+	}
+}
+
+//Github
+#github-contrib {
+	i {
+		vertical-align: middle;
+	}
+}
+
+//Featherlight fixes
+.featherlight img {
+    margin: 0 !important;
+}
+
+//Lifecycle
+.lifecycle {
+
+	#body-inner {
+
+		ul {
+			list-style: none;
+			margin: 0;
+			padding: 2rem 0 0;
+			position: relative;
+		}
+
+		ol {
+			margin: 1rem 0 1rem 0;
+			padding: 2rem;
+			position: relative;
+
+			li {margin-left: 1rem;}
+
+			strong {
+				text-decoration: underline;
+			}
+
+			ol {
+				margin-left: -1rem;
+			}
+
+		}
+
+		h3[class*='level'] {
+			font-size: 20px;
+			position: absolute;
+			margin: 0;
+			padding: 4px 10px;
+			right: 0;
+			z-index: 1000;
+			color: #fff;
+			background: $turquoise;
+		}
+
+		ol h3 {
+			margin-top: 1rem !important;
+			right: 2rem !important;
+		}
+
+		.level-1 + ol {
+			background: lighten($turquoise,56%);
+			border: 4px solid $turquoise;
+			color: $green_sea;
+			h3 {
+				background: $emerald;
+
+			}
+		}
+
+		.level-2 + ol  {
+			background: lighten($emerald,49%);
+			border: 4px solid $emerald;
+			color: $nephritis;
+			h3 {
+				background: $peter_river;
+			}
+		}
+
+		.level-3 + ol {
+			background: lighten($peter_river,44%);
+			border: 4px solid $peter_river;
+			color: $belize_hole;
+			h3 {
+				background: $wet_asphalt;
+			}
+		}
+
+		.level-4 + ol{
+			background: lighten($wet_asphalt,63%);
+			border: 4px solid $wet_asphalt;
+			color: $midnight_blue;
+			h3 {
+				background: $wet_asphalt;
+			}
+		}
+	}
+}
+
+#top-bar {
+    background: $navbar-bg;
+    border-radius: 2px;
+    margin: 0rem -1rem 2rem;
+    padding: 0 1rem;
+    height: 0;
+    min-height: 3rem;
+}
+
+// Github link
+#top-github-link {
+
+    @extend %vertical-align;
+    position: relative;
+    z-index: 1;
+
+    float: right;
+    display: block;
+}
+
+// Breadcrumbs
+#body #breadcrumbs {
+
+    @extend %vertical-align;
+
+    height: auto;
+    display: block;
+    margin-bottom: 0;
+    padding-left: 0;
+
+    line-height: 1.4;
+
+    span {
+        padding: 0 0.1rem;
+    }
+}
+
+// Media Query stuff
+@include breakpoint(desktop-only) {
+    #sidebar {
+        width: $sidebar-width-smaller;
+    }
+    #body {
+        margin-left: $sidebar-width-smaller;
+    }
+}
+@include breakpoint(mobile-only) {
+    #sidebar {
+        width: $sidebar-width-smaller;
+        left: - $sidebar-width-smaller;
+    }
+    #body {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .sidebar-hidden {
+        overflow: hidden;
+
+        #sidebar {
+            left: 0;
+        }
+        #body {
+            margin-left: $sidebar-width-smaller;
+
+            overflow: hidden;
+        }
+        #overlay {
+            position: absolute;
+            left:0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            z-index:10;
+            background: rgba(255,255,255,.5);
+            cursor: pointer;
+        }
+    }
+}
+
+// clipboard
+.copy-to-clipboard {
+  background-image: url(../images/clippy.svg);
+  background-position: 50% 50%;
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+  width: 27px;
+  height: $core-font-size + (.2rem * 2);
+	top: -1px;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  color: darken($core-text,10%);
+  background-color: $code-bg;
+  margin-left: -.2rem;
+  cursor: pointer;
+  border-radius: 0 2px 2px 0;
+
+  &:hover {
+    background-color: darken($code-bg, 5%);
+  }
+
+  pre & {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    background-color: #eee;
+    border-color: #ddd;
+    border-radius: 2px;
+
+    &:hover {
+      background-color: #d9d9d9;
+    }
+  }
+}
+
+// Utils
+.parent-element {
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
