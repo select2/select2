@@ -110,6 +110,7 @@ define([
       '</button>'
     );
     $remove.attr('title', removeAll());
+    $remove.attr('aria-label', removeAll());
     $remove.attr('aria-describedby', selectionId);
     Utils.StoreData($remove[0], 'data', data);
 
