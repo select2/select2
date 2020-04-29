@@ -126,14 +126,20 @@ define([
       $selection.find('.select2-selection__choice__display')
         .append(formatted)
         .attr('id', selectionId);
-      $selection.find('.select2-selection__choice__remove')
-        .attr('aria-describedby', selectionId);
 
       var title = selection.title || selection.text;
 
       if (title) {
         $selection.attr('title', title);
       }
+
+      var removeItem = this.options.get('translations').get('removeItem');
+
+      var $remove = $selection.find('.select2-selection__choice__remove');
+
+      $remove.attr('title', removeItem());
+      $remove.attr('aria-label', removeItem());
+      $remove.attr('aria-describedby', selectionId);
 
       Utils.StoreData($selection[0], 'data', selection);
 
