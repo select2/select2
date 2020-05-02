@@ -20,7 +20,9 @@
   }
 
   .select2-selection__clear {
-    position: relative;
+    background-color: transparent;
+    border: none;
+    font-size: 1em;
   }
 }
 

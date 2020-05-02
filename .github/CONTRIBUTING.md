@@ -10,7 +10,7 @@ If you don't find what you're looking for there, then please check the the [foru
 
 ## Asking for Help
 
-In general, the Github issue tracker should **only** be used for **bug reports** and **feature requests**.  If you're just having trouble getting something to work, you should ask in the [forums](https://forums.select2.org) or on [Stack Overflow](https://stackoverflow.com) instead. 
+In general, the Github issue tracker should **only** be used for **bug reports** and **feature requests**.  If you're just having trouble getting something to work, you should ask in the [forums](https://forums.select2.org) or on [Stack Overflow](https://stackoverflow.com) instead.
 
 ### Rules for all community platforms
 
@@ -19,7 +19,7 @@ In general, the Github issue tracker should **only** be used for **bug reports**
 3. Any code snippets should be formatted using [Markdown code fences](https://learn.userfrosting.com/troubleshooting/getting-help#use-markdown-to-format-blocks-of-code) and properly indented. Poorly formatted code is difficult to read and reflects badly on you as a programmer.
 4. Check what you write for spelling and grammar issues. If you want others to take the time to read your question carefully, you must write your question carefully.
 5. When possible create and link to a [minimal, complete, and verifiable](https://stackoverflow.com/help/mcve) example by cloning our [JSBin template](http://jsbin.com/goqagokoye/edit?html,js,output). Code dumps, zip files, etc are NOT acceptable.
-6. Include relevant screenshots or animations, if possible. Drag your screenshots directly into the forums or issue tracker text box. They will automatically be uploaded and the Markdown to display them will be generated.  Avoid third-party image hosts, or links which require extra clicks to view the image (except IRC, where this is unavoidable).
+6. Include relevant screenshots or animations, if possible. Drag your screenshots directly into the forums or issue tracker text box. They will automatically be uploaded and the Markdown to display them will be generated.  Avoid third-party image hosts, or links which require extra clicks to view the image.
 
 ### Stack Overflow
 
