@@ -11,7 +11,7 @@ twig_first: true
 
 # Select2
 
-The jQuery replacement for select boxes 
+The jQuery replacement for select boxes
 
 <div class="s2-docs-featurette">
     <a class="button" href="https://forums.select2.org">Forums</a>
@@ -48,7 +48,7 @@ Select2 gives you a customizable select box with support for searching, tagging,
           <h4>Theming</h4>
           <p>
             Fully skinnable, CSS built with Sass and an
-            <a href="https://github.com/select2/select2-bootstrap-theme">optional theme for Bootstrap 3</a>.
+            <a href="https://github.com/ttskch/select2-bootstrap4-theme">optional theme for Bootstrap 4</a>.
           </p>
       </div>
     </div>
@@ -76,9 +76,7 @@ Select2 gives you a customizable select box with support for searching, tagging,
       <div class="size-1-3 size-tablet-1-2">
         <i class="fa fa-html5 fa-4x"></i>
         <h4>Full browser support</h4>
-        <p>Support for both modern and legacy browsers is built-in, even including Internet Explorer 8.</p>
+        <p>Support for both modern and legacy browsers is built-in, even including Internet Explorer 11.</p>
       </div>
     </div>
 </div>
-
->>>>> <p style="text-align: left;">Looking for the documentation for Select2 3.5.3?  That can still be found <a href="http://select2.github.io/select2/">here</a>.</p>
