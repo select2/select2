@@ -53,6 +53,7 @@ test(
         'noResults',
         'searching',
         'removeAllItems',
+        'removeItem',
         'search'
       ]
     );

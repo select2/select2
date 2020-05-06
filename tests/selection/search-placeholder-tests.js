@@ -43,8 +43,8 @@ test('width does not extend the search box', function (assert) {
 
     assert.equal(
       $search.outerWidth(),
-      60,
-      'The search should not be the entire width of the container'
+      100,
+      'The search should be the entire width of the container'
     );
 
     assert.equal(

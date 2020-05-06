@@ -31,10 +31,10 @@
 
   user-select: none;
   -webkit-user-select: none;
+}
 
-  &[aria-selected] {
-    cursor: pointer;
-  }
+.select2-results__option--selectable {
+  cursor: pointer;
 }
 
 .select2-container--open .select2-dropdown {
