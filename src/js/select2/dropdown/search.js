@@ -14,12 +14,12 @@ define([
         ' spellcheck="false" role="searchbox" aria-autocomplete="list" />' +
       '</span>'
     );
-    $search.attr('aria-label', searchLabel());
 
     this.$searchContainer = $search;
     this.$search = $search.find('input');
 
     this.$search.prop('autocomplete', this.options.get('autocomplete'));
+    this.$search.attr('aria-label', searchLabel());
 
     $rendered.prepend($search);
 
