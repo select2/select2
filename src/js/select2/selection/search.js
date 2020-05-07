@@ -8,24 +8,19 @@ define([
   }
 
   Search.prototype.render = function (decorated) {
-    var tagString;
-    if(this.options.get('searchElement') === 'textarea'){
-	tagString = '<textarea class="select2-search__field"'+
+
+    var $search = $(
+      '<span class="select2-search select2-search--inline">' + 
+    	'<textarea class="select2-search__field"'+
         ' type="search" tabindex="-1"' +
         ' autocorrect="off" autocapitalize="none"' +
         ' spellcheck="false" role="searchbox" aria-autocomplete="list" >' +
-        '</textarea>';
-    } else {
-        tagString = '<input class="select2-search__field"'+
-        ' type="search" tabindex="-1"' +
-        ' autocorrect="off" autocapitalize="none"' +
-        ' spellcheck="false" role="searchbox" aria-autocomplete="list" />';
-    }
-    var $search = $(
-      '<span class="select2-search select2-search--inline">' + tagString + '</span>'
+        '</textarea>' +
+      '</span>
+    );
 
     this.$searchContainer = $search;
-    this.$search = $search.find('input, textarea');
+    this.$search = $search.find('textarea');
 
     this.$search.prop('autocomplete', this.options.get('autocomplete'));
 
