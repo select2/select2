@@ -16,7 +16,7 @@ define([
         ' autocorrect="off" autocapitalize="none"' +
         ' spellcheck="false" role="searchbox" aria-autocomplete="list" >' +
         '</textarea>' +
-      '</span>
+      '</span>'
     );
 
     this.$searchContainer = $search;
