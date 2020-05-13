@@ -11,7 +11,7 @@ import { Dropdown } from './dropdown';
 import { Remove, Toggle } from './icons';
 import { ResultList } from './result-list';
 import { style } from './style';
-import { cn, extend, Key, scope } from './util';
+import { cn, extend, Key, merge, scope } from './util';
 
 const forceImportOfH = h;
 
@@ -336,12 +336,34 @@ export class MultiSelect extends AbstractSelect<Props, State> {
 
     public onSearchKeyDown = (event: KeyboardEvent) => {
         const { open } = this.state;
+        const searchBoxValue = (event.target as HTMLInputElement).value;
+        const { values } = this.props;
+
+        if (
+            searchBoxValue === '' && //
+            (event.key === Key.Backspace || event.key === Key.Delete) && //
+            values.length > 0
+        ) {
+            this.setState(
+                (prevState: State) => {
+                    const state = extend({}, prevState);
+                    this.applyCloseState(state);
+                    state.values.active = values.length - 1;
+                    return state;
+                },
+                () => {
+                    if (this.valuesRef.current) {
+                        this.valuesRef.current.focus();
+                    }
+                }
+            );
+        }
 
         if (open) {
             if (this.handleResultNavigationKeyDown(event)) {
                 return;
             }
-            if (this.hasSearchResults) {
+            if (this.hasSearchResults()) {
                 switch (event.key) {
                     case Key.Enter:
                         this.onActiveResultSelectedViaKeypress(event);
@@ -398,15 +420,21 @@ export class MultiSelect extends AbstractSelect<Props, State> {
     }
 
     public close = (callback?: () => void) => {
-        this.updateState(
+        this.setState(state => {
+            this.applyCloseState(state);
+            return state;
+        }, callback);
+    };
+
+    private applyCloseState(state: State) {
+        merge(state, [
             {
                 open: false,
                 results: { results: undefined },
                 search: ''
-            },
-            callback
-        );
-    };
+            }
+        ]);
+    }
 
     public onValuesBlur = (event: Event) => {
         this.updateState({ values: { active: -1 } });
@@ -463,8 +491,42 @@ export class MultiSelect extends AbstractSelect<Props, State> {
                 event.preventDefault();
                 break;
             }
+            case Key.Backspace:
+            case Key.Delete:
+                this.removeActiveChoice();
         }
     };
+
+    private removeActiveChoice() {
+        const { values, onChange } = this.props;
+        const { selected, active } = this.state.values;
+        if (values.length > 0 && active >= 0) {
+            const nextValues = [...values];
+            nextValues.splice(active, 1);
+            const nextSelected = [...selected];
+            nextSelected.splice(active, 1);
+            let nextActive = active - 1;
+            if (nextSelected.length > 0) {
+                nextActive = Math.max(0, nextActive); // if there are items still available select the first
+            }
+            this.updateState(
+                {
+                    values: {
+                        active: nextActive,
+                        selected: nextSelected
+                    }
+                },
+                () => {
+                    if (nextValues.length === 0) {
+                        if (this.searchRef.current != null) {
+                            this.searchRef.current.focus();
+                        }
+                    }
+                    onChange(nextValues);
+                }
+            );
+        }
+    }
 
     public onDropdownClick = (event: MouseEvent) => {
         // result clicks do not make it this far because they do not propagate

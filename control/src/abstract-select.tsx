@@ -6,7 +6,7 @@ const forceImportOfH = h;
 
 type ToString = (item: any) => string;
 
-export type DataItemRenderer = (string) | ((item: any, h: typeof createElement) => ComponentChild);
+export type DataItemRenderer = string | ((item: any, h: typeof createElement) => ComponentChild);
 
 export type QueryFunction = (search: string, page: number, token: string) => Promise<QueryResult>;
 
@@ -109,7 +109,7 @@ export abstract class AbstractSelect<P extends Props, S extends State> extends C
         return this.renderItem(item, 'resultContent');
     };
 
-    private renderItem = (item: DataItem, rendererName: (keyof Props) & DataItemRenderer): ComponentChild => {
+    private renderItem = (item: DataItem, rendererName: keyof Props & DataItemRenderer): ComponentChild => {
         const renderer = this.props[rendererName] as DataItemRenderer;
         if (renderer) {
             if (typeof renderer === 'function') {
@@ -151,7 +151,7 @@ export abstract class AbstractSelect<P extends Props, S extends State> extends C
 
         const current = this.state.results;
 
-        const minimumCharactersReached = query.length >= minimumCharacters;
+        const minimumCharactersReached = query.length >= (minimumCharacters||0);
         const token = minimumCharactersReached ? uuid() : undefined;
 
         const control = this;
