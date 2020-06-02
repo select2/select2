@@ -164,6 +164,7 @@ export class MultiSelect extends AbstractSelect<Props, State> {
                                     disabled={disabled}
                                     aria-disabled={disabled}
                                     title={dictionary.removeButtonTitle()}
+                                    aria-label={dictionary.removeButtonTitle()}
                                     type='button'
                                 >
                                     <span>
