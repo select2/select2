@@ -124,6 +124,7 @@ export class SingleSelect extends AbstractSelect<Props, State> {
                                     disabled={disabled}
                                     aria-disabled={disabled}
                                     title={dictionary.clearButtonTitle()}
+                                    aria-label={dictionary.clearButtonTitle()}
                                     type='button'
                                 >
                                     <span>
