@@ -206,6 +206,23 @@ define([
       childList: true,
       subtree: false
     });
+
+    var ancestors = this.$element.parents('fieldset');
+
+    if (ancestors.length) {
+
+      this._ancestorObserver = new window.MutationObserver(function () {
+        self._syncA();
+      });
+
+      ancestors.each(function () {
+
+        self._ancestorObserver.observe(this, {
+          attributeFilter: ['disabled'],
+          attributes: true,
+        });
+      });
+    }
   };
 
   Select2.prototype._registerDataEvents = function () {
@@ -473,7 +490,7 @@ define([
    * @return {false} if the disabled option is false.
    */
   Select2.prototype.isDisabled = function () {
-    return this.options.get('disabled');
+    return this.options.get('disabled') || this.$element.is(':disabled');
   };
 
   Select2.prototype.isOpen = function () {
@@ -558,6 +575,11 @@ define([
 
     this._observer.disconnect();
     this._observer = null;
+
+    if (this._ancestorObserver) {
+      this._ancestorObserver.disconnect();
+      this._ancestorObserver = null;
+    }
 
     this._syncA = null;
     this._syncS = null;
