@@ -219,7 +219,7 @@ define([
 
         self._ancestorObserver.observe(this, {
           attributeFilter: ['disabled'],
-          attributes: true,
+          attributes: true
         });
       });
     }
