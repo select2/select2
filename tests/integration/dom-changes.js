@@ -330,3 +330,29 @@ test('adding multiple options calls selection:update once', function (assert) {
     asyncDone();
   }, 0);
 });
+
+test('disabling containing fieldset disables the control', function (assert) {
+  var $ = require('jquery');
+  var Select2 = require('select2/core');
+
+  var $fieldset = $(
+    '<fieldset>' +
+    '  <select></select>' +
+    '</fieldset>');
+
+  var $select = $fieldset.children();
+
+  $('#qunit-fixture').append($fieldset);
+  
+  var select = new Select2($select);
+
+  assert.equal(
+    select.isDisabled(),
+    false);
+
+  $fieldset.prop('disabled', true);
+
+  assert.equal(
+    select.isDisabled(),
+    true);
+});
