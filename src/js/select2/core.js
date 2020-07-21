@@ -353,7 +353,7 @@ define([
   };
 
   Select2.prototype._syncAttributes = function () {
-    this.options.set('disabled', this.$element.prop('disabled'));
+    this.options.set('disabled', this.$element.prop('disabled') || this.$element.is(':disabled'));
 
     if (this.isDisabled()) {
       if (this.isOpen()) {
@@ -490,7 +490,7 @@ define([
    * @return {false} if the disabled option is false.
    */
   Select2.prototype.isDisabled = function () {
-    return this.options.get('disabled') || this.$element.is(':disabled');
+    return this.options.get('disabled');
   };
 
   Select2.prototype.isOpen = function () {
