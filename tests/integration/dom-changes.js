@@ -332,6 +332,10 @@ test('adding multiple options calls selection:update once', function (assert) {
 });
 
 test('disabling containing fieldset disables the control', function (assert) {
+  assert.expect(2);
+
+  var asyncDone = assert.async();
+
   var $ = require('jquery');
   var Select2 = require('select2/core');
 
@@ -352,7 +356,11 @@ test('disabling containing fieldset disables the control', function (assert) {
 
   $fieldset.prop('disabled', true);
 
-  assert.equal(
-    select.isDisabled(),
-    true);
+  setTimeout(function () {
+    assert.equal(
+      select.isDisabled(),
+      true);
+
+    asyncDone();
+  }, 0);
 });
