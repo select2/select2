@@ -346,5 +346,12 @@ define([
     dest.setAttribute('class', replacements.join(' '));
   };
 
+  Utils.hasDisabledAncestors = function ($element) {
+    return $element.parents('fieldset').get().reduce(
+      function (disabled, element) {
+        return disabled || element.hasAttribute('disabled');
+      }, false);
+  }
+
   return Utils;
 });
