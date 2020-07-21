@@ -364,3 +364,40 @@ test('disabling containing fieldset disables the control', function (assert) {
     asyncDone();
   }, 0);
 });
+
+test('control retains disabled state when parent is toggled', function (assert) {
+  assert.expect(2);
+
+  var asyncDone = assert.async();
+
+  var $ = require('jquery');
+  var Select2 = require('select2/core');
+
+  var $fieldset = $(
+    '<fieldset>' +
+    '  <select></select>' +
+    '</fieldset>');
+
+  var $select = $fieldset.children();
+
+  $('#qunit-fixture').append($fieldset);
+
+  var select = new Select2($select, {
+    disabled: true
+  });
+
+  assert.equal(
+    select.isDisabled(),
+    true);
+
+  $fieldset.prop('disabled', true);
+  $fieldset.prop('disabled', false);
+
+  setTimeout(function () {
+    assert.equal(
+      select.isDisabled(),
+      true);
+
+    asyncDone();
+  }, 0);
+});
