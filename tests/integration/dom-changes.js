@@ -365,7 +365,8 @@ test('disabling containing fieldset disables the control', function (assert) {
   }, 0);
 });
 
-test('control retains disabled state when parent is toggled', function (assert) {
+test('control retains disabled state when parent is toggled',
+  function (assert) {
   assert.expect(2);
 
   var asyncDone = assert.async();

@@ -351,7 +351,7 @@ define([
       function (disabled, element) {
         return disabled || element.hasAttribute('disabled');
       }, false);
-  }
+  };
 
   return Utils;
 });

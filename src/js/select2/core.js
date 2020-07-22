@@ -353,7 +353,8 @@ define([
   };
 
   Select2.prototype._syncAttributes = function () {
-    this.options.set('disabled', this.$element.prop('disabled') || Utils.hasDisabledAncestors(this.$element));
+    this.options.set('disabled', this.$element.prop('disabled') ||
+      Utils.hasDisabledAncestors(this.$element));
 
     if (this.isDisabled()) {
       if (this.isOpen()) {
