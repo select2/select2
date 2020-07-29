@@ -51,8 +51,7 @@ exports[`MultiSelect renders with values 1`] = `
       aria-label="Remove selected values" type="button">
         <span>
           <Remove width="20" height="20"></Remove>
-        </span>
-      </button>
+        </span>      </button>
       <label class="s25-offscreen">Add Value</label>
       <input type="text" value class="s25-search" role="combobox"
       aria-label="Add Value" aria-autocomplete="list" aria-haspopup="true" aria-owns="s25-1-results"
