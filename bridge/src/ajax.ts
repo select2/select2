@@ -5,6 +5,7 @@ export interface Ajax {
     url: string;
     params: (term: string, page: number) => object;
     process: (data: string) => QueryResult;
+    onerror?: (data?: string, status?: number) => void;
 }
 
 export function createQueryFromAjax(ajax: Ajax): QueryFunction {
@@ -41,10 +42,18 @@ export function createQueryFromAjax(ajax: Ajax): QueryFunction {
                     const data = ajax.process(request.responseText);
                     resolve({ values: data.values, more: data.more, token });
                 } else {
+                    if (ajax.onerror) {
+                        ajax.onerror(request.responseText, request.status);
+                    }
                     reject();
                 }
             };
-            request.onerror = reject;
+            request.onerror = () => {
+                if (ajax.onerror) {
+                    ajax.onerror();
+                }
+                reject();
+            };
             request.send();
         });
     };
