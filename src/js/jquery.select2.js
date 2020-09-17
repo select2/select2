@@ -16,7 +16,7 @@ define([
       if (typeof options === 'object') {
         var instanceOptions = $.extend(true, {}, options);
         this.each(function () {
-          new Select2($(this), instanceOptions);
+          new Select2($(this), instanceOptions); // eslint-disable-line no-new
         });
 
         return this;
