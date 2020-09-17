@@ -14,10 +14,9 @@ define([
       options = options || {};
 
       if (typeof options === 'object') {
+        var instanceOptions = $.extend(true, {}, options);
         this.each(function () {
-          var instanceOptions = $.extend(true, {}, options);
-
-          var instance = new Select2($(this), instanceOptions);
+          new Select2($(this), instanceOptions);
         });
 
         return this;
