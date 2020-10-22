@@ -3,6 +3,8 @@ module('Options - Copying from element');
 var $ = require('jquery');
 
 var Options = require('select2/options');
+var Select2 = require('select2/core');
+
 
 test('copies disabled attribute when set', function (assert) {
   var $test = $('<select disabled></select>');
@@ -110,4 +112,15 @@ test('autocomplete attribute does not override option', function (assert) {
   }, $test);
 
   assert.ok(options.get('autocomplete'), 'organization');
+});
+
+test('baseCssClass is correctly implemented', function (assert) {
+  var $test = $('<select></select>');
+
+  var select = new Select2($test, {
+    baseCssClass: 'myContainerClass'
+  });
+  var $container = select.render();
+  assert.ok($container.hasClass('select2'));
+  assert.ok($container.hasClass('myContainerClass'));
 });

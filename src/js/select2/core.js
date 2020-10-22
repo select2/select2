@@ -597,6 +597,11 @@ define([
     this.$container[0].classList
       .add('select2-container--' + this.options.get('theme'));
 
+    if (this.options.get('baseCssClass')) {
+      this.$container[0].classList
+        .add(this.options.get('baseCssClass'));
+    }
+
     Utils.StoreData($container[0], 'element', this.$element);
 
     return $container;
