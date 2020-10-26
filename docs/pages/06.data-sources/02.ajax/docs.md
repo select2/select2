@@ -281,7 +281,7 @@ This code powers the Github example presented at the beginning of this chapter:
 
 <script type="text/javascript" class="js-code-placeholder">
 
-$(".js-example-data-ajax").select2({
+$(".js-data-example-ajax").select2({
   ajax: {
     url: "https://api.github.com/search/repositories",
     dataType: 'json',
