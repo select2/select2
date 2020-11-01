@@ -186,31 +186,52 @@ $(".js-example-responsive").select2({
 ## Themes
 
 Select2 supports custom themes using the `theme` option so you can style Select2 to match the rest of your application.
+There are currently 2 themes available to choose from: `classic` and `default`.
 
-These examples use the `classic` theme, which matches the old look of Select2.
 
 <div class="s2-example">
+  Classic Theme:
   <p>
-    <select class="js-example-theme-single js-states form-control">
+    <select class="js-classic-theme-single js-states form-control">
     </select>
   </p>
   <p>
-    <select class="js-example-theme-multiple js-states form-control" multiple="multiple"></select>
+    <select class="js-classic-theme-multiple js-states form-control" multiple="multiple"></select>
   </p>
+
+  Default Theme:
+  <p>
+    <select class="js-default-theme-single js-states form-control">
+    </select>
+  </p>
+  <p>
+    <select class="js-default-theme-multiple js-states form-control" multiple="multiple"></select>
+  </p>
+
 </div>
 
 <pre data-fill-from=".js-code-example-theme"></pre>
 
 <script type="text/javascript" class="js-code-example-theme">
 
-$(".js-example-theme-single").select2({
-  theme: "classic"
+$(".js-classic-theme-single").select2({
+  theme: "classic",
+  placeholder: "Classic single"
 });
 
-$(".js-example-theme-multiple").select2({
-  theme: "classic"
+$(".js-classic-theme-multiple").select2({
+  theme: "classic",
+  placeholder: "Classic multiple"
+});
+$(".js-default-theme-single").select2({
+  theme: "default",
+  placeholder: "Default single"
 });
 
+$(".js-default-theme-multiple").select2({
+  theme: "default",
+  placeholder: "Default multiple"
+});
 </script>
 
 Various display options of the Select2 component can be changed.  You can access the `<option>` element (or `<optgroup>`) and any attributes on those elements using `.element`.
