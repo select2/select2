@@ -19,6 +19,7 @@ export interface Props extends SearchControllerProps {
     valuesLabel: string;
     comboboxLabel: string;
     values: DataItem[];
+    maxValues?: number;
     onChange: (values: DataItem[]) => void;
 }
 
@@ -65,7 +66,7 @@ export class MultiSelect extends AbstractSelect<Props, State> {
     }
 
     public render(props, state) {
-        const { values, tabIndex, minimumCharacters, valuesLabel, comboboxLabel, placeholder } = props;
+        const { values, tabIndex, minimumCharacters, valuesLabel, comboboxLabel, placeholder, maxValues } = props;
         const {
             open,
             loading,
@@ -89,6 +90,9 @@ export class MultiSelect extends AbstractSelect<Props, State> {
         const instructionsDomId = this.namespace + '-instructions';
         const resultsDomId = this.namespace + '-results';
         const resultsNamespace = this.namespace + '-res-';
+
+        const maxValuesSelected = maxValues && values && values.length >= maxValues;
+
         return (
             <Fragment>
                 <div
@@ -215,6 +219,8 @@ export class MultiSelect extends AbstractSelect<Props, State> {
                     >
                         <ResultList
                             namespace={resultsNamespace}
+                            showMaximumValuesSelectedError={maxValuesSelected}
+                            maximumValues={maxValues}
                             minimumCharacters={minimumCharacters}
                             dictionary={this.dictionary}
                             itemLabel={this.getItemLabel}

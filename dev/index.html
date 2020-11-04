@@ -173,7 +173,8 @@
             minimumCharacters: 2,
             query: query,
             quiet: 100,
-            values: [window.select2countries[0], window.select2countries[1], window.select2countries[1]].map(countryToDataItem),
+            values: [window.select2countries[0], window.select2countries[1]].map(countryToDataItem),
+            maxValues:3,
         },
     );
 

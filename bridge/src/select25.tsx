@@ -38,6 +38,7 @@ interface MultiSelectOptions extends BaseSelectOptions {
     comboboxLabel?: string;
     allowDuplicates: boolean;
     values: DataItem[];
+    maxValues?: number;
 }
 
 interface SingleSelectOptions extends BaseSelectOptions {
@@ -121,6 +122,7 @@ class MultiSelectWrapper extends Component<
                 allowDuplicates={opts.allowDuplicates}
                 values={this.state.values}
                 onChange={this.onChange}
+                maxValues={opts.maxValues}
             />
         );
     }

@@ -25,6 +25,7 @@ export const enum style {
     searchResultsMessage = 's25-search-results-message',
     searchResultsLoading = 's25-search-results-loading',
     searchResultsMinimumError = 's25-search-results-minimum-error',
+    searchResultsMaximumSelectedError = 's25-search-results-maximum-selected-error',
     hiddenAccessible = 's25-hidden-accessible',
     hidden = 's25-hidden',
     placeholder = 's25-placeholder',

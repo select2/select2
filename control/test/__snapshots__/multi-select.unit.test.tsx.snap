@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MultiSelect renders with empty values 1`] = `
-<p>
+<y>
   <div class="s25-control s25-multi" tabIndex="-1">
     <div class="s25-body">
       <div id="s25-0-instructions" class="s25-offscreen" style="display: none;">Items can be removed from this list box by selecting them and activating
@@ -23,11 +23,11 @@ exports[`MultiSelect renders with empty values 1`] = `
       </div>
     </div>
   </div>
-</p>
+</y>
 `;
 
 exports[`MultiSelect renders with values 1`] = `
-<p>
+<y>
   <div class="s25-control s25-multi" tabIndex="-1">
     <div class="s25-body">
       <div id="s25-1-instructions" class="s25-offscreen" style="display: none;">Items can be removed from this list box by selecting them and activating
@@ -51,7 +51,8 @@ exports[`MultiSelect renders with values 1`] = `
       aria-label="Remove selected values" type="button">
         <span>
           <Remove width="20" height="20"></Remove>
-        </span>      </button>
+        </span>
+      </button>
       <label class="s25-offscreen">Add Value</label>
       <input type="text" value class="s25-search" role="combobox"
       aria-label="Add Value" aria-autocomplete="list" aria-haspopup="true" aria-owns="s25-1-results"
@@ -61,5 +62,5 @@ exports[`MultiSelect renders with values 1`] = `
       </div>
     </div>
   </div>
-</p>
+</y>
 `;

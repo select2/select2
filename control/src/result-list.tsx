@@ -28,16 +28,19 @@ interface Props {
     showNoSearchResultsFound: boolean;
     showLoadMoreResults: boolean;
 
+    showMaximumValuesSelectedError: boolean;
+    maximumValues: number;
+
     onResultClicked: (result: any, event: MouseEvent) => void;
     onMouseMove: (index: any, event: MouseEvent) => void;
     onLoadMore: () => void;
 }
 
 export class ResultList extends Component<Props> {
-    private container: RefObject<HTMLElement>;
+    private container: RefObject<HTMLDivElement>;
     private lastMouseClientX?: number;
     private lastMouseClientY?: number;
-    private loadMore: RefObject<HTMLElement>;
+    private loadMore: RefObject<HTMLDivElement>;
     constructor(props) {
         super(props);
         this.container = createRef();
@@ -52,6 +55,8 @@ export class ResultList extends Component<Props> {
         const { dictionary, minimumCharacters, showLoadMoreResults, results } = props;
         const query = this.props.search;
 
+        const overrideError = props.showMaximumValuesSelectedError;
+
         return (
             <div class={style.body}>
                 <div
@@ -60,22 +65,27 @@ export class ResultList extends Component<Props> {
                     class={style.searchResults}
                     aria-busy={props.loading}
                 >
-                    {props.loading && (
+                    {!overrideError && props.loading && (
                         <div class={cn(style.searchResultsLoading, style.searchResultsMessage)}>
                             {dictionary.searchResultsLoading()}
                         </div>
                     )}
-                    {props.showNoSearchResultsFound && (
+                    {!overrideError && props.showNoSearchResultsFound && (
                         <div class={cn(style.noSearchResults, style.searchResultsMessage)}>
                             {dictionary.noSearchResults()}
                         </div>
                     )}
-                    {props.showMinimumCharactersError && (
+                    {!overrideError && props.showMinimumCharactersError && (
                         <div class={cn(style.searchResultsMinimumError, style.searchResultsMessage)}>
                             {dictionary.minimumCharactersMessage(query.length, minimumCharacters)}
                         </div>
                     )}
-                    {results && results.length > 0 && (
+                    {props.showMaximumValuesSelectedError && (
+                        <div class={cn(style.searchResultsMaximumSelectedError, style.searchResultsMessage)}>
+                            {dictionary.maximumValuesSelectedMessage(props.maximumValues)}
+                        </div>
+                    )}
+                    {!overrideError && results && results.length > 0 && (
                         <div
                             class={style.options}
                             role='listbox'
