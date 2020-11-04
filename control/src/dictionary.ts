@@ -8,7 +8,7 @@ export interface Dictionary {
     minimumCharactersMessage(len: number, min: number): string;
     multiSelectInstructions(): string;
     expandButtonTitle(): string;
-    maximumValuesSelectedMessage(max: number): string;
+    maximumValuesSelectedMessage(): string;
 }
 
 const EN_US: Dictionary = {
@@ -44,7 +44,7 @@ const EN_US: Dictionary = {
     expandButtonTitle(): string {
         return 'Expand';
     },
-    maximumValuesSelectedMessage(max: number): string {
+    maximumValuesSelectedMessage(): string {
         return 'Maximum number of values already selected';
     }
 };

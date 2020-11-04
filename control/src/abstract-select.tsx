@@ -28,6 +28,7 @@ export interface ResultListState {
     page: number;
 
     showMinimumCharactersError: boolean;
+    showMaximumValuesSelectedError: boolean;
     showNoSearchResultsFound: boolean;
     showLoadMoreResults: boolean;
 }
@@ -85,6 +86,7 @@ export abstract class AbstractSelect<P extends Props, S extends State> extends C
                 token: null,
 
                 showLoadMoreResults: false,
+                showMaximumValuesSelectedError: false,
                 showMinimumCharactersError: false,
                 showNoSearchResultsFound: false
             },
@@ -151,9 +153,11 @@ export abstract class AbstractSelect<P extends Props, S extends State> extends C
 
         const current = this.state.results;
 
-        const minimumCharactersReached = query.length >= (minimumCharacters||0);
-        const token = minimumCharactersReached ? uuid() : undefined;
+        const minimumCharactersReached = query.length >= (minimumCharacters || 0);
+        const maximumValuesSelected = this.isMaximumNumberOfValuesSelected();
+        const error = !minimumCharactersReached || maximumValuesSelected;
 
+        const token = !error ? uuid() : undefined;
         const control = this;
 
         this.updateState(
@@ -161,13 +165,14 @@ export abstract class AbstractSelect<P extends Props, S extends State> extends C
             [
                 start,
                 {
-                    loading: minimumCharactersReached,
+                    loading: !error,
                     results: {
                         active: -1,
                         page: 0,
                         results: undefined,
                         showLoadMoreResults: false,
-                        showMinimumCharactersError: !minimumCharactersReached,
+                        showMaximumValuesSelectedError: maximumValuesSelected,
+                        showMinimumCharactersError: !minimumCharactersReached && !maximumValuesSelected,
                         showNoSearchResultsFound: false,
                         token
                     },
@@ -182,6 +187,11 @@ export abstract class AbstractSelect<P extends Props, S extends State> extends C
                 if (!minimumCharactersReached) {
                     // todo - throttle this announcement?
                     announce.politely(dictionary.minimumCharactersMessage(query.length, minimumCharacters!));
+                    return;
+                }
+
+                if (maximumValuesSelected) {
+                    announce.politely(dictionary.maximumValuesSelectedMessage());
                     return;
                 }
 
@@ -351,5 +361,9 @@ export abstract class AbstractSelect<P extends Props, S extends State> extends C
     protected hasSearchResults() {
         const results = this.state.results.results;
         return results && results.length > 0;
+    }
+
+    protected isMaximumNumberOfValuesSelected() {
+        return false;
     }
 }

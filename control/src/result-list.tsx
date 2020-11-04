@@ -55,8 +55,6 @@ export class ResultList extends Component<Props> {
         const { dictionary, minimumCharacters, showLoadMoreResults, results } = props;
         const query = this.props.search;
 
-        const overrideError = props.showMaximumValuesSelectedError;
-
         return (
             <div class={style.body}>
                 <div
@@ -65,27 +63,27 @@ export class ResultList extends Component<Props> {
                     class={style.searchResults}
                     aria-busy={props.loading}
                 >
-                    {!overrideError && props.loading && (
+                    {props.loading && (
                         <div class={cn(style.searchResultsLoading, style.searchResultsMessage)}>
                             {dictionary.searchResultsLoading()}
                         </div>
                     )}
-                    {!overrideError && props.showNoSearchResultsFound && (
+                    {props.showNoSearchResultsFound && (
                         <div class={cn(style.noSearchResults, style.searchResultsMessage)}>
                             {dictionary.noSearchResults()}
                         </div>
                     )}
-                    {!overrideError && props.showMinimumCharactersError && (
+                    {props.showMinimumCharactersError && (
                         <div class={cn(style.searchResultsMinimumError, style.searchResultsMessage)}>
                             {dictionary.minimumCharactersMessage(query.length, minimumCharacters)}
                         </div>
                     )}
                     {props.showMaximumValuesSelectedError && (
                         <div class={cn(style.searchResultsMaximumSelectedError, style.searchResultsMessage)}>
-                            {dictionary.maximumValuesSelectedMessage(props.maximumValues)}
+                            {dictionary.maximumValuesSelectedMessage()}
                         </div>
                     )}
-                    {!overrideError && results && results.length > 0 && (
+                    {results && results.length > 0 && (
                         <div
                             class={style.options}
                             role='listbox'

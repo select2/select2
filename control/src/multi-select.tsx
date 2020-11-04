@@ -66,7 +66,7 @@ export class MultiSelect extends AbstractSelect<Props, State> {
     }
 
     public render(props, state) {
-        const { values, tabIndex, minimumCharacters, valuesLabel, comboboxLabel, placeholder, maxValues } = props;
+        const { values, tabIndex, minimumCharacters, maxValues, valuesLabel, comboboxLabel, placeholder } = props;
         const {
             open,
             loading,
@@ -90,8 +90,6 @@ export class MultiSelect extends AbstractSelect<Props, State> {
         const instructionsDomId = this.namespace + '-instructions';
         const resultsDomId = this.namespace + '-results';
         const resultsNamespace = this.namespace + '-res-';
-
-        const maxValuesSelected = maxValues && maxValues >= 0 && values && values.length >= maxValues;
 
         return (
             <Fragment>
@@ -219,7 +217,6 @@ export class MultiSelect extends AbstractSelect<Props, State> {
                     >
                         <ResultList
                             namespace={resultsNamespace}
-                            showMaximumValuesSelectedError={maxValuesSelected}
                             maximumValues={maxValues}
                             minimumCharacters={minimumCharacters}
                             dictionary={this.dictionary}
@@ -370,16 +367,15 @@ export class MultiSelect extends AbstractSelect<Props, State> {
             if (this.handleResultNavigationKeyDown(event)) {
                 return;
             }
-            if (this.hasSearchResults()) {
+            if (event.key === Key.Escape) {
+                if (open) {
+                    this.close();
+                }
+                event.preventDefault();
+            } else if (this.hasSearchResults()) {
                 switch (event.key) {
                     case Key.Enter:
                         this.onActiveResultSelectedViaKeypress(event);
-                        break;
-                    case Key.Escape:
-                        if (open) {
-                            this.close();
-                        }
-                        event.preventDefault();
                         break;
                 }
             }
@@ -587,4 +583,9 @@ export class MultiSelect extends AbstractSelect<Props, State> {
         onChange(next);
         return next;
     };
+
+    protected isMaximumNumberOfValuesSelected() {
+        const { maxValues, values } = this.props;
+        return !!(maxValues && maxValues >= 0 && values && values.length >= maxValues);
+    }
 }
