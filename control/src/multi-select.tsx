@@ -378,6 +378,13 @@ export class MultiSelect extends AbstractSelect<Props, State> {
                         this.onActiveResultSelectedViaKeypress(event);
                         break;
                 }
+            } else {
+                // when there are no search results ignore enter
+                switch (event.key) {
+                    case Key.Enter:
+                        event.preventDefault();
+                        break;
+                }
             }
         } else {
             switch (event.key) {
