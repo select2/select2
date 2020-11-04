@@ -91,7 +91,7 @@ export class MultiSelect extends AbstractSelect<Props, State> {
         const resultsDomId = this.namespace + '-results';
         const resultsNamespace = this.namespace + '-res-';
 
-        const maxValuesSelected = maxValues && values && values.length >= maxValues;
+        const maxValuesSelected = maxValues && maxValues >= 0 && values && values.length >= maxValues;
 
         return (
             <Fragment>
