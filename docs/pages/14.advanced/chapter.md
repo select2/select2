@@ -4,4 +4,4 @@ taxonomy:
     category: docs
 ---
 
-# Advanced Features and Developer Guide
+# Advanced Features and Developer Guide :)
