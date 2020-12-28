@@ -553,6 +553,14 @@ define([
     this.$element.val(newVal).trigger('input').trigger('change');
   };
 
+  Select2.prototype.hide = function () {
+    this.$container.hide();
+  };
+
+  Select2.prototype.show = function () {
+    this.$container.show();
+  };
+
   Select2.prototype.destroy = function () {
     this.$container.remove();
 
