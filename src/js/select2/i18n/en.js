@@ -45,6 +45,9 @@ define(function () {
     },
     removeItem: function () {
       return 'Remove item';
+    },
+    search: function() {
+      return 'Search';
     }
   };
 });
