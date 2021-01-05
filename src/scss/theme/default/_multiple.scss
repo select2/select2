@@ -33,6 +33,12 @@
     margin-left: 5px;
     margin-top: 5px;
     padding: 0;
+
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: bottom;
   }
 
   .select2-selection__choice__display {
