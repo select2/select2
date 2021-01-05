@@ -4,15 +4,18 @@
   border-radius: 4px;
   cursor: text;
   padding-bottom: 5px;
-  padding-right: 5px;
+  padding-right: 25px;
+  position: relative;
 
   .select2-selection__clear {
     cursor: pointer;
-    float: right;
     font-weight: bold;
     height: 20px;
     margin-right: 10px;
     margin-top: 5px;
+
+    position: absolute;
+    right: 0;
 
     // This padding is to account for the bottom border for the first
     // selection row and the top border of the second selection row.
