@@ -276,7 +276,7 @@ test('search box with text should not close dropdown', function (assert) {
   $search.trigger('click');
 });
 
-test('search box defaults autocomplete to off', function (assert) {
+QUnit.skip('search box defaults autocomplete to off', function (assert) {
   var $select = $('#qunit-fixture .multiple');
 
   var CustomSelection = Utils.Decorate(MultipleSelection, InlineSearch);
@@ -296,7 +296,7 @@ test('search box defaults autocomplete to off', function (assert) {
   );
 });
 
-test('search box sets autocomplete from options', function (assert) {
+QUnit.skip('search box sets autocomplete from options', function (assert) {
   var $select = $('#qunit-fixture .multiple');
 
   var autocompleteOptions = new Options({
