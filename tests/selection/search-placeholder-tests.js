@@ -39,7 +39,7 @@ test('width does not extend the search box', function (assert) {
     // Update the selection so the search is rendered
     selection.update([]);
 
-    var $search = $selection.find('input');
+    var $search = $selection.find('textarea');
 
     assert.equal(
       $search.outerWidth(),

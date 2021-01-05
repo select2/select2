@@ -290,7 +290,7 @@ test('search box defaults autocomplete to off', function (assert) {
   selection.update([]);
 
   assert.equal(
-    $selection.find('input').attr('autocomplete'),
+    $selection.find('textarea').attr('autocomplete'),
     'off',
     'The search box has autocomplete disabled'
   );
@@ -314,7 +314,7 @@ test('search box sets autocomplete from options', function (assert) {
   selection.update([]);
 
   assert.equal(
-    $selection.find('input').attr('autocomplete'),
+    $selection.find('textarea').attr('autocomplete'),
     'country-name',
     'The search box sets the right autocomplete attribute'
   );
