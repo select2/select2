@@ -5,6 +5,7 @@ define([
 
   Search.prototype.render = function (decorated) {
     var $rendered = decorated.call(this);
+    var searchLabel = this.options.get('translations').get('search');
 
     var $search = $(
       '<span class="select2-search select2-search--dropdown">' +
@@ -18,6 +19,7 @@ define([
     this.$search = $search.find('input');
 
     this.$search.prop('autocomplete', this.options.get('autocomplete'));
+    this.$search.attr('aria-label', searchLabel());
 
     $rendered.prepend($search);
 

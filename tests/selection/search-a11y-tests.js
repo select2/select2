@@ -215,3 +215,23 @@ test('aria-controls should be removed when closed', function (assert) {
     'There are no results for the search box to point to when it is closed'
   );
 });
+
+test('aria-label attribute is present', function (assert) {
+  var $select = $('#qunit-fixture .multiple');
+
+  var CustomSelection = Utils.Decorate(MultipleSelection, InlineSearch);
+  var selection = new CustomSelection($select, options);
+  var $selection = selection.render();
+
+  var container = new MockContainer();
+  selection.bind(container, $('<span></span>'));
+
+  // Update the selection so the search is rendered
+  selection.update([]);
+
+  assert.equal(
+    $selection.find('input').attr('aria-label'),
+    'Search',
+    'The search box has a label'
+  );
+});
