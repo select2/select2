@@ -93,6 +93,7 @@ define([
     decorated.call(this, data);
 
     this.$selection.find('.select2-selection__clear').remove();
+    this.$selection[0].classList.remove('select2-selection--clearable');
 
     if (this.$selection.find('.select2-selection__placeholder').length > 0 ||
         data.length === 0) {
@@ -115,6 +116,7 @@ define([
     Utils.StoreData($remove[0], 'data', data);
 
     this.$selection.prepend($remove);
+    this.$selection[0].classList.add('select2-selection--clearable');
   };
 
   return AllowClear;
