@@ -554,6 +554,7 @@ define([
   };
 
   Select2.prototype.destroy = function () {
+    Utils.RemoveData(this.$container[0]);
     this.$container.remove();
 
     this._observer.disconnect();
