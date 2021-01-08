@@ -33,7 +33,7 @@ test('width does not extend the search box', function (assert) {
     selection.bind(container, $container);
 
     // Make it visible so the browser can place focus on the search
-    $container.find("div").append($selection);
+    $container.find('div').append($selection);
     $('#qunit-fixture').append($container);
 
     // Update the selection so the search is rendered
@@ -43,8 +43,9 @@ test('width does not extend the search box', function (assert) {
 
     assert.equal(
       $search.outerWidth(),
-      100,
-      'The search should be the entire width of the container'
+      93,
+      'The search should be the entire width of the container, '+
+      'minus the borders and the initial padding'
     );
 
     assert.equal(
