@@ -4,8 +4,12 @@
   border-radius: 4px;
   cursor: text;
   padding-bottom: 5px;
-  padding-right: 25px;
+  padding-right: 5px;
   position: relative;
+
+  &.select2-selection--clearable {
+    padding-right: 25px;
+  }
 
   .select2-selection__clear {
     cursor: pointer;

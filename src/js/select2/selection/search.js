@@ -11,14 +11,16 @@ define([
     var searchLabel = this.options.get('translations').get('search');
     var $search = $(
       '<span class="select2-search select2-search--inline">' +
-        '<input class="select2-search__field" type="search" tabindex="-1"' +
+        '<textarea class="select2-search__field"'+
+        ' type="search" tabindex="-1"' +
         ' autocorrect="off" autocapitalize="none"' +
-        ' spellcheck="false" role="searchbox" aria-autocomplete="list" />' +
+        ' spellcheck="false" role="searchbox" aria-autocomplete="list" >' +
+        '</textarea>' +
       '</span>'
     );
 
     this.$searchContainer = $search;
-    this.$search = $search.find('input');
+    this.$search = $search.find('textarea');
 
     this.$search.prop('autocomplete', this.options.get('autocomplete'));
     this.$search.attr('aria-label', searchLabel());
