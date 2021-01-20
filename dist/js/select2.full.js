@@ -1085,7 +1085,8 @@ S2.define('select2/results',[
       }
 
       var $childrenContainer = $('<ul></ul>', {
-        'class': 'select2-results__options select2-results__options--nested'
+        'class': 'select2-results__options select2-results__options--nested',
+        'role': 'none'
       });
 
       $childrenContainer.append($children);
@@ -1636,6 +1637,7 @@ S2.define('select2/selection/single',[
       .attr('role', 'textbox')
       .attr('aria-readonly', 'true');
     this.$selection.attr('aria-labelledby', id);
+    this.$selection.attr('aria-controls', id);
 
     this.$selection.on('mousedown', function (evt) {
       // Only respond to left clicks
@@ -2006,6 +2008,7 @@ S2.define('select2/selection/allowClear',[
     decorated.call(this, data);
 
     this.$selection.find('.select2-selection__clear').remove();
+    this.$selection[0].classList.remove('select2-selection--clearable');
 
     if (this.$selection.find('.select2-selection__placeholder').length > 0 ||
         data.length === 0) {
@@ -2028,6 +2031,7 @@ S2.define('select2/selection/allowClear',[
     Utils.StoreData($remove[0], 'data', data);
 
     this.$selection.prepend($remove);
+    this.$selection[0].classList.add('select2-selection--clearable');
   };
 
   return AllowClear;
@@ -2043,18 +2047,22 @@ S2.define('select2/selection/search',[
   }
 
   Search.prototype.render = function (decorated) {
+    var searchLabel = this.options.get('translations').get('search');
     var $search = $(
       '<span class="select2-search select2-search--inline">' +
-        '<input class="select2-search__field" type="search" tabindex="-1"' +
+        '<textarea class="select2-search__field"'+
+        ' type="search" tabindex="-1"' +
         ' autocorrect="off" autocapitalize="none"' +
-        ' spellcheck="false" role="searchbox" aria-autocomplete="list" />' +
+        ' spellcheck="false" role="searchbox" aria-autocomplete="list" >' +
+        '</textarea>' +
       '</span>'
     );
 
     this.$searchContainer = $search;
-    this.$search = $search.find('input');
+    this.$search = $search.find('textarea');
 
     this.$search.prop('autocomplete', this.options.get('autocomplete'));
+    this.$search.attr('aria-label', searchLabel());
 
     var $rendered = decorated.call(this);
 
@@ -3697,7 +3705,7 @@ S2.define('select2/data/ajax',[
 
     if (this._request != null) {
       // JSONP requests cannot always be aborted
-      if ($.isFunction(this._request.abort)) {
+      if (typeof this._request.abort === 'function') {
         this._request.abort();
       }
 
@@ -4177,6 +4185,7 @@ S2.define('select2/dropdown/search',[
 
   Search.prototype.render = function (decorated) {
     var $rendered = decorated.call(this);
+    var searchLabel = this.options.get('translations').get('search');
 
     var $search = $(
       '<span class="select2-search select2-search--dropdown">' +
@@ -4190,6 +4199,7 @@ S2.define('select2/dropdown/search',[
     this.$search = $search.find('input');
 
     this.$search.prop('autocomplete', this.options.get('autocomplete'));
+    this.$search.attr('aria-label', searchLabel());
 
     $rendered.prepend($search);
 
@@ -4882,6 +4892,9 @@ S2.define('select2/i18n/en',[],function () {
     },
     removeItem: function () {
       return 'Remove item';
+    },
+    search: function() {
+      return 'Search';
     }
   };
 });
@@ -5757,12 +5770,12 @@ S2.define('select2/core',[
       var key = evt.which;
 
       if (self.isOpen()) {
-        if (key === KEYS.ESC || key === KEYS.TAB ||
+        if (key === KEYS.ESC ||
             (key === KEYS.UP && evt.altKey)) {
           self.close(evt);
 
           evt.preventDefault();
-        } else if (key === KEYS.ENTER) {
+        } else if (key === KEYS.ENTER || key === KEYS.TAB) {
           self.trigger('results:select', {});
 
           evt.preventDefault();
@@ -6009,6 +6022,7 @@ S2.define('select2/core',[
   };
 
   Select2.prototype.destroy = function () {
+    Utils.RemoveData(this.$container[0]);
     this.$container.remove();
 
     this._observer.disconnect();
