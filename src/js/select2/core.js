@@ -302,12 +302,12 @@ define([
       var key = evt.which;
 
       if (self.isOpen()) {
-        if (key === KEYS.ESC ||
+        if (key === KEYS.ESC || key === KEYS.TAB ||
             (key === KEYS.UP && evt.altKey)) {
           self.close(evt);
 
           evt.preventDefault();
-        } else if (key === KEYS.ENTER || key === KEYS.TAB) {
+        } else if (key === KEYS.ENTER) {
           self.trigger('results:select', {});
 
           evt.preventDefault();
