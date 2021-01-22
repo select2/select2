@@ -78,7 +78,7 @@ define([
 
       if (tag != null) {
         var $option = self.option(tag);
-        $option.attr('data-select2-tag', true);
+        $option.attr('data-select2-tag', 'true');
 
         self.addOptions([$option]);
 
