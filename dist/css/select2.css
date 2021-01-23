@@ -46,7 +46,14 @@
     font-size: 100%;
     margin-top: 5px;
     margin-left: 5px;
-    padding: 0; }
+    padding: 0;
+    max-width: 100%;
+    resize: none;
+    height: 18px;
+    vertical-align: bottom;
+    font-family: sans-serif;
+    overflow: hidden;
+    word-break: keep-all; }
     .select2-container .select2-search--inline .select2-search__field::-webkit-search-cancel-button {
       -webkit-appearance: none; }
 
@@ -188,23 +195,35 @@
   border-radius: 4px;
   cursor: text;
   padding-bottom: 5px;
-  padding-right: 5px; }
+  padding-right: 5px;
+  position: relative; }
+  .select2-container--default .select2-selection--multiple.select2-selection--clearable {
+    padding-right: 25px; }
   .select2-container--default .select2-selection--multiple .select2-selection__clear {
     cursor: pointer;
-    float: right;
     font-weight: bold;
     height: 20px;
     margin-right: 10px;
     margin-top: 5px;
+    position: absolute;
+    right: 0;
     padding: 1px; }
   .select2-container--default .select2-selection--multiple .select2-selection__choice {
     background-color: #e4e4e4;
     border: 1px solid #aaa;
     border-radius: 4px;
+    box-sizing: border-box;
     display: inline-block;
     margin-left: 5px;
     margin-top: 5px;
-    padding: 0; }
+    padding: 0;
+    padding-left: 20px;
+    position: relative;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: bottom;
+    white-space: nowrap; }
   .select2-container--default .select2-selection--multiple .select2-selection__choice__display {
     cursor: default;
     padding-left: 2px;
@@ -219,7 +238,10 @@
     cursor: pointer;
     font-size: 1em;
     font-weight: bold;
-    padding: 0 4px; }
+    padding: 0 4px;
+    position: absolute;
+    left: 0;
+    top: 0; }
     .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover, .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:focus {
       background-color: #f1f1f1;
       color: #333;

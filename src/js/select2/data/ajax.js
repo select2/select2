@@ -45,7 +45,7 @@ define([
 
     if (this._request != null) {
       // JSONP requests cannot always be aborted
-      if ($.isFunction(this._request.abort)) {
+      if (typeof this._request.abort === 'function') {
         this._request.abort();
       }
 

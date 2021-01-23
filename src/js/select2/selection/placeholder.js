@@ -25,6 +25,15 @@ define([
     $placeholder[0].classList.add('select2-selection__placeholder');
     $placeholder[0].classList.remove('select2-selection__choice');
 
+    var placeholderTitle = placeholder.title ||
+      placeholder.text ||
+      $placeholder.text();
+
+    this.$selection.find('.select2-selection__rendered').attr(
+      'title',
+      placeholderTitle
+    );
+
     return $placeholder;
   };
 

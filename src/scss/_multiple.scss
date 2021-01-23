@@ -30,6 +30,13 @@
     margin-top: 5px;
     margin-left: 5px;
     padding: 0;
+    max-width: 100%;
+    resize: none;
+    height: 18px;
+    vertical-align: bottom;
+    font-family: sans-serif;
+    overflow: hidden;
+    word-break: keep-all;
 
     &::-webkit-search-cancel-button {
       -webkit-appearance: none;

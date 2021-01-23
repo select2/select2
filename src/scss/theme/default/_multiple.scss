@@ -5,14 +5,21 @@
   cursor: text;
   padding-bottom: 5px;
   padding-right: 5px;
+  position: relative;
+
+  &.select2-selection--clearable {
+    padding-right: 25px;
+  }
 
   .select2-selection__clear {
     cursor: pointer;
-    float: right;
     font-weight: bold;
     height: 20px;
     margin-right: 10px;
     margin-top: 5px;
+
+    position: absolute;
+    right: 0;
 
     // This padding is to account for the bottom border for the first
     // selection row and the top border of the second selection row.
@@ -25,11 +32,21 @@
     background-color: #e4e4e4;
     border: 1px solid #aaa;
     border-radius: 4px;
+    box-sizing: border-box;
 
     display: inline-block;
     margin-left: 5px;
     margin-top: 5px;
     padding: 0;
+    padding-left: 20px;
+
+    position: relative;
+
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: bottom;
+    white-space: nowrap;
   }
 
   .select2-selection__choice__display {
@@ -53,6 +70,10 @@
     font-weight: bold;
 
     padding: 0 4px;
+
+    position: absolute;
+    left: 0;
+    top: 0;
 
     &:hover, &:focus {
       background-color: #f1f1f1;

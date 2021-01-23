@@ -46,6 +46,7 @@ Third party developers have created plugins for platforms which allow Select2 to
 
 Plugins
 
+* [Backdrop CMS][backdrop-cms] - [backdrop-select2]
 * [Django]
   - [django-autocomplete-light]
   - [django-easy-select2]
@@ -132,6 +133,8 @@ Support this project with your organization. Your logo will show up here with a 
 [releases]: https://github.com/select2/select2/releases
 
 [angularjs]: https://angularjs.org/
+[backdrop-cms]: https://backdropcms.org/
+[backdrop-select2]: https://backdropcms.org/project/select2
 [bootstrap3]: https://getbootstrap.com/
 [bootstrap4]: https://getbootstrap.com/
 [django]: https://www.djangoproject.com/

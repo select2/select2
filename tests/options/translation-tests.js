@@ -53,7 +53,8 @@ test(
         'noResults',
         'searching',
         'removeAllItems',
-        'removeItem'
+        'removeItem',
+        'search'
       ]
     );
   }
