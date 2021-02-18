@@ -57,6 +57,23 @@ language: {
 
 >>> Translations are handled by the `select2/translation` module.
 
+### Extend a default translation
+```
+import 'select2/dist/js/select2.full';
+import languageFr from 'select2/dist/js/i18n/fr';
+
+languageFr.noResults= function () {
+    return 'Pas de bras pas de chocolat';
+};
+
+$(function() {
+    $('.js-multiple-search').select2({
+            language: languageFr
+        }
+    );
+})
+```
+
 ## RTL support
 
 Select2 will work on RTL websites if the `dir` attribute is set on the `<select>` or any parents of it. You can also initialize Select2 with the `dir: "rtl"` configuration option.
