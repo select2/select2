@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: maddox/actions/sleep@master
         with:
-          args: "60"
+          args: "180"
       - uses: actions/checkout@v1
       - name: Copy to documentation server
         uses: maxheld83/rsync@v0.1.0
