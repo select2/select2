@@ -79,6 +79,31 @@ test('does not create option if text is same but lowercase', function (assert) {
   });
 });
 
+test('uses matcher to find options', function (assert) {
+  var usedMatcher = false;
+  var localOptions = new Options({
+    matcher: function (params, data) {
+      usedMatcher = true;
+      return options.options.matcher(params, data);
+    }
+  });
+
+  var data = new SelectTags($('#qunit-fixture .single'), localOptions);
+
+  data.query({
+    term: 'one'
+  }, function (data) {
+    assert.equal(data.results.length, 1);
+
+    var item = data.results[0];
+
+    assert.equal(item.id, 'One');
+    assert.equal(item.text, 'One');
+  });
+
+  assert.ok(usedMatcher, 'Tags decorator should have called matcher');
+});
+
 test('does not trigger for additional pages', function (assert) {
   var data = new SelectTags($('#qunit-fixture .single'), options);
 
