@@ -22,6 +22,7 @@ This is a list of all the Select2 configuration options.
 | `dropdownCssClass` | string | `''` | Adds additional CSS classes to the dropdown container. The helper `:all:` can be used to add all CSS classes present on the original `<select>` element. |
 | `dropdownParent` | jQuery selector or DOM node | `$(document.body)` | Allows you to [customize placement](/dropdown#dropdown-placement) of the dropdown. |
 | `escapeMarkup` | callback | `Utils.escapeMarkup` | Handles [automatic escaping of content rendered by custom templates](/dropdown#built-in-escaping). |
+| `keepSelectionOrder` | boolean | `false` | When set to `true` and `multiple: true`, the built-in dataAdapter will preserve the order that options are selected and return that order in the control value.
 | `language` | string or object | `EnglishTranslation` | Specify the [language used for Select2 messages](/i18n#message-translations). |
 | `matcher` | A callback taking search `params` and the `data` object. | | Handles custom [search matching](/searching#customizing-how-results-are-matched). |
 | `maximumInputLength` | integer | `0` | [Maximum number of characters](/searching#maximum-search-term-length) that may be provided for a search term. |
@@ -41,5 +42,6 @@ This is a list of all the Select2 configuration options.
 | `theme` | string | `default` | Allows you to set the [theme](/appearance#themes). |
 | `tokenizer` | callback | | A callback that handles [automatic tokenization of free-text entry](/tagging#automatic-tokenization-into-tags). |
 | `tokenSeparators` | array | `null` | The list of characters that should be used as token separators. |
+| `trackManualSelectionOrder` | boolean | `true` | When `keepSelectionOrder: true`, this controls trying to track manual selection changes and ordering. Tracking user selection order made through the control itself is accurate, but selections performed externally via DOM or jQuery has some limitations.  This flag enables additional event handlers to track individual changes, but has some performance overheads.  Setting the control value using `jQuery.val([...])` still cannot preserve the value ordering though.<br />If your application does not manually change selections, you may want to try to use `trackManualSelectionOrder: false`.
 | `width` | string | `resolve` | Supports [customization of the container width](/appearance#container-width). |
 | `scrollAfterSelect` | boolean | `false` | If `true`, resolves issue for multiselects using `closeOnSelect: false` that caused the list of results to scroll to the first selection after each select/unselect (see https://github.com/select2/select2/pull/5150). This behaviour was intentional to deal with infinite scroll UI issues (if you need this behavior, set `false`) but it created an issue with multiselect dropdown boxes of fixed length. This pull request adds a configurable option to toggle between these two desirable behaviours. |

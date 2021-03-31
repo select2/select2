@@ -18,6 +18,7 @@ define([
   './data/select',
   './data/array',
   './data/ajax',
+  './data/selectionOrder',
   './data/tags',
   './data/tokenizer',
   './data/minimumInputLength',
@@ -45,7 +46,7 @@ define([
 
              Utils, Translation, DIACRITICS,
 
-             SelectData, ArrayData, AjaxData, Tags, Tokenizer,
+             SelectData, ArrayData, AjaxData, SelectionOrder, Tags, Tokenizer,
              MinimumInputLength, MaximumInputLength, MaximumSelectionLength,
 
              Dropdown, DropdownSearch, HidePlaceholder, InfiniteScroll,
@@ -67,6 +68,13 @@ define([
         options.dataAdapter = ArrayData;
       } else {
         options.dataAdapter = SelectData;
+      }
+
+      if (options.keepSelectionOrder && options.multiple) {
+          options.dataAdapter = Utils.Decorate(
+            options.dataAdapter,
+            SelectionOrder
+          );
       }
 
       if (options.minimumInputLength > 0) {
@@ -309,6 +317,9 @@ define([
       minimumResultsForSearch: 0,
       selectOnClose: false,
       scrollAfterSelect: false,
+
+      keepSelectionOrder: false,
+
       sorter: function (data) {
         return data;
       },
