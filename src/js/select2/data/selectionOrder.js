@@ -17,6 +17,10 @@ define([
    * Options are also physically rearranged in the DOM in order to support
    * direct DOM `<select>` value retrieval or via `jQuery.val()`.
    *
+   * Can pull initial display and selection ordering from 'data-display-order'
+   * and 'data-selection-order' HTML attributes respectively. After reading
+   * these attributes, they are synced into the option's item/data and removed.
+   *
    * @param decorated
    * @param $element
    * @param options
@@ -40,129 +44,106 @@ define([
 
 
   SelectionOrder.prototype.bind = function (decorated, container, $container) {
+    var self = this;
     decorated.call(this, container, $container);
 
     // Initialize initial set of DOM options
     if (this.keepSelectionOrder) {
-      this._prepareInitialOptions();
+      // Prepare initial DOM options with display/selection order attributes.
+      self._handleChange();
+
       if (this.trackManualSelectionOrder) {
-        this._registerChangeHandler();
+        self.$element.on('change', function() {
+          self._handleChange();
+        });
       }
     }
   };
 
 
   /**
-   * Prepare initial DOM options with display/selection order attributes
-   * @private
-   */
-  SelectionOrder.prototype._prepareInitialOptions = function() {
-      var self = this;
-      var selectedOpts = [];
-      self.$element.children('option').each(function (i) {
-        var $this = $(this);
-        // Set default display order
-        $this.attr(DATA_DISPLAY_ORDER_ATTRNAME, i);
-
-        if (this.selected) {
-          selectedOpts.push($this);
-        }
-      });
-
-      // Sort selected options last (in order) in DOM
-      if (selectedOpts.length) {
-        selectedOpts = selectedOpts.sort(
-          createJqAttrSorter(DATA_SELECTION_ORDER_ATTRNAME)
-        );
-
-        $.each(selectedOpts, function(i, $opt) {
-          // Ensure data and selection order is set for all selected
-          var data = Utils.GetData($opt[0], 'data');
-          if (data) {
-            data.selectionOrder = i;
-          }
-          $opt.attr(DATA_SELECTION_ORDER_ATTRNAME, i);
-
-          $opt.detach();
-          self.$element.append($opt);
-        });
-      }
-  };
-
-
-  /**
    * Register change handler on container (select) to monitor for manual
-   * changes made to selections via DOM/jQuery.
+   * changes made to selections or display order via DOM/jQuery.
    *
    * Any options selected before the change event may lose their relative
    * order unfortunately:
    * For example, `$select.val(['3','2','1']).trigger('change')` will
    * not be able to track the value order, but will fallback to DOM option
-   * order essentially.
+   * order essentially.  Any values previously selected will also keep
+   * their previous selection order. A call to `val([]).trigger("change")`
+   * first can help with that to clear all previous selection orders.
    *
-   * jQuery.valHooks could be used to "monitor" for individual changes, however
-   *
+   * Note: jQuery.valHooks could be used to "monitor" for individual changes,
+   * however that approach is generally discouraged.
+   * Note: MutationObservers would have been ideal, but they don't notify
+   * on `option.selected` property changes either.
    *
    * @private
    */
-  SelectionOrder.prototype._registerChangeHandler = function() {
+  SelectionOrder.prototype._handleChange = function() {
     var self = this;
-    self.$element.on('change', function() {
-      var selectedOpts = [];
-      var updatedSelectedOrder = false;
+    var selectedOpts = [];
+    var newOrder = (new Date()).getTime();
 
-      self.$element.children('option').each(function (i) {
-        var $this = $(this);
-        var selectionOrder = this.getAttribute(DATA_SELECTION_ORDER_ATTRNAME);
-        var data;
+    self.$element.children('option').each(function (i) {
+      var $this = $(this);
+      var data = self.item($this);
 
-        if (this.selected) {
-          selectedOpts.push($this);
-          // Ensure selection order is set
-          if (selectionOrder == null) {
-            var newOrder = (new Date()).getTime();
-            this.setAttribute(DATA_SELECTION_ORDER_ATTRNAME, newOrder);
-            
-            data = self.item($this);
-            data.selectionOrder = newOrder;
+      // Sync DOM into data, if needed
+      var displayOrderAttr = $this.attr(DATA_DISPLAY_ORDER_ATTRNAME);
+      if (displayOrderAttr != null) {
+        data.displayOrder = displayOrderAttr;
+        $this.attr(DATA_DISPLAY_ORDER_ATTRNAME, null);
+      }
+      else if (data.displayOrder == null) {
+        data.displayOrder = i;
+      }
 
-            updatedSelectedOrder = true;
-          }
+      var selectionOrderAttr = $this.attr(DATA_SELECTION_ORDER_ATTRNAME);
+      if (selectionOrderAttr != null) {
+        data.selectionOrder = selectionOrderAttr;
+        $this.attr(DATA_SELECTION_ORDER_ATTRNAME, null);
+      }
+
+      data.selected = this.selected;
+      if (data.selected) {
+        selectedOpts.push(data);
+
+        // Ensure selection order is set (and unique between items)
+        if (data.selectionOrder == null) {
+          data.selectionOrder = newOrder + i;
         }
-        else if (selectionOrder != null) {
-          // Ensure selection order is unset
-          this.removeAttribute(DATA_SELECTION_ORDER_ATTRNAME);
-
-          data = self.item($this);
-          if (data.selectionOrder != null) {
-            delete data.selectionOrder;
-          }
+      }
+      else {
+        // Ensure unselected state synced
+        if (data.selectionOrder != null) {
+          delete data.selectionOrder;
         }
-      });
+      }
+    });
 
 
-      if (updatedSelectedOrder) {
-        // Sort selected options last (in order) in DOM
-        if (selectedOpts.length) {
-          selectedOpts = selectedOpts.sort(
-            createJqAttrSorter(DATA_SELECTION_ORDER_ATTRNAME)
-          );
+    // Sort selected options last (in order) in DOM
+    if (selectedOpts.length) {
+      var selectedOptsSorted = self.selectionSorter(selectedOpts.slice(0));
 
-          $.each(selectedOpts, function (i, $opt) {
-            // Ensure data and selection order is set for all selected
-            var data = Utils.GetData($opt[0], 'data');
-            if (data) {
-              data.selectionOrder = i;
-            }
-            $opt.attr(DATA_SELECTION_ORDER_ATTRNAME, i);
+      var orderChanged = false;
+      for (var i = 0; i < selectedOptsSorted.length; i++) {
+        // Reset to simple ordering (not date-based)
+        selectedOptsSorted[i].selectionOrder = i;
 
-            $opt.detach();
-            self.$element.append($opt);
-          });
+        if (selectedOpts[i].id !== selectedOptsSorted[i].id) {
+          orderChanged = true;
         }
       }
 
-    });
+      if (orderChanged) {
+        $.each(selectedOptsSorted, function (i, data) {
+          $(data.element).detach();
+          self.$element.append(data.element);
+        });
+      }
+    }
   };
 
 
@@ -195,8 +176,6 @@ define([
 
         // Get full data from option
         data = this.item($opt);
-
-        $opt.attr(DATA_SELECTION_ORDER_ATTRNAME, newOrder);
       }
 
       // Use current time as ordering key
@@ -211,8 +190,6 @@ define([
     if (this.keepSelectionOrder) {
       var $opt = this.getElementFromData(data);
       if ($opt && $opt.length) {
-        $opt.attr(DATA_SELECTION_ORDER_ATTRNAME, null);
-
         // Get full data from option
         data = this.item($opt);
       }
@@ -231,7 +208,7 @@ define([
 
     function queryCallback(data) {
       if (self.keepSelectionOrder) {
-        // Sort data based on original option order, not adjusted order.
+        // Sort data based on display order, not adjusted order.
         // Results/sorter may sort results into more desired order later though.
         data.results = self.queryResultSorter(data.results);
       }
@@ -244,50 +221,38 @@ define([
 
 
   SelectionOrder.prototype.addOptions = function (decorated, $options) {
+    var maxDisplayOrder = 0;
+    if (this.keepSelectionOrder) {
+      // Get max display order in collection
+      this.$element.children('option').each(function() {
+        var order = this.getAttribute(DATA_DISPLAY_ORDER_ATTRNAME);
+        maxDisplayOrder = Math.max(
+          maxDisplayOrder,
+          (order ? parseInt(order, 10) : 0)
+        );
+      });
+    }
+
     decorated.call(this, $options);
 
     if (this.keepSelectionOrder) {
-      // Add new option at the end
-      var $lastOpt = this.$element.children('option').last();
-      var nextOrder = parseInt(
-        $lastOpt.attr(DATA_DISPLAY_ORDER_ATTRNAME) || '0',
-        10
-      ) + 1;
+      if (!Array.isArray($options)) {
+        $options = [$options];
+      }
+
       for (var i = 0; i < $options.length; i++) {
         var $opt = $options[i];
-        $opt.attr(DATA_DISPLAY_ORDER_ATTRNAME, nextOrder + i);
-      }
-    }
-  };
+        var data = this.item($opt);
 
-
-  SelectionOrder.prototype.item = function (decorated, $option) {
-    var data = decorated.call(this, $option);
-
-    if (this.keepSelectionOrder) {
-      var attrValue;
-
-      // if `option` item
-      if (data.id != null) {
-        // Default selection order using `data-selection-order` attrib
-        if (data.selectionOrder === undefined) {
-          attrValue = $option.attr(DATA_SELECTION_ORDER_ATTRNAME);
-          if (attrValue != null) {
-            data.selectionOrder = parseInt(attrValue,10);
-          }
-        }
-
-        // Default option/result display order using `data-display-order` attrib
         if (data.displayOrder === undefined) {
-          attrValue = $option.attr(DATA_DISPLAY_ORDER_ATTRNAME);
-          if (attrValue != null) {
-            data.displayOrder = parseInt(attrValue, 10);
-          }
+          data.displayOrder = maxDisplayOrder + 1 + i;
+        }
+
+        if (data.selected && data.selectionOrder === undefined) {
+          data.selectionOrder = (new Date()).getTime();
         }
       }
     }
-
-    return data;
   };
 
 
@@ -330,27 +295,6 @@ define([
       return 0;
     };
   };
-
-  var createJqAttrSorter = function(attrName) {
-    /**
-     * Sorter for JQuery objects by a given attr name
-     * Sort ordered items first, then leave all others in same order as original
-     */
-    return function ($a, $b) {
-      var aVal = $a.attr(attrName),
-          bVal = $b.attr(attrName);
-
-      if (aVal != null && bVal != null) {
-        return aVal - bVal;
-      } else if (aVal != null) {
-        return -1;
-      } else if (bVal != null) {
-        return 1;
-      }
-      return 0;
-    };
-  };
-
 
   SelectionOrder.prototype.selectionSorter = function (_, data) {
     return data.sort(createPropSorter('selectionOrder'));

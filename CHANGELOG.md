@@ -30,6 +30,9 @@
 * Selected results in the dropdown should now be properly announced to screen readers (#5841)
 * Significant improvements were made to make the selection area accessible (#5824, #5842, #5916, #5942, #5973)
 * Allow pasting multiple lines into the search field for tokenization (#5806)
+* Added optional `SelectionOrder` DataAdapter decorator to support tracking value ordering for multiple selects (#3106)
+  * Added `keepSelectionOrder` option
+  * Added `trackManualSelectionOrder` option
 
 ### Bug fixes
 

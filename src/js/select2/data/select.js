@@ -274,6 +274,10 @@ define([
       item.text = item.text.toString();
     }
 
+    if (!item.children && item.id == null) {
+      item.id = item.text;
+    }
+
     if (item._resultId == null && item.id && this.container != null) {
       item._resultId = this.generateResultId(this.container, item);
     }

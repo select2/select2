@@ -3,6 +3,7 @@ module('Data adapters - SelectionOrder');
 var Select2 = require('select2/core');
 
 var SelectData = require('select2/data/select');
+var ArrayData = require('select2/data/array');
 var SelectionOrder = require('select2/data/selectionOrder');
 var Tags = require('select2/data/tags');
 
@@ -94,6 +95,45 @@ test('initial dom selection order preserved', function (assert) {
   });
 });
 
+
+test('initial array selection order preserved', function (assert) {
+  assert.expect(2);
+
+  var options = new Options({
+    keepSelectionOrder: true,
+    data: [
+      { text: 'One', selected: true },
+      { text: 'Two' },
+      { id: 3, text: 'Three', selected: true, selectionOrder: 1 },
+      { id: 4, text: 'Four', selected: true } // No defined order
+    ]
+  });
+
+  var $select = $(
+    '<select multiple></select>'
+  );
+
+  var container = new MockContainer();
+  var $container = $('<div></div>');
+
+  var OrderedArrayData = Utils.Decorate(ArrayData, SelectionOrder);
+
+  var dataAdapter = new OrderedArrayData($select, options);
+  dataAdapter.bind(container, $container);
+
+  dataAdapter.current(function (data) {
+    assert.equal(data.length, 3);
+
+    var itemIds = $.map(data, function(item) { return item.id; });
+
+    // Verify explicit selection order preserved
+    assert.deepEqual(
+      itemIds,
+      ['3', 'One', '4'],
+      'The values should be in selection order'
+    );
+  });
+});
 
 
 
