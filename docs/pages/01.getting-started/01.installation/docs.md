@@ -25,7 +25,7 @@ Select2 is available on Bower.  Add the following to your `bower.json` file and 
 
 ```
 "dependencies": {
-    "select2": "~4.0"
+    "select2": "~4.0.13"
 }
 ```
 
