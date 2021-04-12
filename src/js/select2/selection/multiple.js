@@ -30,7 +30,7 @@ define([
     this.$selection.find('.select2-selection__rendered').attr('id', id);
 
     this.$selection.on('click', function (evt) {
-      self.trigger('toggle', {
+      self.container.isOpen() || self.trigger('toggle', {
         originalEvent: evt
       });
     });
