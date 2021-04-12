@@ -45,7 +45,7 @@ define([
         return;
       }
 
-      self.trigger('toggle', {
+      self.container.isOpen() || self.trigger('toggle', {
         originalEvent: evt
       });
     });

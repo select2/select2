@@ -1645,7 +1645,7 @@ S2.define('select2/selection/single',[
         return;
       }
 
-      self.trigger('toggle', {
+      self.container.isOpen() || self.trigger('toggle', {
         originalEvent: evt
       });
     });
