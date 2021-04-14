@@ -346,6 +346,9 @@ define([
         self.trigger('select', {
           data: data
         });
+        if (!this.options.get('closeOnSelect')) {
+          this.selection.$search.val('');
+        }
       }
     });
 

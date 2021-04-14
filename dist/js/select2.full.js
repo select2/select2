@@ -1197,6 +1197,9 @@ S2.define('select2/results',[
         self.trigger('select', {
           data: data
         });
+        if (!this.options.get('closeOnSelect')) {
+          this.selection.$search.val('');
+        }
       }
     });
 
