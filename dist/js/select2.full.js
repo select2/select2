@@ -1645,9 +1645,11 @@ S2.define('select2/selection/single',[
         return;
       }
 
-      self.container.isOpen() || self.trigger('toggle', {
-        originalEvent: evt
-      });
+      if (!self.container.isOpen()) {
+        self.trigger('toggle', {
+          originalEvent: evt
+        });
+      }
     });
 
     this.$selection.on('focus', function (evt) {
@@ -1739,9 +1741,11 @@ S2.define('select2/selection/multiple',[
     this.$selection.find('.select2-selection__rendered').attr('id', id);
 
     this.$selection.on('click', function (evt) {
-      self.container.isOpen() || self.trigger('toggle', {
-        originalEvent: evt
-      });
+      if (!self.container.isOpen()) {
+        self.trigger('toggle', {
+          originalEvent: evt
+        });
+      }
     });
 
     this.$selection.on(

@@ -45,9 +45,11 @@ define([
         return;
       }
 
-      self.container.isOpen() || self.trigger('toggle', {
-        originalEvent: evt
-      });
+      if (!self.container.isOpen()) {
+        self.trigger('toggle', {
+          originalEvent: evt
+        });
+      }
     });
 
     this.$selection.on('focus', function (evt) {
