@@ -1197,6 +1197,9 @@ S2.define('select2/results',[
         self.trigger('select', {
           data: data
         });
+        if (!this.options.get('closeOnSelect')) {
+          this.selection.$search.val('');
+        }
       }
     });
 
@@ -3751,7 +3754,7 @@ S2.define('select2/data/ajax',[
       }, function () {
         // Attempt to detect if a request was aborted
         // Only works if the transport exposes a status property
-        if ('status' in $request &&
+        if ($request && 'status' in $request &&
             ($request.status === 0 || $request.status === '0')) {
           return;
         }
