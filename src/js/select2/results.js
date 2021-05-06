@@ -288,6 +288,9 @@ define([
 
       self.setClasses();
 
+      if (!self.options.get('closeOnSelect')) {
+        this.selection.$search.val('');
+      }
       if (self.options.get('scrollAfterSelect')) {
         self.highlightFirstItem();
       }
@@ -346,7 +349,7 @@ define([
         self.trigger('select', {
           data: data
         });
-        if (!this.options.get('closeOnSelect')) {
+        if (!self.options.get('closeOnSelect')) {
           this.selection.$search.val('');
         }
       }
