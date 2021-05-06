@@ -1139,6 +1139,9 @@ S2.define('select2/results',[
 
       self.setClasses();
 
+      if (!self.options.get('closeOnSelect')) {
+        this.selection.$search.val('');
+      }
       if (self.options.get('scrollAfterSelect')) {
         self.highlightFirstItem();
       }
@@ -1197,7 +1200,7 @@ S2.define('select2/results',[
         self.trigger('select', {
           data: data
         });
-        if (!this.options.get('closeOnSelect')) {
+        if (!self.options.get('closeOnSelect')) {
           this.selection.$search.val('');
         }
       }
