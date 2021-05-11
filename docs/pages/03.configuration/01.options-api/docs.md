@@ -34,7 +34,7 @@ This is a list of all the Select2 configuration options.
 | `selectionAdapter` | | `SingleSelection` or `MultipleSelection`, depending on the value of `multiple`. | Used to override the built-in [SelectionAdapter](/advanced/default-adapters/selection). |
 | `selectionCssClass` | string | `''` | Adds additional CSS classes to the selection container. The helper `:all:` can be used to add all CSS classes present on the original `<select>` element. |
 | `selectOnClose` | boolean | `false` | Implements [automatic selection](/dropdown#automatic-selection) when the dropdown is closed. |
-| `sorter` | callback | | |
+| `sorter` | callback | | Handles sorting of the results dropdown. Receives an array and is expected to return an array which is used to create the `<option>` elements. |
 | `tags` | boolean / array of objects | `false` | Used to enable [free text responses](/tagging). |
 | `templateResult` | callback | | Customizes the way that [search results are rendered](/dropdown#templating). |
 | `templateSelection` | callback | | Customizes the way that [selections are rendered](/selections#templating). |
