@@ -61,4 +61,4 @@ $.fn.select2.defaults.set('amdLanguageBase', 'select2/i18n/');
 
 Specifies the base AMD loader language path to be used for select2 language file resolution. This option typically doesn't need to be changed, but is available for situations where module names may change as a result of certain build environments.
 
->>> Due to [a bug in older versions](https://github.com/jrburke/requirejs/issues/1342) of the r.js build tool, Select2 was sometimes placed before jQuery in then compiled build file. Because of this, Select2 will trigger an error because it won't be able to find or load jQuery.  By upgrading to version 2.1.18 or higher of the r.js build tool, you will be able to fix the issue.
+>>> Due to [a bug in older versions](https://github.com/jrburke/requirejs/issues/1342) of the r.js build tool, Select2 was sometimes placed before jQuery in the compiled build file. Because of this, Select2 will trigger an error because it won't be able to find or load jQuery.  By upgrading to version 2.1.18 or higher of the r.js build tool, you will be able to fix the issue.
