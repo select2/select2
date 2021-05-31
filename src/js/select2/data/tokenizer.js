@@ -82,7 +82,7 @@ define([
     while (i < term.length) {
       var termChar = term[i];
 
-      if ($.inArray(termChar, separators) === -1) {
+      if (separators.indexOf(termChar) === -1) {
         i++;
 
         continue;

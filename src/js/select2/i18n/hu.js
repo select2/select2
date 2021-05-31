@@ -28,6 +28,12 @@ define(function () {
     },
     removeAllItems: function () {
       return 'Távolítson el minden elemet';
+    },
+    removeItem: function () {
+      return 'Elem eltávolítása';
+    },
+    search: function() {
+      return 'Keresés';
     }
   };
 });

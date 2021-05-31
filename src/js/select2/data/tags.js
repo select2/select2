@@ -18,7 +18,7 @@ define([
 
     decorated.call(this, $element, options);
 
-    if ($.isArray(tags)) {
+    if (Array.isArray(tags)) {
       for (var t = 0; t < tags.length; t++) {
         var tag = tags[t];
         var item = this._normalizeItem(tag);
@@ -78,7 +78,7 @@ define([
 
       if (tag != null) {
         var $option = self.option(tag);
-        $option.attr('data-select2-tag', true);
+        $option.attr('data-select2-tag', 'true');
 
         self.addOptions([$option]);
 
@@ -94,7 +94,11 @@ define([
   };
 
   Tags.prototype.createTag = function (decorated, params) {
-    var term = $.trim(params.term);
+    if (params.term == null) {
+      return null;
+    }
+
+    var term = params.term.trim();
 
     if (term === '') {
       return null;

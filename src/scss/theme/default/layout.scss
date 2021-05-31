@@ -38,18 +38,6 @@
   }
 
   .select2-results__option {
-    &[role=group] {
-      padding: 0;
-    }
-
-    &[aria-disabled=true] {
-      color: #999;
-    }
-
-    &[aria-selected=true] {
-      background-color: #ddd;
-    }
-
     .select2-results__option {
       padding-left: 1em;
 
@@ -84,7 +72,19 @@
     }
   }
 
-  .select2-results__option--highlighted[aria-selected] {
+  .select2-results__option--group {
+    padding: 0;
+  }
+
+  .select2-results__option--disabled {
+    color: #999;
+  }
+
+  .select2-results__option--selected {
+    background-color: #ddd;
+  }
+
+  .select2-results__option--highlighted.select2-results__option--selectable {
     background-color: #5897fb;
     color: white;
   }

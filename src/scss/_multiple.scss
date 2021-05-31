@@ -10,23 +10,33 @@
   -webkit-user-select: none;
 
   .select2-selection__rendered {
-    display: inline-block;
-    overflow: hidden;
-    padding-left: 8px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    display: inline;
+    list-style: none;
+    padding: 0;
+  }
+
+  .select2-selection__clear {
+    background-color: transparent;
+    border: none;
+    font-size: 1em;
   }
 }
 
 .select2-search--inline {
-  float: left;
-
   .select2-search__field {
     box-sizing: border-box;
     border: none;
     font-size: 100%;
     margin-top: 5px;
+    margin-left: 5px;
     padding: 0;
+    max-width: 100%;
+    resize: none;
+    height: 18px;
+    vertical-align: bottom;
+    font-family: sans-serif;
+    overflow: hidden;
+    word-break: keep-all;
 
     &::-webkit-search-cancel-button {
       -webkit-appearance: none;

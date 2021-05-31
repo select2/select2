@@ -3,25 +3,23 @@
   border: 1px solid #aaa;
   border-radius: 4px;
   cursor: text;
+  padding-bottom: 5px;
+  padding-right: 5px;
+  position: relative;
 
-  .select2-selection__rendered {
-    box-sizing: border-box;
-    list-style: none;
-    margin: 0;
-    padding: 0 5px;
-    width: 100%;
-
-    li {
-      list-style: none;
-    }
+  &.select2-selection--clearable {
+    padding-right: 25px;
   }
 
   .select2-selection__clear {
     cursor: pointer;
-    float: right;
     font-weight: bold;
-    margin-top: 5px;
+    height: 20px;
     margin-right: 10px;
+    margin-top: 5px;
+
+    position: absolute;
+    right: 0;
 
     // This padding is to account for the bottom border for the first
     // selection row and the top border of the second selection row.
@@ -32,46 +30,83 @@
 
   .select2-selection__choice {
     background-color: #e4e4e4;
-
     border: 1px solid #aaa;
     border-radius: 4px;
+    box-sizing: border-box;
+
+    display: inline-block;
+    margin-left: 5px;
+    margin-top: 5px;
+    padding: 0;
+    padding-left: 20px;
+
+    position: relative;
+
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: bottom;
+    white-space: nowrap;
+  }
+
+  .select2-selection__choice__display {
     cursor: default;
 
-    float: left;
-
-    margin-right: 5px;
-    margin-top: 5px;
-    padding: 0 5px;
+    padding-left: 2px;
+    padding-right: 5px;
   }
 
   .select2-selection__choice__remove {
+    background-color: transparent;
+    border: none;
+    border-right: 1px solid #aaa;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+
     color: #999;
     cursor: pointer;
 
-    display: inline-block;
+    font-size: 1em;
     font-weight: bold;
 
-    margin-right: 2px;
+    padding: 0 4px;
 
-    &:hover {
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    &:hover, &:focus {
+      background-color: #f1f1f1;
       color: #333;
+      outline: none;
     }
   }
 }
 
 &[dir="rtl"] {
   .select2-selection--multiple {
-    .select2-selection__choice, .select2-search--inline {
-      float: right;
-    }
-
     .select2-selection__choice {
       margin-left: 5px;
       margin-right: auto;
     }
 
+    .select2-selection__choice__display {
+      padding-left: 5px;
+      padding-right: 2px;
+    }
+
     .select2-selection__choice__remove {
-      margin-left: 2px;
+      border-left: 1px solid #aaa;
+      border-right: none;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
+
+    .select2-selection__clear {
+      float: left;
+      margin-left: 10px;
       margin-right: auto;
     }
   }

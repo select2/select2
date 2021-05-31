@@ -42,6 +42,12 @@ define(function () {
     },
     removeAllItems: function () {
       return 'Remove all items';
+    },
+    removeItem: function () {
+      return 'Remove item';
+    },
+    search: function() {
+      return 'Search';
     }
   };
 });
