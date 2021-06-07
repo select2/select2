@@ -62,6 +62,7 @@ Themes
 
 - [Bootstrap 3][bootstrap3] - [select2-bootstrap-theme]
 - [Bootstrap 4][bootstrap4] - [select2-bootstrap4-theme]
+- [Bootstrap 5](https://getbootstrap.com/docs/5.0) - [select2-bootstrap-5-theme](https://github.com/apalfrey/select2-bootstrap-5-theme)
 - [Flat UI][flat-ui] - [select2-flat-theme]
 
 Missing an integration? Modify this `README` and make a pull request back here to Select2 on GitHub.
