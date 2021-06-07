@@ -55,8 +55,6 @@ define([
       self.$search.attr('tabindex', 0);
       self.$search.attr('aria-controls', resultsId);
 
-      self.$search.trigger('focus');
-
       window.setTimeout(function () {
         self.$search.trigger('focus');
       }, 0);
