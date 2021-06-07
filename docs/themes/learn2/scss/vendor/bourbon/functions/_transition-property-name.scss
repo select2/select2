@@ -12,7 +12,7 @@
 }
 
 @function transition-property-name($prop, $vendor: false) {
-	// put other properties that need to be prefixed here aswell
+	// put other properties that need to be prefixed here as well
 	@if $vendor and $prop == transform {
 		@return unquote('-'+$vendor+'-'+$prop);
 	}

@@ -175,7 +175,7 @@ test('inherited - three levels', function (assert) {
 
   var inst = new DecoratedClass('test');
 
-  assert.ok(inst.baseCalled, 'The base class contructor was called');
+  assert.ok(inst.baseCalled, 'The base class constructor was called');
   assert.ok(inst.middleCalled, 'The middle class constructor was called');
   assert.ok(inst.decoratorCalled, 'The decorator constructor was called');
 
