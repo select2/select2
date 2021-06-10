@@ -33,11 +33,17 @@ define([
 
       // If an existing option wasn't found for it, create the option
       if (!$existingOptions.length) {
-        var $option = self.option(item);
-        $option.attr('data-select2-tag', true);
+        // If tags, allow creating new options
+        if (self.options.get('tags')) {
+          var $option = self.option(item);
+          $option.attr('data-select2-tag', true);
 
-        self._removeOldTags();
-        self.addOptions([$option]);
+          self._removeOldTags();
+          self.addOptions([$option]);
+        } else {
+          // Don't create new option or select item
+          return;
+        }
       }
 
       // Select the item, now that we know there is an option for it

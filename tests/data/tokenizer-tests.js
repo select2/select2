@@ -217,3 +217,69 @@ test('works with multiple tokens given', function (assert) {
     'The two new tags should have been created'
   );
 });
+
+test('works when unknown option used with no tagging', function (assert) {
+  assert.expect(6);
+
+  var SelectData = require('select2/data/select');
+  var Tokenizer = require('select2/data/tokenizer');
+  var Tags = require('select2/data/tags');
+
+  var Options = require('select2/options');
+  var Utils = require('select2/utils');
+
+  var $ = require('jquery');
+
+  var TokenizedSelect = Utils.Decorate(
+    SelectData,
+    Tokenizer
+  );
+  var $select = $('#qunit-fixture .multiple');
+
+  var options = new Options({
+    tags: false,
+    tokenSeparators: [',']
+  });
+
+  var container = new MockContainer();
+  container.dropdown = container.selection = {};
+
+  var $container = $('<div></div>');
+
+  var data = new TokenizedSelect($select, options);
+  data.bind(container, $container);
+
+  var validItemSelected = false;
+
+  data.on('select', function (params) {
+    assert.ok(params.data, 'Data should not be null');
+
+    assert.equal(
+      params.data.id,
+      'One',
+      'Should only receive single valid option'
+    );
+    validItemSelected = true;
+  });
+
+  assert.equal(
+    $select.children('option').length,
+    2,
+    'The two original options should only exist'
+  );
+
+  data.query({
+    term: 'One,Unknown'
+  }, function () {
+    assert.ok(true, 'The callback should have succeeded');
+  });
+
+  assert.ok(validItemSelected, 'The single valid term should have selected');
+
+  assert.equal(
+    $select.children('option').length,
+    2,
+    'The two original options should only exist'
+  );
+
+});
