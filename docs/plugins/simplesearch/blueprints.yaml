@@ -74,7 +74,7 @@ form:
       type: text
       size: x-small
       label: Minimum query length
-      help: The mimimum number of characters needed before serach can be submitted
+      help: The minimum number of characters needed before search can be submitted
       validate:
         type: number
         min: 0

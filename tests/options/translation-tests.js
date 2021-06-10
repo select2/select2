@@ -11,7 +11,7 @@ module('Options - Translations', {
   }
 });
 
-test('partial dictonaries are reset when default reset', function (assert) {
+test('partial dictionaries are reset when default reset', function (assert) {
   Defaults.set('language', {
     test: 'testing'
   });
