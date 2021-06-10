@@ -21,7 +21,7 @@ define([
 
     this.$selection.on('mousedown', '.select2-selection__clear',
       function (evt) {
-        self._handleClear(evt);
+        self._handleClear(evt, container);
     });
 
     container.on('keypress', function (evt) {
@@ -29,7 +29,7 @@ define([
     });
   };
 
-  AllowClear.prototype._handleClear = function (_, evt) {
+  AllowClear.prototype._handleClear = function (_, evt, container) {
     // Ignore the event if it is disabled
     if (this.isDisabled()) {
       return;
@@ -76,7 +76,9 @@ define([
 
     this.$element.trigger('input').trigger('change');
 
-    this.trigger('toggle', {});
+    if (container.isOpen()) {
+      this.trigger('toggle', {});
+    }
   };
 
   AllowClear.prototype._handleKeyboardClear = function (_, evt, container) {
