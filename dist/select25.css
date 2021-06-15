@@ -200,6 +200,8 @@
       fill: #0073e6; }
   .s25-remove:not(.s25-offscreen) {
     width: 30px; }
+  .s25-remove.s25-offscreen {
+    display: none; }
   .s25-remove:focus {
     border: 1px solid #4d90fe; }
   .s25-remove:disabled {

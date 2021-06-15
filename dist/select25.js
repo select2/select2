@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 Igor Vaynberg and Select2 contributors
+ * Copyright 2021 Igor Vaynberg and Select2 contributors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -15,7 +15,7 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
  * Bundle of select2
- * Generated: 2020-11-04
+ * Generated: 2021-06-15
  * Version: 5.0.0-snapshot
  * Dependencies:
  *

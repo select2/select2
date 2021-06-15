@@ -293,6 +293,10 @@ $dropdown-padding: 8px 10px;
         width: 30px;
     }
 
+    &.s25-offscreen {
+        display: none;
+    }
+
     &:focus {
         border: $border-focus;
     }
