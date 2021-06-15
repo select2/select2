@@ -114,7 +114,7 @@ export class SingleSelect extends AbstractSelect<Props, State> {
                         </div>
                         {scope(() => {
                             const disabled = !value;
-                            const clazz = cn(style.remove, { [style.offscreen]: !allowClear });
+                            const clazz = cn(style.remove, { [style.hidden]: !allowClear });
                             return (
                                 <button
                                     class={clazz}
