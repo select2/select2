@@ -198,7 +198,7 @@
       background-color: #cde6ff; }
     .s25-remove:not(:disabled) span svg {
       fill: #0073e6; }
-  .s25-remove:not(.s25-offscreen) {
+  .s25-remove:not(.s25-hidden) {
     width: 30px; }
   .s25-remove:focus {
     border: 1px solid #4d90fe; }
@@ -207,7 +207,7 @@
   .s25-remove:active {
     border: 0px; }
 
-.s25-remove.s25-offscreen ~ .s25-toggle {
+.s25-remove.s25-hidden ~ .s25-toggle {
   right: 0; }
 
 .s25-placeholder {

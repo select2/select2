@@ -289,7 +289,7 @@ $dropdown-padding: 8px 10px;
         }
     }
 
-    &:not(.s25-offscreen) {
+    &:not(.s25-hidden) {
         width: 30px;
     }
 
@@ -306,7 +306,7 @@ $dropdown-padding: 8px 10px;
     }
 }
 
-.s25-remove.s25-offscreen ~ .s25-toggle {
+.s25-remove.s25-hidden ~ .s25-toggle {
     right: 0;
 }
 
