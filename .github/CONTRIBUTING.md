@@ -10,7 +10,7 @@ If you don't find what you're looking for there, then please check the the [foru
 
 ## Asking for Help
 
-In general, the Github issue tracker should **only** be used for **bug reports** and **feature requests**.  If you're just having trouble getting something to work, you should ask in the [forums](https://forums.select2.org) or on [Stack Overflow](https://stackoverflow.com) instead.
+In general, the GitHub issue tracker should **only** be used for **bug reports** and **feature requests**.  If you're just having trouble getting something to work, you should ask in the [forums](https://forums.select2.org) or on [Stack Overflow](https://stackoverflow.com) instead.
 
 ### Rules for all community platforms
 
