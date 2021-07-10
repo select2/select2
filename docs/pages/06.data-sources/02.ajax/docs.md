@@ -16,7 +16,7 @@ Select2 comes with AJAX support built in, using jQuery's AJAX methods. In this e
 **In your HTML:**
 
 ```
-<select class="js-data-example-ajax"></select>
+<input class="js-data-example-ajax"></input>
 ```
 
 **In your Javascript:**
