@@ -55,8 +55,6 @@ define([
       self.$search.attr('tabindex', 0);
       self.$search.attr('aria-controls', resultsId);
 
-      self.$search.trigger('focus');
-
       window.setTimeout(function () {
         self.$search.trigger('focus');
       }, 0);
@@ -69,12 +67,6 @@ define([
 
       self.$search.val('');
       self.$search.trigger('blur');
-    });
-
-    container.on('focus', function () {
-      if (!container.isOpen()) {
-        self.$search.trigger('focus');
-      }
     });
 
     container.on('results:all', function (params) {
