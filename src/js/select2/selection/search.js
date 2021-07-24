@@ -225,14 +225,17 @@ define([
   };
 
   Search.prototype.resizeSearch = function () {
-    this.$search.css('width', '25px');
-
+    var el = this.$selection.find('.select2-selection__rendered');
+    var search = this.$search;
     var width = '100%';
 
-    if (this.$search.attr('placeholder') === '') {
-      var minimumWidth = this.$search.val().length + 1;
+    if (search.attr('placeholder') !== '' && el.is(":visible")) {
+      width = el.width();
+    } else {
+      var minimumWidth = search.val().length + 1;
+      var placeholderWidth = search.attr('placeholder').length + 1;
 
-      width = (minimumWidth * 0.75) + 'em';
+      width = (Math.max( minimumWidth, placeholderWidth) * 0.75) + 'em';
     }
 
     this.$search.css('width', width);
