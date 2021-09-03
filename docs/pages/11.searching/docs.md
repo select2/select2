@@ -181,4 +181,36 @@ $('#js-example-basic-hide-search-multi').on('select2:opening select2:closing', f
 });
 </script>
 
+### Live-Search-with-Ajax
+
+The below example is used when a user has to fill in the select2 with live data coming in from an API call. In this example when the page is loaded, the drop down is empty. When the user starts inputing text, we have an ajax call calling the API to get the data which is includes the text the user  has inputted. 
+
+<div class="s2-example">
+    <select id="js-example-basic-hide-search" class="js-states form-control"></select>
+</div>
+
+Use the below script inside a js file:
+
+<script>
+
+$(document).ready(function () {
+    $("#js-example-basic-hide-search").select2({
+        ajax: {
+            url: "GetDataAccordingToText", //this is a method name calling the API
+            delay: 250,
+            data: function (params) {
+                return { 'dataText': params.term }
+
+            },
+            processResults: function (response) {
+                return {
+                    results: response.items // the return from the API
+                }
+            },
+            cache: true
+        }
+    });
+});
+</script>
+
 See [this issue](https://github.com/select2/select2/issues/4797) for the source of this solution.
