@@ -57,7 +57,7 @@ define([
     }, this.ajaxOptions);
 
     if (typeof options.url === 'function') {
-      options.url = options.url.call(this.$element, params);
+      options.url = options.url.call(this.$element, params, this.options && this.options.options || {});
     }
 
     if (typeof options.data === 'function') {
