@@ -27,6 +27,21 @@ define([
 
   SelectAdapter.prototype.select = function (data) {
     var self = this;
+    var current = this.$element.val();
+    var options = self.options;
+
+    // If the selected data was already selected, clone the option and select it
+    // as well.
+    if (options && options.get('reuse') && current.includes(data.id)) {
+      // Clone the option removing the id such that a new one is generated.
+      var $option = this.option(data);
+      $option[0].removeAttribute('data-select2-id');
+      this.addOptions($option);
+
+      current.push(data.id);
+      this.$element.val(current);
+      this.$element.trigger('input').trigger('change');
+    }
 
     data.selected = true;
 
@@ -69,9 +84,19 @@ define([
 
   SelectAdapter.prototype.unselect = function (data) {
     var self = this;
+    var val = this.$element.val();
+    var options = self.options;
 
     if (!this.$element.prop('multiple')) {
       return;
+    }
+
+    // Remove the option, unless it is the last occurrence remaining.
+    if (
+        options && options.get('reuse') &&
+        val.indexOf(data.id) != val.lastIndexOf(data.id)
+    ) {
+      this.removeOption(data);
     }
 
     data.selected = false;
@@ -158,6 +183,15 @@ define([
 
   SelectAdapter.prototype.addOptions = function ($options) {
     this.$element.append($options);
+  };
+
+  SelectAdapter.prototype.removeOption = function ($option) {
+    var id = $option.element.getAttribute('data-select2-id');
+    for (var d = 0; d < this.$element[0].length; d++) {
+      if (this.$element[0][d].getAttribute('data-select2-id') == id) {
+        this.$element[0].remove(d);
+      }
+    }
   };
 
   SelectAdapter.prototype.option = function (data) {
