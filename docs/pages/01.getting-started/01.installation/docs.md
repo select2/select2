@@ -38,6 +38,22 @@ The precompiled distribution files will be available in `vendor/select2/dist/css
 <script src="vendor/select2/dist/js/select2.min.js"></script>
 ```
 
+## Installing with Webpack Encore
+
+Firstly, run `yarn install select2` from your project directory.
+
+Then, include Select2 JavaScript in your `app.js`:
+
+```
+require('select2');
+```
+
+And include its CSS in your `app.scss`:
+
+```
+@import '~select2';
+```
+
 ## Manual installation
 
 We strongly recommend that you use either a CDN or a package manager like Bower or npm. This will make it easier for you to deploy your project in different environments, and easily update Select2 when new versions are released. Nonetheless if you prefer to integrate Select2 into your project manually, you can [download the release of your choice](https://github.com/select2/select2/tags) from GitHub and copy the files from the `dist` directory into your project.
