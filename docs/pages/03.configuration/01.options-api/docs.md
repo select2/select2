@@ -32,7 +32,7 @@ This is a list of all the Select2 configuration options.
 | `placeholder` | string or object | `null` | Specifies the [placeholder](/placeholders) for the control. |
 | `resultsAdapter` | | `ResultsAdapter` | Used to override the built-in [ResultsAdapter](/advanced/default-adapters/results). |
 | `selectionAdapter` | | `SingleSelection` or `MultipleSelection`, depending on the value of `multiple`. | Used to override the built-in [SelectionAdapter](/advanced/default-adapters/selection). |
-| `selectionCssClass` | string | `''` | Adds additional CSS classes to the selection container. The helper `:all:` can be used to add all CSS classes present on the original `<select>` element. |
+| `containerCssClass` | string | `''` | Adds additional CSS classes to the selection container. The helper `:all:` can be used to add all CSS classes present on the original `<select>` element. |
 | `selectOnClose` | boolean | `false` | Implements [automatic selection](/dropdown#automatic-selection) when the dropdown is closed. |
 | `sorter` | callback | | |
 | `tags` | boolean / array of objects | `false` | Used to enable [free text responses](/tagging). |
