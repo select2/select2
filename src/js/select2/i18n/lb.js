@@ -18,7 +18,8 @@ define(function () {
         return 'Méi Resultater lueden…';
       },
       maximumSelected: function (args) {
-        return 'Dir kennt nëmmen ' + args.maximum + ' Element' + ((args.maximum > 1) ? 'er' : '') + ' auswielen';
+        return 'Dir kennt nëmmen ' + args.maximum + ' Element' +
+          ((args.maximum > 1) ? 'er' : '') + ' auswielen';
       },
       noResults: function () {
         return 'Keng Resultater fonnt';
