@@ -116,3 +116,20 @@ If you run into positioning issues while using the default `body` attachment, yo
 See [this issue](https://github.com/select2/select2/issues/3970#issuecomment-160496724).
 
 >>>> `dropdownParent` will cause DOM events to be raised outside of the standard Select2 DOM container. This can cause issues with third-party components such as modals.
+
+## Dropdown position
+
+By default, Select2 will try to select the optimal position for the dropdown, either below or above the `<select>` element.
+If you want to force the dropdown to open either above or below the `<select>` element, you can specify this with a constructor option `forceDropdownPosition`:
+```
+//Forces the Select2 dropdown to open BELOW the <select> element
+$('#mySelect2').select2({
+    forceDropdownPosition: 'below'
+});
+
+
+//Forces the Select2 dropdown to open ABOVE the <select> element
+$('#mySelect2').select2({
+    forceDropdownPosition: 'above'
+});
+```
