@@ -96,11 +96,14 @@ define([
         if (id !== data.id && val.indexOf(id) === -1) {
           val.push(id);
         }
+
+        if(currentData[d].id == data.id){
+          currentData[d].element.selected = false;
+          $(currentData[d].element).trigger('input').trigger('change');
+        }
+        
       }
-
-      self.$element.val(val);
-
-      self.$element.trigger('input').trigger('change');
+      
     });
   };
 
