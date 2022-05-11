@@ -35,8 +35,11 @@ This will cause the dropdown to be attached to the modal, rather than the `<body
 **Alternatively**, you may simply globally override Bootstrap's behavior:
 
 ```
-// Do this before you initialize any of your modals
+// Do this before you initialize any of your modals (Bootstrap 3)
 $.fn.modal.Constructor.prototype.enforceFocus = function() {};
+
+// Do this before you initialize any of your modals (Bootstrap 4+)
+$.fn.modal.Constructor.prototype._enforceFocus = function() {};
 ```
 
 See [this answer](https://stackoverflow.com/questions/18487056/select2-doesnt-work-when-embedded-in-a-bootstrap-modal/19574076#19574076) for more information.
