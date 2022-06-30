@@ -525,7 +525,7 @@ define([
     if (content == null) {
       container.style.display = 'none';
     } else if (typeof content === 'string') {
-      container.innerHTML = escapeMarkup(content);
+      $(container).html(escapeMarkup(content));
     } else {
       $(container).append(content);
     }
