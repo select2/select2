@@ -27,7 +27,7 @@ define(function () {
       return 'جاري البحث…';
     },
     removeItem: function () {
-      return 'قم بازالة العنصر';
+      return 'قم بإزالة العنصر';
     },
      removeAllItems: function () {
       return 'قم بإزالة كل العناصر';
