@@ -110,11 +110,15 @@ define([
     this.container = container;
 
     container.on('select', function (params) {
-      self.select(params.data);
+      var option = container.$element.find('option')[0];
+      var data = Utils.GetData(option, 'data');
+      self.select(data);
     });
 
     container.on('unselect', function (params) {
-      self.unselect(params.data);
+      var option = container.$element.find('option')[0];
+      var data = Utils.GetData(option, 'data');
+      self.unselect(data);
     });
   };
 
