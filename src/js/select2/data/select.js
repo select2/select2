@@ -114,7 +114,7 @@ define([
     });
 
     container.on('unselect', function (params) {
-      var option = container.$element.find('option')[0];
+      var option = container.$element.find('option[value=' + params.data.id + ']')[0];
       var data = Utils.GetData(option, 'data');
       self.unselect(data);
     });
