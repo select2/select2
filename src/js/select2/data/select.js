@@ -114,10 +114,11 @@ define([
     });
 
     container.on('unselect', function (params) {
-      var unselected = 'option[value=' + params.data.id + ']';
-      container.$element.find(unselected).each(function () {
-        var data = Utils.GetData(this, 'data');
-        self.unselect(data);
+      container.$element.find('option').each(function () {
+        if ($(this).val() == params.data.id) {
+          var data = Utils.GetData(this, 'data');
+          self.unselect(data);
+        }
       });
     });
   };
