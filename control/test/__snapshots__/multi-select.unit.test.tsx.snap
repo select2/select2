@@ -1,14 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MultiSelect renders with empty values 1`] = `
-<y>
+<v>
   <div class="s25-control s25-multi" tabIndex="-1">
     <div class="s25-body">
       <div id="s25-0-instructions" class="s25-offscreen" style="display: none;">Items can be removed from this list box by selecting them and activating
         'Remove selected values' button. Items can be added by selecting them in
         the adjacent combobox.</div>
       <button class="s25-remove s25-offscreen" disabled
-      aria-disabled title="Remove selected values" aria-label="Remove selected values"
+      aria-disabled="true" title="Remove selected values" aria-label="Remove selected values"
       type="button">
         <span>
           <Remove width="20" height="20"></Remove>
@@ -17,17 +17,17 @@ exports[`MultiSelect renders with empty values 1`] = `
       <label class="s25-offscreen">Add Value</label>
       <input type="text" value class="s25-search" role="combobox"
       aria-label="Add Value" aria-autocomplete="list" aria-haspopup="true" aria-owns="s25-0-results"
-      aria-controls="s25-0-results" aria-expanded="false" />
-      <div class="s25-toggle" aria-hidden tabIndex="-1" title="Expand">
+      aria-controls="s25-0-results" aria-expanded="false" aria-busy="false" />
+      <div class="s25-toggle" aria-hidden="true" tabIndex="-1" title="Expand">
         <Toggle height="20" width="20"></Toggle>
       </div>
     </div>
   </div>
-</y>
+</v>
 `;
 
 exports[`MultiSelect renders with values 1`] = `
-<y>
+<v>
   <div class="s25-control s25-multi" tabIndex="-1">
     <div class="s25-body">
       <div id="s25-1-instructions" class="s25-offscreen" style="display: none;">Items can be removed from this list box by selecting them and activating
@@ -36,18 +36,20 @@ exports[`MultiSelect renders with values 1`] = `
       <div class="s25-multi-values" tabIndex="0"
       role="listbox" aria-orientation="vertical" aria-multiselectable="true"
       aria-label="Selected Values" aria-describedby="s25-1-instructions">
-        <div id="s25-1-vl-0" class="s25-item" role="option" aria-label="United States">
+        <div id="s25-1-vl-0" class="s25-item" role="option" aria-selected="false"
+        aria-label="United States">
           <div class="s25-content">
             <MarkupRenderer markup="United States"></MarkupRenderer>
           </div>
         </div>
-        <div id="s25-1-vl-1" class="s25-item" role="option" aria-label="Mexico">
+        <div id="s25-1-vl-1" class="s25-item" role="option" aria-selected="false"
+        aria-label="Mexico">
           <div class="s25-content">
             <MarkupRenderer markup="Mexico"></MarkupRenderer>
           </div>
         </div>
       </div>
-      <button class="s25-remove" disabled aria-disabled title="Remove selected values"
+      <button class="s25-remove" disabled aria-disabled="true" title="Remove selected values"
       aria-label="Remove selected values" type="button">
         <span>
           <Remove width="20" height="20"></Remove>
@@ -56,11 +58,11 @@ exports[`MultiSelect renders with values 1`] = `
       <label class="s25-offscreen">Add Value</label>
       <input type="text" value class="s25-search" role="combobox"
       aria-label="Add Value" aria-autocomplete="list" aria-haspopup="true" aria-owns="s25-1-results"
-      aria-controls="s25-1-results" aria-expanded="false" />
-      <div class="s25-toggle" aria-hidden tabIndex="-1" title="Expand">
+      aria-controls="s25-1-results" aria-expanded="false" aria-busy="false" />
+      <div class="s25-toggle" aria-hidden="true" tabIndex="-1" title="Expand">
         <Toggle height="20" width="20"></Toggle>
       </div>
     </div>
   </div>
-</y>
+</v>
 `;

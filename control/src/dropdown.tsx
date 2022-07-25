@@ -29,6 +29,7 @@ interface Props {
     onMouseDown?: MouseEventListener;
     onFocusOut?: EventListener;
     onComponentDidMount?: () => void;
+    parentElement?: () => Element;
 }
 
 export class Dropdown extends Component<Props> {
@@ -61,11 +62,12 @@ export class Dropdown extends Component<Props> {
         if (this.props.onFocusOut) {
             this.container.addEventListener('focusout', this.props.onFocusOut);
         }
-        document.body.appendChild(this.container);
+        const parentElement = this.props.parentElement ? this.props.parentElement() : document.body;
+        parentElement.appendChild(this.container);
     }
 
     public componentDidMount() {
-        this.props.dropdownRef.current = this.container;
+        this.props.dropdownRef.current = this.container ? this.container : null;
         this.scrollParents = getScrollParents(this.props.controlRef.current!);
         this.scrollParents.forEach(parent => {
             ['resize', 'scroll', 'touchmove'].forEach(event => {
@@ -90,7 +92,7 @@ export class Dropdown extends Component<Props> {
             this.scrollParents = undefined;
         }
 
-        this.props.dropdownRef.current = undefined;
+        this.props.dropdownRef.current = null;
         this.container!.parentElement!.removeChild(this.container!);
     }
 

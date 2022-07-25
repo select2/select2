@@ -214,6 +214,7 @@ export class MultiSelect extends AbstractSelect<Props, State> {
                         onClick={this.onDropdownClick}
                         controlRef={this.containerRef}
                         dropdownRef={this.dropdownRef}
+                        parentElement={this.props.dropdownParentElement}
                     >
                         <ResultList
                             namespace={resultsNamespace}

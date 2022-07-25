@@ -53,6 +53,7 @@ export interface Props {
     minimumCharacters?: number;
     openOnFocus?: boolean;
     dictionary?: string | Dictionary;
+    dropdownParentElement?: () => Element;
 }
 
 function MarkupRenderer({ markup }) {
@@ -61,6 +62,7 @@ function MarkupRenderer({ markup }) {
 
 export const DEFAULT_PROPS: Partial<Props> = {
     allowDuplicates: false,
+    dropdownParentElement: () => document.fullscreenElement || document.body,
     minimumCharacters: 0,
     quiet: 50,
     tabIndex: 0

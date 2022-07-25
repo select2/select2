@@ -146,6 +146,7 @@ export class SingleSelect extends AbstractSelect<Props, State> {
                         dropdownRef={this.dropdownRef}
                         onFocusOut={this.onFocusOut}
                         onComponentDidMount={this.focusOnSearch}
+                        parentElement={this.props.dropdownParentElement}
                     >
                         <div>
                             <input
