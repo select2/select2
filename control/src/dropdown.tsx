@@ -110,7 +110,7 @@ export class Dropdown extends Component<Props> {
         let top = rect.top + rect.height;
         let left = rect.left;
         const width = rect.width;
-        if (document.fullscreenEnabled) {
+        if (!document.fullscreenElement) {
             top += window.scrollY;
             left += window.scrollX;
         }
