@@ -107,9 +107,16 @@ export class Dropdown extends Component<Props> {
     private position() {
         const control = this.props.controlRef.current!;
         const rect = control.getBoundingClientRect();
-        const style = `top: ${rect.top + rect.height + window.pageYOffset}px;
-            left: ${rect.left + window.pageXOffset}px;
-            width: ${rect.width}px;`;
+        let top = rect.top + rect.height;
+        let left = rect.left;
+        const width = rect.width;
+        if (document.fullscreenEnabled) {
+            top += window.scrollY;
+            left += window.scrollX;
+        }
+        const style = `top: ${top}px;
+            left: ${left}px;
+            width: ${width}px;`;
         this.container!.setAttribute('style', style);
     }
 }
