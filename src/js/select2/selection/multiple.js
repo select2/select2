@@ -30,6 +30,10 @@ define([
     this.$selection.find('.select2-selection__rendered').attr('id', id);
 
     this.$selection.on('click', function (evt) {
+      if ($(evt.target).hasClass('select2-selection__choice__remove')) {
+        return;
+      }
+
       self.trigger('toggle', {
         originalEvent: evt
       });
