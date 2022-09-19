@@ -7,7 +7,7 @@ define(function () {
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;
 
-      var message = 'Vă rugăm să ștergeți' + overChars + ' caracter';
+      var message = 'Vă rugăm să ștergeți ' + overChars + ' caracter';
 
       if (overChars !== 1) {
         message += 'e';
