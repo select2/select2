@@ -50,6 +50,12 @@ define(function () {
     },
     removeAllItems: function () {
       return 'Eliminar todos los elementos';
+    },
+    removeItem: function () {
+      return 'Eliminar elemento';
+    },
+    search: function() {
+      return 'Buscar';
     }
   };
 });
