@@ -24,7 +24,7 @@ define(function () {
       return 'Tidak ada data yang sesuai';
     },
     searching: function () {
-      return 'Sedang mencari ...';
+      return 'Sedang mencari…';
     },
     removeAllItems: function () {
       return 'Hapus semua item';
