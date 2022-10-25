@@ -15,7 +15,7 @@ define(function () {
       return 'Masukkan ' + remainingChars + ' huruf lagi';
     },
     loadingMore: function () {
-      return 'Mengambil data ...';
+      return 'Mengambil data…';
     },
     maximumSelected: function (args) {
       return 'Anda hanya dapat memilih ' + args.maximum + ' pilihan';
