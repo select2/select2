@@ -46,7 +46,7 @@ define(function () {
       return 'Remover todos os itens';
     },
     removeItem: function () {
-      return 'Remover iten';
+      return 'Remover item';
     },
     search: function() {
       return 'Buscar';
