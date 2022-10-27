@@ -18,7 +18,7 @@ This is a list of all the Select2 configuration options.
 | `dir` | string | `ltr` | Sets the [`dir` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/dir) on the selection and dropdown containers to indicate the direction of the text. |
 | `disabled` | boolean | `false` | When set to `true`, the select control will be disabled. |
 | `dropdownAdapter` | | `DropdownAdapter` | Used to override the built-in [DropdownAdapter](/advanced/default-adapters/dropdown) |
-| `dropdownAutoWidth` | boolean | `false` | |
+| `dropdownAutoWidth` | boolean | `false` | Sets the width on the dropdown dynamically whenever it is opened |
 | `dropdownCssClass` | string | `''` | Adds additional CSS classes to the dropdown container. The helper `:all:` can be used to add all CSS classes present on the original `<select>` element. |
 | `dropdownParent` | jQuery selector or DOM node | `$(document.body)` | Allows you to [customize placement](/dropdown#dropdown-placement) of the dropdown. |
 | `escapeMarkup` | callback | `Utils.escapeMarkup` | Handles [automatic escaping of content rendered by custom templates](/dropdown#built-in-escaping). |
