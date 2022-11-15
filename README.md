@@ -52,7 +52,8 @@ Plugins
   - [django-easy-select2]
   - [django-select2]
 * [Drupal] - [drupal-select2]
-* [Meteor] - [meteor-select2]
+* [Meteor] - [meteor-select2] 
+* [Ruby on Rails][ruby-on-rails] - [bootstrap-select2-rails]
 * [Ruby on Rails][ruby-on-rails] - [select2-rails]
 * [Wicket] - [wicketstuff-select2]
 * [Yii 2][yii2] - [yii2-widget-select2]
@@ -153,6 +154,7 @@ Support this project with your organization. Your logo will show up here with a 
 [select2-bootstrap4-theme]: https://github.com/ttskch/select2-bootstrap4-theme
 [select2-flat-theme]: https://github.com/techhysahil/select2-Flat_Theme
 [select2-rails]: https://github.com/argerim/select2-rails
+[bootstrap-select2-rails]: https://github.com/Nerian/bootstrap-select2-rails
 [vue.js]: http://vuejs.org/
 [select2-vue]: http://vuejs.org/examples/select2.html
 [wicket]: https://wicket.apache.org/
