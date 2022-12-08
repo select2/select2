@@ -64,8 +64,6 @@ cd /path/to/select2/repo
 npm install
 ```
 
-You may need to install `libsass` on your system if it is not already available in order to build the SASS files which generate the CSS for themes and the main component.
-
 ### Building the Select2 component
 
 Select2 uses the [Grunt][grunt] build task system and defines a few custom
