@@ -183,7 +183,7 @@ QUnit.test('inherited - three levels', function (assert) {
   assert.strictEqual(inst.middleTestArgument, 'test');
   assert.strictEqual(inst.decoratorTestArgument, 'test');
 
-  var out = inst.QUnit.test('test');
+  var out = inst.test('test');
 
   assert.strictEqual(out, 'testabc');
 });
