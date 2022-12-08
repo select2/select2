@@ -1,10 +1,10 @@
-module('select2(data)');
+QUnit.module('select2(data)');
 
 var $ = require('jquery');
 var Select2 = require('select2/core');
 var Options = require('select2/options');
 
-test('single default selection returned', function (assert) {
+QUnit.test('single default selection returned', function (assert) {
   var $select = $(
     '<select>' +
       '<option>One</option>' +
@@ -39,7 +39,7 @@ test('single default selection returned', function (assert) {
   );
 });
 
-test('multiple default selections returned', function (assert) {
+QUnit.test('multiple default selections returned', function (assert) {
   var $select = $(
     '<select multiple>' +
       '<option selected>One</option>' +
@@ -76,9 +76,9 @@ test('multiple default selections returned', function (assert) {
   );
 });
 
-module('select2(val)');
+QUnit.module('select2(val)');
 
-test('single value matches jquery value', function (assert) {
+QUnit.test('single value matches jquery value', function (assert) {
   var $select = $(
     '<select>' +
       '<option>One</option>' +
@@ -105,7 +105,7 @@ test('single value matches jquery value', function (assert) {
   );
 });
 
-test('multiple value matches the jquery value', function (assert) {
+QUnit.test('multiple value matches the jquery value', function (assert) {
   var $select = $(
     '<select multiple>' +
       '<option selected>One</option>' +

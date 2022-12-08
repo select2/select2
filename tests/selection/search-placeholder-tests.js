@@ -1,4 +1,4 @@
-module('Selection containers - Inline search - Placeholder');
+QUnit.module('Selection containers - Inline search - Placeholder');
 
 var MultipleSelection = require('select2/selection/multiple');
 var InlineSearch = require('select2/selection/search');
@@ -13,7 +13,7 @@ var CustomSelection = Utils.Decorate(
   InlineSearch
 );
 
-test('width does not extend the search box', function (assert) {
+QUnit.test('width does not extend the search box', function (assert) {
     assert.expect(2);
 
     var $container = $(

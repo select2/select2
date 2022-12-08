@@ -1,8 +1,8 @@
-module('select2(val)');
+QUnit.module('select2(val)');
 
 var Utils = require('select2/utils');
 
-test('multiple elements with arguments works', function (assert) {
+QUnit.test('multiple elements with arguments works', function (assert) {
   var $ = require('jquery');
   require('jquery.select2');
 
@@ -31,7 +31,7 @@ test('multiple elements with arguments works', function (assert) {
   );
 });
 
-test('initializes when jQuery $.data contains' +
+QUnit.test('initializes when jQuery $.data contains' +
   ' cyclic reference', function (assert) {
   var $ = require('jquery');
   require('jquery.select2');
@@ -60,7 +60,7 @@ test('initializes when jQuery $.data contains' +
   );
 });
 
-test('$element.data returns instance and options correctly', 
+QUnit.test('$element.data returns instance and options correctly', 
   function (assert) {
   var $ = require('jquery');
   require('jquery.select2');
