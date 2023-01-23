@@ -8,7 +8,7 @@ Select2
 Select2 is a jQuery-based replacement for select boxes. It supports searching,
 remote data sets, and pagination of results.
 
-To get started, checkout examples and documentation at
+To get started, check out examples and documentation at
 https://select2.org/
 
 Use cases
