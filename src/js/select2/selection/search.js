@@ -41,7 +41,7 @@ define([
 
     decorated.call(this, container, $container);
 
-    self.$search.attr('aria-describedby', selectionId);
+    self.$search.attr('aria-describedby', container.id + '-label ' + selectionId);
 
     container.on('open', function () {
       self.$search.attr('aria-controls', resultsId);
