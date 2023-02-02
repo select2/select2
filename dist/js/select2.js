@@ -1438,7 +1438,7 @@ S2.define('select2/selection/base',[
 
   BaseSelection.prototype.render = function () {
     var $selection = $(
-      '<span class="select2-selection" role="combobox" ' +
+      '<span class="select2-selection" role="searchbox" ' +
       ' aria-haspopup="true" aria-expanded="false">' +
       '</span>'
     );
