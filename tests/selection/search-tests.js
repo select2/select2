@@ -1,4 +1,4 @@
-module('Selection containers - Inline search');
+QUnit.module('Selection containers - Inline search');
 
 var MultipleSelection = require('select2/selection/multiple');
 var InlineSearch = require('select2/selection/search');
@@ -9,7 +9,7 @@ var Utils = require('select2/utils');
 
 var options = new Options({});
 
-test('backspace will remove a choice', function (assert) {
+QUnit.test('backspace will remove a choice', function (assert) {
   assert.expect(3);
 
   var KEYS = require('select2/keys');
@@ -51,7 +51,7 @@ test('backspace will remove a choice', function (assert) {
   $search.trigger(backspace);
 });
 
-test('backspace will set the search text', function (assert) {
+QUnit.test('backspace will set the search text', function (assert) {
   assert.expect(3);
 
   var KEYS = require('select2/keys');
@@ -90,7 +90,7 @@ test('backspace will set the search text', function (assert) {
   assert.equal($search.val(), 'One', 'The search text was set');
 });
 
-test('updating selection does not shift the focus', function (assert) {
+QUnit.test('updating selection does not shift the focus', function (assert) {
   // Check for IE 8, which triggers a false negative during testing
   if (window.attachEvent && !window.addEventListener) {
     // We must expect 0 assertions or the test will fail
@@ -138,7 +138,7 @@ test('updating selection does not shift the focus', function (assert) {
   );
 });
 
-test('the focus event shifts the focus', function (assert) {
+QUnit.test('the focus event shifts the focus', function (assert) {
   // Check for IE 8, which triggers a false negative during testing
   if (window.attachEvent && !window.addEventListener) {
     // We must expect 0 assertions or the test will fail
@@ -190,7 +190,7 @@ test('the focus event shifts the focus', function (assert) {
   );
 });
 
-test('search box without text should propagate click', function (assert) {
+QUnit.test('search box without text should propagate click', function (assert) {
   assert.expect(1);
 
   var $container = $('#qunit-fixture .event-container');
@@ -218,7 +218,7 @@ test('search box without text should propagate click', function (assert) {
   $search.trigger('click');
 });
 
-test('search box with text should not propagate click', function (assert) {
+QUnit.test('search box with text should not propagate click', function (assert) {
   assert.expect(0);
 
   var $container = $('#qunit-fixture .event-container');
@@ -247,7 +247,7 @@ test('search box with text should not propagate click', function (assert) {
   $search.trigger('click');
 });
 
-test('search box with text should not close dropdown', function (assert) {
+QUnit.test('search box with text should not close dropdown', function (assert) {
   assert.expect(0);
 
   var $container = $('#qunit-fixture .event-container');

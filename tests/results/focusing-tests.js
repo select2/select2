@@ -1,6 +1,6 @@
-module('Results - highlighting results');
+QUnit.module('Results - highlighting results');
 
-test('results:all with no data skips results:focus', function (assert) {
+QUnit.test('results:all with no data skips results:focus', function (assert) {
   assert.expect(0);
 
   var $ = require('jquery');
@@ -42,7 +42,7 @@ test('results:all with no data skips results:focus', function (assert) {
   });
 });
 
-test('results:all triggers results:focus on the first item', function (assert) {
+QUnit.test('results:all triggers results:focus on the first item', function (assert) {
   assert.expect(2);
 
   var $ = require('jquery');
@@ -90,7 +90,7 @@ test('results:all triggers results:focus on the first item', function (assert) {
   });
 });
 
-test('results:append does not trigger results:focus', function (assert) {
+QUnit.test('results:append does not trigger results:focus', function (assert) {
   assert.expect(0);
 
   var $ = require('jquery');
@@ -137,7 +137,7 @@ test('results:append does not trigger results:focus', function (assert) {
   });
 });
 
-test('scrollAfterSelect triggers results:focus', function (assert) {
+QUnit.test('scrollAfterSelect triggers results:focus', function (assert) {
   assert.expect(3);
 
   var $ = require('jquery');
@@ -189,7 +189,7 @@ test('scrollAfterSelect triggers results:focus', function (assert) {
   container.trigger('select', {});
 });
 
-test('!scrollAfterSelect does not trigger results:focus', function (assert) {
+QUnit.test('!scrollAfterSelect does not trigger results:focus', function (assert) {
   assert.expect(1);
 
   var $ = require('jquery');
@@ -240,7 +240,7 @@ test('!scrollAfterSelect does not trigger results:focus', function (assert) {
   container.trigger('select', {});
 });
 
-test('tag result is highlighted with no other selections', function (assert) {
+QUnit.test('tag result is highlighted with no other selections', function (assert) {
   assert.expect(2);
 
   var $ = require('jquery');
@@ -293,7 +293,7 @@ test('tag result is highlighted with no other selections', function (assert) {
   });
 });
 
-test('tag result is highlighted with other selections', function (assert) {
+QUnit.test('tag result is highlighted with other selections', function (assert) {
   assert.expect(2);
 
   var $ = require('jquery');

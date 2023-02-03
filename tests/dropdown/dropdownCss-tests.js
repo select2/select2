@@ -1,4 +1,4 @@
-module('Dropdown - dropdownCssClass');
+QUnit.module('Dropdown - dropdownCssClass');
 
 var $ = require('jquery');
 var Utils = require('select2/utils');
@@ -10,7 +10,7 @@ var DropdownCSS = Utils.Decorate(
   require('select2/dropdown/dropdownCss')
 );
 
-test('all classes will be copied if :all: is used', function (assert) {
+QUnit.test('all classes will be copied if :all: is used', function (assert) {
   var $element = $('<select class="test copy works"></select>');
   var options = new Options({
     dropdownCssClass: ':all:'
@@ -25,7 +25,7 @@ test('all classes will be copied if :all: is used', function (assert) {
   assert.ok(!$dropdown.hasClass(':all:'));
 });
 
-test(':all: can be used with other classes', function (assert) {
+QUnit.test(':all: can be used with other classes', function (assert) {
   var $element = $('<select class="test copy works"></select>');
   var options = new Options({
     dropdownCssClass: ':all: other'
@@ -41,7 +41,7 @@ test(':all: can be used with other classes', function (assert) {
   assert.ok(!$dropdown.hasClass(':all:'));
 });
 
-test('classes can be passed in as a string', function (assert) {
+QUnit.test('classes can be passed in as a string', function (assert) {
   var $element = $('<select class="test copy works"></select>');
   var options = new Options({
     dropdownCssClass: 'other'
