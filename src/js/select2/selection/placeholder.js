@@ -29,7 +29,7 @@ define([
       placeholder.text ||
       $placeholder.text();
 
-    this.$selection.find('.select2-selection__rendered').attr(
+    this.$selection.find('.select2-selection__rendered')[0].setAttribute(
       'title',
       placeholderTitle
     );

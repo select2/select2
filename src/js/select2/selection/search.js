@@ -23,7 +23,7 @@ define([
     this.$search = $search.find('textarea');
 
     this.$search.prop('autocomplete', this.options.get('autocomplete'));
-    this.$search.attr('aria-label', searchLabel());
+    this.$search[0].setAttribute('aria-label', searchLabel());
 
     var $rendered = decorated.call(this);
 
@@ -41,10 +41,10 @@ define([
 
     decorated.call(this, container, $container);
 
-    self.$search.attr('aria-describedby', selectionId);
+    self.$search[0].setAttribute('aria-describedby', selectionId);
 
     container.on('open', function () {
-      self.$search.attr('aria-controls', resultsId);
+      self.$search[0].setAttribute('aria-controls', resultsId);
       self.$search.trigger('focus');
     });
 
@@ -72,7 +72,8 @@ define([
 
     container.on('results:focus', function (params) {
       if (params.data._resultId) {
-        self.$search.attr('aria-activedescendant', params.data._resultId);
+        self.$search[0]
+          .setAttribute('aria-activedescendant', params.data._resultId);
       } else {
         self.$search.removeAttr('aria-activedescendant');
       }
@@ -180,18 +181,19 @@ define([
    * @private
    */
   Search.prototype._transferTabIndex = function (decorated) {
-    this.$search.attr('tabindex', this.$selection.attr('tabindex'));
-    this.$selection.attr('tabindex', '-1');
+    this.$search[0]
+      .setAttribute('tabindex', this.$selection[0].getAttribute('tabindex'));
+    this.$selection[0].setAttribute('tabindex', '-1');
   };
 
   Search.prototype.createPlaceholder = function (decorated, placeholder) {
-    this.$search.attr('placeholder', placeholder.text);
+    this.$search[0].setAttribute('placeholder', placeholder.text);
   };
 
   Search.prototype.update = function (decorated, data) {
     var searchHadFocus = this.$search[0] == document.activeElement;
 
-    this.$search.attr('placeholder', '');
+    this.$search[0].setAttribute('placeholder', '');
 
     decorated.call(this, data);
 
@@ -229,7 +231,7 @@ define([
 
     var width = '100%';
 
-    if (this.$search.attr('placeholder') === '') {
+    if (this.$search[0].getAttribute('placeholder') === '') {
       var minimumWidth = this.$search.val().length + 1;
 
       width = (minimumWidth * 0.75) + 'em';

@@ -100,8 +100,11 @@ define([
       return;
     }
 
-    var selectionId = this.$selection.find('.select2-selection__rendered')
-      .attr('id');
+    var rendered = this.$selection.find('.select2-selection__rendered')[0];
+    var selectionId = null;
+    if(rendered != null) {
+      selectionId = rendered.getAttribute('id');
+    }
 
     var removeAll = this.options.get('translations').get('removeAllItems');
 
@@ -110,9 +113,9 @@ define([
         '<span aria-hidden="true">&times;</span>' +
       '</button>'
     );
-    $remove.attr('title', removeAll());
-    $remove.attr('aria-label', removeAll());
-    $remove.attr('aria-describedby', selectionId);
+    $remove[0].setAttribute('title', removeAll());
+    $remove[0].setAttribute('aria-label', removeAll());
+    $remove[0].setAttribute('aria-describedby', selectionId);
     Utils.StoreData($remove[0], 'data', data);
 
     this.$selection.prepend($remove);

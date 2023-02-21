@@ -23,13 +23,16 @@ define([
 
     if (Utils.GetData(this.$element[0], 'old-tabindex') != null) {
       this._tabindex = Utils.GetData(this.$element[0], 'old-tabindex');
-    } else if (this.$element.attr('tabindex') != null) {
-      this._tabindex = this.$element.attr('tabindex');
+    } else if (this.$element[0].getAttribute('tabindex') != null) {
+      this._tabindex = this.$element[0].getAttribute('tabindex');
     }
 
-    $selection.attr('title', this.$element.attr('title'));
-    $selection.attr('tabindex', this._tabindex);
-    $selection.attr('aria-disabled', 'false');
+    if(this.$element[0].getAttribute('title')) {
+      $selection[0]
+        .setAttribute('title', this.$element[0].getAttribute('title'));
+    }
+    $selection[0].setAttribute('tabindex', this._tabindex);
+    $selection[0].setAttribute('aria-disabled', 'false');
 
     this.$selection = $selection;
 
@@ -60,7 +63,8 @@ define([
     });
 
     container.on('results:focus', function (params) {
-      self.$selection.attr('aria-activedescendant', params.data._resultId);
+      self.$selection[0]
+        .setAttribute('aria-activedescendant', params.data._resultId);
     });
 
     container.on('selection:update', function (params) {
@@ -69,15 +73,15 @@ define([
 
     container.on('open', function () {
       // When the dropdown is open, aria-expanded="true"
-      self.$selection.attr('aria-expanded', 'true');
-      self.$selection.attr('aria-owns', resultsId);
+      self.$selection[0].setAttribute('aria-expanded', 'true');
+      self.$selection[0].setAttribute('aria-owns', resultsId);
 
       self._attachCloseHandler(container);
     });
 
     container.on('close', function () {
       // When the dropdown is closed, aria-expanded="false"
-      self.$selection.attr('aria-expanded', 'false');
+      self.$selection[0].setAttribute('aria-expanded', 'false');
       self.$selection.removeAttr('aria-activedescendant');
       self.$selection.removeAttr('aria-owns');
 
@@ -87,13 +91,13 @@ define([
     });
 
     container.on('enable', function () {
-      self.$selection.attr('tabindex', self._tabindex);
-      self.$selection.attr('aria-disabled', 'false');
+      self.$selection[0].setAttribute('tabindex', self._tabindex);
+      self.$selection[0].setAttribute('aria-disabled', 'false');
     });
 
     container.on('disable', function () {
-      self.$selection.attr('tabindex', '-1');
-      self.$selection.attr('aria-disabled', 'true');
+      self.$selection[0].setAttribute('tabindex', '-1');
+      self.$selection[0].setAttribute('aria-disabled', 'true');
     });
   };
 
