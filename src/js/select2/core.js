@@ -21,9 +21,9 @@ define([
 
     // Set up the tabindex
 
-    var tabindex = $element.attr('tabindex') || 0;
+    var tabindex = $element[0].getAttribute('tabindex') || 0;
     Utils.StoreData($element[0], 'old-tabindex', tabindex);
-    $element.attr('tabindex', '-1');
+    $element[0].setAttribute('tabindex', '-1');
 
     // Set up containers and adapters
 
@@ -78,7 +78,7 @@ define([
 
     // Hide the original select
     $element[0].classList.add('select2-hidden-accessible');
-    $element.attr('aria-hidden', 'true');
+    $element[0].setAttribute('aria-hidden', 'true');
 
     // Synchronize any monitored attributes
     this._syncAttributes();
@@ -93,11 +93,12 @@ define([
 
   Select2.prototype._generateId = function ($element) {
     var id = '';
+    var element = $element[0];
 
-    if ($element.attr('id') != null) {
-      id = $element.attr('id');
-    } else if ($element.attr('name') != null) {
-      id = $element.attr('name') + '-' + Utils.generateChars(2);
+    if (element != null && element.getAttribute('id') != null) {
+      id = element.getAttribute('id');
+    } else if (element != null && element.getAttribute('name') != null) {
+      id = element.getAttribute('name') + '-' + Utils.generateChars(2);
     } else {
       id = Utils.generateChars(4);
     }
@@ -142,7 +143,7 @@ define([
     }
 
     if (method == 'style') {
-      var style = $element.attr('style');
+      var style = $element[0].getAttribute('style');
 
       if (typeof(style) !== 'string') {
         return null;
@@ -563,11 +564,11 @@ define([
     this._syncS = null;
 
     this.$element.off('.select2');
-    this.$element.attr('tabindex',
-    Utils.GetData(this.$element[0], 'old-tabindex'));
+    this.$element[0].setAttribute('tabindex',
+      Utils.GetData(this.$element[0], 'old-tabindex'));
 
     this.$element[0].classList.remove('select2-hidden-accessible');
-    this.$element.attr('aria-hidden', 'false');
+    this.$element[0].setAttribute('aria-hidden', 'false');
     Utils.RemoveData(this.$element[0]);
     this.$element.removeData('select2');
 
@@ -590,7 +591,7 @@ define([
       '</span>'
     );
 
-    $container.attr('dir', this.options.get('dir'));
+    $container[0].setAttribute('dir', this.options.get('dir'));
 
     this.$container = $container;
 
