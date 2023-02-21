@@ -32,7 +32,7 @@ define([
 
     var id = container.id + '-container';
 
-    var rendered = this.$selection.find('.select2-selection__rendered')[0]
+    var rendered = this.$selection.find('.select2-selection__rendered')[0];
     if(rendered != null) {
       rendered.setAttribute('id', id);
       rendered.setAttribute('role', 'textbox');

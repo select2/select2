@@ -27,7 +27,8 @@ define([
     MultipleSelection.__super__.bind.apply(this, arguments);
 
     var id = container.id + '-container';
-    var rendered = this.$selection.find('.select2-selection__rendered')[0]
+
+    var rendered = this.$selection.find('.select2-selection__rendered')[0];
     if(rendered != null) {
       rendered.setAttribute('id', id);
     }
@@ -109,7 +110,8 @@ define([
 
     var $selections = [];
 
-    var selectionIdPrefix = this.$selection.find('.select2-selection__rendered')[0]
+    var selectionIdPrefix = this.$selection
+      .find('.select2-selection__rendered')[0]
       .getAttribute('id') + '-choice-';
 
     for (var d = 0; d < data.length; d++) {
