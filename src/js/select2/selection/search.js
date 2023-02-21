@@ -72,7 +72,8 @@ define([
 
     container.on('results:focus', function (params) {
       if (params.data._resultId) {
-        self.$search[0].setAttribute('aria-activedescendant', params.data._resultId);
+        self.$search[0]
+          .setAttribute('aria-activedescendant', params.data._resultId);
       } else {
         self.$search.removeAttr('aria-activedescendant');
       }
@@ -180,7 +181,8 @@ define([
    * @private
    */
   Search.prototype._transferTabIndex = function (decorated) {
-    this.$search[0].setAttribute('tabindex', this.$selection[0].getAttribute('tabindex'));
+    this.$search[0]
+      .setAttribute('tabindex', this.$selection[0].getAttribute('tabindex'));
     this.$selection[0].setAttribute('tabindex', '-1');
   };
 

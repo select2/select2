@@ -28,7 +28,8 @@ define([
     }
 
     if(this.$element[0].getAttribute('title')) {
-      $selection[0].setAttribute('title', this.$element[0].getAttribute('title'))
+      $selection[0]
+        .setAttribute('title', this.$element[0].getAttribute('title'));
     }
     $selection[0].setAttribute('tabindex', this._tabindex);
     $selection[0].setAttribute('aria-disabled', 'false');
@@ -62,7 +63,8 @@ define([
     });
 
     container.on('results:focus', function (params) {
-      self.$selection[0].setAttribute('aria-activedescendant', params.data._resultId);
+      self.$selection[0]
+        .setAttribute('aria-activedescendant', params.data._resultId);
     });
 
     container.on('selection:update', function (params) {
