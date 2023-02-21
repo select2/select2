@@ -32,12 +32,14 @@ define([
 
     var id = container.id + '-container';
 
-    this.$selection.find('.select2-selection__rendered')
-      .attr('id', id)
-      .attr('role', 'textbox')
-      .attr('aria-readonly', 'true');
-    this.$selection.attr('aria-labelledby', id);
-    this.$selection.attr('aria-controls', id);
+    var rendered = this.$selection.find('.select2-selection__rendered')[0]
+    if(rendered != null) {
+      rendered.setAttribute('id', id);
+      rendered.setAttribute('role', 'textbox');
+      rendered.setAttribute('aria-readonly', 'true');
+    }
+    this.$selection[0].setAttribute('aria-labelledby', id);
+    this.$selection[0].setAttribute('aria-controls', id);
 
     this.$selection.on('mousedown', function (evt) {
       // Only respond to left clicks
@@ -98,7 +100,7 @@ define([
     var title = selection.title || selection.text;
 
     if (title) {
-      $rendered.attr('title', title);
+      $rendered[0].setAttribute('title', title);
     } else {
       $rendered.removeAttr('title');
     }

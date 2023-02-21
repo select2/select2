@@ -18,7 +18,7 @@ define([
       '</span>'
     );
 
-    $dropdown.attr('dir', this.options.get('dir'));
+    $dropdown[0].setAttribute('dir', this.options.get('dir'));
 
     this.$dropdown = $dropdown;
 

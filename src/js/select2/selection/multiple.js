@@ -27,7 +27,10 @@ define([
     MultipleSelection.__super__.bind.apply(this, arguments);
 
     var id = container.id + '-container';
-    this.$selection.find('.select2-selection__rendered').attr('id', id);
+    var rendered = this.$selection.find('.select2-selection__rendered')[0]
+    if(rendered != null) {
+      rendered.setAttribute('id', id);
+    }
 
     this.$selection.on('click', function (evt) {
       self.trigger('toggle', {
@@ -106,8 +109,8 @@ define([
 
     var $selections = [];
 
-    var selectionIdPrefix = this.$selection.find('.select2-selection__rendered')
-      .attr('id') + '-choice-';
+    var selectionIdPrefix = this.$selection.find('.select2-selection__rendered')[0]
+      .getAttribute('id') + '-choice-';
 
     for (var d = 0; d < data.length; d++) {
       var selection = data[d];
@@ -124,22 +127,22 @@ define([
       }
 
       $selection.find('.select2-selection__choice__display')
-        .append(formatted)
-        .attr('id', selectionId);
+        .append(formatted)[0]
+        .setAttribute('id', selectionId);
 
       var title = selection.title || selection.text;
 
       if (title) {
-        $selection.attr('title', title);
+        $selection[0].setAttribute('title', title);
       }
 
       var removeItem = this.options.get('translations').get('removeItem');
 
-      var $remove = $selection.find('.select2-selection__choice__remove');
+      var remove = $selection.find('.select2-selection__choice__remove')[0];
 
-      $remove.attr('title', removeItem());
-      $remove.attr('aria-label', removeItem());
-      $remove.attr('aria-describedby', selectionId);
+      remove.setAttribute('title', removeItem());
+      remove.setAttribute('aria-label', removeItem());
+      remove.setAttribute('aria-describedby', selectionId);
 
       Utils.StoreData($selection[0], 'data', selection);
 
