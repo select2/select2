@@ -100,7 +100,7 @@ define([
       return;
     }
 
-    var rendered = this.$selection.find('.select2-selection__rendered')[0]
+    var rendered = this.$selection.find('.select2-selection__rendered')[0];
     var selectionId = null;
     if(rendered != null) {
       selectionId = rendered.getAttribute('id');

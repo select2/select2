@@ -91,7 +91,8 @@ define([
 
     container.on('results:focus', function (params) {
       if (params.data._resultId) {
-        self.$search[0].setAttribute('aria-activedescendant', params.data._resultId);
+        self.$search[0]
+          .setAttribute('aria-activedescendant', params.data._resultId);
       } else {
         self.$search.removeAttr('aria-activedescendant');
       }
