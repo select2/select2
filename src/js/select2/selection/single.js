@@ -39,7 +39,6 @@ define([
     this.$selection.attr('aria-labelledby', id);
     this.$selection.attr('aria-controls', id);
     this.$selection.attr('aria-controls', id);
-    this.$selection.attr('aria-expanded', 'true');
     this.$selection.on('mousedown', function (evt) {
       // Only respond to left clicks
       if (evt.which !== 1) {
