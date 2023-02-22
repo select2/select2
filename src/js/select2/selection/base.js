@@ -15,7 +15,7 @@ define([
   BaseSelection.prototype.render = function () {
     var $selection = $(
       '<span class="select2-selection" role="combobox" ' +
-      ' aria-haspopup="true" aria-expanded="false">' +
+      ' aria-haspopup="true">' +
       '</span>'
     );
 
