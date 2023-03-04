@@ -228,12 +228,14 @@ define([
       return true;
     }
 
-	var computed = getComputedStyle(el);
-    var paddingHeight = parseInt(computed.paddingTop) + parseInt(computed.paddingBottom);
-    var paddingWidth = parseInt(computed.paddingLeft) + parseInt(computed.paddingRight);
+    var computed = window.getComputedStyle(el);
+    var paddingHeight = parseInt(computed.paddingTop, 10);
+        paddingHeight += parseInt(computed.paddingBottom, 10);
+    var paddingWidth = parseInt(computed.paddingLeft, 10);
+        paddingWidth += parseInt(computed.paddingRight, 10);
   
-    return ((elm.clientHeight - paddingHeight) < el.scrollHeight ||
-      (elm.clientWidth - paddingWidth) < el.scrollWidth);
+    return ((el.clientHeight - paddingHeight) < el.scrollHeight ||
+      (el.clientWidth - paddingWidth) < el.scrollWidth);
   };
 
   Utils.escapeMarkup = function (markup) {
@@ -308,9 +310,9 @@ define([
         if (Utils.__cache[id][name] != null) {
           return Utils.__cache[id][name];
         }
-        return element.dataset.[name]; // Fallback to HTML5 data attribs.
+        return element.dataset[name]; // Fallback to HTML5 data attribs.
       }
-      return element.dataset.[name]; // Fallback to HTML5 data attribs.
+      return element.dataset[name]; // Fallback to HTML5 data attribs.
     } else {
       return Utils.__cache[id];
     }
