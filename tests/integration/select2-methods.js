@@ -137,3 +137,50 @@ test('multiple value matches the jquery value', function (assert) {
     'The values should match the jquery values'
   );
 });
+
+test('multiple selection and clearing of grouped options', function (assert) {
+  var container = new MockContainer();
+  var $container = $('<div></div>');
+
+  var $select = $(
+    '<select multiple>' +
+      '<optgroup label="Group 1">' +
+        '<option value="1">Option 1.1</option>' +
+        '<option value="2">Option 1.2</option>' +
+      '</optgroup>' +
+      '<optgroup label="Group 2">' +
+        '<option value="3">Option 2.1</option>' +
+        '<option value="4">Option 2.2</option>' +
+      '</optgroup>' +
+    '</select>'
+  );
+  $container.append($select);
+
+  var select = new Select2($select);
+  select.render();
+  select.selection.bind(container, $container);
+
+  $select.val(['3', '1']);
+  $select.trigger('change');
+
+  assert.equal(
+    $select.find(':selected').length,
+    2,
+    'Two items should be selected'
+  );
+
+  var $remove = null;
+
+  // Remove the first item
+  $remove = $container.find('.select2-selection__choice__remove');
+  $remove.trigger('click');
+
+  // Remove the second item
+  $remove = $container.find('.select2-selection__choice__remove');
+  $remove.trigger('click');
+
+  assert.notOk(
+    $select.find(':selected').length,
+    'No items should be selected'
+  );
+});
