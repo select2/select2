@@ -14,7 +14,7 @@ define([
   };
 
   Translation.prototype.extend = function (translation) {
-    this.dict = Object.assign(translation.all(), this.dict);
+    this.dict = Object.assign({}, translation.all(), this.dict);
   };
 
   // Static functions
