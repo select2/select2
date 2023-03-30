@@ -141,22 +141,33 @@ test('multiple value matches the jquery value', function (assert) {
 test('multiple selection and clearing of grouped options', function (assert) {
   var container = new MockContainer();
   var $container = $('<div></div>');
-
-  var $select = $(
-    '<select multiple>' +
-      '<optgroup label="Group 1">' +
-        '<option value="1">Option 1.1</option>' +
-        '<option value="2">Option 1.2</option>' +
-      '</optgroup>' +
-      '<optgroup label="Group 2">' +
-        '<option value="3">Option 2.1</option>' +
-        '<option value="4">Option 2.2</option>' +
-      '</optgroup>' +
-    '</select>'
-  );
+  var $select = $('<select></select>');
   $container.append($select);
 
-  var select = new Select2($select);
+  var data = [{
+    text: "Group 1",
+    children: [{
+      id: 1,
+      text: "Option 1.1"
+    }, {
+      id: 2,
+      text: "Option 1.2"
+    }]
+  }, {
+    text: "Group 2",
+    children: [{
+      id: 3,
+      text: "Option 2.1"
+    }, {
+      id: 4,
+      text: "Option 2.2"
+    }]
+  }];
+
+  var select = new Select2($select, {
+    multiple: true,
+    data: data,
+  });
   select.render();
   select.selection.bind(container, $container);
 
