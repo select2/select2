@@ -186,9 +186,18 @@ test('multiple selection and clearing of grouped options', function (assert) {
   $remove = $container.find('.select2-selection__choice__remove');
   $remove.trigger('click');
 
-  // Remove the second item
-  $remove = $container.find('.select2-selection__choice__remove');
-  $remove.trigger('click');
+  // Open the dropdown menu
+  $container.find('.select2-selection').trigger('click');
+  $selections = $('.select2-results__option--highlighted');
+
+  assert.equal(
+    $selections.length,
+    1,
+    'One item should remain selected'
+  );
+
+  // Remove the second selection by clicking on the item in the dropdown
+  $selections.first().trigger('click');
 
   assert.notOk(
     $select.find(':selected').length,
