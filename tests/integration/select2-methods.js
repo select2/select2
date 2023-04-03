@@ -183,15 +183,15 @@ test('multiple selection and clearing of grouped options', function (assert) {
   $remove = $container.find('.select2-selection__choice__remove');
   $remove.trigger('click');
 
-  // Open the dropdown menu
-  $container.find('.select2-selection').trigger('click');
   var $selections = $('.select2-selection__choice');
-
   assert.equal(
     $selections.length,
     1,
     'One item should remain selected'
   );
+
+  // Open the dropdown menu
+  $container.find('.select2-selection').trigger('click');
 
   // Remove the second selection by clicking on the item in the dropdown
   $selections.first().trigger('click');
