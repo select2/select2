@@ -177,11 +177,8 @@ test('multiple selection and clearing of grouped options', function (assert) {
     'Two items should be selected'
   );
 
-  var $remove = null;
-
   // Remove the first item
-  $remove = $container.find('.select2-selection__choice__remove');
-  $remove.trigger('click');
+  $container.find('.select2-selection__choice__remove').trigger('click');
 
   var $selections = $('.select2-selection__choice');
   assert.equal(
