@@ -139,8 +139,7 @@ test('multiple value matches the jquery value', function (assert) {
 });
 
 test('multiple selection and clearing of grouped options', function (assert) {
-  var container = new MockContainer();
-  var $container = $('<div></div>');
+  var $container = $('#qunit-fixture');
   var $select = $('<select></select>');
   $container.append($select);
 
@@ -168,8 +167,6 @@ test('multiple selection and clearing of grouped options', function (assert) {
     multiple: true,
     data: data
   });
-  select.render();
-  select.selection.bind(container, $container);
 
   $select.val(['3', '1']);
   $select.trigger('change');
