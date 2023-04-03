@@ -185,7 +185,7 @@ test('multiple selection and clearing of grouped options', function (assert) {
 
   // Open the dropdown menu
   $container.find('.select2-selection').trigger('click');
-  var $selections = $('.select2-results__option[aria-selected=true]');
+  var $selections = $('.select2-selection__choice');
 
   assert.equal(
     $selections.length,
