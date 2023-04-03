@@ -191,7 +191,7 @@ test('multiple selection and clearing of grouped options', function (assert) {
   select.selection.trigger('query', {term: 'Option'});
 
   // Remove the second selection by clicking on the item in the dropdown
-  $selections.first().trigger('click');
+  $('.select2-results__option[aria-selected=true]').trigger('mouseup');
 
   assert.notOk(
     $select.find(':selected').length,
