@@ -249,7 +249,7 @@ define([
     return data;
   };
 
-  SelectAdapter.prototype._normalizeItem = function (item) {
+  SelectAdapter.prototype._normalizeItem = function (item, recursive) {
     if (item !== Object(item)) {
       item = {
         id: item,
@@ -278,10 +278,11 @@ define([
       item._resultId = this.generateResultId(this.container, item);
     }
 
-    if (item.children) {
-        item.children = item.children.map(
-            SelectAdapter.prototype._normalizeItem
-        );
+    // HTML optgroup elements cannot be nested, so limit recursion to depth one
+    if (item.children && !recursive) {
+        item.children = item.children.map(function (c) {
+            return SelectAdapter.prototype._normalizeItem(c, true);
+        });
     }
 
     return $.extend({}, defaults, item);
