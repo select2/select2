@@ -279,7 +279,9 @@ define([
     }
 
     if (item.children) {
-        item.children = item.children.map(SelectAdapter.prototype._normalizeItem);
+        item.children = item.children.map(
+            SelectAdapter.prototype._normalizeItem
+        );
     }
 
     return $.extend({}, defaults, item);
