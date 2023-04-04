@@ -227,9 +227,6 @@ define([
 
       for (var c = 0; c < data.children.length; c++) {
         var child = data.children[c];
-        if (child.id !== undefined) {
-            data.children[c].id = child.id = child.id.toString();
-        }
 
         var $child = this.option(child);
 
