@@ -66,6 +66,9 @@ define([
 
     function request () {
       var $request = options.transport(options, function (data) {
+        if (data.results) {
+          data.results = data.results.map(AjaxAdapter.prototype._normalizeItem);
+        }
         var results = self.processResults(data, params);
 
         if (self.options.get('debug') && window.console && console.error) {
