@@ -139,7 +139,7 @@ test('multiple value matches the jquery value', function (assert) {
 });
 
 test('selection and clearing of data from ajax source', function (assert) {
-  assert.async();
+  var asyncDone = assert.async();
 
   var dataURL = 'http://127.0.0.1/test';
   $.mockjax({
@@ -188,6 +188,8 @@ test('selection and clearing of data from ajax source', function (assert) {
         0,
         'The previously-selected item should have been unselected'
       );
+
+      asyncDone();
     }
   });
 });
