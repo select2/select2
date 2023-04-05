@@ -144,7 +144,8 @@ test('selection and clearing of data from ajax source', function (assert) {
   var dataURL = 'http://127.0.0.1/test';
   $.mockjax({
     url: dataURL,
-    responseText: {results: [{id: 6128, text: '6128'}]}
+    responseText: {results: [{id: 6128, text: '6128'}]},
+    logging: 1
   });
 
   var $container = $('#qunit-fixture');
