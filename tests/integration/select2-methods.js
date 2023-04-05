@@ -151,7 +151,7 @@ test('selection and clearing of data from ajax source', function (assert) {
   var $select = $('<select></select>');
   $container.append($select);
 
-  var select = new Select2($select, {ajax: {url: dataURL}, multiple: true});
+  var select = new Select2($select, {ajax: {url: dataURL}});
  
   assert.equal(
     $select.find(':selected').length,

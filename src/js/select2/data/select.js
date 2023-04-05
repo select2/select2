@@ -70,10 +70,6 @@ define([
   SelectAdapter.prototype.unselect = function (data) {
     var self = this;
 
-    if (!this.$element.prop('multiple')) {
-      return;
-    }
-
     data.selected = false;
 
     if (
