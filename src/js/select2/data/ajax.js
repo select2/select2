@@ -66,19 +66,16 @@ define([
 
     function request () {
       var $request = options.transport(options, function (data) {
-        if (data.results) {
-          data.results = data.results.map(AjaxAdapter.prototype._normalizeItem);
-        }
         var results = self.processResults(data, params);
 
-        if (self.options.get('debug') && window.console && console.error) {
+        if (results && results.results && Array.isArray(results.results)) {
+          results.results = results.results.map(AjaxAdapter.prototype._normalizeItem);
+        } else if (self.options.get('debug') && window.console && console.error) {
           // Check to make sure that the response included a `results` key.
-          if (!results || !results.results || !Array.isArray(results.results)) {
-            console.error(
-              'Select2: The AJAX results did not return an array in the ' +
-              '`results` key of the response.'
-            );
-          }
+          console.error(
+            'Select2: The AJAX results did not return an array in the ' +
+            '`results` key of the response.'
+          );
         }
 
         callback(results);
