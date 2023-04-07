@@ -455,12 +455,12 @@ define([
       var data = Utils.GetData(this, 'data');
 
       if ($this.hasClass('select2-results__option--selected')) {
-        self.trigger('unselect', {
-          originalEvent: evt,
-          data: data
-        });
-
-        if (!self.options.get('multiple')) {
+        if (self.options.get('multiple')) {
+          self.trigger('unselect', {
+            originalEvent: evt,
+            data: data
+          });
+        } else {
           self.trigger('close', {
             originalEvent: evt,
             data: data
