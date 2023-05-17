@@ -124,7 +124,7 @@ If you want to force the dropdown to open either above or below the `<select>` e
 ```
 //Forces the Select2 dropdown to open BELOW the <select> element
 $('#mySelect2').select2({
-    forceDropdownPosition: 'below'
+  forceDropdownPosition: 'below'
 });
 
 
