@@ -207,7 +207,7 @@ define([
     css.top -= parentOffset.top;
     css.left -= parentOffset.left;
     
-    if(this.options.get('forceDropdownPosition')==='below' || this.options.get('forceDropdownPosition')==='above') {
+    if (this.options.get('forceDropdownPosition') === 'below' || this.options.get('forceDropdownPosition') === 'above') {
       newDirection = this.options.get('forceDropdownPosition');
     }else {
       if (!isCurrentlyAbove && !isCurrentlyBelow) {
