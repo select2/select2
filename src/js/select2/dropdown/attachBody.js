@@ -209,7 +209,7 @@ define([
     
     if (this.options.get('forceDropdownPosition') === 'below' || this.options.get('forceDropdownPosition') === 'above') {
       newDirection = this.options.get('forceDropdownPosition');
-    }else {
+    } else {
       if (!isCurrentlyAbove && !isCurrentlyBelow) {
         newDirection = 'below';
       }
