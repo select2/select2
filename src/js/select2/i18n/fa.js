@@ -36,6 +36,12 @@ define(function () {
     },
     removeAllItems: function () {
       return 'همه موارد را حذف کنید';
+    },
+    removeItem: function () {
+      return 'حذف آیتم';
+    },
+    search: function() {
+      return 'جستجو';
     }
   };
 });
