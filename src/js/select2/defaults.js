@@ -176,41 +176,41 @@ define([
       } else {
         options.selectionAdapter = SingleSelection;
       }
-    }
 
-    // Add the placeholder mixin if a placeholder was specified
-    if (options.placeholder != null) {
+      // Add the placeholder mixin if a placeholder was specified
+      if (options.placeholder != null) {
+        options.selectionAdapter = Utils.Decorate(
+          options.selectionAdapter,
+          Placeholder
+        );
+      }
+
+      if (options.allowClear) {
+        options.selectionAdapter = Utils.Decorate(
+          options.selectionAdapter,
+          AllowClear
+        );
+      }
+
+      if (options.multiple) {
+        options.selectionAdapter = Utils.Decorate(
+          options.selectionAdapter,
+          SelectionSearch
+        );
+      }
+
+      if (options.selectionCssClass != null) {
+        options.selectionAdapter = Utils.Decorate(
+          options.selectionAdapter,
+          SelectionCSS
+        );
+      }
+
       options.selectionAdapter = Utils.Decorate(
         options.selectionAdapter,
-        Placeholder
+        EventRelay
       );
     }
-
-    if (options.allowClear) {
-      options.selectionAdapter = Utils.Decorate(
-        options.selectionAdapter,
-        AllowClear
-      );
-    }
-
-    if (options.multiple) {
-      options.selectionAdapter = Utils.Decorate(
-        options.selectionAdapter,
-        SelectionSearch
-      );
-    }
-
-    if (options.selectionCssClass != null) {
-      options.selectionAdapter = Utils.Decorate(
-        options.selectionAdapter,
-        SelectionCSS
-      );
-    }
-
-    options.selectionAdapter = Utils.Decorate(
-      options.selectionAdapter,
-      EventRelay
-    );
 
     // If the defaults were not previously applied from an element, it is
     // possible for the language option to have not been resolved
