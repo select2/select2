@@ -31,6 +31,7 @@ This is a list of all the Select2 configuration options.
 | `multiple` | boolean | `false` | This option enables multi-select (pillbox) mode. Select2 will automatically map the value of the `multiple` HTML attribute to this option during initialization. |
 | `placeholder` | string or object | `null` | Specifies the [placeholder](/placeholders) for the control. |
 | `resultsAdapter` | | `ResultsAdapter` | Used to override the built-in [ResultsAdapter](/advanced/default-adapters/results). |
+| `searchDecorator` | | `SelectionSearch` | Used to override the built-in `SelectionSearch` decorator. This decorator applies only if you're using one of built-in adapters for `selectionAdapter`. Otherwise this option has no effect.
 | `selectionAdapter` | | `SingleSelection` or `MultipleSelection`, depending on the value of `multiple`. | Used to override the built-in [SelectionAdapter](/advanced/default-adapters/selection). |
 | `selectionCssClass` | string | `''` | Adds additional CSS classes to the selection container. The helper `:all:` can be used to add all CSS classes present on the original `<select>` element. |
 | `selectOnClose` | boolean | `false` | Implements [automatic selection](/dropdown#automatic-selection) when the dropdown is closed. |
