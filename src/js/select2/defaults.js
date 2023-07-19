@@ -195,7 +195,7 @@ define([
       if (options.multiple) {
         options.selectionAdapter = Utils.Decorate(
           options.selectionAdapter,
-          SelectionSearch
+          options.searchHandler || SelectionSearch
         );
       }
 
