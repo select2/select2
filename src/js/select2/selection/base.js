@@ -78,8 +78,8 @@ define([
     container.on('close', function () {
       // When the dropdown is closed, aria-expanded="false"
       self.$selection.attr('aria-expanded', 'false');
-      self.$selection.removeAttr('aria-activedescendant');
-      self.$selection.removeAttr('aria-owns');
+      self.$selection[0].removeAttribute('aria-activedescendant');
+      self.$selection[0].removeAttribute('aria-owns');
 
       self.$selection.trigger('focus');
 

@@ -62,8 +62,8 @@ define([
 
     container.on('close', function () {
       self.$search.attr('tabindex', -1);
-      self.$search.removeAttr('aria-controls');
-      self.$search.removeAttr('aria-activedescendant');
+      self.$search[0].removeAttribute('aria-controls');
+      self.$search[0].removeAttribute('aria-activedescendant');
 
       self.$search.val('');
       self.$search.trigger('blur');
@@ -85,7 +85,7 @@ define([
       if (params.data._resultId) {
         self.$search.attr('aria-activedescendant', params.data._resultId);
       } else {
-        self.$search.removeAttr('aria-activedescendant');
+        self.$search[0].removeAttribute('aria-activedescendant');
       }
     });
   };

@@ -14,7 +14,11 @@ define([
       Utils.copyNonInternalCssClasses($selection[0], this.$element[0]);
     }
 
-    $selection.addClass(selectionCssClass);
+    selectionCssClass.trim().split(' ').forEach(function(cssClass) {
+      if(cssClass.length > 0) {
+        $selection[0].classList.add(cssClass);
+      }
+    });
 
     return $selection;
   };

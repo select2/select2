@@ -13,10 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Use Node.js 8
+      - name: Use Node.js 12
         uses: actions/setup-node@v1
         with:
-          node-version: 8
+          node-version: 12
           registry-url: https://npm.pkg.github.com/
           scope: '@select2'
       - name: Rename package to include private scope
@@ -42,10 +42,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Use Node.js 8
+      - name: Use Node.js 12
         uses: actions/setup-node@v1
         with:
-          node-version: 8
+          node-version: 12
           registry-url: 'https://registry.npmjs.org'
       - name: npm install
         run: npm install
