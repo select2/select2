@@ -34,7 +34,7 @@ define(function () {
       return message;
     },
     noResults: function () {
-      return 'Geen resultaten gevonden…';
+      return 'Geen resultaten gevonden';
     },
     searching: function () {
       return 'Zoeken…';
