@@ -41,8 +41,9 @@
     &::-webkit-search-cancel-button {
       -webkit-appearance: none;
     }
-    &::placeholder{
-      line-height:normal;
+
+    &::placeholder {
+      line-height: normal;
     }
   }
 }
