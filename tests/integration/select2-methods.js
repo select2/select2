@@ -144,7 +144,9 @@ QUnit.test('selection and clearing of data from ajax source', function (assert) 
   var dataURL = 'http://127.0.0.1/test';
   $.mockjax({
     url: dataURL,
-    responseText: {results: [{id: 6128, text: '6128'}]},
+    response: function (settings) {
+      this.responseText = {results: [{id: 6128, text: settings.data.term}]};
+    },
     logging: 1
   });
 
@@ -160,14 +162,16 @@ QUnit.test('selection and clearing of data from ajax source', function (assert) 
     'No items should be selected'
   );
 
-  // Open the dropdown menu, to perform an AJAX request
-  select.selection.trigger('query', {term: '6128'});
+  var queryTerms = ['firstQuery', 'secondQuery', 'thirdQuery', 'fourthQuery'];
+  var queryTerm = queryTerms.shift();
 
-  var selectionStatus = null;
+  // Open the dropdown menu, to perform an AJAX request
+  select.selection.trigger('query', {term: 'firstResult'});
+
   select.on('results:all', function() {
 
     // First call: select a result from the dropdown menu
-    if (selectionStatus === null) {
+    if (queryTerm == 'firstQuery') {
 
       $('.select2-results__option').trigger('mouseup');
       assert.equal(
@@ -177,11 +181,10 @@ QUnit.test('selection and clearing of data from ajax source', function (assert) 
       );
 
       // Trigger a second call
-      selectionStatus = true;
-      select.selection.trigger('query', {term: '6128'});
+      select.selection.trigger('query', {term: 'secondResult'});
 
     // Second call: unselect the previously-selected item
-    } else if (selectionStatus == true) {
+    } else if (queryTerm == 'secondQuery') {
 
       $('.select2-results__option[aria-selected=true]').trigger('mouseup');
       assert.equal(
@@ -214,5 +217,7 @@ QUnit.test('selection and clearing of data from ajax source', function (assert) 
 
       asyncDone();
     }
+
+    queryTerm = queryTerms.shift();
   });
 });
