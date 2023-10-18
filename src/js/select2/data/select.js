@@ -70,6 +70,14 @@ define([
   SelectAdapter.prototype.unselect = function (data) {
     var self = this;
 
+    // Remove local HTML option elements when unselected items from AJAX sources
+    if (this.options.get('ajax')) {
+      var $option = this.$element.find('option').filter(function (i, elm) {
+        return elm.value == data.id.toString();
+      });
+      $option.remove();
+    }
+
     if (!this.$element.prop('multiple')) {
       return;
     }
