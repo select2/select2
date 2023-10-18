@@ -190,6 +190,28 @@ QUnit.test('selection and clearing of data from ajax source', function (assert) 
         'The previously-created HTML option element should have been removed'
       );
 
+      // Trigger a third call
+      select.selection.trigger('query', {term: 'thirdResult'});
+
+    // Third call: (re)select the item, which has updated text 'thirdResult'
+    } else if (queryTerm == 'thirdQuery') {
+      $('.select2-results__option').trigger('mouseup');
+      assert.equal(
+        $select.find('option').length,
+        1,
+        'An HTML option element should have been created for the item'
+      );
+
+      // Trigger a fourth call
+      select.selection.trigger('query', {term: 'fourthResult'});
+
+    // Fourth call: assert that the updated text is in place
+    } else if (queryTerm == 'fourthQuery') {
+      assert.equal(
+        $select.find('option:selected').text(),
+        'thirdResult'
+      );
+
       asyncDone();
     }
   });
