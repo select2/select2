@@ -70,7 +70,7 @@ define([
   SelectAdapter.prototype.unselect = function (data) {
     var self = this;
 
-    // Remove local HTML option elements when unselected items from AJAX sources
+    // Remote-origin (AJAX) items: remove matching option elements from the DOM
     if (this.options.get('ajax')) {
       var $option = this.$element.find('option').filter(function (i, elm) {
         return elm.value == data.id.toString();
