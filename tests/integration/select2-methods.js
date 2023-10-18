@@ -171,9 +171,9 @@ QUnit.test('selection and clearing of data from ajax source', function (assert) 
 
       $('.select2-results__option').trigger('mouseup');
       assert.equal(
-        $select.find(':selected').length,
+        $select.find('option').length,
         1,
-        'One item should be selected'
+        'An HTML option element should have been created for the item'
       );
 
       // Trigger a second call
@@ -185,12 +185,11 @@ QUnit.test('selection and clearing of data from ajax source', function (assert) 
 
       $('.select2-results__option[aria-selected=true]').trigger('mouseup');
       assert.equal(
-        $select.find(':selected').length,
+        $select.find('option').length,
         0,
-        'The previously-selected item should have been unselected'
+        'The previously-created HTML option element should have been removed'
       );
 
-      selectionStatus = false;
       asyncDone();
     }
   });
