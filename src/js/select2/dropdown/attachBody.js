@@ -206,17 +206,21 @@ define([
 
     css.top -= parentOffset.top;
     css.left -= parentOffset.left;
+    
+    if (this.options.get('forceDropdownPosition') === 'below' || this.options.get('forceDropdownPosition') === 'above') {
+      newDirection = this.options.get('forceDropdownPosition');
+    } else {
+      if (!isCurrentlyAbove && !isCurrentlyBelow) {
+        newDirection = 'below';
+      }
 
-    if (!isCurrentlyAbove && !isCurrentlyBelow) {
-      newDirection = 'below';
+      if (!enoughRoomBelow && enoughRoomAbove && !isCurrentlyAbove) {
+        newDirection = 'above';
+      } else if (!enoughRoomAbove && enoughRoomBelow && isCurrentlyAbove) {
+        newDirection = 'below';
+      }
     }
-
-    if (!enoughRoomBelow && enoughRoomAbove && !isCurrentlyAbove) {
-      newDirection = 'above';
-    } else if (!enoughRoomAbove && enoughRoomBelow && isCurrentlyAbove) {
-      newDirection = 'below';
-    }
-
+    
     if (newDirection == 'above' ||
       (isCurrentlyAbove && newDirection !== 'below')) {
       css.top = container.top - parentOffset.top - dropdown.height;

@@ -299,6 +299,7 @@ define([
       autocomplete: 'off',
       closeOnSelect: true,
       debug: false,
+      forceDropdownPosition: 'auto',
       dropdownAutoWidth: false,
       escapeMarkup: Utils.escapeMarkup,
       language: {},
