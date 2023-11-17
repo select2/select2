@@ -1,7 +1,6 @@
 define([
-  'jquery',
   'require'
-], function ($, require) {
+], function (require) {
   function Translation (dict) {
     this.dict = dict || {};
   }
@@ -15,7 +14,7 @@ define([
   };
 
   Translation.prototype.extend = function (translation) {
-    this.dict = $.extend({}, translation.all(), this.dict);
+    this.dict = Object.assign({}, translation.all(), this.dict);
   };
 
   // Static functions

@@ -1,6 +1,5 @@
 define([
-  'jquery'
-], function ($) {
+], function () {
   var Utils = {};
 
   Utils.Extend = function (ChildClass, SuperClass) {
@@ -216,7 +215,6 @@ define([
     // http://codereview.stackexchange.com/q/13338
     // and was designed to be used with the Sizzle selector engine.
 
-    var $el = $(el);
     var overflowX = el.style.overflowX;
     var overflowY = el.style.overflowY;
 
@@ -230,8 +228,14 @@ define([
       return true;
     }
 
-    return ($el.innerHeight() < el.scrollHeight ||
-      $el.innerWidth() < el.scrollWidth);
+    var computed = window.getComputedStyle(el);
+    var paddingHeight = parseInt(computed.paddingTop, 10);
+        paddingHeight += parseInt(computed.paddingBottom, 10);
+    var paddingWidth = parseInt(computed.paddingLeft, 10);
+        paddingWidth += parseInt(computed.paddingRight, 10);
+  
+    return ((el.clientHeight - paddingHeight) < el.scrollHeight ||
+      (el.clientWidth - paddingWidth) < el.scrollWidth);
   };
 
   Utils.escapeMarkup = function (markup) {
@@ -306,9 +310,9 @@ define([
         if (Utils.__cache[id][name] != null) {
           return Utils.__cache[id][name];
         }
-        return $(element).data(name); // Fallback to HTML5 data attribs.
+        return element.dataset[name]; // Fallback to HTML5 data attribs.
       }
-      return $(element).data(name); // Fallback to HTML5 data attribs.
+      return element.dataset[name]; // Fallback to HTML5 data attribs.
     } else {
       return Utils.__cache[id];
     }
