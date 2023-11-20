@@ -24,6 +24,10 @@ define([
       this.options.multiple = $e.prop('multiple');
     }
 
+    if (this.options.reuse == null) {
+      this.options.reuse = $e.prop('reuse');
+    }
+
     if (this.options.disabled == null) {
       this.options.disabled = $e.prop('disabled');
     }
