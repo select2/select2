@@ -335,7 +335,7 @@ define([
   };
 
   Select2.prototype._syncAttributes = function () {
-    this.options.set('disabled', this.$element.prop('disabled'));
+    this.options.set('disabled', this.$element[0].disabled);
 
     if (this.isDisabled()) {
       if (this.isOpen()) {
@@ -497,7 +497,7 @@ define([
     if (this.options.get('debug') && window.console && console.warn) {
       console.warn(
         'Select2: The `select2("enable")` method has been deprecated and will' +
-        ' be removed in later Select2 versions. Use $element.prop("disabled")' +
+        ' be removed in later Select2 versions. Use $element[0].disabled' +
         ' instead.'
       );
     }
@@ -508,7 +508,7 @@ define([
 
     var disabled = !args[0];
 
-    this.$element.prop('disabled', disabled);
+    this.$element[0].disabled = disabled;
   };
 
   Select2.prototype.data = function () {

@@ -22,7 +22,7 @@ define([
     this.$searchContainer = $search;
     this.$search = $search.find('textarea');
 
-    this.$search.prop('autocomplete', this.options.get('autocomplete'));
+    this.$search.autocomplete = this.options.get('autocomplete');
     this.$search.attr('aria-label', searchLabel());
 
     var $rendered = decorated.call(this);
@@ -57,13 +57,13 @@ define([
     });
 
     container.on('enable', function () {
-      self.$search.prop('disabled', false);
+      self.$search[0].disabled = false;
 
       self._transferTabIndex();
     });
 
     container.on('disable', function () {
-      self.$search.prop('disabled', true);
+      self.$search[0].disabled = true;
     });
 
     container.on('focus', function (evt) {
