@@ -21,29 +21,35 @@ define([
     var excludedData = ['select2'];
 
     if (this.options.multiple == null) {
-      this.options.multiple = $e.prop('multiple');
+      this.options.multiple = $e[0].multiple;
     }
 
     if (this.options.disabled == null) {
-      this.options.disabled = $e.prop('disabled');
+      this.options.disabled = $e[0].disabled;
     }
 
-    if (this.options.autocomplete == null && $e.prop('autocomplete')) {
-      this.options.autocomplete = $e.prop('autocomplete');
+    if (this.options.autocomplete == null && $e[0].autocomplete) {
+      this.options.autocomplete = $e[0].autocomplete;
     }
 
-    if (this.options.dir == null) {
-      if ($e.prop('dir')) {
-        this.options.dir = $e.prop('dir');
-      } else if ($e.closest('[dir]').prop('dir')) {
-        this.options.dir = $e.closest('[dir]').prop('dir');
+    if (this.options.dir === null) {
+      var dirValue = $e[0].getAttribute('dir');
+
+      if (dirValue) {
+        this.options.dir = dirValue;
       } else {
-        this.options.dir = 'ltr';
+        var closestDirValue = $e.closest('[dir]').getAttribute('dir');
+
+        if (closestDirValue) {
+          this.options.dir = closestDirValue;
+        } else {
+          this.options.dir = 'ltr';
+        }
       }
     }
 
-    $e.prop('disabled', this.options.disabled);
-    $e.prop('multiple', this.options.multiple);
+    $e[0].disabled = this.options.disabled;
+    $e[0].multiple = this.options.multiple;
 
     if (Utils.GetData($e[0], 'select2Tags')) {
       if (this.options.debug && window.console && console.warn) {

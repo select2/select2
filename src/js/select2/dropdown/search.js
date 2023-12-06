@@ -18,7 +18,7 @@ define([
     this.$searchContainer = $search;
     this.$search = $search.find('input');
 
-    this.$search.prop('autocomplete', this.options.get('autocomplete'));
+    this.$search[0].autocomplete = this.options.get('autocomplete');
     this.$search.attr('aria-label', searchLabel());
 
     $rendered.prepend($search);
