@@ -48,8 +48,18 @@ define([
     });
 
     this.$search.on('keyup input', function (evt) {
-      self.handleSearch(evt);
-    });
+    // Set the current input value to an empty string if the previous value is undefined.
+    self.preTargetValue = self.preTargetValue === undefined ? "" : self.preTargetValue;
+
+    // In the case of Korean characters, the 'input' event can occur even when
+    // arrow keys or enter keys are pressed. Therefore, prevent additional actions
+    // and avoid duplicate searches if the value has not changed.
+    if (self.preTargetValue === evt.target.value) {
+        evt.preventDefault();
+    } else {
+        self.preTargetValue = evt.target.value;
+        self.handleSearch(evt);
+    }
 
     container.on('open', function () {
       self.$search.attr('tabindex', 0);
