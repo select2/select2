@@ -421,7 +421,10 @@ define([
   };
 
   Defaults.prototype.set = function (key, value) {
-    var camelKey = $.camelCase(key);
+    function upperCaseLetter(_, letter) {
+      return letter.toUpperCase();
+    }
+    var camelKey = key.replace(/-([a-z])/g, upperCaseLetter);
 
     var data = {};
     data[camelKey] = value;

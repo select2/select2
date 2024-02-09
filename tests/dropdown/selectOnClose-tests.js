@@ -93,7 +93,7 @@ QUnit.test('will not trigger if no results here highlighted', function (assert) 
   );
 
   assert.equal(
-    $.trim($dropdown.find('li').text()),
+    $dropdown.find('li').text().trim(),
     'Test',
     'The result should be the same as the one we appended'
   );
