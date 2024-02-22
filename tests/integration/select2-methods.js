@@ -137,3 +137,87 @@ test('multiple value matches the jquery value', function (assert) {
     'The values should match the jquery values'
   );
 });
+
+test('selection and clearing of data from ajax source', function (assert) {
+  var asyncDone = assert.async();
+
+  var dataURL = 'http://127.0.0.1/test';
+  $.mockjax({
+    url: dataURL,
+    response: function (settings) {
+      this.responseText = {results: [{id: 6128, text: settings.data.term}]};
+    },
+    logging: 1
+  });
+
+  var $container = $('#qunit-fixture');
+  var $select = $('<select></select>');
+  $container.append($select);
+
+  var select = new Select2($select, {ajax: {url: dataURL}, multiple: true});
+
+  assert.equal(
+    $select.find(':selected').length,
+    0,
+    'No items should be selected'
+  );
+
+  var queryTerms = ['firstQuery', 'secondQuery', 'thirdQuery', 'fourthQuery'];
+  var queryTerm = queryTerms.shift();
+
+  // Open the dropdown menu, to perform an AJAX request
+  select.selection.trigger('query', {term: 'firstResult'});
+
+  select.on('results:all', function() {
+
+    // First call: select a result from the dropdown menu
+    if (queryTerm == 'firstQuery') {
+
+      $('.select2-results__option').trigger('mouseup');
+      assert.equal(
+        $select.find('option').length,
+        1,
+        'An HTML option element should have been created for the item'
+      );
+
+      // Trigger a second call
+      select.selection.trigger('query', {term: 'secondResult'});
+
+    // Second call: unselect the previously-selected item
+    } else if (queryTerm == 'secondQuery') {
+
+      $('.select2-results__option[aria-selected=true]').trigger('mouseup');
+      assert.equal(
+        $select.find('option').length,
+        0,
+        'The previously-created HTML option element should have been removed'
+      );
+
+      // Trigger a third call
+      select.selection.trigger('query', {term: 'thirdResult'});
+
+    // Third call: (re)select the item, which has updated text 'thirdResult'
+    } else if (queryTerm == 'thirdQuery') {
+      $('.select2-results__option').trigger('mouseup');
+      assert.equal(
+        $select.find('option').length,
+        1,
+        'An HTML option element should have been created for the item'
+      );
+
+      // Trigger a fourth call
+      select.selection.trigger('query', {term: 'fourthResult'});
+
+    // Fourth call: assert that the updated text is in place
+    } else if (queryTerm == 'fourthQuery') {
+      assert.equal(
+        $select.find('option:selected').text(),
+        'thirdResult'
+      );
+
+      asyncDone();
+    }
+
+    queryTerm = queryTerms.shift();
+  });
+});
