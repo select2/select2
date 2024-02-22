@@ -208,7 +208,7 @@ test('selection and clearing of data from ajax source', function (assert) {
       // Trigger a fourth call
       select.selection.trigger('query', {term: 'fourthResult'});
 
-    // Third call: assert that the updated text is in place
+    // Fourth call: assert that the updated text is in place
     } else if (queryTerm == 'fourthQuery') {
       assert.equal(
         $select.find('option:selected').text(),
