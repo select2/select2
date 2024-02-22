@@ -137,3 +137,64 @@ test('multiple value matches the jquery value', function (assert) {
     'The values should match the jquery values'
   );
 });
+
+test('multiple selection and clearing of grouped options', function (assert) {
+  var $container = $('#qunit-fixture');
+  var $select = $('<select></select>');
+  $container.append($select);
+
+  var data = [{
+    text: 'Group 1',
+    children: [{
+      id: 1,
+      text: 'Option 1.1'
+    }, {
+      id: 2,
+      text: 'Option 1.2'
+    }]
+  }, {
+    text: 'Group 2',
+    children: [{
+      id: 3,
+      text: 'Option 2.1'
+    }, {
+      id: 4,
+      text: 'Option 2.2'
+    }]
+  }];
+
+  var select = new Select2($select, {
+    multiple: true,
+    data: data
+  });
+
+  $select.val(['3', '1']);
+  $select.trigger('change');
+
+  assert.equal(
+    $select.find(':selected').length,
+    2,
+    'Two items should be selected'
+  );
+
+  // Remove the first item
+  $container.find('.select2-selection__choice__remove').trigger('click');
+
+  var $selections = $('.select2-selection__choice');
+  assert.equal(
+    $selections.length,
+    1,
+    'One item should remain selected'
+  );
+
+  // Open the dropdown menu
+  select.selection.trigger('query', {term: 'Option'});
+
+  // Remove the second selection by clicking on the item in the dropdown
+  $('.select2-results__option[aria-selected=true]').trigger('mouseup');
+
+  assert.notOk(
+    $select.find(':selected').length,
+    'No items should be selected'
+  );
+});
