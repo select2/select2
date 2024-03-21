@@ -68,38 +68,38 @@ define([
       } else {
         options.dataAdapter = SelectData;
       }
+    }
 
-      if (options.minimumInputLength > 0) {
-        options.dataAdapter = Utils.Decorate(
-          options.dataAdapter,
-          MinimumInputLength
-        );
-      }
+    if (options.minimumInputLength > 0) {
+      options.dataAdapter = Utils.Decorate(
+        options.dataAdapter,
+        MinimumInputLength
+      );
+    }
 
-      if (options.maximumInputLength > 0) {
-        options.dataAdapter = Utils.Decorate(
-          options.dataAdapter,
-          MaximumInputLength
-        );
-      }
+    if (options.maximumInputLength > 0) {
+      options.dataAdapter = Utils.Decorate(
+        options.dataAdapter,
+        MaximumInputLength
+      );
+    }
 
-      if (options.maximumSelectionLength > 0) {
-        options.dataAdapter = Utils.Decorate(
-          options.dataAdapter,
-          MaximumSelectionLength
-        );
-      }
+    if (options.maximumSelectionLength > 0) {
+      options.dataAdapter = Utils.Decorate(
+        options.dataAdapter,
+        MaximumSelectionLength
+      );
+    }
 
-      if (options.tags) {
-        options.dataAdapter = Utils.Decorate(options.dataAdapter, Tags);
-      }
+    if (options.tags) {
+      options.dataAdapter = Utils.Decorate(options.dataAdapter, Tags);
+    }
 
-      if (options.tokenSeparators != null || options.tokenizer != null) {
-        options.dataAdapter = Utils.Decorate(
-          options.dataAdapter,
-          Tokenizer
-        );
-      }
+    if (options.tokenSeparators != null || options.tokenizer != null) {
+      options.dataAdapter = Utils.Decorate(
+        options.dataAdapter,
+        Tokenizer
+      );
     }
 
     if (options.resultsAdapter == null) {
