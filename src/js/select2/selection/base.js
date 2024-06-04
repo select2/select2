@@ -14,9 +14,12 @@ define([
 
   BaseSelection.prototype.render = function () {
     var $selection = $(
-      '<span class="select2-selection" aria-describedby="This button opens a select" role="button" ' +
-      ' aria-haspopup="true" aria-expanded="false">' +
-      '</span>'
+      '<span class="select2-selection" aria-describedby="sr-description"' +
+      ' role="button" aria-haspopup="true" aria-expanded="false">' +
+      '</span><span class="visually-hidden" id="sr-description">' +
+      'This button opens a select. When results are avaialble,' +
+      'use up and down arrows to navigate and ' +
+      'enter to select </span>'
     );
 
     this._tabindex = 0;
@@ -68,10 +71,11 @@ define([
       self.$selection.attr('aria-label', params.data.resultsId);
       var $label = self.$selection.attr('aria-label');
       var $labeltext;
-      if ($title =  undefined) {
-        $labeltext = $label + "No value currently selected.";
+      if ($title == undefined) {
+        $labeltext = $label + 'No value currently selected.';
       }
-      var $title = self.$selection.find('.select2-selection__rendered').attr('title');
+      var $rendered = self.$selection.find('.select2-selection__rendered');
+      var $title = $rendered.attr('title');
       var labeltext = $label + 'The selected value is:' + $title;
       self.$selection.attr('aria-label', labeltext);
     });

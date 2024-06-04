@@ -1438,9 +1438,12 @@ S2.define('select2/selection/base',[
 
   BaseSelection.prototype.render = function () {
     var $selection = $(
-      '<span class="select2-selection" aria-describedby="This button opens a select" role="button" ' +
-      ' aria-haspopup="true" aria-expanded="false">' +
-      '</span>'
+      '<span class="select2-selection" aria-describedby="sr-description"' +
+      ' role="button" aria-haspopup="true" aria-expanded="false">' +
+      '</span><span class="visually-hidden" id="sr-description">' +
+      'This button opens a select. When results are avaialble,' +
+      'use up and down arrows to navigate and ' +
+      'enter to select </span>'
     );
 
     this._tabindex = 0;
@@ -1492,10 +1495,11 @@ S2.define('select2/selection/base',[
       self.$selection.attr('aria-label', params.data.resultsId);
       var $label = self.$selection.attr('aria-label');
       var $labeltext;
-      if ($title =  undefined) {
-        $labeltext = $label + "No value currently selected.";
+      if ($title == undefined) {
+        $labeltext = $label + 'No value currently selected.';
       }
-      var $title = self.$selection.find('.select2-selection__rendered').attr('title');
+      var $rendered = self.$selection.find('.select2-selection__rendered');
+      var $title = $rendered.attr('title');
       var labeltext = $label + 'The selected value is:' + $title;
       self.$selection.attr('aria-label', labeltext);
     });
@@ -1645,9 +1649,7 @@ S2.define('select2/selection/single',[
     var id = container.id + '-container';
 
     this.$selection.find('.select2-selection__rendered')
-      .attr('id', id)
-      .attr('role', 'textbox')
-      .attr('aria-readonly', 'true');
+      .attr('id', id);
     this.$selection.attr('aria-controls', id);
 
     this.$selection.on('mousedown', function (evt) {
