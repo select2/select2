@@ -16,7 +16,9 @@ define([
     var $selection = $(
       '<span class="select2-selection" aria-describedby="sr-description"' +
       ' role="button" aria-haspopup="true" aria-expanded="false">' +
-      '</span><span class="visually-hidden" id="sr-description">' +
+      '</span>'
+      //this needs to be appended in such a way that it doesnt break things.
+      var $describedby = '<span class="visually-hidden" id="sr-description">' +
       'This button opens a select. When results are avaialble,' +
       'use up and down arrows to navigate and ' +
       'enter to select </span>'
@@ -74,10 +76,12 @@ define([
       if ($title == undefined) {
         $labeltext = $label + 'No value currently selected.';
       }
+      else {
       var $rendered = self.$selection.find('.select2-selection__rendered');
       var $title = $rendered.attr('title');
       var labeltext = $label + 'The selected value is:' + $title;
       self.$selection.attr('aria-label', labeltext);
+      }
     });
 
     container.on('open', function () {
