@@ -55,8 +55,8 @@ test('static aria attributes are present', function (assert) {
 
   assert.equal(
     $selection.attr('role'),
-    'searchbox',
-    'The container should identify as a searchbox'
+    'button',
+    'The container should identify as a button'
   );
 
   assert.equal(
@@ -164,23 +164,5 @@ test('aria-disabled should reflected disabled state', function (assert) {
 });
 
 module('Accessibility - Single');
-
-test('aria-labelledby should match the rendered container', function (assert) {
-  var $select = $('#qunit-fixture .single');
-
-  var selection = new SingleSelection($select, options);
-  var $selection = selection.render();
-
-  var container = new MockContainer();
-  selection.bind(container, $('<span></span>'));
-
-  var $rendered = $selection.find('.select2-selection__rendered');
-
-  assert.equal(
-    $selection.attr('aria-labelledby'),
-    $rendered.attr('id'),
-    'The rendered selection should label the container'
-  );
-});
 
 module('Accessibility - Multiple');

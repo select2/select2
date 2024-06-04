@@ -1438,7 +1438,7 @@ S2.define('select2/selection/base',[
 
   BaseSelection.prototype.render = function () {
     var $selection = $(
-      '<span class="select2-selection" role="searchbox" ' +
+      '<span class="select2-selection" aria-describedby="This button opens a select" role="button" ' +
       ' aria-haspopup="true" aria-expanded="false">' +
       '</span>'
     );
@@ -1489,12 +1489,21 @@ S2.define('select2/selection/base',[
 
     container.on('selection:update', function (params) {
       self.update(params.data);
+      self.$selection.attr('aria-label', params.data.resultsId);
+      var $label = self.$selection.attr('aria-label');
+      var $labeltext;
+      if ($title =  undefined) {
+        $labeltext = $label + "No value currently selected.";
+      }
+      var $title = self.$selection.find('.select2-selection__rendered').attr('title');
+      var labeltext = $label + 'The selected value is:' + $title;
+      self.$selection.attr('aria-label', labeltext);
     });
 
     container.on('open', function () {
       // When the dropdown is open, aria-expanded="true"
       self.$selection.attr('aria-expanded', 'true');
-      self.$selection.attr('aria-owns', resultsId);
+      self.$selection.attr('aria-owns', '.select2-container');
 
       self._attachCloseHandler(container);
     });
@@ -1541,7 +1550,7 @@ S2.define('select2/selection/base',[
 
   BaseSelection.prototype._attachCloseHandler = function (container) {
 
-    $(document.body).on('mousedown.select2.' + container.id, function (e) {
+    $(document.body).on('mouseup.select2.' + container.id, function (e) {
       var $target = $(e.target);
 
       var $select = $target.closest('.select2');
@@ -1561,7 +1570,7 @@ S2.define('select2/selection/base',[
   };
 
   BaseSelection.prototype._detachCloseHandler = function (container) {
-    $(document.body).off('mousedown.select2.' + container.id);
+    $(document.body).off('mouseup.select2.' + container.id);
   };
 
   BaseSelection.prototype.position = function ($selection, $container) {
@@ -1639,7 +1648,6 @@ S2.define('select2/selection/single',[
       .attr('id', id)
       .attr('role', 'textbox')
       .attr('aria-readonly', 'true');
-    this.$selection.attr('aria-labelledby', id);
     this.$selection.attr('aria-controls', id);
 
     this.$selection.on('mousedown', function (evt) {

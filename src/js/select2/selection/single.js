@@ -36,7 +36,6 @@ define([
       .attr('id', id)
       .attr('role', 'textbox')
       .attr('aria-readonly', 'true');
-    this.$selection.attr('aria-labelledby', id);
     this.$selection.attr('aria-controls', id);
 
     this.$selection.on('mousedown', function (evt) {
