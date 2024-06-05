@@ -16,13 +16,7 @@ define([
     var $selection = $(
       '<span class="select2-selection" aria-describedby="sr-description"' +
       ' role="button" aria-haspopup="true" aria-expanded="false">' +
-      '</span>'
-      //this needs to be appended in such a way that it doesnt break things.
-      var $describedby = '<span class="visually-hidden" id="sr-description">' +
-      'This button opens a select. When results are avaialble,' +
-      'use up and down arrows to navigate and ' +
-      'enter to select </span>'
-    );
+      '</span>');
 
     this._tabindex = 0;
 
@@ -43,7 +37,12 @@ define([
 
   BaseSelection.prototype.bind = function (container, $container) {
     var self = this;
-
+  //this needs to be appended in such a way that it doesnt break things.
+  var $describedby = $('<span class="visually-hidden" id="sr-description">' +
+              'This button opens a select. When results are available,' +
+              'use up and down arrows to navigate and ' +
+              'enter to select </span>');
+    this.$selection.after($describedby);
     var resultsId = container.id + '-results';
 
     this.container = container;
@@ -73,16 +72,16 @@ define([
       self.$selection.attr('aria-label', params.data.resultsId);
       var $label = self.$selection.attr('aria-label');
       var $labeltext;
+      var $rendered = self.$selection.find('.select2-selection__rendered');
+      var $title = $rendered.attr('title');
       if ($title == undefined) {
         $labeltext = $label + 'No value currently selected.';
       }
       else {
-      var $rendered = self.$selection.find('.select2-selection__rendered');
-      var $title = $rendered.attr('title');
-      var labeltext = $label + 'The selected value is:' + $title;
-      self.$selection.attr('aria-label', labeltext);
+      $labeltext = $label + 'The selected value is:' + $title;
       }
-    });
+      self.$selection.attr('aria-label', $labeltext);
+      });
 
     container.on('open', function () {
       // When the dropdown is open, aria-expanded="true"
