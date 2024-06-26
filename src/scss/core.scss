@@ -8,6 +8,9 @@
 
   @import "single";
   @import "multiple";
+  & .hide {
+    display: none !important;
+  }
 }
 
 @import "dropdown";

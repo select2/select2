@@ -4,6 +4,7 @@ define([
   '../utils',
   '../keys'
 ], function ($, BaseSelection, Utils, KEYS) {
+
   function SingleSelection () {
     SingleSelection.__super__.constructor.apply(this, arguments);
   }
@@ -54,6 +55,10 @@ define([
     this.$selection.on('blur', function (evt) {
       // User exits the container
     });
+
+    if (container && (this.options.get('hideAccessibly') == "1")) {
+      $($container).addClass('hide');
+    }
 
     container.on('focus', function (evt) {
       if (!container.isOpen()) {

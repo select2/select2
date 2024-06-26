@@ -1493,15 +1493,24 @@ S2.define('select2/selection/base',[
     container.on('selection:update', function (params) {
       self.update(params.data);
       self.$selection.attr('aria-label', params.data.resultsId);
-      var $label = self.$selection.attr('aria-label');
+      var $label = $("label[for='" + $(self.element).attr('id') + "']").text();
       var $labeltext;
       var $rendered = self.$selection.find('.select2-selection__rendered');
       var $title = $rendered.attr('title');
-      if ($title == undefined) {
+      // this is here to prevent the aria-label breaking for the dropdown within the advanced search
+      // which currently has to be left enabled even if all other select2s are hidden
+      if ($title && $title.includes('Click here')) {$title = undefined };
+      if ($label && $title) {
+        $labeltext = $label + 'The selected value is:' + $title;
+      }
+      else if ($label && !$title) {
         $labeltext = $label + 'No value currently selected.';
       }
+      else if ($title && !$label) {
+        $labeltext = 'The selected value is: ' + $title;
+      }
       else {
-      $labeltext = $label + 'The selected value is:' + $title;
+        $labeltext = 'No value currently selected.';
       }
       self.$selection.attr('aria-label', $labeltext);
       });
@@ -1622,6 +1631,7 @@ S2.define('select2/selection/single',[
   '../utils',
   '../keys'
 ], function ($, BaseSelection, Utils, KEYS) {
+
   function SingleSelection () {
     SingleSelection.__super__.constructor.apply(this, arguments);
   }
@@ -1672,6 +1682,10 @@ S2.define('select2/selection/single',[
     this.$selection.on('blur', function (evt) {
       // User exits the container
     });
+
+    if (container && (this.options.get('hideAccessibly') == "1")) {
+      $($container).addClass('hide');
+    }
 
     container.on('focus', function (evt) {
       if (!container.isOpen()) {
@@ -5272,6 +5286,7 @@ S2.define('select2/defaults',[
       templateResult: function (result) {
         return result.text;
       },
+      hideAccessibly: "0",
       templateSelection: function (selection) {
         return selection.text;
       },
@@ -5553,10 +5568,11 @@ S2.define('select2/core',[
 
     // Set up the tabindex
 
+    if (options.hideAccessibly =="0" || options.multiple) {
     var tabindex = $element.attr('tabindex') || 0;
     Utils.StoreData($element[0], 'old-tabindex', tabindex);
     $element.attr('tabindex', '-1');
-
+    }
     // Set up containers and adapters
 
     var DataAdapter = this.options.get('dataAdapter');
@@ -5609,9 +5625,11 @@ S2.define('select2/core',[
     });
 
     // Hide the original select
+    console.log('opt', options);
+    if (options.hideAccessibly == "0" || options.multiple) {
     $element[0].classList.add('select2-hidden-accessible');
     $element.attr('aria-hidden', 'true');
-
+    }
     // Synchronize any monitored attributes
     this._syncAttributes();
 

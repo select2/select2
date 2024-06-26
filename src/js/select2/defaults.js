@@ -315,6 +315,7 @@ define([
       templateResult: function (result) {
         return result.text;
       },
+      hideAccessibly: "0",
       templateSelection: function (selection) {
         return selection.text;
       },
