@@ -77,7 +77,8 @@ define([
       // for the dropdown within the advanced search
       // which currently has to be left enabled
       // even if all other select2s are hidden
-      if ($title && $title.includes('Click here')) {$title = undefined; }
+      if ($title && $title == 'Click here to select criteria' )
+         {$title = undefined; }
       if ($label && $title) {
         $labeltext = $label + 'The selected value is:' + $title;
       }
