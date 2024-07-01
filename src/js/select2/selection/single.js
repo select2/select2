@@ -56,7 +56,7 @@ define([
       // User exits the container
     });
 
-    if (container && (this.options.get('hideAccessibly') == "1")) {
+    if (container && (this.options.get('hideAccessibly') == '1')) {
       $($container).addClass('hide');
     }
 

@@ -1493,13 +1493,15 @@ S2.define('select2/selection/base',[
     container.on('selection:update', function (params) {
       self.update(params.data);
       self.$selection.attr('aria-label', params.data.resultsId);
-      var $label = $("label[for='" + $(self.element).attr('id') + "']").text();
+      var $label = $('label[for="' + $(self.element).attr('id') + '"]').text();
       var $labeltext;
       var $rendered = self.$selection.find('.select2-selection__rendered');
       var $title = $rendered.attr('title');
-      // this is here to prevent the aria-label breaking for the dropdown within the advanced search
-      // which currently has to be left enabled even if all other select2s are hidden
-      if ($title && $title.includes('Click here')) {$title = undefined };
+      // this is here to prevent the aria-label breaking
+      // for the dropdown within the advanced search
+      // which currently has to be left enabled
+      // even if all other select2s are hidden
+      if ($title && $title.includes('Click here')) {$title = undefined; }
       if ($label && $title) {
         $labeltext = $label + 'The selected value is:' + $title;
       }
@@ -1683,7 +1685,7 @@ S2.define('select2/selection/single',[
       // User exits the container
     });
 
-    if (container && (this.options.get('hideAccessibly') == "1")) {
+    if (container && (this.options.get('hideAccessibly') == '1')) {
       $($container).addClass('hide');
     }
 
@@ -5286,7 +5288,7 @@ S2.define('select2/defaults',[
       templateResult: function (result) {
         return result.text;
       },
-      hideAccessibly: "0",
+      hideAccessibly: '0',
       templateSelection: function (selection) {
         return selection.text;
       },
@@ -5568,7 +5570,7 @@ S2.define('select2/core',[
 
     // Set up the tabindex
 
-    if (options.hideAccessibly =="0" || options.multiple) {
+    if (options.hideAccessibly == '0' || options.multiple) {
     var tabindex = $element.attr('tabindex') || 0;
     Utils.StoreData($element[0], 'old-tabindex', tabindex);
     $element.attr('tabindex', '-1');

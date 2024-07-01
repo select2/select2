@@ -69,13 +69,15 @@ define([
     container.on('selection:update', function (params) {
       self.update(params.data);
       self.$selection.attr('aria-label', params.data.resultsId);
-      var $label = $("label[for='" + $(self.element).attr('id') + "']").text();
+      var $label = $('label[for="' + $(self.element).attr('id') + '"]').text();
       var $labeltext;
       var $rendered = self.$selection.find('.select2-selection__rendered');
       var $title = $rendered.attr('title');
-      // this is here to prevent the aria-label breaking for the dropdown within the advanced search
-      // which currently has to be left enabled even if all other select2s are hidden
-      if ($title && $title.includes('Click here')) {$title = undefined };
+      // this is here to prevent the aria-label breaking
+      // for the dropdown within the advanced search
+      // which currently has to be left enabled
+      // even if all other select2s are hidden
+      if ($title && $title.includes('Click here')) {$title = undefined; }
       if ($label && $title) {
         $labeltext = $label + 'The selected value is:' + $title;
       }
