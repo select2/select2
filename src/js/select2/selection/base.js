@@ -14,7 +14,7 @@ define([
 
   BaseSelection.prototype.render = function () {
     var $selection = $(
-      '<span class="select2-selection" aria-describedby="sr-description"' +
+      '<span class="select2-selection"' +
       ' role="button" aria-haspopup="true" aria-expanded="false">' +
       '</span>');
 
@@ -37,11 +37,14 @@ define([
 
   BaseSelection.prototype.bind = function (container, $container) {
     var self = this;
-    var $describedby = $('<span class="visually-hidden" id="sr-description">' +
+    var $describedby = $('<span class="visually-hidden" id="sr-description'+
+      container.id + '">' +
               'This button opens a select. When results are available,' +
               'use up and down arrows to navigate and ' +
               'enter to select </span>');
     this.$selection.after($describedby);
+    var srId = 'sr-description' + container.id;
+    this.$selection.attr('aria-describedby', srId);
     var resultsId = container.id + '-results';
 
     this.container = container;
@@ -70,16 +73,13 @@ define([
       self.update(params.data);
       self.$selection.attr('aria-label', params.data.resultsId);
       var $label = $('label[for="' + this.$element.attr('id') + '"]').text();
-      console.log('element', this.$element)
       var $labeltext;
       var $rendered = self.$selection.find('.select2-selection__rendered');
-      console.log('rendered', $($rendered).prop('nodeName'));
       var $title = $rendered.attr('title');
       // this is here to prevent the aria-label breaking
       // for the dropdown within the advanced search
       // which currently has to be left enabled
       // even if all other select2s are hidden
-      console.log('label', $label), 'title', $title;
       if ($title && $title == 'Click here to select criteria' )
          {$title = undefined; }
       if ($label && $title) {

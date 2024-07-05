@@ -222,6 +222,7 @@ define([
 
     this.$search.val(item.text);
     this.handleSearch();
+
   };
 
   Search.prototype.resizeSearch = function () {

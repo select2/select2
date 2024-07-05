@@ -1438,7 +1438,7 @@ S2.define('select2/selection/base',[
 
   BaseSelection.prototype.render = function () {
     var $selection = $(
-      '<span class="select2-selection" aria-describedby="sr-description"' +
+      '<span class="select2-selection"' +
       ' role="button" aria-haspopup="true" aria-expanded="false">' +
       '</span>');
 
@@ -1461,11 +1461,14 @@ S2.define('select2/selection/base',[
 
   BaseSelection.prototype.bind = function (container, $container) {
     var self = this;
-    var $describedby = $('<span class="visually-hidden" id="sr-description">' +
+    var $describedby = $('<span class="visually-hidden" id="sr-description'+
+      container.id + '">' +
               'This button opens a select. When results are available,' +
               'use up and down arrows to navigate and ' +
               'enter to select </span>');
     this.$selection.after($describedby);
+    var srId = 'sr-description' + container.id;
+    this.$selection.attr('aria-describedby', srId);
     var resultsId = container.id + '-results';
 
     this.container = container;
@@ -1494,16 +1497,13 @@ S2.define('select2/selection/base',[
       self.update(params.data);
       self.$selection.attr('aria-label', params.data.resultsId);
       var $label = $('label[for="' + this.$element.attr('id') + '"]').text();
-      console.log('element', this.$element)
       var $labeltext;
       var $rendered = self.$selection.find('.select2-selection__rendered');
-      console.log('rendered', $($rendered).prop('nodeName'));
       var $title = $rendered.attr('title');
       // this is here to prevent the aria-label breaking
       // for the dropdown within the advanced search
       // which currently has to be left enabled
       // even if all other select2s are hidden
-      console.log('label', $label), 'title', $title;
       if ($title && $title == 'Click here to select criteria' )
          {$title = undefined; }
       if ($label && $title) {
@@ -1759,7 +1759,8 @@ S2.define('select2/selection/multiple',[
     $selection[0].classList.add('select2-selection--multiple');
 
     $selection.html(
-      '<ul class="select2-selection__rendered" aria-live="assertive" aria-relevant="all"></ul>'
+      '<ul class="select2-selection__rendered" ' +
+      'aria-live="assertive" aria-relevant="all"></ul>'
     );
 
     return $selection;
@@ -1772,10 +1773,12 @@ S2.define('select2/selection/multiple',[
 
     var id = container.id + '-container';
     this.$selection.attr('role','combobox');
-    this.$selection.siblings('#sr-description').text('This is a multi-select.' +
+    this.$selection.siblings('#sr-description'+ container.id)
+    .text('This is a multi-select.' +
     'Press enter or begin typing to reveal results.' +
-    'Use backspace from the text input to delete existingselected results.');
-    this.$selection.find('.select2-selection__rendered').attr('id', id);
+    'Use arrow key to select results' +
+    'Use backspace from the text input to delete existing selected results.');
+     this.$selection.find('.select2-selection__rendered').attr('id', id);
 
     this.$selection.on('click', function (evt) {
       self.trigger('toggle', {
@@ -1857,8 +1860,6 @@ S2.define('select2/selection/multiple',[
 
     var selectionIdPrefix = this.$selection.find('.select2-selection__rendered')
       .attr('id') + '-choice-';
-      var $rendered = this.$selection.find('.select2-selection__rendered');
-      var titlestring ="";
     for (var d = 0; d < data.length; d++) {
       var selection = data[d];
 
@@ -2309,6 +2310,7 @@ S2.define('select2/selection/search',[
 
     this.$search.val(item.text);
     this.handleSearch();
+
   };
 
   Search.prototype.resizeSearch = function () {
