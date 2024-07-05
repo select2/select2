@@ -69,14 +69,17 @@ define([
     container.on('selection:update', function (params) {
       self.update(params.data);
       self.$selection.attr('aria-label', params.data.resultsId);
-      var $label = $('label[for="' + $(self.element).attr('id') + '"]').text();
+      var $label = $('label[for="' + this.$element.attr('id') + '"]').text();
+      console.log('element', this.$element)
       var $labeltext;
       var $rendered = self.$selection.find('.select2-selection__rendered');
+      console.log('rendered', $($rendered).prop('nodeName'));
       var $title = $rendered.attr('title');
       // this is here to prevent the aria-label breaking
       // for the dropdown within the advanced search
       // which currently has to be left enabled
       // even if all other select2s are hidden
+      console.log('label', $label), 'title', $title;
       if ($title && $title == 'Click here to select criteria' )
          {$title = undefined; }
       if ($label && $title) {
@@ -89,7 +92,7 @@ define([
         $labeltext = 'The selected value is: ' + $title;
       }
       else {
-        $labeltext = 'No value currently selected.';
+        $labeltext = $label + 'No value currently selected.';
       }
       self.$selection.attr('aria-label', $labeltext);
       });

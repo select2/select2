@@ -15,7 +15,7 @@ define([
     $selection[0].classList.add('select2-selection--multiple');
 
     $selection.html(
-      '<ul class="select2-selection__rendered"></ul>'
+      '<ul class="select2-selection__rendered" aria-live="assertive" aria-relevant="all"></ul>'
     );
 
     return $selection;
@@ -27,6 +27,10 @@ define([
     MultipleSelection.__super__.bind.apply(this, arguments);
 
     var id = container.id + '-container';
+    this.$selection.attr('role','combobox');
+    this.$selection.siblings('#sr-description').text('This is a multi-select.' +
+    'Press enter or begin typing to reveal results.' +
+    'Use backspace from the text input to delete existingselected results.');
     this.$selection.find('.select2-selection__rendered').attr('id', id);
 
     this.$selection.on('click', function (evt) {
@@ -105,10 +109,12 @@ define([
     }
 
     var $selections = [];
+    var titles = [];
 
     var selectionIdPrefix = this.$selection.find('.select2-selection__rendered')
       .attr('id') + '-choice-';
-
+      var $rendered = this.$selection.find('.select2-selection__rendered');
+      var titlestring ="";
     for (var d = 0; d < data.length; d++) {
       var selection = data[d];
 
@@ -129,10 +135,6 @@ define([
 
       var title = selection.title || selection.text;
 
-      if (title) {
-        $selection.attr('title', title);
-      }
-
       var removeItem = this.options.get('translations').get('removeItem');
 
       var $remove = $selection.find('.select2-selection__choice__remove');
@@ -144,11 +146,13 @@ define([
       Utils.StoreData($selection[0], 'data', selection);
 
       $selections.push($selection);
+      titles.push(title);
     }
 
     var $rendered = this.$selection.find('.select2-selection__rendered');
 
     $rendered.append($selections);
+    $rendered.attr('title', titles.join(' '));
   };
 
   return MultipleSelection;

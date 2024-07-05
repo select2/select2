@@ -1493,14 +1493,17 @@ S2.define('select2/selection/base',[
     container.on('selection:update', function (params) {
       self.update(params.data);
       self.$selection.attr('aria-label', params.data.resultsId);
-      var $label = $('label[for="' + $(self.element).attr('id') + '"]').text();
+      var $label = $('label[for="' + this.$element.attr('id') + '"]').text();
+      console.log('element', this.$element)
       var $labeltext;
       var $rendered = self.$selection.find('.select2-selection__rendered');
+      console.log('rendered', $($rendered).prop('nodeName'));
       var $title = $rendered.attr('title');
       // this is here to prevent the aria-label breaking
       // for the dropdown within the advanced search
       // which currently has to be left enabled
       // even if all other select2s are hidden
+      console.log('label', $label), 'title', $title;
       if ($title && $title == 'Click here to select criteria' )
          {$title = undefined; }
       if ($label && $title) {
@@ -1513,7 +1516,7 @@ S2.define('select2/selection/base',[
         $labeltext = 'The selected value is: ' + $title;
       }
       else {
-        $labeltext = 'No value currently selected.';
+        $labeltext = $label + 'No value currently selected.';
       }
       self.$selection.attr('aria-label', $labeltext);
       });
@@ -1756,7 +1759,7 @@ S2.define('select2/selection/multiple',[
     $selection[0].classList.add('select2-selection--multiple');
 
     $selection.html(
-      '<ul class="select2-selection__rendered"></ul>'
+      '<ul class="select2-selection__rendered" aria-live="assertive" aria-relevant="all"></ul>'
     );
 
     return $selection;
@@ -1768,6 +1771,10 @@ S2.define('select2/selection/multiple',[
     MultipleSelection.__super__.bind.apply(this, arguments);
 
     var id = container.id + '-container';
+    this.$selection.attr('role','combobox');
+    this.$selection.siblings('#sr-description').text('This is a multi-select.' +
+    'Press enter or begin typing to reveal results.' +
+    'Use backspace from the text input to delete existingselected results.');
     this.$selection.find('.select2-selection__rendered').attr('id', id);
 
     this.$selection.on('click', function (evt) {
@@ -1846,10 +1853,12 @@ S2.define('select2/selection/multiple',[
     }
 
     var $selections = [];
+    var titles = [];
 
     var selectionIdPrefix = this.$selection.find('.select2-selection__rendered')
       .attr('id') + '-choice-';
-
+      var $rendered = this.$selection.find('.select2-selection__rendered');
+      var titlestring ="";
     for (var d = 0; d < data.length; d++) {
       var selection = data[d];
 
@@ -1870,10 +1879,6 @@ S2.define('select2/selection/multiple',[
 
       var title = selection.title || selection.text;
 
-      if (title) {
-        $selection.attr('title', title);
-      }
-
       var removeItem = this.options.get('translations').get('removeItem');
 
       var $remove = $selection.find('.select2-selection__choice__remove');
@@ -1885,11 +1890,13 @@ S2.define('select2/selection/multiple',[
       Utils.StoreData($selection[0], 'data', selection);
 
       $selections.push($selection);
+      titles.push(title);
     }
 
     var $rendered = this.$selection.find('.select2-selection__rendered');
 
     $rendered.append($selections);
+    $rendered.attr('title', titles.join(' '));
   };
 
   return MultipleSelection;
