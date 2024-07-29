@@ -1,7 +1,7 @@
 /*jshint browser: true */
-module('DOM integration');
+QUnit.module('DOM integration');
 
-test('adding a new unselected option changes nothing', function (assert) {
+QUnit.test('adding a new unselected option changes nothing', function (assert) {
   // Any browsers which support mutation observers will not trigger the event
   var expected = 4;
   if (window.MutationObserver) {
@@ -69,7 +69,7 @@ test('adding a new unselected option changes nothing', function (assert) {
   syncDone();
 });
 
-test('adding a new selected option changes the value', function (assert) {
+QUnit.test('adding a new selected option changes the value', function (assert) {
   // handle IE 8 not being supported
   var expected = 4;
   if (!window.MutationObserver && !window.addEventListener) {
@@ -135,7 +135,7 @@ test('adding a new selected option changes the value', function (assert) {
   syncDone();
 });
 
-test('removing an unselected option changes nothing', function (assert) {
+QUnit.test('removing an unselected option changes nothing', function (assert) {
   // Any browsers which support mutation observers will not trigger the event
   var expected = 4;
   if (!window.MutationObserver && !window.addEventListener) {
@@ -199,7 +199,7 @@ test('removing an unselected option changes nothing', function (assert) {
   syncDone();
 });
 
-test('removing a selected option changes the value', function (assert) {
+QUnit.test('removing a selected option changes the value', function (assert) {
   // handle IE 8 not being supported
   var expected = 3;
   if (!window.MutationObserver && !window.addEventListener) {
@@ -257,7 +257,7 @@ test('removing a selected option changes the value', function (assert) {
   syncDone();
 });
 
-test('searching tags does not loose focus', function (assert) {
+QUnit.test('searching tags does not loose focus', function (assert) {
   assert.expect(1);
 
   var asyncDone = assert.async();
@@ -289,7 +289,7 @@ test('searching tags does not loose focus', function (assert) {
 });
 
 
-test('adding multiple options calls selection:update once', function (assert) {
+QUnit.test('adding multiple options calls selection:update once', function (assert) {
   assert.expect(1);
 
   var asyncDone = assert.async();

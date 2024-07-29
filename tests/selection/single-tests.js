@@ -1,4 +1,4 @@
-module('Selection containers - Single');
+QUnit.module('Selection containers - Single');
 
 var SingleSelection = require('select2/selection/single');
 
@@ -8,7 +8,7 @@ var Utils = require('select2/utils');
 
 var options = new Options({});
 
-test('display uses templateSelection', function (assert) {
+QUnit.test('display uses templateSelection', function (assert) {
   var called = false;
 
   var templateOptions = new Options({
@@ -33,7 +33,7 @@ test('display uses templateSelection', function (assert) {
   assert.equal(out, 'test');
 });
 
-test('templateSelection can addClass', function (assert) {
+QUnit.test('templateSelection can addClass', function (assert) {
   var called = false;
 
   var templateOptions = new Options({
@@ -62,7 +62,7 @@ test('templateSelection can addClass', function (assert) {
   assert.ok($container.hasClass('testclass'));
 });
 
-test('empty update clears the selection', function (assert) {
+QUnit.test('empty update clears the selection', function (assert) {
   var selection = new SingleSelection(
     $('#qunit-fixture .single'),
     options
@@ -82,7 +82,7 @@ test('empty update clears the selection', function (assert) {
   );
 });
 
-test('empty update clears the selection title', function (assert) {
+QUnit.test('empty update clears the selection title', function (assert) {
   var selection = new SingleSelection(
     $('#qunit-fixture .single'),
     options
@@ -102,7 +102,7 @@ test('empty update clears the selection title', function (assert) {
   );
 });
 
-test('update renders the data text', function (assert) {
+QUnit.test('update renders the data text', function (assert) {
   var selection = new SingleSelection(
     $('#qunit-fixture .single'),
     options
@@ -118,7 +118,7 @@ test('update renders the data text', function (assert) {
   assert.equal($rendered.text(), 'test');
 });
 
-test('update sets the title to the data text', function (assert) {
+QUnit.test('update sets the title to the data text', function (assert) {
   var selection = new SingleSelection(
     $('#qunit-fixture .single'),
     options
@@ -138,7 +138,7 @@ test('update sets the title to the data text', function (assert) {
   );
 });
 
-test('update sets the title to the data title', function (assert) {
+QUnit.test('update sets the title to the data title', function (assert) {
   var selection = new SingleSelection(
     $('#qunit-fixture .single'),
     options
@@ -159,7 +159,7 @@ test('update sets the title to the data title', function (assert) {
   );
 });
 
-test('update should clear title for placeholder options', function (assert) {
+QUnit.test('update should clear title for placeholder options', function (assert) {
   var selection = new SingleSelection(
     $('#qunit-fixture .single'),
     options
@@ -182,7 +182,7 @@ test('update should clear title for placeholder options', function (assert) {
   );
 });
 
-test('update should clear title for options without text', function (assert) {
+QUnit.test('update should clear title for options without text', function (assert) {
   var selection = new SingleSelection(
     $('#qunit-fixture .single'),
     options
@@ -204,7 +204,7 @@ test('update should clear title for options without text', function (assert) {
   );
 });
 
-test('escapeMarkup is being used', function (assert) {
+QUnit.test('escapeMarkup is being used', function (assert) {
   var selection = new SingleSelection(
     $('#qunit-fixture .single'),
     options

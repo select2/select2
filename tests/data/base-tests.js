@@ -1,4 +1,4 @@
-module('Data adapters - Base');
+QUnit.module('Data adapters - Base');
 
 var BaseData = require('select2/data/base');
 var $ = require('jquery');
@@ -6,7 +6,7 @@ var Options = require('select2/options');
 
 var options = new Options({});
 
-test('current is required', function (assert) {
+QUnit.test('current is required', function (assert) {
   var data = new BaseData($('#qunit-fixture select'), options);
 
   assert.throws(
@@ -17,7 +17,7 @@ test('current is required', function (assert) {
   );
 });
 
-test('query is required', function (assert) {
+QUnit.test('query is required', function (assert) {
   var data = new BaseData($('#qunit-fixture select'), options);
 
   assert.throws(

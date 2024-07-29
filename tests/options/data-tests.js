@@ -1,10 +1,10 @@
-module('Options - Attributes');
+QUnit.module('Options - Attributes');
 
 var $ = require('jquery');
 
 var Options = require('select2/options');
 
-test('no nesting', function (assert) {
+QUnit.test('no nesting', function (assert) {
   var $test = $('<select data-test="test"></select>');
 
   var options = new Options({}, $test);
@@ -12,7 +12,7 @@ test('no nesting', function (assert) {
   assert.equal(options.get('test'), 'test');
 });
 
-test('with nesting', function (assert) {
+QUnit.test('with nesting', function (assert) {
   var $test = $('<select data-first--second="test"></select>');
 
   if ($test[0].dataset == null) {
@@ -30,7 +30,7 @@ test('with nesting', function (assert) {
   assert.equal(options.get('first').second, 'test');
 });
 
-test('overrides initialized data', function (assert) {
+QUnit.test('overrides initialized data', function (assert) {
   var $test = $('<select data-override="yes" data-data="yes"></select>');
 
   var options = new Options({

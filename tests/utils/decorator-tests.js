@@ -1,8 +1,8 @@
-module('Decorators');
+QUnit.module('Decorators');
 
 var Utils = require('select2/utils');
 
-test('overridden - method', function (assert) {
+QUnit.test('overridden - method', function (assert) {
   function BaseClass () {}
 
   BaseClass.prototype.hello = function () {
@@ -22,7 +22,7 @@ test('overridden - method', function (assert) {
   assert.strictEqual(inst.hello(), 'B');
 });
 
-test('overridden - constructor', function (assert) {
+QUnit.test('overridden - constructor', function (assert) {
   function BaseClass () {
     this.inherited = true;
   }
@@ -47,7 +47,7 @@ test('overridden - constructor', function (assert) {
   assert.ok(!inst.inherited);
 });
 
-test('not overridden - method', function (assert) {
+QUnit.test('not overridden - method', function (assert) {
   function BaseClass () {}
 
   BaseClass.prototype.hello = function () {
@@ -67,7 +67,7 @@ test('not overridden - method', function (assert) {
   assert.strictEqual(inst.hello(), 'A');
 });
 
-test('not overridden - constructor', function (assert) {
+QUnit.test('not overridden - constructor', function (assert) {
   function BaseClass () {
     this.called = true;
   }
@@ -89,7 +89,7 @@ test('not overridden - constructor', function (assert) {
   assert.ok(inst.called);
 });
 
-test('inherited - method', function (assert) {
+QUnit.test('inherited - method', function (assert) {
   function BaseClass () {}
 
   BaseClass.prototype.hello = function () {
@@ -109,7 +109,7 @@ test('inherited - method', function (assert) {
   assert.strictEqual(inst.hello(), 'BAC');
 });
 
-test('inherited - constructor', function (assert) {
+QUnit.test('inherited - constructor', function (assert) {
   function BaseClass () {
     this.inherited = true;
   }
@@ -136,7 +136,7 @@ test('inherited - constructor', function (assert) {
   assert.ok(inst.inherited);
 });
 
-test('inherited - three levels', function (assert) {
+QUnit.test('inherited - three levels', function (assert) {
   function BaseClass (testArgument) {
     this.baseCalled = true;
     this.baseTestArgument = testArgument;

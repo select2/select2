@@ -1,4 +1,4 @@
-module('Dropdown - selectOnClose');
+QUnit.module('Dropdown - selectOnClose');
 
 var $ = require('jquery');
 
@@ -16,7 +16,7 @@ var options = new Options({
   selectOnClose: true
 });
 
-test('will not trigger if no results were given', function (assert) {
+QUnit.test('will not trigger if no results were given', function (assert) {
   assert.expect(0);
 
   var $element = $('<select></select>');
@@ -34,7 +34,7 @@ test('will not trigger if no results were given', function (assert) {
   container.trigger('close');
 });
 
-test('will not trigger if the results list is empty', function (assert) {
+QUnit.test('will not trigger if the results list is empty', function (assert) {
   assert.expect(1);
 
   var $element = $('<select></select>');
@@ -62,7 +62,7 @@ test('will not trigger if the results list is empty', function (assert) {
   container.trigger('close');
 });
 
-test('will not trigger if no results here highlighted', function (assert) {
+QUnit.test('will not trigger if no results here highlighted', function (assert) {
   assert.expect(2);
 
   var $element = $('<select></select>');
@@ -101,7 +101,7 @@ test('will not trigger if no results here highlighted', function (assert) {
   container.trigger('close');
 });
 
-test('will trigger if there is a highlighted result', function (assert) {
+QUnit.test('will trigger if there is a highlighted result', function (assert) {
   assert.expect(2);
 
   var $element = $('<select></select>');
