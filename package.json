@@ -60,8 +60,5 @@
     "grunt-sass": "^3.1.0",
     "jquery-mousewheel": "~3.1.13",
     "sass": "^1.77.8"
-  },
-  "dependencies": {
-    "sass": "^1.77.8"
   }
 }
