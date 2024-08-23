@@ -138,7 +138,7 @@ QUnit.test('multiple value matches the jquery value', function (assert) {
   );
 });
 
-test('selection and clearing of data from ajax source', function (assert) {
+QUnit.test('selection and clearing of data from ajax source', function (assert) {
   var asyncDone = assert.async();
 
   var dataURL = 'http://127.0.0.1/test';
