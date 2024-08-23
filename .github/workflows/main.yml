@@ -20,8 +20,8 @@ jobs:
     name: Tests
     runs-on: ubuntu-latest
     steps:
-      - run: apt update
-      - run: apt install -y chromium-browser
+      - run: sudo apt update
+      - run: sudo apt install -y chromium-browser
       - uses: actions/checkout@v1
       - name: Use Node.js 20
         uses: actions/setup-node@v1
