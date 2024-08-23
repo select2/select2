@@ -31,8 +31,8 @@ jobs:
         run: npm install
       - name: Run tests
         env:
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1
-          PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: "1"
+          PUPPETEER_EXECUTABLE_PATH: "/usr/bin/chromium-browser"
         run: grunt compile test
   minification:
     name: Minification
