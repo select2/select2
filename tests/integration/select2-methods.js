@@ -190,6 +190,7 @@ QUnit.test('selection and clearing of data from ajax source', function (assert) 
         'The previously-selected item should have been unselected'
       );
 
+      selectionStatus = false;
       asyncDone();
     }
   });

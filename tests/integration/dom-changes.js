@@ -279,9 +279,13 @@ QUnit.test('searching tags does not loose focus', function (assert) {
   var inputEl = select.selection.$search[0];
   inputEl.focus();
 
+  var done = false;
   select.on('selection:update', function() {
-    assert.equal(document.activeElement, inputEl);
-    asyncDone();
+    if (!done) {
+      assert.equal(document.activeElement, inputEl);
+      done = true;
+      asyncDone();
+    }
   });
 
   select.selection.trigger('query', {term: 'f'});
