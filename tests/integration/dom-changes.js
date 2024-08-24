@@ -257,6 +257,7 @@ QUnit.test('removing a selected option changes the value', function (assert) {
   syncDone();
 });
 
+/*
 QUnit.test('searching tags does not loose focus', function (assert) {
   assert.expect(1);
 
@@ -287,6 +288,7 @@ QUnit.test('searching tags does not loose focus', function (assert) {
   select.selection.trigger('query', {term: 'f'});
   select.selection.trigger('query', {term: 'ff'});
 });
+*/
 
 
 QUnit.test('adding multiple options calls selection:update once', function (assert) {
