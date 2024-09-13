@@ -463,10 +463,6 @@ define([
 
           return;
         } else {
-          self.trigger('unselect', {
-            originalEvent: evt,
-            data: data
-          });
           self.trigger('close', {
             originalEvent: evt,
             data: data
