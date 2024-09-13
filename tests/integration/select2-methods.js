@@ -175,9 +175,9 @@ QUnit.test('selection and clearing of data from ajax source', function (assert) 
 
       $('.select2-results__option').trigger('mouseup');
       assert.equal(
-        $select.find('option').length,
-        1,
-        'An HTML option element should have been created for the item'
+        $select.find('option').text(),
+        'firstResult',
+        'The selected search result should be added to the HTML option cache'
       );
 
       // Trigger a second call
@@ -188,9 +188,9 @@ QUnit.test('selection and clearing of data from ajax source', function (assert) 
 
       $('.select2-results__option[aria-selected=true]').trigger('mouseup');
       assert.equal(
-        $select.find('option').length,
-        0,
-        'The previously-created HTML option element should have been removed'
+        $select.find('option').text(),
+        'firstResult',
+        'The previously-selected label should remain in the HTML option cache'
       );
 
       // Trigger a third call
@@ -200,9 +200,9 @@ QUnit.test('selection and clearing of data from ajax source', function (assert) 
     } else if (queryTerm == 'thirdQuery') {
       $('.select2-results__option').trigger('mouseup');
       assert.equal(
-        $select.find('option').length,
-        1,
-        'An HTML option element should have been created for the item'
+        $select.find('option').text(),
+        'thirdResult',
+        'The newly-selected label should update the HTML option cache'
       );
 
       // Trigger a fourth call

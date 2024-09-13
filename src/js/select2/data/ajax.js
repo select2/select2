@@ -110,12 +110,14 @@ define([
     }
   };
 
-  AjaxAdapter.prototype.unselect = function (data) {
+  AjaxAdapter.prototype.select = function (data) {
     // Remove matching option elements from the DOM
     var $option = this.$element.find('option').filter(function (i, elm) {
       return elm.value == data.id.toString();
     });
     $option.remove();
+
+    AjaxAdapter.__super__.select.call(this, data);
   };
 
   return AjaxAdapter;
