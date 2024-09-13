@@ -278,6 +278,12 @@ define([
       item._resultId = this.generateResultId(this.container, item);
     }
 
+    if (item.children) {
+        item.children = item.children.map(
+            SelectAdapter.prototype._normalizeItem
+        );
+    }
+
     return $.extend({}, defaults, item);
   };
 
