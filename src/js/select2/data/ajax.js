@@ -111,17 +111,11 @@ define([
   };
 
   AjaxAdapter.prototype.unselect = function (data) {
-    var self = this;
-
     // Remove matching option elements from the DOM
-    this.current(function (currentData) {
-      var selectedIds = currentData.map(function (selection) {
-        var $option = self.$element.find('option').filter(function (i, elm) {
-          return elm.value == selection.id.toString();
-        });
-        $option.remove();
-      });
+    var $option = this.$element.find('option').filter(function (i, elm) {
+      return elm.value == data.id.toString();
     });
+    $option.remove();
   };
 
   return AjaxAdapter;
