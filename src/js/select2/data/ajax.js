@@ -111,11 +111,11 @@ define([
   };
 
   AjaxAdapter.prototype.select = function (data) {
-    // Update the label on matching option elements in the DOM
+    // Remove matching option elements from the DOM
     var $option = this.$element.find('option').filter(function (i, elm) {
       return elm.value == data.id.toString();
     });
-    $option.val(data.text);
+    $option.remove();
 
     AjaxAdapter.__super__.select.call(this, data);
   };
