@@ -20,7 +20,20 @@ define(["./array", "../utils"], function (ArrayAdapter, Utils) {
       },
       transport: function (params, success, failure) {
         var request = new XMLHttpRequest();
+          // For GET requests, append data to URL as query params
+        if (params.type === 'GET' && params.data) {
+          var queryString = Object.keys(params.data)
+            .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(params.data[key]))
+            .join('&');
+          params.url = params.url + (params.url.indexOf('?') > -1 ? '&' : '?') + queryString;
+        }
+
         request.open(params.type, params.url, true);
+
+        if (params.dataType === "json") {
+          request.setRequestHeader("Content-Type", "application/json");
+          request.setRequestHeader("Accept", "application/json");
+        }
 
         request.onload = function () {
           if (request.status >= 200 && request.status < 400) {
@@ -34,7 +47,8 @@ define(["./array", "../utils"], function (ArrayAdapter, Utils) {
           failure();
         };
 
-        request.send(params.data);
+        request.send(params.type !== 'GET' ? params.data : null);
+        // request.send(params.data);
 
         return request;
       },
