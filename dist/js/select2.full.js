@@ -4830,7 +4830,7 @@ S2.define('select2/dropdown/attachBody',["../utils"], function (Utils) {
     offset = Object.assign({}, offset, {
       left: offset.left + $window.scrollX,
       top: offset.top + this.container.offsetHeight + $window.scrollY,
-      bottom: offset.top + this.container.offsetHeight,
+      bottom: offset.top - this.container.offsetHeight,
       right: offset.left + this.container.offsetWidth,
     });
 
@@ -4839,7 +4839,7 @@ S2.define('select2/dropdown/attachBody',["../utils"], function (Utils) {
     };
 
     container.top = offset.top;
-    container.bottom = offset.top + container.height;
+    container.bottom = offset.top - container.height;
 
     var dropdown = {
       height: this.dropdown.offsetHeight,
