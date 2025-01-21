@@ -1,4 +1,4 @@
-Select2
+![vanilla](https://github.com/forus-coop/select2-vanilla/blob/develop/select2-vanilla@2x.png?raw=true)
 =======
 ![Build Status][github-actions-image]
 [![Financial Contributors on Open Collective](https://opencollective.com/select2/all/badge.svg?label=financial+contributors)](https://opencollective.com/select2)
