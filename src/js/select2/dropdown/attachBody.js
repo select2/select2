@@ -34,11 +34,7 @@ define(["../utils"], function (Utils) {
     this.dropdownContainer.remove();
   };
 
-  AttachBody.prototype.position = function (
-    decorated,
-    $dropdown,
-    $container
-  ) {
+  AttachBody.prototype.position = function (decorated, $dropdown, $container) {
     // Clone all of the container classes
     $dropdown.className = $container.className;
 
@@ -201,6 +197,8 @@ define(["../utils"], function (Utils) {
     offset = Object.assign({}, offset, {
       left: offset.left + $window.scrollX,
       top: offset.top + this.container.offsetHeight + $window.scrollY,
+      bottom: offset.top - this.container.offsetHeight - $window.scrollY,
+      right: offset.left + this.container.offsetWidth,
     });
 
     var container = {
@@ -208,18 +206,16 @@ define(["../utils"], function (Utils) {
     };
 
     container.top = offset.top;
-    container.bottom = offset.top + container.height;
+    container.bottom = offset.top - container.height -  $window.scrollY;
 
     var dropdown = {
       height: this.dropdown.offsetHeight,
     };
 
-
     var viewport = {
       top: $window.scrollY,
       bottom: $window.scrollY + $window.innerHeight,
     };
-
 
     var enoughRoomAbove = viewport.top < offset.top - dropdown.height;
     var enoughRoomBelow = viewport.bottom > offset.bottom + dropdown.height;
@@ -228,7 +224,6 @@ define(["../utils"], function (Utils) {
       left: offset.left + "px",
       top: container.bottom + "px",
     };
-
 
     // Determine what the parent element is to use for calculating the offset
     var $offsetParent = this.dropdownParent;
