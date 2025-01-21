@@ -1901,7 +1901,7 @@ S2.define('select2/selection/placeholder',[], function () {
     $placeholder.classList.remove("select2-selection__choice");
 
     var placeholderTitle =
-      placeholder.title || placeholder.text // || $placeholder.text();
+      placeholder.title || placeholder.text || $placeholder.text();
 
     this.selection
       .querySelector(".select2-selection__rendered")
@@ -3782,7 +3782,20 @@ S2.define('select2/data/ajax',["./array", "../utils"], function (ArrayAdapter, U
       },
       transport: function (params, success, failure) {
         var request = new XMLHttpRequest();
+          // For GET requests, append data to URL as query params
+        if (params.type === 'GET' && params.data) {
+          var queryString = Object.keys(params.data)
+            .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(params.data[key]))
+            .join('&');
+          params.url = params.url + (params.url.indexOf('?') > -1 ? '&' : '?') + queryString;
+        }
+
         request.open(params.type, params.url, true);
+
+        if (params.dataType === "json") {
+          request.setRequestHeader("Content-Type", "application/json");
+          request.setRequestHeader("Accept", "application/json");
+        }
 
         request.onload = function () {
           if (request.status >= 200 && request.status < 400) {
@@ -3796,7 +3809,8 @@ S2.define('select2/data/ajax',["./array", "../utils"], function (ArrayAdapter, U
           failure();
         };
 
-        request.send(params.data);
+        request.send(params.type !== 'GET' ? params.data : null);
+        // request.send(params.data);
 
         return request;
       },
@@ -4653,11 +4667,7 @@ S2.define('select2/dropdown/attachBody',["../utils"], function (Utils) {
     this.dropdownContainer.remove();
   };
 
-  AttachBody.prototype.position = function (
-    decorated,
-    $dropdown,
-    $container
-  ) {
+  AttachBody.prototype.position = function (decorated, $dropdown, $container) {
     // Clone all of the container classes
     $dropdown.className = $container.className;
 
@@ -4820,6 +4830,8 @@ S2.define('select2/dropdown/attachBody',["../utils"], function (Utils) {
     offset = Object.assign({}, offset, {
       left: offset.left + $window.scrollX,
       top: offset.top + this.container.offsetHeight + $window.scrollY,
+      bottom: offset.top + this.container.offsetHeight,
+      right: offset.left + this.container.offsetWidth,
     });
 
     var container = {
@@ -4833,12 +4845,10 @@ S2.define('select2/dropdown/attachBody',["../utils"], function (Utils) {
       height: this.dropdown.offsetHeight,
     };
 
-
     var viewport = {
       top: $window.scrollY,
       bottom: $window.scrollY + $window.innerHeight,
     };
-
 
     var enoughRoomAbove = viewport.top < offset.top - dropdown.height;
     var enoughRoomBelow = viewport.bottom > offset.bottom + dropdown.height;
@@ -4847,7 +4857,6 @@ S2.define('select2/dropdown/attachBody',["../utils"], function (Utils) {
       left: offset.left + "px",
       top: container.bottom + "px",
     };
-
 
     // Determine what the parent element is to use for calculating the offset
     var $offsetParent = this.dropdownParent;
