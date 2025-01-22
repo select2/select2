@@ -181,103 +181,63 @@ define(["../utils"], function (Utils) {
   };
 
   AttachBody.prototype._positionDropdown = function () {
-    var $window = window;
-
-    var isCurrentlyAbove = this.dropdown.classList.contains(
-      "select2-dropdown--above"
-    );
-    var isCurrentlyBelow = this.dropdown.classList.contains(
-      "select2-dropdown--below"
-    );
-
-    var newDirection = null;
-
-    var offset = this.container.getBoundingClientRect();
-
-    offset = Object.assign({}, offset, {
-      left: offset.left + $window.scrollX,
-      top: offset.top + this.container.offsetHeight + $window.scrollY,
-      bottom: offset.top - this.container.offsetHeight - $window.scrollY,
-      right: offset.left + this.container.offsetWidth,
-    });
-
-    var container = {
-      height: this.container.offsetHeight,
+    const viewport = {
+      top: window.scrollY,
+      bottom: window.scrollY + window.innerHeight,
     };
 
-    container.top = offset.top;
-    container.bottom = offset.top - container.height -  $window.scrollY;
+    const offset = this.container.getBoundingClientRect();
+    const dropdownHeight = this.dropdown.offsetHeight;
 
-    var dropdown = {
-      height: this.dropdown.offsetHeight,
+    const enoughRoomAbove = viewport.top < offset.top - dropdownHeight;
+    const enoughRoomBelow = viewport.bottom > offset.bottom + dropdownHeight;
+
+    const parentOffset = this._getParentOffset(this.dropdownParent);
+
+    const newDirection = !enoughRoomBelow && enoughRoomAbove
+      ? "above"
+      : "below";
+
+    const css = {
+      left: offset.left + window.scrollX - parentOffset.left + "px",
+      top:
+        newDirection === "above"
+          ? offset.top + window.scrollY - dropdownHeight - parentOffset.top + "px"
+          : offset.bottom + window.scrollY - parentOffset.top + "px",
     };
 
-    var viewport = {
-      top: $window.scrollY,
-      bottom: $window.scrollY + $window.innerHeight,
-    };
+    this.dropdown.classList.remove("select2-dropdown--below", "select2-dropdown--above");
+    this.dropdown.classList.add(`select2-dropdown--${newDirection}`);
 
-    var enoughRoomAbove = viewport.top < offset.top - dropdown.height;
-    var enoughRoomBelow = viewport.bottom > offset.bottom + dropdown.height;
-
-    var css = {
-      left: offset.left + "px",
-      top: container.bottom + "px",
-    };
-
-    // Determine what the parent element is to use for calculating the offset
-    var $offsetParent = this.dropdownParent;
-
-    // For statically positioned elements, we need to get the element
-    // that is determining the offset
-    if (window.getComputedStyle($offsetParent).position === "static") {
-      $offsetParent = $offsetParent.offsetParent;
-    }
-
-    var parentOffset = {
-      top: 0,
-      left: 0,
-    };
-
-    if (
-      $offsetParent &&
-      (document.body.contains($offsetParent) || $offsetParent.isConnected)
-    ) {
-      parentOffset = $offsetParent.getBoundingClientRect();
-    }
-
-    css.top = parseFloat(css.top) - parentOffset.top + "px";
-    css.left = parseFloat(css.left) - parentOffset.left + "px";
-
-    if (!isCurrentlyAbove && !isCurrentlyBelow) {
-      newDirection = "below";
-    }
-
-    if (!enoughRoomBelow && enoughRoomAbove && !isCurrentlyAbove) {
-      newDirection = "above";
-    } else if (!enoughRoomAbove && enoughRoomBelow && isCurrentlyAbove) {
-      newDirection = "below";
-    }
-
-    if (
-      newDirection == "above" ||
-      (isCurrentlyAbove && newDirection !== "below")
-    ) {
-      css.top = container.top - parentOffset.top - dropdown.height + "px";
-    }
-
-    if (newDirection != null) {
-      this.dropdown.classList.remove("select2-dropdown--below");
-      this.dropdown.classList.remove("select2-dropdown--above");
-      this.dropdown.classList.add("select2-dropdown--" + newDirection);
-
-      this.container.classList.remove("select2-container--below");
-      this.container.classList.remove("select2-container--above");
-      this.container.classList.add("select2-container--" + newDirection);
-    }
+    this.container.classList.remove("select2-container--below", "select2-container--above");
+    this.container.classList.add(`select2-container--${newDirection}`);
 
     Object.assign(this.dropdownContainer.style, css);
   };
+
+  AttachBody.prototype._getParentOffset = function (parent) {
+    if (!(parent instanceof Element)) {
+      // Fallback to `document.body` if `parent` is not an element
+      parent = document.body;
+    }
+
+    const style = window.getComputedStyle(parent);
+
+    if (style.position === "static") {
+      parent = parent.offsetParent || document.body;
+    }
+
+    if (parent) {
+      const parentOffset = parent.getBoundingClientRect();
+      return {
+        top: parentOffset.top + window.scrollY,
+        left: parentOffset.left + window.scrollX,
+      };
+    }
+
+    return { top: 0, left: 0 };
+  };
+
 
   AttachBody.prototype._resizeDropdown = function () {
     var css = {
