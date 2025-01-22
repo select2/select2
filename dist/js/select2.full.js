@@ -2088,7 +2088,6 @@ S2.define('select2/selection/search',["../utils", "../keys"], function (Utils, K
 
     const searchField = document.createElement("textarea");
     searchField.className = "select2-search__field";
-    searchField.type = "search";
     searchField.tabIndex = "-1";
     searchField.autocorrect = "off";
     searchField.autocapitalize = "none";

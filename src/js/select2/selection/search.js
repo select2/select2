@@ -12,7 +12,6 @@ define(["../utils", "../keys"], function (Utils, KEYS) {
 
     const searchField = document.createElement("textarea");
     searchField.className = "select2-search__field";
-    searchField.type = "search";
     searchField.tabIndex = "-1";
     searchField.autocorrect = "off";
     searchField.autocapitalize = "none";
