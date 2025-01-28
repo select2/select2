@@ -294,7 +294,6 @@ define([
     if (item.text != null) {
       item.text = item.text.toString();
     }
-
     if (item._resultId == null && item.id && this.container != null) {
       item._resultId = this.generateResultId(this.container, item);
     }

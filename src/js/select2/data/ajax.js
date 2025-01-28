@@ -12,20 +12,23 @@ define(["./array", "../utils"], function (ArrayAdapter, Utils) {
   Utils.Extend(AjaxAdapter, ArrayAdapter);
 
   AjaxAdapter.prototype._applyDefaults = function (options) {
-    var defaults = {
+    const defaults = {
       data: function (params) {
-        return Object.assign({}, params, {
-          q: params.term,
-        });
+        const mergedParams = {};
+        for (const key in params) {
+          if (Object.prototype.hasOwnProperty.call(params, key)) {
+            mergedParams[key] = params[key];
+          }
+        }
+        mergedParams.q = params.term;
+        return mergedParams;
       },
       transport: function (params, success, failure) {
-        var request = new XMLHttpRequest();
-          // For GET requests, append data to URL as query params
-        if (params.type === 'GET' && params.data) {
-          var queryString = Object.keys(params.data)
-            .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(params.data[key]))
-            .join('&');
-          params.url = params.url + (params.url.indexOf('?') > -1 ? '&' : '?') + queryString;
+        const request = new XMLHttpRequest();
+
+        if (params.type === "GET" && params.data) {
+          const queryString = new URLSearchParams(params.data).toString();
+          params.url += (params.url.indexOf("?") > -1 ? "&" : "?") + queryString;
         }
 
         request.open(params.type, params.url, true);
@@ -39,22 +42,38 @@ define(["./array", "../utils"], function (ArrayAdapter, Utils) {
           if (request.status >= 200 && request.status < 400) {
             success(JSON.parse(request.responseText));
           } else {
-            failure();
+            failure(new Error(`HTTP error ${request.status}`));
           }
         };
 
         request.onerror = function () {
-          failure();
+          failure(new Error("Network error occurred"));
         };
 
-        request.send(params.type !== 'GET' ? params.data : null);
-        // request.send(params.data);
+        if (params.type !== "GET") {
+          request.send(JSON.stringify(params.data));
+        } else {
+          request.send(null);
+        }
 
         return request;
       },
     };
 
-    return Object.assign({}, defaults, options, true);
+    // Merge `defaults` and `options` manually
+    const mergedOptions = {};
+    for (const key in defaults) {
+      if (Object.prototype.hasOwnProperty.call(defaults, key)) {
+        mergedOptions[key] = defaults[key];
+      }
+    }
+    for (const key in options) {
+      if (Object.prototype.hasOwnProperty.call(options, key)) {
+        mergedOptions[key] = options[key];
+      }
+    }
+
+    return mergedOptions;
   };
 
   AjaxAdapter.prototype.processResults = function (results) {
@@ -66,11 +85,9 @@ define(["./array", "../utils"], function (ArrayAdapter, Utils) {
     var self = this;
 
     if (this._request != null) {
-      // JSONP requests cannot always be aborted
       if (typeof this._request.abort === "function") {
         this._request.abort();
       }
-
       this._request = null;
     }
 
@@ -101,7 +118,7 @@ define(["./array", "../utils"], function (ArrayAdapter, Utils) {
             Array.isArray(results.results)
           ) {
             results.results = results.results.map(
-              AjaxAdapter.prototype._normalizeItem
+              self._normalizeItem.bind(self) // Ensure the correct context is passed
             );
           } else {
             if (
@@ -109,10 +126,8 @@ define(["./array", "../utils"], function (ArrayAdapter, Utils) {
               window.console &&
               console.error
             ) {
-              // Check to make sure that the response included a `results` key.
               console.error(
-                "Select2: The AJAX results did not return an array in the " +
-                  "`results` key of the response."
+                "Select2: The AJAX results did not return an array in the `results` key of the response."
               );
             }
           }
@@ -120,8 +135,6 @@ define(["./array", "../utils"], function (ArrayAdapter, Utils) {
           callback(results);
         },
         function () {
-          // Attempt to detect if a request was aborted
-          // Only works if the transport exposes a status property
           if (
             request &&
             "status" in request &&

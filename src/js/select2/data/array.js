@@ -1,4 +1,4 @@
-define(["./select", "../utils"], function (SelectAdapter, Utils) {
+S2.define('select2/data/array',["./select", "../utils"], function (SelectAdapter, Utils) {
   function ArrayAdapter($element, options) {
     this._dataToConvert = options.get("data") || [];
 
@@ -14,71 +14,46 @@ define(["./select", "../utils"], function (SelectAdapter, Utils) {
   };
 
   ArrayAdapter.prototype.select = function (data) {
-    var self = this;
+    // Ensure `option` is correctly filtered
+    let options = Array.from(this.element.querySelectorAll("option"));
 
-    // Convert NodeList to array
-    var options = Array.prototype.slice.call(this.element.querySelectorAll('option'));
+    let option = options.find((option) => option.value === data.id.toString());
 
-    var option = options.filter(function (option) {
-      return option.value == data.id.toString();
-    });
-
-    if (option.length === 0) {
-      var option = this.option(data);
+    if (!option) {
+      // Create a new `option` if not found
+      option = this.option(data);
       this.element.appendChild(option);
     }
 
-    option[0].selected = true;
+    option.selected = true;
+
+    // Dispatch `input` and `change` events
+    this.element.dispatchEvent(new Event("input"));
+    this.element.dispatchEvent(new Event("change"));
   };
 
   ArrayAdapter.prototype.convertToOptions = function (data) {
-    var self = this;
+    const existingOptions = Array.from(this.element.querySelectorAll("option"));
+    const existingIds = new Set(existingOptions.map((option) => option.value));
 
-    var $existing = this.element.querySelectorAll("option");
-    var existingIds = Array.from($existing).map(function (option) {
-      return self.item(option).id;
+    const newOptions = [];
+
+    data.forEach((item) => {
+      const normalizedItem = this._normalizeItem(item);
+
+      if (!existingIds.has(normalizedItem.id)) {
+        const option = this.option(normalizedItem);
+
+        if (normalizedItem.children) {
+          const childOptions = this.convertToOptions(normalizedItem.children);
+          childOptions.forEach((child) => option.appendChild(child));
+        }
+
+        newOptions.push(option);
+      }
     });
 
-    var $options = [];
-
-    // Filter out all items except for the one passed in the argument
-    function onlyItem(item) {
-      return function (option) {
-        return option.value == item.id;
-      };
-    }
-
-    for (var d = 0; d < data.length; d++) {
-      var item = this._normalizeItem(data[d]);
-
-      // Skip items which were pre-loaded, only merge the data
-      if (existingIds.indexOf(item.id) >= 0) {
-        var $existingOption = Array.from($existing).filter(
-          onlyItem(item)
-        );
-
-        var existingData = this.item($existingOption);
-        var newData = Object.assign({}, item, existingData);
-
-        var $newOption = this.option(newData);
-
-        $existingOption.replaceWith($newOption);
-
-        continue;
-      }
-
-      var $option = this.option(item);
-
-      if (item.children) {
-        var $children = this.convertToOptions(item.children);
-
-        $option.append($children);
-      }
-
-      $options.push($option);
-    }
-
-    return $options;
+    return newOptions;
   };
 
   return ArrayAdapter;

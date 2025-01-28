@@ -933,21 +933,21 @@ S2.define('select2/results',["./utils"], function (Utils) {
   };
 
   Results.prototype.highlightFirstItem = function () {
-    var $options = this.results.querySelectorAll(
+    var options = this.results.querySelectorAll(
       ".select2-results__option--selectable"
     );
-    var $selected = Array.prototype.filter.call(
-      $options,
+    var selected = Array.prototype.filter.call(
+      options,
       function (option) {
         return option.classList.contains(
           "select2-results__option--selected"
         );
       }
     );
-    if ($selected.length > 0) {
-      $selected[0].dispatchEvent(new Event("mouseenter"));
-    } else {
-      $options[0].dispatchEvent(new Event("mouseenter"));
+    if (selected.length > 0) {
+      selected[0].dispatchEvent(new Event("mouseenter"));
+    } else if (options.length > 0) {
+      options[0].dispatchEvent(new Event("mouseenter"));
     }
 
     this.ensureHighlightVisible();
@@ -1299,7 +1299,7 @@ S2.define('select2/results',["./utils"], function (Utils) {
 
         option.addEventListener("mousedown", function (evt) {
           var data = Utils.GetData(option, "data");
-
+          if (this.classList.contains("select2-results__option--selected")) {
             if (self.options.get("multiple")) {
               self.trigger("unselect", {
                 originalEvent: evt,
@@ -1311,8 +1311,8 @@ S2.define('select2/results',["./utils"], function (Utils) {
                 data: data,
               });
             }
-
-            // return;
+          }
+          // return;
 
           self.trigger("select", {
             originalEvent: evt,
@@ -3565,7 +3565,6 @@ S2.define('select2/data/select',[
     if (item.text != null) {
       item.text = item.text.toString();
     }
-
     if (item._resultId == null && item.id && this.container != null) {
       item._resultId = this.generateResultId(this.container, item);
     }
@@ -3604,75 +3603,52 @@ S2.define('select2/data/array',["./select", "../utils"], function (SelectAdapter
   };
 
   ArrayAdapter.prototype.select = function (data) {
-    var self = this;
+    // Ensure `option` is correctly filtered
+    let options = Array.from(this.element.querySelectorAll("option"));
 
-    // Convert NodeList to array
-    var options = Array.prototype.slice.call(this.element.querySelectorAll('option'));
+    let option = options.find((option) => option.value === data.id.toString());
 
-    var option = options.filter(function (option) {
-      return option.value == data.id.toString();
-    });
-
-    if (option.length === 0) {
-      var option = this.option(data);
+    if (!option) {
+      // Create a new `option` if not found
+      option = this.option(data);
       this.element.appendChild(option);
     }
 
-    option[0].selected = true;
+    option.selected = true;
+
+    // Dispatch `input` and `change` events
+    this.element.dispatchEvent(new Event("input"));
+    this.element.dispatchEvent(new Event("change"));
   };
 
   ArrayAdapter.prototype.convertToOptions = function (data) {
-    var self = this;
+    const existingOptions = Array.from(this.element.querySelectorAll("option"));
+    const existingIds = new Set(existingOptions.map((option) => option.value));
 
-    var $existing = this.element.querySelectorAll("option");
-    var existingIds = Array.from($existing).map(function (option) {
-      return self.item(option).id;
+    const newOptions = [];
+
+    data.forEach((item) => {
+      const normalizedItem = this._normalizeItem(item);
+
+      if (!existingIds.has(normalizedItem.id)) {
+        const option = this.option(normalizedItem);
+
+        if (normalizedItem.children) {
+          const childOptions = this.convertToOptions(normalizedItem.children);
+          childOptions.forEach((child) => option.appendChild(child));
+        }
+
+        newOptions.push(option);
+      }
     });
 
-    var $options = [];
-
-    // Filter out all items except for the one passed in the argument
-    function onlyItem(item) {
-      return function (option) {
-        return option.value == item.id;
-      };
-    }
-
-    for (var d = 0; d < data.length; d++) {
-      var item = this._normalizeItem(data[d]);
-
-      // Skip items which were pre-loaded, only merge the data
-      if (existingIds.indexOf(item.id) >= 0) {
-        var $existingOption = Array.from($existing).filter(
-          onlyItem(item)
-        );
-
-        var existingData = this.item($existingOption);
-        var newData = Object.assign({}, item, existingData);
-
-        var $newOption = this.option(newData);
-
-        $existingOption.replaceWith($newOption);
-
-        continue;
-      }
-
-      var $option = this.option(item);
-
-      if (item.children) {
-        var $children = this.convertToOptions(item.children);
-
-        $option.append($children);
-      }
-
-      $options.push($option);
-    }
-
-    return $options;
+    return newOptions;
   };
 
   return ArrayAdapter;
 });
+
+S2.define("select2/data/array", function(){});
 
 S2.define('select2/data/ajax',["./array", "../utils"], function (ArrayAdapter, Utils) {
   function AjaxAdapter($element, options) {
@@ -3688,20 +3664,23 @@ S2.define('select2/data/ajax',["./array", "../utils"], function (ArrayAdapter, U
   Utils.Extend(AjaxAdapter, ArrayAdapter);
 
   AjaxAdapter.prototype._applyDefaults = function (options) {
-    var defaults = {
+    const defaults = {
       data: function (params) {
-        return Object.assign({}, params, {
-          q: params.term,
-        });
+        const mergedParams = {};
+        for (const key in params) {
+          if (Object.prototype.hasOwnProperty.call(params, key)) {
+            mergedParams[key] = params[key];
+          }
+        }
+        mergedParams.q = params.term;
+        return mergedParams;
       },
       transport: function (params, success, failure) {
-        var request = new XMLHttpRequest();
-          // For GET requests, append data to URL as query params
-        if (params.type === 'GET' && params.data) {
-          var queryString = Object.keys(params.data)
-            .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(params.data[key]))
-            .join('&');
-          params.url = params.url + (params.url.indexOf('?') > -1 ? '&' : '?') + queryString;
+        const request = new XMLHttpRequest();
+
+        if (params.type === "GET" && params.data) {
+          const queryString = new URLSearchParams(params.data).toString();
+          params.url += (params.url.indexOf("?") > -1 ? "&" : "?") + queryString;
         }
 
         request.open(params.type, params.url, true);
@@ -3715,22 +3694,38 @@ S2.define('select2/data/ajax',["./array", "../utils"], function (ArrayAdapter, U
           if (request.status >= 200 && request.status < 400) {
             success(JSON.parse(request.responseText));
           } else {
-            failure();
+            failure(new Error(`HTTP error ${request.status}`));
           }
         };
 
         request.onerror = function () {
-          failure();
+          failure(new Error("Network error occurred"));
         };
 
-        request.send(params.type !== 'GET' ? params.data : null);
-        // request.send(params.data);
+        if (params.type !== "GET") {
+          request.send(JSON.stringify(params.data));
+        } else {
+          request.send(null);
+        }
 
         return request;
       },
     };
 
-    return Object.assign({}, defaults, options, true);
+    // Merge `defaults` and `options` manually
+    const mergedOptions = {};
+    for (const key in defaults) {
+      if (Object.prototype.hasOwnProperty.call(defaults, key)) {
+        mergedOptions[key] = defaults[key];
+      }
+    }
+    for (const key in options) {
+      if (Object.prototype.hasOwnProperty.call(options, key)) {
+        mergedOptions[key] = options[key];
+      }
+    }
+
+    return mergedOptions;
   };
 
   AjaxAdapter.prototype.processResults = function (results) {
@@ -3742,11 +3737,9 @@ S2.define('select2/data/ajax',["./array", "../utils"], function (ArrayAdapter, U
     var self = this;
 
     if (this._request != null) {
-      // JSONP requests cannot always be aborted
       if (typeof this._request.abort === "function") {
         this._request.abort();
       }
-
       this._request = null;
     }
 
@@ -3777,7 +3770,7 @@ S2.define('select2/data/ajax',["./array", "../utils"], function (ArrayAdapter, U
             Array.isArray(results.results)
           ) {
             results.results = results.results.map(
-              AjaxAdapter.prototype._normalizeItem
+              self._normalizeItem.bind(self) // Ensure the correct context is passed
             );
           } else {
             if (
@@ -3785,10 +3778,8 @@ S2.define('select2/data/ajax',["./array", "../utils"], function (ArrayAdapter, U
               window.console &&
               console.error
             ) {
-              // Check to make sure that the response included a `results` key.
               console.error(
-                "Select2: The AJAX results did not return an array in the " +
-                  "`results` key of the response."
+                "Select2: The AJAX results did not return an array in the `results` key of the response."
               );
             }
           }
@@ -3796,8 +3787,6 @@ S2.define('select2/data/ajax',["./array", "../utils"], function (ArrayAdapter, U
           callback(results);
         },
         function () {
-          // Attempt to detect if a request was aborted
-          // Only works if the transport exposes a status property
           if (
             request &&
             "status" in request &&

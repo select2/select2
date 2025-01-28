@@ -98,21 +98,21 @@ define(["./utils"], function (Utils) {
   };
 
   Results.prototype.highlightFirstItem = function () {
-    var $options = this.results.querySelectorAll(
+    var options = this.results.querySelectorAll(
       ".select2-results__option--selectable"
     );
-    var $selected = Array.prototype.filter.call(
-      $options,
+    var selected = Array.prototype.filter.call(
+      options,
       function (option) {
         return option.classList.contains(
           "select2-results__option--selected"
         );
       }
     );
-    if ($selected.length > 0) {
-      $selected[0].dispatchEvent(new Event("mouseenter"));
-    } else {
-      $options[0].dispatchEvent(new Event("mouseenter"));
+    if (selected.length > 0) {
+      selected[0].dispatchEvent(new Event("mouseenter"));
+    } else if (options.length > 0) {
+      options[0].dispatchEvent(new Event("mouseenter"));
     }
 
     this.ensureHighlightVisible();
@@ -464,7 +464,7 @@ define(["./utils"], function (Utils) {
 
         option.addEventListener("mousedown", function (evt) {
           var data = Utils.GetData(option, "data");
-
+          if (this.classList.contains("select2-results__option--selected")) {
             if (self.options.get("multiple")) {
               self.trigger("unselect", {
                 originalEvent: evt,
@@ -476,8 +476,8 @@ define(["./utils"], function (Utils) {
                 data: data,
               });
             }
-
-            // return;
+          }
+          // return;
 
           self.trigger("select", {
             originalEvent: evt,
