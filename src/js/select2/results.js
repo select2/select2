@@ -375,7 +375,7 @@ define([
 
       var currentOffset = self.$results.offset().top;
       var nextTop = $next.offset().top;
-      var nextOffset = self.$results.scrollTop() + (nextTop - currentOffset);
+      var nextOffset = self.$results..parent().scrollTop() + (nextTop - currentOffset);
 
       if (nextIndex === 0) {
         self.$results.scrollTop(0);
@@ -425,7 +425,7 @@ define([
 
     if ($.fn.mousewheel) {
       this.$results.on('mousewheel', function (e) {
-        var top = self.$results.scrollTop();
+        var top = self.$results.parent().scrollTop();
 
         var bottom = self.$results.get(0).scrollHeight - top + e.deltaY;
 

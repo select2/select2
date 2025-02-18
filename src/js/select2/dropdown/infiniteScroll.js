@@ -37,7 +37,7 @@ define([
       self.loading = true;
     });
 
-    this.$results.on('scroll', this.loadMoreIfNeeded.bind(this));
+    this.$results.parent().on('scroll', this.loadMoreIfNeeded.bind(this));
   };
 
   InfiniteScroll.prototype.loadMoreIfNeeded = function () {
@@ -50,7 +50,7 @@ define([
       return;
     }
 
-    var currentOffset = this.$results.offset().top +
+    var currentOffset = this.$results.parent().offset().top +
       this.$results.outerHeight(false);
     var loadingMoreOffset = this.$loadingMore.offset().top +
       this.$loadingMore.outerHeight(false);
