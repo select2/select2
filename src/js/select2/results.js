@@ -375,7 +375,7 @@ define([
 
       var currentOffset = self.$results.offset().top;
       var nextTop = $next.offset().top;
-      var nextOffset = self.$results..parent().scrollTop() + (nextTop - currentOffset);
+      var nextOffset = self.$results.parent().scrollTop() + (nextTop - currentOffset);
 
       if (nextIndex === 0) {
         self.$results.scrollTop(0);
