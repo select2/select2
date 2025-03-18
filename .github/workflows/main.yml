@@ -7,9 +7,9 @@ jobs:
     name: Linting
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       - name: Use Node.js 20
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e
         with:
           node-version: 20
       - name: npm install
@@ -22,9 +22,9 @@ jobs:
     steps:
       - run: sudo apt update
       - run: sudo apt install -y chromium-browser
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       - name: Use Node.js 20
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e
         with:
           node-version: 20
       - name: npm install
@@ -38,9 +38,9 @@ jobs:
     name: Minification
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       - name: Use Node.js 20
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e
         with:
           node-version: 20
       - name: npm install

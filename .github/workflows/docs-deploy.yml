@@ -7,12 +7,12 @@ jobs:
     name: Deploy Grav
     runs-on: ubuntu-latest
     steps:
-      - uses: maddox/actions/sleep@master
+      - uses: maddox/actions/sleep@064c408aac15c33fbdeb1cee155a529d6fbb13ff
         with:
           args: "180"
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       - name: Copy to documentation server
-        uses: maxheld83/rsync@v0.1.0
+        uses: maxheld83/rsync@fffa96941effe8fdbf294a6548d1ee735e3f93e5
         env:
           USERNAME: ${{ secrets.DOCUMENTATION_SSH_USERNAME }}
           SSH_PRIVATE_KEY: ${{ secrets.DOCUMENTATION_SSH_KEY }}
