@@ -1574,7 +1574,7 @@ S2.define('select2/selection/base',[
   };
 
   BaseSelection.prototype.update = function (data) {
-    throw new Error('The `update` method must be defined in child classes.');
+    throw new Error('The "update" method must be defined in child classes.');
   };
 
   /**
