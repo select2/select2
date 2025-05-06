@@ -1,11 +1,11 @@
-module('Options - Width');
+QUnit.module('Options - Width');
 
 var $ = require('jquery');
 
 var Select2 = require('select2/core');
 var select = new Select2($('<select></select>'));
 
-test('string passed as width', function (assert) {
+QUnit.test('string passed as width', function (assert) {
   var $test = $('<select></select>');
 
   var width = select._resolveWidth($test, '80%');
@@ -13,7 +13,7 @@ test('string passed as width', function (assert) {
   assert.equal(width, '80%');
 });
 
-test('width from style attribute', function (assert) {
+QUnit.test('width from style attribute', function (assert) {
   var $test = $('<select style="width: 50%;"></selct>');
 
   var width = select._resolveWidth($test, 'style');
@@ -21,7 +21,7 @@ test('width from style attribute', function (assert) {
   assert.equal(width, '50%');
 });
 
-test('width from style returns null if nothing is found', function (assert) {
+QUnit.test('width from style returns null if nothing is found', function (assert) {
   var $test = $('<select></selct>');
 
   var width = select._resolveWidth($test, 'style');
@@ -29,7 +29,7 @@ test('width from style returns null if nothing is found', function (assert) {
   assert.equal(width, null);
 });
 
-test('width from computed element width', function (assert) {
+QUnit.test('width from computed element width', function (assert) {
   var $style = $(
     '<style type="text/css">.css-set-width { width: 500px; }</style>'
   );
@@ -43,7 +43,7 @@ test('width from computed element width', function (assert) {
   assert.equal(width, '500px');
 });
 
-test('resolve gets the style if it is there', function (assert) {
+QUnit.test('resolve gets the style if it is there', function (assert) {
   var $test = $('<select style="width: 20%;"></selct>');
 
   var width = select._resolveWidth($test, 'resolve');
@@ -51,7 +51,7 @@ test('resolve gets the style if it is there', function (assert) {
   assert.equal(width, '20%');
 });
 
-test('resolve falls back to element if there is no style', function (assert) {
+QUnit.test('resolve falls back to element if there is no style', function (assert) {
   var $style = $(
     '<style type="text/css">.css-set-width { width: 500px; }</style>'
   );
@@ -65,7 +65,7 @@ test('resolve falls back to element if there is no style', function (assert) {
   assert.equal(width, '500px');
 });
 
-test('computedstyle gets the style if parent is invisible', function (assert) {
+QUnit.test('computedstyle gets the style if parent is invisible', function (assert) {
   var $style = $(
     '<style type="text/css">.css-set-width { width: 500px; }</style>'
   );

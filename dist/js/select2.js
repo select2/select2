@@ -3578,6 +3578,12 @@ S2.define('select2/data/select',[
       item._resultId = this.generateResultId(this.container, item);
     }
 
+    if (item.children) {
+        item.children = item.children.map(
+            SelectAdapter.prototype._normalizeItem
+        );
+    }
+
     return $.extend({}, defaults, item);
   };
 
@@ -3744,9 +3750,13 @@ S2.define('select2/data/ajax',[
       var $request = options.transport(options, function (data) {
         var results = self.processResults(data, params);
 
-        if (self.options.get('debug') && window.console && console.error) {
-          // Check to make sure that the response included a `results` key.
-          if (!results || !results.results || !Array.isArray(results.results)) {
+        if (results && results.results && Array.isArray(results.results)) {
+          results.results = results.results.map(
+            AjaxAdapter.prototype._normalizeItem
+          );
+        } else {
+          if (self.options.get('debug') && window.console && console.error) {
+            // Check to make sure that the response included a `results` key.
             console.error(
               'Select2: The AJAX results did not return an array in the ' +
               '`results` key of the response.'
@@ -5374,7 +5384,10 @@ S2.define('select2/defaults',[
   };
 
   Defaults.prototype.set = function (key, value) {
-    var camelKey = $.camelCase(key);
+    function upperCaseLetter(_, letter) {
+      return letter.toUpperCase();
+    }
+    var camelKey = key.replace(/-([a-z])/g, upperCaseLetter);
 
     var data = {};
     data[camelKey] = value;

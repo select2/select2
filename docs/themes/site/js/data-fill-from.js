@@ -5,7 +5,7 @@ $(document).ready(function() {
     var codeContainer = $this.data("fill-from");
     var $container = $(codeContainer);
 
-    var code = $.trim($container.html());
+    var code = ($container.html() || '').trim();
 
     $this.text(code);
     $this.addClass("prettyprint");

@@ -8,10 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Use Node.js 12
+      - name: Use Node.js 20
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 20
       - name: npm install
         run: npm install
       - name: Run linting
@@ -20,24 +20,29 @@ jobs:
     name: Tests
     runs-on: ubuntu-latest
     steps:
+      - run: sudo apt update
+      - run: sudo apt install -y chromium-browser
       - uses: actions/checkout@v1
-      - name: Use Node.js 12
+      - name: Use Node.js 20
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 20
       - name: npm install
         run: npm install
       - name: Run tests
+        env:
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: "1"
+          PUPPETEER_EXECUTABLE_PATH: "/usr/bin/chromium-browser"
         run: grunt compile test
   minification:
     name: Minification
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Use Node.js 12
+      - name: Use Node.js 20
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 20
       - name: npm install
         run: npm install
       - name: Run minification

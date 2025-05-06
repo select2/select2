@@ -1,10 +1,10 @@
-module('Options - Copying from element');
+QUnit.module('Options - Copying from element');
 
 var $ = require('jquery');
 
 var Options = require('select2/options');
 
-test('copies disabled attribute when set', function (assert) {
+QUnit.test('copies disabled attribute when set', function (assert) {
   var $test = $('<select disabled></select>');
 
   var options = new Options({}, $test);
@@ -12,7 +12,7 @@ test('copies disabled attribute when set', function (assert) {
   assert.ok(options.get('disabled'));
 });
 
-test('does not copy disabled attribute when not set', function (assert) {
+QUnit.test('does not copy disabled attribute when not set', function (assert) {
   var $test = $('<select></select>');
 
   var options = new Options({}, $test);
@@ -20,7 +20,7 @@ test('does not copy disabled attribute when not set', function (assert) {
   assert.ok(!options.get('disabled'));
 });
 
-test('disabled attribute does not override disable option', function (assert) {
+QUnit.test('disabled attribute does not override disable option', function (assert) {
   var $test = $('<select disabled></select>');
 
   var options = new Options({
@@ -30,7 +30,7 @@ test('disabled attribute does not override disable option', function (assert) {
   assert.ok(!options.get('disabled'));
 });
 
-test('disabled option is synchronized back', function (assert) {
+QUnit.test('disabled option is synchronized back', function (assert) {
   var $test = $('<select disabled></select>');
 
   assert.ok($test.prop('disabled'));
@@ -42,7 +42,7 @@ test('disabled option is synchronized back', function (assert) {
   assert.ok(!$test.prop('disabled'));
 });
 
-test('copies multiple attribute when set', function (assert) {
+QUnit.test('copies multiple attribute when set', function (assert) {
   var $test = $('<select multiple></select>');
 
   var options = new Options({}, $test);
@@ -50,7 +50,7 @@ test('copies multiple attribute when set', function (assert) {
   assert.ok(options.get('multiple'));
 });
 
-test('does not copy multiple attribute when not set', function (assert) {
+QUnit.test('does not copy multiple attribute when not set', function (assert) {
   var $test = $('<select></select>');
 
   var options = new Options({}, $test);
@@ -58,7 +58,7 @@ test('does not copy multiple attribute when not set', function (assert) {
   assert.ok(!options.get('multiple'));
 });
 
-test('multiple attribute does not override multiple option', function (assert) {
+QUnit.test('multiple attribute does not override multiple option', function (assert) {
   var $test = $('<select multiple></select>');
 
   var options = new Options({
@@ -68,7 +68,7 @@ test('multiple attribute does not override multiple option', function (assert) {
   assert.ok(!options.get('multiple'));
 });
 
-test('multiple option is synchronized back', function (assert) {
+QUnit.test('multiple option is synchronized back', function (assert) {
   var $test = $('<select multiple></select>');
 
   assert.ok($test.prop('multiple'));
@@ -80,7 +80,7 @@ test('multiple option is synchronized back', function (assert) {
   assert.ok(!$test.prop('multiple'));
 });
 
-test('copies autocomplete attribute when set', function (assert) {
+QUnit.test('copies autocomplete attribute when set', function (assert) {
   var $test = $('<select autocomplete="country-name"></select>');
 
   if ($test.prop('autocomplete') !== 'country-name') {
@@ -94,7 +94,7 @@ test('copies autocomplete attribute when set', function (assert) {
   assert.equal(options.get('autocomplete'), 'country-name');
 });
 
-test('does not copy autocomplete attribute when not set', function (assert) {
+QUnit.test('does not copy autocomplete attribute when not set', function (assert) {
   var $test = $('<select></select>');
 
   var options = new Options({}, $test);
@@ -102,7 +102,7 @@ test('does not copy autocomplete attribute when not set', function (assert) {
   assert.equal(options.get('autocomplete'), 'off');
 });
 
-test('autocomplete attribute does not override option', function (assert) {
+QUnit.test('autocomplete attribute does not override option', function (assert) {
   var $test = $('<select autocomplete="country-name"></select>');
 
   var options = new Options({
