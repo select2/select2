@@ -319,6 +319,7 @@ define([
         return selection.text;
       },
       theme: 'default',
+      trimTitle: false,
       width: 'resolve'
     };
   };

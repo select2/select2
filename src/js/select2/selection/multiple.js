@@ -130,7 +130,7 @@ define([
       var title = selection.title || selection.text;
 
       if (title) {
-        $selection.attr('title', title);
+        $selection.attr('title', this.options.get('trimTitle') ? title.trim() : title);
       }
 
       var removeItem = this.options.get('translations').get('removeItem');

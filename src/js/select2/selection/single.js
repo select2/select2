@@ -98,7 +98,7 @@ define([
     var title = selection.title || selection.text;
 
     if (title) {
-      $rendered.attr('title', title);
+      $rendered.attr('title', this.options.get('trimTitle') ? title.trim() : title);
     } else {
       $rendered[0].removeAttribute('title');
     }
