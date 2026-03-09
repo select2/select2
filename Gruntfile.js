@@ -132,7 +132,7 @@ module.exports = function (grunt) {
         options: {
           api: 'modern',
           implementation: sass,
-          outputStyle: 'compressed'
+          style: 'compressed'
         },
         files: {
           'dist/css/select2.min.css': [
@@ -145,7 +145,7 @@ module.exports = function (grunt) {
         options: {
           api: 'modern',
           implementation: sass,
-          outputStyle: 'expanded'
+          style: 'expanded'
         },
         files: {
           'dist/css/select2.css': [
