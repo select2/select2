@@ -7,75 +7,75 @@
     padding-bottom: 5px;
     padding-right: 5px;
     position: relative;
-  
+
     &.select2-selection--clearable {
       padding-right: 25px;
     }
-  
+
     .select2-selection__clear {
       cursor: pointer;
       font-weight: bold;
       height: 20px;
       margin-right: 10px;
       margin-top: 5px;
-  
+
       position: absolute;
       right: 0;
-  
+
       // This padding is to account for the bottom border for the first
       // selection row and the top border of the second selection row.
       // Without it, selections on the first row may be offset incorrectly
       // and appear in their own row instead of going to the second row
       padding: 1px;
     }
-  
+
     .select2-selection__choice {
       background-color: #e4e4e4;
       border: 1px solid #aaa;
       border-radius: 4px;
       box-sizing: border-box;
-  
+
       display: inline-block;
       margin-left: 5px;
       margin-top: 5px;
       padding: 0;
       padding-left: 20px;
-  
+
       position: relative;
-  
+
       max-width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
       vertical-align: bottom;
       white-space: nowrap;
     }
-  
+
     .select2-selection__choice__display {
       cursor: default;
-  
+
       padding-left: 2px;
       padding-right: 5px;
     }
-  
+
     .select2-selection__choice__remove {
       background-color: transparent;
       border: none;
       border-right: 1px solid #aaa;
       border-top-left-radius: 4px;
       border-bottom-left-radius: 4px;
-  
+
       color: #999;
       cursor: pointer;
-  
+
       font-size: 1em;
       font-weight: bold;
-  
+
       padding: 0 4px;
-  
+
       position: absolute;
       left: 0;
       top: 0;
-  
+
       &:hover, &:focus {
         background-color: #f1f1f1;
         color: #333;
@@ -83,19 +83,19 @@
       }
     }
   }
-  
+
   &[dir="rtl"] {
     .select2-selection--multiple {
       .select2-selection__choice {
         margin-left: 5px;
         margin-right: auto;
       }
-  
+
       .select2-selection__choice__display {
         padding-left: 5px;
         padding-right: 2px;
       }
-  
+
       .select2-selection__choice__remove {
         border-left: 1px solid #aaa;
         border-right: none;
@@ -104,7 +104,7 @@
         border-top-right-radius: 4px;
         border-bottom-right-radius: 4px;
       }
-  
+
       .select2-selection__clear {
         float: left;
         margin-left: 10px;
@@ -112,20 +112,20 @@
       }
     }
   }
-  
+
   &.select2-container--focus {
     .select2-selection--multiple {
       border: solid black 1px;
       outline: 0;
     }
   }
-  
+
   &.select2-container--disabled {
     .select2-selection--multiple {
       background-color: #eee;
       cursor: default;
     }
-  
+
     .select2-selection__choice__remove {
       display: none;
     }

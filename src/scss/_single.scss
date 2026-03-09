@@ -1,32 +1,32 @@
 @mixin rules {
   .select2-selection--single {
     box-sizing: border-box;
-  
+
     cursor: pointer;
     display: block;
-  
+
     height: 28px;
-  
+
     user-select: none;
     -webkit-user-select: none;
-  
+
     .select2-selection__rendered {
       display: block;
       padding-left: 8px;
       padding-right: 20px;
-  
+
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-  
+
     .select2-selection__clear {
       background-color: transparent;
       border: none;
       font-size: 1em;
     }
   }
-  
+
   &[dir="rtl"] {
     .select2-selection--single {
       .select2-selection__rendered {
