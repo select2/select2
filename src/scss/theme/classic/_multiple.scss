@@ -1,102 +1,106 @@
-.select2-selection--multiple {
-  background-color: white;
+@use "../../theme/classic/defaults" as defaults;
 
-  border: 1px solid $border-color;
-  border-radius: $border-radius;
-
-  cursor: text;
-
-  outline: 0;
-
-  padding-bottom: 5px;
-  padding-right: 5px;
-
-  &:focus {
-    border: 1px solid $focus-border-color;
-  }
-
-  .select2-selection__clear {
-    display: none;
-  }
-
-  .select2-selection__choice {
-    background-color: #e4e4e4;
-    border: 1px solid $border-color;
-    border-radius: $border-radius;
-
-    display: inline-block;
-    margin-left: 5px;
-    margin-top: 5px;
-    padding: 0;
-  }
-
-  .select2-selection__choice__display {
-    cursor: default;
-
-    padding-left: 2px;
+@mixin rules {
+  .select2-selection--multiple {
+    background-color: white;
+  
+    border: 1px solid defaults.$border-color;
+    border-radius: defaults.$border-radius;
+  
+    cursor: text;
+  
+    outline: 0;
+  
+    padding-bottom: 5px;
     padding-right: 5px;
-  }
-
-  .select2-selection__choice__remove {
-    background-color: transparent;
-    border: none;
-    border-top-left-radius: $border-radius;
-    border-bottom-left-radius: $border-radius;
-
-    color: $remove-color;
-    cursor: pointer;
-
-    font-size: 1em;
-    font-weight: bold;
-
-    padding: 0 4px;
-
-    &:hover {
-      color: $remove-hover-color;
-      outline: none;
+  
+    &:focus {
+      border: 1px solid defaults.$focus-border-color;
     }
-  }
-}
-
-&[dir="rtl"] {
-  .select2-selection--multiple {
+  
+    .select2-selection__clear {
+      display: none;
+    }
+  
     .select2-selection__choice {
+      background-color: #e4e4e4;
+      border: 1px solid defaults.$border-color;
+      border-radius: defaults.$border-radius;
+  
+      display: inline-block;
       margin-left: 5px;
-      margin-right: auto;
+      margin-top: 5px;
+      padding: 0;
     }
-
+  
     .select2-selection__choice__display {
-      padding-left: 5px;
-      padding-right: 2px;
+      cursor: default;
+  
+      padding-left: 2px;
+      padding-right: 5px;
     }
-
+  
     .select2-selection__choice__remove {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-      border-top-right-radius: $border-radius;
-      border-bottom-right-radius: $border-radius;
+      background-color: transparent;
+      border: none;
+      border-top-left-radius: defaults.$border-radius;
+      border-bottom-left-radius: defaults.$border-radius;
+  
+      color: defaults.$remove-color;
+      cursor: pointer;
+  
+      font-size: 1em;
+      font-weight: bold;
+  
+      padding: 0 4px;
+  
+      &:hover {
+        color: defaults.$remove-hover-color;
+        outline: none;
+      }
     }
   }
-}
-
-&.select2-container--open {
-  .select2-selection--multiple {
-    border: 1px solid $focus-border-color;
-  }
-
-  &.select2-container--above {
+  
+  &[dir="rtl"] {
     .select2-selection--multiple {
-      border-top: none;
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
+      .select2-selection__choice {
+        margin-left: 5px;
+        margin-right: auto;
+      }
+  
+      .select2-selection__choice__display {
+        padding-left: 5px;
+        padding-right: 2px;
+      }
+  
+      .select2-selection__choice__remove {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-top-right-radius: defaults.$border-radius;
+        border-bottom-right-radius: defaults.$border-radius;
+      }
     }
   }
-
-  &.select2-container--below {
+  
+  &.select2-container--open {
     .select2-selection--multiple {
-      border-bottom: none;
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
+      border: 1px solid defaults.$focus-border-color;
+    }
+  
+    &.select2-container--above {
+      .select2-selection--multiple {
+        border-top: none;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+    }
+  
+    &.select2-container--below {
+      .select2-selection--multiple {
+        border-bottom: none;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
     }
   }
 }

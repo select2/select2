@@ -130,6 +130,7 @@ module.exports = function (grunt) {
     sass: {
       dist: {
         options: {
+          api: 'modern',
           implementation: sass,
           outputStyle: 'compressed'
         },
@@ -142,6 +143,7 @@ module.exports = function (grunt) {
       },
       dev: {
         options: {
+          api: 'modern',
           implementation: sass,
           outputStyle: 'expanded'
         },

@@ -1,3 +1,11 @@
+@use "single";
+@use "multiple";
+
+@use "dropdown";
+
+@use "theme/default/layout" as theme_default_layout;
+@use "theme/classic/layout" as theme_classic_layout;
+
 .select2-container {
   box-sizing: border-box;
 
@@ -6,11 +14,11 @@
   position: relative;
   vertical-align: middle;
 
-  @import "single";
-  @import "multiple";
+  @include single.rules;
+  @include multiple.rules;
 }
 
-@import "dropdown";
+@include dropdown.rules;
 
 .select2-close-mask {
   border: 0;
@@ -46,5 +54,5 @@
   white-space: nowrap !important;
 }
 
-@import "theme/default/layout";
-@import "theme/classic/layout";
+@include theme_default_layout.rules;
+@include theme_classic_layout.rules;
