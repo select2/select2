@@ -1,9 +1,10 @@
-@import "defaults";
-@import "../../mixins/gradients";
+@use 'sass:meta';
+@use 'defaults' as *;
+@use '../../mixins/gradients' as *;
 
 .select2-container--classic {
-  @import "single";
-  @import "multiple";
+  @include meta.load-css("single");
+  @include meta.load-css("multiple");
 
   .select2-search--dropdown {
     .select2-search__field {

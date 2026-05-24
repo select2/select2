@@ -1,5 +1,9 @@
+@use 'sass:color';
+@use 'defaults' as *;
+@use '../../mixins/gradients' as *;
+
 .select2-selection--single {
-  background-color: mix($selection-bg-top-color, $selection-bg-bottom-color);
+  background-color: color.mix($selection-bg-top-color, $selection-bg-bottom-color);
 
   border: 1px solid $border-color;
   border-radius: $border-radius;
