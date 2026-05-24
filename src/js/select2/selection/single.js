@@ -36,8 +36,15 @@ define([
       .attr('id', id)
       .attr('role', 'textbox')
       .attr('aria-readonly', 'true');
-    this.$selection.attr('aria-labelledby', id);
     this.$selection.attr('aria-controls', id);
+
+    // Set aria-label or aria-labelledby for accessibility.
+    const ariaLabel = this.$element.attr('aria-label') ? this.$element.attr('aria-label') : $('label[for="' + this.$element.attr('id') + '"]').text();
+    if (ariaLabel) {
+      this.$selection.attr('aria-label', ariaLabel)
+    } else {
+      this.$selection.attr('aria-labelledby', id);
+    }
 
     this.$selection.on('mousedown', function (evt) {
       // Only respond to left clicks
