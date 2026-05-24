@@ -1,6 +1,8 @@
+@use 'sass:meta';
+
 .select2-container--default {
-  @import "single";
-  @import "multiple";
+  @include meta.load-css("single");
+  @include meta.load-css("multiple");
 
   &.select2-container--open.select2-container--above {
     .select2-selection--single, .select2-selection--multiple {

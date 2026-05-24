@@ -131,24 +131,24 @@ module.exports = function (grunt) {
       dist: {
         options: {
           implementation: sass,
-          outputStyle: 'compressed'
+          style: 'compressed'
         },
         files: {
           'dist/css/select2.min.css': [
             'src/scss/core.scss',
-            'src/scss/theme/default/layout.css'
+            'src/scss/theme/default/layout.scss'
           ]
         }
       },
       dev: {
         options: {
           implementation: sass,
-          outputStyle: 'expanded'
+          style: 'expanded'
         },
         files: {
           'dist/css/select2.css': [
             'src/scss/core.scss',
-            'src/scss/theme/default/layout.css'
+            'src/scss/theme/default/layout.scss'
           ]
         }
       }
