@@ -41,7 +41,7 @@ define([
       return;
     }
 
-    if (this.$element.prop('multiple')) {
+    if (this.$element[0].multiple) {
       this.current(function (currentData) {
         var val = [];
 
@@ -70,7 +70,7 @@ define([
   SelectAdapter.prototype.unselect = function (data) {
     var self = this;
 
-    if (!this.$element.prop('multiple')) {
+    if (!this.$element[0].multiple) {
       return;
     }
 
@@ -216,15 +216,15 @@ define([
       data = {
         id: $option.val(),
         text: $option.text(),
-        disabled: $option.prop('disabled'),
-        selected: $option.prop('selected'),
-        title: $option.prop('title')
+        disabled: $option[0].disabled,
+        selected: $option[0].selected,
+        title: $option[0].title
       };
     } else if (option.tagName.toLowerCase() === 'optgroup') {
       data = {
-        text: $option.prop('label'),
+        text: $option[0].label,
         children: [],
-        title: $option.prop('title')
+        title: $option[0].title
       };
 
       var $children = $option.children('option');

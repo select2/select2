@@ -2073,7 +2073,7 @@ S2.define('select2/selection/search',[
     this.$searchContainer = $search;
     this.$search = $search.find('textarea');
 
-    this.$search.prop('autocomplete', this.options.get('autocomplete'));
+    this.$search[0].autocomplete = this.options.get('autocomplete');
     this.$search.attr('aria-label', searchLabel());
 
     var $rendered = decorated.call(this);
@@ -2108,13 +2108,13 @@ S2.define('select2/selection/search',[
     });
 
     container.on('enable', function () {
-      self.$search.prop('disabled', false);
+      self.$search[0].disabled = false;
 
       self._transferTabIndex();
     });
 
     container.on('disable', function () {
-      self.$search.prop('disabled', true);
+      self.$search[0].disabled = true;
     });
 
     container.on('focus', function (evt) {
@@ -3341,7 +3341,7 @@ S2.define('select2/data/select',[
       return;
     }
 
-    if (this.$element.prop('multiple')) {
+    if (this.$element[0].multiple) {
       this.current(function (currentData) {
         var val = [];
 
@@ -3370,7 +3370,7 @@ S2.define('select2/data/select',[
   SelectAdapter.prototype.unselect = function (data) {
     var self = this;
 
-    if (!this.$element.prop('multiple')) {
+    if (!this.$element[0].multiple) {
       return;
     }
 
@@ -3516,15 +3516,15 @@ S2.define('select2/data/select',[
       data = {
         id: $option.val(),
         text: $option.text(),
-        disabled: $option.prop('disabled'),
-        selected: $option.prop('selected'),
-        title: $option.prop('title')
+        disabled: $option[0].disabled,
+        selected: $option[0].selected,
+        title: $option[0].title
       };
     } else if (option.tagName.toLowerCase() === 'optgroup') {
       data = {
-        text: $option.prop('label'),
+        text: $option[0].label,
         children: [],
-        title: $option.prop('title')
+        title: $option[0].title
       };
 
       var $children = $option.children('option');
@@ -4224,7 +4224,7 @@ S2.define('select2/dropdown/search',[
     this.$searchContainer = $search;
     this.$search = $search.find('input');
 
-    this.$search.prop('autocomplete', this.options.get('autocomplete'));
+    this.$search[0].autocomplete = this.options.get('autocomplete');
     this.$search.attr('aria-label', searchLabel());
 
     $rendered.prepend($search);
@@ -5289,8 +5289,9 @@ S2.define('select2/defaults',[
   Defaults.prototype.applyFromElement = function (options, $element) {
     var optionLanguage = options.language;
     var defaultLanguage = this.defaults.language;
-    var elementLanguage = $element.prop('lang');
-    var parentLanguage = $element.closest('[lang]').prop('lang');
+    var elementLanguage = $element[0].lang;
+    var elementClosest = $element.closest('[lang]');
+    var parentLanguage = elementClosest[0] ? elementClosest[0].lang : null;
 
     var languages = Array.prototype.concat.call(
       this._resolveLanguage(elementLanguage),
@@ -5425,29 +5426,35 @@ S2.define('select2/options',[
     var excludedData = ['select2'];
 
     if (this.options.multiple == null) {
-      this.options.multiple = $e.prop('multiple');
+      this.options.multiple = $e[0].multiple;
     }
 
     if (this.options.disabled == null) {
-      this.options.disabled = $e.prop('disabled');
+      this.options.disabled = $e[0].disabled;
     }
 
-    if (this.options.autocomplete == null && $e.prop('autocomplete')) {
-      this.options.autocomplete = $e.prop('autocomplete');
+    if (this.options.autocomplete == null && $e[0].autocomplete) {
+      this.options.autocomplete = $e[0].autocomplete;
     }
 
-    if (this.options.dir == null) {
-      if ($e.prop('dir')) {
-        this.options.dir = $e.prop('dir');
-      } else if ($e.closest('[dir]').prop('dir')) {
-        this.options.dir = $e.closest('[dir]').prop('dir');
+    if (this.options.dir === null) {
+      var dirValue = $e[0].getAttribute('dir');
+
+      if (dirValue) {
+        this.options.dir = dirValue;
       } else {
-        this.options.dir = 'ltr';
+        var closestDirValue = $e.closest('[dir]').getAttribute('dir');
+
+        if (closestDirValue) {
+          this.options.dir = closestDirValue;
+        } else {
+          this.options.dir = 'ltr';
+        }
       }
     }
 
-    $e.prop('disabled', this.options.disabled);
-    $e.prop('multiple', this.options.multiple);
+    $e[0].disabled = this.options.disabled;
+    $e[0].multiple = this.options.multiple;
 
     if (Utils.GetData($e[0], 'select2Tags')) {
       if (this.options.debug && window.console && console.warn) {
@@ -5876,7 +5883,7 @@ S2.define('select2/core',[
   };
 
   Select2.prototype._syncAttributes = function () {
-    this.options.set('disabled', this.$element.prop('disabled'));
+    this.options.set('disabled', this.$element[0].disabled);
 
     if (this.isDisabled()) {
       if (this.isOpen()) {
@@ -6038,7 +6045,7 @@ S2.define('select2/core',[
     if (this.options.get('debug') && window.console && console.warn) {
       console.warn(
         'Select2: The `select2("enable")` method has been deprecated and will' +
-        ' be removed in later Select2 versions. Use $element.prop("disabled")' +
+        ' be removed in later Select2 versions. Use $element[0].disabled' +
         ' instead.'
       );
     }
@@ -6049,7 +6056,7 @@ S2.define('select2/core',[
 
     var disabled = !args[0];
 
-    this.$element.prop('disabled', disabled);
+    this.$element[0].disabled = disabled;
   };
 
   Select2.prototype.data = function () {
