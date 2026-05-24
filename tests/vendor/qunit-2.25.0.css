@@ -1,5 +1,5 @@
 /*!
- * QUnit 2.22.0
+ * QUnit 2.25.0
  * https://qunitjs.com/
  *
  * Copyright OpenJS Foundation and other contributors
@@ -329,11 +329,11 @@
 	margin:  0;
 }
 
-#qunit-tests li strong {
+#qunit-tests li .qunit-test-name {
 	cursor: pointer;
 }
 
-#qunit-tests li.skipped strong {
+#qunit-tests li.skipped .qunit-test-name {
 	cursor: default;
 }
 

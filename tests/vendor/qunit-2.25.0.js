@@ -1,5 +1,5 @@
 /*!
- * QUnit 2.22.0
+ * QUnit 2.25.0
  * https://qunitjs.com/
  *
  * Copyright OpenJS Foundation and other contributors
@@ -33,54 +33,6 @@
     return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", {
       writable: !1
     }), e;
-  }
-  function _createForOfIteratorHelper(r, e) {
-    var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
-    if (!t) {
-      if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) {
-        t && (r = t);
-        var n = 0,
-          F = function () {};
-        return {
-          s: F,
-          n: function () {
-            return n >= r.length ? {
-              done: !0
-            } : {
-              done: !1,
-              value: r[n++]
-            };
-          },
-          e: function (r) {
-            throw r;
-          },
-          f: F
-        };
-      }
-      throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-    }
-    var o,
-      a = !0,
-      u = !1;
-    return {
-      s: function () {
-        t = t.call(r);
-      },
-      n: function () {
-        var r = t.next();
-        return a = r.done, r;
-      },
-      e: function (r) {
-        u = !0, o = r;
-      },
-      f: function () {
-        try {
-          a || null == t.return || t.return();
-        } finally {
-          if (u) throw o;
-        }
-      }
-    };
   }
   function _iterableToArray(r) {
     if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r);
@@ -291,7 +243,7 @@
   };
 
   var toString = Object.prototype.toString;
-  var hasOwn$2 = Object.prototype.hasOwnProperty;
+  var hasOwn$1 = Object.prototype.hasOwnProperty;
   var performance = {
     // eslint-disable-next-line compat/compat -- Checked
     now: window$1 && window$1.performance && window$1.performance.now ? window$1.performance.now.bind(window$1.performance) : Date.now
@@ -330,7 +282,7 @@
     var allowArray = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
     var vals = allowArray && is('array', obj) ? [] : {};
     for (var key in obj) {
-      if (hasOwn$2.call(obj, key)) {
+      if (hasOwn$1.call(obj, key)) {
         var val = obj[key];
         vals[key] = val === Object(val) ? objectValues(val, allowArray) : val;
       }
@@ -359,7 +311,7 @@
     // This enables subsetting [20, 30] with {1: 30}.
     var subset = {};
     for (var key in model) {
-      if (hasOwn$2.call(model, key) && hasOwn$2.call(obj, key)) {
+      if (hasOwn$1.call(model, key) && hasOwn$1.call(obj, key)) {
         subset[key] = objectValuesSubset(obj[key], model[key]);
       }
     }
@@ -367,7 +319,7 @@
   }
   function extend(a, b, undefOnly) {
     for (var prop in b) {
-      if (hasOwn$2.call(b, prop)) {
+      if (hasOwn$1.call(b, prop)) {
         if (b[prop] === undefined) {
           delete a[prop];
         } else if (!(undefOnly && typeof a[prop] !== 'undefined')) {
@@ -758,6 +710,7 @@
     failOnZeroTests: true,
     // Select by pattern or case-insensitive substring match against "moduleName: testName"
     filter: undefined,
+    testFilter: null,
     // TODO: Make explicit in QUnit 3.
     // fixture: undefined,
 
@@ -770,6 +723,7 @@
     // By default, run previously failed tests first
     // very useful in combination with "Hide passed tests" checked
     reorder: true,
+    reporters: {},
     // When enabled, all tests must call expect()
     requireExpects: false,
     // By default, scroll to top of the page when suite is done
@@ -846,6 +800,8 @@
     // started: 0,
 
     // Internal state
+    _event_listeners: Object.create(null),
+    _event_memory: {},
     _deprecated_timeout_shown: false,
     _deprecated_countEachStep_shown: false,
     blocking: true,
@@ -873,6 +829,11 @@
       config[dest] = val;
     }
   }
+  function readFlatPreconfigStringOrBoolean(val, dest) {
+    if (typeof val === 'boolean' || typeof val === 'string' && val !== '') {
+      config[dest] = val;
+    }
+  }
   function readFlatPreconfigStringArray(val, dest) {
     if (typeof val === 'string' && val !== '') {
       config[dest] = [val];
@@ -894,9 +855,21 @@
     readFlatPreconfigBoolean(obj.qunit_config_reorder, 'reorder');
     readFlatPreconfigBoolean(obj.qunit_config_requireexpects, 'requireExpects');
     readFlatPreconfigBoolean(obj.qunit_config_scrolltop, 'scrolltop');
-    readFlatPreconfigString(obj.qunit_config_seed, 'seed');
+    readFlatPreconfigStringOrBoolean(obj.qunit_config_seed, 'seed');
     readFlatPreconfigStringArray(obj.qunit_config_testid, 'testId');
     readFlatPreconfigNumber(obj.qunit_config_testtimeout, 'testTimeout');
+    var reporterKeys = {
+      qunit_config_reporters_console: 'console',
+      qunit_config_reporters_tap: 'tap'
+    };
+    for (var key in reporterKeys) {
+      var val = obj[key];
+      // Based on readFlatPreconfigBoolean
+      if (typeof val === 'boolean' || typeof val === 'string' && val !== '') {
+        var dest = reporterKeys[key];
+        config.reporters[dest] = val === true || val === 'true' || val === '1';
+      }
+    }
   }
   if (process$1 && 'env' in process$1) {
     readFlatPreconfig(process$1.env);
@@ -914,6 +887,12 @@
 
   // Push a loose unnamed module to the modules collection
   config.modules.push(config.currentModule);
+  if (config.seed === 'true' || config.seed === true) {
+    // Generate a random seed
+    // Length of `Math.random()` fraction, in base 36, may vary from 6-14.
+    // Pad and take slice to a consistent 10-digit value.
+    config.seed = (Math.random().toString(36) + '0000000000').slice(2, 12);
+  }
 
   var dump = (function () {
     function quote(str) {
@@ -1400,6 +1379,40 @@
       }
     }
   }
+
+  /**
+   * Clear the SuiteReport tree of all tests and leave only current module as child suite
+   *
+   * This should be called before defining the first module.only() or test.only()
+   * because otherwise:
+   * - `runEnd.testCounts` is too high.
+   * - UI (HtmlReporter) and TAP (TapReporter) display totals too high.
+   * - Test runners like QTap might timeout because the TAP plan
+   *   would be printed as "1..9" even if only 2 tests are run,
+   *   which means tap-finished will wait for 3-9.
+   */
+  function clearSuiteReports(currentModule) {
+    var childSuite = null;
+    var suiteReport = currentModule.suiteReport;
+    while (suiteReport) {
+      suiteReport.tests.length = 0;
+      var i = suiteReport.childSuites.indexOf(childSuite);
+      if (i === -1) {
+        suiteReport.childSuites.length = 0;
+      } else {
+        // Reduce in-place to just currentModule.suiteReport or its intermediary
+        suiteReport.childSuites.splice(0, i);
+        suiteReport.childSuites.splice(1);
+      }
+      if (suiteReport === runSuite) {
+        suiteReport = null;
+      } else {
+        childSuite = suiteReport;
+        currentModule = currentModule.parentModule;
+        suiteReport = currentModule && currentModule.suiteReport || runSuite;
+      }
+    }
+  }
   var focused$1 = false; // indicates that the "only" filter was used
 
   function module$1(name, options, scope) {
@@ -1414,6 +1427,7 @@
       // delete any and all previously registered modules and tests.
       config.modules.length = 0;
       config.queue.length = 0;
+      clearSuiteReports(config.currentModule);
 
       // Ignore any tests declared after this block within the same
       // module parent. https://github.com/qunitjs/qunit/issues/1645
@@ -1451,8 +1465,8 @@
   //
   // This should reduce a raw stack trace like this:
   //
-  // > foo.broken()@/src/foo.js
-  // > Bar@/src/bar.js
+  // > foo.broken()@/example/foo.js
+  // > Bar@/example/bar.js
   // > @/test/bar.test.js
   // > @/lib/qunit.js:500:12
   // > @/lib/qunit.js:100:28
@@ -1462,8 +1476,8 @@
   //
   // and shorten it to show up until the end of the user's bar.test.js code.
   //
-  // > foo.broken()@/src/foo.js
-  // > Bar@/src/bar.js
+  // > foo.broken()@/example/foo.js
+  // > Bar@/example/bar.js
   // > @/test/bar.test.js
   //
   // QUnit will obtain one example trace (once per process/pageload suffices),
@@ -1480,21 +1494,89 @@
   //
   // See also:
   // - https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Error/Stack
-  //
-  var fileName = (sourceFromStacktrace(0) || ''
-  // Global replace, because a frame like localhost:4000/lib/qunit.js:1234:50,
-  // would otherwise (harmlessly, but uselessly) remove only the port (first match).
-  // https://github.com/qunitjs/qunit/issues/1769
-  ).replace(/(:\d+)+\)?/g, '')
-  // Remove anything prior to the last slash (Unix/Windows) from the last frame,
-  // leaving only "qunit.js".
-  .replace(/.+[/\\]/, '');
+
+  function qunitFileName() {
+    var error = new Error();
+    if (!error.stack) {
+      // Copy of sourceFromStacktrace() to avoid circular dependency
+      // Support: IE 9-11
+      try {
+        throw error;
+      } catch (err) {
+        error = err;
+      }
+    }
+    return (error.stack || ''
+    // Copy of extractStacktrace() to avoid circular dependency
+    // Support: V8/Chrome
+    ).replace(/^error$\n/im, '').split('\n')[0]
+    // Global replace, because a frame like localhost:4000/lib/qunit.js:1234:50,
+    // would otherwise (harmlessly, but uselessly) remove only the port (first match).
+    // https://github.com/qunitjs/qunit/issues/1769
+    .replace(/(:\d+)+\)?/g, '')
+    // Remove anything prior to the last slash (Unix/Windows) from the last frame,
+    // leaving only "qunit.js".
+    .replace(/.+[/\\]/, '');
+  }
+  var fileName = qunitFileName();
+
+  /**
+   * Responsibilities:
+   * - For internal errors from QUnit itself, remove the first qunit.js frames.
+   * - For errors in Node.js, format any remaining qunit.js and node:internal
+   *   frames as internal (i.e. grey out).
+   *
+   * @param {string} stack Error#stack
+   * @param {Function} formatInternal Format a string in an "internal" color
+   * @param {string|null} [eToString] Error#toString() to help remove
+   *  noise from Node.js/V8 stack traces.
+   */
+  function annotateStacktrace(stack, formatInternal) {
+    var eToString = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+    var frames = stack.split('\n');
+    var annotated = [];
+    if (eToString && eToString.indexOf(frames[0]) !== -1) {
+      // In Firefox and Safari e.stack starts with frame 0, but in V8 (Chrome/Node.js),
+      // e.stack starts first stringified message. Preserve this separately,
+      // so that, below, we can distinguish between internal frames on top
+      // (to remove) vs later internal frames (to format differently).
+      annotated.push(frames.shift());
+    }
+    var initialInternal = true;
+    for (var i = 0; i < frames.length; i++) {
+      var frame = frames[i];
+      var isInternal = fileName && frame.indexOf(fileName) !== -1 ||
+      // Support Node 16+: ESM-style
+      // "at wrap (node:internal/modules/cjs/loader:1)"
+      frame.indexOf('node:internal/') !== -1 ||
+      // Support Node 12-14 (CJS-style)
+      // "at load (internal/modules/cjs/loader.js:7)"
+      frame.match(/^\s+at .+\(internal[^)]*\)$/) ||
+      // Support Node 10
+      // "at listOnTimeout (timers.js:263)"
+      // Avoid matching "(C:)" on Windows
+      // Avoid matching "(http:)"
+      frame.match(/^\s+at .+\([a-z]+\.js[:\d]*\)$/);
+      if (!isInternal) {
+        initialInternal = false;
+      }
+      // Remove initial internal frames entirely.
+      if (!initialInternal) {
+        annotated.push(isInternal ? formatInternal(frame) : frame);
+      }
+    }
+    return annotated.join('\n');
+  }
   function extractStacktrace(e, offset) {
     offset = offset === undefined ? 4 : offset;
 
     // Support: IE9, e.stack is not supported, we will return undefined
     if (e && e.stack) {
       var stack = e.stack.split('\n');
+      // In Firefox and Safari, e.stack starts immediately with the first frame.
+      //
+      // In V8 (Chrome/Node.js), the stack starts first with a stringified error message,
+      // and the real stack starting on line 2.
       if (/^error$/i.test(stack[0])) {
         stack.shift();
       }
@@ -1516,8 +1598,9 @@
   function sourceFromStacktrace(offset) {
     var error = new Error();
 
-    // Support: Safari <=7 only, IE <=10 - 11 only
-    // Not all browsers generate the `stack` property for `new Error()`, see also #636
+    // Support: IE 9-11, iOS 7
+    // Not all browsers generate the `stack` property for `new Error()`
+    // See also https://github.com/qunitjs/qunit/issues/636
     if (!error.stack) {
       try {
         throw error;
@@ -1971,8 +2054,8 @@
   // eslint-disable-next-line dot-notation
   Assert.prototype.raises = Assert.prototype['throws'];
 
-  var LISTENERS = Object.create(null);
   var SUPPORTED_EVENTS = ['error', 'runStart', 'suiteStart', 'testStart', 'assertion', 'testEnd', 'suiteEnd', 'runEnd'];
+  var MEMORY_EVENTS = ['error', 'runEnd'];
 
   /**
    * Emits an event with the specified data to all currently registered listeners.
@@ -1992,10 +2075,13 @@
     }
 
     // Clone the callbacks in case one of them registers a new callback
-    var originalCallbacks = LISTENERS[eventName];
+    var originalCallbacks = config._event_listeners[eventName];
     var callbacks = originalCallbacks ? _toConsumableArray(originalCallbacks) : [];
     for (var i = 0; i < callbacks.length; i++) {
       callbacks[i](data);
+    }
+    if (inArray(eventName, MEMORY_EVENTS)) {
+      config._event_memory[eventName] = data;
     }
   }
 
@@ -2017,13 +2103,14 @@
     } else if (typeof callback !== 'function') {
       throw new TypeError('callback must be a function when registering a listener');
     }
-    if (!LISTENERS[eventName]) {
-      LISTENERS[eventName] = [];
-    }
+    var listeners = config._event_listeners[eventName] || (config._event_listeners[eventName] = []);
 
     // Don't register the same callback more than once
-    if (!inArray(callback, LISTENERS[eventName])) {
-      LISTENERS[eventName].push(callback);
+    if (!inArray(callback, listeners)) {
+      listeners.push(callback);
+      if (config._event_memory[eventName] !== undefined) {
+        callback(config._event_memory[eventName]);
+      }
     }
   }
 
@@ -2964,7 +3051,7 @@
         runtime: Math.round(performance.now() - this.started),
         todo: !!this.todo
       };
-      if (hasOwn$2.call(resultInfo, 'expected')) {
+      if (hasOwn$1.call(resultInfo, 'expected')) {
         details.expected = resultInfo.expected;
       }
       if (!resultInfo.result) {
@@ -2979,14 +3066,13 @@
         message: resultInfo.message
       });
     },
-    pushFailure: function pushFailure(message, source, actual) {
+    pushFailure: function pushFailure(message, source) {
       if (!(this instanceof Test)) {
         throw new Error('pushFailure() assertion outside test context, was ' + sourceFromStacktrace(2));
       }
       this.pushResult({
         result: false,
         message: message || 'error',
-        actual: actual || null,
         source: source
       });
     },
@@ -3205,12 +3291,32 @@
         return false;
       }
       var filter = config.filter;
-      if (!filter) {
-        return true;
+      if (filter) {
+        var regexFilter = /^(!?)\/([\w\W]*)\/(i?$)/.exec(filter);
+        var fullName = this.module.name + ': ' + this.testName;
+        if (regexFilter) {
+          if (!this.regexFilter(!!regexFilter[1], regexFilter[2], regexFilter[3], fullName)) {
+            return false;
+          }
+        } else if (!this.stringFilter(filter, fullName)) {
+          return false;
+        }
       }
-      var regexFilter = /^(!?)\/([\w\W]*)\/(i?$)/.exec(filter);
-      var fullName = this.module.name + ': ' + this.testName;
-      return regexFilter ? this.regexFilter(!!regexFilter[1], regexFilter[2], regexFilter[3], fullName) : this.stringFilter(filter, fullName);
+      if (typeof config.testFilter === 'function') {
+        var testInfo = {
+          testId: this.testId,
+          testName: this.testName,
+          module: this.module.name,
+          skip: !!this.skip
+        };
+        try {
+          return !!config.testFilter(testInfo);
+        } catch (error) {
+          Logger.warn('Error in QUnit.config.testFilter callback: ', error);
+          return false;
+        }
+      }
+      return true;
     },
     regexFilter: function regexFilter(exclude, pattern, flags, fullName) {
       var regex = new RegExp(pattern, flags);
@@ -3247,7 +3353,7 @@
     config.pollution = [];
     if (config.noglobals) {
       for (var key in g) {
-        if (hasOwn$2.call(g, key)) {
+        if (hasOwn$1.call(g, key)) {
           // In Opera sometimes DOM element ids show up here, ignore them
           if (/^qunit-test-output/.test(key)) {
             continue;
@@ -3284,6 +3390,7 @@
     }
     if (!focused) {
       config.queue.length = 0;
+      clearSuiteReports(config.currentModule);
       focused = true;
     }
     var newTest = new Test(settings);
@@ -3300,10 +3407,54 @@
   function makeEachTestName(testName, argument) {
     return "".concat(testName, " [").concat(argument, "]");
   }
+
+  // Characters to avoid in test names especially CLI/AP output:
+  // * x00-1F: e.g. NULL, backspace (\b), line breaks (\r\n), ESC.
+  // * x74: DEL.
+  // * xA0: non-breaking space.
+  //
+  // See https://en.wikipedia.org/wiki/ASCII#Character_order
+  //
+  // eslint-disable-next-line no-control-regex
+  var rNonObviousStr = /[\x00-\x1F\x7F\xA0]/;
   function runEach(data, eachFn) {
     if (Array.isArray(data)) {
       for (var i = 0; i < data.length; i++) {
-        eachFn(data[i], i);
+        var value = data[i];
+
+        // Create automatic labels for primitive data in arrays passed to test.each().
+        // We want to avoid the default "example [0], example [1]" where possible since
+        // these are not self-explanatory in results, and are also tedious to locate
+        // the source of since the numerical key of an array isn't literally in the
+        // code (you have to count).
+        //
+        // Design requirements:
+        // * Unique. Each label must be unique and correspond 1:1 with a data value.
+        //   This way each test name will hash to a unique testId with Rerun link,
+        //   without having to rely on Test class enforcing uniqueness with invisible
+        //   space hack.
+        // * Unambigious. While technical uniqueness is a hard requirement above,
+        //   we also want the labels to be obvious and unambiguous to humans.
+        //   For example, abbrebating "foobar" and "foobaz" to "f" and "fo" is
+        //   technically unique, but ambigious to humans which one is which.
+        // * Short and readable. Where possible we omit the array index numbers
+        //   so that in most cases, the value is simply shown as-is.
+        //   We prefer "example [foo], example [bar]"
+        //   over "example [0: foo], example [2: bar]".
+        //   This also has the benefit of being stable and robust against e.g.
+        //   re-ordering data or adding new items during development, without
+        //   invalidating a previous filter or rerun link immediately.
+        var valueType = _typeof(value);
+        var testKey = i;
+        if (valueType === 'string' && value.length <= 40 && !rNonObviousStr.test(value) && !/\s*\d+: /.test(value)) {
+          testKey = value;
+        } else if (valueType === 'string' || valueType === 'number' || valueType === 'boolean' || valueType === 'undefined' || value === null) {
+          var valueForName = String(value);
+          if (!rNonObviousStr.test(valueForName)) {
+            testKey = i + ': ' + (valueForName.length <= 30 ? valueForName : valueForName.slice(0, 29) + '…');
+          }
+        }
+        eachFn(value, testKey);
       }
     } else if (_typeof(data) === 'object' && data !== null) {
       for (var key in data) {
@@ -3754,8 +3905,6 @@
     };
   }
 
-  var hasOwn$1 = Object.prototype.hasOwnProperty;
-
   /**
    * Format a given value into YAML.
    *
@@ -3789,7 +3938,7 @@
    * "[Circular]" as they cannot otherwise be represented.
    */
   function prettyYamlValue(value) {
-    var indent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4;
+    var indent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
     if (value === undefined) {
       // Not supported in JSON/YAML, turn into string
       // and let the below output it as bare string.
@@ -3813,7 +3962,10 @@
       // cause data loss or invalid YAML syntax.
       //
       // - Quotes, escapes, line breaks, or JSON-like stuff.
-      var rSpecialJson = /['"\\/[{}\]\r\n]/;
+      // - Not allowed in YAML unquoted strings per https://yaml.org/spec/1.2.2/#733-plain-style
+      //   * ": " (colon followed by space)
+      //   * " #" (space followed by hash)
+      var rSpecialJson = /['"\\/[{}\]\r\n|:#]/;
 
       // - Characters that are special at the start of a YAML value
       var rSpecialYaml = /[-?:,[\]{}#&*!|=>'"%@`]/;
@@ -3839,7 +3991,7 @@
 
         // See also <https://yaml-multiline.info/>
         // Support IE 9-11: Avoid ES6 String#repeat
-        var prefix = new Array(indent + 1).join(' ');
+        var _prefix = new Array(indent * 2 + 1).join(' ');
         var trailingLinebreakMatch = value.match(/\n+$/);
         var trailingLinebreaks = trailingLinebreakMatch ? trailingLinebreakMatch[0].length : 0;
         if (trailingLinebreaks === 1) {
@@ -3850,14 +4002,14 @@
           // Ignore the last new line, since we'll get that one for free
           // with the straight-forward Block syntax.
           .replace(/\n$/, '').split('\n').map(function (line) {
-            return prefix + line;
+            return _prefix + line;
           });
           return '|\n' + lines.join('\n');
         } else {
           // This has either no trailing new lines, or more than 1.
           // Use |+ so that YAML parsers will preserve it exactly.
           var _lines = value.split('\n').map(function (line) {
-            return prefix + line;
+            return _prefix + line;
           });
           return '|+\n' + _lines.join('\n');
         }
@@ -3866,9 +4018,12 @@
         return value;
       }
     }
+    var prefix = new Array(indent + 1).join(' ');
 
     // Handle null, boolean, array, and object
-    return JSON.stringify(decycledShallowClone(value), null, 2);
+    return JSON.stringify(decycledShallowClone(value), null, 2).split('\n').map(function (line, i) {
+      return i === 0 ? line : prefix + line;
+    }).join('\n');
   }
 
   /**
@@ -3913,6 +4068,7 @@
       // Support IE 9: Function#bind is supported, but no console.log.bind().
       this.log = options.log || Function.prototype.bind.call(console$1.log, console$1);
       this.testCount = 0;
+      this.started = false;
       this.ended = false;
       this.bailed = false;
       runner.on('error', this.onError.bind(this));
@@ -3923,7 +4079,10 @@
     return _createClass(TapReporter, [{
       key: "onRunStart",
       value: function onRunStart(_runSuite) {
-        this.log('TAP version 13');
+        if (!this.started) {
+          this.log('TAP version 13');
+          this.started = true;
+        }
       }
     }, {
       key: "onError",
@@ -3936,8 +4095,9 @@
         // Imitate onTestEnd
         // Skip this if we're past "runEnd" as it would look odd
         if (!this.ended) {
+          this.onRunStart();
           this.testCount = this.testCount + 1;
-          this.log($.red("not ok ".concat(this.testCount, " global failure")));
+          this.log("not ok ".concat(this.testCount, " ").concat($.red('global failure')));
           this.logError(error);
         }
         this.log('Bail out! ' + errorString(error).split('\n')[0]);
@@ -3953,14 +4113,14 @@
         if (test.status === 'passed') {
           this.log("ok ".concat(this.testCount, " ").concat(test.fullName.join(' > ')));
         } else if (test.status === 'skipped') {
-          this.log($.yellow("ok ".concat(this.testCount, " # SKIP ").concat(test.fullName.join(' > '))));
+          this.log("ok ".concat(this.testCount, " ").concat($.yellow(test.fullName.join(' > ')), " # SKIP"));
         } else if (test.status === 'todo') {
-          this.log($.cyan("not ok ".concat(this.testCount, " # TODO ").concat(test.fullName.join(' > '))));
+          this.log("not ok ".concat(this.testCount, " ").concat($.cyan(test.fullName.join(' > ')), " # TODO"));
           test.errors.forEach(function (error) {
             return _this.logAssertion(error, 'todo');
           });
         } else {
-          this.log($.red("not ok ".concat(this.testCount, " ").concat(test.fullName.join(' > '))));
+          this.log("not ok ".concat(this.testCount, " ").concat($.red(test.fullName.join(' > '))));
           test.errors.forEach(function (error) {
             return _this.logAssertion(error);
           });
@@ -3968,13 +4128,13 @@
       }
     }, {
       key: "onRunEnd",
-      value: function onRunEnd(runSuite) {
+      value: function onRunEnd(runEnd) {
         this.ended = true;
-        this.log("1..".concat(runSuite.testCounts.total));
-        this.log("# pass ".concat(runSuite.testCounts.passed));
-        this.log($.yellow("# skip ".concat(runSuite.testCounts.skipped)));
-        this.log($.cyan("# todo ".concat(runSuite.testCounts.todo)));
-        this.log($.red("# fail ".concat(runSuite.testCounts.failed)));
+        this.log("1..".concat(runEnd.testCounts.total));
+        this.log("# pass ".concat(runEnd.testCounts.passed));
+        this.log("# ".concat($.yellow("skip ".concat(runEnd.testCounts.skipped))));
+        this.log("# ".concat($.cyan("todo ".concat(runEnd.testCounts.todo))));
+        this.log("# ".concat($.red("fail ".concat(runEnd.testCounts.failed))));
       }
     }, {
       key: "logAssertion",
@@ -3982,16 +4142,22 @@
         var out = '  ---';
         out += "\n  message: ".concat(prettyYamlValue(error.message || 'failed'));
         out += "\n  severity: ".concat(prettyYamlValue(severity || 'failed'));
-        if (hasOwn$1.call(error, 'actual')) {
+
+        // When pushFailure() is used, actual/expected are initially unset but
+        // eventually in Test#logAssertion, for testReport#pushAssertion, these are
+        // forged into existence as undefined.
+        var hasAny = error.expected !== undefined || error.actual !== undefined;
+        if (hasAny) {
           out += "\n  actual  : ".concat(prettyYamlValue(error.actual));
-        }
-        if (hasOwn$1.call(error, 'expected')) {
           out += "\n  expected: ".concat(prettyYamlValue(error.expected));
         }
         if (error.stack) {
           // Since stacks aren't user generated, take a bit of liberty by
           // adding a trailing new line to allow a straight-forward YAML Blocks.
-          out += "\n  stack: ".concat(prettyYamlValue(error.stack + '\n'));
+          var fmtStack = annotateStacktrace(error.stack, $.grey);
+          if (fmtStack.length) {
+            out += "\n  stack: ".concat(prettyYamlValue(fmtStack + '\n'));
+          }
         }
         out += '\n  ...';
         this.log(out);
@@ -4003,7 +4169,10 @@
         out += "\n  message: ".concat(prettyYamlValue(errorString(error)));
         out += "\n  severity: ".concat(prettyYamlValue('failed'));
         if (error && error.stack) {
-          out += "\n  stack: ".concat(prettyYamlValue(error.stack + '\n'));
+          var fmtStack = annotateStacktrace(error.stack, $.grey, error.toString());
+          if (fmtStack.length) {
+            out += "\n  stack: ".concat(prettyYamlValue(fmtStack + '\n'));
+          }
         }
         out += '\n  ...';
         this.log(out);
@@ -4273,6 +4442,7 @@
    */
   function onUncaughtException(error) {
     if (config.current) {
+      // This omits 'actual' and 'expected' (undefined)
       config.current.assert.pushResult({
         result: false,
         message: "global failure: ".concat(errorString(error)),
@@ -5353,7 +5523,7 @@
   QUnit.isLocal = window$1 && window$1.location && window$1.location.protocol === 'file:';
 
   // Expose the current QUnit version
-  QUnit.version = '2.22.0';
+  QUnit.version = '2.25.0';
   extend(QUnit, {
     config: config,
     diff: diff,
@@ -5479,6 +5649,16 @@
       return;
     }
 
+    // QUnit.config.reporters is considered writable between qunit.js and QUnit.start().
+    // Now that QUnit.start() has been called, it is time to decide which built-in reporters
+    // to load.
+    if (config.reporters.console) {
+      reporters.console.init(QUnit);
+    }
+    if (config.reporters.tap) {
+      reporters.tap.init(QUnit);
+    }
+
     // The test run hasn't officially begun yet
     // Record the time of the test run's beginning
     config.started = performance.now();
@@ -5568,14 +5748,20 @@
     // TODO: Move to /src/core/config.js in QUnit 3,
     // in accordance with /docs/api/config.index.md#order
     QUnit.config.filter = urlParams.filter;
+    // NOTE: Based on readFlatPreconfigNumber from QUnit 3.
+    if (/^[0-9]+$/.test(urlParams.maxDepth)) {
+      QUnit.config.maxDepth = QUnit.dump.maxDepth = +urlParams.maxDepth;
+    }
     QUnit.config.module = urlParams.module;
     QUnit.config.moduleId = [].concat(urlParams.moduleId || []);
     QUnit.config.testId = [].concat(urlParams.testId || []);
 
     // Test order randomization
-    if (urlParams.seed === true) {
-      // Generate a random seed if the option is specified without a value
-      QUnit.config.seed = Math.random().toString(36).slice(2);
+    // Generate a random seed if `?seed` is specified without a value (boolean true),
+    // or when set to the string "true".
+    if (urlParams.seed === 'true' || urlParams.seed === true) {
+      // NOTE: This duplicates logic from /src/core/config.js. Consolidated in QUnit 3.
+      QUnit.config.seed = (Math.random().toString(36) + '0000000000').slice(2, 12);
     } else if (urlParams.seed) {
       QUnit.config.seed = urlParams.seed;
     }
@@ -6483,7 +6669,7 @@
         if (!val.value || typeof val.value === 'string') {
           urlConfigHtml += "<label for='qunit-urlconfig-" + escaped + "' title='" + escapedTooltip + "'><input id='qunit-urlconfig-" + escaped + "' name='" + escaped + "' type='checkbox'" + (val.value ? " value='" + escapeText(val.value) + "'" : '') + (config[val.id] ? " checked='checked'" : '') + " title='" + escapedTooltip + "' />" + escapeText(val.label) + '</label>';
         } else {
-          urlConfigHtml += "<label for='qunit-urlconfig-" + escaped + "' title='" + escapedTooltip + "'>" + escapeText(val.label) + ": </label><select id='qunit-urlconfig-" + escaped + "' name='" + escaped + "' title='" + escapedTooltip + "'><option></option>";
+          urlConfigHtml += "<label for='qunit-urlconfig-" + escaped + "' title='" + escapedTooltip + "'>" + escapeText(val.label) + ": <select id='qunit-urlconfig-" + escaped + "' name='" + escaped + "' title='" + escapedTooltip + "'><option></option>";
           if (Array.isArray(val.value)) {
             for (var j = 0; j < val.value.length; j++) {
               escaped = escapeText(val.value[j]);
@@ -6500,7 +6686,7 @@
             escaped = escapeText(config[val.id]);
             urlConfigHtml += "<option value='" + escaped + "' selected='selected' disabled='disabled'>" + escaped + '</option>';
           }
-          urlConfigHtml += '</select>';
+          urlConfigHtml += '</select></label>';
         }
       }
       return urlConfigHtml;
@@ -6528,9 +6714,9 @@
         config[field.name] = value || false;
         var tests = id('qunit-tests');
         if (tests) {
-          var length = tests.children.length;
-          var children = tests.children;
           if (field.checked) {
+            var length = tests.children.length;
+            var children = tests.children;
             for (var i = 0; i < length; i++) {
               var test = children[i];
               var className = test ? test.className : '';
@@ -6540,22 +6726,19 @@
                 hiddenTests.push(test);
               }
             }
-            var _iterator = _createForOfIteratorHelper(hiddenTests),
-              _step;
-            try {
-              for (_iterator.s(); !(_step = _iterator.n()).done;) {
-                var hiddenTest = _step.value;
-                tests.removeChild(hiddenTest);
-              }
-            } catch (err) {
-              _iterator.e(err);
-            } finally {
-              _iterator.f();
+
+            // Optimization: Avoid `for-of` iterator overhead.
+            for (var _i = 0; _i < hiddenTests.length; _i++) {
+              tests.removeChild(hiddenTests[_i]);
             }
           } else {
-            while (hiddenTests.length) {
-              tests.appendChild(hiddenTests.shift());
+            // Optimization: Avoid `while (arr.length) arr.shift()` which would mutate the array many times.
+            // As of Chrome 126, HTMLElement.append(...hiddenTests) is still slower than
+            // calling appendChild in a loop.
+            for (var _i2 = 0; _i2 < hiddenTests.length; _i2++) {
+              tests.appendChild(hiddenTests[_i2]);
             }
+            hiddenTests.length = 0;
           }
         }
         window$1.history.replaceState(null, '', updatedUrl);
@@ -6923,6 +7106,7 @@
         return;
       }
       var title = document.createElement('strong');
+      title.className = 'qunit-test-name';
       title.innerHTML = getNameHtml(name, moduleName);
       var testBlock = document.createElement('li');
       testBlock.appendChild(title);
@@ -7051,10 +7235,13 @@
       var diff;
       var showDiff = false;
 
-      // The pushFailure doesn't provide details.expected
-      // when it calls, it's implicit to also not show expected and diff stuff
-      // Also, we need to check details.expected existence, as it can exist and be undefined
-      if (!details.result && hasOwn.call(details, 'expected')) {
+      // When pushFailure() is called, it is implied that no expected value
+      // or diff should be shown, because both expected and actual as undefined.
+      //
+      // This must check details.expected existence. If it exists as undefined,
+      // that's a regular assertion for which to render actual/expected and a diff.
+      var showAnyValues = !details.result && (details.expected !== undefined || details.actual !== undefined);
+      if (showAnyValues) {
         if (details.negative) {
           expected = 'NOT ' + QUnit.dump.parse(details.expected);
         } else {
@@ -7080,9 +7267,9 @@
             message += "<tr class='test-diff'><th>Diff: </th><td><pre>" + diff + '</pre></td></tr>';
           }
         } else if (expected.indexOf('[object Array]') !== -1 || expected.indexOf('[object Object]') !== -1) {
-          message += "<tr class='test-message'><th>Message: </th><td>" + 'Diff suppressed as the depth of object is more than current max depth (' + QUnit.config.maxDepth + ').<p>Hint: Use <code>QUnit.dump.maxDepth</code> to ' + " run with a higher max depth or <a href='" + escapeText(setUrl({
-            maxDepth: -1
-          })) + "'>" + 'Rerun</a> without max depth.</p></td></tr>';
+          message += "<tr class='test-message'><th>Message: </th><td>" + 'Diff suppressed as the depth of object is more than current max depth (' + QUnit.dump.maxDepth + ').<p>Hint: Use <code>QUnit.dump.maxDepth</code> to ' + " run with a higher max depth or <a href='" + escapeText(setUrl({
+            maxDepth: 0
+          })) + "'>" + 'Rerun without max depth</a>.</p></td></tr>';
         } else {
           message += "<tr class='test-message'><th>Message: </th><td>" + 'Diff suppressed as the expected and actual results have an equivalent' + ' serialization</td></tr>';
         }
