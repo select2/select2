@@ -22,7 +22,7 @@ define([
     this.$searchContainer = $search;
     this.$search = $search.find('textarea');
 
-    this.$search.autocomplete = this.options.get('autocomplete');
+    this.$search[0].autocomplete = this.options.get('autocomplete');
     this.$search.attr('aria-label', searchLabel());
 
     var $rendered = decorated.call(this);
