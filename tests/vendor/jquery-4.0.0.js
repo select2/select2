@@ -1,12 +1,12 @@
 /*!
- * jQuery JavaScript Library v4.0.0-beta.2
+ * jQuery JavaScript Library v4.0.0
  * https://jquery.com/
  *
  * Copyright OpenJS Foundation and other contributors
  * Released under the MIT license
- * https://jquery.org/license
+ * https://jquery.com/license/
  *
- * Date: 2024-07-17T13:32Z
+ * Date: 2026-01-18T00:20Z
  */
 ( function( global, factory ) {
 
@@ -116,7 +116,7 @@ function DOMEval( code, node, doc ) {
 	}
 }
 
-var version = "4.0.0-beta.2",
+var version = "4.0.0",
 
 	rhtmlSuffix = /HTML$/i,
 
@@ -530,55 +530,20 @@ var whitespace = "[\\x20\\t\\r\\n\\f]";
 
 var isIE = document$1.documentMode;
 
-// Support: Chrome 105 - 111 only, Safari 15.4 - 16.3 only
-// Make sure the `:has()` argument is parsed unforgivingly.
-// We include `*` in the test to detect buggy implementations that are
-// _selectively_ forgiving (specifically when the list includes at least
-// one valid selector).
-// Note that we treat complete lack of support for `:has()` as if it were
-// spec-compliant support, which is fine because use of `:has()` in such
-// environments will fail in the qSA path and fall back to jQuery traversal
-// anyway.
-try {
-	document$1.querySelector( ":has(*,:jqfake)" );
-	support.cssHas = false;
-} catch ( e ) {
-	support.cssHas = true;
-}
+var rbuggyQSA = isIE && new RegExp(
 
-// Build QSA regex.
-// Regex strategy adopted from Diego Perini.
-var rbuggyQSA = [];
+	// Support: IE 9 - 11+
+	// IE's :disabled selector does not pick up the children of disabled fieldsets
+	":enabled|:disabled|" +
 
-if ( isIE ) {
-	rbuggyQSA.push(
+	// Support: IE 11+
+	// IE 11 doesn't find elements on a `[name='']` query in some cases.
+	// Adding a temporary attribute to the document before the selection works
+	// around the issue.
+	"\\[" + whitespace + "*name" + whitespace + "*=" +
+	whitespace + "*(?:''|\"\")"
 
-		// Support: IE 9 - 11+
-		// IE's :disabled selector does not pick up the children of disabled fieldsets
-		":enabled",
-		":disabled",
-
-		// Support: IE 11+
-		// IE 11 doesn't find elements on a `[name='']` query in some cases.
-		// Adding a temporary attribute to the document before the selection works
-		// around the issue.
-		"\\[" + whitespace + "*name" + whitespace + "*=" +
-			whitespace + "*(?:''|\"\")"
-	);
-}
-
-if ( !support.cssHas ) {
-
-	// Support: Chrome 105 - 110+, Safari 15.4 - 16.3+
-	// Our regular `try-catch` mechanism fails to detect natively-unsupported
-	// pseudo-classes inside `:has()` (such as `:has(:contains("Foo"))`)
-	// in browsers that parse the `:has()` argument as a forgiving selector list.
-	// https://drafts.csswg.org/selectors/#relational now requires the argument
-	// to be parsed unforgivingly, but browsers have not yet fully adjusted.
-	rbuggyQSA.push( ":has" );
-}
-
-rbuggyQSA = rbuggyQSA.length && new RegExp( rbuggyQSA.join( "|" ) );
+);
 
 var rtrimCSS = new RegExp(
 	"^" + whitespace + "+|((?:^|[^\\\\])(?:\\\\.)*)" + whitespace + "+$",
@@ -1973,7 +1938,7 @@ for ( i in { submit: true, reset: true } ) {
 
 // Easy API for creating new setFilters
 function setFilters() {}
-setFilters.prototype = jQuery.expr.filters = jQuery.expr.pseudos;
+setFilters.prototype = jQuery.expr.pseudos;
 jQuery.expr.setFilters = new setFilters();
 
 function addCombinator( matcher, combinator, base ) {
@@ -4387,7 +4352,9 @@ function getAll( context, tag ) {
 	var ret;
 
 	if ( typeof context.getElementsByTagName !== "undefined" ) {
-		ret = context.getElementsByTagName( tag || "*" );
+
+		// Use slice to snapshot the live collection from gEBTN
+		ret = arr.slice.call( context.getElementsByTagName( tag || "*" ) );
 
 	} else if ( typeof context.querySelectorAll !== "undefined" ) {
 		ret = context.querySelectorAll( tag || "*" );
@@ -5082,12 +5049,17 @@ jQuery.event = {
 
 		beforeunload: {
 			postDispatch: function( event ) {
+				if ( event.result !== undefined ) {
 
-				// Support: Chrome <=73+
-				// Chrome doesn't alert on `event.preventDefault()`
-				// as the standard mandates.
-				if ( event.result !== undefined && event.originalEvent ) {
-					event.originalEvent.returnValue = event.result;
+					// Setting `event.originalEvent.returnValue` in modern
+					// browsers does the same as just calling `preventDefault()`,
+					// the browsers ignore the value anyway.
+					// Incidentally, IE 11 is the only browser from our supported
+					// ones which respects the value returned from a `beforeunload`
+					// handler attached by `addEventListener`; other browsers do
+					// so only for inline handlers, so not setting the value
+					// directly shouldn't reduce any functionality.
+					event.preventDefault();
 				}
 			}
 		}
@@ -5851,10 +5823,9 @@ function curCSS( elem, name, computed ) {
 
 		if ( isCustomProp && ret ) {
 
-			// Support: Firefox 105+, Chrome <=105+
+			// Support: Firefox 105 - 135+
 			// Spec requires trimming whitespace for custom properties (gh-4926).
-			// Firefox only trims leading whitespace. Chrome just collapses
-			// both leading & trailing whitespace to a single space.
+			// Firefox only trims leading whitespace.
 			//
 			// Fall back to `undefined` if empty string returned.
 			// This collapses a missing definition with property defined
@@ -5884,8 +5855,7 @@ function curCSS( elem, name, computed ) {
 }
 
 var cssPrefixes = [ "Webkit", "Moz", "ms" ],
-	emptyStyle = document$1.createElement( "div" ).style,
-	vendorProps = {};
+	emptyStyle = document$1.createElement( "div" ).style;
 
 // Return a vendor-prefixed property or undefined
 function vendorPropName( name ) {
@@ -5904,86 +5874,102 @@ function vendorPropName( name ) {
 
 // Return a potentially-mapped vendor prefixed property
 function finalPropName( name ) {
-	var final = vendorProps[ name ];
-
-	if ( final ) {
-		return final;
-	}
 	if ( name in emptyStyle ) {
 		return name;
 	}
-	return vendorProps[ name ] = vendorPropName( name ) || name;
+	return vendorPropName( name ) || name;
 }
 
-( function() {
+var reliableTrDimensionsVal, reliableColDimensionsVal,
+	table = document$1.createElement( "table" );
 
-var reliableTrDimensionsVal,
-	div = document$1.createElement( "div" );
+// Executing table tests requires only one layout, so they're executed
+// at the same time to save the second computation.
+function computeTableStyleTests() {
+	if (
 
-// Finish early in limited (non-browser) environments
-if ( !div.style ) {
-	return;
-}
+		// This is a singleton, we need to execute it only once
+		!table ||
 
-// Support: IE 10 - 11+
-// IE misreports `getComputedStyle` of table rows with width/height
-// set in CSS while `offset*` properties report correct values.
-// Support: Firefox 70+
-// Only Firefox includes border widths
-// in computed dimensions. (gh-4529)
-support.reliableTrDimensions = function() {
-	var table, tr, trStyle;
-	if ( reliableTrDimensionsVal == null ) {
-		table = document$1.createElement( "table" );
-		tr = document$1.createElement( "tr" );
-
-		table.style.cssText = "position:absolute;left:-11111px;border-collapse:separate";
-		tr.style.cssText = "box-sizing:content-box;border:1px solid";
-
-		// Support: Chrome 86+
-		// Height set through cssText does not get applied.
-		// Computed height then comes back as 0.
-		tr.style.height = "1px";
-		div.style.height = "9px";
-
-		// Support: Android Chrome 86+
-		// In our bodyBackground.html iframe,
-		// display for all div elements is set to "inline",
-		// which causes a problem only in Android Chrome, but
-		// not consistently across all devices.
-		// Ensuring the div is `display: block`
-		// gets around this issue.
-		div.style.display = "block";
-
-		documentElement$1
-			.appendChild( table )
-			.appendChild( tr )
-			.appendChild( div );
-
-		// Don't run until window is visible
-		if ( table.offsetWidth === 0 ) {
-			documentElement$1.removeChild( table );
-			return;
-		}
-
-		trStyle = window.getComputedStyle( tr );
-		reliableTrDimensionsVal = ( Math.round( parseFloat( trStyle.height ) ) +
-			Math.round( parseFloat( trStyle.borderTopWidth ) ) +
-			Math.round( parseFloat( trStyle.borderBottomWidth ) ) ) === tr.offsetHeight;
-
-		documentElement$1.removeChild( table );
+		// Finish early in limited (non-browser) environments
+		!table.style
+	) {
+		return;
 	}
-	return reliableTrDimensionsVal;
-};
-} )();
 
-var
+	var trStyle,
+		col = document$1.createElement( "col" ),
+		tr = document$1.createElement( "tr" ),
+		td = document$1.createElement( "td" );
 
-	// Swappable if display is none or starts with table
-	// except "table", "table-cell", or "table-caption"
-	// See here for display values: https://developer.mozilla.org/en-US/docs/CSS/display
-	rdisplayswap = /^(none|table(?!-c[ea]).+)/,
-	cssShow = { position: "absolute", visibility: "hidden", display: "block" },
+	table.style.cssText = "position:absolute;left:-11111px;" +
+		"border-collapse:separate;border-spacing:0";
+	tr.style.cssText = "box-sizing:content-box;border:1px solid;height:1px";
+	td.style.cssText = "height:9px;width:9px;padding:0";
+
+	col.span = 2;
+
+	documentElement$1
+		.appendChild( table )
+		.appendChild( col )
+		.parentNode
+		.appendChild( tr )
+		.appendChild( td )
+		.parentNode
+		.appendChild( td.cloneNode( true ) );
+
+	// Don't run until window is visible
+	if ( table.offsetWidth === 0 ) {
+		documentElement$1.removeChild( table );
+		return;
+	}
+
+	trStyle = window.getComputedStyle( tr );
+
+	// Support: Firefox 135+
+	// Firefox always reports computed width as if `span` was 1.
+	// Support: Safari 18.3+
+	// In Safari, computed width for columns is always 0.
+	// In both these browsers, using `offsetWidth` solves the issue.
+	// Support: IE 11+
+	// In IE, `<col>` computed width is `"auto"` unless `width` is set
+	// explicitly via CSS so measurements there remain incorrect. Because of
+	// the lack of a proper workaround, we accept this limitation, treating
+	// IE as passing the test.
+	reliableColDimensionsVal = isIE || Math.round( parseFloat(
+		window.getComputedStyle( col ).width )
+	) === 18;
+
+	// Support: IE 10 - 11+
+	// IE misreports `getComputedStyle` of table rows with width/height
+	// set in CSS while `offset*` properties report correct values.
+	// Support: Firefox 70 - 135+
+	// Only Firefox includes border widths
+	// in computed dimensions for table rows. (gh-4529)
+	reliableTrDimensionsVal = Math.round( parseFloat( trStyle.height ) +
+		parseFloat( trStyle.borderTopWidth ) +
+		parseFloat( trStyle.borderBottomWidth ) ) === tr.offsetHeight;
+
+	documentElement$1.removeChild( table );
+
+	// Nullify the table so it wouldn't be stored in the memory;
+	// it will also be a sign that checks were already performed.
+	table = null;
+}
+
+jQuery.extend( support, {
+	reliableTrDimensions: function() {
+		computeTableStyleTests();
+		return reliableTrDimensionsVal;
+	},
+
+	reliableColDimensions: function() {
+		computeTableStyleTests();
+		return reliableColDimensionsVal;
+	}
+} );
+
+var cssShow = { position: "absolute", visibility: "hidden", display: "block" },
 	cssNormalTransform = {
 		letterSpacing: "0",
 		fontWeight: "400"
@@ -6096,24 +6082,22 @@ function getWidthOrHeight( elem, dimension, extra ) {
 	}
 
 
-	if ( (
+	if (
+		(
 
-		// Fall back to offsetWidth/offsetHeight when value is "auto"
-		// This happens for inline elements with no explicit setting (gh-3571)
-		val === "auto" ||
+			// Fall back to offsetWidth/offsetHeight when value is "auto"
+			// This happens for inline elements with no explicit setting (gh-3571)
+			val === "auto" ||
 
-		// Support: IE 9 - 11+
-		// Use offsetWidth/offsetHeight for when box sizing is unreliable.
-		// In those cases, the computed value can be trusted to be border-box.
-		( isIE && isBorderBox ) ||
+			// Support: IE 9 - 11+
+			// Use offsetWidth/offsetHeight for when box sizing is unreliable.
+			// In those cases, the computed value can be trusted to be border-box.
+			( isIE && isBorderBox ) ||
 
-		// Support: IE 10 - 11+
-		// IE misreports `getComputedStyle` of table rows with width/height
-		// set in CSS while `offset*` properties report correct values.
-		// Support: Firefox 70+
-		// Firefox includes border widths
-		// in computed dimensions for table rows. (gh-4529)
-		( !support.reliableTrDimensions() && nodeName( elem, "tr" ) ) ) &&
+			( !support.reliableColDimensions() && nodeName( elem, "col" ) ) ||
+
+			( !support.reliableTrDimensions() && nodeName( elem, "tr" ) )
+		) &&
 
 		// Make sure the element is visible & connected
 		elem.getClientRects().length ) {
@@ -6275,17 +6259,9 @@ jQuery.each( [ "height", "width" ], function( _i, dimension ) {
 		get: function( elem, computed, extra ) {
 			if ( computed ) {
 
-				// Certain elements can have dimension info if we invisibly show them
-				// but it must have a current display style that would benefit
-				return rdisplayswap.test( jQuery.css( elem, "display" ) ) &&
-
-					// Support: Safari <=8 - 12+, Chrome <=73+
-					// Table columns in WebKit/Blink have non-zero offsetWidth & zero
-					// getBoundingClientRect().width unless display is changed.
-					// Support: IE <=11+
-					// Running getBoundingClientRect on a disconnected node
-					// in IE throws an error.
-					( !elem.getClientRects().length || !elem.getBoundingClientRect().width ) ?
+				// Elements with `display: none` can have dimension info if
+				// we invisibly show them.
+				return jQuery.css( elem, "display" ) === "none" ?
 					swap( elem, cssShow, function() {
 						return getWidthOrHeight( elem, dimension, extra );
 					} ) :
@@ -9220,20 +9196,14 @@ jQuery.parseHTML = function( data, context, keepScripts ) {
 		context = false;
 	}
 
-	var base, parsed, scripts;
+	var parsed, scripts;
 
 	if ( !context ) {
 
 		// Stop scripts or inline event handlers from being executed immediately
-		// by using document.implementation
-		context = document$1.implementation.createHTMLDocument( "" );
-
-		// Set the base href for the created document
-		// so any parsed elements with URLs
-		// are based on the document's URL (gh-2965)
-		base = context.createElement( "base" );
-		base.href = document$1.location.href;
-		context.head.appendChild( base );
+		// by using DOMParser
+		context = ( new window.DOMParser() )
+			.parseFromString( "", "text/html" );
 	}
 
 	parsed = rsingleTag.exec( data );
@@ -9656,6 +9626,8 @@ jQuery.holdReady = function( hold ) {
 		jQuery.ready( true );
 	}
 };
+
+jQuery.expr[ ":" ] = jQuery.expr.filters = jQuery.expr.pseudos;
 
 // Register as a named AMD module, since jQuery can be concatenated with other
 // files that may use define, but not via a proper concatenation script that
