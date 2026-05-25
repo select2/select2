@@ -6136,7 +6136,7 @@ S2.define('select2/core',[
 
     this.$element.off('.select2');
     this.$element[0].setAttribute('tabindex',
-      Utils.GetData(this.$element[0], 'old-tabindex'));
+    Utils.GetData(this.$element[0], 'old-tabindex'));
 
     this.$element[0].classList.remove('select2-hidden-accessible');
     this.$element[0].setAttribute('aria-hidden', 'false');
