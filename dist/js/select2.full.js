@@ -499,8 +499,7 @@ S2.define('jquery',[],function () {
 });
 
 S2.define('select2/utils',[
-  'jquery'
-], function ($) {
+], function () {
   var Utils = {};
 
   Utils.Extend = function (ChildClass, SuperClass) {
@@ -716,7 +715,6 @@ S2.define('select2/utils',[
     // http://codereview.stackexchange.com/q/13338
     // and was designed to be used with the Sizzle selector engine.
 
-    var $el = $(el);
     var overflowX = el.style.overflowX;
     var overflowY = el.style.overflowY;
 
@@ -730,8 +728,10 @@ S2.define('select2/utils',[
       return true;
     }
 
-    return ($el.innerHeight() < el.scrollHeight ||
-      $el.innerWidth() < el.scrollWidth);
+    var computedEl = window.getComputedStyle(el);
+
+    return (parseFloat(computedEl.height) < el.scrollHeight ||
+      parseFloat(computedEl.width) < el.scrollWidth);
   };
 
   Utils.escapeMarkup = function (markup) {
@@ -802,13 +802,18 @@ S2.define('select2/utils',[
     // and for a specified element.
     var id = Utils.GetUniqueElementId(element);
     if (name) {
+      // Convert the attribute name format (e.g. 'foo-bar') to the dataset
+      // property key format (e.g. 'fooBar') as required by the HTML spec.
+      var datasetKey = name.replace(/-([a-z])/g, function (_, letter) {
+        return letter.toUpperCase();
+      });
       if (Utils.__cache[id]) {
         if (Utils.__cache[id][name] != null) {
           return Utils.__cache[id][name];
         }
-        return $(element).data(name); // Fallback to HTML5 data attribs.
+        return element.dataset[datasetKey]; // Fallback to HTML5 data attribs.
       }
-      return $(element).data(name); // Fallback to HTML5 data attribs.
+      return element.dataset[datasetKey]; // Fallback to HTML5 data attribs.
     } else {
       return Utils.__cache[id];
     }
@@ -2370,9 +2375,8 @@ S2.define('select2/selection/eventRelay',[
 });
 
 S2.define('select2/translation',[
-  'jquery',
   'require'
-], function ($, require) {
+], function (require) {
   function Translation (dict) {
     this.dict = dict || {};
   }
@@ -2386,7 +2390,7 @@ S2.define('select2/translation',[
   };
 
   Translation.prototype.extend = function (translation) {
-    this.dict = $.extend({}, translation.all(), this.dict);
+    this.dict = Object.assign({}, translation.all(), this.dict);
   };
 
   // Static functions

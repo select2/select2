@@ -228,14 +228,10 @@ define([
       return true;
     }
 
-    var computed = window.getComputedStyle(el);
-    var paddingHeight = parseInt(computed.paddingTop, 10);
-        paddingHeight += parseInt(computed.paddingBottom, 10);
-    var paddingWidth = parseInt(computed.paddingLeft, 10);
-        paddingWidth += parseInt(computed.paddingRight, 10);
-  
-    return ((el.clientHeight - paddingHeight) < el.scrollHeight ||
-      (el.clientWidth - paddingWidth) < el.scrollWidth);
+    var computedEl = window.getComputedStyle(el);
+
+    return (parseFloat(computedEl.height) < el.scrollHeight ||
+      parseFloat(computedEl.width) < el.scrollWidth);
   };
 
   Utils.escapeMarkup = function (markup) {
@@ -306,13 +302,18 @@ define([
     // and for a specified element.
     var id = Utils.GetUniqueElementId(element);
     if (name) {
+      // Convert the attribute name format (e.g. 'foo-bar') to the dataset
+      // property key format (e.g. 'fooBar') as required by the HTML spec.
+      var datasetKey = name.replace(/-([a-z])/g, function (_, letter) {
+        return letter.toUpperCase();
+      });
       if (Utils.__cache[id]) {
         if (Utils.__cache[id][name] != null) {
           return Utils.__cache[id][name];
         }
-        return element.dataset[name]; // Fallback to HTML5 data attribs.
+        return element.dataset[datasetKey]; // Fallback to HTML5 data attribs.
       }
-      return element.dataset[name]; // Fallback to HTML5 data attribs.
+      return element.dataset[datasetKey]; // Fallback to HTML5 data attribs.
     } else {
       return Utils.__cache[id];
     }
