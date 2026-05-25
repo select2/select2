@@ -77,7 +77,7 @@ define([
   MultipleSelection.prototype.clear = function () {
     var $rendered = this.$selection.find('.select2-selection__rendered');
     $rendered.empty();
-    $rendered.removeAttr('title');
+    $rendered[0].removeAttribute('title');
   };
 
   MultipleSelection.prototype.display = function (data, container) {
