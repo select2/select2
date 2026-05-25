@@ -240,6 +240,66 @@ QUnit.test('!scrollAfterSelect does not trigger results:focus', function (assert
   container.trigger('select', {});
 });
 
+QUnit.test('mouseenter clears aria-selected on all highlighted results', function (assert) {
+  assert.expect(4);
+
+  var $ = require('jquery');
+
+  var $select = $('<select></select>');
+  var $parent = $('<div></div>');
+
+  var $container = $('<span></span>');
+  var container = new MockContainer();
+
+  $parent.appendTo($('#qunit-fixture'));
+  $select.appendTo($parent);
+
+  var Utils = require('select2/utils');
+  var Options = require('select2/options');
+  var Results = require('select2/results');
+
+  var results = new Results($select, new Options({ multiple: true }));
+
+  results.data = {};
+  results.data.current = function (callback) {
+    callback([]);
+  };
+
+  results.$results = results.render();
+  results.$results.appendTo($parent);
+
+  results.bind(container, $container);
+
+  // Append three selectable options
+  results.append({
+    results: [
+      { id: '1', text: 'One' },
+      { id: '2', text: 'Two' },
+      { id: '3', text: 'Three' }
+    ]
+  });
+
+  var $options = results.$results.find('.select2-results__option--selectable');
+
+  // Manually mark the first two as highlighted with aria-selected="true"
+  $options.eq(0).addClass('select2-results__option--highlighted');
+  $options[0].setAttribute('aria-selected', 'true');
+  $options.eq(1).addClass('select2-results__option--highlighted');
+  $options[1].setAttribute('aria-selected', 'true');
+
+  // Trigger mouseenter on the third option to shift focus
+  $options.eq(2).trigger('mouseenter');
+
+  assert.equal($options[0].getAttribute('aria-selected'), 'false',
+    'First previously-highlighted result should have aria-selected="false"');
+  assert.notOk($options.eq(0).hasClass('select2-results__option--highlighted'),
+    'First result should no longer be highlighted');
+  assert.equal($options[1].getAttribute('aria-selected'), 'false',
+    'Second previously-highlighted result should have aria-selected="false"');
+  assert.notOk($options.eq(1).hasClass('select2-results__option--highlighted'),
+    'Second result should no longer be highlighted');
+});
+
 QUnit.test('tag result is highlighted with no other selections', function (assert) {
   assert.expect(2);
 

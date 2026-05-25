@@ -39,7 +39,7 @@ define([
 
   AttachBody.prototype.position = function (decorated, $dropdown, $container) {
     // Clone all of the container classes
-    $dropdown.attr('class', $container.attr('class'));
+    $dropdown[0].setAttribute('class', $container[0].getAttribute('class'));
 
     $dropdown[0].classList.remove('select2');
     $dropdown[0].classList.add('select2-container--open');
