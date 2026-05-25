@@ -482,9 +482,9 @@ define([
 
       var $highlighted = self.getHighlightedResults();
       $highlighted.removeClass('select2-results__option--highlighted');
-      if($highlighted[0] != null) {
-        $highlighted[0].setAttribute('aria-selected', 'false');
-      }
+      $highlighted.each(function () {
+        this.setAttribute('aria-selected', 'false');
+      });
 
       self.trigger('results:focus', {
         data: data,
