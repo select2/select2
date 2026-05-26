@@ -1,6 +1,9 @@
 define(function () {
   // Estonian
   return {
+    errorLoading: function () {
+      return 'Tulemusi ei olnud võimalik laadida.';
+    },
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;
 
@@ -50,7 +53,13 @@ define(function () {
       return 'Otsin…';
     },
     removeAllItems: function () {
-      return 'Eemalda kõik esemed';
+      return 'Eemalda kõik valikud';
+    },
+    removeItem: function () {
+      return 'Eemalda valik';
+    },
+    search: function() {
+      return 'Otsi';
     }
   };
 });
