@@ -1,24 +1,25 @@
 name: Documentation Deployment
 
-on: release
+on:
+  - release
+  - workflow_dispatch
 
 jobs:
   grav:
     name: Deploy Grav
     runs-on: ubuntu-latest
     steps:
-      - uses: maddox/actions/sleep@master
+      - uses: juliangruber/sleep-action@v2.0.4
         with:
-          args: "180"
-      - uses: actions/checkout@v1
+          time: 3m
+      - uses: actions/checkout@v6
       - name: Copy to documentation server
-        uses: maxheld83/rsync@v0.1.0
-        env:
-          USERNAME: ${{ secrets.DOCUMENTATION_SSH_USERNAME }}
-          SSH_PRIVATE_KEY: ${{ secrets.DOCUMENTATION_SSH_KEY }}
-          HOST_NAME: ${{ secrets.DOCUMENTATION_SSH_HOST }}
-          SSH_PUBLIC_KEY: not-needed
-          HOST_IP: not-needed
-          HOST_FINGERPRINT: not-needed
+        uses: burnett01/rsync-deployments@v8
         with:
-          args: "docs/ $USERNAME@$HOST_NAME:/var/www/select2-docs/user/"
+          switches: -avzr --delete
+          path: docs/
+          remote_path: /var/www/select2-docs/user/
+          remote_host: ${{ secrets.DOCUMENTATION_SSH_HOST }}
+          remote_port: 22
+          remote_user: ${{ secrets.DOCUMENTATION_SSH_USERNAME }}
+          remote_key: ${{ secrets.DOCUMENTATION_SSH_KEY }}
