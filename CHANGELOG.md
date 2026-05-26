@@ -1,6 +1,6 @@
 # Change Log
 
-## 4.1.0 (unreleased)
+## 4.1.0
 
 ### Breaking changes
 
@@ -30,6 +30,8 @@
 * Selected results in the dropdown should now be properly announced to screen readers (#5841)
 * Significant improvements were made to make the selection area accessible (#5824, #5842, #5916, #5942, #5973)
 * Allow pasting multiple lines into the search field for tokenization (#5806)
+* Add support for jQuery 4.0.0 (#6332)
+* Add `originalEvent` to `close` trigger arguments (#6079)
 
 ### Bug fixes
 
@@ -37,6 +39,11 @@
 * Change internal data ID generation to be more unique and prevent conflicts with numeric IDs (#5840)
 * Internet Explorer 11 no longer steals focus of search box while tagging (#5842)
 * Fix slow memory leak caused by not clearing cache on destroy (#5965)
+* Fix multiple select placeholder misalignment (#6277)
+* Fix RTL `selection__choice__remove` button (#6257)
+* Fix support for data-placeholder values which consist solely of digits (#6297)
+* Fix unselection of items from AJAX data sources with non-string identifiers (#6241, #6335)
+* Convert optgroup child data identifiers to string datatype (#6338)
 
 ### Translations
 
@@ -44,10 +51,29 @@
 * Add Punjabi translations (`pa`) (#5831)
 * Add Telugu translations (`te`) (#5881)
 * Updated Hungarian translations (`hu`) for 4.1.0 changes (#5970)
+* Add Luxembourgish translation (`lb`) (#6131)
+* Add Uyghur (Uighur) translation (`ug`) (#6166)
+* Update Arabic translation with removeItem string (`ar`) (#6175)
+* Add missing Traditional Chinese translations (`zh-TW`) (#6157)
+* Update Indonesian translation (`id`) (#6153)
+* Update Turkish translation (`tr`) (#6123)
+* Update Romanian translation (`ro`) (#6190)
+* Updated DE/ES/FR/PT/PT-BR translations (#6132)
+* Update Polish translation (`pl`) (#6097, #6377)
+* Update Norwegian translations (`nb`) (#6213)
+* Update Persian/Farsi translation (`fa`) (#6258)
+* Fix Dutch translation (`nl`) removing unwanted dots for noResults (#6269)
+* Fix Brazilian Portuguese translation typo (#6200)
+* Add missing Bosnian, Catalan, Danish, and Finnish translations (#6305)
 
 ### Miscellaneous
 
 * The `amdLanguageBase` option no longer has an effect because the full build does not include any dynamically loaded modules (#5815)
+* Replace jQuery `attr`/`removeAttr` with native `getAttribute`/`setAttribute`/`removeAttribute` (#6227, #6228)
+* Replace jQuery `addClass` with native `classList.add` (#6229)
+* Remove jQuery from Utils and Translation modules (#6233)
+* Remove use of jQuery `prop()` function (#6289)
+* Switch NPM publishing to trusted publishing with provenance (#6405)
 
 ## 4.0.13
 
