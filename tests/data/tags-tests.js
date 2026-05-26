@@ -1,4 +1,4 @@
-module('Data adapters - Tags');
+QUnit.module('Data adapters - Tags');
 
 var SelectData = require('select2/data/select');
 var Tags = require('select2/data/tags');
@@ -12,7 +12,7 @@ var options = new Options({
   tags: true
 });
 
-test('does not trigger on blank or null terms', function (assert) {
+QUnit.test('does not trigger on blank or null terms', function (assert) {
   var data = new SelectTags($('#qunit-fixture .single'), options);
 
   data.query({
@@ -38,7 +38,7 @@ test('does not trigger on blank or null terms', function (assert) {
   });
 });
 
-test('white space is trimmed by default', function (assert) {
+QUnit.test('white space is trimmed by default', function (assert) {
   var data = new SelectTags($('#qunit-fixture .single'), options);
 
   data.query({
@@ -64,7 +64,7 @@ test('white space is trimmed by default', function (assert) {
   });
 });
 
-test('does not create option if text is same but lowercase', function (assert) {
+QUnit.test('does not create option if text is same but lowercase', function (assert) {
   var data = new SelectTags($('#qunit-fixture .single'), options);
 
   data.query({
@@ -79,7 +79,7 @@ test('does not create option if text is same but lowercase', function (assert) {
   });
 });
 
-test('does not trigger for additional pages', function (assert) {
+QUnit.test('does not trigger for additional pages', function (assert) {
   var data = new SelectTags($('#qunit-fixture .single'), options);
 
   data.query({
@@ -94,7 +94,7 @@ test('does not trigger for additional pages', function (assert) {
   });
 });
 
-test('creates tag at beginning', function (assert) {
+QUnit.test('creates tag at beginning', function (assert) {
   var data = new SelectTags($('#qunit-fixture .single'), options);
 
   data.query({
@@ -109,7 +109,7 @@ test('creates tag at beginning', function (assert) {
   });
 });
 
-test('tags can be the only result', function (assert) {
+QUnit.test('tags can be the only result', function (assert) {
   var data = new SelectTags($('#qunit-fixture .single'), options);
 
   data.query({
@@ -124,7 +124,7 @@ test('tags can be the only result', function (assert) {
   });
 });
 
-test('tags are injected as options', function (assert) {
+QUnit.test('tags are injected as options', function (assert) {
   var data = new SelectTags($('#qunit-fixture .single'), options);
 
   data.query({
@@ -143,7 +143,7 @@ test('tags are injected as options', function (assert) {
   });
 });
 
-test('old tags are removed automatically', function (assert) {
+QUnit.test('old tags are removed automatically', function (assert) {
   var data = new SelectTags($('#qunit-fixture .single'), options);
 
   data.query({
@@ -172,7 +172,7 @@ test('old tags are removed automatically', function (assert) {
   });
 });
 
-test('insertTag controls the tag location', function (assert) {
+QUnit.test('insertTag controls the tag location', function (assert) {
   var data = new SelectTags($('#qunit-fixture .single'), options);
 
   data.insertTag = function (data, tag) {
@@ -191,7 +191,7 @@ test('insertTag controls the tag location', function (assert) {
   });
 });
 
-test('insertTag can be controlled through the options', function (assert) {
+QUnit.test('insertTag can be controlled through the options', function (assert) {
   var options = new Options({
     insertTag: function (data, tag) {
       data.push(tag);
@@ -211,7 +211,7 @@ test('insertTag can be controlled through the options', function (assert) {
   });
 });
 
-test('createTag controls the tag object', function (assert) {
+QUnit.test('createTag controls the tag object', function (assert) {
   var data = new SelectTags($('#qunit-fixture .single'), options);
 
   data.createTag = function (params) {
@@ -233,7 +233,7 @@ test('createTag controls the tag object', function (assert) {
   });
 });
 
-test('createTag returns null for no tag', function (assert) {
+QUnit.test('createTag returns null for no tag', function (assert) {
   var data = new SelectTags($('#qunit-fixture .single'), options);
 
   data.createTag = function (params) {
@@ -247,7 +247,7 @@ test('createTag returns null for no tag', function (assert) {
   });
 });
 
-test('the createTag options customizes the function', function (assert) {
+QUnit.test('the createTag options customizes the function', function (assert) {
   var data = new SelectTags(
     $('#qunit-fixture .single'),
     new Options({

@@ -34,6 +34,9 @@ define(function () {
     },
     removeItem: function () {
       return 'Supprimer l\'élément';
+    },
+    search: function() {
+      return 'Rechercher';
     }
   };
 });

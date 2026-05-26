@@ -14,7 +14,7 @@ define([
   };
 
   HidePlaceholder.prototype.normalizePlaceholder = function (_, placeholder) {
-    if (typeof placeholder === 'string') {
+    if (typeof placeholder !== 'object') {
       placeholder = {
         id: '',
         text: placeholder

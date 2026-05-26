@@ -1,6 +1,6 @@
 @function cs-colorblind($color, $mode: $cs-colorblind) {
 
-  // Refrence: http://www.w3.org/TR/AERT#color-contrast
+  // Reference: http://www.w3.org/TR/AERT#color-contrast
 
   // Deuteranopia
   @if $mode == deuteranopia {

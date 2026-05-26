@@ -1,6 +1,6 @@
-module('Dropdown - attachBody - dropdownParent option');
+QUnit.module('Dropdown - attachBody - dropdownParent option');
 
-test('can be a selector string', function (assert) {
+QUnit.test('can be a selector string', function (assert) {
     assert.expect(1);
 
     var $ = require('jquery');
@@ -29,7 +29,7 @@ test('can be a selector string', function (assert) {
     );
 });
 
-test('can be a jQuery object', function (assert) {
+QUnit.test('can be a jQuery object', function (assert) {
     assert.expect(1);
 
     var $ = require('jquery');
@@ -58,7 +58,7 @@ test('can be a jQuery object', function (assert) {
     );
 });
 
-test('defaults to the document body', function (assert) {
+QUnit.test('defaults to the document body', function (assert) {
     assert.expect(1);
 
     var $ = require('jquery');

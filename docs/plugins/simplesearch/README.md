@@ -61,7 +61,7 @@ simplesearch:
     filter_combinator: and
 ```
 
- These page headers will only be taken into account if the search route points to this page.  For example: here the the route points to `@self` which in turn resolves to `/blog`.  You can also specify the route explicity with `route: /blog` if you so choose. This header is within the `/user/pages/blog/blog.md` file.  We will cover this self-controlled form of search handling below.
+ These page headers will only be taken into account if the search route points to this page.  For example: here the the route points to `@self` which in turn resolves to `/blog`.  You can also specify the route explicitly with `route: /blog` if you so choose. This header is within the `/user/pages/blog/blog.md` file.  We will cover this self-controlled form of search handling below.
 
 # Usage
 
@@ -77,7 +77,7 @@ After installing the SimpleSearch plugin, you can add a simple **searchbox** to 
 {% include 'partials/simplesearch_searchbox.html.twig' %}
 ```
 
-By default the **simplesearch_searchbox** Twig template uses the `route` as defined in the configuration.  The SimpleSearch plugin uses this route and then appends a `query:` paramater to create the following final URL.
+By default the **simplesearch_searchbox** Twig template uses the `route` as defined in the configuration.  The SimpleSearch plugin uses this route and then appends a `query:` parameter to create the following final URL.
 
 ```
 http://yoursite.com/search/query:something
@@ -115,7 +115,7 @@ You can also completely customize the look and feel of the results by overriding
 
 This is a new feature of SimpleSearch and it very useful and simple way to provide a 'filter' like search of a collection listing page.  In this example, we will assume you have a Blog listing page you wish to be able to search and filter based on a search box.
 
-To accomplish this, you need ot use the page-based configuration as described above, and configure multiple filters, `@self` to use the page's content collection: http://learn.getgrav.org/content/headers#collection-headers
+To accomplish this, you need to use the page-based configuration as described above, and configure multiple filters, `@self` to use the page's content collection: http://learn.getgrav.org/content/headers#collection-headers
 
 ```
 content:

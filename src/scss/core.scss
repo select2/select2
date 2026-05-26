@@ -1,3 +1,5 @@
+@use 'sass:meta';
+
 .select2-container {
   box-sizing: border-box;
 
@@ -6,11 +8,11 @@
   position: relative;
   vertical-align: middle;
 
-  @import "single";
-  @import "multiple";
+  @include meta.load-css("single");
+  @include meta.load-css("multiple");
 }
 
-@import "dropdown";
+@include meta.load-css("dropdown");
 
 .select2-close-mask {
   border: 0;
@@ -46,5 +48,5 @@
   white-space: nowrap !important;
 }
 
-@import "theme/default/layout";
-@import "theme/classic/layout";
+@include meta.load-css("theme/default/layout");
+@include meta.load-css("theme/classic/layout");

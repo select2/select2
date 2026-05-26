@@ -18,7 +18,7 @@ This is a list of all the Select2 configuration options.
 | `dir` | string | `ltr` | Sets the [`dir` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/dir) on the selection and dropdown containers to indicate the direction of the text. |
 | `disabled` | boolean | `false` | When set to `true`, the select control will be disabled. |
 | `dropdownAdapter` | | `DropdownAdapter` | Used to override the built-in [DropdownAdapter](/advanced/default-adapters/dropdown) |
-| `dropdownAutoWidth` | boolean | `false` | |
+| `dropdownAutoWidth` | boolean | `false` | Sets the width on the dropdown dynamically whenever it is opened |
 | `dropdownCssClass` | string | `''` | Adds additional CSS classes to the dropdown container. The helper `:all:` can be used to add all CSS classes present on the original `<select>` element. |
 | `dropdownParent` | jQuery selector or DOM node | `$(document.body)` | Allows you to [customize placement](/dropdown#dropdown-placement) of the dropdown. |
 | `escapeMarkup` | callback | `Utils.escapeMarkup` | Handles [automatic escaping of content rendered by custom templates](/dropdown#built-in-escaping). |
@@ -34,7 +34,7 @@ This is a list of all the Select2 configuration options.
 | `selectionAdapter` | | `SingleSelection` or `MultipleSelection`, depending on the value of `multiple`. | Used to override the built-in [SelectionAdapter](/advanced/default-adapters/selection). |
 | `selectionCssClass` | string | `''` | Adds additional CSS classes to the selection container. The helper `:all:` can be used to add all CSS classes present on the original `<select>` element. |
 | `selectOnClose` | boolean | `false` | Implements [automatic selection](/dropdown#automatic-selection) when the dropdown is closed. |
-| `sorter` | callback | | |
+| `sorter` | callback | | Handles custom sorting of matched results. Accepts one argument: an array of data objects. If search parameters are set, the array will contain only matched objects. Must return an array of data objects in the desired order. |
 | `tags` | boolean / array of objects | `false` | Used to enable [free text responses](/tagging). |
 | `templateResult` | callback | | Customizes the way that [search results are rendered](/dropdown#templating). |
 | `templateSelection` | callback | | Customizes the way that [selections are rendered](/selections#templating). |
@@ -42,4 +42,4 @@ This is a list of all the Select2 configuration options.
 | `tokenizer` | callback | | A callback that handles [automatic tokenization of free-text entry](/tagging#automatic-tokenization-into-tags). |
 | `tokenSeparators` | array | `null` | The list of characters that should be used as token separators. |
 | `width` | string | `resolve` | Supports [customization of the container width](/appearance#container-width). |
-| `scrollAfterSelect` | boolean | `false` | If `true`, resolves issue for multiselects using `closeOnSelect: false` that caused the list of results to scroll to the first selection after each select/unselect (see https://github.com/select2/select2/pull/5150). This behaviour was intentional to deal with infinite scroll UI issues (if you need this behavior, set `false`) but it created an issue with multiselect dropdown boxes of fixed length. This pull request adds a configurable option to toggle between these two desirable behaviours. |
+| `scrollAfterSelect` | boolean | `false` | If `true`, resolves issue for multiselects using `closeOnSelect: false` that caused the list of results to scroll to the first selection after each select/unselect (see https://github.com/select2/select2/pull/5150). This behaviour was intentional to deal with infinite scroll UI issues (if you need this behavior, set `false`) but it created an issue with multiselect dropdown boxes of fixed length. |

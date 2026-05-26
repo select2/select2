@@ -12,10 +12,10 @@ define(function () {
       return words[2];
     }
   };
-  
+
   return {
     errorLoading: function () {
-      return 'Nie można załadować wyników.';
+      return 'Wystąpił błąd podczas ładowania wyników.';
     },
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;
@@ -24,25 +24,31 @@ define(function () {
     },
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
-      
-      return 'Podaj przynajmniej ' + remainingChars + ' ' +
+
+      return 'Wpisz co najmniej ' + remainingChars + ' ' +
         pluralWord(remainingChars, charsWords);
     },
     loadingMore: function () {
-      return 'Trwa ładowanie…';
+      return 'Trwa ładowanie...';
     },
     maximumSelected: function (args) {
-      return 'Możesz zaznaczyć tylko ' + args.maximum + ' ' +
+      return 'Możesz zaznaczyć maksymalnie ' + args.maximum + ' ' +
         pluralWord(args.maximum, itemsWords);
     },
     noResults: function () {
       return 'Brak wyników';
     },
     searching: function () {
-      return 'Trwa wyszukiwanie…';
+      return 'Trwa wyszukiwanie...';
     },
     removeAllItems: function () {
-      return 'Usuń wszystkie przedmioty';
+      return 'Usuń wszystkie elementy';
+    },
+    removeItem: function () {
+      return 'Usuń element';
+    },
+    search: function() {
+      return 'Szukaj';
     }
   };
 });

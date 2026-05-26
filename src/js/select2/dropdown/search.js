@@ -18,8 +18,8 @@ define([
     this.$searchContainer = $search;
     this.$search = $search.find('input');
 
-    this.$search.prop('autocomplete', this.options.get('autocomplete'));
-    this.$search.attr('aria-label', searchLabel());
+    this.$search[0].autocomplete = this.options.get('autocomplete');
+    this.$search[0].setAttribute('aria-label', searchLabel());
 
     $rendered.prepend($search);
 
@@ -52,8 +52,8 @@ define([
     });
 
     container.on('open', function () {
-      self.$search.attr('tabindex', 0);
-      self.$search.attr('aria-controls', resultsId);
+      self.$search[0].setAttribute('tabindex', 0);
+      self.$search[0].setAttribute('aria-controls', resultsId);
 
       self.$search.trigger('focus');
 
@@ -63,9 +63,9 @@ define([
     });
 
     container.on('close', function () {
-      self.$search.attr('tabindex', -1);
-      self.$search.removeAttr('aria-controls');
-      self.$search.removeAttr('aria-activedescendant');
+      self.$search[0].setAttribute('tabindex', -1);
+      self.$search[0].removeAttribute('aria-controls');
+      self.$search[0].removeAttribute('aria-activedescendant');
 
       self.$search.val('');
       self.$search.trigger('blur');
@@ -91,9 +91,10 @@ define([
 
     container.on('results:focus', function (params) {
       if (params.data._resultId) {
-        self.$search.attr('aria-activedescendant', params.data._resultId);
+        self.$search[0]
+          .setAttribute('aria-activedescendant', params.data._resultId);
       } else {
-        self.$search.removeAttr('aria-activedescendant');
+        self.$search[0].removeAttribute('aria-activedescendant');
       }
     });
   };

@@ -1,4 +1,4 @@
-module('Data adapters - Array');
+QUnit.module('Data adapters - Array');
 
 var ArrayData = require('select2/data/array');
 var $ = require('jquery');
@@ -66,7 +66,7 @@ var nestedOptions = new Options({
   ]
 });
 
-test('current gets default for single', function (assert) {
+QUnit.test('current gets default for single', function (assert) {
   var $select = $('#qunit-fixture .single-empty');
 
   var data = new ArrayData($select, arrayOptions);
@@ -91,7 +91,7 @@ test('current gets default for single', function (assert) {
   });
 });
 
-test('current gets default for multiple', function (assert) {
+QUnit.test('current gets default for multiple', function (assert) {
   var $select = $('#qunit-fixture .multiple');
 
   var data = new ArrayData($select, arrayOptions);
@@ -108,7 +108,7 @@ test('current gets default for multiple', function (assert) {
   });
 });
 
-test('current works with existing selections', function (assert) {
+QUnit.test('current works with existing selections', function (assert) {
   var $select = $('#qunit-fixture .multiple');
 
   var data = new ArrayData($select, arrayOptions);
@@ -141,7 +141,7 @@ test('current works with existing selections', function (assert) {
   });
 });
 
-test('current works with selected data', function (assert) {
+QUnit.test('current works with selected data', function (assert) {
   var $select = $('#qunit-fixture .single-empty');
 
   var data = new ArrayData($select, arrayOptions);
@@ -177,7 +177,7 @@ test('current works with selected data', function (assert) {
   });
 });
 
-test('select works for single', function (assert) {
+QUnit.test('select works for single', function (assert) {
   var $select = $('#qunit-fixture .single-empty');
 
   var data = new ArrayData($select, arrayOptions);
@@ -203,7 +203,7 @@ test('select works for single', function (assert) {
   );
 });
 
-test('multiple sets the value', function (assert) {
+QUnit.test('multiple sets the value', function (assert) {
   var $select = $('#qunit-fixture .multiple');
 
   var data = new ArrayData($select, arrayOptions);
@@ -224,7 +224,7 @@ test('multiple sets the value', function (assert) {
   assert.deepEqual($select.val(), ['default']);
 });
 
-test('multiple adds to the old value', function (assert) {
+QUnit.test('multiple adds to the old value', function (assert) {
   var $select = $('#qunit-fixture .multiple');
 
   var data = new ArrayData($select, arrayOptions);
@@ -244,7 +244,7 @@ test('multiple adds to the old value', function (assert) {
   assert.deepEqual($select.val(), ['One', 'default']);
 });
 
-test('option tags are automatically generated', function (assert) {
+QUnit.test('option tags are automatically generated', function (assert) {
   var $select = $('#qunit-fixture .single-empty');
 
   var data = new ArrayData($select, arrayOptions);
@@ -259,7 +259,7 @@ test('option tags are automatically generated', function (assert) {
   );
 });
 
-test('automatically generated option tags have a result id', function (assert) {
+QUnit.test('automatically generated option tags have a result id', function (assert) {
   var $select = $('#qunit-fixture .single-empty');
 
   var data = new ArrayData($select, arrayOptions);
@@ -277,7 +277,7 @@ test('automatically generated option tags have a result id', function (assert) {
   );
 });
 
-test('option tags can receive new data', function(assert) {
+QUnit.test('option tags can receive new data', function(assert) {
   var $select = $('#qunit-fixture .single');
 
   var data = new ArrayData($select, extraOptions);
@@ -310,7 +310,7 @@ test('option tags can receive new data', function(assert) {
   );
 });
 
-test('optgroup tags can also be generated', function (assert) {
+QUnit.test('optgroup tags can also be generated', function (assert) {
   var $select = $('#qunit-fixture .single-empty');
 
   var data = new ArrayData($select, nestedOptions);
@@ -331,7 +331,7 @@ test('optgroup tags can also be generated', function (assert) {
   );
 });
 
-test('optgroup tags have the right properties', function (assert) {
+QUnit.test('optgroup tags have the right properties', function (assert) {
   var $select = $('#qunit-fixture .single-empty');
 
   var data = new ArrayData($select, nestedOptions);
@@ -354,7 +354,7 @@ test('optgroup tags have the right properties', function (assert) {
   );
 });
 
-test('existing selections are respected on initialization', function (assert) {
+QUnit.test('existing selections are respected on initialization', function (assert) {
    var $select = $(
      '<select>' +
         '<option>First</option>' +

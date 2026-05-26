@@ -1,4 +1,4 @@
-module('Data adapters - Maximum selection length');
+QUnit.module('Data adapters - Maximum selection length');
 
 var SelectData = require('select2/data/select');
 var MaximumSelectionLength = require('select2/data/maximumSelectionLength');
@@ -9,7 +9,7 @@ var Utils = require('select2/utils');
 
 var MaximumSelectionData = Utils.Decorate(SelectData, MaximumSelectionLength);
 
-test('0 never displays the notice', function (assert) {
+QUnit.test('0 never displays the notice', function (assert) {
   assert.expect(3);
 
   var $select = $('#qunit-fixture .multiple');
@@ -50,7 +50,7 @@ test('0 never displays the notice', function (assert) {
   });
 });
 
-test('< 0 never displays the notice', function (assert) {
+QUnit.test('< 0 never displays the notice', function (assert) {
   assert.expect(3);
 
   var $select = $('#qunit-fixture .multiple');
@@ -91,7 +91,7 @@ test('< 0 never displays the notice', function (assert) {
   });
 });
 
-test('triggers when >= 1 selection' , function (assert) {
+QUnit.test('triggers when >= 1 selection' , function (assert) {
   assert.expect(2);
 
   var $select = $('#qunit-fixture .multiple');
@@ -126,7 +126,7 @@ test('triggers when >= 1 selection' , function (assert) {
   });
 });
 
-test('triggers after selection' , function (assert) {
+QUnit.test('triggers after selection' , function (assert) {
   assert.expect(1);
 
   var $select = $('#qunit-fixture .multiple');

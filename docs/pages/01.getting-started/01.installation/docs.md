@@ -13,8 +13,8 @@ A CDN (content delivery network) is the fastest way to get up and running with S
 Select2 is hosted on both the [jsDelivr](https://www.jsdelivr.com/package/npm/select2) and [cdnjs](https://cdnjs.com/libraries/select2) CDNs. Simply include the following lines of code in the `<head>` section of your page:
 
 ```
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
 ```
 
 >>> <i class="fa fa-info-circle"></i> Immediately following a new release, it takes some time for CDNs to catch up and get the new versions live on the CDN.
@@ -36,6 +36,22 @@ The precompiled distribution files will be available in `vendor/select2/dist/css
 ```
 <link href="vendor/select2/dist/css/select2.min.css" rel="stylesheet" />
 <script src="vendor/select2/dist/js/select2.min.js"></script>
+```
+
+## Installing with Webpack Encore
+
+Firstly, run `yarn install select2` from your project directory.
+
+Then, include Select2 JavaScript in your `app.js`:
+
+```
+require('select2');
+```
+
+And include its CSS in your `app.scss`:
+
+```
+@import '~select2';
 ```
 
 ## Manual installation

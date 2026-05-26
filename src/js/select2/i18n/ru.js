@@ -56,6 +56,12 @@ define(function () {
     },
     removeAllItems: function () {
       return 'Удалить все элементы';
+    },
+    removeItem: function () {
+      return 'Удалить элемент';
+    },
+    search: function() {
+      return 'Поиск';
     }
   };
 });

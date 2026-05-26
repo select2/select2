@@ -1,4 +1,4 @@
-module('Dropdown - Search');
+QUnit.module('Dropdown - Search');
 
 var Dropdown = require('select2/dropdown');
 var DropdownSearch = Utils.Decorate(
@@ -12,7 +12,7 @@ var Utils = require('select2/utils');
 
 var options = new Options({});
 
-test('search box defaults autocomplete to off', function (assert) {
+QUnit.test('search box defaults autocomplete to off', function (assert) {
   var $select = $('#qunit-fixture .single');
 
   var dropdown = new DropdownSearch($select, options);
@@ -28,7 +28,7 @@ test('search box defaults autocomplete to off', function (assert) {
   );
 });
 
-test('search box sets autocomplete from options', function (assert) {
+QUnit.test('search box sets autocomplete from options', function (assert) {
   var $select = $('#qunit-fixture .single');
 
   var autocompleteOptions = new Options({

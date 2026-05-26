@@ -8,7 +8,7 @@ define([
   }
 
   Placeholder.prototype.normalizePlaceholder = function (_, placeholder) {
-    if (typeof placeholder === 'string') {
+    if (typeof placeholder !== 'object') {
       placeholder = {
         id: '',
         text: placeholder
@@ -29,7 +29,7 @@ define([
       placeholder.text ||
       $placeholder.text();
 
-    this.$selection.find('.select2-selection__rendered').attr(
+    this.$selection.find('.select2-selection__rendered')[0].setAttribute(
       'title',
       placeholderTitle
     );

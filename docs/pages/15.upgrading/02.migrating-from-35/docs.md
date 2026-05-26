@@ -165,7 +165,7 @@ $.fn.select2.amd.require([
     $("#select").select2({
         dataAdapter: CustomData
     });
-}
+});
 ```
 
 The new `current` method of the data adapter works in a similar way to the old `initSelection` method, with three notable differences. The first, and most important, is that **it is called whenever the current selections are needed** to ensure that Select2 is always displaying the most accurate and up to date data. No matter what type of element Select2 is attached to, whether it supports a single or multiple selections, the data passed to the callback **must be an array, even if it contains one selection**.

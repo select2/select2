@@ -18,7 +18,7 @@ define([
     );
 
     if (this.options.get('multiple')) {
-      $results.attr('aria-multiselectable', 'true');
+      $results[0].setAttribute('aria-multiselectable', 'true');
     }
 
     this.$results = $results;
@@ -138,10 +138,10 @@ define([
         if ((item.element != null && item.element.selected) ||
             (item.element == null && selectedIds.indexOf(id) > -1)) {
           this.classList.add('select2-results__option--selected');
-          $option.attr('aria-selected', 'true');
+          $option[0].setAttribute('aria-selected', 'true');
         } else {
           this.classList.remove('select2-results__option--selected');
-          $option.attr('aria-selected', 'false');
+          $option[0].setAttribute('aria-selected', 'false');
         }
       });
 
@@ -256,7 +256,7 @@ define([
 
     var id = container.id + '-results';
 
-    this.$results.attr('id', id);
+    this.$results[0].setAttribute('id', id);
 
     container.on('results:all', function (params) {
       self.clear();
@@ -307,8 +307,8 @@ define([
 
     container.on('open', function () {
       // When the dropdown is open, aria-expended="true"
-      self.$results.attr('aria-expanded', 'true');
-      self.$results.attr('aria-hidden', 'false');
+      self.$results[0].setAttribute('aria-expanded', 'true');
+      self.$results[0].setAttribute('aria-hidden', 'false');
 
       self.setClasses();
       self.ensureHighlightVisible();
@@ -316,9 +316,9 @@ define([
 
     container.on('close', function () {
       // When the dropdown is closed, aria-expended="false"
-      self.$results.attr('aria-expanded', 'false');
-      self.$results.attr('aria-hidden', 'true');
-      self.$results.removeAttr('aria-activedescendant');
+      self.$results[0].setAttribute('aria-expanded', 'false');
+      self.$results[0].setAttribute('aria-hidden', 'true');
+      self.$results[0].removeAttribute('aria-activedescendant');
     });
 
     container.on('results:toggle', function () {
@@ -461,7 +461,10 @@ define([
             data: data
           });
         } else {
-          self.trigger('close', {});
+          self.trigger('close', {
+            originalEvent: evt,
+            data: data
+          });
         }
 
         return;
@@ -477,9 +480,11 @@ define([
       function (evt) {
       var data = Utils.GetData(this, 'data');
 
-      self.getHighlightedResults()
-          .removeClass('select2-results__option--highlighted')
-          .attr('aria-selected', 'false');
+      var $highlighted = self.getHighlightedResults();
+      $highlighted.removeClass('select2-results__option--highlighted');
+      $highlighted.each(function () {
+        this.setAttribute('aria-selected', 'false');
+      });
 
       self.trigger('results:focus', {
         data: data,

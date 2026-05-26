@@ -68,9 +68,13 @@ define([
       var $request = options.transport(options, function (data) {
         var results = self.processResults(data, params);
 
-        if (self.options.get('debug') && window.console && console.error) {
-          // Check to make sure that the response included a `results` key.
-          if (!results || !results.results || !Array.isArray(results.results)) {
+        if (results && results.results && Array.isArray(results.results)) {
+          results.results = results.results.map(
+            AjaxAdapter.prototype._normalizeItem
+          );
+        } else {
+          if (self.options.get('debug') && window.console && console.error) {
+            // Check to make sure that the response included a `results` key.
             console.error(
               'Select2: The AJAX results did not return an array in the ' +
               '`results` key of the response.'
@@ -82,7 +86,7 @@ define([
       }, function () {
         // Attempt to detect if a request was aborted
         // Only works if the transport exposes a status property
-        if ('status' in $request &&
+        if ($request && 'status' in $request &&
             ($request.status === 0 || $request.status === '0')) {
           return;
         }

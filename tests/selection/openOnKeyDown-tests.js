@@ -1,4 +1,4 @@
-module('Selection containers - Open On Key Down');
+QUnit.module('Selection containers - Open On Key Down');
 
 var KEYS = require('select2/keys');
 var $ = require('jquery');
@@ -35,7 +35,7 @@ function buildKeyDownEvent (keyCode, eventProps) {
  * @return {null}
  */
 function testAbled(isEnabled, testName, keyCode, eventProps, fn) {
-  test(testName, function (assert) {
+  QUnit.test(testName, function (assert) {
     var $element = $(
       '<select>' +
         '<option>one</option>' +

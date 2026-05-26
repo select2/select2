@@ -326,8 +326,9 @@ define([
   Defaults.prototype.applyFromElement = function (options, $element) {
     var optionLanguage = options.language;
     var defaultLanguage = this.defaults.language;
-    var elementLanguage = $element.prop('lang');
-    var parentLanguage = $element.closest('[lang]').prop('lang');
+    var elementLanguage = $element[0].lang;
+    var elementClosest = $element.closest('[lang]');
+    var parentLanguage = elementClosest[0] ? elementClosest[0].lang : null;
 
     var languages = Array.prototype.concat.call(
       this._resolveLanguage(elementLanguage),
@@ -421,7 +422,10 @@ define([
   };
 
   Defaults.prototype.set = function (key, value) {
-    var camelKey = $.camelCase(key);
+    function upperCaseLetter(_, letter) {
+      return letter.toUpperCase();
+    }
+    var camelKey = key.replace(/-([a-z])/g, upperCaseLetter);
 
     var data = {};
     data[camelKey] = value;

@@ -1,5 +1,5 @@
 /*!
- * Select2 4.1.0-rc.0
+ * Select2 4.1.0
  * https://select2.github.io
  *
  * Released under the MIT license
@@ -499,8 +499,7 @@ S2.define('jquery',[],function () {
 });
 
 S2.define('select2/utils',[
-  'jquery'
-], function ($) {
+], function () {
   var Utils = {};
 
   Utils.Extend = function (ChildClass, SuperClass) {
@@ -716,7 +715,6 @@ S2.define('select2/utils',[
     // http://codereview.stackexchange.com/q/13338
     // and was designed to be used with the Sizzle selector engine.
 
-    var $el = $(el);
     var overflowX = el.style.overflowX;
     var overflowY = el.style.overflowY;
 
@@ -730,8 +728,10 @@ S2.define('select2/utils',[
       return true;
     }
 
-    return ($el.innerHeight() < el.scrollHeight ||
-      $el.innerWidth() < el.scrollWidth);
+    var computedEl = window.getComputedStyle(el);
+
+    return (parseFloat(computedEl.height) < el.scrollHeight ||
+      parseFloat(computedEl.width) < el.scrollWidth);
   };
 
   Utils.escapeMarkup = function (markup) {
@@ -802,13 +802,18 @@ S2.define('select2/utils',[
     // and for a specified element.
     var id = Utils.GetUniqueElementId(element);
     if (name) {
+      // Convert the attribute name format (e.g. 'foo-bar') to the dataset
+      // property key format (e.g. 'fooBar') as required by the HTML spec.
+      var datasetKey = name.replace(/-([a-z])/g, function (_, letter) {
+        return letter.toUpperCase();
+      });
       if (Utils.__cache[id]) {
         if (Utils.__cache[id][name] != null) {
           return Utils.__cache[id][name];
         }
-        return $(element).data(name); // Fallback to HTML5 data attribs.
+        return element.dataset[datasetKey]; // Fallback to HTML5 data attribs.
       }
-      return $(element).data(name); // Fallback to HTML5 data attribs.
+      return element.dataset[datasetKey]; // Fallback to HTML5 data attribs.
     } else {
       return Utils.__cache[id];
     }
@@ -869,7 +874,7 @@ S2.define('select2/results',[
     );
 
     if (this.options.get('multiple')) {
-      $results.attr('aria-multiselectable', 'true');
+      $results[0].setAttribute('aria-multiselectable', 'true');
     }
 
     this.$results = $results;
@@ -989,10 +994,10 @@ S2.define('select2/results',[
         if ((item.element != null && item.element.selected) ||
             (item.element == null && selectedIds.indexOf(id) > -1)) {
           this.classList.add('select2-results__option--selected');
-          $option.attr('aria-selected', 'true');
+          $option[0].setAttribute('aria-selected', 'true');
         } else {
           this.classList.remove('select2-results__option--selected');
-          $option.attr('aria-selected', 'false');
+          $option[0].setAttribute('aria-selected', 'false');
         }
       });
 
@@ -1107,7 +1112,7 @@ S2.define('select2/results',[
 
     var id = container.id + '-results';
 
-    this.$results.attr('id', id);
+    this.$results[0].setAttribute('id', id);
 
     container.on('results:all', function (params) {
       self.clear();
@@ -1158,8 +1163,8 @@ S2.define('select2/results',[
 
     container.on('open', function () {
       // When the dropdown is open, aria-expended="true"
-      self.$results.attr('aria-expanded', 'true');
-      self.$results.attr('aria-hidden', 'false');
+      self.$results[0].setAttribute('aria-expanded', 'true');
+      self.$results[0].setAttribute('aria-hidden', 'false');
 
       self.setClasses();
       self.ensureHighlightVisible();
@@ -1167,9 +1172,9 @@ S2.define('select2/results',[
 
     container.on('close', function () {
       // When the dropdown is closed, aria-expended="false"
-      self.$results.attr('aria-expanded', 'false');
-      self.$results.attr('aria-hidden', 'true');
-      self.$results.removeAttr('aria-activedescendant');
+      self.$results[0].setAttribute('aria-expanded', 'false');
+      self.$results[0].setAttribute('aria-hidden', 'true');
+      self.$results[0].removeAttribute('aria-activedescendant');
     });
 
     container.on('results:toggle', function () {
@@ -1312,7 +1317,10 @@ S2.define('select2/results',[
             data: data
           });
         } else {
-          self.trigger('close', {});
+          self.trigger('close', {
+            originalEvent: evt,
+            data: data
+          });
         }
 
         return;
@@ -1328,9 +1336,11 @@ S2.define('select2/results',[
       function (evt) {
       var data = Utils.GetData(this, 'data');
 
-      self.getHighlightedResults()
-          .removeClass('select2-results__option--highlighted')
-          .attr('aria-selected', 'false');
+      var $highlighted = self.getHighlightedResults();
+      $highlighted.removeClass('select2-results__option--highlighted');
+      $highlighted.each(function () {
+        this.setAttribute('aria-selected', 'false');
+      });
 
       self.trigger('results:focus', {
         data: data,
@@ -1444,13 +1454,16 @@ S2.define('select2/selection/base',[
 
     if (Utils.GetData(this.$element[0], 'old-tabindex') != null) {
       this._tabindex = Utils.GetData(this.$element[0], 'old-tabindex');
-    } else if (this.$element.attr('tabindex') != null) {
-      this._tabindex = this.$element.attr('tabindex');
+    } else if (this.$element[0].getAttribute('tabindex') != null) {
+      this._tabindex = this.$element[0].getAttribute('tabindex');
     }
 
-    $selection.attr('title', this.$element.attr('title'));
-    $selection.attr('tabindex', this._tabindex);
-    $selection.attr('aria-disabled', 'false');
+    if(this.$element[0].getAttribute('title')) {
+      $selection[0]
+        .setAttribute('title', this.$element[0].getAttribute('title'));
+    }
+    $selection[0].setAttribute('tabindex', this._tabindex);
+    $selection[0].setAttribute('aria-disabled', 'false');
 
     this.$selection = $selection;
 
@@ -1481,7 +1494,8 @@ S2.define('select2/selection/base',[
     });
 
     container.on('results:focus', function (params) {
-      self.$selection.attr('aria-activedescendant', params.data._resultId);
+      self.$selection[0]
+        .setAttribute('aria-activedescendant', params.data._resultId);
     });
 
     container.on('selection:update', function (params) {
@@ -1490,17 +1504,17 @@ S2.define('select2/selection/base',[
 
     container.on('open', function () {
       // When the dropdown is open, aria-expanded="true"
-      self.$selection.attr('aria-expanded', 'true');
-      self.$selection.attr('aria-owns', resultsId);
+      self.$selection[0].setAttribute('aria-expanded', 'true');
+      self.$selection[0].setAttribute('aria-owns', resultsId);
 
       self._attachCloseHandler(container);
     });
 
     container.on('close', function () {
       // When the dropdown is closed, aria-expanded="false"
-      self.$selection.attr('aria-expanded', 'false');
-      self.$selection.removeAttr('aria-activedescendant');
-      self.$selection.removeAttr('aria-owns');
+      self.$selection[0].setAttribute('aria-expanded', 'false');
+      self.$selection[0].removeAttribute('aria-activedescendant');
+      self.$selection[0].removeAttribute('aria-owns');
 
       self.$selection.trigger('focus');
 
@@ -1508,13 +1522,13 @@ S2.define('select2/selection/base',[
     });
 
     container.on('enable', function () {
-      self.$selection.attr('tabindex', self._tabindex);
-      self.$selection.attr('aria-disabled', 'false');
+      self.$selection[0].setAttribute('tabindex', self._tabindex);
+      self.$selection[0].setAttribute('aria-disabled', 'false');
     });
 
     container.on('disable', function () {
-      self.$selection.attr('tabindex', '-1');
-      self.$selection.attr('aria-disabled', 'true');
+      self.$selection[0].setAttribute('tabindex', '-1');
+      self.$selection[0].setAttribute('aria-disabled', 'true');
     });
   };
 
@@ -1632,12 +1646,14 @@ S2.define('select2/selection/single',[
 
     var id = container.id + '-container';
 
-    this.$selection.find('.select2-selection__rendered')
-      .attr('id', id)
-      .attr('role', 'textbox')
-      .attr('aria-readonly', 'true');
-    this.$selection.attr('aria-labelledby', id);
-    this.$selection.attr('aria-controls', id);
+    var rendered = this.$selection.find('.select2-selection__rendered')[0];
+    if(rendered != null) {
+      rendered.setAttribute('id', id);
+      rendered.setAttribute('role', 'textbox');
+      rendered.setAttribute('aria-readonly', 'true');
+    }
+    this.$selection[0].setAttribute('aria-labelledby', id);
+    this.$selection[0].setAttribute('aria-controls', id);
 
     this.$selection.on('mousedown', function (evt) {
       // Only respond to left clicks
@@ -1668,7 +1684,7 @@ S2.define('select2/selection/single',[
   SingleSelection.prototype.clear = function () {
     var $rendered = this.$selection.find('.select2-selection__rendered');
     $rendered.empty();
-    $rendered.removeAttr('title'); // clear tooltip on empty
+    $rendered[0].removeAttribute('title'); // clear tooltip on empty
   };
 
   SingleSelection.prototype.display = function (data, container) {
@@ -1698,9 +1714,9 @@ S2.define('select2/selection/single',[
     var title = selection.title || selection.text;
 
     if (title) {
-      $rendered.attr('title', title);
+      $rendered[0].setAttribute('title', title);
     } else {
-      $rendered.removeAttr('title');
+      $rendered[0].removeAttribute('title');
     }
   };
 
@@ -1736,7 +1752,11 @@ S2.define('select2/selection/multiple',[
     MultipleSelection.__super__.bind.apply(this, arguments);
 
     var id = container.id + '-container';
-    this.$selection.find('.select2-selection__rendered').attr('id', id);
+
+    var rendered = this.$selection.find('.select2-selection__rendered')[0];
+    if(rendered != null) {
+      rendered.setAttribute('id', id);
+    }
 
     this.$selection.on('click', function (evt) {
       self.trigger('toggle', {
@@ -1782,7 +1802,7 @@ S2.define('select2/selection/multiple',[
   MultipleSelection.prototype.clear = function () {
     var $rendered = this.$selection.find('.select2-selection__rendered');
     $rendered.empty();
-    $rendered.removeAttr('title');
+    $rendered[0].removeAttribute('title');
   };
 
   MultipleSelection.prototype.display = function (data, container) {
@@ -1815,8 +1835,9 @@ S2.define('select2/selection/multiple',[
 
     var $selections = [];
 
-    var selectionIdPrefix = this.$selection.find('.select2-selection__rendered')
-      .attr('id') + '-choice-';
+    var selectionIdPrefix = this.$selection
+      .find('.select2-selection__rendered')[0]
+      .getAttribute('id') + '-choice-';
 
     for (var d = 0; d < data.length; d++) {
       var selection = data[d];
@@ -1833,22 +1854,22 @@ S2.define('select2/selection/multiple',[
       }
 
       $selection.find('.select2-selection__choice__display')
-        .append(formatted)
-        .attr('id', selectionId);
+        .append(formatted)[0]
+        .setAttribute('id', selectionId);
 
       var title = selection.title || selection.text;
 
       if (title) {
-        $selection.attr('title', title);
+        $selection[0].setAttribute('title', title);
       }
 
       var removeItem = this.options.get('translations').get('removeItem');
 
-      var $remove = $selection.find('.select2-selection__choice__remove');
+      var remove = $selection.find('.select2-selection__choice__remove')[0];
 
-      $remove.attr('title', removeItem());
-      $remove.attr('aria-label', removeItem());
-      $remove.attr('aria-describedby', selectionId);
+      remove.setAttribute('title', removeItem());
+      remove.setAttribute('aria-label', removeItem());
+      remove.setAttribute('aria-describedby', selectionId);
 
       Utils.StoreData($selection[0], 'data', selection);
 
@@ -1873,7 +1894,7 @@ S2.define('select2/selection/placeholder',[
   }
 
   Placeholder.prototype.normalizePlaceholder = function (_, placeholder) {
-    if (typeof placeholder === 'string') {
+    if (typeof placeholder !== 'object') {
       placeholder = {
         id: '',
         text: placeholder
@@ -1894,7 +1915,7 @@ S2.define('select2/selection/placeholder',[
       placeholder.text ||
       $placeholder.text();
 
-    this.$selection.find('.select2-selection__rendered').attr(
+    this.$selection.find('.select2-selection__rendered')[0].setAttribute(
       'title',
       placeholderTitle
     );
@@ -2024,8 +2045,11 @@ S2.define('select2/selection/allowClear',[
       return;
     }
 
-    var selectionId = this.$selection.find('.select2-selection__rendered')
-      .attr('id');
+    var rendered = this.$selection.find('.select2-selection__rendered')[0];
+    var selectionId = null;
+    if(rendered != null) {
+      selectionId = rendered.getAttribute('id');
+    }
 
     var removeAll = this.options.get('translations').get('removeAllItems');
 
@@ -2034,9 +2058,9 @@ S2.define('select2/selection/allowClear',[
         '<span aria-hidden="true">&times;</span>' +
       '</button>'
     );
-    $remove.attr('title', removeAll());
-    $remove.attr('aria-label', removeAll());
-    $remove.attr('aria-describedby', selectionId);
+    $remove[0].setAttribute('title', removeAll());
+    $remove[0].setAttribute('aria-label', removeAll());
+    $remove[0].setAttribute('aria-describedby', selectionId);
     Utils.StoreData($remove[0], 'data', data);
 
     this.$selection.prepend($remove);
@@ -2070,8 +2094,8 @@ S2.define('select2/selection/search',[
     this.$searchContainer = $search;
     this.$search = $search.find('textarea');
 
-    this.$search.prop('autocomplete', this.options.get('autocomplete'));
-    this.$search.attr('aria-label', searchLabel());
+    this.$search[0].autocomplete = this.options.get('autocomplete');
+    this.$search[0].setAttribute('aria-label', searchLabel());
 
     var $rendered = decorated.call(this);
 
@@ -2089,29 +2113,29 @@ S2.define('select2/selection/search',[
 
     decorated.call(this, container, $container);
 
-    self.$search.attr('aria-describedby', selectionId);
+    self.$search[0].setAttribute('aria-describedby', selectionId);
 
     container.on('open', function () {
-      self.$search.attr('aria-controls', resultsId);
+      self.$search[0].setAttribute('aria-controls', resultsId);
       self.$search.trigger('focus');
     });
 
     container.on('close', function () {
       self.$search.val('');
       self.resizeSearch();
-      self.$search.removeAttr('aria-controls');
-      self.$search.removeAttr('aria-activedescendant');
+      self.$search[0].removeAttribute('aria-controls');
+      self.$search[0].removeAttribute('aria-activedescendant');
       self.$search.trigger('focus');
     });
 
     container.on('enable', function () {
-      self.$search.prop('disabled', false);
+      self.$search[0].disabled = false;
 
       self._transferTabIndex();
     });
 
     container.on('disable', function () {
-      self.$search.prop('disabled', true);
+      self.$search[0].disabled = true;
     });
 
     container.on('focus', function (evt) {
@@ -2120,9 +2144,10 @@ S2.define('select2/selection/search',[
 
     container.on('results:focus', function (params) {
       if (params.data._resultId) {
-        self.$search.attr('aria-activedescendant', params.data._resultId);
+        self.$search[0]
+          .setAttribute('aria-activedescendant', params.data._resultId);
       } else {
-        self.$search.removeAttr('aria-activedescendant');
+        self.$search[0].removeAttribute('aria-activedescendant');
       }
     });
 
@@ -2228,18 +2253,19 @@ S2.define('select2/selection/search',[
    * @private
    */
   Search.prototype._transferTabIndex = function (decorated) {
-    this.$search.attr('tabindex', this.$selection.attr('tabindex'));
-    this.$selection.attr('tabindex', '-1');
+    this.$search[0]
+      .setAttribute('tabindex', this.$selection[0].getAttribute('tabindex'));
+    this.$selection[0].setAttribute('tabindex', '-1');
   };
 
   Search.prototype.createPlaceholder = function (decorated, placeholder) {
-    this.$search.attr('placeholder', placeholder.text);
+    this.$search[0].setAttribute('placeholder', placeholder.text);
   };
 
   Search.prototype.update = function (decorated, data) {
     var searchHadFocus = this.$search[0] == document.activeElement;
 
-    this.$search.attr('placeholder', '');
+    this.$search[0].setAttribute('placeholder', '');
 
     decorated.call(this, data);
 
@@ -2277,7 +2303,7 @@ S2.define('select2/selection/search',[
 
     var width = '100%';
 
-    if (this.$search.attr('placeholder') === '') {
+    if (this.$search[0].getAttribute('placeholder') === '') {
       var minimumWidth = this.$search.val().length + 1;
 
       width = (minimumWidth * 0.75) + 'em';
@@ -2305,7 +2331,11 @@ S2.define('select2/selection/selectionCss',[
       Utils.copyNonInternalCssClasses($selection[0], this.$element[0]);
     }
 
-    $selection.addClass(selectionCssClass);
+    selectionCssClass.trim().split(' ').forEach(function(cssClass) {
+      if(cssClass.length > 0) {
+        $selection[0].classList.add(cssClass);
+      }
+    });
 
     return $selection;
   };
@@ -2363,9 +2393,8 @@ S2.define('select2/selection/eventRelay',[
 });
 
 S2.define('select2/translation',[
-  'jquery',
   'require'
-], function ($, require) {
+], function (require) {
   function Translation (dict) {
     this.dict = dict || {};
   }
@@ -2379,7 +2408,7 @@ S2.define('select2/translation',[
   };
 
   Translation.prototype.extend = function (translation) {
-    this.dict = $.extend({}, translation.all(), this.dict);
+    this.dict = Object.assign({}, translation.all(), this.dict);
   };
 
   // Static functions
@@ -3334,7 +3363,7 @@ S2.define('select2/data/select',[
       return;
     }
 
-    if (this.$element.prop('multiple')) {
+    if (this.$element[0].multiple) {
       this.current(function (currentData) {
         var val = [];
 
@@ -3363,7 +3392,7 @@ S2.define('select2/data/select',[
   SelectAdapter.prototype.unselect = function (data) {
     var self = this;
 
-    if (!this.$element.prop('multiple')) {
+    if (!this.$element[0].multiple) {
       return;
     }
 
@@ -3509,15 +3538,15 @@ S2.define('select2/data/select',[
       data = {
         id: $option.val(),
         text: $option.text(),
-        disabled: $option.prop('disabled'),
-        selected: $option.prop('selected'),
-        title: $option.prop('title')
+        disabled: $option[0].disabled,
+        selected: $option[0].selected,
+        title: $option[0].title
       };
     } else if (option.tagName.toLowerCase() === 'optgroup') {
       data = {
-        text: $option.prop('label'),
+        text: $option[0].label,
         children: [],
-        title: $option.prop('title')
+        title: $option[0].title
       };
 
       var $children = $option.children('option');
@@ -3569,6 +3598,12 @@ S2.define('select2/data/select',[
 
     if (item._resultId == null && item.id && this.container != null) {
       item._resultId = this.generateResultId(this.container, item);
+    }
+
+    if (item.children) {
+        item.children = item.children.map(
+            SelectAdapter.prototype._normalizeItem
+        );
     }
 
     return $.extend({}, defaults, item);
@@ -3737,9 +3772,13 @@ S2.define('select2/data/ajax',[
       var $request = options.transport(options, function (data) {
         var results = self.processResults(data, params);
 
-        if (self.options.get('debug') && window.console && console.error) {
-          // Check to make sure that the response included a `results` key.
-          if (!results || !results.results || !Array.isArray(results.results)) {
+        if (results && results.results && Array.isArray(results.results)) {
+          results.results = results.results.map(
+            AjaxAdapter.prototype._normalizeItem
+          );
+        } else {
+          if (self.options.get('debug') && window.console && console.error) {
+            // Check to make sure that the response included a `results` key.
             console.error(
               'Select2: The AJAX results did not return an array in the ' +
               '`results` key of the response.'
@@ -3751,7 +3790,7 @@ S2.define('select2/data/ajax',[
       }, function () {
         // Attempt to detect if a request was aborted
         // Only works if the transport exposes a status property
-        if ('status' in $request &&
+        if ($request && 'status' in $request &&
             ($request.status === 0 || $request.status === '0')) {
           return;
         }
@@ -3858,7 +3897,7 @@ S2.define('select2/data/tags',[
 
       if (tag != null) {
         var $option = self.option(tag);
-        $option.attr('data-select2-tag', 'true');
+        $option[0].setAttribute('data-select2-tag', 'true');
 
         self.addOptions([$option]);
 
@@ -3945,7 +3984,7 @@ S2.define('select2/data/tokenizer',[
       // If an existing option wasn't found for it, create the option
       if (!$existingOptions.length) {
         var $option = self.option(item);
-        $option.attr('data-select2-tag', true);
+        $option[0].setAttribute('data-select2-tag', true);
 
         self._removeOldTags();
         self.addOptions([$option]);
@@ -4164,7 +4203,7 @@ S2.define('select2/dropdown',[
       '</span>'
     );
 
-    $dropdown.attr('dir', this.options.get('dir'));
+    $dropdown[0].setAttribute('dir', this.options.get('dir'));
 
     this.$dropdown = $dropdown;
 
@@ -4207,8 +4246,8 @@ S2.define('select2/dropdown/search',[
     this.$searchContainer = $search;
     this.$search = $search.find('input');
 
-    this.$search.prop('autocomplete', this.options.get('autocomplete'));
-    this.$search.attr('aria-label', searchLabel());
+    this.$search[0].autocomplete = this.options.get('autocomplete');
+    this.$search[0].setAttribute('aria-label', searchLabel());
 
     $rendered.prepend($search);
 
@@ -4241,8 +4280,8 @@ S2.define('select2/dropdown/search',[
     });
 
     container.on('open', function () {
-      self.$search.attr('tabindex', 0);
-      self.$search.attr('aria-controls', resultsId);
+      self.$search[0].setAttribute('tabindex', 0);
+      self.$search[0].setAttribute('aria-controls', resultsId);
 
       self.$search.trigger('focus');
 
@@ -4252,9 +4291,9 @@ S2.define('select2/dropdown/search',[
     });
 
     container.on('close', function () {
-      self.$search.attr('tabindex', -1);
-      self.$search.removeAttr('aria-controls');
-      self.$search.removeAttr('aria-activedescendant');
+      self.$search[0].setAttribute('tabindex', -1);
+      self.$search[0].removeAttribute('aria-controls');
+      self.$search[0].removeAttribute('aria-activedescendant');
 
       self.$search.val('');
       self.$search.trigger('blur');
@@ -4280,9 +4319,10 @@ S2.define('select2/dropdown/search',[
 
     container.on('results:focus', function (params) {
       if (params.data._resultId) {
-        self.$search.attr('aria-activedescendant', params.data._resultId);
+        self.$search[0]
+          .setAttribute('aria-activedescendant', params.data._resultId);
       } else {
-        self.$search.removeAttr('aria-activedescendant');
+        self.$search[0].removeAttribute('aria-activedescendant');
       }
     });
   };
@@ -4322,7 +4362,7 @@ S2.define('select2/dropdown/hidePlaceholder',[
   };
 
   HidePlaceholder.prototype.normalizePlaceholder = function (_, placeholder) {
-    if (typeof placeholder === 'string') {
+    if (typeof placeholder !== 'object') {
       placeholder = {
         id: '',
         text: placeholder
@@ -4483,7 +4523,7 @@ S2.define('select2/dropdown/attachBody',[
 
   AttachBody.prototype.position = function (decorated, $dropdown, $container) {
     // Clone all of the container classes
-    $dropdown.attr('class', $container.attr('class'));
+    $dropdown[0].setAttribute('class', $container[0].getAttribute('class'));
 
     $dropdown[0].classList.remove('select2');
     $dropdown[0].classList.add('select2-container--open');
@@ -4846,7 +4886,11 @@ S2.define('select2/dropdown/dropdownCss',[
       Utils.copyNonInternalCssClasses($dropdown[0], this.$element[0]);
     }
 
-    $dropdown.addClass(dropdownCssClass);
+    dropdownCssClass.trim().split(' ').forEach(function(cssClass) {
+      if(cssClass.length > 0) {
+        $dropdown[0].classList.add(cssClass);
+      }
+    });
 
     return $dropdown;
   };
@@ -5268,8 +5312,9 @@ S2.define('select2/defaults',[
   Defaults.prototype.applyFromElement = function (options, $element) {
     var optionLanguage = options.language;
     var defaultLanguage = this.defaults.language;
-    var elementLanguage = $element.prop('lang');
-    var parentLanguage = $element.closest('[lang]').prop('lang');
+    var elementLanguage = $element[0].lang;
+    var elementClosest = $element.closest('[lang]');
+    var parentLanguage = elementClosest[0] ? elementClosest[0].lang : null;
 
     var languages = Array.prototype.concat.call(
       this._resolveLanguage(elementLanguage),
@@ -5363,7 +5408,10 @@ S2.define('select2/defaults',[
   };
 
   Defaults.prototype.set = function (key, value) {
-    var camelKey = $.camelCase(key);
+    function upperCaseLetter(_, letter) {
+      return letter.toUpperCase();
+    }
+    var camelKey = key.replace(/-([a-z])/g, upperCaseLetter);
 
     var data = {};
     data[camelKey] = value;
@@ -5401,29 +5449,35 @@ S2.define('select2/options',[
     var excludedData = ['select2'];
 
     if (this.options.multiple == null) {
-      this.options.multiple = $e.prop('multiple');
+      this.options.multiple = $e[0].multiple;
     }
 
     if (this.options.disabled == null) {
-      this.options.disabled = $e.prop('disabled');
+      this.options.disabled = $e[0].disabled;
     }
 
-    if (this.options.autocomplete == null && $e.prop('autocomplete')) {
-      this.options.autocomplete = $e.prop('autocomplete');
+    if (this.options.autocomplete == null && $e[0].autocomplete) {
+      this.options.autocomplete = $e[0].autocomplete;
     }
 
-    if (this.options.dir == null) {
-      if ($e.prop('dir')) {
-        this.options.dir = $e.prop('dir');
-      } else if ($e.closest('[dir]').prop('dir')) {
-        this.options.dir = $e.closest('[dir]').prop('dir');
+    if (this.options.dir === null) {
+      var dirValue = $e[0].getAttribute('dir');
+
+      if (dirValue) {
+        this.options.dir = dirValue;
       } else {
-        this.options.dir = 'ltr';
+        var closestDirValue = $e.closest('[dir]').getAttribute('dir');
+
+        if (closestDirValue) {
+          this.options.dir = closestDirValue;
+        } else {
+          this.options.dir = 'ltr';
+        }
       }
     }
 
-    $e.prop('disabled', this.options.disabled);
-    $e.prop('multiple', this.options.multiple);
+    $e[0].disabled = this.options.disabled;
+    $e[0].multiple = this.options.multiple;
 
     if (Utils.GetData($e[0], 'select2Tags')) {
       if (this.options.debug && window.console && console.warn) {
@@ -5447,7 +5501,7 @@ S2.define('select2/options',[
         );
       }
 
-      $e.attr('ajax--url', Utils.GetData($e[0], 'ajaxUrl'));
+      $e[0].setAttribute('ajax--url', Utils.GetData($e[0], 'ajaxUrl'));
       Utils.StoreData($e[0], 'ajax-Url', Utils.GetData($e[0], 'ajaxUrl'));
     }
 
@@ -5538,9 +5592,9 @@ S2.define('select2/core',[
 
     // Set up the tabindex
 
-    var tabindex = $element.attr('tabindex') || 0;
+    var tabindex = $element[0].getAttribute('tabindex') || 0;
     Utils.StoreData($element[0], 'old-tabindex', tabindex);
-    $element.attr('tabindex', '-1');
+    $element[0].setAttribute('tabindex', '-1');
 
     // Set up containers and adapters
 
@@ -5595,7 +5649,7 @@ S2.define('select2/core',[
 
     // Hide the original select
     $element[0].classList.add('select2-hidden-accessible');
-    $element.attr('aria-hidden', 'true');
+    $element[0].setAttribute('aria-hidden', 'true');
 
     // Synchronize any monitored attributes
     this._syncAttributes();
@@ -5610,11 +5664,12 @@ S2.define('select2/core',[
 
   Select2.prototype._generateId = function ($element) {
     var id = '';
+    var element = $element[0];
 
-    if ($element.attr('id') != null) {
-      id = $element.attr('id');
-    } else if ($element.attr('name') != null) {
-      id = $element.attr('name') + '-' + Utils.generateChars(2);
+    if (element != null && element.getAttribute('id') != null) {
+      id = element.getAttribute('id');
+    } else if (element != null && element.getAttribute('name') != null) {
+      id = element.getAttribute('name') + '-' + Utils.generateChars(2);
     } else {
       id = Utils.generateChars(4);
     }
@@ -5659,7 +5714,7 @@ S2.define('select2/core',[
     }
 
     if (method == 'style') {
-      var style = $element.attr('style');
+      var style = $element[0].getAttribute('style');
 
       if (typeof(style) !== 'string') {
         return null;
@@ -5852,7 +5907,7 @@ S2.define('select2/core',[
   };
 
   Select2.prototype._syncAttributes = function () {
-    this.options.set('disabled', this.$element.prop('disabled'));
+    this.options.set('disabled', this.$element[0].disabled);
 
     if (this.isDisabled()) {
       if (this.isOpen()) {
@@ -6014,7 +6069,7 @@ S2.define('select2/core',[
     if (this.options.get('debug') && window.console && console.warn) {
       console.warn(
         'Select2: The `select2("enable")` method has been deprecated and will' +
-        ' be removed in later Select2 versions. Use $element.prop("disabled")' +
+        ' be removed in later Select2 versions. Use $element[0].disabled' +
         ' instead.'
       );
     }
@@ -6025,7 +6080,7 @@ S2.define('select2/core',[
 
     var disabled = !args[0];
 
-    this.$element.prop('disabled', disabled);
+    this.$element[0].disabled = disabled;
   };
 
   Select2.prototype.data = function () {
@@ -6080,11 +6135,11 @@ S2.define('select2/core',[
     this._syncS = null;
 
     this.$element.off('.select2');
-    this.$element.attr('tabindex',
+    this.$element[0].setAttribute('tabindex',
     Utils.GetData(this.$element[0], 'old-tabindex'));
 
     this.$element[0].classList.remove('select2-hidden-accessible');
-    this.$element.attr('aria-hidden', 'false');
+    this.$element[0].setAttribute('aria-hidden', 'false');
     Utils.RemoveData(this.$element[0]);
     this.$element.removeData('select2');
 
@@ -6107,7 +6162,7 @@ S2.define('select2/core',[
       '</span>'
     );
 
-    $container.attr('dir', this.options.get('dir'));
+    $container[0].setAttribute('dir', this.options.get('dir'));
 
     this.$container = $container;
 
@@ -6220,78 +6275,85 @@ S2.define('select2/selection/stopPropagation',[
 });
 
 /*!
- * jQuery Mousewheel 3.1.13
- *
- * Copyright jQuery Foundation and other contributors
- * Released under the MIT license
- * http://jquery.org/license
+ * jQuery Mousewheel 3.2.2
+ * Copyright OpenJS Foundation and other contributors
  */
 
-(function (factory) {
+( function( factory ) {
+    "use strict";
+
     if ( typeof S2.define === 'function' && S2.define.amd ) {
+
         // AMD. Register as an anonymous module.
-        S2.define('jquery-mousewheel',['jquery'], factory);
-    } else if (typeof exports === 'object') {
+        S2.define( 'jquery-mousewheel',[ "jquery" ], factory );
+    } else if ( typeof exports === "object" ) {
+
         // Node/CommonJS style for Browserify
         module.exports = factory;
     } else {
-        // Browser globals
-        factory(jQuery);
-    }
-}(function ($) {
 
-    var toFix  = ['wheel', 'mousewheel', 'DOMMouseScroll', 'MozMousePixelScroll'],
-        toBind = ( 'onwheel' in document || document.documentMode >= 9 ) ?
-                    ['wheel'] : ['mousewheel', 'DomMouseScroll', 'MozMousePixelScroll'],
-        slice  = Array.prototype.slice,
-        nullLowestDeltaTimeout, lowestDelta;
+        // Browser globals
+        factory( jQuery );
+    }
+} )( function( $ ) {
+    "use strict";
+
+    var nullLowestDeltaTimeout, lowestDelta,
+        modernEvents = !!$.fn.on,
+        toFix  = [ "wheel", "mousewheel", "DOMMouseScroll", "MozMousePixelScroll" ],
+        toBind = ( "onwheel" in window.document || window.document.documentMode >= 9 ) ?
+            [ "wheel" ] : [ "mousewheel", "DomMouseScroll", "MozMousePixelScroll" ],
+        slice  = Array.prototype.slice;
 
     if ( $.event.fixHooks ) {
         for ( var i = toFix.length; i; ) {
-            $.event.fixHooks[ toFix[--i] ] = $.event.mouseHooks;
+            $.event.fixHooks[ toFix[ --i ] ] = $.event.mouseHooks;
         }
     }
 
     var special = $.event.special.mousewheel = {
-        version: '3.1.12',
+        version: "3.2.2",
 
         setup: function() {
             if ( this.addEventListener ) {
                 for ( var i = toBind.length; i; ) {
-                    this.addEventListener( toBind[--i], handler, false );
+                    this.addEventListener( toBind[ --i ], handler, false );
                 }
             } else {
                 this.onmousewheel = handler;
             }
+
             // Store the line height and page height for this particular element
-            $.data(this, 'mousewheel-line-height', special.getLineHeight(this));
-            $.data(this, 'mousewheel-page-height', special.getPageHeight(this));
+            $.data( this, "mousewheel-line-height", special.getLineHeight( this ) );
+            $.data( this, "mousewheel-page-height", special.getPageHeight( this ) );
         },
 
         teardown: function() {
             if ( this.removeEventListener ) {
                 for ( var i = toBind.length; i; ) {
-                    this.removeEventListener( toBind[--i], handler, false );
+                    this.removeEventListener( toBind[ --i ], handler, false );
                 }
             } else {
                 this.onmousewheel = null;
             }
+
             // Clean up the data we added to the element
-            $.removeData(this, 'mousewheel-line-height');
-            $.removeData(this, 'mousewheel-page-height');
+            $.removeData( this, "mousewheel-line-height" );
+            $.removeData( this, "mousewheel-page-height" );
         },
 
-        getLineHeight: function(elem) {
-            var $elem = $(elem),
-                $parent = $elem['offsetParent' in $.fn ? 'offsetParent' : 'parent']();
-            if (!$parent.length) {
-                $parent = $('body');
+        getLineHeight: function( elem ) {
+            var $elem = $( elem ),
+                $parent = $elem[ "offsetParent" in $.fn ? "offsetParent" : "parent" ]();
+            if ( !$parent.length ) {
+                $parent = $( "body" );
             }
-            return parseInt($parent.css('fontSize'), 10) || parseInt($elem.css('fontSize'), 10) || 16;
+            return parseInt( $parent.css( "fontSize" ), 10 ) ||
+                parseInt( $elem.css( "fontSize" ), 10 ) || 16;
         },
 
-        getPageHeight: function(elem) {
-            return $(elem).height();
+        getPageHeight: function( elem ) {
+            return $( elem ).height();
         },
 
         settings: {
@@ -6300,56 +6362,68 @@ S2.define('select2/selection/stopPropagation',[
         }
     };
 
-    $.fn.extend({
-        mousewheel: function(fn) {
-            return fn ? this.bind('mousewheel', fn) : this.trigger('mousewheel');
+    $.fn.extend( {
+        mousewheel: function( fn ) {
+            return fn ?
+                this[ modernEvents ? "on" : "bind" ]( "mousewheel", fn ) :
+                this.trigger( "mousewheel" );
         },
 
-        unmousewheel: function(fn) {
-            return this.unbind('mousewheel', fn);
+        unmousewheel: function( fn ) {
+            return this[ modernEvents ? "off" : "unbind" ]( "mousewheel", fn );
         }
-    });
+    } );
 
 
-    function handler(event) {
+    function handler( event ) {
         var orgEvent   = event || window.event,
-            args       = slice.call(arguments, 1),
+            args       = slice.call( arguments, 1 ),
             delta      = 0,
             deltaX     = 0,
             deltaY     = 0,
-            absDelta   = 0,
-            offsetX    = 0,
-            offsetY    = 0;
-        event = $.event.fix(orgEvent);
-        event.type = 'mousewheel';
+            absDelta   = 0;
+        event = $.event.fix( orgEvent );
+        event.type = "mousewheel";
 
         // Old school scrollwheel delta
-        if ( 'detail'      in orgEvent ) { deltaY = orgEvent.detail * -1;      }
-        if ( 'wheelDelta'  in orgEvent ) { deltaY = orgEvent.wheelDelta;       }
-        if ( 'wheelDeltaY' in orgEvent ) { deltaY = orgEvent.wheelDeltaY;      }
-        if ( 'wheelDeltaX' in orgEvent ) { deltaX = orgEvent.wheelDeltaX * -1; }
+        if ( "detail" in orgEvent ) {
+            deltaY = orgEvent.detail * -1;
+        }
+        if ( "wheelDelta" in orgEvent ) {
+            deltaY = orgEvent.wheelDelta;
+        }
+        if ( "wheelDeltaY" in orgEvent ) {
+            deltaY = orgEvent.wheelDeltaY;
+        }
+        if ( "wheelDeltaX" in orgEvent ) {
+            deltaX = orgEvent.wheelDeltaX * -1;
+        }
 
         // Firefox < 17 horizontal scrolling related to DOMMouseScroll event
-        if ( 'axis' in orgEvent && orgEvent.axis === orgEvent.HORIZONTAL_AXIS ) {
+        if ( "axis" in orgEvent && orgEvent.axis === orgEvent.HORIZONTAL_AXIS ) {
             deltaX = deltaY * -1;
             deltaY = 0;
         }
 
-        // Set delta to be deltaY or deltaX if deltaY is 0 for backwards compatabilitiy
+        // Set delta to be deltaY or deltaX if deltaY is 0 for backwards compatability
         delta = deltaY === 0 ? deltaX : deltaY;
 
         // New school wheel delta (wheel event)
-        if ( 'deltaY' in orgEvent ) {
+        if ( "deltaY" in orgEvent ) {
             deltaY = orgEvent.deltaY * -1;
             delta  = deltaY;
         }
-        if ( 'deltaX' in orgEvent ) {
+        if ( "deltaX" in orgEvent ) {
             deltaX = orgEvent.deltaX;
-            if ( deltaY === 0 ) { delta  = deltaX * -1; }
+            if ( deltaY === 0 ) {
+                delta  = deltaX * -1;
+            }
         }
 
         // No change actually happened, no reason to go any further
-        if ( deltaY === 0 && deltaX === 0 ) { return; }
+        if ( deltaY === 0 && deltaX === 0 ) {
+            return;
+        }
 
         // Need to convert lines and pages to pixels if we aren't already in pixels
         // There are three delta modes:
@@ -6357,31 +6431,32 @@ S2.define('select2/selection/stopPropagation',[
         //   * deltaMode 1 is by lines
         //   * deltaMode 2 is by pages
         if ( orgEvent.deltaMode === 1 ) {
-            var lineHeight = $.data(this, 'mousewheel-line-height');
+            var lineHeight = $.data( this, "mousewheel-line-height" );
             delta  *= lineHeight;
             deltaY *= lineHeight;
             deltaX *= lineHeight;
         } else if ( orgEvent.deltaMode === 2 ) {
-            var pageHeight = $.data(this, 'mousewheel-page-height');
+            var pageHeight = $.data( this, "mousewheel-page-height" );
             delta  *= pageHeight;
             deltaY *= pageHeight;
             deltaX *= pageHeight;
         }
 
         // Store lowest absolute delta to normalize the delta values
-        absDelta = Math.max( Math.abs(deltaY), Math.abs(deltaX) );
+        absDelta = Math.max( Math.abs( deltaY ), Math.abs( deltaX ) );
 
         if ( !lowestDelta || absDelta < lowestDelta ) {
             lowestDelta = absDelta;
 
             // Adjust older deltas if necessary
-            if ( shouldAdjustOldDeltas(orgEvent, absDelta) ) {
+            if ( shouldAdjustOldDeltas( orgEvent, absDelta ) ) {
                 lowestDelta /= 40;
             }
         }
 
         // Adjust older deltas if necessary
-        if ( shouldAdjustOldDeltas(orgEvent, absDelta) ) {
+        if ( shouldAdjustOldDeltas( orgEvent, absDelta ) ) {
+
             // Divide all the things by 40!
             delta  /= 40;
             deltaX /= 40;
@@ -6389,57 +6464,58 @@ S2.define('select2/selection/stopPropagation',[
         }
 
         // Get a whole, normalized value for the deltas
-        delta  = Math[ delta  >= 1 ? 'floor' : 'ceil' ](delta  / lowestDelta);
-        deltaX = Math[ deltaX >= 1 ? 'floor' : 'ceil' ](deltaX / lowestDelta);
-        deltaY = Math[ deltaY >= 1 ? 'floor' : 'ceil' ](deltaY / lowestDelta);
+        delta  = Math[ delta  >= 1 ? "floor" : "ceil" ]( delta  / lowestDelta );
+        deltaX = Math[ deltaX >= 1 ? "floor" : "ceil" ]( deltaX / lowestDelta );
+        deltaY = Math[ deltaY >= 1 ? "floor" : "ceil" ]( deltaY / lowestDelta );
 
         // Normalise offsetX and offsetY properties
         if ( special.settings.normalizeOffset && this.getBoundingClientRect ) {
             var boundingRect = this.getBoundingClientRect();
-            offsetX = event.clientX - boundingRect.left;
-            offsetY = event.clientY - boundingRect.top;
+            event.offsetX = event.clientX - boundingRect.left;
+            event.offsetY = event.clientY - boundingRect.top;
         }
 
         // Add information to the event object
         event.deltaX = deltaX;
         event.deltaY = deltaY;
         event.deltaFactor = lowestDelta;
-        event.offsetX = offsetX;
-        event.offsetY = offsetY;
+
         // Go ahead and set deltaMode to 0 since we converted to pixels
         // Although this is a little odd since we overwrite the deltaX/Y
         // properties with normalized deltas.
         event.deltaMode = 0;
 
         // Add event and delta to the front of the arguments
-        args.unshift(event, delta, deltaX, deltaY);
+        args.unshift( event, delta, deltaX, deltaY );
 
-        // Clearout lowestDelta after sometime to better
+        // Clear out lowestDelta after sometime to better
         // handle multiple device types that give different
         // a different lowestDelta
         // Ex: trackpad = 3 and mouse wheel = 120
-        if (nullLowestDeltaTimeout) { clearTimeout(nullLowestDeltaTimeout); }
-        nullLowestDeltaTimeout = setTimeout(nullLowestDelta, 200);
+        if ( nullLowestDeltaTimeout ) {
+            window.clearTimeout( nullLowestDeltaTimeout );
+        }
+        nullLowestDeltaTimeout = window.setTimeout( function() {
+            lowestDelta = null;
+        }, 200 );
 
-        return ($.event.dispatch || $.event.handle).apply(this, args);
+        return ( $.event.dispatch || $.event.handle ).apply( this, args );
     }
 
-    function nullLowestDelta() {
-        lowestDelta = null;
-    }
+    function shouldAdjustOldDeltas( orgEvent, absDelta ) {
 
-    function shouldAdjustOldDeltas(orgEvent, absDelta) {
-        // If this is an older event and the delta is divisable by 120,
+        // If this is an older event and the delta is divisible by 120,
         // then we are assuming that the browser is treating this as an
         // older mouse wheel event and that we should divide the deltas
         // by 40 to try and get a more usable deltaFactor.
         // Side note, this actually impacts the reported scroll distance
         // in older browsers and can cause scrolling to be slower than native.
         // Turn this off by setting $.event.special.mousewheel.settings.adjustOldDeltas to false.
-        return special.settings.adjustOldDeltas && orgEvent.type === 'mousewheel' && absDelta % 120 === 0;
+        return special.settings.adjustOldDeltas && orgEvent.type === "mousewheel" &&
+            absDelta % 120 === 0;
     }
 
-}));
+} );
 
 S2.define('jquery.select2',[
   'jquery',

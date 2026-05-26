@@ -43,7 +43,7 @@ You should now have all the plugin files under
 | PHP OpenSSL (Secure Sockets Library)    | Checks to make sure that PHP OpenSSL is installed.                                                        |
 | PHP Mbstring (Multibyte String Library) | Checks to make sure that PHP Mbstring is installed.                                                       |
 | .htaccess                               | Checks to make sure that there is an `.htaccess` file in Grav's root directory.                           |
-| `bin/*` executable                      | Checks that all the files in the `bin/` folder are exectuable.                                            |
+| `bin/*` executable                      | Checks that all the files in the `bin/` folder are executable.                                            |
 | Cache                                   | Checks the `/cache` folder's existence and verifies that it is writeable.                                 |
 | Logs                                    | Checks the `/logs` folder's existence and verifies that it is writeable.                                  |
 | Images                                  | Checks the `/images` folder's existence and verifies that it is writeable.                                |
