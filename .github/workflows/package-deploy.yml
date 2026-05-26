@@ -40,6 +40,9 @@ jobs:
     name: NPM
     if: github.event_name == 'release'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js 24
@@ -52,6 +55,4 @@ jobs:
       - name: Run linting, tests, minify
         run: grunt
       - name: Deploy (release)
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+        run: npm publish --provenance --access public
