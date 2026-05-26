@@ -308,6 +308,7 @@
 }
 
 .select2-container--default[dir=rtl] .select2-selection--multiple .select2-selection__choice {
+  padding: 0 20px 0 0;
   margin-left: 5px;
   margin-right: auto;
 }
@@ -318,6 +319,8 @@
 }
 
 .select2-container--default[dir=rtl] .select2-selection--multiple .select2-selection__choice__remove {
+  left: auto;
+  right: 0;
   border-left: 1px solid #aaa;
   border-right: none;
   border-top-left-radius: 0;

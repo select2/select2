@@ -208,28 +208,6 @@ module.exports = function (grunt) {
       }
     },
 
-    watch: {
-      js: {
-        files: [
-          'src/js/select2/**/*.js',
-          'tests/**/*.js'
-        ],
-        tasks: [
-          'compile',
-          'test',
-          'minify'
-        ]
-      },
-      css: {
-        files: [
-          'src/scss/**/*.scss'
-        ],
-        tasks: [
-          'compile',
-          'minify'
-        ]
-      }
-    }
   });
 
   grunt.loadNpmTasks('grunt-contrib-concat');
@@ -238,8 +216,6 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-
   grunt.loadNpmTasks('grunt-sass');
 
   grunt.registerTask('default', ['compile', 'test', 'lint', 'minify']);
