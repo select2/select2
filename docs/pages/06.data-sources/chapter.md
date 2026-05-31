@@ -1,7 +1,7 @@
 ---
 title: Data sources
 taxonomy:
-    category: docs
+  category: docs
 ---
 
 # Data sources

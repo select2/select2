@@ -1,9 +1,9 @@
 ---
 title: Add, select, or clear items
 metadata:
-    description: Programmatically adding, selecting, and clearing options in a Select2 control.
+  description: Programmatically adding, selecting, and clearing options in a Select2 control.
 taxonomy:
-    category: docs
+  category: docs
 ---
 
 ## Creating new options in the dropdown
@@ -20,7 +20,7 @@ var newOption = new Option(data.text, data.id, false, false);
 $('#mySelect2').append(newOption).trigger('change');
 ```
 
-The third parameter of `new Option(...)` determines whether the item is "default selected"; i.e. it sets the `selected` attribute for the new option.  The fourth parameter sets the options actual selected state - if set to `true`, the new option will be selected by default.
+The third parameter of `new Option(...)` determines whether the item is "default selected"; i.e. it sets the `selected` attribute for the new option. The fourth parameter sets the options actual selected state - if set to `true`, the new option will be selected by default.
 
 ### Create if not exists
 
@@ -56,11 +56,11 @@ $('#mySelect2').trigger('change'); // Notify any JS components that the value ch
 
 Select2 will listen for the `change` event on the `<select>` element that it is attached to. When you make any external changes that need to be reflected in Select2 (such as changing the value), you should trigger this event.
 
-### Preselecting options in an remotely-sourced (AJAX) Select2 
+### Preselecting options in an remotely-sourced (AJAX) Select2
 
-For Select2 controls that receive their data from an [AJAX source](/data-sources/ajax), using `.val()` will not work.  The options won't exist yet, because the AJAX request is not fired until the control is opened and/or the user begins searching.  This is further complicated by server-side filtering and pagination - there is no guarantee when a particular item will actually be loaded into the Select2 control!
+For Select2 controls that receive their data from an [AJAX source](/data-sources/ajax), using `.val()` will not work. The options won't exist yet, because the AJAX request is not fired until the control is opened and/or the user begins searching. This is further complicated by server-side filtering and pagination - there is no guarantee when a particular item will actually be loaded into the Select2 control!
 
-The best way to deal with this, therefore, is to simply add the preselected item as a new option.  For remotely sourced data, this will probably involve creating a new API endpoint in your server-side application that can retrieve individual items:
+The best way to deal with this, therefore, is to simply add the preselected item as a new option. For remotely sourced data, this will probably involve creating a new API endpoint in your server-side application that can retrieve individual items:
 
 ```
 // Set up the Select2 control
@@ -90,7 +90,7 @@ $.ajax({
 });
 ```
 
-Notice that we manually trigger the `select2:select` event and pass along the entire `data` object.  This allows other handlers to [access additional properties of the selected item](/programmatic-control/events#triggering-events).
+Notice that we manually trigger the `select2:select` event and pass along the entire `data` object. This allows other handlers to [access additional properties of the selected item](/programmatic-control/events#triggering-events).
 
 ## Clearing selections
 

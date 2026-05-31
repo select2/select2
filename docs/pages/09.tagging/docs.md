@@ -1,13 +1,13 @@
 ---
 title: Dynamic option creation
 taxonomy:
-    category: docs
+  category: docs
 process:
-    twig: true
+  twig: true
 never_cache_twig: true
 ---
 
-In addition to a prepopulated menu of options, Select2 can dynamically create new options from text input by the user in the search box.  This feature is called "tagging".  To enable tagging, set the `tags` option to `true`:
+In addition to a prepopulated menu of options, Select2 can dynamically create new options from text input by the user in the search box. This feature is called "tagging". To enable tagging, set the `tags` option to `true`:
 
 <div class="s2-example">
   <p>
@@ -36,7 +36,7 @@ Note that when tagging is enabled the user can select from the pre-existing opti
 ## Tagging with multi-value select boxes
 
 Tagging can also be used in multi-value select boxes. In the example below, we set the `multiple="multiple"` attribute on a Select2 control that also has `tags: true` enabled:
-  
+
 <div class="s2-example">
   <p>
     <select class="js-example-tags form-control" multiple="multiple">

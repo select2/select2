@@ -1,13 +1,13 @@
 ---
 title: SelectAdapter
 taxonomy:
-    category: docs
+  category: docs
 ---
 
-Select2 provides the `SelectAdapter` as a default implementation of the `DataAdapter` adapter.  It extends `BaseAdapter`.
+Select2 provides the `SelectAdapter` as a default implementation of the `DataAdapter` adapter. It extends `BaseAdapter`.
 
 This adapter can be overridden by assigning a custom adapter to the `dataAdapter` configuration option.
- 
+
 **AMD Modules:**
 
 - `select2/data/base`
@@ -22,7 +22,7 @@ This decorator implements the [tagging](/tagging) feature.
 **AMD Modules:**
 
 `select2/data/tags`
-  
+
 ### `MinimumInputLength`
 
 This decorator implements the [minimum search term length](/searching#minimum-search-term-length) feature as exposed through the `minimumInputLength` configuration option.

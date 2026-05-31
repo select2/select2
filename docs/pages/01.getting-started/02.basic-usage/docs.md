@@ -1,15 +1,15 @@
 ---
 title: Basic usage
 taxonomy:
-    category: docs
+  category: docs
 process:
-    twig: true
+  twig: true
 never_cache_twig: true
 ---
 
 ## Single select boxes
 
-Select2 was designed to be a replacement for the standard `<select>` box that is displayed by the browser.  By default it supports all options and operations that are available in a standard select box, but with added flexibility.
+Select2 was designed to be a replacement for the standard `<select>` box that is displayed by the browser. By default it supports all options and operations that are available in a standard select box, but with added flexibility.
 
 Select2 can take a regular select box like this...
 
@@ -44,8 +44,8 @@ $(document).ready(function() {
 });
 ```
 
-> [!TIP] 
-> The DOM cannot be safely manipulated until it is "ready".  To make sure that your DOM is ready before the browser initializes the Select2 control, wrap your code in a [`$(document).ready()`](https://learn.jquery.com/using-jquery-core/document-ready/) block.  Only one `$(document).ready()` block is needed per page.
+> [!TIP]
+> The DOM cannot be safely manipulated until it is "ready". To make sure that your DOM is ready before the browser initializes the Select2 control, wrap your code in a [`$(document).ready()`](https://learn.jquery.com/using-jquery-core/document-ready/) block. Only one `$(document).ready()` block is needed per page.
 
 ## Multi-select boxes (pillbox)
 

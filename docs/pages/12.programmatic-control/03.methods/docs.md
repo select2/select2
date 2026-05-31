@@ -1,15 +1,15 @@
 ---
 title: Methods
 metadata:
-    description: Select2 has several built-in methods that allow programmatic control of the component. 
+  description: Select2 has several built-in methods that allow programmatic control of the component.
 taxonomy:
-    category: docs
+  category: docs
 process:
-    twig: true
+  twig: true
 never_cache_twig: true
 ---
 
-Select2 has several built-in methods that allow programmatic control of the component.  
+Select2 has several built-in methods that allow programmatic control of the component.
 
 ## Opening the dropdown
 
@@ -43,15 +43,15 @@ See [this Stack Overflow answer](https://stackoverflow.com/a/29854133/2970321)).
 
 ## Destroying the Select2 control
 
-The `destroy` method will remove the Select2 widget from the target element.  It will revert back to a standard `select` control:
-  
+The `destroy` method will remove the Select2 widget from the target element. It will revert back to a standard `select` control:
+
 ```
 $('#mySelect2').select2('destroy');
 ```
 
 ### Event unbinding
 
-When you destroy a Select2 control, Select2 will only unbind the events that were automatically bound by the plugin.  Any events that you bind in your own code, **including any [Select2 events](/programmatic-control/events) that you explicitly bind,** will need to be unbound manually using the `.off` jQuery method:
+When you destroy a Select2 control, Select2 will only unbind the events that were automatically bound by the plugin. Any events that you bind in your own code, **including any [Select2 events](/programmatic-control/events) that you explicitly bind,** will need to be unbound manually using the `.off` jQuery method:
 
 ```
 // Set up a Select2 control
@@ -73,44 +73,46 @@ $('#example').off('select2:select');
 
 <div class="s2-example">
 
-    <label for="select2-single">Single select</label>
-    
-    <button class="js-programmatic-set-val button" aria-label="Set Select2 option">
-      Set "California"
-    </button>
-    
-    <button class="js-programmatic-open button">
-      Open
-    </button>
-    
-    <button class="js-programmatic-close button">
-      Close
-    </button>
-    
-    <button class="js-programmatic-destroy button">
-      Destroy
-    </button>
-    
-    <button class="js-programmatic-init button">
-      Re-initialize
-    </button>
-    <p>
-      <select id="select2-single" class="js-example-programmatic js-states form-control"></select>
-    </p>
-    
-    <label for="select2-multi">Multiple select</label>
+```
+<label for="select2-single">Single select</label>
 
-    <button type="button" class="js-programmatic-multi-set-val button" aria-label="Programmatically set Select2 options">
-      Set to California and Alabama
-    </button>
-    
-    <button type="button" class="js-programmatic-multi-clear button" aria-label="Programmatically clear Select2 options">
-      Clear
-    </button>
+<button class="js-programmatic-set-val button" aria-label="Set Select2 option">
+  Set "California"
+</button>
 
-    <p>
-      <select id="select2-multi" class="js-example-programmatic-multi js-states form-control" multiple="multiple"></select>
-    </p>
+<button class="js-programmatic-open button">
+  Open
+</button>
+
+<button class="js-programmatic-close button">
+  Close
+</button>
+
+<button class="js-programmatic-destroy button">
+  Destroy
+</button>
+
+<button class="js-programmatic-init button">
+  Re-initialize
+</button>
+<p>
+  <select id="select2-single" class="js-example-programmatic js-states form-control"></select>
+</p>
+
+<label for="select2-multi">Multiple select</label>
+
+<button type="button" class="js-programmatic-multi-set-val button" aria-label="Programmatically set Select2 options">
+  Set to California and Alabama
+</button>
+
+<button type="button" class="js-programmatic-multi-clear button" aria-label="Programmatically clear Select2 options">
+  Clear
+</button>
+
+<p>
+  <select id="select2-multi" class="js-example-programmatic-multi js-states form-control" multiple="multiple"></select>
+</p>
+```
 
 </div>
 

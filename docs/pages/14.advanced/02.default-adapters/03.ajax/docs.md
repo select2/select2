@@ -1,7 +1,7 @@
 ---
 title: Ajax
 taxonomy:
-    category: docs
+  category: docs
 ---
 
 The `AjaxAdapter` implements support for creating results [from remote data sources using AJAX requests](/data-sources/ajax).

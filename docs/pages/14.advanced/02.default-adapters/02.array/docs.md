@@ -1,7 +1,7 @@
 ---
 title: Array
 taxonomy:
-    category: docs
+  category: docs
 ---
 
 The `ArrayAdapter` implements support for creating results based on an [array of data objects](/data-sources/arrays).

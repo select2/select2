@@ -1,7 +1,7 @@
 ---
 title: Migrating from Select2 3.5
 taxonomy:
-    category: docs
+  category: docs
 ---
 
 Select2 offers limited backwards compatibility with the previous 3.5.x release line, allowing people to more efficiently transfer across releases and get the latest features. For many of the larger changes, such as the change in how custom data adapters work, compatibility modules were created that will be used to assist in the upgrade process. It is not recommended to rely on these compatibility modules as they will eventually be removed in future releases, but they make upgrading easier for major changes.
@@ -38,12 +38,12 @@ The options that you create should have `selected="selected"` set so Select2 and
 In past versions of Select2 the `matcher` callback processed options at every level, which limited the control that you had when displaying results, especially in cases where there was nested data. The `matcher` function was only given the individual option, even if it was a nested options, without any context.
 
 With the new [matcher function](/searching), only the root-level options are matched and matchers are expected to limit the results of any children options that they contain. This allows developers to customize how options within groups can be displayed, and modify how the results are returned.
- 
+
 ### Wrapper for old-style `matcher` callbacks
 
-For backwards compatibility, a wrapper function has been created that allows old-style matcher functions to be converted to the new style. 
+For backwards compatibility, a wrapper function has been created that allows old-style matcher functions to be converted to the new style.
 
-This wrapper function is only bundled in the [full version of Select2](/getting-started/builds-and-modules).  You can retrieve the function from the `select2/compat/matcher` module, which should just wrap the old matcher function.
+This wrapper function is only bundled in the [full version of Select2](/getting-started/builds-and-modules). You can retrieve the function from the `select2/compat/matcher` module, which should just wrap the old matcher function.
 
 <div class="s2-example">
     <select class="js-example-matcher-compat js-states form-control"></select>
@@ -69,7 +69,7 @@ $.fn.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
 
 </script>
 
-> [!WARNING] 
+> [!WARNING]
 > This will work for any matchers that only took in the search term and the text of the option as parameters. If your matcher relied on the third parameter containing the jQuery element representing the original `<option>` tag, then you may need to slightly change your matcher to expect the full JavaScript data object being passed in instead. You can still retrieve the jQuery element from the data object using the `data.element` property.
 
 ## More flexible placeholders
@@ -108,11 +108,11 @@ Select2 will now order selected choices in the same order that will be sent to t
 
 ## Changed method and option names
 
-When designing the future option set for Select2 4.0, special care was taken to ensure that the most commonly used options were brought over.  For the most part, the commonly used options of Select2 can still be referenced under their previous names, but there were some changes which have been noted.
+When designing the future option set for Select2 4.0, special care was taken to ensure that the most commonly used options were brought over. For the most part, the commonly used options of Select2 can still be referenced under their previous names, but there were some changes which have been noted.
 
 ### Removed the requirement of `initSelection`
 
-> [!WARNING] 
+> [!WARNING]
 > **Deprecated in Select2 4.0.** This has been replaced by another option and is only available in the [full builds](/getting-started/builds-and-modules) of Select2.
 
 In the past, whenever you wanted to use a custom data adapter, such as AJAX or tagging, you needed to help Select2 out in determining the initial
@@ -204,7 +204,7 @@ $request.then(function (data) {
 
 ### Custom data adapters instead of `query`
 
-> [!WARNING] 
+> [!WARNING]
 > **Deprecated in Select2 4.0.** This has been replaced by another option and is only available in the [full builds](/getting-started/builds-and-modules) of Select2.
 
 [In the past](http://select2.github.io/select2/#data), any time you wanted to hook Select2 up to a different data source you would be required to implement custom `query` and `initSelection` methods. This allowed Select2 to determine the initial selection and the list of results to display, and it would handle everything else internally, which was fine more most people.
@@ -230,6 +230,7 @@ The custom `query` and `initSelection` methods have been replaced by [custom dat
     }
 }
 ```
+
 This has been replaced by custom data adapters which define a similarly named `query` method. The comparable data adapter is provided below as an example.
 
 ```
@@ -283,6 +284,7 @@ You should refer to the updated documentation on templates for [results](/dropdo
 This method has been renamed to `createTag`. You should refer to the documentation on [option creation](/tagging#tag-properties) when migrating from previous versions of Select2.
 
 The `createSearchChoicePosition` option has been removed in favor of the `insertTag` function. New tags are added to the bottom of the list by default.
+
 ```
 insertTag: function (data, tag) {
   // Insert the tag at the end of the results

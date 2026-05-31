@@ -1,10 +1,10 @@
 ---
 title: Selection
 taxonomy:
-    category: docs
+  category: docs
 ---
 
-Select2 provides the `SingleSelection` and `MultipleSelection` adapters as default implementations of the `SelectionAdapter` for single- and multi-select controls, respectively.  Both `SingleSelection` and `MultipleSelection` extend the base `BaseSelection` adapter.
+Select2 provides the `SingleSelection` and `MultipleSelection` adapters as default implementations of the `SelectionAdapter` for single- and multi-select controls, respectively. Both `SingleSelection` and `MultipleSelection` extend the base `BaseSelection` adapter.
 
 The selection adapter can be overridden by assigning a custom adapter to the `selectionAdapter` configuration option.
 
@@ -20,7 +20,6 @@ The selection adapter can be overridden by assigning a custom adapter to the `se
 `select2/dropdown/hidePlaceholder`
 
 These decorators implement Select2's [placeholder](/placeholders) features.
-
 
 ### `AllowClear`
 

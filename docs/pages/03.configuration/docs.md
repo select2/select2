@@ -1,7 +1,7 @@
 ---
 title: Configuration
 taxonomy:
-    category: docs
+  category: docs
 ---
 
 To configure custom options when you initialize Select2, simply pass an object in your call to `.select2()`:

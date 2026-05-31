@@ -1,12 +1,12 @@
 ---
 title: Adapters and Decorators
 taxonomy:
-    category: docs
+  category: docs
 ---
 
 Starting in version 4.0, Select2 uses the [Adapter pattern](https://en.wikipedia.org/wiki/Adapter_pattern) as a powerful means of extending its features and behavior.
 
-Most of the built-in features, such as those described in the previous chapters, are implemented via one of the [built-in adapters](/advanced/default-adapters).  You may further extend the functionality of Select2 by implementing your own adapters.
+Most of the built-in features, such as those described in the previous chapters, are implemented via one of the [built-in adapters](/advanced/default-adapters). You may further extend the functionality of Select2 by implementing your own adapters.
 
 ## Adapter interfaces
 
@@ -79,7 +79,7 @@ SelectionAdapter.update = function (data) { };
 
 The data set is what Select2 uses to generate the possible results that can be selected, as well as the currently selected results.
 
-Adapters that will be used to override the default `dataAdapter`  must implement the `current` and `query` methods as well:
+Adapters that will be used to override the default `dataAdapter` must implement the `current` and `query` methods as well:
 
 ```
 // Get the currently selected options. This is called when trying to get the
@@ -123,9 +123,9 @@ $.fn.select2.amd.require(
 });
 ```
 
-> [!NOTE] 
+> [!NOTE]
 > All core options that use decorators or adapters will clearly state it in the "Decorator" or "Adapter" part of the documentation. Decorators are typically only compatible with a specific type of adapter, so make sure to note what adapter is given.
 
 ## AMD Compatibility
 
-You can find more information on how to integrate Select2 with your existing AMD-based project [here](/getting-started/builds-and-modules).  Select2 automatically loads some modules when the adapters are being automatically constructed, so those who are using Select2 with a custom AMD build using their own system may need to specify the paths that are generated to the Select2 modules.
+You can find more information on how to integrate Select2 with your existing AMD-based project [here](/getting-started/builds-and-modules). Select2 automatically loads some modules when the adapters are being automatically constructed, so those who are using Select2 with a custom AMD build using their own system may need to specify the paths that are generated to the Select2 modules.

@@ -1,11 +1,11 @@
 ---
 title: Ajax (remote data)
 metadata:
-    description: Select2 provides extensive support for populating dropdown items from a remote data source.
+  description: Select2 provides extensive support for populating dropdown items from a remote data source.
 taxonomy:
-    category: docs
+  category: docs
 process:
-    twig: true
+  twig: true
 never_cache_twig: true
 ---
 
@@ -31,23 +31,23 @@ $('.js-example-data-ajax').select2({
 });
 ```
 
-You can configure how Select2 searches for remote data using the `ajax` option.  Select2 will pass any options in the `ajax` object to jQuery's `$.ajax` function, or the `transport` function you specify.
+You can configure how Select2 searches for remote data using the `ajax` option. Select2 will pass any options in the `ajax` object to jQuery's `$.ajax` function, or the `transport` function you specify.
 
-> [!NOTE] 
-> For **remote data sources only**, Select2 does not create a new `<option>` element until the item has been selected for the first time.  This is done for performance reasons.  Once an `<option>` has been created, it will remain in the DOM even if the selection is later changed.
+> [!NOTE]
+> For **remote data sources only**, Select2 does not create a new `<option>` element until the item has been selected for the first time. This is done for performance reasons. Once an `<option>` has been created, it will remain in the DOM even if the selection is later changed.
 
 ## Request parameters
 
-Select2 will issue a request to the specified URL when the user opens the control (unless there is a `minimumInputLength` set as a Select2 option), and again every time the user types in the search box.  By default, it will send the following as query string parameters:
+Select2 will issue a request to the specified URL when the user opens the control (unless there is a `minimumInputLength` set as a Select2 option), and again every time the user types in the search box. By default, it will send the following as query string parameters:
 
 - `term` : The current search term in the search box.
-- `q`    : Contains the same contents as `term`.
-- `_type`: A "request type".  Will usually be `query`, but changes to `query_append` for paginated requests.
-- `page` : The current page number to request.  Only sent for paginated (infinite scrolling) searches.
+- `q` : Contains the same contents as `term`.
+- `_type`: A "request type". Will usually be `query`, but changes to `query_append` for paginated requests.
+- `page` : The current page number to request. Only sent for paginated (infinite scrolling) searches.
 
 For example, Select2 might issue a request that looks like: `https://api.github.com/search/repositories?term=sel&_type=query&q=sel`.
 
-Sometimes, you may need to add additional query parameters to the request.  You can modify the parameters that are sent with the request by overriding the `ajax.data` option:
+Sometimes, you may need to add additional query parameters to the request. You can modify the parameters that are sent with the request by overriding the `ajax.data` option:
 
 ```
 $('#mySelect2').select2({
@@ -84,7 +84,7 @@ $('#mySelect2').select2({
 });
 ```
 
-> [!NOTE] 
+> [!NOTE]
 > Select2 expects results from the remote endpoint to be filtered on the **server side**. See [this comment](https://github.com/select2/select2/issues/2321#issuecomment-42749687) for an explanation of why this implementation choice was made. If server-side filtering is not possible, you may be interested in using Select2's [support for data arrays](/data-sources/arrays) instead.
 
 ## Default (pre-selected) values
@@ -103,9 +103,9 @@ To achieve this programmatically, you will need to [create and append a new `Opt
 
 ## Pagination
 
-Select2 supports pagination ("infinite scrolling") for remote data sources out of the box.  To use this feature, your remote data source must be able to respond to paginated requests (server-side frameworks like [Laravel](https://laravel.com/docs/5.5/pagination) and [UserFrosting](https://learn.userfrosting.com/database/data-sprunjing) have this built-in).
+Select2 supports pagination ("infinite scrolling") for remote data sources out of the box. To use this feature, your remote data source must be able to respond to paginated requests (server-side frameworks like [Laravel](https://laravel.com/docs/5.5/pagination) and [UserFrosting](https://learn.userfrosting.com/database/data-sprunjing) have this built-in).
 
-To use pagination, you must tell Select2 to add any necessary pagination parameters to the request by overriding the `ajax.data` setting.  The current page to be retrieved is stored in the `params.page` property.
+To use pagination, you must tell Select2 to add any necessary pagination parameters to the request by overriding the `ajax.data` setting. The current page to be retrieved is stored in the `params.page` property.
 
 ```
 $('#mySelect2').select2({
@@ -124,7 +124,7 @@ $('#mySelect2').select2({
 });
 ```
 
-Select2 will expect a `pagination.more` value in the response.  The value of `more` should be `true` or `false`, which tells Select2 whether or not there are more pages of results available for retrieval:
+Select2 will expect a `pagination.more` value in the response. The value of `more` should be `true` or `false`, which tells Select2 whether or not there are more pages of results available for retrieval:
 
 ```
 {
@@ -144,7 +144,7 @@ Select2 will expect a `pagination.more` value in the response.  The value of `mo
 }
 ```
 
-If your server-side code does not generate the `pagination.more` property in the response, you can use `processResults` to generate this value from other information that is available.  For example, suppose your API returns a `count_filtered` value that tells you how many total (unpaginated) results are available in the data set.  If you know that your paginated API returns 10 results at a time, you can use this along with the value of `count_filtered` to compute the value of `pagination.more`:
+If your server-side code does not generate the `pagination.more` property in the response, you can use `processResults` to generate this value from other information that is available. For example, suppose your API returns a `count_filtered` value that tells you how many total (unpaginated) results are available in the data set. If you know that your paginated API returns 10 results at a time, you can use this along with the value of `count_filtered` to compute the value of `pagination.more`:
 
 ```
 processResults: function (data, params) {
@@ -161,7 +161,7 @@ processResults: function (data, params) {
 
 ## Rate-limiting requests
 
-You can tell Select2 to wait until the user has finished typing their search term before triggering the AJAX request.  Simply use the `ajax.delay` configuration option to tell Select2 how long to wait after a user has stopped typing before sending the request:
+You can tell Select2 to wait until the user has finished typing their search term before triggering the AJAX request. Simply use the `ajax.delay` configuration option to tell Select2 how long to wait after a user has stopped typing before sending the request:
 
 ```
 $('#mySelect2').select2({

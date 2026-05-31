@@ -1,9 +1,9 @@
 ---
 title: Appearance
 taxonomy:
-    category: docs
+  category: docs
 process:
-    twig: true
+  twig: true
 never_cache_twig: true
 ---
 
@@ -18,7 +18,7 @@ Select2 will respond to the <code>disabled</code> attribute on `<select>` elemen
     <select class="js-example-disabled js-states form-control" disabled="disabled"></select>
   </p>
 
-  <p>
+<p>
     <select class="js-example-disabled-multi js-states form-control" multiple="multiple" disabled="disabled"></select>
   </p>
   <div class="btn-group btn-group-sm" role="group" aria-label="Programmatic enabling and disabling">
@@ -181,7 +181,7 @@ $(".js-example-responsive").select2({
 
 </script>
 
-> [!WARNING] 
+> [!WARNING]
 > Select2 will do its best to resolve the percent width specified via a CSS class, but it is not always possible. The best way to ensure that Select2 is using a percent based width is to inline the `style` declaration into the tag.
 
 ## Themes
@@ -214,4 +214,4 @@ $(".js-example-theme-multiple").select2({
 
 </script>
 
-Various display options of the Select2 component can be changed.  You can access the `<option>` element (or `<optgroup>`) and any attributes on those elements using `.element`.
+Various display options of the Select2 component can be changed. You can access the `<option>` element (or `<optgroup>`) and any attributes on those elements using `.element`.

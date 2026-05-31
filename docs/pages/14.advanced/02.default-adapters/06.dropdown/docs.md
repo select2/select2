@@ -1,10 +1,10 @@
 ---
 title: Dropdown
 taxonomy:
-    category: docs
+  category: docs
 ---
 
-The dropdown adapter defines the main container that the dropdown should be held in.  Select2 allows you to change the way that the dropdown works, allowing you to do anything from attach it to a different location in the document or add a search box.
+The dropdown adapter defines the main container that the dropdown should be held in. Select2 allows you to change the way that the dropdown works, allowing you to do anything from attach it to a different location in the document or add a search box.
 
 It is common for decorators to attach to the `render` and `position` methods to alter how the dropdown is altered and positioned.
 
@@ -30,7 +30,7 @@ When this decorator is loaded, Select2 can place the dropdown directly after the
 
 `select2/dropdown/attachContainer`
 
-> [!WARNING] 
+> [!WARNING]
 > **Check your build.** This module is only included in the [full builds](/getting-started/builds-and-modules) of Select2.
 
 ### `DropdownSearch`

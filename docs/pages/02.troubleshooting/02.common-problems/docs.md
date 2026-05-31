@@ -1,14 +1,14 @@
 ---
 title: Common problems
 metadata:
-    description: Commonly encountered issues when using Select2.
+  description: Commonly encountered issues when using Select2.
 taxonomy:
-    category: docs
+  category: docs
 ---
 
 ### Select2 does not function properly when I use it inside a Bootstrap modal.
 
-This issue occurs because Bootstrap modals tend to steal focus from other elements outside of the modal.  Since by default, Select2 [attaches the dropdown menu to the `<body>` element](/dropdown#dropdown-placement), it is considered "outside of the modal".
+This issue occurs because Bootstrap modals tend to steal focus from other elements outside of the modal. Since by default, Select2 [attaches the dropdown menu to the `<body>` element](/dropdown#dropdown-placement), it is considered "outside of the modal".
 
 To avoid this problem, you may attach the dropdown to the modal itself with the [dropdownParent](/dropdown#dropdown-placement) setting:
 
@@ -46,6 +46,6 @@ See [this answer](https://stackoverflow.com/questions/18487056/select2-doesnt-wo
 
 ### The dropdown becomes misaligned/displaced when using pinch-zoom.
 
-See [#5048](https://github.com/select2/select2/issues/5048).  The problem is that some browsers' implementations of pinch-zoom affect the `body` element, which [Select2 attaches to by default](https://select2.org/dropdown#dropdown-placement), causing it to render incorrectly.
+See [#5048](https://github.com/select2/select2/issues/5048). The problem is that some browsers' implementations of pinch-zoom affect the `body` element, which [Select2 attaches to by default](https://select2.org/dropdown#dropdown-placement), causing it to render incorrectly.
 
 The solution is to use `dropdownParent` to attach the dropdown to a more specific element.

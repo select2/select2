@@ -1,7 +1,7 @@
 ---
 title: Upgrading
 taxonomy:
-    category: docs
+  category: docs
 ---
 
 # Upgrading Select2
