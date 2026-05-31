@@ -6,16 +6,16 @@ define(function () {
       },
       inputTooLong: function (args) {
         var overChars = args.input.length - args.maximum;
-  
+
         var message = overChars + ' ھەرپ-بەلگىنى ئۆچۈرۈۋېتىڭ.';
-  
+
         return message;
       },
       inputTooShort: function (args) {
         var remainingChars = args.minimum - args.input.length;
-  
+
         var message = 'كەم دېگەندە ' + remainingChars + ' ھەرپ-بەلگە كىرگۈزۈڭ.';
-  
+
         return message;
       },
       loadingMore: function () {

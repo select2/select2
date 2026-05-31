@@ -39,7 +39,7 @@ define(function () {
     searching: function () {
       return 'Пошук…';
     },
-    removeAllItems: function () {     
+    removeAllItems: function () {
       return 'Видалити всі елементи';
     }
   };

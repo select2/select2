@@ -1,12 +1,10 @@
 name: Package Deployment
-
 on:
   push:
     branches:
       - develop
       - master
   release: ~
-
 jobs:
   deploy_github:
     name: GitHub Package Registry

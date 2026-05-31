@@ -51,7 +51,7 @@ define(function () {
       return 'Rimuovi oggetto';
     },
     search: function() {
-      return 'Ricerca';  
+      return 'Ricerca';
     }
   };
 });

@@ -6,12 +6,12 @@ define(function () {
       },
       inputTooLong: function (args) {
         var overChars = args.input.length - args.maximum;
-  
+
         return 'Läscht ' + overChars + ' Schrëftzeechen';
       },
       inputTooShort: function (args) {
         var remainingChars = args.minimum - args.input.length;
-  
+
         return 'Tippt mindestens ' + remainingChars + ' Schrëftzeechen an';
       },
       loadingMore: function () {
@@ -38,4 +38,3 @@ define(function () {
       }
     };
   });
-  

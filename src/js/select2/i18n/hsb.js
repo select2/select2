@@ -14,7 +14,7 @@ define(function () {
       return words[3];
     }
   };
-  
+
   return {
     errorLoading: function () {
       return 'Wuslědki njedachu so začitać.';
@@ -22,12 +22,12 @@ define(function () {
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;
 
-      return 'Prošu zhašej ' + overChars + ' ' + 
+      return 'Prošu zhašej ' + overChars + ' ' +
         pluralWord(overChars, charsWords);
     },
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
-      
+
       return 'Prošu zapodaj znajmjeńša ' + remainingChars + ' ' +
         pluralWord(remainingChars, charsWords);
     },

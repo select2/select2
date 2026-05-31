@@ -14,7 +14,7 @@ define(function () {
       return words[3];
     }
   };
-  
+
   return {
     errorLoading: function () {
       return 'Wuslědki njejsu se dali zacytaś.';
@@ -22,12 +22,12 @@ define(function () {
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;
 
-      return 'Pšosym lašuj ' + overChars + ' ' + 
+      return 'Pšosym lašuj ' + overChars + ' ' +
         pluralWord(overChars, charsWords);
     },
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
-      
+
       return 'Pšosym zapódaj nanejmjenjej ' + remainingChars + ' ' +
         pluralWord(remainingChars, charsWords);
     },

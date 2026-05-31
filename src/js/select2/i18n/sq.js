@@ -18,7 +18,7 @@ define(function () {
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
-      var message = 'Të lutem shkruaj ' + remainingChars + 
+      var message = 'Të lutem shkruaj ' + remainingChars +
           ' ose më shumë karaktere';
 
       return message;

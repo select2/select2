@@ -1,9 +1,7 @@
 name: Documentation Deployment
-
 on:
   - release
   - workflow_dispatch
-
 jobs:
   grav:
     name: Deploy Grav

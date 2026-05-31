@@ -3,4 +3,4 @@ built_in_css: false
 route: /search
 template: simplesearch_results
 filters:
-    category: docs
+  category: docs

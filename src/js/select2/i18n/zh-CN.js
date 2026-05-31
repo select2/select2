@@ -32,7 +32,7 @@ define(function () {
     searching: function () {
       return '搜索中…';
     },
-    removeAllItems: function () {     
+    removeAllItems: function () {
       return '删除所有项目';
     }
   };

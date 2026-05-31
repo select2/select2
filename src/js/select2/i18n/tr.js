@@ -32,7 +32,7 @@ define(function () {
     searching: function () {
       return 'Aranıyor…';
     },
-    removeAllItems: function () {     
+    removeAllItems: function () {
       return 'Tüm öğeleri kaldır';
     },
     removeItem: function () {
