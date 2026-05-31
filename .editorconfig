@@ -1,6 +1,9 @@
+root = true
+
 [*]
+charset = utf-8
 indent_style = space
 end_of_line = lf
 
-[*.js]
+[*.{js,json}]
 indent_size = 2

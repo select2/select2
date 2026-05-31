@@ -1,0 +1,24 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: (dist|docs|vendor)/
+      - id: check-merge-conflict
+      - id: check-json
+      - id: check-yaml
+        exclude: ^docs/(plugins|themes)/
+      - id: debug-statements
+      - id: destroyed-symlinks
+      - id: check-executables-have-shebangs
+      - id: end-of-file-fixer
+        exclude: (dist|docs|vendor)/
+      - id: detect-private-key
+  - repo: https://github.com/google/yamlfmt
+    rev: v0.21.0
+    hooks:
+      - id: yamlfmt
+        exclude: ^docs/(plugins|themes)/
+ci:
+  autoupdate_schedule: weekly
+  skip:
