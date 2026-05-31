@@ -17,7 +17,8 @@ Select2 is hosted on both the [jsDelivr](https://www.jsdelivr.com/package/npm/se
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
 ```
 
->>> <i class="fa fa-info-circle"></i> Immediately following a new release, it takes some time for CDNs to catch up and get the new versions live on the CDN.
+> [!NOTE] 
+> <i class="fa fa-info-circle"></i> Immediately following a new release, it takes some time for CDNs to catch up and get the new versions live on the CDN.
 
 ## Installing with Bower
 

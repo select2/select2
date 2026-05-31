@@ -131,4 +131,5 @@ When options are to be generated in `<optgroup>` sections, options should be nes
 }
 ```
 
->>>> Because Select2 generates an `<optgroup>` when creating nested options, only [a single level of nesting is supported](/options#dropdown-option-groups). Any additional levels of nesting is not guaranteed to be displayed properly across all browsers and devices.
+> [!WARNING] 
+> Because Select2 generates an `<optgroup>` when creating nested options, only [a single level of nesting is supported](/options#dropdown-option-groups). Any additional levels of nesting is not guaranteed to be displayed properly across all browsers and devices.

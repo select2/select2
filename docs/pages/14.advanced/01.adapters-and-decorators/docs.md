@@ -123,7 +123,8 @@ $.fn.select2.amd.require(
 });
 ```
 
->>> All core options that use decorators or adapters will clearly state it in the "Decorator" or "Adapter" part of the documentation. Decorators are typically only compatible with a specific type of adapter, so make sure to note what adapter is given.
+> [!NOTE] 
+> All core options that use decorators or adapters will clearly state it in the "Decorator" or "Adapter" part of the documentation. Decorators are typically only compatible with a specific type of adapter, so make sure to note what adapter is given.
 
 ## AMD Compatibility
 

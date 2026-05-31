@@ -30,7 +30,8 @@ When this decorator is loaded, Select2 can place the dropdown directly after the
 
 `select2/dropdown/attachContainer`
 
->>>> **Check your build.** This module is only included in the [full builds](/getting-started/builds-and-modules) of Select2.
+> [!WARNING] 
+> **Check your build.** This module is only included in the [full builds](/getting-started/builds-and-modules) of Select2.
 
 ### `DropdownSearch`
 

@@ -40,4 +40,5 @@ $('#mySelect2').select2({
 $('#mySelect2').find(':selected').data('custom-attribute');
 ```
 
->>>> Do not rely on the `selected` attribute of `<option>` elements to determine the currently selected item(s).  Select2 does not add the `selected` attribute when an element is created from a remotely-sourced option.  See [this issue](https://github.com/select2/select2/issues/3366#issuecomment-102566500) for more information.
+> [!WARNING] 
+> Do not rely on the `selected` attribute of `<option>` elements to determine the currently selected item(s).  Select2 does not add the `selected` attribute when an element is created from a remotely-sourced option.  See [this issue](https://github.com/select2/select2/issues/3366#issuecomment-102566500) for more information.

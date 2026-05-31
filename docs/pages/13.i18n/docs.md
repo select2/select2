@@ -55,7 +55,8 @@ language: {
 }
 ```
 
->>> Translations are handled by the `select2/translation` module.
+> [!NOTE] 
+> Translations are handled by the `select2/translation` module.
 
 ## RTL support
 

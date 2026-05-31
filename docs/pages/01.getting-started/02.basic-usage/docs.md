@@ -44,7 +44,8 @@ $(document).ready(function() {
 });
 ```
 
->>>>>> The DOM cannot be safely manipulated until it is "ready".  To make sure that your DOM is ready before the browser initializes the Select2 control, wrap your code in a [`$(document).ready()`](https://learn.jquery.com/using-jquery-core/document-ready/) block.  Only one `$(document).ready()` block is needed per page.
+> [!TIP] 
+> The DOM cannot be safely manipulated until it is "ready".  To make sure that your DOM is ready before the browser initializes the Select2 control, wrap your code in a [`$(document).ready()`](https://learn.jquery.com/using-jquery-core/document-ready/) block.  Only one `$(document).ready()` block is needed per page.
 
 ## Multi-select boxes (pillbox)
 

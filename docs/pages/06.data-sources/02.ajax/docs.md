@@ -33,7 +33,8 @@ $('.js-example-data-ajax').select2({
 
 You can configure how Select2 searches for remote data using the `ajax` option.  Select2 will pass any options in the `ajax` object to jQuery's `$.ajax` function, or the `transport` function you specify.
 
->>> For **remote data sources only**, Select2 does not create a new `<option>` element until the item has been selected for the first time.  This is done for performance reasons.  Once an `<option>` has been created, it will remain in the DOM even if the selection is later changed.
+> [!NOTE] 
+> For **remote data sources only**, Select2 does not create a new `<option>` element until the item has been selected for the first time.  This is done for performance reasons.  Once an `<option>` has been created, it will remain in the DOM even if the selection is later changed.
 
 ## Request parameters
 
@@ -83,7 +84,8 @@ $('#mySelect2').select2({
 });
 ```
 
->>> Select2 expects results from the remote endpoint to be filtered on the **server side**. See [this comment](https://github.com/select2/select2/issues/2321#issuecomment-42749687) for an explanation of why this implementation choice was made. If server-side filtering is not possible, you may be interested in using Select2's [support for data arrays](/data-sources/arrays) instead.
+> [!NOTE] 
+> Select2 expects results from the remote endpoint to be filtered on the **server side**. See [this comment](https://github.com/select2/select2/issues/2321#issuecomment-42749687) for an explanation of why this implementation choice was made. If server-side filtering is not possible, you may be interested in using Select2's [support for data arrays](/data-sources/arrays) instead.
 
 ## Default (pre-selected) values
 

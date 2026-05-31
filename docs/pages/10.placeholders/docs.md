@@ -38,7 +38,8 @@ $(".js-example-placeholder-single").select2({
 });
 </script>
 
->>> **For single selects only**, in order for the placeholder value to appear, you must have a blank `<option>` as the first option in your `<select>` control.  This is because the browser tries to select the first option by default. If your first option were non-empty, the browser would display this instead of the placeholder.
+> [!NOTE] 
+> **For single selects only**, in order for the placeholder value to appear, you must have a blank `<option>` as the first option in your `<select>` control.  This is because the browser tries to select the first option by default. If your first option were non-empty, the browser would display this instead of the placeholder.
 
 ### Multi-select placeholders
 
@@ -58,7 +59,8 @@ $(".js-example-placeholder-multiple").select2({
 });
 </script>
 
->>> Select2 uses the `placeholder` attribute on multiple select boxes, which requires IE 10+. You can support it in older versions with [the Placeholders.js polyfill](https://github.com/jamesallardice/Placeholders.js).
+> [!NOTE] 
+> Select2 uses the `placeholder` attribute on multiple select boxes, which requires IE 10+. You can support it in older versions with [the Placeholders.js polyfill](https://github.com/jamesallardice/Placeholders.js).
 
 ## Default selection placeholders
 
@@ -95,7 +97,8 @@ $('select').select2({
 });
 ```
 
->>>>> **When multiple selections are allowed**, the placeholder will be displayed using the `placeholder` attribute on the search box. You can customize the display of this placeholder using CSS, as explained in the following Stack Overflow answer: [Change an input's HTML5 placeholder color with CSS](http://stackoverflow.com/q/2610497/359284).
+> [!IMPORTANT] 
+> **When multiple selections are allowed**, the placeholder will be displayed using the `placeholder` attribute on the search box. You can customize the display of this placeholder using CSS, as explained in the following Stack Overflow answer: [Change an input's HTML5 placeholder color with CSS](http://stackoverflow.com/q/2610497/359284).
 
 ## Placeholders in legacy Internet Explorer versions
 

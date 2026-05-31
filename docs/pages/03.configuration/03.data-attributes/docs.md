@@ -14,7 +14,8 @@ It is recommended that you declare your configuration options by [passing in an 
 </select>
 ```
 
->>> Some options are not supported as `data-*`, for example `disabled` as it's not a Javascript option, but it's an HTML [attribute](/configuration/options-api).
+> [!NOTE] 
+> Some options are not supported as `data-*`, for example `disabled` as it's not a Javascript option, but it's an HTML [attribute](/configuration/options-api).
 
 ## Nested (subkey) options
 
@@ -39,7 +40,8 @@ To write these options as `data-*` attributes, each level of nesting should be s
 
 The value of the option is subject to jQuery's [parsing rules](https://api.jquery.com/data/#data-html5) for HTML5 data attributes.
 
->>> Due to [a jQuery bug](https://github.com/jquery/jquery/issues/2070), nested options using `data-*` attributes [do not work in jQuery 1.x](https://github.com/select2/select2/issues/2969).
+> [!NOTE] 
+> Due to [a jQuery bug](https://github.com/jquery/jquery/issues/2070), nested options using `data-*` attributes [do not work in jQuery 1.x](https://github.com/select2/select2/issues/2969).
 
 ## `camelCase` options
 

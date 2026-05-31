@@ -69,7 +69,8 @@ $.fn.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
 
 </script>
 
->>>> This will work for any matchers that only took in the search term and the text of the option as parameters. If your matcher relied on the third parameter containing the jQuery element representing the original `<option>` tag, then you may need to slightly change your matcher to expect the full JavaScript data object being passed in instead. You can still retrieve the jQuery element from the data object using the `data.element` property.
+> [!WARNING] 
+> This will work for any matchers that only took in the search term and the text of the option as parameters. If your matcher relied on the third parameter containing the jQuery element representing the original `<option>` tag, then you may need to slightly change your matcher to expect the full JavaScript data object being passed in instead. You can still retrieve the jQuery element from the data object using the `data.element` property.
 
 ## More flexible placeholders
 
@@ -111,7 +112,8 @@ When designing the future option set for Select2 4.0, special care was taken to 
 
 ### Removed the requirement of `initSelection`
 
->>>> **Deprecated in Select2 4.0.** This has been replaced by another option and is only available in the [full builds](/getting-started/builds-and-modules) of Select2.
+> [!WARNING] 
+> **Deprecated in Select2 4.0.** This has been replaced by another option and is only available in the [full builds](/getting-started/builds-and-modules) of Select2.
 
 In the past, whenever you wanted to use a custom data adapter, such as AJAX or tagging, you needed to help Select2 out in determining the initial
 values that were selected. This was typically done through the `initSelection` option, which took the underlying data of the input and converted it into data objects that Select2 could use.
@@ -202,7 +204,8 @@ $request.then(function (data) {
 
 ### Custom data adapters instead of `query`
 
->>>> **Deprecated in Select2 4.0.** This has been replaced by another option and is only available in the [full builds](/getting-started/builds-and-modules) of Select2.
+> [!WARNING] 
+> **Deprecated in Select2 4.0.** This has been replaced by another option and is only available in the [full builds](/getting-started/builds-and-modules) of Select2.
 
 [In the past](http://select2.github.io/select2/#data), any time you wanted to hook Select2 up to a different data source you would be required to implement custom `query` and `initSelection` methods. This allowed Select2 to determine the initial selection and the list of results to display, and it would handle everything else internally, which was fine more most people.
 

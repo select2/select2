@@ -181,7 +181,8 @@ $(".js-example-responsive").select2({
 
 </script>
 
->>>> Select2 will do its best to resolve the percent width specified via a CSS class, but it is not always possible. The best way to ensure that Select2 is using a percent based width is to inline the `style` declaration into the tag.
+> [!WARNING] 
+> Select2 will do its best to resolve the percent width specified via a CSS class, but it is not always possible. The best way to ensure that Select2 is using a percent based width is to inline the `style` declaration into the tag.
 
 ## Themes
 

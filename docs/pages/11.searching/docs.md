@@ -47,7 +47,8 @@ $(".js-example-matcher").select2({
 });
 ```
 
->>>> `matcher` only works with **locally supplied data** (e.g., via an [array](/data-sources/arrays)!  When a remote data set is used, Select2 expects that the returned results have already been filtered on the server side.
+> [!WARNING] 
+> `matcher` only works with **locally supplied data** (e.g., via an [array](/data-sources/arrays)!  When a remote data set is used, Select2 expects that the returned results have already been filtered on the server side.
 
 ### Matching grouped options
 
@@ -103,7 +104,8 @@ $(".js-example-matcher-start").select2({
 
 </script>
 
->>> A [compatibility module](/upgrading/migrating-from-35#wrapper-for-old-style-matcher-callbacks) exists for using v3-style matcher callbacks.
+> [!NOTE] 
+> A [compatibility module](/upgrading/migrating-from-35#wrapper-for-old-style-matcher-callbacks) exists for using v3-style matcher callbacks.
 
 ## Minimum search term length
 

@@ -27,7 +27,8 @@ A traditional `<select>` box contains any number of `<option>` elements.  Each o
 }
 ```
 
->>> Options sourced from [other data sources](/data-sources) must conform to this this same internal representation.  See ["The Select2 data format"](/data-sources/formats) for details.
+> [!NOTE] 
+> Options sourced from [other data sources](/data-sources) must conform to this this same internal representation.  See ["The Select2 data format"](/data-sources/formats) for details.
 
 ## Dropdown option groups
 

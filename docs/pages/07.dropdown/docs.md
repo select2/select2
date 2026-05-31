@@ -40,7 +40,8 @@ $(".js-example-templating").select2({
 
 The `templateResult` function should return a string containing the text to be displayed, or an object (such as a jQuery object) that contains the data that should be displayed.  It can also return `null`, which will prevent the option from being displayed in the results list.
 
->>> You may find it helpful to use a client-side templating engine like [Handlebars](http://handlebarsjs.com/) to define your templates.
+> [!NOTE] 
+> You may find it helpful to use a client-side templating engine like [Handlebars](http://handlebarsjs.com/) to define your templates.
 
 ### Built-in escaping
 
@@ -48,7 +49,8 @@ By default, strings returned by `templateResult` are assumed to **contain only t
 
 If you need to render HTML with your result template, you must wrap your rendered result in a jQuery object. In this case, the result will be passed [directly to `jQuery.fn.append`](https://api.jquery.com/append/) and will be handled directly by jQuery.  Any markup, such as HTML, will not be escaped and it is up to you to escape any malicious input provided by users.
 
->>> **Anything rendered in the results is templated.** This includes results such as the "Searching..." and "Loading more..." text which will periodically be displayed, which allows you to add more advanced formatting to these automatically generated options.  You must ensure that your templating functions can support them.
+> [!NOTE] 
+> **Anything rendered in the results is templated.** This includes results such as the "Searching..." and "Loading more..." text which will periodically be displayed, which allows you to add more advanced formatting to these automatically generated options.  You must ensure that your templating functions can support them.
 
 ## Automatic selection
 
@@ -72,11 +74,13 @@ $('#mySelect2').select2({
 
 Note that this option is only applicable to multi-select controls.
 
->>> If the [`CloseOnSelect` decorator](/advanced/default-adapters/dropdown#closeonselect) is not used (or `closeOnSelect` is set to <code>false</code>), the dropdown will not automatically close when a result is selected.  The dropdown will also never close if the <kbd>ctrl</kbd> key is held down when the result is selected.
+> [!NOTE] 
+> If the [`CloseOnSelect` decorator](/advanced/default-adapters/dropdown#closeonselect) is not used (or `closeOnSelect` is set to <code>false</code>), the dropdown will not automatically close when a result is selected.  The dropdown will also never close if the <kbd>ctrl</kbd> key is held down when the result is selected.
 
 ## Dropdown placement
 
->>>>> Attention [Harvest Chosen](https://harvesthq.github.io/chosen/) migrators!  If you are migrating to Select2 from Chosen, this option will cause Select2 to position the dropdown in a similar way.
+> [!IMPORTANT] 
+> Attention [Harvest Chosen](https://harvesthq.github.io/chosen/) migrators!  If you are migrating to Select2 from Chosen, this option will cause Select2 to position the dropdown in a similar way.
 
 By default, Select2 will attach the dropdown to the end of the body and will absolutely position it to appear above or below the selection container.
 
@@ -115,4 +119,5 @@ If you run into positioning issues while using the default `body` attachment, yo
 
 See [this issue](https://github.com/select2/select2/issues/3970#issuecomment-160496724).
 
->>>> `dropdownParent` will cause DOM events to be raised outside of the standard Select2 DOM container. This can cause issues with third-party components such as modals.
+> [!WARNING] 
+> `dropdownParent` will cause DOM events to be raised outside of the standard Select2 DOM container. This can cause issues with third-party components such as modals.

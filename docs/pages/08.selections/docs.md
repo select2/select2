@@ -44,7 +44,8 @@ $(".js-example-templating").select2({
 
 </script>
 
->>> You may find it helpful to use a client-side templating engine like [Handlebars](http://handlebarsjs.com/) to define your templates.
+> [!NOTE] 
+> You may find it helpful to use a client-side templating engine like [Handlebars](http://handlebarsjs.com/) to define your templates.
 
 ### Built-in escaping
 
@@ -52,7 +53,8 @@ By default, strings returned by `templateSelection` are assumed to **contain onl
 
 If you need to render HTML with your selection template, you must wrap your rendered selection in a jQuery object. In this case, the selection will be passed [directly to `jQuery.fn.append`](https://api.jquery.com/append/) and will be handled directly by jQuery.  Any markup, such as HTML, will not be escaped and it is up to you to escape any malicious input provided by users.
 
->>>> Anything rendered as a selection is templated.  This includes placeholders and pre-existing selections that are displayed, so you must ensure that your templating functions can support them.
+> [!WARNING] 
+> Anything rendered as a selection is templated.  This includes placeholders and pre-existing selections that are displayed, so you must ensure that your templating functions can support them.
 
 ## Limiting the number of selections
 
