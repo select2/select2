@@ -19,6 +19,12 @@ repos:
     hooks:
       - id: yamlfmt
         exclude: ^docs/(plugins|themes)/
+  - repo: https://github.com/biomejs/pre-commit
+    rev: v2.4.16
+    hooks:
+      - id: biome-format
+        args: [--use-editorconfig=true]
+        exclude: (dist|docs|vendor)/|(banner|wrapper).(start|end).js
 ci:
   autoupdate_schedule: weekly
   skip:
