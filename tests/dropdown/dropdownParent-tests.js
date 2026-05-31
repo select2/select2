@@ -1,83 +1,89 @@
 QUnit.module('Dropdown - attachBody - dropdownParent option');
 
 QUnit.test('can be a selector string', function (assert) {
-    assert.expect(1);
+  assert.expect(1);
 
-    var $ = require('jquery');
+  var $ = require('jquery');
 
-    var $select = $('<select></select>');
-    var $parent = $('<div id="parent"></div>');
+  var $select = $('<select></select>');
+  var $parent = $('<div id="parent"></div>');
 
-    $('#qunit-fixture').append($parent);
+  $('#qunit-fixture').append($parent);
 
-    var Utils = require('select2/utils');
-    var Options = require('select2/options');
+  var Utils = require('select2/utils');
+  var Options = require('select2/options');
 
-    var Dropdown = require('select2/dropdown');
-    var AttachBody = require('select2/dropdown/attachBody');
+  var Dropdown = require('select2/dropdown');
+  var AttachBody = require('select2/dropdown/attachBody');
 
-    var DropdownAdapter = Utils.Decorate(Dropdown, AttachBody);
+  var DropdownAdapter = Utils.Decorate(Dropdown, AttachBody);
 
-    var dropdown = new DropdownAdapter($select, new Options({
-        dropdownParent: '#parent'
-    }));
+  var dropdown = new DropdownAdapter(
+    $select,
+    new Options({
+      dropdownParent: '#parent'
+    })
+  );
 
-    assert.equal(
-        dropdown.$dropdownParent[0],
-        $parent[0],
-        'Should be parsed using the selector as a jQuery object'
-    );
+  assert.equal(
+    dropdown.$dropdownParent[0],
+    $parent[0],
+    'Should be parsed using the selector as a jQuery object'
+  );
 });
 
 QUnit.test('can be a jQuery object', function (assert) {
-    assert.expect(1);
+  assert.expect(1);
 
-    var $ = require('jquery');
+  var $ = require('jquery');
 
-    var $select = $('<select></select>');
-    var $parent = $('<div id="parent"></div>');
+  var $select = $('<select></select>');
+  var $parent = $('<div id="parent"></div>');
 
-    $('#qunit-fixture').append($parent);
+  $('#qunit-fixture').append($parent);
 
-    var Utils = require('select2/utils');
-    var Options = require('select2/options');
+  var Utils = require('select2/utils');
+  var Options = require('select2/options');
 
-    var Dropdown = require('select2/dropdown');
-    var AttachBody = require('select2/dropdown/attachBody');
+  var Dropdown = require('select2/dropdown');
+  var AttachBody = require('select2/dropdown/attachBody');
 
-    var DropdownAdapter = Utils.Decorate(Dropdown, AttachBody);
+  var DropdownAdapter = Utils.Decorate(Dropdown, AttachBody);
 
-    var dropdown = new DropdownAdapter($select, new Options({
-        dropdownParent: $parent
-    }));
+  var dropdown = new DropdownAdapter(
+    $select,
+    new Options({
+      dropdownParent: $parent
+    })
+  );
 
-    assert.equal(
-        dropdown.$dropdownParent[0],
-        $parent[0],
-        'Should just take the passed in jQuery object'
-    );
+  assert.equal(
+    dropdown.$dropdownParent[0],
+    $parent[0],
+    'Should just take the passed in jQuery object'
+  );
 });
 
 QUnit.test('defaults to the document body', function (assert) {
-    assert.expect(1);
+  assert.expect(1);
 
-    var $ = require('jquery');
+  var $ = require('jquery');
 
-    var $select = $('<select></select>');
+  var $select = $('<select></select>');
 
-    var Utils = require('select2/utils');
-    var Options = require('select2/options');
+  var Utils = require('select2/utils');
+  var Options = require('select2/options');
 
-    var Dropdown = require('select2/dropdown');
-    var AttachBody = require('select2/dropdown/attachBody');
+  var Dropdown = require('select2/dropdown');
+  var AttachBody = require('select2/dropdown/attachBody');
 
-    var DropdownAdapter = Utils.Decorate(Dropdown, AttachBody);
+  var DropdownAdapter = Utils.Decorate(Dropdown, AttachBody);
 
-    var dropdown = new DropdownAdapter($select, new Options({}));
+  var dropdown = new DropdownAdapter($select, new Options({}));
 
-    assert.equal(
-        dropdown.$dropdownParent[0],
-        document.body,
-        'Should default to wrapping document.body'
-    );
+  assert.equal(
+    dropdown.$dropdownParent[0],
+    document.body,
+    'Should default to wrapping document.body'
+  );
 });

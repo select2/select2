@@ -51,9 +51,12 @@ QUnit.test('templateSelection can addClass', function (assert) {
 
   var $container = selection.selectionContainer();
 
-  var out = selection.display({
-    text: 'test'
-  }, $container);
+  var out = selection.display(
+    {
+      text: 'test'
+    },
+    $container
+  );
 
   assert.ok(called);
 
@@ -63,10 +66,7 @@ QUnit.test('templateSelection can addClass', function (assert) {
 });
 
 QUnit.test('empty update clears the selection', function (assert) {
-  var selection = new MultipleSelection(
-    $('#qunit-fixture .multiple'),
-    options
-  );
+  var selection = new MultipleSelection($('#qunit-fixture .multiple'), options);
 
   var $selection = selection.render();
   var $rendered = $selection.find('.select2-selection__rendered');
@@ -75,18 +75,11 @@ QUnit.test('empty update clears the selection', function (assert) {
 
   selection.update([]);
 
-  assert.equal(
-    $rendered.text(),
-    '',
-    'There should have been nothing rendered'
-  );
+  assert.equal($rendered.text(), '', 'There should have been nothing rendered');
 });
 
 QUnit.test('empty update clears the selection title', function (assert) {
-  var selection = new MultipleSelection(
-    $('#qunit-fixture .multiple'),
-    options
-  );
+  var selection = new MultipleSelection($('#qunit-fixture .multiple'), options);
 
   var $selection = selection.render();
 
@@ -102,16 +95,15 @@ QUnit.test('empty update clears the selection title', function (assert) {
 });
 
 QUnit.test('update sets the title to the data text', function (assert) {
-  var selection = new MultipleSelection(
-    $('#qunit-fixture .multiple'),
-    options
-  );
+  var selection = new MultipleSelection($('#qunit-fixture .multiple'), options);
 
   var $selection = selection.render();
 
-  selection.update([{
-    text: 'test'
-  }]);
+  selection.update([
+    {
+      text: 'test'
+    }
+  ]);
 
   var $rendered = $selection.find('.select2-selection__rendered li');
 
@@ -123,17 +115,16 @@ QUnit.test('update sets the title to the data text', function (assert) {
 });
 
 QUnit.test('update sets the title to the data title', function (assert) {
-  var selection = new MultipleSelection(
-    $('#qunit-fixture .multiple'),
-    options
-  );
+  var selection = new MultipleSelection($('#qunit-fixture .multiple'), options);
 
   var $selection = selection.render();
 
-  selection.update([{
-    text: 'test',
-    title: 'correct'
-  }]);
+  selection.update([
+    {
+      text: 'test',
+      title: 'correct'
+    }
+  ]);
 
   var $rendered = $selection.find('.select2-selection__rendered li');
 
@@ -144,63 +135,72 @@ QUnit.test('update sets the title to the data title', function (assert) {
   );
 });
 
-QUnit.test('update should clear title for placeholder options', function (assert) {
-  var selection = new MultipleSelection(
-    $('#qunit-fixture .multiple'),
-    options
-  );
+QUnit.test(
+  'update should clear title for placeholder options',
+  function (assert) {
+    var selection = new MultipleSelection(
+      $('#qunit-fixture .multiple'),
+      options
+    );
 
-  var $selection = selection.render();
+    var $selection = selection.render();
 
-  selection.update([{
-    id: '',
-    text: ''
-  }]);
+    selection.update([
+      {
+        id: '',
+        text: ''
+      }
+    ]);
 
-  var $rendered = $selection.find('.select2-selection__rendered li');
+    var $rendered = $selection.find('.select2-selection__rendered li');
 
-  assert.equal(
-    $rendered.attr('title'),
-    undefined,
-    'The title should be removed if a placeholder is rendered'
-  );
-});
+    assert.equal(
+      $rendered.attr('title'),
+      undefined,
+      'The title should be removed if a placeholder is rendered'
+    );
+  }
+);
 
-QUnit.test('update should clear title for options without text', function (assert) {
-  var selection = new MultipleSelection(
-    $('#qunit-fixture .multiple'),
-    options
-  );
+QUnit.test(
+  'update should clear title for options without text',
+  function (assert) {
+    var selection = new MultipleSelection(
+      $('#qunit-fixture .multiple'),
+      options
+    );
 
-  var $selection = selection.render();
+    var $selection = selection.render();
 
-  selection.update([{
-    id: ''
-  }]);
+    selection.update([
+      {
+        id: ''
+      }
+    ]);
 
-  var $rendered = $selection.find('.select2-selection__rendered li');
+    var $rendered = $selection.find('.select2-selection__rendered li');
 
-  assert.equal(
-    $rendered.attr('title'),
-    undefined,
-    'The title should be removed if there is no text or title property'
-  );
-});
+    assert.equal(
+      $rendered.attr('title'),
+      undefined,
+      'The title should be removed if there is no text or title property'
+    );
+  }
+);
 
 QUnit.test('escapeMarkup is being used', function (assert) {
-  var selection = new MultipleSelection(
-    $('#qunit-fixture .multiple'),
-    options
-  );
+  var selection = new MultipleSelection($('#qunit-fixture .multiple'), options);
 
   var $selection = selection.render();
   var $rendered = $selection.find('.select2-selection__rendered');
 
   var unescapedText = '<script>bad("stuff");</script>';
 
-  selection.update([{
-    text: unescapedText
-  }]);
+  selection.update([
+    {
+      text: unescapedText
+    }
+  ]);
 
   assert.equal(
     $rendered.text().substr(1),
@@ -219,10 +219,7 @@ QUnit.test('clear button respects the disabled state', function (assert) {
   var container = new MockContainer();
   var $container = $('<div></div>');
 
-  var selection = new MultipleSelection(
-    $select,
-    options
-  );
+  var selection = new MultipleSelection($select, options);
 
   var $selection = selection.render();
   $container.append($selection);
@@ -230,9 +227,11 @@ QUnit.test('clear button respects the disabled state', function (assert) {
   selection.bind(container, $container);
 
   // Select an option
-  selection.update([{
-    text: 'Test'
-  }]);
+  selection.update([
+    {
+      text: 'Test'
+    }
+  ]);
 
   var $rendered = $selection.find('.select2-selection__rendered');
 

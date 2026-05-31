@@ -1,7 +1,5 @@
-define([
-  'jquery'
-], function ($) {
-  function Search () { }
+define(['jquery'], function ($) {
+  function Search() {}
 
   Search.prototype.render = function (decorated) {
     var $rendered = decorated.call(this);
@@ -12,7 +10,7 @@ define([
         '<input class="select2-search__field" type="search" tabindex="-1"' +
         ' autocorrect="off" autocapitalize="none"' +
         ' spellcheck="false" role="searchbox" aria-autocomplete="list" />' +
-      '</span>'
+        '</span>'
     );
 
     this.$searchContainer = $search;
@@ -91,8 +89,10 @@ define([
 
     container.on('results:focus', function (params) {
       if (params.data._resultId) {
-        self.$search[0]
-          .setAttribute('aria-activedescendant', params.data._resultId);
+        self.$search[0].setAttribute(
+          'aria-activedescendant',
+          params.data._resultId
+        );
       } else {
         self.$search[0].removeAttribute('aria-activedescendant');
       }

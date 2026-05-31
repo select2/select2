@@ -21,23 +21,26 @@ module.exports = function (grunt) {
   var i18nModules = [];
   var i18nPaths = {};
 
-  var i18nFiles = grunt.file.expand({
-    cwd: 'src/js'
-  }, 'select2/i18n/*.js');
+  var i18nFiles = grunt.file.expand(
+    {
+      cwd: 'src/js'
+    },
+    'select2/i18n/*.js'
+  );
 
   var testFiles = grunt.file.expand('tests/**/*.html');
   var testUrls = testFiles.map(function (filePath) {
     return 'http://localhost:9999/' + filePath;
   });
 
-  var testBuildNumber = "unknown";
+  var testBuildNumber = 'unknown';
 
   if (process.env.TRAVIS_JOB_ID) {
-    testBuildNumber = "travis-" + process.env.TRAVIS_JOB_ID;
+    testBuildNumber = 'travis-' + process.env.TRAVIS_JOB_ID;
   } else {
     var currentTime = new Date();
 
-    testBuildNumber = "manual-" + currentTime.getTime();
+    testBuildNumber = 'manual-' + currentTime.getTime();
   }
 
   for (var i = 0; i < i18nFiles.length; i++) {
@@ -51,30 +54,25 @@ module.exports = function (grunt) {
     i18nPaths[name] = '../../' + name;
   }
 
-  var minifiedBanner = '/*! Select2 <%= package.version %> | https://github.com/select2/select2/blob/master/LICENSE.md */';
+  var minifiedBanner =
+    '/*! Select2 <%= package.version %> | https://github.com/select2/select2/blob/master/LICENSE.md */';
 
   grunt.initConfig({
     package: grunt.file.readJSON('package.json'),
 
     concat: {
-      'dist': {
+      dist: {
         options: {
-          banner: grunt.file.read('src/js/wrapper.start.js'),
+          banner: grunt.file.read('src/js/wrapper.start.js')
         },
-        src: [
-          'dist/js/select2.js',
-          'src/js/wrapper.end.js'
-        ],
+        src: ['dist/js/select2.js', 'src/js/wrapper.end.js'],
         dest: 'dist/js/select2.js'
       },
       'dist.full': {
         options: {
-          banner: grunt.file.read('src/js/wrapper.start.js'),
+          banner: grunt.file.read('src/js/wrapper.start.js')
         },
-        src: [
-          'dist/js/select2.full.js',
-          'src/js/wrapper.end.js'
-        ],
+        src: ['dist/js/select2.full.js', 'src/js/wrapper.end.js'],
         dest: 'dist/js/select2.full.js'
       }
     },
@@ -90,7 +88,7 @@ module.exports = function (grunt) {
     },
 
     uglify: {
-      'dist': {
+      dist: {
         src: 'dist/js/select2.js',
         dest: 'dist/js/select2.min.js',
         options: {
@@ -155,7 +153,7 @@ module.exports = function (grunt) {
     },
 
     requirejs: {
-      'dist': {
+      dist: {
         options: {
           baseUrl: 'src/js',
           optimize: 'none',
@@ -164,8 +162,8 @@ module.exports = function (grunt) {
           include: includes,
           namespace: 'S2',
           paths: {
-            'almond': require.resolve('almond').slice(0, -3),
-            'jquery': 'jquery.shim',
+            almond: require.resolve('almond').slice(0, -3),
+            jquery: 'jquery.shim',
             'jquery-mousewheel': 'jquery.mousewheel.shim'
           },
           wrap: {
@@ -183,9 +181,11 @@ module.exports = function (grunt) {
           include: fullIncludes,
           namespace: 'S2',
           paths: {
-            'almond': require.resolve('almond').slice(0, -3),
-            'jquery': 'jquery.shim',
-            'jquery-mousewheel': require.resolve('jquery-mousewheel').slice(0, -3)
+            almond: require.resolve('almond').slice(0, -3),
+            jquery: 'jquery.shim',
+            'jquery-mousewheel': require
+              .resolve('jquery-mousewheel')
+              .slice(0, -3)
           },
           wrap: {
             startFile: 'src/js/banner.start.js',
@@ -193,7 +193,7 @@ module.exports = function (grunt) {
           }
         }
       },
-      'i18n': {
+      i18n: {
         options: {
           baseUrl: 'src/js/select2/i18n',
           dir: 'dist/js/i18n',
@@ -206,8 +206,7 @@ module.exports = function (grunt) {
           }
         }
       }
-    },
-
+    }
   });
 
   grunt.loadNpmTasks('grunt-contrib-concat');
@@ -221,8 +220,11 @@ module.exports = function (grunt) {
   grunt.registerTask('default', ['compile', 'test', 'lint', 'minify']);
 
   grunt.registerTask('compile', [
-    'requirejs:dist', 'requirejs:dist.full', 'requirejs:i18n',
-    'concat:dist', 'concat:dist.full',
+    'requirejs:dist',
+    'requirejs:dist.full',
+    'requirejs:i18n',
+    'concat:dist',
+    'concat:dist.full',
     'sass:dev'
   ]);
   grunt.registerTask('minify', ['uglify', 'sass:dist']);

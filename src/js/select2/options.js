@@ -1,9 +1,5 @@
-define([
-  'jquery',
-  './defaults',
-  './utils'
-], function ($, Defaults, Utils) {
-  function Options (options, $element) {
+define(['jquery', './defaults', './utils'], function ($, Defaults, Utils) {
+  function Options(options, $element) {
     this.options = options;
 
     if ($element != null) {
@@ -55,8 +51,8 @@ define([
       if (this.options.debug && window.console && console.warn) {
         console.warn(
           'Select2: The `data-select2-tags` attribute has been changed to ' +
-          'use the `data-data` and `data-tags="true"` attributes and will be ' +
-          'removed in future versions of Select2.'
+            'use the `data-data` and `data-tags="true"` attributes and will be ' +
+            'removed in future versions of Select2.'
         );
       }
 
@@ -68,8 +64,8 @@ define([
       if (this.options.debug && window.console && console.warn) {
         console.warn(
           'Select2: The `data-ajax-url` attribute has been changed to ' +
-          '`data-ajax--url` and support for the old attribute will be removed' +
-          ' in future versions of Select2.'
+            '`data-ajax--url` and support for the old attribute will be removed' +
+            ' in future versions of Select2.'
         );
       }
 

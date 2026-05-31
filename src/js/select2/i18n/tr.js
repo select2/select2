@@ -1,7 +1,7 @@
 define(function () {
   // Turkish
   return {
-    errorLoading: function (){
+    errorLoading: function () {
       return 'Sonuç yüklenemedi';
     },
     inputTooLong: function (args) {
@@ -38,7 +38,7 @@ define(function () {
     removeItem: function () {
       return 'Bu öğeyi kaldır';
     },
-    search: function() {
+    search: function () {
       return 'Ara';
     }
   };

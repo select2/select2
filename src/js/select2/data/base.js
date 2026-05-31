@@ -1,7 +1,5 @@
-define([
-  '../utils'
-], function (Utils) {
-  function BaseAdapter ($element, options) {
+define(['../utils'], function (Utils) {
+  function BaseAdapter($element, options) {
     BaseAdapter.__super__.constructor.call(this);
   }
 

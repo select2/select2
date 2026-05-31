@@ -1,7 +1,5 @@
-define([
-
-], function () {
-  function Placeholder (decorated, $element, options) {
+define([], function () {
+  function Placeholder(decorated, $element, options) {
     this.placeholder = this.normalizePlaceholder(options.get('placeholder'));
 
     decorated.call(this, $element, options);
@@ -25,22 +23,19 @@ define([
     $placeholder[0].classList.add('select2-selection__placeholder');
     $placeholder[0].classList.remove('select2-selection__choice');
 
-    var placeholderTitle = placeholder.title ||
-      placeholder.text ||
-      $placeholder.text();
+    var placeholderTitle =
+      placeholder.title || placeholder.text || $placeholder.text();
 
-    this.$selection.find('.select2-selection__rendered')[0].setAttribute(
-      'title',
-      placeholderTitle
-    );
+    this.$selection
+      .find('.select2-selection__rendered')[0]
+      .setAttribute('title', placeholderTitle);
 
     return $placeholder;
   };
 
   Placeholder.prototype.update = function (decorated, data) {
-    var singlePlaceholder = (
-      data.length == 1 && data[0].id != this.placeholder.id
-    );
+    var singlePlaceholder =
+      data.length == 1 && data[0].id != this.placeholder.id;
     var multipleSelections = data.length > 1;
 
     if (multipleSelections || singlePlaceholder) {

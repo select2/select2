@@ -11,8 +11,8 @@ define(function () {
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
-      var message = 'Vui lòng nhập thêm từ ' + remainingChars +
-                    ' ký tự trở lên';
+      var message =
+        'Vui lòng nhập thêm từ ' + remainingChars + ' ký tự trở lên';
 
       return message;
     },

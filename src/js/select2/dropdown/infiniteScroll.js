@@ -1,7 +1,5 @@
-define([
-  'jquery'
-], function ($) {
-  function InfiniteScroll (decorated, $element, options, dataAdapter) {
+define(['jquery'], function ($) {
+  function InfiniteScroll(decorated, $element, options, dataAdapter) {
     this.lastParams = {};
 
     decorated.call(this, $element, options, dataAdapter);
@@ -50,10 +48,10 @@ define([
       return;
     }
 
-    var currentOffset = this.$results.offset().top +
-      this.$results.outerHeight(false);
-    var loadingMoreOffset = this.$loadingMore.offset().top +
-      this.$loadingMore.outerHeight(false);
+    var currentOffset =
+      this.$results.offset().top + this.$results.outerHeight(false);
+    var loadingMoreOffset =
+      this.$loadingMore.offset().top + this.$loadingMore.outerHeight(false);
 
     if (currentOffset + 50 >= loadingMoreOffset) {
       this.loadMore();
@@ -63,7 +61,7 @@ define([
   InfiniteScroll.prototype.loadMore = function () {
     this.loading = true;
 
-    var params = $.extend({}, {page: 1}, this.lastParams);
+    var params = $.extend({}, { page: 1 }, this.lastParams);
 
     params.page++;
 
@@ -77,8 +75,8 @@ define([
   InfiniteScroll.prototype.createLoadingMore = function () {
     var $option = $(
       '<li ' +
-      'class="select2-results__option select2-results__option--load-more"' +
-      'role="option" aria-disabled="true"></li>'
+        'class="select2-results__option select2-results__option--load-more"' +
+        'role="option" aria-disabled="true"></li>'
     );
 
     var message = this.options.get('translations').get('loadingMore');

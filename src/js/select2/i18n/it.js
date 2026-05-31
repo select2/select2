@@ -20,7 +20,8 @@ define(function () {
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
-      var message = 'Per favore inserisci ' +remainingChars+ ' o più caratteri';
+      var message =
+        'Per favore inserisci ' + remainingChars + ' o più caratteri';
 
       return message;
     },
@@ -50,7 +51,7 @@ define(function () {
     removeItem: function () {
       return 'Rimuovi oggetto';
     },
-    search: function() {
+    search: function () {
       return 'Ricerca';
     }
   };

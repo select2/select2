@@ -1,7 +1,7 @@
 define(function () {
   // Turkmen
   return {
-    errorLoading: function (){
+    errorLoading: function () {
       return 'Netije ýüklenmedi.';
     },
     inputTooLong: function (args) {

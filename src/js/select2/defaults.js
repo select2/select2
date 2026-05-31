@@ -36,24 +36,46 @@ define([
   './dropdown/tagsSearchHighlight',
 
   './i18n/en'
-], function ($,
+], function (
+  $,
 
-             ResultsList,
+  ResultsList,
 
-             SingleSelection, MultipleSelection, Placeholder, AllowClear,
-             SelectionSearch, SelectionCSS, EventRelay,
+  SingleSelection,
+  MultipleSelection,
+  Placeholder,
+  AllowClear,
+  SelectionSearch,
+  SelectionCSS,
+  EventRelay,
 
-             Utils, Translation, DIACRITICS,
+  Utils,
+  Translation,
+  DIACRITICS,
 
-             SelectData, ArrayData, AjaxData, Tags, Tokenizer,
-             MinimumInputLength, MaximumInputLength, MaximumSelectionLength,
+  SelectData,
+  ArrayData,
+  AjaxData,
+  Tags,
+  Tokenizer,
+  MinimumInputLength,
+  MaximumInputLength,
+  MaximumSelectionLength,
 
-             Dropdown, DropdownSearch, HidePlaceholder, InfiniteScroll,
-             AttachBody, MinimumResultsForSearch, SelectOnClose, CloseOnSelect,
-             DropdownCSS, TagsSearchHighlight,
+  Dropdown,
+  DropdownSearch,
+  HidePlaceholder,
+  InfiniteScroll,
+  AttachBody,
+  MinimumResultsForSearch,
+  SelectOnClose,
+  CloseOnSelect,
+  DropdownCSS,
+  TagsSearchHighlight,
 
-             EnglishTranslation) {
-  function Defaults () {
+  EnglishTranslation
+) {
+  function Defaults() {
     this.reset();
   }
 
@@ -95,10 +117,7 @@ define([
       }
 
       if (options.tokenSeparators != null || options.tokenizer != null) {
-        options.dataAdapter = Utils.Decorate(
-          options.dataAdapter,
-          Tokenizer
-        );
+        options.dataAdapter = Utils.Decorate(options.dataAdapter, Tokenizer);
       }
     }
 
@@ -240,7 +259,7 @@ define([
   };
 
   Defaults.prototype.reset = function () {
-    function stripDiacritics (text) {
+    function stripDiacritics(text) {
       // Used 'uni range + named function' from http://jsperf.com/diacritics/18
       function match(a) {
         return DIACRITICS[a] || a;
@@ -249,7 +268,7 @@ define([
       return text.replace(/[^\u0000-\u007E]/g, match);
     }
 
-    function matcher (params, data) {
+    function matcher(params, data) {
       // Always return the object if there is nothing to compare
       if (params.term == null || params.term.trim() === '') {
         return data;
@@ -403,8 +422,10 @@ define([
             // because of how Select2 helps load all possible translation files
             if (debug && window.console && console.warn) {
               console.warn(
-                'Select2: The language file for "' + language + '" could ' +
-                'not be automatically loaded. A fallback will be used instead.'
+                'Select2: The language file for "' +
+                  language +
+                  '" could ' +
+                  'not be automatically loaded. A fallback will be used instead.'
               );
             }
           }

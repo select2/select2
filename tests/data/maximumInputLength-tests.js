@@ -5,7 +5,7 @@ var $ = require('jquery');
 var Options = require('select2/options');
 var Utils = require('select2/utils');
 
-function MaximumInputStub () {
+function MaximumInputStub() {
   this.called = false;
 }
 

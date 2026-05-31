@@ -14,7 +14,8 @@ define(function () {
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
-      var message = 'Vennligst skriv inn ' + remainingChars + ' eller flere tegn';
+      var message =
+        'Vennligst skriv inn ' + remainingChars + ' eller flere tegn';
 
       return message;
     },
@@ -42,7 +43,7 @@ define(function () {
     removeItem: function () {
       return 'Fjerne element';
     },
-    search: function() {
+    search: function () {
       return 'Søk';
     }
   };

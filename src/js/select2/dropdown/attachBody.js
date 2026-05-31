@@ -1,8 +1,5 @@
-define([
-  'jquery',
-  '../utils'
-], function ($, Utils) {
-  function AttachBody (decorated, $element, options) {
+define(['jquery', '../utils'], function ($, Utils) {
+  function AttachBody(decorated, $element, options) {
     this.$dropdownParent = $(options.get('dropdownParent') || document.body);
 
     decorated.call(this, $element, options);
@@ -67,9 +64,10 @@ define([
     this.$dropdownContainer.detach();
   };
 
-  AttachBody.prototype._bindContainerResultHandlers =
-      function (decorated, container) {
-
+  AttachBody.prototype._bindContainerResultHandlers = function (
+    decorated,
+    container
+  ) {
     // These should only be bound once
     if (this._containerResultsHandlersBound) {
       return;
@@ -105,8 +103,10 @@ define([
     this._containerResultsHandlersBound = true;
   };
 
-  AttachBody.prototype._attachPositioningHandler =
-      function (decorated, container) {
+  AttachBody.prototype._attachPositioningHandler = function (
+    decorated,
+    container
+  ) {
     var self = this;
 
     var scrollEvent = 'scroll.select2.' + container.id;
@@ -126,15 +126,19 @@ define([
       $(this).scrollTop(position.y);
     });
 
-    $(window).on(scrollEvent + ' ' + resizeEvent + ' ' + orientationEvent,
+    $(window).on(
+      scrollEvent + ' ' + resizeEvent + ' ' + orientationEvent,
       function (e) {
-      self._positionDropdown();
-      self._resizeDropdown();
-    });
+        self._positionDropdown();
+        self._resizeDropdown();
+      }
+    );
   };
 
-  AttachBody.prototype._detachPositioningHandler =
-      function (decorated, container) {
+  AttachBody.prototype._detachPositioningHandler = function (
+    decorated,
+    container
+  ) {
     var scrollEvent = 'scroll.select2.' + container.id;
     var resizeEvent = 'resize.select2.' + container.id;
     var orientationEvent = 'orientationchange.select2.' + container.id;
@@ -148,10 +152,12 @@ define([
   AttachBody.prototype._positionDropdown = function () {
     var $window = $(window);
 
-    var isCurrentlyAbove = this.$dropdown[0].classList
-      .contains('select2-dropdown--above');
-    var isCurrentlyBelow = this.$dropdown[0].classList
-      .contains('select2-dropdown--below');
+    var isCurrentlyAbove = this.$dropdown[0].classList.contains(
+      'select2-dropdown--above'
+    );
+    var isCurrentlyBelow = this.$dropdown[0].classList.contains(
+      'select2-dropdown--below'
+    );
 
     var newDirection = null;
 
@@ -175,8 +181,8 @@ define([
       bottom: $window.scrollTop() + $window.height()
     };
 
-    var enoughRoomAbove = viewport.top < (offset.top - dropdown.height);
-    var enoughRoomBelow = viewport.bottom > (offset.bottom + dropdown.height);
+    var enoughRoomAbove = viewport.top < offset.top - dropdown.height;
+    var enoughRoomBelow = viewport.bottom > offset.bottom + dropdown.height;
 
     var css = {
       left: offset.left,
@@ -200,7 +206,7 @@ define([
     if (
       $.contains(document.body, $offsetParent[0]) ||
       $offsetParent[0].isConnected
-      ) {
+    ) {
       parentOffset = $offsetParent.offset();
     }
 
@@ -217,8 +223,10 @@ define([
       newDirection = 'below';
     }
 
-    if (newDirection == 'above' ||
-      (isCurrentlyAbove && newDirection !== 'below')) {
+    if (
+      newDirection == 'above' ||
+      (isCurrentlyAbove && newDirection !== 'below')
+    ) {
       css.top = container.top - parentOffset.top - dropdown.height;
     }
 

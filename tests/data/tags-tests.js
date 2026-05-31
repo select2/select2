@@ -15,161 +15,197 @@ var options = new Options({
 QUnit.test('does not trigger on blank or null terms', function (assert) {
   var data = new SelectTags($('#qunit-fixture .single'), options);
 
-  data.query({
-    term: ''
-  }, function (data) {
-    assert.equal(data.results.length, 1);
+  data.query(
+    {
+      term: ''
+    },
+    function (data) {
+      assert.equal(data.results.length, 1);
 
-    var item = data.results[0];
+      var item = data.results[0];
 
-    assert.equal(item.id, 'One');
-    assert.equal(item.text, 'One');
-  });
+      assert.equal(item.id, 'One');
+      assert.equal(item.text, 'One');
+    }
+  );
 
-  data.query({
-    term: null
-  }, function (data) {
-    assert.equal(data.results.length, 1);
+  data.query(
+    {
+      term: null
+    },
+    function (data) {
+      assert.equal(data.results.length, 1);
 
-    var item = data.results[0];
+      var item = data.results[0];
 
-    assert.equal(item.id, 'One');
-    assert.equal(item.text, 'One');
-  });
+      assert.equal(item.id, 'One');
+      assert.equal(item.text, 'One');
+    }
+  );
 });
 
 QUnit.test('white space is trimmed by default', function (assert) {
   var data = new SelectTags($('#qunit-fixture .single'), options);
 
-  data.query({
-    term: '  '
-  }, function (data) {
-    assert.equal(data.results.length, 1);
+  data.query(
+    {
+      term: '  '
+    },
+    function (data) {
+      assert.equal(data.results.length, 1);
 
-    var item = data.results[0];
+      var item = data.results[0];
 
-    assert.equal(item.id, 'One');
-    assert.equal(item.text, 'One');
-  });
+      assert.equal(item.id, 'One');
+      assert.equal(item.text, 'One');
+    }
+  );
 
-  data.query({
-    term: ' One '
-  }, function (data) {
-    assert.equal(data.results.length, 1);
+  data.query(
+    {
+      term: ' One '
+    },
+    function (data) {
+      assert.equal(data.results.length, 1);
 
-    var item = data.results[0];
+      var item = data.results[0];
 
-    assert.equal(item.id, 'One');
-    assert.equal(item.text, 'One');
-  });
+      assert.equal(item.id, 'One');
+      assert.equal(item.text, 'One');
+    }
+  );
 });
 
-QUnit.test('does not create option if text is same but lowercase', function (assert) {
-  var data = new SelectTags($('#qunit-fixture .single'), options);
+QUnit.test(
+  'does not create option if text is same but lowercase',
+  function (assert) {
+    var data = new SelectTags($('#qunit-fixture .single'), options);
 
-  data.query({
-    term: 'one'
-  }, function (data) {
-    assert.equal(data.results.length, 1);
+    data.query(
+      {
+        term: 'one'
+      },
+      function (data) {
+        assert.equal(data.results.length, 1);
 
-    var item = data.results[0];
+        var item = data.results[0];
 
-    assert.equal(item.id, 'One');
-    assert.equal(item.text, 'One');
-  });
-});
+        assert.equal(item.id, 'One');
+        assert.equal(item.text, 'One');
+      }
+    );
+  }
+);
 
 QUnit.test('does not trigger for additional pages', function (assert) {
   var data = new SelectTags($('#qunit-fixture .single'), options);
 
-  data.query({
-    page: 2
-  }, function (data) {
-    assert.equal(data.results.length, 1);
+  data.query(
+    {
+      page: 2
+    },
+    function (data) {
+      assert.equal(data.results.length, 1);
 
-    var item = data.results[0];
+      var item = data.results[0];
 
-    assert.equal(item.id, 'One');
-    assert.equal(item.text, 'One');
-  });
+      assert.equal(item.id, 'One');
+      assert.equal(item.text, 'One');
+    }
+  );
 });
 
 QUnit.test('creates tag at beginning', function (assert) {
   var data = new SelectTags($('#qunit-fixture .single'), options);
 
-  data.query({
-    term: 'o'
-  }, function (data) {
-    assert.equal(data.results.length, 2);
+  data.query(
+    {
+      term: 'o'
+    },
+    function (data) {
+      assert.equal(data.results.length, 2);
 
-    var first = data.results[0];
+      var first = data.results[0];
 
-    assert.equal(first.id, 'o');
-    assert.equal(first.text, 'o');
-  });
+      assert.equal(first.id, 'o');
+      assert.equal(first.text, 'o');
+    }
+  );
 });
 
 QUnit.test('tags can be the only result', function (assert) {
   var data = new SelectTags($('#qunit-fixture .single'), options);
 
-  data.query({
-    term: 'test'
-  }, function (data) {
-    assert.equal(data.results.length, 1);
+  data.query(
+    {
+      term: 'test'
+    },
+    function (data) {
+      assert.equal(data.results.length, 1);
 
-    var item = data.results[0];
+      var item = data.results[0];
 
-    assert.equal(item.id, 'test');
-    assert.equal(item.text, 'test');
-  });
+      assert.equal(item.id, 'test');
+      assert.equal(item.text, 'test');
+    }
+  );
 });
 
 QUnit.test('tags are injected as options', function (assert) {
   var data = new SelectTags($('#qunit-fixture .single'), options);
 
-  data.query({
-    term: 'test'
-  }, function (data) {
-    assert.equal(data.results.length, 1);
+  data.query(
+    {
+      term: 'test'
+    },
+    function (data) {
+      assert.equal(data.results.length, 1);
 
-    var $children = $('#qunit-fixture .single option');
+      var $children = $('#qunit-fixture .single option');
 
-    assert.equal($children.length, 2);
+      assert.equal($children.length, 2);
 
-    var $tag = $children.last();
+      var $tag = $children.last();
 
-    assert.equal($tag.val(), 'test');
-    assert.equal($tag.text(), 'test');
-  });
+      assert.equal($tag.val(), 'test');
+      assert.equal($tag.text(), 'test');
+    }
+  );
 });
 
 QUnit.test('old tags are removed automatically', function (assert) {
   var data = new SelectTags($('#qunit-fixture .single'), options);
 
-  data.query({
-    term: 'first'
-  }, function (data) {
-    assert.equal(data.results.length, 1);
+  data.query(
+    {
+      term: 'first'
+    },
+    function (data) {
+      assert.equal(data.results.length, 1);
 
-    var $children = $('#qunit-fixture .single option');
+      var $children = $('#qunit-fixture .single option');
 
-    assert.equal($children.length, 2);
-  });
+      assert.equal($children.length, 2);
+    }
+  );
 
-  data.query({
-    term: 'second'
-  }, function (data) {
-    assert.equal(data.results.length, 1);
+  data.query(
+    {
+      term: 'second'
+    },
+    function (data) {
+      assert.equal(data.results.length, 1);
 
-    var $children = $('#qunit-fixture .single option');
+      var $children = $('#qunit-fixture .single option');
 
-    assert.equal($children.length, 2);
+      assert.equal($children.length, 2);
 
-    var $tag = $children.last();
+      var $tag = $children.last();
 
-    assert.equal($tag.val(), 'second');
-    assert.equal($tag.text(), 'second');
-  });
+      assert.equal($tag.val(), 'second');
+      assert.equal($tag.text(), 'second');
+    }
+  );
 });
 
 QUnit.test('insertTag controls the tag location', function (assert) {
@@ -179,37 +215,46 @@ QUnit.test('insertTag controls the tag location', function (assert) {
     data.push(tag);
   };
 
-  data.query({
-    term: 'o'
-  }, function (data) {
-    assert.equal(data.results.length, 2);
+  data.query(
+    {
+      term: 'o'
+    },
+    function (data) {
+      assert.equal(data.results.length, 2);
 
-    var item = data.results[1];
+      var item = data.results[1];
 
-    assert.equal(item.id, 'o');
-    assert.equal(item.text, 'o');
-  });
-});
-
-QUnit.test('insertTag can be controlled through the options', function (assert) {
-  var options = new Options({
-    insertTag: function (data, tag) {
-      data.push(tag);
+      assert.equal(item.id, 'o');
+      assert.equal(item.text, 'o');
     }
-  });
-  var data = new SelectTags($('#qunit-fixture .single'), options);
-
-  data.query({
-    term: 'o'
-  }, function (data) {
-    assert.equal(data.results.length, 2);
-
-    var item = data.results[1];
-
-    assert.equal(item.id, 'o');
-    assert.equal(item.text, 'o');
-  });
+  );
 });
+
+QUnit.test(
+  'insertTag can be controlled through the options',
+  function (assert) {
+    var options = new Options({
+      insertTag: function (data, tag) {
+        data.push(tag);
+      }
+    });
+    var data = new SelectTags($('#qunit-fixture .single'), options);
+
+    data.query(
+      {
+        term: 'o'
+      },
+      function (data) {
+        assert.equal(data.results.length, 2);
+
+        var item = data.results[1];
+
+        assert.equal(item.id, 'o');
+        assert.equal(item.text, 'o');
+      }
+    );
+  }
+);
 
 QUnit.test('createTag controls the tag object', function (assert) {
   var data = new SelectTags($('#qunit-fixture .single'), options);
@@ -221,16 +266,19 @@ QUnit.test('createTag controls the tag object', function (assert) {
     };
   };
 
-  data.query({
-    term: 'test'
-  }, function (data) {
-    assert.equal(data.results.length, 1);
+  data.query(
+    {
+      term: 'test'
+    },
+    function (data) {
+      assert.equal(data.results.length, 1);
 
-    var item = data.results[0];
+      var item = data.results[0];
 
-    assert.equal(item.id, 0);
-    assert.equal(item.text, 'test');
-  });
+      assert.equal(item.id, 0);
+      assert.equal(item.text, 'test');
+    }
+  );
 });
 
 QUnit.test('createTag returns null for no tag', function (assert) {
@@ -240,11 +288,14 @@ QUnit.test('createTag returns null for no tag', function (assert) {
     return null;
   };
 
-  data.query({
-    term: 'o'
-  }, function (data) {
-    assert.equal(data.results.length, 1);
-  });
+  data.query(
+    {
+      term: 'o'
+    },
+    function (data) {
+      assert.equal(data.results.length, 1);
+    }
+  );
 });
 
 QUnit.test('the createTag options customizes the function', function (assert) {
@@ -262,15 +313,18 @@ QUnit.test('the createTag options customizes the function', function (assert) {
     })
   );
 
-  data.query({
-    term: 'test'
-  }, function (data) {
-    assert.equal(data.results.length, 1);
+  data.query(
+    {
+      term: 'test'
+    },
+    function (data) {
+      assert.equal(data.results.length, 1);
 
-    var item = data.results[0];
+      var item = data.results[0];
 
-    assert.equal(item.id, 'test');
-    assert.equal(item.text, 'test');
-    assert.equal(item.tag, true);
-  });
+      assert.equal(item.id, 'test');
+      assert.equal(item.text, 'test');
+      assert.equal(item.tag, true);
+    }
+  );
 });

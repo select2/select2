@@ -1,9 +1,5 @@
-define([
-  './array',
-  '../utils',
-  'jquery'
-], function (ArrayAdapter, Utils, $) {
-  function AjaxAdapter ($element, options) {
+define(['./array', '../utils', 'jquery'], function (ArrayAdapter, Utils, $) {
+  function AjaxAdapter($element, options) {
     this.ajaxOptions = this._applyDefaults(options.get('ajax'));
 
     if (this.ajaxOptions.processResults != null) {
@@ -52,9 +48,12 @@ define([
       this._request = null;
     }
 
-    var options = $.extend({
-      type: 'GET'
-    }, this.ajaxOptions);
+    var options = $.extend(
+      {
+        type: 'GET'
+      },
+      this.ajaxOptions
+    );
 
     if (typeof options.url === 'function') {
       options.url = options.url.call(this.$element, params);
@@ -64,37 +63,44 @@ define([
       options.data = options.data.call(this.$element, params);
     }
 
-    function request () {
-      var $request = options.transport(options, function (data) {
-        var results = self.processResults(data, params);
+    function request() {
+      var $request = options.transport(
+        options,
+        function (data) {
+          var results = self.processResults(data, params);
 
-        if (results && results.results && Array.isArray(results.results)) {
-          results.results = results.results.map(
-            AjaxAdapter.prototype._normalizeItem
-          );
-        } else {
-          if (self.options.get('debug') && window.console && console.error) {
-            // Check to make sure that the response included a `results` key.
-            console.error(
-              'Select2: The AJAX results did not return an array in the ' +
-              '`results` key of the response.'
+          if (results && results.results && Array.isArray(results.results)) {
+            results.results = results.results.map(
+              AjaxAdapter.prototype._normalizeItem
             );
+          } else {
+            if (self.options.get('debug') && window.console && console.error) {
+              // Check to make sure that the response included a `results` key.
+              console.error(
+                'Select2: The AJAX results did not return an array in the ' +
+                  '`results` key of the response.'
+              );
+            }
           }
-        }
 
-        callback(results);
-      }, function () {
-        // Attempt to detect if a request was aborted
-        // Only works if the transport exposes a status property
-        if ($request && 'status' in $request &&
-            ($request.status === 0 || $request.status === '0')) {
-          return;
-        }
+          callback(results);
+        },
+        function () {
+          // Attempt to detect if a request was aborted
+          // Only works if the transport exposes a status property
+          if (
+            $request &&
+            'status' in $request &&
+            ($request.status === 0 || $request.status === '0')
+          ) {
+            return;
+          }
 
-        self.trigger('results:message', {
-          message: 'errorLoading'
-        });
-      });
+          self.trigger('results:message', {
+            message: 'errorLoading'
+          });
+        }
+      );
 
       self._request = $request;
     }

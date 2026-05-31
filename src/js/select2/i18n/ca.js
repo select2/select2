@@ -43,7 +43,7 @@ define(function () {
       return message;
     },
     noResults: function () {
-      return 'No s\'han trobat resultats';
+      return "No s'han trobat resultats"; // jshint ignore:line
     },
     searching: function () {
       return 'Cercant…';

@@ -7,7 +7,7 @@ define(function () {
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;
 
-      var message =  overChars + ' अक्षर को हटा दें';
+      var message = overChars + ' अक्षर को हटा दें';
 
       if (overChars > 1) {
         message = overChars + ' अक्षरों को हटा दें ';

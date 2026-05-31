@@ -1,10 +1,10 @@
-define([
-  'jquery',
-  './base',
-  '../utils',
-  '../keys'
-], function ($, BaseSelection, Utils, KEYS) {
-  function SingleSelection () {
+define(['jquery', './base', '../utils', '../keys'], function (
+  $,
+  BaseSelection,
+  Utils,
+  KEYS
+) {
+  function SingleSelection() {
     SingleSelection.__super__.constructor.apply(this, arguments);
   }
 
@@ -17,9 +17,9 @@ define([
 
     $selection.html(
       '<span class="select2-selection__rendered"></span>' +
-      '<span class="select2-selection__arrow" role="presentation">' +
+        '<span class="select2-selection__arrow" role="presentation">' +
         '<b role="presentation"></b>' +
-      '</span>'
+        '</span>'
     );
 
     return $selection;
@@ -33,7 +33,7 @@ define([
     var id = container.id + '-container';
 
     var rendered = this.$selection.find('.select2-selection__rendered')[0];
-    if(rendered != null) {
+    if (rendered != null) {
       rendered.setAttribute('id', id);
       rendered.setAttribute('role', 'textbox');
       rendered.setAttribute('aria-readonly', 'true');

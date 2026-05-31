@@ -32,7 +32,7 @@ define(function () {
     removeItem: function () {
       return 'Elem eltávolítása';
     },
-    search: function() {
+    search: function () {
       return 'Keresés';
     }
   };

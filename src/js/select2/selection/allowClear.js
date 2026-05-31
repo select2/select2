@@ -1,9 +1,5 @@
-define([
-  'jquery',
-  '../keys',
-  '../utils'
-], function ($, KEYS, Utils) {
-  function AllowClear () { }
+define(['jquery', '../keys', '../utils'], function ($, KEYS, Utils) {
+  function AllowClear() {}
 
   AllowClear.prototype.bind = function (decorated, container, $container) {
     var self = this;
@@ -14,15 +10,18 @@ define([
       if (this.options.get('debug') && window.console && console.error) {
         console.error(
           'Select2: The `allowClear` option should be used in combination ' +
-          'with the `placeholder` option.'
+            'with the `placeholder` option.'
         );
       }
     }
 
-    this.$selection.on('mousedown', '.select2-selection__clear',
+    this.$selection.on(
+      'mousedown',
+      '.select2-selection__clear',
       function (evt) {
         self._handleClear(evt);
-    });
+      }
+    );
 
     container.on('keypress', function (evt) {
       self._handleKeyboardClear(evt, container);
@@ -95,14 +94,16 @@ define([
     this.$selection.find('.select2-selection__clear').remove();
     this.$selection[0].classList.remove('select2-selection--clearable');
 
-    if (this.$selection.find('.select2-selection__placeholder').length > 0 ||
-        data.length === 0) {
+    if (
+      this.$selection.find('.select2-selection__placeholder').length > 0 ||
+      data.length === 0
+    ) {
       return;
     }
 
     var rendered = this.$selection.find('.select2-selection__rendered')[0];
     var selectionId = null;
-    if(rendered != null) {
+    if (rendered != null) {
       selectionId = rendered.getAttribute('id');
     }
 
@@ -111,7 +112,7 @@ define([
     var $remove = $(
       '<button type="button" class="select2-selection__clear" tabindex="-1">' +
         '<span aria-hidden="true">&times;</span>' +
-      '</button>'
+        '</button>'
     );
     $remove[0].setAttribute('title', removeAll());
     $remove[0].setAttribute('aria-label', removeAll());

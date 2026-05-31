@@ -42,7 +42,7 @@ define(function () {
     removeItem: function () {
       return 'Remover iten';
     },
-    search: function() {
+    search: function () {
       return 'Procurar';
     }
   };

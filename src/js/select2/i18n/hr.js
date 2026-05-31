@@ -1,6 +1,6 @@
 define(function () {
   // Croatian
-  function character (n) {
+  function character(n) {
     var message = ' ' + n + ' znak';
 
     if (n % 10 < 5 && n % 10 > 0 && (n % 100 < 5 || n % 100 > 19)) {

@@ -20,24 +20,33 @@ QUnit.test('does not copy disabled attribute when not set', function (assert) {
   assert.ok(!options.get('disabled'));
 });
 
-QUnit.test('disabled attribute does not override disable option', function (assert) {
-  var $test = $('<select disabled></select>');
+QUnit.test(
+  'disabled attribute does not override disable option',
+  function (assert) {
+    var $test = $('<select disabled></select>');
 
-  var options = new Options({
-    disabled: false
-  }, $test);
+    var options = new Options(
+      {
+        disabled: false
+      },
+      $test
+    );
 
-  assert.ok(!options.get('disabled'));
-});
+    assert.ok(!options.get('disabled'));
+  }
+);
 
 QUnit.test('disabled option is synchronized back', function (assert) {
   var $test = $('<select disabled></select>');
 
   assert.ok($test.prop('disabled'));
 
-  var options = new Options({
-    disabled: false
-  }, $test);
+  var options = new Options(
+    {
+      disabled: false
+    },
+    $test
+  );
 
   assert.ok(!$test.prop('disabled'));
 });
@@ -58,24 +67,33 @@ QUnit.test('does not copy multiple attribute when not set', function (assert) {
   assert.ok(!options.get('multiple'));
 });
 
-QUnit.test('multiple attribute does not override multiple option', function (assert) {
-  var $test = $('<select multiple></select>');
+QUnit.test(
+  'multiple attribute does not override multiple option',
+  function (assert) {
+    var $test = $('<select multiple></select>');
 
-  var options = new Options({
-    multiple: false
-  }, $test);
+    var options = new Options(
+      {
+        multiple: false
+      },
+      $test
+    );
 
-  assert.ok(!options.get('multiple'));
-});
+    assert.ok(!options.get('multiple'));
+  }
+);
 
 QUnit.test('multiple option is synchronized back', function (assert) {
   var $test = $('<select multiple></select>');
 
   assert.ok($test.prop('multiple'));
 
-  var options = new Options({
-    multiple: false
-  }, $test);
+  var options = new Options(
+    {
+      multiple: false
+    },
+    $test
+  );
 
   assert.ok(!$test.prop('multiple'));
 });
@@ -94,20 +112,29 @@ QUnit.test('copies autocomplete attribute when set', function (assert) {
   assert.equal(options.get('autocomplete'), 'country-name');
 });
 
-QUnit.test('does not copy autocomplete attribute when not set', function (assert) {
-  var $test = $('<select></select>');
+QUnit.test(
+  'does not copy autocomplete attribute when not set',
+  function (assert) {
+    var $test = $('<select></select>');
 
-  var options = new Options({}, $test);
+    var options = new Options({}, $test);
 
-  assert.equal(options.get('autocomplete'), 'off');
-});
+    assert.equal(options.get('autocomplete'), 'off');
+  }
+);
 
-QUnit.test('autocomplete attribute does not override option', function (assert) {
-  var $test = $('<select autocomplete="country-name"></select>');
+QUnit.test(
+  'autocomplete attribute does not override option',
+  function (assert) {
+    var $test = $('<select autocomplete="country-name"></select>');
 
-  var options = new Options({
-    autocomplete: 'organization'
-  }, $test);
+    var options = new Options(
+      {
+        autocomplete: 'organization'
+      },
+      $test
+    );
 
-  assert.ok(options.get('autocomplete'), 'organization');
-});
+    assert.ok(options.get('autocomplete'), 'organization');
+  }
+);

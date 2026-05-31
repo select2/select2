@@ -1,9 +1,5 @@
-define([
-  './base',
-  '../utils',
-  'jquery'
-], function (BaseAdapter, Utils, $) {
-  function SelectAdapter ($element, options) {
+define(['./base', '../utils', 'jquery'], function (BaseAdapter, Utils, $) {
+  function SelectAdapter($element, options) {
     this.$element = $element;
     this.options = options;
 
@@ -32,7 +28,8 @@ define([
 
     // If data.element is a DOM node, use it instead
     if (
-      data.element != null && data.element.tagName.toLowerCase() === 'option'
+      data.element != null &&
+      data.element.tagName.toLowerCase() === 'option'
     ) {
       data.element.selected = true;
 
@@ -257,9 +254,13 @@ define([
       };
     }
 
-    item = $.extend({}, {
-      text: ''
-    }, item);
+    item = $.extend(
+      {},
+      {
+        text: ''
+      },
+      item
+    );
 
     var defaults = {
       selected: false,
@@ -279,9 +280,7 @@ define([
     }
 
     if (item.children) {
-        item.children = item.children.map(
-            SelectAdapter.prototype._normalizeItem
-        );
+      item.children = item.children.map(SelectAdapter.prototype._normalizeItem);
     }
 
     return $.extend({}, defaults, item);

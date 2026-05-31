@@ -32,7 +32,7 @@ var arrayOptions = new Options({
   ]
 });
 
-var extraOptions = new Options ({
+var extraOptions = new Options({
   data: [
     {
       id: 'default',
@@ -83,11 +83,7 @@ QUnit.test('current gets default for single', function (assert) {
 
     var item = val[0];
 
-    assert.equal(
-      item.id,
-      'default',
-      'The first item should be selected'
-    );
+    assert.equal(item.id, 'default', 'The first item should be selected');
   });
 });
 
@@ -100,11 +96,7 @@ QUnit.test('current gets default for multiple', function (assert) {
   data.bind(container, $('<div></div>'));
 
   data.current(function (val) {
-    assert.equal(
-      val.length,
-      0,
-      'There should be no default selection.'
-    );
+    assert.equal(val.length, 0, 'There should be no default selection.');
   });
 });
 
@@ -119,11 +111,7 @@ QUnit.test('current works with existing selections', function (assert) {
   $select.val(['One']);
 
   data.current(function (val) {
-    assert.equal(
-      val.length,
-      1,
-      'There should only be one existing selection.'
-    );
+    assert.equal(val.length, 1, 'There should only be one existing selection.');
 
     var option = val[0];
 
@@ -155,11 +143,7 @@ QUnit.test('current works with selected data', function (assert) {
   });
 
   data.current(function (val) {
-    assert.equal(
-      val.length,
-      1,
-      'There should only be one option selected.'
-    );
+    assert.equal(val.length, 1, 'There should only be one option selected.');
 
     var option = val[0];
 
@@ -185,11 +169,7 @@ QUnit.test('select works for single', function (assert) {
   var container = new MockContainer();
   data.bind(container, $('<div></div>'));
 
-  assert.equal(
-    $select.val(),
-    'default',
-    'There should already be a selection'
-  );
+  assert.equal($select.val(), 'default', 'There should already be a selection');
 
   data.select({
     id: '1',
@@ -259,25 +239,28 @@ QUnit.test('option tags are automatically generated', function (assert) {
   );
 });
 
-QUnit.test('automatically generated option tags have a result id', function (assert) {
-  var $select = $('#qunit-fixture .single-empty');
+QUnit.test(
+  'automatically generated option tags have a result id',
+  function (assert) {
+    var $select = $('#qunit-fixture .single-empty');
 
-  var data = new ArrayData($select, arrayOptions);
+    var data = new ArrayData($select, arrayOptions);
 
-  var container = new MockContainer();
-  data.bind(container, $('<div></div>'));
+    var container = new MockContainer();
+    data.bind(container, $('<div></div>'));
 
-  data.select({
-    id: 'default'
-  });
+    data.select({
+      id: 'default'
+    });
 
-  assert.ok(
-    Utils.GetData($select.find(':selected')[0], 'data')._resultId,
-    '<option> default should have a result ID assigned'
-  );
-});
+    assert.ok(
+      Utils.GetData($select.find(':selected')[0], 'data')._resultId,
+      '<option> default should have a result ID assigned'
+    );
+  }
+);
 
-QUnit.test('option tags can receive new data', function(assert) {
+QUnit.test('option tags can receive new data', function (assert) {
   var $select = $('#qunit-fixture .single');
 
   var data = new ArrayData($select, extraOptions);
@@ -354,12 +337,14 @@ QUnit.test('optgroup tags have the right properties', function (assert) {
   );
 });
 
-QUnit.test('existing selections are respected on initialization', function (assert) {
-   var $select = $(
-     '<select>' +
+QUnit.test(
+  'existing selections are respected on initialization',
+  function (assert) {
+    var $select = $(
+      '<select>' +
         '<option>First</option>' +
         '<option selected>Second</option>' +
-      '</select>'
+        '</select>'
     );
 
     var options = new Options({
@@ -383,4 +368,5 @@ QUnit.test('existing selections are respected on initialization', function (asse
     data.bind(container, $('<div></div>'));
 
     assert.equal($select.val(), 'Second');
-});
+  }
+);

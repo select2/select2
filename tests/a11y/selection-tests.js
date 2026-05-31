@@ -22,30 +22,33 @@ QUnit.test('title is carried over from original element', function (assert) {
   );
 });
 
-QUnit.test('aria-expanded reflects the state of the container', function (assert) {
-  var $select = $('#qunit-fixture .single');
+QUnit.test(
+  'aria-expanded reflects the state of the container',
+  function (assert) {
+    var $select = $('#qunit-fixture .single');
 
-  var selection = new BaseSelection($select, options);
-  var $selection = selection.render();
+    var selection = new BaseSelection($select, options);
+    var $selection = selection.render();
 
-  var container = new MockContainer();
+    var container = new MockContainer();
 
-  selection.bind(container, $('<span></span>'));
+    selection.bind(container, $('<span></span>'));
 
-  assert.equal(
-    $selection.attr('aria-expanded'),
-    'false',
-    'The container should not be expanded when it is closed'
-  );
+    assert.equal(
+      $selection.attr('aria-expanded'),
+      'false',
+      'The container should not be expanded when it is closed'
+    );
 
-  container.trigger('open');
+    container.trigger('open');
 
-  assert.equal(
-    $selection.attr('aria-expanded'),
-    'true',
-    'The container should be expanded when it is opened'
-  );
-});
+    assert.equal(
+      $selection.attr('aria-expanded'),
+      'true',
+      'The container should be expanded when it is opened'
+    );
+  }
+);
 
 QUnit.test('static aria attributes are present', function (assert) {
   var $select = $('#qunit-fixture .single');
@@ -165,22 +168,25 @@ QUnit.test('aria-disabled should reflected disabled state', function (assert) {
 
 QUnit.module('Accessibility - Single');
 
-QUnit.test('aria-labelledby should match the rendered container', function (assert) {
-  var $select = $('#qunit-fixture .single');
+QUnit.test(
+  'aria-labelledby should match the rendered container',
+  function (assert) {
+    var $select = $('#qunit-fixture .single');
 
-  var selection = new SingleSelection($select, options);
-  var $selection = selection.render();
+    var selection = new SingleSelection($select, options);
+    var $selection = selection.render();
 
-  var container = new MockContainer();
-  selection.bind(container, $('<span></span>'));
+    var container = new MockContainer();
+    selection.bind(container, $('<span></span>'));
 
-  var $rendered = $selection.find('.select2-selection__rendered');
+    var $rendered = $selection.find('.select2-selection__rendered');
 
-  assert.equal(
-    $selection.attr('aria-labelledby'),
-    $rendered.attr('id'),
-    'The rendered selection should label the container'
-  );
-});
+    assert.equal(
+      $selection.attr('aria-labelledby'),
+      $rendered.attr('id'),
+      'The rendered selection should label the container'
+    );
+  }
+);
 
 QUnit.module('Accessibility - Multiple');

@@ -14,8 +14,8 @@ define(function () {
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
-      var message = 'Gelieve ' + remainingChars +
-        ' of meer karakters in te voeren';
+      var message =
+        'Gelieve ' + remainingChars + ' of meer karakters in te voeren';
 
       return message;
     },

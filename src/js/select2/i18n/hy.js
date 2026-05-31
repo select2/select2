@@ -14,8 +14,8 @@ define(function () {
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
-      var message = 'Խնդրում ենք մուտքագրել ' + remainingChars +
-        ' կամ ավել նշաններ';
+      var message =
+        'Խնդրում ենք մուտքագրել ' + remainingChars + ' կամ ավել նշաններ';
 
       return message;
     },
@@ -23,8 +23,8 @@ define(function () {
       return 'Բեռնվում են նոր արդյունքներ․․․';
     },
     maximumSelected: function (args) {
-      var message = 'Դուք կարող եք ընտրել առավելագույնը ' + args.maximum +
-        ' կետ';
+      var message =
+        'Դուք կարող եք ընտրել առավելագույնը ' + args.maximum + ' կետ';
 
       return message;
     },
