@@ -25,6 +25,7 @@ repos:
           - mdformat-web
           - mdformat-mkdocs
           - mdformat-front-matters
+          - mdformat-web
         exclude: ^docs/(plugins|themes)/
   - repo: https://github.com/google/yamlfmt
     rev: v0.21.0

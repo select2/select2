@@ -1,46 +1,26 @@
-# select2.org
+<div align="center" markdown>
+![Select2 logo](images/logo.png)
 
-https://select2.org
+# Select2
 
-This is the repository for the documentation for Select2. It is built with the flat-file CMS [Grav](http://getgrav.org), using their [RTFM skeleton](https://github.com/getgrav/grav-skeleton-rtfm-site#rtfm-skeleton).
+_The jQuery replacement for select boxes_
 
-## Local installation
+</div>
 
-### Step 1 - Install Grav
+<div class="grid cards" align="center" markdown>
+[:fontawesome-solid-tag: Releases](https://github.com/select2/select2/releases){ .md-button }
+[:fontawesome-solid-comment: Forums](https://forums.select2.org){ .md-button }
+[:fontawesome-brands-github: GitHub](https://github.com/select2/select2){ .md-button }
+</div>
 
-This application uses the [Grav](https://learn.getgrav.org/) CMS. This repository does not contain a full Grav installation - rather, it just contains the contents of Grav's `user` directory, which is where all of our content, themes, and assets live. This was done as per the [recommendation on Grav's blog](https://getgrav.org/blog/developing-with-github-part-2), to make it easier to deploy changes to the live server.
+Select2 gives you a customizable select box with support for searching, tagging, remote data sets, infinite scrolling,
+and many other highly used options.
 
-To install this website on your computer, first [install grav core](https://getgrav.org/downloads) in a project folder called `select2-docs` under your webserver's document root folder. Then, find the `user` folder inside of your project folder. Delete the contents of the `user` folder and clone this repository directly into the user folder.
-
-When you're done it might look something like this:
-
-```
-htdocs/
-└── select2-docs/
-   ├── assets/
-   ├── ...
-   ├── user/
-       ├── .git
-       ├── accounts/
-       ├── assets/
-       ├── config/
-       └── ...
-   └── ...
-
-```
-
-### Step 2
-
-Grav needs your webserver to be able to write to certain directories. In OSX with XAMPP installed, this won't work by default. To deal with this:
-
-Add default webserver user `daemon` to OSX's `staff` group (which already has the necessary permissions for writing to files/directories):
-
-`sudo dseditgroup -o edit -a daemon -t user staff`
-
-### Step 3
-
-Visit the local installation in your browser! For example, http://localhost/select2-docs.
-
-## Credits
-
-Favicons were generated with https://realfavicongenerator.net/
+<div class="grid cards" markdown>
+- :fontawesome-solid-language: __In your language__ Select2 comes with support for [RTL environments](i18n.md#rtl-support) and [diacritics](i18n.md#transliteration-support-diacritics), and over [40 languages built-in](i18n.md).
+- :fontawesome-solid-database: __Remote data support__ [Using AJAX](data-sources/ajax.md) you can efficiently search large lists of items.
+- :fontawesome-solid-brush: __Theming__ Fully skinnable, CSS built with Sass and an [optional theme for Bootstrap 4](https://github.com/ttskch/select2-bootstrap4-theme).
+- :fontawesome-solid-plug: __Fully extensible__ The [plugin system](advanced/README.md) allows you to easily customize Select2 to work exactly how you want it to.
+- :fontawesome-solid-tag: __Dynamic item creation__ Allow users to type in a new option and [add it on the fly](tagging.md).
+- :fontawesome-brands-html5: __Full browser support__ Support for both modern and legacy browsers is built-in, even including Internet Explorer 11.
+</div>

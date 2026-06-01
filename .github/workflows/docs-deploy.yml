@@ -1,23 +1,34 @@
 name: Documentation Deployment
 on:
-  - release
-  - workflow_dispatch
+  release:
+    types: [published]
+  workflow_dispatch:
+permissions:
+  contents: write
 jobs:
-  grav:
-    name: Deploy Grav
+  gh-page-build:
+    runs-on: ubuntu-latest
+    if: github.event_name != 'release' || github.event.release.prerelease == false
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@v7
+      - run: uv run mkdocs build
+        env:
+          MKDOCS_GIT_COMMITTERS_APIKEY: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: site
+  gh-page-deploy:
+    needs: gh-page-build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - uses: juliangruber/sleep-action@v2.0.4
-        with:
-          time: 3m
-      - uses: actions/checkout@v6
-      - name: Copy to documentation server
-        uses: burnett01/rsync-deployments@v8
-        with:
-          switches: -avzr --delete
-          path: docs/
-          remote_path: /var/www/select2-docs/user/
-          remote_host: ${{ secrets.DOCUMENTATION_SSH_HOST }}
-          remote_port: 22
-          remote_user: ${{ secrets.DOCUMENTATION_SSH_USERNAME }}
-          remote_key: ${{ secrets.DOCUMENTATION_SSH_KEY }}
+      - id: deployment
+        uses: actions/deploy-pages@v5

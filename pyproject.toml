@@ -1,0 +1,12 @@
+[project]
+name = "select2-docs"
+version = "0.0.0"
+requires-python = ">=3.14"
+dependencies = [
+  "mkdocs",
+  "mkdocs-material",
+  "markdown-callouts",
+  "Pygments",
+  "mkdocs-git-committers-plugin-2>=2.5.0",
+  "mkdocs-git-revision-date-localized-plugin>=1.5.3",
+]

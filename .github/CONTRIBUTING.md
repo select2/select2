@@ -94,6 +94,16 @@ cd /path/to/selct2/repo
 grunt test
 ```
 
+### Editing the documentation
+
+Install `uv` (one-time, if you do not have it yet), then run:
+
+```bash
+uv run mkdocs serve
+```
+
+Edit the Markdown files in the `docs/` directory, and the documentation will be automatically reloaded in your browser.
+
 ### Setting up the documentation repo
 
 The documentation for Select2 is maintained in a [separate repository](https://github.com/select2/docs). Select2.org is built with the flat-file CMS [Grav](http://getgrav.org), using their [RTFM skeleton](https://github.com/getgrav/grav-skeleton-rtfm-site#rtfm-skeleton).

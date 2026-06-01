@@ -1,3 +1,0 @@
-enabled: true
-routes:
-  404: '/error'

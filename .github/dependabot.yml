@@ -1,0 +1,34 @@
+version: 2
+updates:
+  - package-ecosystem: pip
+    directory: "/"
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7
+    groups:
+      minor-pip-dependencies:
+        update-types:
+          - "minor"
+          - "patch"
+      major-pip-dependencies:
+        update-types:
+          - "major"
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7
+    groups:
+      minor-npm-dependencies:
+        update-types:
+          - "minor"
+          - "patch"
+      major-npm-dependencies:
+        update-types:
+          - "major"

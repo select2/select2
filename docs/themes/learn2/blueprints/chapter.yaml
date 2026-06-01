@@ -1,4 +1,0 @@
-title: Chapter
-'@extends':
-    type: default
-    context: blueprints://pages
