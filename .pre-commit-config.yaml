@@ -3,16 +3,16 @@ repos:
     rev: v6.0.0
     hooks:
       - id: trailing-whitespace
-        exclude: (dist|docs|vendor)/
+        exclude: (dist|vendor)/
       - id: check-merge-conflict
       - id: check-json
       - id: check-yaml
-        exclude: ^docs/(plugins|themes)/
+        exclude: mkdocs.yml
       - id: debug-statements
       - id: destroyed-symlinks
       - id: check-executables-have-shebangs
       - id: end-of-file-fixer
-        exclude: (dist|docs|vendor)/
+        exclude: (dist|vendor)/
       - id: detect-private-key
   - repo: https://github.com/hukkin/mdformat
     rev: 1.0.0
@@ -26,17 +26,15 @@ repos:
           - mdformat-mkdocs
           - mdformat-front-matters
           - mdformat-config
-        exclude: ^docs/(plugins|themes)/
   - repo: https://github.com/google/yamlfmt
     rev: v0.21.0
     hooks:
       - id: yamlfmt
-        exclude: ^docs/(plugins|themes)/
   - repo: https://github.com/biomejs/pre-commit
     rev: v2.4.16
     hooks:
       - id: biome-format
         args: [--use-editorconfig=true]
-        exclude: (dist|docs|vendor)/|(banner|wrapper).(start|end).js
+        exclude: (dist|vendor)/|(banner|wrapper).(start|end).js
 ci:
   autoupdate_schedule: weekly
