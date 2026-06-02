@@ -20,22 +20,22 @@ Select2 will respond to the `disabled` attribute on `<select>` elements. You can
 ```javascript
 $(".js-example-disabled").select2();
 $(".js-example-disabled-multi").select2();
-  
-$(".js-programmatic-enable").on("click", function () {
-  $(".js-example-disabled").prop("disabled", false);
-  $(".js-example-disabled-multi").prop("disabled", false);
+
+$(".js-programmatic-enable").on("click", function() {
+    $(".js-example-disabled").prop("disabled", false);
+    $(".js-example-disabled-multi").prop("disabled", false);
 });
 
-$(".js-programmatic-disable").on("click", function () {
-  $(".js-example-disabled").prop("disabled", true);
-  $(".js-example-disabled-multi").prop("disabled", true);
+$(".js-programmatic-disable").on("click", function() {
+    $(".js-example-disabled").prop("disabled", true);
+    $(".js-example-disabled-multi").prop("disabled", true);
 });
 ```
 
 <script type="text/javascript" class="js-code-disabled">
 $(".js-example-disabled").select2();
 $(".js-example-disabled-multi").select2();
-  
+
 $(".js-programmatic-enable").on("click", function () {
   $(".js-example-disabled").prop("disabled", false);
   $(".js-example-disabled-multi").prop("disabled", false);
@@ -63,15 +63,14 @@ You can, and should, use a `<label>` with Select2, just like any other `<select>
 
 ```html
 <label for="id_label_single">
-  Click this to highlight the single select element
-  <select class="js-example-basic-single js-states" id="id_label_single">
-  </select>
+ Click this to highlight the single select element
+ <select class="js-example-basic-single js-states" id="id_label_single">
+ </select>
 </label>
-
 <label for="id_label_multiple">
-  Click this to highlight the multiple select element
-  <select class="js-example-basic-multiple js-states" id="id_label_multiple" multiple="multiple">
-  </select>
+ Click this to highlight the multiple select element
+ <select class="js-example-basic-multiple js-states" id="id_label_multiple" multiple="multiple">
+ </select>
 </label>
 ```
 
@@ -109,12 +108,12 @@ $.fn.select2.amd.require([
 
 Select2 will try to match the width of the original element as closely as possible. Sometimes this isn't perfect, in which case you may manually set the `width` [configuration option](configuration/options-api.md):
 
-| Value | Description |
-| ----- | ----------- |
-| `element` | Uses the computed element width from any applicable CSS rules. |
-| `style` | Width is determined from the `select` element's `style` attribute. If no `style` attribute is found, null is returned as the width. |
-| `resolve` | Uses the `style` attribute value if available, falling back to the computed element width as necessary. |
-| `<value>` | Valid CSS values can be passed as a string (e.g. `width: '80%'` |
+| Value     | Description                                                                                                                         |
+| --------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `element` | Uses the computed element width from any applicable CSS rules.                                                                      |
+| `style`   | Width is determined from the `select` element's `style` attribute. If no `style` attribute is found, null is returned as the width. |
+| `resolve` | Uses the `style` attribute value if available, falling back to the computed element width as necessary.                             |
+| `<value>` | Valid CSS values can be passed as a string (e.g. `width: '80%'`                                                                     |
 
 ### Example
 
@@ -158,11 +157,11 @@ These examples use the `classic` theme, which matches the old look of Select2.
 
 ```javascript
 $(".js-example-theme-single").select2({
-  theme: "classic"
+    theme: "classic"
 });
 
 $(".js-example-theme-multiple").select2({
-  theme: "classic"
+    theme: "classic"
 });
 ```
 

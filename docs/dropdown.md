@@ -7,18 +7,18 @@ By default, Select2 will display the `text` property of each data object within 
 <select class="js-example-templating js-states"></select>
 
 ```javascript
-function formatState (state) {
-  if (!state.id) {
-    return state.text;
-  }
-  var $state = $(
-    `<span><img src="https://flagpedia.net/data/us/w580/${state.element.value.toLowerCase()}.webp" class="img-flag" />${state.text}</span>`
-  );
-  return $state;
+function formatState(state) {
+    if (!state.id) {
+        return state.text;
+    }
+    var $state = $(
+        `<span><img src="https://flagpedia.net/data/us/w580/${state.element.value.toLowerCase()}.webp" class="img-flag" />${state.text}</span>`
+    );
+    return $state;
 };
 
 $(".js-example-templating").select2({
-  templateResult: formatState
+    templateResult: formatState
 });
 ```
 

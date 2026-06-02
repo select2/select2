@@ -13,11 +13,11 @@ Select2 comes with AJAX support built in, using jQuery's AJAX methods. In this e
 
 ```javascript
 $('.js-example-data-ajax').select2({
-  ajax: {
-    url: 'https://api.github.com/search/repositories',
-    dataType: 'json'
-    // Additional AJAX parameters go here; see the end of this page for the full code of this example
-  }
+    ajax: {
+        url: 'https://api.github.com/search/repositories',
+        dataType: 'json'
+        // Additional AJAX parameters go here; see the end of this page for the full code of this example
+    }
 });
 ```
 
@@ -41,18 +41,18 @@ Sometimes, you may need to add additional query parameters to the request. You c
 
 ```javascript
 $('#mySelect2').select2({
-  ajax: {
-    url: 'https://api.github.com/orgs/select2/repos',
-    data: function(params) {
-      var query = {
-        search: params.term,
-        type: 'public'
-      }
+    ajax: {
+        url: 'https://api.github.com/orgs/select2/repos',
+        data: function(params) {
+            var query = {
+                search: params.term,
+                type: 'public'
+            }
 
-      // Query parameters will be ?search=[term]&type=public
-      return query;
+            // Query parameters will be ?search=[term]&type=public
+            return query;
+        }
     }
-  }
 });
 ```
 
@@ -62,15 +62,15 @@ You can use the `ajax.processResults` option to transform the data returned by y
 
 ```javascript
 $('#mySelect2').select2({
-  ajax: {
-    url: '/example/api',
-    processResults: function(data) {
-      // Transforms the top-level key of the response object from 'items' to 'results'
-      return {
-        results: data.items
-      };
+    ajax: {
+        url: '/example/api',
+        processResults: function(data) {
+            // Transforms the top-level key of the response object from 'items' to 'results'
+            return {
+                results: data.items
+            };
+        }
     }
-  }
 });
 ```
 
@@ -85,9 +85,9 @@ To provide default selections, you may include an `<option>` for each selection 
 
 ```html
 <select class="js-example-data-ajax">
-  <option selected="selected" value="3620194">
-    select2/select2
-  </option>
+ <option selected="selected" value="3620194">
+  select2/select2
+ </option>
 </select>
 ```
 
@@ -101,18 +101,18 @@ To use pagination, you must tell Select2 to add any necessary pagination paramet
 
 ```javascript
 $('#mySelect2').select2({
-  ajax: {
-    url: 'https://api.github.com/search/repositories',
-    data: function(params) {
-      var query = {
-        search: params.term,
-        page: params.page || 1
-      }
+    ajax: {
+        url: 'https://api.github.com/search/repositories',
+        data: function(params) {
+            var query = {
+                search: params.term,
+                page: params.page || 1
+            }
 
-      // Query parameters will be ?search=[term]&page=[page]
-      return query;
+            // Query parameters will be ?search=[term]&page=[page]
+            return query;
+        }
     }
-  }
 });
 ```
 
@@ -140,14 +140,14 @@ If your server-side code does not generate the `pagination.more` property in the
 
 ```javascript
 processResults: function(data, params) {
-  params.page = params.page || 1;
+    params.page = params.page || 1;
 
-  return {
-    results: data.results,
-    pagination: {
-      more: (params.page * 10) < data.count_filtered
-    }
-  };
+    return {
+        results: data.results,
+        pagination: {
+            more: (params.page * 10) < data.count_filtered
+        }
+    };
 }
 ```
 
@@ -157,9 +157,9 @@ You can tell Select2 to wait until the user has finished typing their search ter
 
 ```javascript
 $('#mySelect2').select2({
-  ajax: {
-    delay: 250 // wait 250 milliseconds before triggering the request
-  }
+    ajax: {
+        delay: 250 // wait 250 milliseconds before triggering the request
+    }
 });
 ```
 
@@ -169,11 +169,11 @@ If there isn't a single url for your search results, or you need to call a funct
 
 ```javascript
 $('#mySelect2').select2({
-  ajax: {
-    url: function(params) {
-      return '/some/url/' + params.term;
+    ajax: {
+        url: function(params) {
+            return '/some/url/' + params.term;
+        }
     }
-  }
 });
 ```
 
@@ -183,13 +183,13 @@ Select2 uses the transport method defined in `ajax.transport` to send requests t
 
 ```javascript
 $('#mySelect2').select2({
-  ajax: {
-    transport: function(params, success, failure) {
-      var request = new AjaxRequest(params.url, params);
-      request.on('success', success);
-      request.on('failure', failure);
+    ajax: {
+        transport: function(params, success, failure) {
+            var request = new AjaxRequest(params.url, params);
+            request.on('success', success);
+            request.on('failure', failure);
+        }
     }
-  }
 });
 ```
 
@@ -201,69 +201,69 @@ There are a few custom options that Select2 will intercept, allowing you to cust
 
 ```javascript
 ajax: {
-  // The number of milliseconds to wait for the user to stop typing before
-  // issuing the ajax request.
-  delay: 250,
-  // You can craft a custom url based on the parameters that are passed into the
-  // request. This is useful if you are using a framework which has
-  // JavaScript-based functions for generating the urls to make requests to.
-  //
-  // @param params The object containing the parameters used to generate the
-  //   request.
-  // @returns The url that the request should be made to.
-  url: function(params) {
-    return UrlGenerator.Random();
-  },
-  // You can pass custom data into the request based on the parameters used to
-  // make the request. For `GET` requests, the default method, these are the
-  // query parameters that are appended to the url. For `POST` requests, this
-  // is the form data that will be passed into the request. For other requests,
-  // the data returned from here should be customized based on what jQuery and
-  // your server are expecting.
-  //
-  // @param params The object containing the parameters used to generate the
-  //   request.
-  // @returns Data to be directly passed into the request.
-  data: function(params) {
-    var queryParameters = {
-      q: params.term
+    // The number of milliseconds to wait for the user to stop typing before
+    // issuing the ajax request.
+    delay: 250,
+    // You can craft a custom url based on the parameters that are passed into the
+    // request. This is useful if you are using a framework which has
+    // JavaScript-based functions for generating the urls to make requests to.
+    //
+    // @param params The object containing the parameters used to generate the
+    //   request.
+    // @returns The url that the request should be made to.
+    url: function(params) {
+        return UrlGenerator.Random();
+    },
+    // You can pass custom data into the request based on the parameters used to
+    // make the request. For `GET` requests, the default method, these are the
+    // query parameters that are appended to the url. For `POST` requests, this
+    // is the form data that will be passed into the request. For other requests,
+    // the data returned from here should be customized based on what jQuery and
+    // your server are expecting.
+    //
+    // @param params The object containing the parameters used to generate the
+    //   request.
+    // @returns Data to be directly passed into the request.
+    data: function(params) {
+        var queryParameters = {
+            q: params.term
+        }
+
+        return queryParameters;
+    },
+    // You can modify the results that are returned from the server, allowing you
+    // to make last-minute changes to the data, or find the correct part of the
+    // response to pass to Select2. Keep in mind that results should be passed as
+    // an array of objects.
+    //
+    // @param data The data as it is returned directly by jQuery.
+    // @returns An object containing the results data as well as any required
+    //   metadata that is used by plugins. The object should contain an array of
+    //   data objects as the `results` key.
+    processResults: function(data) {
+        return {
+            results: data
+        };
+    },
+    // You can use a custom AJAX transport function if you do not want to use the
+    // default one provided by jQuery.
+    //
+    // @param params The object containing the parameters used to generate the
+    //   request.
+    // @param success A callback function that takes `data`, the results from the
+    //   request.
+    // @param failure A callback function that indicates that the request could
+    //   not be completed.
+    // @returns An object that has an `abort` function that can be called to abort
+    //   the request if needed.
+    transport: function(params, success, failure) {
+        var $request = $.ajax(params);
+
+        $request.then(success);
+        $request.fail(failure);
+
+        return $request;
     }
-
-    return queryParameters;
-  },
-  // You can modify the results that are returned from the server, allowing you
-  // to make last-minute changes to the data, or find the correct part of the
-  // response to pass to Select2. Keep in mind that results should be passed as
-  // an array of objects.
-  //
-  // @param data The data as it is returned directly by jQuery.
-  // @returns An object containing the results data as well as any required
-  //   metadata that is used by plugins. The object should contain an array of
-  //   data objects as the `results` key.
-  processResults: function(data) {
-    return {
-      results: data
-    };
-  },
-  // You can use a custom AJAX transport function if you do not want to use the
-  // default one provided by jQuery.
-  //
-  // @param params The object containing the parameters used to generate the
-  //   request.
-  // @param success A callback function that takes `data`, the results from the
-  //   request.
-  // @param failure A callback function that indicates that the request could
-  //   not be completed.
-  // @returns An object that has an `abort` function that can be called to abort
-  //   the request if needed.
-  transport: function(params, success, failure) {
-    var $request = $.ajax(params);
-
-    $request.then(success);
-    $request.fail(failure);
-
-    return $request;
-  }
 }
 ```
 
@@ -273,69 +273,69 @@ This code powers the Github example presented at the beginning of this chapter:
 
 ```javascript
 $(".js-example-data-ajax").select2({
-  ajax: {
-    url: "https://api.github.com/search/repositories",
-    dataType: 'json',
-    delay: 250,
-    data: function (params) {
-      return {
-        q: params.term, // search term
-        page: params.page
-      };
-    },
-    processResults: function (data, params) {
-      // parse the results into the format expected by Select2
-      // since we are using custom formatting functions we do not need to
-      // alter the remote JSON data, except to indicate that infinite
-      // scrolling can be used
-      params.page = params.page || 1;
+    ajax: {
+        url: "https://api.github.com/search/repositories",
+        dataType: 'json',
+        delay: 250,
+        data: function(params) {
+            return {
+                q: params.term, // search term
+                page: params.page
+            };
+        },
+        processResults: function(data, params) {
+            // parse the results into the format expected by Select2
+            // since we are using custom formatting functions we do not need to
+            // alter the remote JSON data, except to indicate that infinite
+            // scrolling can be used
+            params.page = params.page || 1;
 
-      return {
-        results: data.items,
-        pagination: {
-          more: (params.page * 30) < data.total_count
-        }
-      };
+            return {
+                results: data.items,
+                pagination: {
+                    more: (params.page * 30) < data.total_count
+                }
+            };
+        },
+        cache: true
     },
-    cache: true
-  },
-  placeholder: 'Search for a repository',
-  minimumInputLength: 1,
-  templateResult: formatRepo,
-  templateSelection: formatRepoSelection
+    placeholder: 'Search for a repository',
+    minimumInputLength: 1,
+    templateResult: formatRepo,
+    templateSelection: formatRepoSelection
 });
 
-function formatRepo (repo) {
-  if (repo.loading) {
-    return repo.text;
-  }
+function formatRepo(repo) {
+    if (repo.loading) {
+        return repo.text;
+    }
 
-  var $container = $(
-    "<div class='select2-result-repository clearfix'>" +
-      "<div class='select2-result-repository__avatar'><img src='" + repo.owner.avatar_url + "' /></div>" +
-      "<div class='select2-result-repository__meta'>" +
+    var $container = $(
+        "<div class='select2-result-repository clearfix'>" +
+        "<div class='select2-result-repository__avatar'><img src='" + repo.owner.avatar_url + "' /></div>" +
+        "<div class='select2-result-repository__meta'>" +
         "<div class='select2-result-repository__title'></div>" +
         "<div class='select2-result-repository__description'></div>" +
         "<div class='select2-result-repository__statistics'>" +
-          "<div class='select2-result-repository__forks'><i class='fa fa-flash'></i> </div>" +
-          "<div class='select2-result-repository__stargazers'><i class='fa fa-star'></i> </div>" +
-          "<div class='select2-result-repository__watchers'><i class='fa fa-eye'></i> </div>" +
+        "<div class='select2-result-repository__forks'><i class='fa fa-flash'></i> </div>" +
+        "<div class='select2-result-repository__stargazers'><i class='fa fa-star'></i> </div>" +
+        "<div class='select2-result-repository__watchers'><i class='fa fa-eye'></i> </div>" +
         "</div>" +
-      "</div>" +
-    "</div>"
-  );
+        "</div>" +
+        "</div>"
+    );
 
-  $container.find(".select2-result-repository__title").text(repo.full_name);
-  $container.find(".select2-result-repository__description").text(repo.description);
-  $container.find(".select2-result-repository__forks").append(repo.forks_count + " Forks");
-  $container.find(".select2-result-repository__stargazers").append(repo.stargazers_count + " Stars");
-  $container.find(".select2-result-repository__watchers").append(repo.watchers_count + " Watchers");
+    $container.find(".select2-result-repository__title").text(repo.full_name);
+    $container.find(".select2-result-repository__description").text(repo.description);
+    $container.find(".select2-result-repository__forks").append(repo.forks_count + " Forks");
+    $container.find(".select2-result-repository__stargazers").append(repo.stargazers_count + " Stars");
+    $container.find(".select2-result-repository__watchers").append(repo.watchers_count + " Watchers");
 
-  return $container;
+    return $container;
 }
 
-function formatRepoSelection (repo) {
-  return repo.full_name || repo.text;
+function formatRepoSelection(repo) {
+    return repo.full_name || repo.text;
 }
 ```
 

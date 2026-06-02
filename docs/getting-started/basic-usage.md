@@ -12,13 +12,13 @@ and turn it into this...
 
 ```html
 <select class="js-example-basic-single" name="state">
-  <option value="AL">
-    Alabama
-  </option>
-  ...
-  <option value="WY">
-    Wyoming
-  </option>
+ <option value="AL">
+  Alabama
+ </option>
+ ...
+ <option value="WY">
+  Wyoming
+ </option>
 </select>
 ```
 
@@ -33,7 +33,7 @@ Select2 will register itself as a jQuery function if you use any of the distribu
 ```javascript
 // In your Javascript (external .js resource or <script> tag)
 $(document).ready(function() {
-  $('.js-example-basic-single').select2();
+    $('.js-example-basic-single').select2();
 });
 ```
 
@@ -50,13 +50,13 @@ Select2 also supports multi-value select boxes. The select below is declared wit
 
 ```html
 <select class="js-example-basic-multiple" multiple="multiple" name="states[]">
-  <option value="AL">
-    Alabama
-  </option>
-  ...
-  <option value="WY">
-    Wyoming
-  </option>
+ <option value="AL">
+  Alabama
+ </option>
+ ...
+ <option value="WY">
+  Wyoming
+ </option>
 </select>
 ```
 
@@ -64,7 +64,7 @@ Select2 also supports multi-value select boxes. The select below is declared wit
 
 ```javascript
 $(document).ready(function() {
-  $('.js-example-basic-multiple').select2();
+    $('.js-example-basic-multiple').select2();
 });
 ```
 

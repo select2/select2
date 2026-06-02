@@ -48,18 +48,18 @@ For backwards compatibility, a wrapper function has been created that allows old
 This wrapper function is only bundled in the [full version of Select2](../getting-started/builds-and-modules.md). You can retrieve the function from the `select2/compat/matcher` module, which should just wrap the old matcher function.
 
 ```javascript
-function matchStart (term, text) {
-  if (text.toUpperCase().indexOf(term.toUpperCase()) == 0) {
-    return true;
-  }
+function matchStart(term, text) {
+    if (text.toUpperCase().indexOf(term.toUpperCase()) == 0) {
+        return true;
+    }
 
-  return false;
+    return false;
 }
 
-$.fn.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
-  $(".js-example-matcher-compat").select2({
-    matcher: oldMatcher(matchStart)
-  })
+$.fn.select2.amd.require(['select2/compat/matcher'], function(oldMatcher) {
+    $(".js-example-matcher-compat").select2({
+        matcher: oldMatcher(matchStart)
+    })
 });
 ```
 
@@ -89,10 +89,10 @@ You would have previously had to get the placeholder option through the `placeho
 
 ```javascript
 $("select").select2({
-  placeholder: {
-    id: "-1",
-    placeholder: "Select an option"
-  }
+    placeholder: {
+        id: "-1",
+        placeholder: "Select an option"
+    }
 });
 ```
 
@@ -121,17 +121,17 @@ selected values into data objects that can be displayed. The default implementat
 
 ```javascript
 {
-  initSelection: function(element, callback) {
-    var data = [];
+    initSelection: function(element, callback) {
+        var data = [];
 
-  $(element.val()).each(function() {
-      data.push({
-        id: this,
-        text: this
-      });
-    });
-    callback(data);
-  }
+        $(element.val()).each(function() {
+            data.push({
+                id: this,
+                text: this
+            });
+        });
+        callback(data);
+    }
 }
 ```
 
@@ -139,36 +139,36 @@ When using the new `current` method of the custom data adapter, **this method is
 
 ```javascript
 $.fn.select2.amd.require([
-  'select2/data/array',
-  'select2/utils'
+    'select2/data/array',
+    'select2/utils'
 ], function(ArrayData, Utils) {
-  function CustomData($element, options) {
-    CustomData.__super__.constructor.call(this, $element, options);
-  }
-
-  Utils.Extend(CustomData, ArrayData);
-
-  CustomData.prototype.current = function(callback) {
-    var data = [];
-    var currentVal = this.$element.val();
-
-    if (!this.$element.prop('multiple')) {
-      currentVal = [currentVal];
+    function CustomData($element, options) {
+        CustomData.__super__.constructor.call(this, $element, options);
     }
 
-    for (var v = 0; v < currentVal.length; v++) {
-      data.push({
-        id: currentVal[v],
-        text: currentVal[v]
-      });
-    }
+    Utils.Extend(CustomData, ArrayData);
 
-    callback(data);
-  };
+    CustomData.prototype.current = function(callback) {
+        var data = [];
+        var currentVal = this.$element.val();
 
-  $("#select").select2({
-    dataAdapter: CustomData
-  });
+        if (!this.$element.prop('multiple')) {
+            currentVal = [currentVal];
+        }
+
+        for (var v = 0; v < currentVal.length; v++) {
+            data.push({
+                id: currentVal[v],
+                text: currentVal[v]
+            });
+        }
+
+        callback(data);
+    };
+
+    $("#select").select2({
+        dataAdapter: CustomData
+    });
 });
 ```
 
@@ -182,25 +182,25 @@ If you only need to load in the initial options once, and otherwise will be lett
 var $element = $('select').select2(); // the select element you are working with
 
 var $request = $.ajax({
-  url: '/my/remote/source' // wherever your data is actually coming from
+    url: '/my/remote/source' // wherever your data is actually coming from
 });
 
 $request.then(function(data) {
-  // This assumes that the data comes back as an array of data objects
-  // The idea is that you are using the same callback as the old `initSelection`
+    // This assumes that the data comes back as an array of data objects
+    // The idea is that you are using the same callback as the old `initSelection`
 
-  for (var d = 0; d < data.length; d++) {
-    var item = data[d];
+    for (var d = 0; d < data.length; d++) {
+        var item = data[d];
 
-    // Create the DOM option that is pre-selected by default
-    var option = new Option(item.text, item.id, true, true);
+        // Create the DOM option that is pre-selected by default
+        var option = new Option(item.text, item.id, true, true);
 
-    // Append it to the select
-    $element.append(option);
-  }
+        // Append it to the select
+        $element.append(option);
+    }
 
-  // Update the selected options that are displayed
-  $element.trigger('change');
+    // Update the selected options that are displayed
+    $element.trigger('change');
 });
 ```
 
@@ -216,23 +216,24 @@ The custom `query` and `initSelection` methods have been replaced by [custom dat
 
 ```javascript
 {
-  query: function(query) {
-    var data = {
-        results: []
-    }, i, j, s;
+    query: function(query) {
+        var data = {
+                results: []
+            },
+            i, j, s;
 
-    for (i = 1; i < 5; i++) {
-      s = "";
-      for (j = 0; j < i; j++) {
-        s = s + query.term;
-      }
-      data.results.push({
-        id: query.term + i,
-        text: s
-      });
+        for (i = 1; i < 5; i++) {
+            s = "";
+            for (j = 0; j < i; j++) {
+                s = s + query.term;
+            }
+            data.results.push({
+                id: query.term + i,
+                text: s
+            });
+        }
+        query.callback(data);
     }
-    query.callback(data);
-  }
 }
 ```
 
@@ -240,40 +241,40 @@ This has been replaced by custom data adapters which define a similarly named `q
 
 ```javascript
 $.fn.select2.amd.require([
-    'select2/data/array',
-    'select2/utils'
-], function(ArrayData, Utils) {
-  function CustomData($element, options) {
-      CustomData.__super__.constructor.call(this, $element, options);
-  }
+            'select2/data/array',
+            'select2/utils'
+        ], function(ArrayData, Utils) {
+            function CustomData($element, options) {
+                CustomData.__super__.constructor.call(this, $element, options);
+            }
 
-  Utils.Extend(CustomData, ArrayData);
+            Utils.Extend(CustomData, ArrayData);
 
-  CustomData.prototype.query = function(params, callback) {
-    var data = {
-      results: []
-    };
+            CustomData.prototype.query = function(params, callback) {
+                var data = {
+                    results: []
+                };
 
-    for (var i = 1; i < 5; i++) {
-      var s = "";
+                for (var i = 1; i < 5; i++) {
+                    var s = "";
 
-      for (var j = 0; j < i; j++) {
-        s = s + params.term;
-      }
+                    for (var j = 0; j < i; j++) {
+                        s = s + params.term;
+                    }
 
-      data.results.push({
-        id: params.term + i,
-        text: s
-      });
-    }
+                    data.results.push({
+                        id: params.term + i,
+                        text: s
+                    });
+                }
 
-    callback(data);
-  };
+                callback(data);
+            };
 
-  $("#select").select2({
-    dataAdapter: CustomData
-  });
-}
+            $("#select").select2({
+                dataAdapter: CustomData
+            });
+        }
 ```
 
 The new `query` method of the data adapter is very similar to the old `query` option that was passed into Select2 when initializing it. The old `query` argument is mostly the same as the new `params` that are passed in to query on, and the callback that should be used to return the results is now passed in as the second parameter.

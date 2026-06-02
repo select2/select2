@@ -4,8 +4,8 @@ New options can be added to a Select2 control programmatically by creating a new
 
 ```javascript
 var data = {
-  id: 1,
-  text: 'Barn owl'
+    id: 1,
+    text: 'Barn owl'
 };
 
 var newOption = new Option(data.text, data.id, false, false);
@@ -21,12 +21,12 @@ You can use `.find` to select the option if it already exists, and create it oth
 ```javascript
 // Set the value, creating a new option if necessary
 if ($('#mySelect2').find("option[value='" + data.id + "']").length) {
-  $('#mySelect2').val(data.id).trigger('change');
+    $('#mySelect2').val(data.id).trigger('change');
 } else {
-  // Create a DOM Option and pre-select by default
-  var newOption = new Option(data.text, data.id, true, true);
-  // Append it to the select
-  $('#mySelect2').append(newOption).trigger('change');
+    // Create a DOM Option and pre-select by default
+    var newOption = new Option(data.text, data.id, true, true);
+    // Append it to the select
+    $('#mySelect2').append(newOption).trigger('change');
 }
 ```
 
@@ -57,28 +57,28 @@ The best way to deal with this, therefore, is to simply add the preselected item
 ```javascript
 // Set up the Select2 control
 $('#mySelect2').select2({
-  ajax: {
-    url: '/api/students'
-  }
+    ajax: {
+        url: '/api/students'
+    }
 });
 
 // Fetch the preselected item, and add to the control
 var studentSelect = $('#mySelect2');
 $.ajax({
-  type: 'GET',
-  url: '/api/students/s/' + studentId
+    type: 'GET',
+    url: '/api/students/s/' + studentId
 }).then(function(data) {
-  // create the option and append to Select2
-  var option = new Option(data.full_name, data.id, true, true);
-  studentSelect.append(option).trigger('change');
+    // create the option and append to Select2
+    var option = new Option(data.full_name, data.id, true, true);
+    studentSelect.append(option).trigger('change');
 
-  // manually trigger the `select2:select` event
-  studentSelect.trigger({
-    type: 'select2:select',
-    params: {
-      data: data
-    }
-  });
+    // manually trigger the `select2:select` event
+    studentSelect.trigger({
+        type: 'select2:select',
+        params: {
+            data: data
+        }
+    });
 });
 ```
 

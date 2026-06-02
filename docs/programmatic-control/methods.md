@@ -24,7 +24,7 @@ To test whether Select2 has been initialized on a particular DOM element, you ca
 
 ```javascript
 if ($('#mySelect2').hasClass("select2-hidden-accessible")) {
-  // Select2 has been initialized
+    // Select2 has been initialized
 }
 ```
 
@@ -48,7 +48,7 @@ $('#example').select2();
 
 // Bind an event
 $('#example').on('select2:select', function(e) {
-  console.log('select event');
+    console.log('select event');
 });
 
 // Destroy Select2
@@ -107,48 +107,43 @@ $('#example').off('select2:select');
 
 ```html
 <label for="select2-single">
-  Single select
+ Single select
 </label>
-
 <p>
-  <button aria-label="Set Select2 option" class="js-programmatic-set-val md-button">
-    Set "California"
-  </button>
-  <button class="js-programmatic-open md-button">
-    Open
-  </button>
-  <button class="js-programmatic-close md-button">
-    Close
-  </button>
-  <button class="js-programmatic-destroy md-button">
-    Destroy
-  </button>
-  <button class="js-programmatic-init md-button">
-    Re-initialize
-  </button>
+ <button aria-label="Set Select2 option" class="js-programmatic-set-val md-button">
+  Set "California"
+ </button>
+ <button class="js-programmatic-open md-button">
+  Open
+ </button>
+ <button class="js-programmatic-close md-button">
+  Close
+ </button>
+ <button class="js-programmatic-destroy md-button">
+  Destroy
+ </button>
+ <button class="js-programmatic-init md-button">
+  Re-initialize
+ </button>
 </p>
-
 <p>
-  <select class="js-example-programmatic js-states" id="select2-single">
-  </select>
+ <select class="js-example-programmatic js-states" id="select2-single">
+ </select>
 </p>
-
 <label for="select2-multi">
-  Multiple select
+ Multiple select
 </label>
-
 <p>
-  <button aria-label="Programmatically set Select2 options" class="js-programmatic-multi-set-val md-button" type="button">
-    Set to California and Alabama
-  </button>
-  <button aria-label="Programmatically clear Select2 options" class="js-programmatic-multi-clear md-button" type="button">
-    Clear
-  </button>
+ <button aria-label="Programmatically set Select2 options" class="js-programmatic-multi-set-val md-button" type="button">
+  Set to California and Alabama
+ </button>
+ <button aria-label="Programmatically clear Select2 options" class="js-programmatic-multi-clear md-button" type="button">
+  Clear
+ </button>
 </p>
-
 <p>
-  <select class="js-example-programmatic-multi js-states" id="select2-multi" multiple="multiple">
-  </select>
+ <select class="js-example-programmatic-multi js-states" id="select2-multi" multiple="multiple">
+ </select>
 </p>
 ```
 
@@ -156,32 +151,32 @@ $('#example').off('select2:select');
 var $example = $(".js-example-programmatic").select2();
 var $exampleMulti = $(".js-example-programmatic-multi").select2();
 
-$(".js-programmatic-set-val").on("click", function () {
-  $example.val("CA").trigger("change");
+$(".js-programmatic-set-val").on("click", function() {
+    $example.val("CA").trigger("change");
 });
 
-$(".js-programmatic-open").on("click", function () {
-  $example.select2("open");
+$(".js-programmatic-open").on("click", function() {
+    $example.select2("open");
 });
 
-$(".js-programmatic-close").on("click", function () {
-  $example.select2("close");
+$(".js-programmatic-close").on("click", function() {
+    $example.select2("close");
 });
 
-$(".js-programmatic-init").on("click", function () {
-  $example.select2();
+$(".js-programmatic-init").on("click", function() {
+    $example.select2();
 });
 
-$(".js-programmatic-destroy").on("click", function () {
-  $example.select2("destroy");
+$(".js-programmatic-destroy").on("click", function() {
+    $example.select2("destroy");
 });
 
-$(".js-programmatic-multi-set-val").on("click", function () {
-  $exampleMulti.val(["CA", "AL"]).trigger("change");
+$(".js-programmatic-multi-set-val").on("click", function() {
+    $exampleMulti.val(["CA", "AL"]).trigger("change");
 });
 
-$(".js-programmatic-multi-clear").on("click", function () {
-  $exampleMulti.val(null).trigger("change");
+$(".js-programmatic-multi-clear").on("click", function() {
+    $exampleMulti.val(null).trigger("change");
 });
 ```
 

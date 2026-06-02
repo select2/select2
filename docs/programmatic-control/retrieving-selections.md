@@ -20,12 +20,12 @@ It is possible to extend the `<option>` elements representing the current select
 
 ```javascript
 $('#mySelect2').select2({
-  // ...
-  templateSelection: function(data, container) {
-    // Add custom attributes to the <option> tag for the selected option
-    $(data.element).attr('data-custom-attribute', data.customValue);
-    return data.text;
-  }
+    // ...
+    templateSelection: function(data, container) {
+        // Add custom attributes to the <option> tag for the selected option
+        $(data.element).attr('data-custom-attribute', data.customValue);
+        return data.text;
+    }
 });
 
 // Retrieve custom attribute value of the first selected element

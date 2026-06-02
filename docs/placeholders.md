@@ -12,15 +12,15 @@ The most common situation is to use a string of text as your placeholder value.
 
 ```html
 <select class="js-example-placeholder-single js-states">
-  <option>
-  </option>
+ <option>
+ </option>
 </select>
 ```
 
 ```javascript
 $(".js-example-placeholder-single").select2({
-  placeholder: "Select a state",
-  allowClear: true
+    placeholder: "Select a state",
+    allowClear: true
 });
 ```
 
@@ -47,7 +47,7 @@ For multi-selects, you must **not** have an empty `<option>` element:
 
 ```javascript
 $(".js-example-placeholder-multiple").select2({
-  placeholder: "Select a state"
+    placeholder: "Select a state"
 });
 ```
 
@@ -66,10 +66,10 @@ Alternatively, the value of the `placeholder` option can be a data object repres
 
 ```javascript
 $('select').select2({
-  placeholder: {
-    id: '-1', // the value of the option
-    text: 'Select an option'
-  }
+    placeholder: {
+        id: '-1', // the value of the option
+        text: 'Select an option'
+    }
 });
 ```
 

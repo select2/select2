@@ -7,20 +7,20 @@ The appearance of selected results can be customized by using the `templateSelec
 <select class="js-example-templating js-states"></select>
 
 ```javascript
-function formatState (state) {
-  if (!state.id) {
-    return state.text;
-  }
+function formatState(state) {
+    if (!state.id) {
+        return state.text;
+    }
 
-  var $state = $(
-    `<span><img src="https://flagpedia.net/data/us/w580/${state.element.value.toLowerCase()}.webp" class="img-flag" />${state.text}</span>`
-  );
+    var $state = $(
+        `<span><img src="https://flagpedia.net/data/us/w580/${state.element.value.toLowerCase()}.webp" class="img-flag" />${state.text}</span>`
+    );
 
-  return $state;
+    return $state;
 };
 
 $(".js-example-templating").select2({
-  templateSelection: formatState
+    templateSelection: formatState
 });
 ```
 
@@ -62,7 +62,7 @@ Select2 multi-value select boxes can set restrictions regarding the maximum numb
 
 ```javascript
 $(".js-example-basic-multiple-limit").select2({
-  maximumSelectionLength: 2
+    maximumSelectionLength: 2
 });
 ```
 
@@ -78,7 +78,7 @@ When set to `true`, causes a clear button ("x" icon) to appear on the select box
 
 ```javascript
 $('select').select2({
-  placeholder: 'This is my placeholder',
-  allowClear: true
+    placeholder: 'This is my placeholder',
+    allowClear: true
 });
 ```

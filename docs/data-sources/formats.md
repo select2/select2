@@ -59,9 +59,9 @@ If you cannot do this on your server or you are in a situation where the API can
 
 ```javascript
 var data = $.map(yourArrayData, function(obj) {
-  obj.id = obj.id || obj.pk; // replace pk with your identifier
+    obj.id = obj.id || obj.pk; // replace pk with your identifier
 
-  return obj;
+    return obj;
 });
 ```
 
@@ -71,9 +71,9 @@ Just like with the `id` property, Select2 requires that the text that should be 
 
 ```javascript
 var data = $.map(yourArrayData, function(obj) {
-  obj.text = obj.text || obj.name; // replace name with the property used for the text
+    obj.text = obj.text || obj.name; // replace name with the property used for the text
 
-  return obj;
+    return obj;
 });
 ```
 
@@ -92,29 +92,29 @@ When options are to be generated in `<optgroup>` sections, options should be nes
 ```json
 {
   "results": [
-    { 
-      "text": "Group 1", 
-      "children" : [
+    {
+      "text": "Group 1",
+      "children": [
         {
-            "id": 1,
-            "text": "Option 1.1"
+          "id": 1,
+          "text": "Option 1.1"
         },
         {
-            "id": 2,
-            "text": "Option 1.2"
+          "id": 2,
+          "text": "Option 1.2"
         }
       ]
     },
-    { 
-      "text": "Group 2", 
-      "children" : [
+    {
+      "text": "Group 2",
+      "children": [
         {
-            "id": 3,
-            "text": "Option 2.1"
+          "id": 3,
+          "text": "Option 2.1"
         },
         {
-            "id": 4,
-            "text": "Option 2.2"
+          "id": 4,
+          "text": "Option 2.2"
         }
       ]
     }
