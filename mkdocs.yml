@@ -34,8 +34,8 @@ theme:
     - search.suggest
     - search.share
 extra_javascript: # jQuery and Select2 via CDNJS
-  - https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js
-  - https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js
+  - https://cdn.jsdelivr.net/npm/jquery@4.0.0/dist/jquery.min.js
+  - https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.full.min.js
 plugins:
   - search
   - git-revision-date-localized:
