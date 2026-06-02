@@ -10,6 +10,7 @@ theme:
   name: material
   custom_dir: docs/overrides
   logo: images/logo.png
+  favicon: images/favicon.ico
   palette:
     - media: "(prefers-color-scheme)"
       primary: blue-grey
