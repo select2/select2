@@ -4,7 +4,7 @@
 {% block libs %}
 <!-- Add scripts that need to run before here -->
 {{ super() }}
-<link href="https://cdn.jsdelivr.net/npm/select2@latest/dist/css/select2.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet"/>
 <style>
   select {
     width: 100%
@@ -76,9 +76,9 @@
 </style>
 
 <script src="https://cdn.jsdelivr.net/gh/jquery/jquery@4.0.0/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@latest/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
 
-<select class="js-source-states">
+<script type="text/html" class="js-source-states">
   <optgroup label="Alaskan/Hawaiian Time Zone">
     <option value="AK">Alaska</option>
     <option value="HI">Hawaii</option>
@@ -139,7 +139,7 @@
     <option value="VA">Virginia</option>
     <option value="WV">West Virginia</option>
   </optgroup>
-</select>
+</script>
 
 <script type="text/javascript">
   $(document).ready(function () {

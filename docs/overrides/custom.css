@@ -1,0 +1,18 @@
+.s2-docs-features {
+  text-align: center;
+}
+
+.s2-docs-features span {
+  color: #777;
+  display: block;
+  font-size: 28px;
+}
+.s2-docs-features strong {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 125%;
+  margin: 15px 0 15px;
+  text-rendering: optimizeLegibility;
+}

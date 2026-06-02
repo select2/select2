@@ -33,6 +33,8 @@ theme:
     - content.code.copy
     - search.suggest
     - search.share
+extra_css:
+  - overrides/custom.css
 extra_javascript: # jQuery and Select2 via CDNJS
   - https://cdn.jsdelivr.net/npm/jquery@4.0.0/dist/jquery.min.js
   - https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.full.min.js
