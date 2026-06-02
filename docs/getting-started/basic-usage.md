@@ -4,29 +4,27 @@ Select2 was designed to be a replacement for the standard `<select>` box that is
 
 Select2 can take a regular select box like this...
 
-<select class="js-states form-control"></select>
+<select class="js-states"></select>
 
 and turn it into this...
 
-<div class="s2-example">
-    <select class="js-example-basic-single js-states form-control"></select>
-</div>
+<select class="js-example-basic-single js-states"></select>
 
 ```html
 <select class="js-example-basic-single" name="state">
- <option value="AL">
-  Alabama
- </option>
- ...
- <option value="WY">
-  Wyoming
- </option>
+  <option value="AL">
+    Alabama
+  </option>
+  ...
+  <option value="WY">
+    Wyoming
+  </option>
 </select>
 ```
 
 <script type="text/javascript" class="js-code-example-basic-single">
 $(document).ready(function() {
-    $('.js-example-basic-single').select2();
+  $('.js-example-basic-single').select2();
 });
 </script>
 
@@ -35,7 +33,7 @@ Select2 will register itself as a jQuery function if you use any of the distribu
 ```javascript
 // In your Javascript (external .js resource or <script> tag)
 $(document).ready(function() {
-    $('.js-example-basic-single').select2();
+  $('.js-example-basic-single').select2();
 });
 ```
 
@@ -46,23 +44,19 @@ $(document).ready(function() {
 
 Select2 also supports multi-value select boxes. The select below is declared with the `multiple` attribute.
 
-<div class="s2-example">
-  <p>
-    <select class="js-example-basic-multiple js-states form-control" multiple="multiple"></select>
-  </p>
-</div>
+<select class="js-example-basic-multiple js-states" multiple="multiple"></select>
 
 **In your HTML:**
 
 ```html
 <select class="js-example-basic-multiple" multiple="multiple" name="states[]">
- <option value="AL">
-  Alabama
- </option>
- ...
- <option value="WY">
-  Wyoming
- </option>
+  <option value="AL">
+    Alabama
+  </option>
+  ...
+  <option value="WY">
+    Wyoming
+  </option>
 </select>
 ```
 
@@ -70,37 +64,36 @@ Select2 also supports multi-value select boxes. The select below is declared wit
 
 ```javascript
 $(document).ready(function() {
-    $('.js-example-basic-multiple').select2();
+  $('.js-example-basic-multiple').select2();
 });
 ```
 
 <script type="text/javascript">
-  $.fn.select2.amd.require([
-    "select2/core",
-    "select2/utils"
-  ], function (Select2, Utils, oldMatcher) {
-    var $basicSingle = $(".js-example-basic-single");
-    var $basicMultiple = $(".js-example-basic-multiple");
+$.fn.select2.amd.require([
+  "select2/core",
+  "select2/utils"
+], function (Select2, Utils, oldMatcher) {
+  var $basicSingle = $(".js-example-basic-single");
+  var $basicMultiple = $(".js-example-basic-multiple");
 
-    $.fn.select2.defaults.set("width", "100%");
+  $.fn.select2.defaults.set("width", "100%");
 
-    $basicSingle.select2();
-    $basicMultiple.select2();
+  $basicSingle.select2();
+  $basicMultiple.select2();
 
-    function formatState (state) {
-      if (!state.id) {
-        return state.text;
-      }
-      var $state = $(
-        '<span>' +
-          '<img src="vendor/images/flags/' +
-            state.element.value.toLowerCase() +
-          '.png" class="img-flag" /> ' +
-          state.text +
-        '</span>'
-      );
-      return $state;
-    };
-  });
-
+  function formatState (state) {
+    if (!state.id) {
+      return state.text;
+    }
+    var $state = $(
+      '<span>' +
+        '<img src="vendor/images/flags/' +
+          state.element.value.toLowerCase() +
+        '.png" class="img-flag" /> ' +
+        state.text +
+      '</span>'
+    );
+    return $state;
+  };
+});
 </script>

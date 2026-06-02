@@ -59,9 +59,9 @@ If you cannot do this on your server or you are in a situation where the API can
 
 ```javascript
 var data = $.map(yourArrayData, function(obj) {
-    obj.id = obj.id || obj.pk; // replace pk with your identifier
+  obj.id = obj.id || obj.pk; // replace pk with your identifier
 
-    return obj;
+  return obj;
 });
 ```
 
@@ -71,9 +71,9 @@ Just like with the `id` property, Select2 requires that the text that should be 
 
 ```javascript
 var data = $.map(yourArrayData, function(obj) {
-    obj.text = obj.text || obj.name; // replace name with the property used for the text
+  obj.text = obj.text || obj.name; // replace name with the property used for the text
 
-    return obj;
+  return obj;
 });
 ```
 

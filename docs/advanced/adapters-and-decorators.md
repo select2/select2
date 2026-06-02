@@ -1,6 +1,6 @@
 Starting in version 4.0, Select2 uses the [Adapter pattern](https://en.wikipedia.org/wiki/Adapter_pattern) as a powerful means of extending its features and behavior.
 
-Most of the built-in features, such as those described in the previous chapters, are implemented via one of the [built-in adapters](default-adapters/README.md). You may further extend the functionality of Select2 by implementing your own adapters.
+Most of the built-in features, such as those described in the previous chapters, are implemented via one of the built-in adapters. You may further extend the functionality of Select2 by implementing your own adapters.
 
 ## Adapter interfaces
 
@@ -20,7 +20,7 @@ All adapters must implement the `Adapter` interface, which Select2 uses to rende
 // @returns A jQuery or DOM element that contains any elements that must be
 //   rendered by Select2.
 Adapter.render = function() {
-    return $jq;
+  return $jq;
 };
 
 // Bind to any Select2 or DOM events.
@@ -84,7 +84,7 @@ Adapters that will be used to override the default `dataAdapter` must implement 
 //   has been retrieved. The first parameter to the function should be an array
 //   of data objects.
 DataAdapter.current = function(callback) {
-    callback(currentData);
+  callback(currentData);
 }
 
 // Get a set of options that are filtered based on the parameters that have
@@ -99,22 +99,23 @@ DataAdapter.current = function(callback) {
 //   determine what objects should be displayed.
 // @param callback The function that should be called with the queried results.
 DataAdapter.query = function(params, callback) {
-    callback(queryiedData);
+  callback(queryiedData);
 }
 ```
 
 ## Decorators
 
-Select2 uses [decorators](https://en.wikipedia.org/wiki/Decorator_pattern) to expose the functionality of adapters through its [configuration options](../configuration/README.md).
+Select2 uses [decorators](https://en.wikipedia.org/wiki/Decorator_pattern) to expose the functionality of adapters through its [configuration options](../configuration/options-api.md).
 
 You can apply a decorator to an adapter using the `Utils.Decorate` method provided with Select2:
 
 ```javascript
 $.fn.select2.amd.require(
-    ["select2/utils", "select2/selection/single", "select2/selection/placeholder"],
-    function(Utils, SingleSelection, Placeholder) {
-        var CustomSelectionAdapter = Utils.Decorate(SingleSelection, Placeholder);
-    });
+  ["select2/utils", "select2/selection/single", "select2/selection/placeholder"],
+  function(Utils, SingleSelection, Placeholder) {
+    var CustomSelectionAdapter = Utils.Decorate(SingleSelection, Placeholder);
+  }
+);
 ```
 
 > [!NOTE]

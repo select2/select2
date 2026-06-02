@@ -10,8 +10,8 @@ The selection adapter can be overridden by assigning a custom adapter to the `se
 
 **AMD Modules:**
 
-`select2/selection/placeholder`
-`select2/dropdown/hidePlaceholder`
+- `select2/selection/placeholder`
+- `select2/dropdown/hidePlaceholder`
 
 These decorators implement Select2's [placeholder](../../placeholders.md) features.
 

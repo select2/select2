@@ -21,7 +21,7 @@ Select2 is available on Bower. Add the following to your `bower.json` file and t
 
 ```json
 "dependencies": {
-    "select2": "~4.0"
+    "select2": "~4.1"
 }
 ```
 
@@ -53,7 +53,7 @@ And include its CSS in your `app.scss`:
 
 ## Manual installation
 
-We strongly recommend that you use either a CDN or a package manager like Bower or npm. This will make it easier for you to deploy your project in different environments, and easily update Select2 when new versions are released. Nonetheless if you prefer to integrate Select2 into your project manually, you can [download the release of your choice](https://github.com/select2/select2/tags) from GitHub and copy the files from the `dist` directory into your project.
+We strongly recommend that you use either a CDN or a package manager like Bower or npm. This will make it easier for you to deploy your project in different environments, and easily update Select2 when new versions are released. Nonetheless if you prefer to integrate Select2 into your project manually, you can [download the release of your choice](https://github.com/select2/select2/releases) from GitHub and copy the files from the `dist` directory into your project.
 
 Include the compiled files in your page:
 

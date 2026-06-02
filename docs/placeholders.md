@@ -6,27 +6,28 @@ The most common situation is to use a string of text as your placeholder value.
 
 ### Single select placeholders
 
-<div class="s2-example">
-  <p>
-    <select class="js-example-placeholder-single js-states form-control">
-      <option></option>
-    </select>
-  </p>
-</div>
+<select class="js-example-placeholder-single js-states">
+  <option></option>
+</select>
 
 ```html
-<select class="js-example-placeholder-single js-states form-control">
- <option>
- </option>
+<select class="js-example-placeholder-single js-states">
+  <option>
+  </option>
 </select>
 ```
 
-<pre data-fill-from="#example-placeholder-single-select"></pre>
+```javascript
+$(".js-example-placeholder-single").select2({
+  placeholder: "Select a state",
+  allowClear: true
+});
+```
 
 <script type="text/javascript" id="example-placeholder-single-select" class="js-code-placeholder">
 $(".js-example-placeholder-single").select2({
-    placeholder: "Select a state",
-    allowClear: true
+  placeholder: "Select a state",
+  allowClear: true
 });
 </script>
 
@@ -37,18 +38,22 @@ $(".js-example-placeholder-single").select2({
 
 For multi-selects, you must **not** have an empty `<option>` element:
 
-<select class="js-example-placeholder-multiple js-states form-control" multiple="multiple"></select>
+<select class="js-example-placeholder-multiple js-states" multiple="multiple"></select>
 
 ```html
-<select class="js-example-placeholder-multiple js-states form-control" multiple="multiple">
+<select class="js-example-placeholder-multiple js-states" multiple="multiple">
 </select>
 ```
 
-<pre data-fill-from="#example-placeholder-multi-select"></pre>
+```javascript
+$(".js-example-placeholder-multiple").select2({
+  placeholder: "Select a state"
+});
+```
 
 <script type="text/javascript" id="example-placeholder-multi-select" class="js-code-placeholder">
 $(".js-example-placeholder-multiple").select2({
-    placeholder: "Select a state"
+  placeholder: "Select a state"
 });
 </script>
 
@@ -61,10 +66,10 @@ Alternatively, the value of the `placeholder` option can be a data object repres
 
 ```javascript
 $('select').select2({
-    placeholder: {
-        id: '-1', // the value of the option
-        text: 'Select an option'
-    }
+  placeholder: {
+    id: '-1', // the value of the option
+    text: 'Select an option'
+  }
 });
 ```
 

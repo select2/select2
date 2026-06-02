@@ -4,14 +4,9 @@ This chapter covers the appearance and behavior of the list of results in the dr
 
 By default, Select2 will display the `text` property of each data object within the list of results. The appearance of search results in the dropdown can be customized by using the `templateResult` option:
 
-<div class="s2-example">
-    <select class="js-example-templating js-states form-control"></select>
-</div>
+<select class="js-example-templating js-states"></select>
 
-<pre data-fill-from=".js-code-example-templating"></pre>
-
-<script type="text/javascript" class="js-code-example-templating">
-
+```javascript
 function formatState (state) {
   if (!state.id) {
     return state.text;
@@ -25,7 +20,22 @@ function formatState (state) {
 $(".js-example-templating").select2({
   templateResult: formatState
 });
+```
 
+<script type="text/javascript" class="js-code-example-templating">
+function formatState (state) {
+  if (!state.id) {
+    return state.text;
+  }
+  var $state = $(
+    `<span><img src="https://flagpedia.net/data/us/w580/${state.element.value.toLowerCase()}.webp" class="img-flag" />${state.text}</span>`
+  );
+  return $state;
+};
+
+$(".js-example-templating").select2({
+  templateResult: formatState
+});
 </script>
 
 The `templateResult` function should return a string containing the text to be displayed, or an object (such as a jQuery object) that contains the data that should be displayed. It can also return `null`, which will prevent the option from being displayed in the results list.
@@ -69,9 +79,6 @@ Note that this option is only applicable to multi-select controls.
 
 ## Dropdown placement
 
-> [!IMPORTANT]
-> Attention [Harvest Chosen](https://harvesthq.github.io/chosen/) migrators! If you are migrating to Select2 from Chosen, this option will cause Select2 to position the dropdown in a similar way.
-
 By default, Select2 will attach the dropdown to the end of the body and will absolutely position it to appear above or below the selection container.
 
 Select2 will display the dropdown above the container if there is not enough space below the container, but there is enough space above it.
@@ -107,7 +114,7 @@ If you run into positioning issues while using the default `body` attachment, yo
 - `document.body.style.position`
 - `$(document.body).offset()`
 
-See [this issue](https://github.com/select2/select2/issues/3970#issuecomment-160496724).
+See [this issue](https://github.com/select2/select2/issues/3970#issuecomment-160496724) for more information.
 
 > [!WARNING]
 > `dropdownParent` will cause DOM events to be raised outside of the standard Select2 DOM container. This can cause issues with third-party components such as modals.

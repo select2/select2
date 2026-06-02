@@ -1,14 +1,14 @@
-It is recommended that you declare your configuration options by [passing in an object](README.md) when initializing Select2. However, you may also define your configuration options by using the HTML5 `data-*` attributes, which will override any options set when initializing Select2 and any [defaults](defaults.md).
+It is recommended that you declare your configuration options by [passing in an object](options-api.md) when initializing Select2. However, you may also define your configuration options by using the HTML5 `data-*` attributes, which will override any options set when initializing Select2 and any [defaults](defaults.md).
 
 ```html
 <select data-placeholder="Select a state">
- <option value="AL">
-  Alabama
- </option>
- ...
- <option value="WY">
-  Wyoming
- </option>
+  <option value="AL">
+    Alabama
+  </option>
+  ...
+  <option value="WY">
+    Wyoming
+  </option>
 </select>
 ```
 
@@ -21,10 +21,10 @@ Sometimes, you have options that are nested under a top-level option. For exampl
 
 ```javascript
 $(".js-example-data-ajax").select2({
-    ajax: {
-        url: "http://example.org/api/test",
-        cache: false
-    }
+  ajax: {
+    url: "http://example.org/api/test",
+    cache: false
+  }
 });
 ```
 
@@ -32,7 +32,7 @@ To write these options as `data-*` attributes, each level of nesting should be s
 
 ```html
 <select data-ajax--cache="true" data-ajax--url="http://example.org/api/test">
- ...
+  ...
 </select>
 ```
 
@@ -49,7 +49,7 @@ This means that declaring your `<select>` tag as...
 
 ```html
 <select data-allow-clear="true" data-placeholder="Select an option" data-tags="true">
- ...
+  ...
 </select>
 ```
 
@@ -57,8 +57,8 @@ Will be interpreted the same as initializing Select2 as...
 
 ```javascript
 $("select").select2({
-    tags: "true",
-    placeholder: "Select an option",
-    allowClear: true
+  tags: "true",
+  placeholder: "Select an option",
+  allowClear: true
 });
 ```

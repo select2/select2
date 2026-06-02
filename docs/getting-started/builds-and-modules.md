@@ -5,33 +5,10 @@ environments where it is going to be used. If you think you need to use
 Select2 in a nonstandard environment, like when you are using AMD, you
 should read over the list below.
 
-<table class="table table-bordered table-striped">
-  <thead>
-    <tr>
-      <th>Build name</th>
-      <th>When you should use it</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr id="builds-standard">
-      <td>
-        Standard (<code>select2.js</code> / <code>select2.min.js</code>)
-      </td>
-      <td>
-        This is the build that most people should be using for Select2. It
-        includes the most commonly used features.
-      </td>
-    </tr>
-    <tr id="builds-full">
-      <td>
-        Full (<code>select2.full.js</code> / <code>select2.full.min.js</code>)
-      </td>
-      <td>
-        You should only use this build if you need the recommended includes like <a href="https://github.com/jquery/jquery-mousewheel">jquery.mousewheel</a>
-      </td>
-    </tr>
-  </tbody>
-</table>
+| Build name | When you should use it |
+| ---------- | ---------------------- |
+| Standard (`select2.js` / `select2.min.js`) | This is the build that most people should be using for Select2. It includes the most commonly used features. |
+| Full (`select2.full.js` / `select2.full.min.js`) | You should only use this build if you need the recommended includes like [jquery.mousewheel](https://github.com/jquery/jquery-mousewheel) |
 
 ## Using Select2 with AMD or CommonJS loaders
 

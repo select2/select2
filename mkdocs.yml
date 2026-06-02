@@ -72,7 +72,7 @@ markdown_extensions:
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
 nav:
   - Home: README.md
-  - Getting Started:
+  - Getting started:
       - Installation: getting-started/installation.md
       - Basic usage: getting-started/basic-usage.md
       - Builds and modules: getting-started/builds-and-modules.md

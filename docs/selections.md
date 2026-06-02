@@ -4,14 +4,9 @@ When an option is selected from the dropdown menu, Select2 will display the sele
 
 The appearance of selected results can be customized by using the `templateSelection` configuration option. This takes a callback that transforms the selection data object into a string representation or jQuery object:
 
-<div class="s2-example">
-    <select class="js-example-templating js-states form-control"></select>
-</div>
+<select class="js-example-templating js-states"></select>
 
-<pre data-fill-from=".js-code-example-templating"></pre>
-
-<script type="text/javascript" class="js-code-example-templating">
-
+```javascript
 function formatState (state) {
   if (!state.id) {
     return state.text;
@@ -27,7 +22,24 @@ function formatState (state) {
 $(".js-example-templating").select2({
   templateSelection: formatState
 });
+```
 
+<script type="text/javascript" class="js-code-example-templating">
+function formatState (state) {
+  if (!state.id) {
+    return state.text;
+  }
+
+  var $state = $(
+    `<span><img src="/images/flags/${state.element.value.toLowerCase()}.png" class="img-flag" />${state.text}</span>`
+  );
+
+  return $state;
+};
+
+$(".js-example-templating").select2({
+  templateSelection: formatState
+});
 </script>
 
 > [!NOTE]
@@ -46,20 +58,18 @@ If you need to render HTML with your selection template, you must wrap your rend
 
 Select2 multi-value select boxes can set restrictions regarding the maximum number of options that can be selected. The select below is declared with the `multiple` attribute with `maximumSelectionLength` in the select2 options.
 
-<div class="s2-example">
-    <p>
-      <select class="js-example-basic-multiple-limit js-states form-control" multiple="multiple"></select>
-    </p>
-</div>
+<select class="js-example-basic-multiple-limit js-states" multiple="multiple"></select>
 
-<pre data-fill-from=".js-code-placeholder"></pre>
-
-<script type="text/javascript" class="js-code-placeholder">
-
+```javascript
 $(".js-example-basic-multiple-limit").select2({
   maximumSelectionLength: 2
 });
+```
 
+<script type="text/javascript" class="js-code-placeholder">
+$(".js-example-basic-multiple-limit").select2({
+  maximumSelectionLength: 2
+});
 </script>
 
 ## Clearable selections
@@ -68,7 +78,7 @@ When set to `true`, causes a clear button ("x" icon) to appear on the select box
 
 ```javascript
 $('select').select2({
-    placeholder: 'This is my placeholder',
-    allowClear: true
+  placeholder: 'This is my placeholder',
+  allowClear: true
 });
 ```

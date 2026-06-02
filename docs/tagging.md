@@ -1,27 +1,26 @@
 In addition to a prepopulated menu of options, Select2 can dynamically create new options from text input by the user in the search box. This feature is called "tagging". To enable tagging, set the `tags` option to `true`:
 
-<div class="s2-example">
-  <p>
-    <select class="js-example-tags form-control">
-      <option selected="selected">orange</option>
-      <option>white</option>
-      <option>purple</option>
-    </select>
-  </p>
-</div>
+<select class="js-example-tags">
+  <option selected="selected">orange</option>
+  <option>white</option>
+  <option>purple</option>
+</select>
 
 ```html
-<select class="form-control">
- <option selected="selected">
-  orange
- </option>
- <option>
-  white
- </option>
- <option>
-  purple
- </option>
+<select>
+  <option selected="selected">
+    orange
+  </option>
+  <option>
+    white
+  </option>
+  <option>
+    purple
+  </option>
 </select>
+```
+
+```javascript
 $(".js-example-tags").select2({
   tags: true
 });
@@ -33,36 +32,30 @@ Note that when tagging is enabled the user can select from the pre-existing opti
 
 Tagging can also be used in multi-value select boxes. In the example below, we set the `multiple="multiple"` attribute on a Select2 control that also has `tags: true` enabled:
 
-<div class="s2-example">
-  <p>
-    <select class="js-example-tags form-control" multiple="multiple">
-      <option selected="selected">orange</option>
-      <option>white</option>
-      <option selected="selected">purple</option>
-    </select>
-  </p>
-</div>
+<select class="js-example-tags" multiple="multiple">
+  <option selected="selected">orange</option>
+  <option>white</option>
+  <option selected="selected">purple</option>
+</select>
 
 ```html
-<select class="form-control" multiple="multiple">
- <option selected="selected">
-  orange
- </option>
- <option>
-  white
- </option>
- <option selected="selected">
-  purple
- </option>
+<select multiple="multiple">
+  <option selected="selected">
+    orange
+  </option>
+  <option>
+    white
+  </option>
+  <option selected="selected">
+    purple
+  </option>
 </select>
 ```
 
 <script type="text/javascript">
-
 $(".js-example-tags").select2({
   tags: true
 });
-
 </script>
 
 Try entering a value that isn't listed in the dropdown - you'll be able to add it as a new option!
@@ -73,25 +66,25 @@ Select2 supports ability to add choices automatically as the user is typing into
 
 The separators that should be used when tokenizing can be specified using the `tokenSeparators` options.
 
-<div class="s2-example">
-<p>
-  <select class="js-example-tokenizer form-control" multiple="multiple">
-    <option>red</option>
-    <option>blue</option>
-    <option>green</option>
-  </select>
-</p>
-</div>
+<select class="js-example-tokenizer" multiple="multiple">
+  <option>red</option>
+  <option>blue</option>
+  <option>green</option>
+</select>
 
-<pre data-fill-from=".js-code-example-tokenizer"></pre>
-
-<script type="text/javascript" class="js-code-example-tokenizer">
-
+```javascript
 $(".js-example-tokenizer").select2({
-    tags: true,
-    tokenSeparators: [',', ' ']
+  tags: true,
+  tokenSeparators: [',', ' ']
 })
 
+```
+
+<script type="text/javascript" class="js-code-example-tokenizer">
+$(".js-example-tokenizer").select2({
+  tags: true,
+  tokenSeparators: [',', ' ']
+})
 </script>
 
 ## Customizing tag creation
@@ -102,19 +95,19 @@ You may add extra properties to newly created tags by defining a `createTag` cal
 
 ```javascript
 $('select').select2({
-    createTag: function(params) {
-        var term = $.trim(params.term);
+  createTag: function(params) {
+    var term = $.trim(params.term);
 
-        if (term === '') {
-            return null;
-        }
-
-        return {
-            id: term,
-            text: term,
-            newTag: true // add additional parameters
-        }
+    if (term === '') {
+      return null;
     }
+
+    return {
+      id: term,
+      text: term,
+      newTag: true // add additional parameters
+    }
+  }
 });
 ```
 
@@ -124,18 +117,18 @@ You may control when Select2 will allow the user to create a new tag, by adding 
 
 ```javascript
 $('select').select2({
-    createTag: function(params) {
-        // Don't offset to create a tag if there is no @ symbol
-        if (params.term.indexOf('@') === -1) {
-            // Return null to disable tag creation
-            return null;
-        }
-
-        return {
-            id: params.term,
-            text: params.term
-        }
+  createTag: function(params) {
+    // Don't offer to create a tag if there is no @ symbol
+    if (params.term.indexOf('@') === -1) {
+      // Return null to disable tag creation
+      return null;
     }
+
+    return {
+      id: params.term,
+      text: params.term
+    }
+  }
 });
 ```
 
@@ -145,9 +138,9 @@ You may control the placement of the newly created option by defining a `insertT
 
 ```javascript
 $('select').select2({
-    insertTag: function(data, tag) {
-        // Insert the tag at the end of the results
-        data.push(tag);
-    }
+  insertTag: function(data, tag) {
+    // Insert the tag at the end of the results
+    data.push(tag);
+  }
 });
 ```

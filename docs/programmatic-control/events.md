@@ -21,7 +21,7 @@ All public events are relayed using the jQuery event system, and they are trigge
 
 ```javascript
 $('#mySelect2').on('select2:select', function(e) {
-    // Do something
+  // Do something
 });
 ```
 
@@ -31,8 +31,8 @@ When `select2:select` is triggered, data from the selection can be accessed via 
 
 ```javascript
 $('#mySelect2').on('select2:select', function(e) {
-    var data = e.params.data;
-    console.log(data);
+  var data = e.params.data;
+  console.log(data);
 });
 ```
 
@@ -78,20 +78,44 @@ $('#mySelect2').trigger('change.select2'); // Notify only Select2 of changes
 
 ## Examples
 
-<div class="s2-example">
-  <p>
-    <select class="js-states js-example-events form-control"></select>
-  </p>
-  <p>
-    <select class="js-states js-example-events form-control" multiple="multiple"></select>
-  </p>
-</div>
+<select class="js-states js-example-events"></select>
 
-<div class="s2-event-log">
-  <ul class="js-event-log"></ul>
-</div>
+<select class="js-states js-example-events" multiple="multiple"></select>
 
-<pre data-fill-from=".js-code-events"></pre>
+<ul class="js-event-log"></ul>
+
+```javascript
+var $eventLog = $(".js-event-log");
+var $eventSelect = $(".js-example-events");
+
+$eventSelect.select2();
+
+$eventSelect.on("select2:open", function (e) { log("select2:open", e); });
+$eventSelect.on("select2:close", function (e) { log("select2:close", e); });
+$eventSelect.on("select2:select", function (e) { log("select2:select", e); });
+$eventSelect.on("select2:unselect", function (e) { log("select2:unselect", e); });
+
+$eventSelect.on("change", function (e) { log("change"); });
+
+function log (name, evt) {
+  if (!evt) {
+    var args = "{}";
+  } else {
+    var args = JSON.stringify(evt.params, function (key, value) {
+      if (value && value.nodeName) return "[DOM node]";
+      if (value instanceof $.Event) return "[$.Event]";
+      return value;
+    });
+  }
+  var $e = $("<li>" + name + " -> " + args + "</li>");
+  $eventLog.append($e);
+  $e.animate({ opacity: 1 }, 10000, 'linear', function () {
+    $e.animate({ opacity: 0 }, 2000, 'linear', function () {
+      $e.remove();
+    });
+  });
+}
+```
 
 <script type="text/javascript" class="js-code-events">
 var $eventLog = $(".js-event-log");
@@ -134,4 +158,4 @@ See [https://stackoverflow.com/a/26706695/2970321](https://stackoverflow.com/a/2
 
 Select2 has an [internal event system](../advanced/default-adapters/selection.md#eventrelay) that works independently of the DOM event system, allowing adapters to communicate with each other. This internal event system is only accessible from plugins and adapters that are connected to Select2 - **not** through the jQuery event system.
 
-You can find more information on the public events triggered by individual adapters in the [advanced chapter](../advanced/README.md).
+You can find more information on the public events triggered by individual adapters in the [advanced chapter](../advanced/adapters-and-decorators.md).

@@ -8,38 +8,38 @@ Select2 will pass each option as represented by its [internal representation](op
 
 ```javascript
 function matchCustom(params, data) {
-    // If there are no search terms, return all of the data
-    if ($.trim(params.term) === '') {
-        return data;
-    }
+  // If there are no search terms, return all of the data
+  if ($.trim(params.term) === '') {
+    return data;
+  }
 
-    // Do not display the item if there is no 'text' property
-    if (typeof data.text === 'undefined') {
-        return null;
-    }
-
-    // `params.term` should be the term that is used for searching
-    // `data.text` is the text that is displayed for the data object
-    if (data.text.indexOf(params.term) > -1) {
-        var modifiedData = $.extend({}, data, true);
-        modifiedData.text += ' (matched)';
-
-        // You can return modified objects from here
-        // This includes matching the `children` how you want in nested data sets
-        return modifiedData;
-    }
-
-    // Return `null` if the term should not be displayed
+  // Do not display the item if there is no 'text' property
+  if (typeof data.text === 'undefined') {
     return null;
+  }
+
+  // `params.term` should be the term that is used for searching
+  // `data.text` is the text that is displayed for the data object
+  if (data.text.indexOf(params.term) > -1) {
+    var modifiedData = $.extend({}, data, true);
+    modifiedData.text += ' (matched)';
+
+    // You can return modified objects from here
+    // This includes matching the `children` how you want in nested data sets
+    return modifiedData;
+  }
+
+  // Return `null` if the term should not be displayed
+  return null;
 }
 
 $(".js-example-matcher").select2({
-    matcher: matchCustom
+  matcher: matchCustom
 });
 ```
 
 > [!WARNING]
-> `matcher` only works with **locally supplied data** (e.g., via an [array](data-sources/arrays.md)! When a remote data set is used, Select2 expects that the returned results have already been filtered on the server side.
+> `matcher` only works with **locally supplied data** (e.g., via an [array](data-sources/arrays.md))! When a remote data set is used, Select2 expects that the returned results have already been filtered on the server side.
 
 ### Matching grouped options
 
@@ -47,14 +47,9 @@ Only first-level objects will be passed in to the `matcher` callback. If you are
 
 This example matches results only if the term appears in the beginning of the string:
 
-<div class="s2-example">
-    <select class="js-example-matcher-start js-states form-control"></select>
-</div>
+<select class="js-example-matcher-start js-states"></select>
 
-<pre data-fill-from=".js-code-example-matcher"></pre>
-
-<script type="text/javascript" class="js-code-example-matcher">
-
+```javascript
 function matchStart(params, data) {
   // If there are no search terms, return all of the data
   if ($.trim(params.term) === '') {
@@ -92,7 +87,46 @@ function matchStart(params, data) {
 $(".js-example-matcher-start").select2({
   matcher: matchStart
 });
+```
 
+<script type="text/javascript" class="js-code-example-matcher">
+function matchStart(params, data) {
+  // If there are no search terms, return all of the data
+  if ($.trim(params.term) === '') {
+    return data;
+  }
+
+  // Skip if there is no 'children' property
+  if (typeof data.children === 'undefined') {
+    return null;
+  }
+
+  // `data.children` contains the actual options that we are matching against
+  var filteredChildren = [];
+  $.each(data.children, function (idx, child) {
+    if (child.text.toUpperCase().indexOf(params.term.toUpperCase()) == 0) {
+      filteredChildren.push(child);
+    }
+  });
+
+  // If we matched any of the timezone group's children, then set the matched children on the group
+  // and return the group object
+  if (filteredChildren.length) {
+    var modifiedData = $.extend({}, data, true);
+    modifiedData.children = filteredChildren;
+
+    // You can return modified objects from here
+    // This includes matching the `children` how you want in nested data sets
+    return modifiedData;
+  }
+
+  // Return `null` if the term should not be displayed
+  return null;
+}
+
+$(".js-example-matcher-start").select2({
+  matcher: matchStart
+});
 </script>
 
 > [!NOTE]
@@ -106,7 +140,7 @@ You may set a minimum search term length by using the `minimumInputLength` optio
 
 ```javascript
 $('select').select2({
-    minimumInputLength: 3 // only start searching when the user has input 3 or more characters
+  minimumInputLength: 3 // only start searching when the user has input 3 or more characters
 });
 ```
 
@@ -118,7 +152,7 @@ You may limit the maximum length of search terms by using the `maximumInputLengt
 
 ```javascript
 $('select').select2({
-    maximumInputLength: 20 // only allow terms up to 20 characters long
+  maximumInputLength: 20 // only allow terms up to 20 characters long
 });
 ```
 
@@ -130,7 +164,7 @@ This option is useful for cases where local data is used with a small result set
 
 ```javascript
 $('select').select2({
-    minimumResultsForSearch: 20 // at least 20 results must be displayed
+  minimumResultsForSearch: 20 // at least 20 results must be displayed
 });
 ```
 
@@ -140,37 +174,41 @@ $('select').select2({
 
 For single selects, Select2 allows you to hide the search box using the `minimumResultsForSearch` configuration option. In this example, we use the value `Infinity` to tell Select2 to never display the search box.
 
-<div class="s2-example">
-    <select id="js-example-basic-hide-search" class="js-states form-control"></select>
-</div>
+<select id="js-example-basic-hide-search" class="js-states"></select>
 
-<pre data-fill-from="#js-code-example-basic-hide-search"></pre>
+```javascript
+$("#js-example-basic-hide-search").select2({
+  minimumResultsForSearch: Infinity
+});
+```
 
 <script type="text/javascript" id="js-code-example-basic-hide-search">
-
 $("#js-example-basic-hide-search").select2({
-    minimumResultsForSearch: Infinity
+  minimumResultsForSearch: Infinity
 });
-
 </script>
 
 ### Multi-select
 
 For multi-select boxes, there is no distinct search control. So, to disable search for multi-select boxes, you will need to set the `disabled` property to true whenever the dropdown is opened or closed:
 
-<div class="s2-example">
-    <select id="js-example-basic-hide-search-multi" class="js-states form-control" multiple="multiple"></select>
-</div>
+<select id="js-example-basic-hide-search-multi" class="js-states" multiple="multiple"></select>
 
-<pre data-fill-from="#js-code-example-basic-hide-search-multi"></pre>
-
-<script type="text/javascript" id="js-code-example-basic-hide-search-multi">
-
+```javascript
 $('#js-example-basic-hide-search-multi').select2();
 
 $('#js-example-basic-hide-search-multi').on('select2:opening select2:closing', function( event ) {
-    var $searchfield = $(this).parent().find('.select2-search__field');
-    $searchfield.prop('disabled', true);
+  var $searchfield = $(this).parent().find('.select2-search__field');
+  $searchfield.prop('disabled', true);
+});
+```
+
+<script type="text/javascript" id="js-code-example-basic-hide-search-multi">
+$('#js-example-basic-hide-search-multi').select2();
+
+$('#js-example-basic-hide-search-multi').on('select2:opening select2:closing', function( event ) {
+  var $searchfield = $(this).parent().find('.select2-search__field');
+  $searchfield.prop('disabled', true);
 });
 </script>
 
