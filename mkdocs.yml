@@ -46,6 +46,11 @@ plugins:
       enabled: !ENV [CI, false]
       repository: select2/select2
       branch: develop
+      exclude_committers:
+        - dependabot[bot]
+        - pre-commit-ci[bot]
+        - web-flow
+        - Copilot
   - redirects:
       redirect_maps:
         'troubleshooting/README.md': 'troubleshooting/getting-help.md'
