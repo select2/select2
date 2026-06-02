@@ -40,4 +40,3 @@ repos:
         exclude: (dist|docs|vendor)/|(banner|wrapper).(start|end).js
 ci:
   autoupdate_schedule: weekly
-  skip:
