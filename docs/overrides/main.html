@@ -63,12 +63,59 @@
   }
 
   .select2-results__option--highlighted .select2-result-repository__title {
-    color: white;
+    color: var(--md-typeset-color);
   }
 
-  .select2-results__option--highlighted .select2-result-repository__forks, .select2-results__option--highlighted .select2-result-repository__stargazers, .select2-results__option--highlighted .select2-result-repository__description, .select2-results__option--highlighted .select2-result-repository__watchers {
-    color: #c6dcef;
+  .select2-container--default .select2-selection--single .select2-selection__rendered, .select2-container--multiple .select2-selection--single .select2-selection__rendered {
+    color: var(--md-typeset-color);
   }
+
+  .select2-dropdown, .select2-container--default {
+    background: var(--md-default-bg-color);
+    color: var(--md-default-fg-color);
+    border-color: var(--md-default-border-color);
+  }
+
+  .select2-container--default.select2-container--disabled, .select2-dropdown, .select2-container--default, .select2-container--default.select2-container--focus {
+    .select2-selection--single, .select2-selection--multiple {
+      background: var(--md-default-bg-color);
+      color: var(--md-default-fg-color);
+      border-color: var(--md-default-border-color);
+    }
+  }
+
+
+  .select2-container--default {
+
+    .select2-results__option {
+      background: var(--md-default-bg-color);
+      color: var(--md-default-fg-color);
+
+      .select2-results__option--selected {
+        background: var(--md-primary-fg-color);
+        color: var(--md-primary-bg-color);
+      }
+
+      .select2-results__option--highlighted {
+        background: var(--md-accent-fg-color);
+        color: var(--md-accent-bg-color);
+      }
+    }
+
+    .select2-selection--multiple {
+      .select2-selection__choice, .select2-selection__choice__display, .select2-selection__choice__remove {
+        background: var(--md-primary-fg-color);
+        color: var(--md-primary-bg-color);
+        border-color: var(--md-default-bg-color--lighter);
+        margin-bottom: 0;
+      }
+
+      .select2-selection__rendered {
+        margin-left: 0
+      }
+    }
+  }
+
 
   .select2-container {
     line-height: 1.25;
