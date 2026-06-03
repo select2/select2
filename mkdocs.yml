@@ -39,6 +39,10 @@ extra_css:
 extra_javascript: # jQuery and Select2 via CDNJS
   - https://cdn.jsdelivr.net/npm/jquery@4.0.0/dist/jquery.min.js
   - https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.full.min.js
+extra:
+  analytics:
+    provider: google
+    property: G-RR7B0FYMWM
 plugins:
   - search
   - git-revision-date-localized:
