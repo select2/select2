@@ -105,6 +105,7 @@ Become a financial contributor and help us sustain our community. \[[Contribute]
 #### Individuals
 
 <a href="https://opencollective.com/select2"><img src="https://opencollective.com/select2/individuals.svg?width=890"></a>
+<a href="https://github.com/select2/select2"><img src="https://sponsor.pics/select2/select2.svg"></a>
 
 #### Organizations
 
