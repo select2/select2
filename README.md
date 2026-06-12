@@ -102,25 +102,8 @@ This project exists thanks to all the people who contribute. \[[Contribute](.git
 
 Become a financial contributor and help us sustain our community. \[[Contribute](https://opencollective.com/select2/contribute)\]
 
-#### Individuals
-
 <a href="https://opencollective.com/select2"><img src="https://opencollective.com/select2/individuals.svg?width=890"></a>
 <a href="https://github.com/select2/select2"><img src="https://sponsor.pics/select2/select2.svg"></a>
-
-#### Organizations
-
-Support this project with your organization. Your logo will show up here with a link to your website. \[[Contribute](https://opencollective.com/select2/contribute)\]
-
-<a href="https://opencollective.com/select2/organization/0/website"><img src="https://opencollective.com/select2/organization/0/avatar.svg"></a>
-<a href="https://opencollective.com/select2/organization/1/website"><img src="https://opencollective.com/select2/organization/1/avatar.svg"></a>
-<a href="https://opencollective.com/select2/organization/2/website"><img src="https://opencollective.com/select2/organization/2/avatar.svg"></a>
-<a href="https://opencollective.com/select2/organization/3/website"><img src="https://opencollective.com/select2/organization/3/avatar.svg"></a>
-<a href="https://opencollective.com/select2/organization/4/website"><img src="https://opencollective.com/select2/organization/4/avatar.svg"></a>
-<a href="https://opencollective.com/select2/organization/5/website"><img src="https://opencollective.com/select2/organization/5/avatar.svg"></a>
-<a href="https://opencollective.com/select2/organization/6/website"><img src="https://opencollective.com/select2/organization/6/avatar.svg"></a>
-<a href="https://opencollective.com/select2/organization/7/website"><img src="https://opencollective.com/select2/organization/7/avatar.svg"></a>
-<a href="https://opencollective.com/select2/organization/8/website"><img src="https://opencollective.com/select2/organization/8/avatar.svg"></a>
-<a href="https://opencollective.com/select2/organization/9/website"><img src="https://opencollective.com/select2/organization/9/avatar.svg"></a>
 
 [angularjs]: https://angularjs.org/
 [backdrop-cms]: https://backdropcms.org/
