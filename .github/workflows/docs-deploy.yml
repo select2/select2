@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name != 'release' || github.event.release.prerelease == false
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - uses: astral-sh/setup-uv@v7
