@@ -34,6 +34,12 @@ define(function () {
     },
     removeAllItems: function () {
       return 'すべてのアイテムを削除';
+    },
+    removeItem: function () {
+      return 'アイテムを削除';
+    },
+    search: function () {
+      return '検索';
     }
   };
 });
