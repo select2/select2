@@ -23,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Use Node.js 24
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: 24
       - name: npm install
@@ -38,7 +38,7 @@ jobs:
       - run: sudo apt install -y chromium-browser
       - uses: actions/checkout@v7
       - name: Use Node.js 24
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: 24
       - name: npm install
@@ -54,7 +54,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Use Node.js 24
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: 24
       - name: npm install
