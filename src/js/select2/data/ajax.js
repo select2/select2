@@ -71,7 +71,7 @@ define(['./array', '../utils', 'jquery'], function (ArrayAdapter, Utils, $) {
 
           if (results && results.results && Array.isArray(results.results)) {
             results.results = results.results.map(
-              AjaxAdapter.prototype._normalizeItem
+              AjaxAdapter.prototype._normalizeItem.bind(self)
             );
           } else {
             if (self.options.get('debug') && window.console && console.error) {

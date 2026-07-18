@@ -280,7 +280,9 @@ define(['./base', '../utils', 'jquery'], function (BaseAdapter, Utils, $) {
     }
 
     if (item.children) {
-      item.children = item.children.map(SelectAdapter.prototype._normalizeItem);
+      item.children = item.children.map(
+        SelectAdapter.prototype._normalizeItem.bind(this)
+      );
     }
 
     return $.extend({}, defaults, item);

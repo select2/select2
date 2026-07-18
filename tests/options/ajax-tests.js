@@ -56,3 +56,49 @@ QUnit.test(
     defaults.reset();
   }
 );
+
+QUnit.module('Data adapter - Ajax');
+
+QUnit.test(
+  'query normalizes results with the adapter bound as `this`',
+  function (assert) {
+    var AjaxData = require('select2/data/ajax');
+    var Options = require('select2/options');
+    var $ = require('jquery');
+
+    var $select = $('#qunit-fixture .single-empty');
+
+    var options = new Options({
+      ajax: {
+        transport: function (params, success) {
+          success({
+            results: [
+              { id: 'a', text: 'First' },
+              {
+                text: 'Group',
+                children: [{ id: 'b', text: 'Child' }]
+              }
+            ]
+          });
+        }
+      }
+    });
+
+    var data = new AjaxData($select, options);
+
+    var container = new MockContainer();
+    data.bind(container, $('<div></div>'));
+
+    data.query({}, function (results) {
+      assert.ok(
+        results.results[0]._resultId,
+        'A top-level AJAX result should receive a generated result ID'
+      );
+
+      assert.ok(
+        results.results[1].children[0]._resultId,
+        'A nested optgroup child should receive a generated result ID'
+      );
+    });
+  }
+);
