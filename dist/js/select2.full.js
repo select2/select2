@@ -5460,13 +5460,15 @@ S2.define('select2/options',[
       this.options.autocomplete = $e[0].autocomplete;
     }
 
-    if (this.options.dir === null) {
+    if (this.options.dir == null) {
       var dirValue = $e[0].getAttribute('dir');
 
       if (dirValue) {
         this.options.dir = dirValue;
       } else {
-        var closestDirValue = $e.closest('[dir]').getAttribute('dir');
+        var $closestDir = $e.closest('[dir]');
+        var closestDirValue = $closestDir[0] ?
+          $closestDir[0].getAttribute('dir') : null;
 
         if (closestDirValue) {
           this.options.dir = closestDirValue;
