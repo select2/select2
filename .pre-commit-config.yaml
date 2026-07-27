@@ -31,7 +31,7 @@ repos:
     hooks:
       - id: yamlfmt
   - repo: https://github.com/biomejs/pre-commit
-    rev: v2.5.4
+    rev: v2.5.5
     hooks:
       - id: biome-format
         args: [--use-editorconfig=true]
