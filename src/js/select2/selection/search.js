@@ -205,7 +205,7 @@ define([
     this.resizeSearch();
 
     if (!this._keyUpPrevented) {
-      var input = $.trim(this.$search.val());
+      var input = this.$search.val().trim();
 
       this.trigger('query', {
         term: input

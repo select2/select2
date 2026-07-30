@@ -100,7 +100,7 @@ define([
 
   Search.prototype.handleSearch = function (evt) {
     if (!this._keyUpPrevented) {
-      var input = $.trim(this.$search.val());
+      var input = this.$search.val().trim();
 
       this.trigger('query', {
         term: input
