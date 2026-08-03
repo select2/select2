@@ -46,9 +46,6 @@
       "lib": "dist"
     }
   },
-  "engines": {
-    "node": ">=24"
-  },
   "scripts": {
     "docs:serve": "uv run mkdocs serve",
     "docs:build": "uv run mkdocs build --strict"
