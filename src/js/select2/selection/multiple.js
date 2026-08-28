@@ -51,6 +51,8 @@ define(['jquery', './base', '../utils'], function ($, BaseSelection, Utils) {
           originalEvent: evt,
           data: data
         });
+
+        evt.stopPropagation();
       }
     );
 
