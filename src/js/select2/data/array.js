@@ -46,6 +46,10 @@ define(['./select', '../utils', 'jquery'], function (SelectAdapter, Utils, $) {
       };
     }
 
+    function itemFromOption($option) {
+      return self.item($option);
+    }
+
     for (var d = 0; d < data.length; d++) {
       var item = this._normalizeItem(data[d]);
 
@@ -69,6 +73,12 @@ define(['./select', '../utils', 'jquery'], function (SelectAdapter, Utils, $) {
         var $children = this.convertToOptions(item.children);
 
         $option.append($children);
+
+        var optionData = this.item($option);
+
+        optionData.children = $children.map(itemFromOption);
+
+        Utils.StoreData($option[0], 'data', optionData);
       }
 
       $options.push($option);
