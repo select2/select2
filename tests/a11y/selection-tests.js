@@ -69,6 +69,20 @@ QUnit.test('static aria attributes are present', function (assert) {
   );
 });
 
+QUnit.test('origin aria label is preserved', function (assert) {
+  var $select = $('#qunit-fixture .single');
+  $select.attr('aria-label', 'label');
+
+  var selection = new BaseSelection($select, options);
+  var $selection = selection.render();
+
+  assert.equal(
+    $selection.attr('aria-label'),
+    'label',
+    'The aria-label from the select element has been preserved'
+  );
+});
+
 QUnit.test('the container should be in the tab order', function (assert) {
   var $select = $('#qunit-fixture .single');
 

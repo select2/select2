@@ -29,6 +29,12 @@ define(['jquery', '../utils', '../keys'], function ($, Utils, KEYS) {
         this.$element[0].getAttribute('title')
       );
     }
+    if (this.$element[0].getAttribute('aria-label')) {
+      $selection[0].setAttribute(
+        'aria-label',
+        this.$element[0].getAttribute('aria-label')
+      );
+    }
     $selection[0].setAttribute('tabindex', this._tabindex);
     $selection[0].setAttribute('aria-disabled', 'false');
 
