@@ -23,17 +23,12 @@ define(['jquery', '../utils', '../keys'], function ($, Utils, KEYS) {
       this._tabindex = this.$element[0].getAttribute('tabindex');
     }
 
-    if (this.$element[0].getAttribute('title')) {
-      $selection[0].setAttribute(
-        'title',
-        this.$element[0].getAttribute('title')
-      );
-    }
-    if (this.$element[0].getAttribute('aria-label')) {
-      $selection[0].setAttribute(
-        'aria-label',
-        this.$element[0].getAttribute('aria-label')
-      );
+    var preserveAttrs = ['title', 'aria-label', 'aria-labelledby'];
+    for (var i = 0; i < preserveAttrs.length; i++) {
+      var attr = preserveAttrs[i];
+      if (this.$element[0].getAttribute(attr)) {
+        $selection[0].setAttribute(attr, this.$element[0].getAttribute(attr));
+      }
     }
     $selection[0].setAttribute('tabindex', this._tabindex);
     $selection[0].setAttribute('aria-disabled', 'false');

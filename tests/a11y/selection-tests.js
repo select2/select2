@@ -72,6 +72,7 @@ QUnit.test('static aria attributes are present', function (assert) {
 QUnit.test('origin aria label is preserved', function (assert) {
   var $select = $('#qunit-fixture .single');
   $select.attr('aria-label', 'label');
+  $select.attr('aria-labelledby', 'element');
 
   var selection = new BaseSelection($select, options);
   var $selection = selection.render();
@@ -80,6 +81,12 @@ QUnit.test('origin aria label is preserved', function (assert) {
     $selection.attr('aria-label'),
     'label',
     'The aria-label from the select element has been preserved'
+  );
+
+  assert.equal(
+    $selection.attr('aria-labelledby'),
+    'element',
+    'The aria-labelledby from the select element has been preserved'
   );
 });
 
