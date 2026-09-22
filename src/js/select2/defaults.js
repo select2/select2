@@ -154,7 +154,11 @@ define([
     }
 
     if (options.dropdownAdapter == null) {
-      if (options.multiple) {
+      // Multiple selects search inline by default (see `selectionAdapter`
+      // below); `dropdownSearch` opts a multiple select into a single
+      // select's floating-dropdown search instead, e.g. to avoid the
+      // control growing/reflowing the surrounding page while it is open
+      if (options.multiple && !options.dropdownSearch) {
         options.dropdownAdapter = Dropdown;
       } else {
         var SearchableDropdown = Utils.Decorate(Dropdown, DropdownSearch);
@@ -211,7 +215,12 @@ define([
         );
       }
 
-      if (options.multiple) {
+      // Skip the inline search box entirely once `dropdownSearch` has moved
+      // searching to the floating dropdown, or when `selectionSearch` was
+      // explicitly disabled (there is no separate dropdown search for
+      // multiple selects, so this is the only way to hide it for them)
+      if (options.multiple && !options.dropdownSearch &&
+          options.selectionSearch !== false) {
         options.selectionAdapter = Utils.Decorate(
           options.selectionAdapter,
           SelectionSearch
@@ -319,6 +328,7 @@ define([
       closeOnSelect: true,
       debug: false,
       dropdownAutoWidth: false,
+      dropdownSearch: false,
       escapeMarkup: Utils.escapeMarkup,
       language: {},
       matcher: matcher,
@@ -327,6 +337,7 @@ define([
       maximumSelectionLength: 0,
       minimumResultsForSearch: 0,
       selectOnClose: false,
+      selectionSearch: true,
       scrollAfterSelect: false,
       sorter: function (data) {
         return data;
