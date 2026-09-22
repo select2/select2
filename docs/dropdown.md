@@ -72,7 +72,7 @@ $('#mySelect2').select2({
 });
 ```
 
-Note that this option is only applicable to multi-select controls.
+This option applies to both single-select and multi-select controls.
 
 > [!NOTE]
 > If the [`CloseOnSelect` decorator](advanced/default-adapters/dropdown.md#closeonselect) is not used (or `closeOnSelect` is set to <code>false</code>), the dropdown will not automatically close when a result is selected. The dropdown will also never close if the <kbd>ctrl</kbd> key is held down when the result is selected.
