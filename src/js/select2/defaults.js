@@ -219,8 +219,11 @@ define([
       // searching to the floating dropdown, or when `selectionSearch` was
       // explicitly disabled (there is no separate dropdown search for
       // multiple selects, so this is the only way to hide it for them)
-      if (options.multiple && !options.dropdownSearch &&
-          options.selectionSearch !== false) {
+      if (
+        options.multiple &&
+        !options.dropdownSearch &&
+        options.selectionSearch !== false
+      ) {
         options.selectionAdapter = Utils.Decorate(
           options.selectionAdapter,
           SelectionSearch
