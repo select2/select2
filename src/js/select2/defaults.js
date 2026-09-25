@@ -349,9 +349,11 @@ define([
     var elementClosest = $element.closest('[lang]');
     var parentLanguage = elementClosest[0] ? elementClosest[0].lang : null;
 
+    // An explicit `language` option is the most intentional signal, so it
+    // takes precedence over the element's own `lang` attribute. See #5995.
     var languages = Array.prototype.concat.call(
-      this._resolveLanguage(elementLanguage),
       this._resolveLanguage(optionLanguage),
+      this._resolveLanguage(elementLanguage),
       this._resolveLanguage(defaultLanguage),
       this._resolveLanguage(parentLanguage)
     );
