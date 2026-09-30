@@ -208,7 +208,7 @@ define(['jquery', '../utils', '../keys'], function ($, Utils, KEYS) {
     this.resizeSearch();
 
     if (!this._keyUpPrevented) {
-      var input = this.$search.val();
+      var input = this.$search.val().trim();
 
       this.trigger('query', {
         term: input
