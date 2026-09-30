@@ -74,8 +74,6 @@ define(['jquery', '../keys', '../utils'], function ($, KEYS, Utils) {
     }
 
     this.$element.trigger('input').trigger('change');
-
-    this.trigger('toggle', {});
   };
 
   AllowClear.prototype._handleKeyboardClear = function (_, evt, container) {
