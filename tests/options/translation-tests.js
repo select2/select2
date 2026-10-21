@@ -284,3 +284,27 @@ QUnit.test('default language overrides inherited lang attr', function (assert) {
 
   assert.deepEqual(options.get('language'), ['es', 'it', 'en']);
 });
+
+QUnit.test(
+  'partial dictionary overrides element lang attr (#5995)',
+  function (assert) {
+    var $element = $('<select lang="en"></select>');
+
+    var options = new Options(
+      {
+        language: {
+          noResults: function () {
+            return 'override works';
+          }
+        }
+      },
+      $element
+    );
+
+    assert.equal(
+      options.get('translations').get('noResults')(),
+      'override works',
+      'The explicit partial override wins over the element lang="en" file'
+    );
+  }
+);
