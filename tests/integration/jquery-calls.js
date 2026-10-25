@@ -94,7 +94,6 @@ QUnit.test(
 
 QUnit.module('select2 search field identifiers');
 
-
 //   Check search field identification across single and multiple controls.
 QUnit.test('search fields have unique IDs and no names', function (assert) {
   // Keep several controls mounted to check identifiers across instances.
@@ -124,7 +123,11 @@ QUnit.test('search fields have unique IDs and no names', function (assert) {
       -1,
       'Each control has a distinct search field ID'
     );
-    assert.strictEqual($search.attr('name'), undefined, 'The field has no name');
+    assert.strictEqual(
+      $search.attr('name'),
+      undefined,
+      'The field has no name'
+    );
     searchIds.push(searchId);
     $select.select2('close');
   }
@@ -133,49 +136,51 @@ QUnit.test('search fields have unique IDs and no names', function (assert) {
   $fixture.find('select').select2('destroy');
 });
 
-
 //   Check search field identification through destruction and reinitialization.
-QUnit.test('search field IDs survive reinitialization without duplicates', function (assert) {
-  // Exercise both search adapters through the public plugin methods.
-  var $ = require('jquery');
-  require('jquery.select2');
-  var $fixture = $('#qunit-fixture');
+QUnit.test(
+  'search field IDs survive reinitialization without duplicates',
+  function (assert) {
+    // Exercise both search adapters through the public plugin methods.
+    var $ = require('jquery');
+    require('jquery.select2');
+    var $fixture = $('#qunit-fixture');
 
-  for (var index = 0; index < 2; index++) {
-    // Open each control to attach its search field to the document.
-    var $select = $('<select><option>One</option></select>')
-      .attr('id', 'search-lifecycle-' + index)
-      .prop('multiple', index === 1)
-      .appendTo($fixture);
-    var options = { dropdownParent: $fixture };
-    $select.select2(options);
-    $select.select2('open');
-    var searchId = $fixture.find('.select2-search__field').attr('id');
-    assert.ok(searchId, 'The initial search field has an ID');
+    for (var index = 0; index < 2; index++) {
+      // Open each control to attach its search field to the document.
+      var $select = $('<select><option>One</option></select>')
+        .attr('id', 'search-lifecycle-' + index)
+        .prop('multiple', index === 1)
+        .appendTo($fixture);
+      var options = { dropdownParent: $fixture };
+      $select.select2(options);
+      $select.select2('open');
+      var searchId = $fixture.find('.select2-search__field').attr('id');
+      assert.ok(searchId, 'The initial search field has an ID');
 
-    // Destroying an open control must remove its identified search field.
-    $select.select2('destroy');
-    assert.strictEqual(
-      document.getElementById(searchId),
-      null,
-      'The search field is removed on destroy'
-    );
+      // Destroying an open control must remove its identified search field.
+      $select.select2('destroy');
+      assert.strictEqual(
+        document.getElementById(searchId),
+        null,
+        'The search field is removed on destroy'
+      );
 
-    // Reinitialization must attach one replacement with the same stable ID.
-    $select.select2(options);
-    $select.select2('open');
-    var $search = $fixture.find('.select2-search__field');
-    assert.strictEqual($search.attr('id'), searchId, 'The ID remains stable');
-    assert.strictEqual(
-      document.getElementById(searchId),
-      $search[0],
-      'The ID resolves to the replacement field'
-    );
-    assert.equal(
-      $fixture.find('[id="' + searchId + '"]').length,
-      1,
-      'The search field ID occurs once'
-    );
-    $select.select2('destroy');
+      // Reinitialization must attach one replacement with the same stable ID.
+      $select.select2(options);
+      $select.select2('open');
+      var $search = $fixture.find('.select2-search__field');
+      assert.strictEqual($search.attr('id'), searchId, 'The ID remains stable');
+      assert.strictEqual(
+        document.getElementById(searchId),
+        $search[0],
+        'The ID resolves to the replacement field'
+      );
+      assert.equal(
+        $fixture.find('[id="' + searchId + '"]').length,
+        1,
+        'The search field ID occurs once'
+      );
+      $select.select2('destroy');
+    }
   }
-});
+);
