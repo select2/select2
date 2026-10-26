@@ -29,6 +29,7 @@ define(['jquery', '../utils', '../keys'], function ($, Utils, KEYS) {
     return $rendered;
   };
 
+  //   Bind search events and identify the inline search field.
   Search.prototype.bind = function (decorated, container, $container) {
     var self = this;
 
@@ -37,6 +38,8 @@ define(['jquery', '../utils', '../keys'], function ($, Utils, KEYS) {
 
     decorated.call(this, container, $container);
 
+    // Identify the search field without including it in submitted form data.
+    self.$search[0].setAttribute('id', container.id + '-search');
     self.$search[0].setAttribute('aria-describedby', selectionId);
 
     container.on('open', function () {

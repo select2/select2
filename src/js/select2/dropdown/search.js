@@ -24,12 +24,16 @@ define(['jquery'], function ($) {
     return $rendered;
   };
 
+  //   Bind search events and identify the dropdown search field.
   Search.prototype.bind = function (decorated, container, $container) {
     var self = this;
 
     var resultsId = container.id + '-results';
 
     decorated.call(this, container, $container);
+
+    // Keep this ID distinct from an inline search in the same control.
+    this.$search[0].setAttribute('id', container.id + '-dropdown-search');
 
     this.$search.on('keydown', function (evt) {
       self.trigger('keypress', evt);
