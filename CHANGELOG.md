@@ -7,12 +7,12 @@
 - The minimum jQuery version supported is the latest version in the 1.x, 2.x, and 3.x series (#5525, #5955)
 - Removed support for legacy Internet Explorer (versions older than IE 11) (#5834)
 - Removed modules deprecated in 4.0.0 (#5815)
-    - Removed legacy support for `<input />` tags
+  - Removed legacy support for `<input />` tags
     - Removed legacy support for `initSelection`
     - Removed legacy support for `query`
     - Removed old `select2/compat/matcher` module
 - Removed undocumented CSS-related options (#5815)
-    - Removed `dropdownCss` option
+  - Removed `dropdownCss` option
     - Removed `adaptDropdownCss` option
     - Removed `containerCss` option
     - Removed `adaptContainerCss` option
@@ -529,6 +529,6 @@ This builds upon [the second release candidate](https://github.com/select2/selec
 - `select2-focus` - Use the native `focus` event instead
 - `select2-blur` - Use the native `blur` event instead
 - All extra properties from the `change` event were removed
-    - `val` can be retrieved with `$element.val()` instead
+  - `val` can be retrieved with `$element.val()` instead
     - `added` can be retrieved by listening to `select2:select`
     - `removed` can be retrieved by listening to `select2:unselect`

@@ -16,14 +16,14 @@ https://select2.org/
 - Enhancing native selects with search.
 - Enhancing native selects with a better multi-select interface.
 - Loading data from JavaScript: easily load items via AJAX and have them
-    searchable.
+  searchable.
 - Nesting optgroups: native selects only support one level of nesting. Select2
-    does not have this restriction.
+  does not have this restriction.
 - Tagging: ability to add new items on the fly.
 - Working with large, remote datasets: ability to partially load a dataset based
-    on the search term.
+  on the search term.
 - Paging of large datasets: easy support for loading more pages when the results
-    are scrolled to the end.
+  are scrolled to the end.
 - Templating: support for custom rendering of results and selections.
 
 ## Browser compatibility
@@ -48,7 +48,7 @@ Plugins
 
 - [Backdrop CMS][backdrop-cms] - [backdrop-select2]
 - [Django]
-    - [django-autocomplete-light]
+  - [django-autocomplete-light]
     - [django-easy-select2]
     - [django-select2]
 - [Drupal] - [drupal-select2]

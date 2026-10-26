@@ -8,17 +8,17 @@ By default, Select2 will display the `text` property of each data object within 
 
 ```javascript
 function formatState(state) {
-    if (!state.id) {
-        return state.text;
-    }
-    var $state = $(
-        `<span><img src="https://flagpedia.net/data/us/w580/${state.element.value.toLowerCase()}.webp" class="img-flag" />${state.text}</span>`
-    );
-    return $state;
-};
+  if (!state.id) {
+    return state.text;
+  }
+  var $state = $(
+    `<span><img src="https://flagpedia.net/data/us/w580/${state.element.value.toLowerCase()}.webp" class="img-flag" />${state.text}</span>`
+  );
+  return $state;
+}
 
-$(".js-example-templating").select2({
-    templateResult: formatState
+$('.js-example-templating').select2({
+  templateResult: formatState
 });
 ```
 
@@ -58,7 +58,7 @@ Select2 can be configured to automatically select the currently highlighted resu
 
 ```javascript
 $('#mySelect2').select2({
-    selectOnClose: true
+  selectOnClose: true
 });
 ```
 
@@ -68,7 +68,7 @@ Select2 will automatically close the dropdown when an element is selected, simil
 
 ```javascript
 $('#mySelect2').select2({
-    closeOnSelect: false
+  closeOnSelect: false
 });
 ```
 
@@ -87,7 +87,7 @@ The `dropdownParent` option allows you to pick an alternative element for the dr
 
 ```javascript
 $('#mySelect2').select2({
-    dropdownParent: $('#myModal')
+  dropdownParent: $('#myModal')
 });
 ```
 
@@ -96,15 +96,17 @@ This is useful when attempting to render Select2 correctly inside of modals and 
 If you are rendering a Select2 inside of a modal (Bootstrap 3.x) that has not yet been rendered or opened, you may need to bind to the `shown.bs.modal` event:
 
 ```javascript
-$('body').on('shown.bs.modal', '.modal', function() {
-    $(this).find('select').each(function() {
-        var dropdownParent = $(document.body);
-        if ($(this).parents('.modal.in:first').length !== 0)
-            dropdownParent = $(this).parents('.modal.in:first');
-        $(this).select2({
-            dropdownParent: dropdownParent
-            // ...
-        });
+$('body').on('shown.bs.modal', '.modal', function () {
+  $(this)
+    .find('select')
+    .each(function () {
+      var dropdownParent = $(document.body);
+      if ($(this).parents('.modal.in:first').length !== 0)
+        dropdownParent = $(this).parents('.modal.in:first');
+      $(this).select2({
+        dropdownParent: dropdownParent
+        // ...
+      });
     });
 });
 ```
