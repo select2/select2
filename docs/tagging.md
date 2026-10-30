@@ -8,21 +8,15 @@ In addition to a prepopulated menu of options, Select2 can dynamically create ne
 
 ```html
 <select>
- <option selected="selected">
-  orange
- </option>
- <option>
-  white
- </option>
- <option>
-  purple
- </option>
+  <option selected="selected">orange</option>
+  <option>white</option>
+  <option>purple</option>
 </select>
 ```
 
 ```javascript
-$(".js-example-tags").select2({
-    tags: true
+$('.js-example-tags').select2({
+  tags: true
 });
 ```
 
@@ -40,15 +34,9 @@ Tagging can also be used in multi-value select boxes. In the example below, we s
 
 ```html
 <select multiple="multiple">
- <option selected="selected">
-  orange
- </option>
- <option>
-  white
- </option>
- <option selected="selected">
-  purple
- </option>
+  <option selected="selected">orange</option>
+  <option>white</option>
+  <option selected="selected">purple</option>
 </select>
 ```
 
@@ -73,10 +61,10 @@ The separators that should be used when tokenizing can be specified using the `t
 </select>
 
 ```javascript
-$(".js-example-tokenizer").select2({
-    tags: true,
-    tokenSeparators: [',', ' ']
-})
+$('.js-example-tokenizer').select2({
+  tags: true,
+  tokenSeparators: [',', ' ']
+});
 ```
 
 <script type="text/javascript" class="js-code-example-tokenizer">
@@ -94,19 +82,19 @@ You may add extra properties to newly created tags by defining a `createTag` cal
 
 ```javascript
 $('select').select2({
-    createTag: function(params) {
-        var term = $.trim(params.term);
+  createTag: function (params) {
+    var term = $.trim(params.term);
 
-        if (term === '') {
-            return null;
-        }
-
-        return {
-            id: term,
-            text: term,
-            newTag: true // add additional parameters
-        }
+    if (term === '') {
+      return null;
     }
+
+    return {
+      id: term,
+      text: term,
+      newTag: true // add additional parameters
+    };
+  }
 });
 ```
 
@@ -116,18 +104,18 @@ You may control when Select2 will allow the user to create a new tag, by adding 
 
 ```javascript
 $('select').select2({
-    createTag: function(params) {
-        // Don't offer to create a tag if there is no @ symbol
-        if (params.term.indexOf('@') === -1) {
-            // Return null to disable tag creation
-            return null;
-        }
-
-        return {
-            id: params.term,
-            text: params.term
-        }
+  createTag: function (params) {
+    // Don't offer to create a tag if there is no @ symbol
+    if (params.term.indexOf('@') === -1) {
+      // Return null to disable tag creation
+      return null;
     }
+
+    return {
+      id: params.term,
+      text: params.term
+    };
+  }
 });
 ```
 
@@ -137,9 +125,9 @@ You may control the placement of the newly created option by defining a `insertT
 
 ```javascript
 $('select').select2({
-    insertTag: function(data, tag) {
-        // Insert the tag at the end of the results
-        data.push(tag);
-    }
+  insertTag: function (data, tag) {
+    // Insert the tag at the end of the results
+    data.push(tag);
+  }
 });
 ```
