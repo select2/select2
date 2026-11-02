@@ -58,13 +58,13 @@ plugins:
         - Copilot
   - redirects:
       redirect_maps:
-        'troubleshooting/README.md': 'troubleshooting/getting-help.md'
-        'configuration/README.md': 'configuration/options-api.md'
-        'data-sources/README.md': 'data-sources/formats.md'
-        'programmatic-control/README.md': 'programmatic-control/add-select-clear-items.md'
-        'advanced/README.md': 'advanced/adapters-and-decorators.md'
-        'advanced/default-adapters/README.md': 'advanced/default-adapters/selection.md'
-        'upgrading/README.md': 'upgrading/new-in-40.md'
+        "troubleshooting/README.md": "troubleshooting/getting-help.md"
+        "configuration/README.md": "configuration/options-api.md"
+        "data-sources/README.md": "data-sources/formats.md"
+        "programmatic-control/README.md": "programmatic-control/add-select-clear-items.md"
+        "advanced/README.md": "advanced/adapters-and-decorators.md"
+        "advanced/default-adapters/README.md": "advanced/default-adapters/selection.md"
+        "upgrading/README.md": "upgrading/new-in-40.md"
 markdown_extensions:
   - admonition
   - attr_list
