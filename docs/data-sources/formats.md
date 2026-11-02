@@ -58,10 +58,10 @@ Select2 requires that the `id` property is used to uniquely identify the options
 If you cannot do this on your server or you are in a situation where the API cannot be changed, you can do this in JavaScript before passing it to Select2:
 
 ```javascript
-var data = $.map(yourArrayData, function(obj) {
-    obj.id = obj.id || obj.pk; // replace pk with your identifier
+var data = $.map(yourArrayData, function (obj) {
+  obj.id = obj.id || obj.pk; // replace pk with your identifier
 
-    return obj;
+  return obj;
 });
 ```
 
@@ -70,10 +70,10 @@ var data = $.map(yourArrayData, function(obj) {
 Just like with the `id` property, Select2 requires that the text that should be displayed for an option is stored in the `text` property. You can map this property from any existing property using the following JavaScript:
 
 ```javascript
-var data = $.map(yourArrayData, function(obj) {
-    obj.text = obj.text || obj.name; // replace name with the property used for the text
+var data = $.map(yourArrayData, function (obj) {
+  obj.text = obj.text || obj.name; // replace name with the property used for the text
 
-    return obj;
+  return obj;
 });
 ```
 

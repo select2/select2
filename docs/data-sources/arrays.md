@@ -11,30 +11,36 @@ You can provide initial selections with array data by providing the option tag f
 </select>
 
 ```javascript
-var data = [{
+var data = [
+  {
     id: 0,
     text: 'enhancement'
-}, {
+  },
+  {
     id: 1,
     text: 'bug'
-}, {
+  },
+  {
     id: 2,
     text: 'duplicate'
-}, {
+  },
+  {
     id: 3,
     text: 'invalid'
-}, {
+  },
+  {
     id: 4,
     text: 'wontfix'
-}];
+  }
+];
 
-$(".js-example-data-array").select2({
-    data: data
-})
+$('.js-example-data-array').select2({
+  data: data
+});
 
-$(".js-example-data-array-selected").select2({
-    data: data
-})
+$('.js-example-data-array-selected').select2({
+  data: data
+});
 ```
 
 <script type="text/javascript" class="js-code-placeholder">
