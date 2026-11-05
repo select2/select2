@@ -432,7 +432,7 @@ define(['jquery', './utils'], function ($, Utils) {
       var clientHeight = el.clientHeight;
 
       var isAtTop = deltaY < 0 && scrollTop <= 0;
-      var isAtBottom = deltaY > 0 && (scrollTop + clientHeight >= scrollHeight);
+      var isAtBottom = deltaY > 0 && scrollTop + clientHeight >= scrollHeight;
 
       if (isAtTop || isAtBottom) {
         e.preventDefault();

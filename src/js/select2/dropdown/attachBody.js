@@ -11,9 +11,10 @@ define(['jquery', '../utils'], function ($, Utils) {
         'dialog, .modal, [role="dialog"], .ui-dialog'
       );
 
-      this.$dropdownParent = $autoModalParent.length > 0 ?
-        $autoModalParent.first() :
-        $(document.body);
+      this.$dropdownParent =
+        $autoModalParent.length > 0
+          ? $autoModalParent.first()
+          : $(document.body);
     }
 
     decorated.call(this, $element, options);
@@ -49,10 +50,17 @@ define(['jquery', '../utils'], function ($, Utils) {
 
     if ($modalAncestors.length > 0) {
       var modalCloseEvent =
-        'hide.bs.modal.select2.' + container.id + ' ' +
-        'hidden.bs.modal.select2.' + container.id + ' ' +
-        'dialogclose.select2.' + container.id + ' ' +
-        'close.select2.' + container.id;
+        'hide.bs.modal.select2.' +
+        container.id +
+        ' ' +
+        'hidden.bs.modal.select2.' +
+        container.id +
+        ' ' +
+        'dialogclose.select2.' +
+        container.id +
+        ' ' +
+        'close.select2.' +
+        container.id;
 
       $modalAncestors.on(modalCloseEvent, function () {
         if (container.isOpen()) {
@@ -218,19 +226,20 @@ define(['jquery', '../utils'], function ($, Utils) {
           break;
         }
 
-        var style = window.getComputedStyle ? window.getComputedStyle(el) : null;
+        var style = window.getComputedStyle
+          ? window.getComputedStyle(el)
+          : null;
         if (style) {
           var isPositioned = style.position !== 'static';
-          var isTransformed = (
+          var isTransformed =
             (style.transform && style.transform !== 'none') ||
             (style.perspective && style.perspective !== 'none') ||
             (style.filter && style.filter !== 'none') ||
-            (style.willChange && style.willChange.indexOf('transform') !== -1) ||
-            (style.contain && (
-              style.contain.indexOf('paint') !== -1 ||
-              style.contain.indexOf('layout') !== -1
-            ))
-          );
+            (style.willChange &&
+              style.willChange.indexOf('transform') !== -1) ||
+            (style.contain &&
+              (style.contain.indexOf('paint') !== -1 ||
+                style.contain.indexOf('layout') !== -1));
 
           if (isPositioned || isTransformed) {
             return $candidate;
