@@ -322,3 +322,46 @@ QUnit.skip('search box sets autocomplete from options', function (assert) {
     'The search box sets the right autocomplete attribute'
   );
 });
+
+QUnit.test('close does not scroll to the search', function (assert) {
+  var $container = $('#qunit-fixture .event-container');
+  var container = new MockContainer();
+
+  var CustomSelection = Utils.Decorate(MultipleSelection, InlineSearch);
+
+  var $element = $('#qunit-fixture .multiple');
+  var selection = new CustomSelection($element, options);
+
+  var $selection = selection.render();
+  selection.bind(container, $container);
+
+  // Update the selection so the search is rendered
+  selection.update([]);
+
+  $container.append($selection);
+
+  var $search = $selection.find('textarea');
+
+  // Record the options passed when the focus is restored
+  var focusOptions = null;
+  var nativeFocus = $search[0].focus;
+
+  $search[0].focus = function (opts) {
+    focusOptions = opts;
+
+    return nativeFocus.apply(this, arguments);
+  };
+
+  container.trigger('close');
+
+  assert.ok(
+    focusOptions != null && focusOptions.preventScroll === true,
+    'The focus must be restored without scrolling the page'
+  );
+
+  assert.equal(
+    document.activeElement,
+    $search[0],
+    'After close, focus must be set to the search'
+  );
+});
