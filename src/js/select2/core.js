@@ -339,7 +339,7 @@ define(['jquery', './options', './utils', './keys'], function (
   };
 
   Select2.prototype._syncAttributes = function () {
-    this.options.set('disabled', this.$element[0].disabled);
+    this.options.set('disabled', this._isElementDisabled());
 
     if (this.isDisabled()) {
       if (this.isOpen()) {
@@ -350,6 +350,23 @@ define(['jquery', './options', './utils', './keys'], function (
     } else {
       this.trigger('enable', {});
     }
+  };
+
+  /**
+   * Determine whether the original element is disabled, including when it is
+   * disabled through a disabled ancestor `<fieldset>`, which does not change
+   * the `disabled` property of the element itself.
+   */
+  Select2.prototype._isElementDisabled = function () {
+    var element = this.$element[0];
+
+    if (element.disabled) {
+      return true;
+    }
+
+    var matches = element.matches || element.msMatchesSelector;
+
+    return matches != null && matches.call(element, ':disabled');
   };
 
   Select2.prototype._isChangeMutation = function (mutations) {
