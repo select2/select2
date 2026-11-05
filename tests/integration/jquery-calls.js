@@ -184,3 +184,41 @@ QUnit.test(
     }
   }
 );
+
+QUnit.test(
+  'close unbinds the scroll handler for IDs with regex characters',
+  function (assert) {
+    var $ = require('jquery');
+    require('jquery.select2');
+
+    var ids = ['list$1', 'list(1)'];
+
+    for (var i = 0; i < ids.length; i++) {
+      var $parent = $(
+        '<div style="height: 50px; overflow-y: scroll">' +
+          '<div style="height: 500px"><select></select></div>' +
+          '</div>'
+      );
+      var $select = $parent.find('select');
+      $select[0].setAttribute('id', ids[i]);
+
+      $('#qunit-fixture').append($parent);
+
+      $select.select2();
+      $select.select2('open');
+      $select.select2('close');
+
+      // A leftover handler would reset the scroll position
+      $parent.scrollTop(20);
+      $parent.trigger('scroll');
+
+      assert.equal(
+        $parent.scrollTop(),
+        20,
+        'The parent of #' + ids[i] + ' can be scrolled after closing'
+      );
+
+      $select.select2('destroy');
+    }
+  }
+);

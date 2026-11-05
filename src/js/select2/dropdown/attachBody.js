@@ -109,9 +109,10 @@ define(['jquery', '../utils'], function ($, Utils) {
   ) {
     var self = this;
 
-    var scrollEvent = 'scroll.select2.' + container.id;
-    var resizeEvent = 'resize.select2.' + container.id;
-    var orientationEvent = 'orientationchange.select2.' + container.id;
+    var namespace = Utils.toEventNamespace(container.id);
+    var scrollEvent = 'scroll.select2.' + namespace;
+    var resizeEvent = 'resize.select2.' + namespace;
+    var orientationEvent = 'orientationchange.select2.' + namespace;
 
     var $watchers = this.$container.parents().filter(Utils.hasScroll);
     $watchers.each(function () {
@@ -139,9 +140,10 @@ define(['jquery', '../utils'], function ($, Utils) {
     decorated,
     container
   ) {
-    var scrollEvent = 'scroll.select2.' + container.id;
-    var resizeEvent = 'resize.select2.' + container.id;
-    var orientationEvent = 'orientationchange.select2.' + container.id;
+    var namespace = Utils.toEventNamespace(container.id);
+    var scrollEvent = 'scroll.select2.' + namespace;
+    var resizeEvent = 'resize.select2.' + namespace;
+    var orientationEvent = 'orientationchange.select2.' + namespace;
 
     var $watchers = this.$container.parents().filter(Utils.hasScroll);
     $watchers.off(scrollEvent);

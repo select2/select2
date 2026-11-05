@@ -121,7 +121,9 @@ define(['jquery', '../utils', '../keys'], function ($, Utils, KEYS) {
   };
 
   BaseSelection.prototype._attachCloseHandler = function (container) {
-    $(document.body).on('mousedown.select2.' + container.id, function (e) {
+    var namespace = Utils.toEventNamespace(container.id);
+
+    $(document.body).on('mousedown.select2.' + namespace, function (e) {
       var $target = $(e.target);
 
       var $select = $target.closest('.select2');
@@ -141,7 +143,9 @@ define(['jquery', '../utils', '../keys'], function ($, Utils, KEYS) {
   };
 
   BaseSelection.prototype._detachCloseHandler = function (container) {
-    $(document.body).off('mousedown.select2.' + container.id);
+    $(document.body).off(
+      'mousedown.select2.' + Utils.toEventNamespace(container.id)
+    );
   };
 
   BaseSelection.prototype.position = function ($selection, $container) {
