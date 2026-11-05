@@ -234,30 +234,33 @@ QUnit.test(
 
 QUnit.module('select2 disabled state');
 
-QUnit.test('a select inside a disabled fieldset is disabled', function (assert) {
-  var $fieldset = $(
-    '<fieldset disabled>' +
-      '<select><option>One</option></select>' +
-      '</fieldset>'
-  );
+QUnit.test(
+  'a select inside a disabled fieldset is disabled',
+  function (assert) {
+    var $fieldset = $(
+      '<fieldset disabled>' +
+        '<select><option>One</option></select>' +
+        '</fieldset>'
+    );
 
-  $('#qunit-fixture').append($fieldset);
+    $('#qunit-fixture').append($fieldset);
 
-  var $select = $fieldset.find('select');
-  var select = new Select2($select, new Options({}));
+    var $select = $fieldset.find('select');
+    var select = new Select2($select, new Options({}));
 
-  assert.ok(select.isDisabled(), 'Select2 should be disabled');
+    assert.ok(select.isDisabled(), 'Select2 should be disabled');
 
-  assert.ok(
-    select.$container[0].classList.contains('select2-container--disabled'),
-    'The container should be marked as disabled'
-  );
+    assert.ok(
+      select.$container[0].classList.contains('select2-container--disabled'),
+      'The container should be marked as disabled'
+    );
 
-  assert.notOk(
-    $select[0].disabled,
-    'The disabled property of the select itself should not be changed'
-  );
-});
+    assert.notOk(
+      $select[0].disabled,
+      'The disabled property of the select itself should not be changed'
+    );
+  }
+);
 
 QUnit.test('a select inside an enabled fieldset is enabled', function (assert) {
   var $fieldset = $(
