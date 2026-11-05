@@ -352,11 +352,7 @@ define(['jquery', './options', './utils', './keys'], function (
     }
   };
 
-  /**
-   * Determine whether the original element is disabled, including when it is
-   * disabled through a disabled ancestor `<fieldset>`, which does not change
-   * the `disabled` property of the element itself.
-   */
+  // A disabled fieldset doesn't set the disabled property of its fields
   Select2.prototype._isElementDisabled = function () {
     var element = this.$element[0];
 
