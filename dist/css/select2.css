@@ -79,7 +79,7 @@
   position: absolute;
   left: -100000px;
   width: 100%;
-  z-index: 1051;
+  z-index: 1060;
 }
 
 .select2-results {
@@ -90,6 +90,7 @@
   list-style: none;
   margin: 0;
   padding: 0;
+  overscroll-behavior: contain;
 }
 
 .select2-results__option {
@@ -433,7 +434,7 @@
 }
 
 .select2-container--classic .select2-selection--single {
-  background-color: rgb(246.5, 246.5, 246.5);
+  background-color: rgb(96.6666666667%, 96.6666666667%, 96.6666666667%);
   border: 1px solid #aaa;
   border-radius: 4px;
   outline: 0;

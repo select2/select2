@@ -1,12 +1,29 @@
 define(['jquery', '../utils'], function ($, Utils) {
   function AttachBody(decorated, $element, options) {
-    this.$dropdownParent = $(options.get('dropdownParent') || document.body);
+    this.$element = $element;
+
+    var configuredParent = options.get('dropdownParent');
+
+    if (configuredParent) {
+      this.$dropdownParent = $(configuredParent);
+    } else {
+      var $autoModalParent = $element.closest(
+        'dialog, .modal, [role="dialog"], .ui-dialog'
+      );
+
+      this.$dropdownParent =
+        $autoModalParent.length > 0
+          ? $autoModalParent.first()
+          : $(document.body);
+    }
 
     decorated.call(this, $element, options);
   }
 
   AttachBody.prototype.bind = function (decorated, container, $container) {
     var self = this;
+
+    this.container = container;
 
     decorated.call(this, container, $container);
 
@@ -23,13 +40,50 @@ define(['jquery', '../utils'], function ($, Utils) {
       self._detachPositioningHandler(container);
     });
 
-    this.$dropdownContainer.on('mousedown', function (evt) {
+    this.$dropdownContainer.on('mousedown touchstart focusin', function (evt) {
       evt.stopPropagation();
     });
+
+    var $modalAncestors = this.$element.closest(
+      'dialog, .modal, [role="dialog"], .ui-dialog'
+    );
+
+    if ($modalAncestors.length > 0) {
+      var modalCloseEvent =
+        'hide.bs.modal.select2.' +
+        container.id +
+        ' ' +
+        'hidden.bs.modal.select2.' +
+        container.id +
+        ' ' +
+        'dialogclose.select2.' +
+        container.id +
+        ' ' +
+        'close.select2.' +
+        container.id;
+
+      $modalAncestors.on(modalCloseEvent, function () {
+        if (container.isOpen()) {
+          container.close();
+        }
+      });
+
+      this._$modalAncestors = $modalAncestors;
+      this._modalCloseEvent = modalCloseEvent;
+    }
   };
 
   AttachBody.prototype.destroy = function (decorated) {
     decorated.call(this);
+
+    if (this._detachPositioningHandler && this.container) {
+      this._detachPositioningHandler(this.container);
+    }
+
+    if (this._$modalAncestors && this._modalCloseEvent) {
+      this._$modalAncestors.off(this._modalCloseEvent);
+      this._$modalAncestors = null;
+    }
 
     this.$dropdownContainer.remove();
   };
@@ -41,9 +95,20 @@ define(['jquery', '../utils'], function ($, Utils) {
     $dropdown[0].classList.remove('select2');
     $dropdown[0].classList.add('select2-container--open');
 
+    var highestZIndex = 1060;
+    var $parents = $container.parents();
+
+    for (var i = 0; i < $parents.length; i++) {
+      var z = parseInt(window.getComputedStyle($parents[i]).zIndex, 10);
+      if (!isNaN(z) && z >= highestZIndex) {
+        highestZIndex = z + 1;
+      }
+    }
+
     $dropdown.css({
       position: 'absolute',
-      top: -999999
+      top: -999999,
+      zIndex: highestZIndex
     });
 
     this.$container = $container;
@@ -113,24 +178,22 @@ define(['jquery', '../utils'], function ($, Utils) {
     var resizeEvent = 'resize.select2.' + container.id;
     var orientationEvent = 'orientationchange.select2.' + container.id;
 
-    var $watchers = this.$container.parents().filter(Utils.hasScroll);
-    $watchers.each(function () {
-      Utils.StoreData(this, 'select2-scroll-position', {
-        x: $(this).scrollLeft(),
-        y: $(this).scrollTop()
-      });
-    });
+    this._$scrollWatchers = this.$container.parents().filter(Utils.hasScroll);
 
-    $watchers.on(scrollEvent, function (ev) {
-      var position = Utils.GetData(this, 'select2-scroll-position');
-      $(this).scrollTop(position.y);
+    this._$scrollWatchers.on(scrollEvent, function () {
+      if (container.isOpen()) {
+        self._positionDropdown();
+        self._resizeDropdown();
+      }
     });
 
     $(window).on(
       scrollEvent + ' ' + resizeEvent + ' ' + orientationEvent,
       function (e) {
-        self._positionDropdown();
-        self._resizeDropdown();
+        if (container.isOpen()) {
+          self._positionDropdown();
+          self._resizeDropdown();
+        }
       }
     );
   };
@@ -143,10 +206,53 @@ define(['jquery', '../utils'], function ($, Utils) {
     var resizeEvent = 'resize.select2.' + container.id;
     var orientationEvent = 'orientationchange.select2.' + container.id;
 
-    var $watchers = this.$container.parents().filter(Utils.hasScroll);
-    $watchers.off(scrollEvent);
+    if (this._$scrollWatchers) {
+      this._$scrollWatchers.off(scrollEvent);
+      this._$scrollWatchers = null;
+    }
+
+    this.$container.parents().off(scrollEvent);
 
     $(window).off(scrollEvent + ' ' + resizeEvent + ' ' + orientationEvent);
+  };
+
+  AttachBody.prototype._getOffsetParent = function () {
+    var $candidate = this.$dropdownParent;
+
+    if ($candidate.css('position') === 'static') {
+      while ($candidate.length && !$candidate.is('body, html')) {
+        var el = $candidate[0];
+        if (el.nodeType !== 1) {
+          break;
+        }
+
+        var style = window.getComputedStyle
+          ? window.getComputedStyle(el)
+          : null;
+        if (style) {
+          var isPositioned = style.position !== 'static';
+          var isTransformed =
+            (style.transform && style.transform !== 'none') ||
+            (style.perspective && style.perspective !== 'none') ||
+            (style.filter && style.filter !== 'none') ||
+            (style.willChange &&
+              style.willChange.indexOf('transform') !== -1) ||
+            (style.contain &&
+              (style.contain.indexOf('paint') !== -1 ||
+                style.contain.indexOf('layout') !== -1));
+
+          if (isPositioned || isTransformed) {
+            return $candidate;
+          }
+        }
+
+        $candidate = $candidate.parent();
+      }
+
+      return $(document.body);
+    }
+
+    return $candidate;
   };
 
   AttachBody.prototype._positionDropdown = function () {
@@ -189,14 +295,7 @@ define(['jquery', '../utils'], function ($, Utils) {
       top: container.bottom
     };
 
-    // Determine what the parent element is to use for calculating the offset
-    var $offsetParent = this.$dropdownParent;
-
-    // For statically positioned elements, we need to get the element
-    // that is determining the offset
-    if ($offsetParent.css('position') === 'static') {
-      $offsetParent = $offsetParent.offsetParent();
-    }
+    var $offsetParent = this._getOffsetParent();
 
     var parentOffset = {
       top: 0,
@@ -213,6 +312,18 @@ define(['jquery', '../utils'], function ($, Utils) {
     css.top -= parentOffset.top;
     css.left -= parentOffset.left;
 
+    if (!$offsetParent.is('body, html')) {
+      css.top += $offsetParent.scrollTop();
+      css.left += $offsetParent.scrollLeft();
+
+      if ($offsetParent[0].clientTop) {
+        css.top -= $offsetParent[0].clientTop;
+      }
+      if ($offsetParent[0].clientLeft) {
+        css.left -= $offsetParent[0].clientLeft;
+      }
+    }
+
     if (!isCurrentlyAbove && !isCurrentlyBelow) {
       newDirection = 'below';
     }
@@ -228,6 +339,14 @@ define(['jquery', '../utils'], function ($, Utils) {
       (isCurrentlyAbove && newDirection !== 'below')
     ) {
       css.top = container.top - parentOffset.top - dropdown.height;
+
+      if (!$offsetParent.is('body, html')) {
+        css.top += $offsetParent.scrollTop();
+
+        if ($offsetParent[0].clientTop) {
+          css.top -= $offsetParent[0].clientTop;
+        }
+      }
     }
 
     if (newDirection != null) {
@@ -244,8 +363,14 @@ define(['jquery', '../utils'], function ($, Utils) {
   };
 
   AttachBody.prototype._resizeDropdown = function () {
+    var width = this.$container.outerWidth(false);
+
+    if (width <= 0) {
+      width = this.$container.parent().width();
+    }
+
     var css = {
-      width: this.$container.outerWidth(false) + 'px'
+      width: width + 'px'
     };
 
     if (this.options.get('dropdownAutoWidth')) {
