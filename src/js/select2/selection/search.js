@@ -44,7 +44,14 @@ define(['jquery', '../utils', '../keys'], function ($, Utils, KEYS) {
 
     container.on('open', function () {
       self.$search[0].setAttribute('aria-controls', resultsId);
-      self.$search.trigger('focus');
+
+      if (self.$search[0] && self.$search[0].focus) {
+        self.$search[0].focus({
+          preventScroll: true
+        });
+      } else {
+        self.$search.trigger('focus');
+      }
     });
 
     container.on('close', function () {

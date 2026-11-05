@@ -57,10 +57,22 @@ define(['jquery'], function ($) {
       self.$search[0].setAttribute('tabindex', 0);
       self.$search[0].setAttribute('aria-controls', resultsId);
 
-      self.$search.trigger('focus');
+      if (self.$search[0] && self.$search[0].focus) {
+        self.$search[0].focus({
+          preventScroll: true
+        });
+      } else {
+        self.$search.trigger('focus');
+      }
 
       window.setTimeout(function () {
-        self.$search.trigger('focus');
+        if (self.$search[0] && self.$search[0].focus) {
+          self.$search[0].focus({
+            preventScroll: true
+          });
+        } else {
+          self.$search.trigger('focus');
+        }
       }, 0);
     });
 

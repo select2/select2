@@ -1277,6 +1277,28 @@ S2.define('select2/results',['jquery', './utils'], function ($, Utils) {
       self.displayMessage(params);
     });
 
+    this.$results.on('wheel', function (e) {
+      var origEvent = e.originalEvent || e;
+      var deltaY = origEvent.deltaY;
+
+      if (deltaY === undefined) {
+        return;
+      }
+
+      var el = self.$results[0];
+      var scrollTop = el.scrollTop;
+      var scrollHeight = el.scrollHeight;
+      var clientHeight = el.clientHeight;
+
+      var isAtTop = deltaY < 0 && scrollTop <= 0;
+      var isAtBottom = deltaY > 0 && (scrollTop + clientHeight >= scrollHeight);
+
+      if (isAtTop || isAtBottom) {
+        e.preventDefault();
+      }
+      e.stopPropagation();
+    });
+
     if ($.fn.mousewheel) {
       this.$results.on('mousewheel', function (e) {
         var top = self.$results.scrollTop();
@@ -1457,11 +1479,12 @@ S2.define('select2/selection/base',['jquery', '../utils', '../keys'], function (
       this._tabindex = this.$element[0].getAttribute('tabindex');
     }
 
-    if (this.$element[0].getAttribute('title')) {
-      $selection[0].setAttribute(
-        'title',
-        this.$element[0].getAttribute('title')
-      );
+    var preserveAttrs = ['title', 'aria-label', 'aria-labelledby'];
+    for (var i = 0; i < preserveAttrs.length; i++) {
+      var attr = preserveAttrs[i];
+      if (this.$element[0].getAttribute(attr)) {
+        $selection[0].setAttribute(attr, this.$element[0].getAttribute(attr));
+      }
     }
     $selection[0].setAttribute('tabindex', this._tabindex);
     $selection[0].setAttribute('aria-disabled', 'false');
@@ -2095,6 +2118,7 @@ S2.define('select2/selection/search',['jquery', '../utils', '../keys'], function
     return $rendered;
   };
 
+  //   Bind search events and identify the inline search field.
   Search.prototype.bind = function (decorated, container, $container) {
     var self = this;
 
@@ -2103,11 +2127,20 @@ S2.define('select2/selection/search',['jquery', '../utils', '../keys'], function
 
     decorated.call(this, container, $container);
 
+    // Identify the search field without including it in submitted form data.
+    self.$search[0].setAttribute('id', container.id + '-search');
     self.$search[0].setAttribute('aria-describedby', selectionId);
 
     container.on('open', function () {
       self.$search[0].setAttribute('aria-controls', resultsId);
-      self.$search.trigger('focus');
+
+      if (self.$search[0] && self.$search[0].focus) {
+        self.$search[0].focus({
+          preventScroll: true
+        });
+      } else {
+        self.$search.trigger('focus');
+      }
     });
 
     container.on('close', function () {
@@ -3599,7 +3632,9 @@ S2.define('select2/data/select',['./base', '../utils', 'jquery'], function (Base
     }
 
     if (item.children) {
-      item.children = item.children.map(SelectAdapter.prototype._normalizeItem);
+      item.children = item.children.map(
+        SelectAdapter.prototype._normalizeItem.bind(this)
+      );
     }
 
     return $.extend({}, defaults, item);
@@ -3769,7 +3804,7 @@ S2.define('select2/data/ajax',['./array', '../utils', 'jquery'], function (Array
 
           if (results && results.results && Array.isArray(results.results)) {
             results.results = results.results.map(
-              AjaxAdapter.prototype._normalizeItem
+              AjaxAdapter.prototype._normalizeItem.bind(self)
             );
           } else {
             if (self.options.get('debug') && window.console && console.error) {
@@ -4257,12 +4292,16 @@ S2.define('select2/dropdown/search',['jquery'], function ($) {
     return $rendered;
   };
 
+  //   Bind search events and identify the dropdown search field.
   Search.prototype.bind = function (decorated, container, $container) {
     var self = this;
 
     var resultsId = container.id + '-results';
 
     decorated.call(this, container, $container);
+
+    // Keep this ID distinct from an inline search in the same control.
+    this.$search[0].setAttribute('id', container.id + '-dropdown-search');
 
     this.$search.on('keydown', function (evt) {
       self.trigger('keypress', evt);
@@ -4286,10 +4325,22 @@ S2.define('select2/dropdown/search',['jquery'], function ($) {
       self.$search[0].setAttribute('tabindex', 0);
       self.$search[0].setAttribute('aria-controls', resultsId);
 
-      self.$search.trigger('focus');
+      if (self.$search[0] && self.$search[0].focus) {
+        self.$search[0].focus({
+          preventScroll: true
+        });
+      } else {
+        self.$search.trigger('focus');
+      }
 
       window.setTimeout(function () {
-        self.$search.trigger('focus');
+        if (self.$search[0] && self.$search[0].focus) {
+          self.$search[0].focus({
+            preventScroll: true
+          });
+        } else {
+          self.$search.trigger('focus');
+        }
       }, 0);
     });
 
@@ -4485,13 +4536,29 @@ S2.define('select2/dropdown/infiniteScroll',['jquery'], function ($) {
 
 S2.define('select2/dropdown/attachBody',['jquery', '../utils'], function ($, Utils) {
   function AttachBody(decorated, $element, options) {
-    this.$dropdownParent = $(options.get('dropdownParent') || document.body);
+    this.$element = $element;
+
+    var configuredParent = options.get('dropdownParent');
+
+    if (configuredParent) {
+      this.$dropdownParent = $(configuredParent);
+    } else {
+      var $autoModalParent = $element.closest(
+        'dialog, .modal, [role="dialog"], .ui-dialog'
+      );
+
+      this.$dropdownParent = $autoModalParent.length > 0 ?
+        $autoModalParent.first() :
+        $(document.body);
+    }
 
     decorated.call(this, $element, options);
   }
 
   AttachBody.prototype.bind = function (decorated, container, $container) {
     var self = this;
+
+    this.container = container;
 
     decorated.call(this, container, $container);
 
@@ -4508,13 +4575,43 @@ S2.define('select2/dropdown/attachBody',['jquery', '../utils'], function ($, Uti
       self._detachPositioningHandler(container);
     });
 
-    this.$dropdownContainer.on('mousedown', function (evt) {
+    this.$dropdownContainer.on('mousedown touchstart focusin', function (evt) {
       evt.stopPropagation();
     });
+
+    var $modalAncestors = this.$element.closest(
+      'dialog, .modal, [role="dialog"], .ui-dialog'
+    );
+
+    if ($modalAncestors.length > 0) {
+      var modalCloseEvent =
+        'hide.bs.modal.select2.' + container.id + ' ' +
+        'hidden.bs.modal.select2.' + container.id + ' ' +
+        'dialogclose.select2.' + container.id + ' ' +
+        'close.select2.' + container.id;
+
+      $modalAncestors.on(modalCloseEvent, function () {
+        if (container.isOpen()) {
+          container.close();
+        }
+      });
+
+      this._$modalAncestors = $modalAncestors;
+      this._modalCloseEvent = modalCloseEvent;
+    }
   };
 
   AttachBody.prototype.destroy = function (decorated) {
     decorated.call(this);
+
+    if (this._detachPositioningHandler && this.container) {
+      this._detachPositioningHandler(this.container);
+    }
+
+    if (this._$modalAncestors && this._modalCloseEvent) {
+      this._$modalAncestors.off(this._modalCloseEvent);
+      this._$modalAncestors = null;
+    }
 
     this.$dropdownContainer.remove();
   };
@@ -4526,9 +4623,20 @@ S2.define('select2/dropdown/attachBody',['jquery', '../utils'], function ($, Uti
     $dropdown[0].classList.remove('select2');
     $dropdown[0].classList.add('select2-container--open');
 
+    var highestZIndex = 1060;
+    var $parents = $container.parents();
+
+    for (var i = 0; i < $parents.length; i++) {
+      var z = parseInt(window.getComputedStyle($parents[i]).zIndex, 10);
+      if (!isNaN(z) && z >= highestZIndex) {
+        highestZIndex = z + 1;
+      }
+    }
+
     $dropdown.css({
       position: 'absolute',
-      top: -999999
+      top: -999999,
+      zIndex: highestZIndex
     });
 
     this.$container = $container;
@@ -4598,24 +4706,22 @@ S2.define('select2/dropdown/attachBody',['jquery', '../utils'], function ($, Uti
     var resizeEvent = 'resize.select2.' + container.id;
     var orientationEvent = 'orientationchange.select2.' + container.id;
 
-    var $watchers = this.$container.parents().filter(Utils.hasScroll);
-    $watchers.each(function () {
-      Utils.StoreData(this, 'select2-scroll-position', {
-        x: $(this).scrollLeft(),
-        y: $(this).scrollTop()
-      });
-    });
+    this._$scrollWatchers = this.$container.parents().filter(Utils.hasScroll);
 
-    $watchers.on(scrollEvent, function (ev) {
-      var position = Utils.GetData(this, 'select2-scroll-position');
-      $(this).scrollTop(position.y);
+    this._$scrollWatchers.on(scrollEvent, function () {
+      if (container.isOpen()) {
+        self._positionDropdown();
+        self._resizeDropdown();
+      }
     });
 
     $(window).on(
       scrollEvent + ' ' + resizeEvent + ' ' + orientationEvent,
       function (e) {
-        self._positionDropdown();
-        self._resizeDropdown();
+        if (container.isOpen()) {
+          self._positionDropdown();
+          self._resizeDropdown();
+        }
       }
     );
   };
@@ -4628,10 +4734,52 @@ S2.define('select2/dropdown/attachBody',['jquery', '../utils'], function ($, Uti
     var resizeEvent = 'resize.select2.' + container.id;
     var orientationEvent = 'orientationchange.select2.' + container.id;
 
-    var $watchers = this.$container.parents().filter(Utils.hasScroll);
-    $watchers.off(scrollEvent);
+    if (this._$scrollWatchers) {
+      this._$scrollWatchers.off(scrollEvent);
+      this._$scrollWatchers = null;
+    }
+
+    this.$container.parents().off(scrollEvent);
 
     $(window).off(scrollEvent + ' ' + resizeEvent + ' ' + orientationEvent);
+  };
+
+  AttachBody.prototype._getOffsetParent = function () {
+    var $candidate = this.$dropdownParent;
+
+    if ($candidate.css('position') === 'static') {
+      while ($candidate.length && !$candidate.is('body, html')) {
+        var el = $candidate[0];
+        if (el.nodeType !== 1) {
+          break;
+        }
+
+        var style = window.getComputedStyle ? window.getComputedStyle(el) : null;
+        if (style) {
+          var isPositioned = style.position !== 'static';
+          var isTransformed = (
+            (style.transform && style.transform !== 'none') ||
+            (style.perspective && style.perspective !== 'none') ||
+            (style.filter && style.filter !== 'none') ||
+            (style.willChange && style.willChange.indexOf('transform') !== -1) ||
+            (style.contain && (
+              style.contain.indexOf('paint') !== -1 ||
+              style.contain.indexOf('layout') !== -1
+            ))
+          );
+
+          if (isPositioned || isTransformed) {
+            return $candidate;
+          }
+        }
+
+        $candidate = $candidate.parent();
+      }
+
+      return $(document.body);
+    }
+
+    return $candidate;
   };
 
   AttachBody.prototype._positionDropdown = function () {
@@ -4674,14 +4822,7 @@ S2.define('select2/dropdown/attachBody',['jquery', '../utils'], function ($, Uti
       top: container.bottom
     };
 
-    // Determine what the parent element is to use for calculating the offset
-    var $offsetParent = this.$dropdownParent;
-
-    // For statically positioned elements, we need to get the element
-    // that is determining the offset
-    if ($offsetParent.css('position') === 'static') {
-      $offsetParent = $offsetParent.offsetParent();
-    }
+    var $offsetParent = this._getOffsetParent();
 
     var parentOffset = {
       top: 0,
@@ -4698,6 +4839,18 @@ S2.define('select2/dropdown/attachBody',['jquery', '../utils'], function ($, Uti
     css.top -= parentOffset.top;
     css.left -= parentOffset.left;
 
+    if (!$offsetParent.is('body, html')) {
+      css.top += $offsetParent.scrollTop();
+      css.left += $offsetParent.scrollLeft();
+
+      if ($offsetParent[0].clientTop) {
+        css.top -= $offsetParent[0].clientTop;
+      }
+      if ($offsetParent[0].clientLeft) {
+        css.left -= $offsetParent[0].clientLeft;
+      }
+    }
+
     if (!isCurrentlyAbove && !isCurrentlyBelow) {
       newDirection = 'below';
     }
@@ -4713,6 +4866,14 @@ S2.define('select2/dropdown/attachBody',['jquery', '../utils'], function ($, Uti
       (isCurrentlyAbove && newDirection !== 'below')
     ) {
       css.top = container.top - parentOffset.top - dropdown.height;
+
+      if (!$offsetParent.is('body, html')) {
+        css.top += $offsetParent.scrollTop();
+
+        if ($offsetParent[0].clientTop) {
+          css.top -= $offsetParent[0].clientTop;
+        }
+      }
     }
 
     if (newDirection != null) {
@@ -4729,8 +4890,14 @@ S2.define('select2/dropdown/attachBody',['jquery', '../utils'], function ($, Uti
   };
 
   AttachBody.prototype._resizeDropdown = function () {
+    var width = this.$container.outerWidth(false);
+
+    if (width <= 0) {
+      width = this.$container.parent().width();
+    }
+
     var css = {
-      width: this.$container.outerWidth(false) + 'px'
+      width: width + 'px'
     };
 
     if (this.options.get('dropdownAutoWidth')) {
@@ -5725,7 +5892,7 @@ S2.define('select2/core',['jquery', './options', './utils', './keys'], function 
       var elementWidth = $element.outerWidth(false);
 
       if (elementWidth <= 0) {
-        return 'auto';
+        return '100%';
       }
 
       return elementWidth + 'px';
@@ -5783,6 +5950,21 @@ S2.define('select2/core',['jquery', './options', './utils', './keys'], function 
     this.$element.on('focus.select2', function (evt) {
       self.trigger('focus', evt);
     });
+
+    var $modal = this.$element.closest(
+      'dialog, .modal, [role="dialog"], .ui-dialog'
+    );
+    if ($modal.length > 0) {
+      $modal.on('shown.bs.modal.select2.' + this.id, function () {
+        var width = self._resolveWidth(
+          self.$element,
+          self.options.get('width')
+        );
+        if (width != null) {
+          self.$container.css('width', width);
+        }
+      });
+    }
 
     this._syncA = Utils.bind(this._syncAttributes, this);
     this._syncS = Utils.bind(this._syncSubtree, this);
@@ -5848,6 +6030,17 @@ S2.define('select2/core',['jquery', './options', './utils', './keys'], function 
 
     this.on('open', function () {
       self.$container[0].classList.add('select2-container--open');
+
+      var currentWidth = self.$container.outerWidth(false);
+      if (currentWidth <= 0 || self.$container[0].style.width === '0px') {
+        var resolvedWidth = self._resolveWidth(
+          self.$element,
+          self.options.get('width')
+        );
+        if (resolvedWidth != null) {
+          self.$container.css('width', resolvedWidth);
+        }
+      }
     });
 
     this.on('close', function () {
@@ -6160,6 +6353,12 @@ S2.define('select2/core',['jquery', './options', './utils', './keys'], function 
     this._syncS = null;
 
     this.$element.off('.select2');
+    var $modal = this.$element.closest(
+      'dialog, .modal, [role="dialog"], .ui-dialog'
+    );
+    if ($modal.length > 0) {
+      $modal.off('.select2.' + this.id);
+    }
     this.$element[0].setAttribute(
       'tabindex',
       Utils.GetData(this.$element[0], 'old-tabindex')

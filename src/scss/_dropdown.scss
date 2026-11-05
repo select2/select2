@@ -13,7 +13,7 @@
 
   width: 100%;
 
-  z-index: 1051;
+  z-index: 1060;
 }
 
 .select2-results {
@@ -24,6 +24,7 @@
   list-style: none;
   margin: 0;
   padding: 0;
+  overscroll-behavior: contain;
 }
 
 .select2-results__option {

@@ -418,6 +418,28 @@ define(['jquery', './utils'], function ($, Utils) {
       self.displayMessage(params);
     });
 
+    this.$results.on('wheel', function (e) {
+      var origEvent = e.originalEvent || e;
+      var deltaY = origEvent.deltaY;
+
+      if (deltaY === undefined) {
+        return;
+      }
+
+      var el = self.$results[0];
+      var scrollTop = el.scrollTop;
+      var scrollHeight = el.scrollHeight;
+      var clientHeight = el.clientHeight;
+
+      var isAtTop = deltaY < 0 && scrollTop <= 0;
+      var isAtBottom = deltaY > 0 && (scrollTop + clientHeight >= scrollHeight);
+
+      if (isAtTop || isAtBottom) {
+        e.preventDefault();
+      }
+      e.stopPropagation();
+    });
+
     if ($.fn.mousewheel) {
       this.$results.on('mousewheel', function (e) {
         var top = self.$results.scrollTop();
