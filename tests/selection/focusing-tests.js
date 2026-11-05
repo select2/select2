@@ -49,7 +49,7 @@ QUnit.test('close does not scroll to the selection', function (assert) {
 
   $container.append($selection);
 
-  // Record the options passed when the focus is restored
+  // Record the focus options
   var focusOptions = null;
   var nativeFocus = $selection[0].focus;
 

@@ -342,7 +342,7 @@ QUnit.test('close does not scroll to the search', function (assert) {
 
   var $search = $selection.find('textarea');
 
-  // Record the options passed when the focus is restored
+  // Record the focus options
   var focusOptions = null;
   var nativeFocus = $search[0].focus;
 

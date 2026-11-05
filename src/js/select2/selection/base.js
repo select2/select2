@@ -86,9 +86,12 @@ define(['jquery', '../utils', '../keys'], function ($, Utils, KEYS) {
       self.$selection[0].removeAttribute('aria-activedescendant');
       self.$selection[0].removeAttribute('aria-owns');
 
-      // The selection may be out of view by now, so restoring the focus must
-      // not scroll the page back to it
+      // Don't scroll the page back to the selection
       self.$selection[0].focus({ preventScroll: true });
+
+      // Restore focus state (container--focus class + focus event)
+      // without scrolling
+      self.trigger('focus', {});
 
       self._detachCloseHandler(container);
     });
