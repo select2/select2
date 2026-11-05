@@ -83,6 +83,15 @@ define(['jquery', '../keys', '../utils'], function ($, KEYS, Utils) {
       return;
     }
 
+    // Backspace in the inline search only removes the last choice
+    if (
+      evt.which == KEYS.BACKSPACE &&
+      this.$search != null &&
+      evt.target === this.$search[0]
+    ) {
+      return;
+    }
+
     if (evt.which == KEYS.DELETE || evt.which == KEYS.BACKSPACE) {
       this._handleClear(evt);
     }
