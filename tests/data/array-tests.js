@@ -3,6 +3,7 @@ QUnit.module('Data adapters - Array');
 var ArrayData = require('select2/data/array');
 var $ = require('jquery');
 var Options = require('select2/options');
+var Results = require('select2/results');
 var Utils = require('select2/utils');
 
 var UserDefinedType = function (id, text) {
@@ -336,6 +337,52 @@ QUnit.test('optgroup tags have the right properties', function (assert) {
     'The <optgroup> should have one child under it'
   );
 });
+
+QUnit.test(
+  'optgroup child data uses generated option state',
+  function (assert) {
+    var $select = $('#qunit-fixture .single-empty');
+    var options = new Options({
+      data: [
+        {
+          text: 'Group',
+          children: [
+            {
+              id: 'child',
+              text: 'Child'
+            }
+          ]
+        }
+      ]
+    });
+
+    var data = new ArrayData($select, options);
+
+    var container = new MockContainer();
+    data.bind(container, $('<div></div>'));
+
+    var child = $select.find('optgroup option')[0];
+    child.disabled = true;
+
+    data.query({}, function (data) {
+      var childData = data.results[0].children[0];
+      var results = new Results($select, new Options({}));
+      var resultOption = results.option(childData);
+
+      assert.equal(
+        childData.element,
+        child,
+        'The child data should reference the generated <option>'
+      );
+
+      assert.equal(
+        resultOption.getAttribute('aria-disabled'),
+        'true',
+        'The child result should reflect the generated <option> disabled state'
+      );
+    });
+  }
+);
 
 QUnit.test(
   'existing selections are respected on initialization',
