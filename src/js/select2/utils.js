@@ -166,6 +166,11 @@ define([], function () {
     return chars;
   };
 
+  // Event namespaces can't contain regex characters
+  Utils.toEventNamespace = function (id) {
+    return String(id).replace(/[^\w-]/g, '');
+  };
+
   Utils.bind = function (func, context) {
     return function () {
       func.apply(context, arguments);
