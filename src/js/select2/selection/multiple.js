@@ -78,7 +78,10 @@ define(['jquery', './base', '../utils'], function ($, BaseSelection, Utils) {
     var template = this.options.get('templateSelection');
     var escapeMarkup = this.options.get('escapeMarkup');
 
-    return escapeMarkup(template(data, container));
+    var content = template(data, container);
+    if (typeof content === 'string' || content instanceof String)
+      content = escapeMarkup(content);
+    return content;
   };
 
   MultipleSelection.prototype.selectionContainer = function () {
