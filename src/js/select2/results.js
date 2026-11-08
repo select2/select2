@@ -153,7 +153,7 @@ define(['jquery', './utils'], function ($, Utils) {
     var $loading = this.option(loading);
     $loading.className += ' loading-results';
 
-    this.$results.prepend($loading);
+    this.$results.html($loading);
   };
 
   Results.prototype.hideLoading = function () {
