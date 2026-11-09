@@ -142,3 +142,33 @@ QUnit.test('will trigger if there is a highlighted result', function (assert) {
 
   container.trigger('close');
 });
+
+QUnit.test(
+  'does not select a result when disabling closes the dropdown',
+  function (assert) {
+    var done = assert.async();
+    var changes = 0;
+    var $select = $(
+      '<select><option>Apple</option><option>Orange</option></select>'
+    ).appendTo('#qunit-fixture');
+
+    $select.on('change', function () {
+      changes++;
+    });
+    $select.select2({ selectOnClose: true });
+    $select.select2('open');
+
+    var instance = $select.data('select2');
+    instance.results.$results.find('li').last().trigger('mouseenter');
+    assert.ok(instance.isOpen(), 'The dropdown starts open');
+
+    $select.prop('disabled', true);
+    window.setTimeout(function () {
+      assert.notOk(instance.isOpen(), 'Disabling closes the dropdown');
+      assert.strictEqual($select.val(), 'Apple');
+      assert.strictEqual(changes, 0);
+      $select.select2('destroy');
+      done();
+    }, 0);
+  }
+);
