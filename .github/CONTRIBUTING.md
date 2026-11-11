@@ -149,18 +149,18 @@ We use GitHub's pull request system for submitting patches. Here are some
 guidelines to follow when creating the pull request for your fix.
 
 1. Make sure to create a ticket for your pull request. This will serve as the
-    bug ticket, and any discussion about the bug will take place there. Your pull
-    request will be focused on the specific changes that fix the bug.
+   bug ticket, and any discussion about the bug will take place there. Your pull
+   request will be focused on the specific changes that fix the bug.
 1. Make sure to reference the ticket you are fixing within your pull request.
-    This will allow us to close off the ticket once we merge the pull request, or
-    follow up on the ticket if there are any related blocking issues.
+   This will allow us to close off the ticket once we merge the pull request, or
+   follow up on the ticket if there are any related blocking issues.
 1. Explain why the specific change was made. Not everyone who is reviewing your
-    pull request will be familiar with the problem it is fixing.
+   pull request will be familiar with the problem it is fixing.
 1. Run your tests first. If your tests aren't passing, the pull request won't
-    be able to be merged. If you're breaking existing tests, make sure that you
-    aren't causing any breaking changes.
+   be able to be merged. If you're breaking existing tests, make sure that you
+   aren't causing any breaking changes.
 1. Only include source changes (`src/`). Do not make changes directly to files in the `dist`
-    directory.
+   directory.
 
 By following these steps, you will make it easier for your pull request to be
 reviewed and eventually merged.
