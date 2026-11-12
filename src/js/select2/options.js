@@ -34,7 +34,10 @@ define(['jquery', './defaults', './utils'], function ($, Defaults, Utils) {
       if (dirValue) {
         this.options.dir = dirValue;
       } else {
-        var closestDirValue = $e.closest('[dir]').getAttribute('dir');
+        var closestDirElement = $e.closest('[dir]')[0];
+        var closestDirValue = closestDirElement
+          ? closestDirElement.getAttribute('dir')
+          : null;
 
         if (closestDirValue) {
           this.options.dir = closestDirValue;

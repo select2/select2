@@ -138,3 +138,39 @@ QUnit.test(
     assert.ok(options.get('autocomplete'), 'organization');
   }
 );
+
+QUnit.test(
+  'dir option falls back to ltr when no ancestor has dir',
+  function (assert) {
+    var $test = $('<select></select>');
+
+    var options = new Options({ dir: null }, $test);
+
+    assert.equal(options.get('dir'), 'ltr');
+  }
+);
+
+QUnit.test(
+  'dir option is copied from a parent element when set',
+  function (assert) {
+    var $parent = $('<div dir="rtl"></div>');
+    var $test = $('<select></select>');
+
+    $parent.append($test);
+    $('body').append($parent);
+
+    var options = new Options({ dir: null }, $test);
+
+    assert.equal(options.get('dir'), 'rtl');
+
+    $parent.remove();
+  }
+);
+
+QUnit.test('copies dir attribute from the element when set', function (assert) {
+  var $test = $('<select dir="rtl"></select>');
+
+  var options = new Options({ dir: null }, $test);
+
+  assert.equal(options.get('dir'), 'rtl');
+});
