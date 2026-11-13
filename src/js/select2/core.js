@@ -136,7 +136,7 @@ define(['jquery', './options', './utils', './keys'], function (
       var elementWidth = $element.outerWidth(false);
 
       if (elementWidth <= 0) {
-        return 'auto';
+        return '100%';
       }
 
       return elementWidth + 'px';
@@ -194,6 +194,21 @@ define(['jquery', './options', './utils', './keys'], function (
     this.$element.on('focus.select2', function (evt) {
       self.trigger('focus', evt);
     });
+
+    var $modal = this.$element.closest(
+      'dialog, .modal, [role="dialog"], .ui-dialog'
+    );
+    if ($modal.length > 0) {
+      $modal.on('shown.bs.modal.select2.' + this.id, function () {
+        var width = self._resolveWidth(
+          self.$element,
+          self.options.get('width')
+        );
+        if (width != null) {
+          self.$container.css('width', width);
+        }
+      });
+    }
 
     this._syncA = Utils.bind(this._syncAttributes, this);
     this._syncS = Utils.bind(this._syncSubtree, this);
@@ -259,6 +274,17 @@ define(['jquery', './options', './utils', './keys'], function (
 
     this.on('open', function () {
       self.$container[0].classList.add('select2-container--open');
+
+      var currentWidth = self.$container.outerWidth(false);
+      if (currentWidth <= 0 || self.$container[0].style.width === '0px') {
+        var resolvedWidth = self._resolveWidth(
+          self.$element,
+          self.options.get('width')
+        );
+        if (resolvedWidth != null) {
+          self.$container.css('width', resolvedWidth);
+        }
+      }
     });
 
     this.on('close', function () {
@@ -571,6 +597,12 @@ define(['jquery', './options', './utils', './keys'], function (
     this._syncS = null;
 
     this.$element.off('.select2');
+    var $modal = this.$element.closest(
+      'dialog, .modal, [role="dialog"], .ui-dialog'
+    );
+    if ($modal.length > 0) {
+      $modal.off('.select2.' + this.id);
+    }
     this.$element[0].setAttribute(
       'tabindex',
       Utils.GetData(this.$element[0], 'old-tabindex')

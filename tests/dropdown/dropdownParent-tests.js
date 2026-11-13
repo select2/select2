@@ -87,3 +87,57 @@ QUnit.test('defaults to the document body', function (assert) {
     'Should default to wrapping document.body'
   );
 });
+
+QUnit.test('defaults to closest modal if inside modal', function (assert) {
+  assert.expect(1);
+
+  var $ = require('jquery');
+
+  var $modal = $('<div class="modal"></div>');
+  var $select = $('<select></select>');
+  $modal.append($select);
+  $('#qunit-fixture').append($modal);
+
+  var Utils = require('select2/utils');
+  var Options = require('select2/options');
+
+  var Dropdown = require('select2/dropdown');
+  var AttachBody = require('select2/dropdown/attachBody');
+
+  var DropdownAdapter = Utils.Decorate(Dropdown, AttachBody);
+
+  var dropdown = new DropdownAdapter($select, new Options({}));
+
+  assert.equal(
+    dropdown.$dropdownParent[0],
+    $modal[0],
+    'Should default to closest modal container'
+  );
+});
+
+QUnit.test('defaults to closest dialog if inside dialog', function (assert) {
+  assert.expect(1);
+
+  var $ = require('jquery');
+
+  var $dialog = $('<dialog></dialog>');
+  var $select = $('<select></select>');
+  $dialog.append($select);
+  $('#qunit-fixture').append($dialog);
+
+  var Utils = require('select2/utils');
+  var Options = require('select2/options');
+
+  var Dropdown = require('select2/dropdown');
+  var AttachBody = require('select2/dropdown/attachBody');
+
+  var DropdownAdapter = Utils.Decorate(Dropdown, AttachBody);
+
+  var dropdown = new DropdownAdapter($select, new Options({}));
+
+  assert.equal(
+    dropdown.$dropdownParent[0],
+    $dialog[0],
+    'Should default to closest dialog container'
+  );
+});
