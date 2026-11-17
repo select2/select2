@@ -23,6 +23,14 @@ These decorators implement Select2's [placeholder](../../placeholders.md) featur
 
 This decorator implements [clearable selections](../../selections.md#clearable-selections) as exposed through the `allowClear` option.
 
+### `SelectionSearch`
+
+**AMD Modules:**
+
+`select2/selection/search`
+
+This decorator implements the inline search box rendered inside a multi-select control's own selection container. It is applied by default for multi-select controls, unless the [`dropdownSearch` option](../../searching.md#searching-from-the-dropdown-for-multi-select-controls) is set (which searches from the dropdown instead) or the [`selectionSearch` option](../../searching.md#hiding-the-search-box) is set to `false` (which hides search entirely).
+
 ### `EventRelay`
 
 **AMD Modules:**

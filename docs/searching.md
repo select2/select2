@@ -168,6 +168,28 @@ $('select').select2({
 });
 ```
 
+## Searching from the dropdown for multi-select controls
+
+By default, a multi-select control renders its search box inline, alongside the selected choices. This is convenient for typing while composing a selection, but it also means the control's height changes while it is open, which can shift the surrounding page layout - undesirable in dense forms, filter bars, and similar UIs.
+
+The `dropdownSearch` option moves the search box out of the selection container and into the floating dropdown panel instead, the same place a single-select's search box already lives. The control's own size is then unaffected by whether the dropdown is open:
+
+<select id="js-example-dropdown-search-multi" class="js-states" multiple="multiple"></select>
+
+```javascript
+$('#js-example-dropdown-search-multi').select2({
+    dropdownSearch: true
+});
+```
+
+<script type="text/javascript" id="js-code-example-dropdown-search-multi">
+$('#js-example-dropdown-search-multi').select2({
+  dropdownSearch: true
+});
+</script>
+
+`dropdownSearch` has no effect on single-select controls, which already search from the dropdown.
+
 ## Hiding the search box
 
 ### Single select
@@ -190,26 +212,21 @@ $("#js-example-basic-hide-search").select2({
 
 ### Multi-select
 
-For multi-select boxes, there is no distinct search control. So, to disable search for multi-select boxes, you will need to set the `disabled` property to true whenever the dropdown is opened or closed:
+For multi-select boxes, set the `selectionSearch` option to `false` to hide the search box entirely:
 
 <select id="js-example-basic-hide-search-multi" class="js-states" multiple="multiple"></select>
 
 ```javascript
-$('#js-example-basic-hide-search-multi').select2();
-
-$('#js-example-basic-hide-search-multi').on('select2:opening select2:closing', function(event) {
-    var $searchfield = $(this).parent().find('.select2-search__field');
-    $searchfield.prop('disabled', true);
+$('#js-example-basic-hide-search-multi').select2({
+    selectionSearch: false
 });
 ```
 
 <script type="text/javascript" id="js-code-example-basic-hide-search-multi">
-$('#js-example-basic-hide-search-multi').select2();
-
-$('#js-example-basic-hide-search-multi').on('select2:opening select2:closing', function( event ) {
-  var $searchfield = $(this).parent().find('.select2-search__field');
-  $searchfield.prop('disabled', true);
+$('#js-example-basic-hide-search-multi').select2({
+  selectionSearch: false
 });
 </script>
 
-See [this issue](https://github.com/select2/select2/issues/4797) for the source of this solution.
+> [!NOTE]
+> Prior to the `selectionSearch` option, this required manually disabling the search field on `select2:opening`/`select2:closing` (see [this issue](https://github.com/select2/select2/issues/4797)). That workaround is no longer necessary.

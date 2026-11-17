@@ -29,7 +29,7 @@ When this decorator is loaded, Select2 can place the dropdown directly after the
 
 ### `DropdownSearch`
 
-This decorator implements the [search box that is displayed at the top of the dropdown](../../searching.md).
+This decorator implements the [search box that is displayed at the top of the dropdown](../../searching.md). It is used by default for single-select controls, and for multi-select controls that set the [`dropdownSearch` option](../../searching.md#searching-from-the-dropdown-for-multi-select-controls).
 
 **AMD Modules:**
 
