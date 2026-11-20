@@ -257,9 +257,7 @@ QUnit.test('clear button respects the disabled state', function (assert) {
 });
 
 QUnit.test('removing a choice does not toggle the dropdown', function (assert) {
-  var selection = new MultipleSelection(
-    $('#qunit-fixture .multiple'), options
-  );
+  var selection = new MultipleSelection($('#qunit-fixture .multiple'), options);
   var $selection = selection.render();
   var container = new MockContainer();
   var data = { id: '1', text: 'Test' };
