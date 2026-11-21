@@ -754,7 +754,7 @@ S2.define('select2/utils',[], function () {
     };
 
     // Do not try to escape the markup if it's not a string
-    if (typeof markup !== 'string') {
+    if (typeof markup !== 'string' && !(markup instanceof String)) {
       return markup;
     }
 
@@ -1403,7 +1403,7 @@ S2.define('select2/results',['jquery', './utils'], function ($, Utils) {
 
     if (content == null) {
       container.style.display = 'none';
-    } else if (typeof content === 'string') {
+    } else if (typeof content === 'string' || content instanceof String) {
       container.innerHTML = escapeMarkup(content);
     } else {
       $(container).append(content);
@@ -1703,7 +1703,11 @@ S2.define('select2/selection/single',['jquery', './base', '../utils', '../keys']
     var template = this.options.get('templateSelection');
     var escapeMarkup = this.options.get('escapeMarkup');
 
-    return escapeMarkup(template(data, container));
+    var content = template(data, container);
+    if (typeof content === 'string' || content instanceof String) {
+      content = escapeMarkup(content);
+    }
+    return content;
   };
 
   SingleSelection.prototype.selectionContainer = function () {
@@ -1815,7 +1819,11 @@ S2.define('select2/selection/multiple',['jquery', './base', '../utils'], functio
     var template = this.options.get('templateSelection');
     var escapeMarkup = this.options.get('escapeMarkup');
 
-    return escapeMarkup(template(data, container));
+    var content = template(data, container);
+    if (typeof content === 'string' || content instanceof String) {
+      content = escapeMarkup(content);
+    }
+    return content;
   };
 
   MultipleSelection.prototype.selectionContainer = function () {

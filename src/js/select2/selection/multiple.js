@@ -79,8 +79,9 @@ define(['jquery', './base', '../utils'], function ($, BaseSelection, Utils) {
     var escapeMarkup = this.options.get('escapeMarkup');
 
     var content = template(data, container);
-    if (typeof content === 'string' || content instanceof String)
+    if (typeof content === 'string' || content instanceof String) {
       content = escapeMarkup(content);
+    }
     return content;
   };
 

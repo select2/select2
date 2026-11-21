@@ -253,7 +253,7 @@ define([], function () {
     };
 
     // Do not try to escape the markup if it's not a string
-    if (typeof markup !== 'string') {
+    if (typeof markup !== 'string' && !(markup instanceof String)) {
       return markup;
     }
 
