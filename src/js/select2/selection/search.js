@@ -52,7 +52,9 @@ define(['jquery', '../utils', '../keys'], function ($, Utils, KEYS) {
       self.resizeSearch();
       self.$search[0].removeAttribute('aria-controls');
       self.$search[0].removeAttribute('aria-activedescendant');
-      self.$search.trigger('focus');
+
+      // Don't scroll the page back to the search
+      self.$search[0].focus({ preventScroll: true });
     });
 
     container.on('enable', function () {
