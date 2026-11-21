@@ -7,11 +7,8 @@ A CDN (content delivery network) is the fastest way to get up and running with S
 Select2 is hosted on both the [jsDelivr](https://www.jsdelivr.com/package/npm/select2) and [cdnjs](https://cdnjs.com/libraries/select2) CDNs. Simply include the following lines of code in the `<head>` section of your page:
 
 ```html
-<link
-  href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css"
-  rel="stylesheet"
->
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.1/dist/css/select2.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.1/dist/js/select2.min.js">
 </script>
 ```
 
@@ -23,8 +20,10 @@ Select2 is hosted on both the [jsDelivr](https://www.jsdelivr.com/package/npm/se
 Select2 is available on Bower. Add the following to your `bower.json` file and then run `bower install`:
 
 ```json
-"dependencies": {
+{
+  "dependencies": {
     "select2": "~4.1"
+  }
 }
 ```
 
@@ -33,7 +32,7 @@ Or, run `bower install select2` from your project directory.
 The precompiled distribution files will be available in `vendor/select2/dist/css/` and `vendor/select2/dist/js/`, relative to your project directory. Include them in your page:
 
 ```html
-<link href="vendor/select2/dist/css/select2.min.css" rel="stylesheet">
+<link href="vendor/select2/dist/css/select2.min.css" rel="stylesheet"/>
 <script src="vendor/select2/dist/js/select2.min.js">
 </script>
 ```
@@ -61,7 +60,7 @@ We strongly recommend that you use either a CDN or a package manager like Bower 
 Include the compiled files in your page:
 
 ```html
-<link href="path/to/select2.min.css" rel="stylesheet">
+<link href="path/to/select2.min.css" rel="stylesheet"/>
 <script src="path/to/select2.min.js">
 </script>
 ```

@@ -1,6 +1,6 @@
 /*!
  * Select2 <%= package.version %>
- * https://select2.github.io
+ * https://select2.org
  *
  * Released under the MIT license
  * https://github.com/select2/select2/blob/master/LICENSE.md

@@ -1,5 +1,28 @@
 # Change Log
 
+## 4.1.1
+
+### Bug fixes
+
+- Fix unbound `_normalizeItem` crash for AJAX data in strict-mode builds (#6439)
+- Retain `aria-label` and `aria-labelledby` attributes from the origin `<select>` element (#6457)
+- Assign IDs to generated search fields (#6473)
+- Remove regex characters from event namespaces (#6484)
+
+### Documentation
+
+- Migrate documentation from Grav to MkDocs (#6413, #6419)
+- Address static docs regression (#6419)
+- Rewrite the docs workflow using newer GitHub Actions (#6408)
+- Add Google Analytics back to MkDocs (#6421)
+
+### Miscellaneous
+
+- Remove the Node engines constraint (#6446)
+- Add GitHub Sponsors to the README (#6426)
+- Add pre-commit hooks for JavaScript, JSON, CSS, and Markdown files (#6409, #6410, #6411, #6412)
+- Fix pre-commit.ci by dropping an empty skip key (#6418)
+
 ## 4.1.0
 
 ### Breaking changes
@@ -7,15 +30,15 @@
 - The minimum jQuery version supported is the latest version in the 1.x, 2.x, and 3.x series (#5525, #5955)
 - Removed support for legacy Internet Explorer (versions older than IE 11) (#5834)
 - Removed modules deprecated in 4.0.0 (#5815)
-  - Removed legacy support for `<input />` tags
-  - Removed legacy support for `initSelection`
-  - Removed legacy support for `query`
-  - Removed old `select2/compat/matcher` module
+    - Removed legacy support for `<input />` tags
+    - Removed legacy support for `initSelection`
+    - Removed legacy support for `query`
+    - Removed old `select2/compat/matcher` module
 - Removed undocumented CSS-related options (#5815)
-  - Removed `dropdownCss` option
-  - Removed `adaptDropdownCss` option
-  - Removed `containerCss` option
-  - Removed `adaptContainerCss` option
+    - Removed `dropdownCss` option
+    - Removed `adaptDropdownCss` option
+    - Removed `containerCss` option
+    - Removed `adaptContainerCss` option
 - The `containerCssClass` option has been renamed to `selectionCssClass` (#5815, #5847)
 - Significant changes to the HTML/CSS for the selection area impacting custom themes (#5842)
 - New CSS classes for the dropdown results to better target highlighted / selected results (#5841)
@@ -529,6 +552,6 @@ This builds upon [the second release candidate](https://github.com/select2/selec
 - `select2-focus` - Use the native `focus` event instead
 - `select2-blur` - Use the native `blur` event instead
 - All extra properties from the `change` event were removed
-  - `val` can be retrieved with `$element.val()` instead
-  - `added` can be retrieved by listening to `select2:select`
-  - `removed` can be retrieved by listening to `select2:unselect`
+    - `val` can be retrieved with `$element.val()` instead
+    - `added` can be retrieved by listening to `select2:select`
+    - `removed` can be retrieved by listening to `select2:unselect`
