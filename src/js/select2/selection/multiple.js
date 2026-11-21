@@ -42,6 +42,8 @@ define(['jquery', './base', '../utils'], function ($, BaseSelection, Utils) {
           return;
         }
 
+        evt.stopPropagation();
+
         var $remove = $(this);
         var $selection = $remove.parent();
 

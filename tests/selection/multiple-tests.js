@@ -255,3 +255,31 @@ QUnit.test('clear button respects the disabled state', function (assert) {
   // Trigger the handler for the remove icon
   $remove.trigger('click');
 });
+
+QUnit.test('removing a choice does not toggle the dropdown', function (assert) {
+  var selection = new MultipleSelection($('#qunit-fixture .multiple'), options);
+  var $selection = selection.render();
+  var container = new MockContainer();
+  var data = { id: '1', text: 'Test' };
+  var unselected = 0;
+  var toggled = 0;
+
+  selection.bind(container, $('<div></div>'));
+  selection.update([data]);
+
+  selection.on('unselect', function (params) {
+    unselected++;
+    assert.strictEqual(params.data, data, 'The selected choice is removed');
+  });
+  selection.on('toggle', function () {
+    toggled++;
+  });
+
+  $selection.find('.select2-selection__choice__remove span').trigger('click');
+
+  assert.equal(unselected, 1, 'Removal is triggered once');
+  assert.equal(toggled, 0, 'Removing a choice does not toggle the dropdown');
+
+  $selection.trigger('click');
+  assert.equal(toggled, 1, 'Clicking the selection still toggles the dropdown');
+});
