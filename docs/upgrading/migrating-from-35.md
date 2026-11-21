@@ -11,25 +11,17 @@ In past versions of Select2, an `<input type="hidden">` tag was recommended if y
 In Select2 4.0, the `<select>` element supports all core options, and support for the old `<input type="hidden">` has been deprecated. This means that if you previously declared an AJAX field with some pre-selected options that looked like:
 
 ```html
-<input name="select-boxes" type="hidden" value="1,2,4,6"/>
+<input name="select-boxes" type="hidden" value="1,2,4,6">
 ```
 
 It will need to be recreated as a `<select>` element with some `<option>` tags that have `value` attributes that match the old value:
 
 ```html
 <select multiple="multiple" name="select-boxes">
- <option selected="selected" value="1">
-  Select2
- </option>
- <option selected="selected" value="2">
-  Chosen
- </option>
- <option selected="selected" value="4">
-  selectize.js
- </option>
- <option selected="selected" value="6">
-  typeahead.js
- </option>
+  <option selected="selected" value="1">Select2</option>
+  <option selected="selected" value="2">Chosen</option>
+  <option selected="selected" value="4">selectize.js</option>
+  <option selected="selected" value="6">typeahead.js</option>
 </select>
 ```
 
@@ -49,17 +41,17 @@ This wrapper function is only bundled in the [full version of Select2](../gettin
 
 ```javascript
 function matchStart(term, text) {
-    if (text.toUpperCase().indexOf(term.toUpperCase()) == 0) {
-        return true;
-    }
+  if (text.toUpperCase().indexOf(term.toUpperCase()) == 0) {
+    return true;
+  }
 
-    return false;
+  return false;
 }
 
-$.fn.select2.amd.require(['select2/compat/matcher'], function(oldMatcher) {
-    $('.js-example-matcher-compat').select2({
-        matcher: oldMatcher(matchStart)
-    });
+$.fn.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
+  $('.js-example-matcher-compat').select2({
+    matcher: oldMatcher(matchStart)
+  });
 });
 ```
 
@@ -76,12 +68,8 @@ For a select that looks like the following, where the first option (with a value
 
 ```html
 <select>
- <option selected="selected" value="-1">
-  Select an option
- </option>
- <option value="1">
-  Something else
- </option>
+  <option selected="selected" value="-1">Select an option</option>
+  <option value="1">Something else</option>
 </select>
 ```
 
@@ -89,10 +77,10 @@ You would have previously had to get the placeholder option through the `placeho
 
 ```javascript
 $('select').select2({
-    placeholder: {
-        id: '-1',
-        placeholder: 'Select an option'
-    }
+  placeholder: {
+    id: '-1',
+    placeholder: 'Select an option'
+  }
 });
 ```
 
@@ -139,36 +127,36 @@ When using the new `current` method of the custom data adapter, **this method is
 
 ```javascript
 $.fn.select2.amd.require(
-    ['select2/data/array', 'select2/utils'],
-    function(ArrayData, Utils) {
-        function CustomData($element, options) {
-            CustomData.__super__.constructor.call(this, $element, options);
-        }
-
-        Utils.Extend(CustomData, ArrayData);
-
-        CustomData.prototype.current = function(callback) {
-            var data = [];
-            var currentVal = this.$element.val();
-
-            if (!this.$element.prop('multiple')) {
-                currentVal = [currentVal];
-            }
-
-            for (var v = 0; v < currentVal.length; v++) {
-                data.push({
-                    id: currentVal[v],
-                    text: currentVal[v]
-                });
-            }
-
-            callback(data);
-        };
-
-        $('#select').select2({
-            dataAdapter: CustomData
-        });
+  ['select2/data/array', 'select2/utils'],
+  function (ArrayData, Utils) {
+    function CustomData($element, options) {
+      CustomData.__super__.constructor.call(this, $element, options);
     }
+
+    Utils.Extend(CustomData, ArrayData);
+
+    CustomData.prototype.current = function (callback) {
+      var data = [];
+      var currentVal = this.$element.val();
+
+      if (!this.$element.prop('multiple')) {
+        currentVal = [currentVal];
+      }
+
+      for (var v = 0; v < currentVal.length; v++) {
+        data.push({
+          id: currentVal[v],
+          text: currentVal[v]
+        });
+      }
+
+      callback(data);
+    };
+
+    $('#select').select2({
+      dataAdapter: CustomData
+    });
+  }
 );
 ```
 
@@ -182,25 +170,25 @@ If you only need to load in the initial options once, and otherwise will be lett
 var $element = $('select').select2(); // the select element you are working with
 
 var $request = $.ajax({
-    url: '/my/remote/source' // wherever your data is actually coming from
+  url: '/my/remote/source' // wherever your data is actually coming from
 });
 
-$request.then(function(data) {
-    // This assumes that the data comes back as an array of data objects
-    // The idea is that you are using the same callback as the old `initSelection`
+$request.then(function (data) {
+  // This assumes that the data comes back as an array of data objects
+  // The idea is that you are using the same callback as the old `initSelection`
 
-    for (var d = 0; d < data.length; d++) {
-        var item = data[d];
+  for (var d = 0; d < data.length; d++) {
+    var item = data[d];
 
-        // Create the DOM option that is pre-selected by default
-        var option = new Option(item.text, item.id, true, true);
+    // Create the DOM option that is pre-selected by default
+    var option = new Option(item.text, item.id, true, true);
 
-        // Append it to the select
-        $element.append(option);
-    }
+    // Append it to the select
+    $element.append(option);
+  }
 
-    // Update the selected options that are displayed
-    $element.trigger('change');
+  // Update the selected options that are displayed
+  $element.trigger('change');
 });
 ```
 
@@ -314,19 +302,22 @@ Select2 previously supported defining array data as an object that matched the s
 
 ```javascript
 var data = $.map(
-    [{
-        pk: 1,
-        word: 'one'
-    }, {
-        pk: 2,
-        word: 'two'
-    }],
-    function(obj) {
-        obj.id = obj.id || obj.pk;
-        obj.text = obj.text || obj.word;
-
-        return obj;
+  [
+    {
+      pk: 1,
+      word: 'one'
+    },
+    {
+      pk: 2,
+      word: 'two'
     }
+  ],
+  function (obj) {
+    obj.id = obj.id || obj.pk;
+    obj.text = obj.text || obj.word;
+
+    return obj;
+  }
 );
 ```
 
@@ -351,15 +342,18 @@ Although it was not documented, a list of possible tags could also be provided u
 If you previously declared the list of tags as:
 
 ```html
-<select data-select2-tags='[{"id": "1", "text": "One"}, {"id": "2", "text": "Two"}]'>
-</select>
+<select
+  data-select2-tags='[{"id": "1", "text": "One"}, {"id": "2", "text": "Two"}]'
+></select>
 ```
 
 ...then you should now declare it as...
 
 ```html
-<select data-data='[{"id": "1", "text": "One"}, {"id": "2", "text": "Two"}]' data-tags="true">
-</select>
+<select
+  data-data='[{"id": "1", "text": "One"}, {"id": "2", "text": "Two"}]'
+  data-tags="true"
+></select>
 ```
 
 ## Deprecated and removed methods

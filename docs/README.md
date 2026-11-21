@@ -1,6 +1,8 @@
 ---
+
 hide:
-  - toc
+- toc
+
 ---
 
 <div align="center" markdown>
