@@ -29,7 +29,7 @@ jobs:
       - name: npm install
         run: npm install
       - name: Run linting
-        run: grunt compile lint
+        run: npx grunt compile lint
   tests:
     name: Tests
     runs-on: ubuntu-latest
@@ -47,7 +47,7 @@ jobs:
         env:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: "1"
           PUPPETEER_EXECUTABLE_PATH: "/usr/bin/chromium-browser"
-        run: grunt compile test
+        run: npx grunt compile test
   minification:
     name: Minification
     runs-on: ubuntu-latest
@@ -60,4 +60,4 @@ jobs:
       - name: npm install
         run: npm install
       - name: Run minification
-        run: grunt compile minify
+        run: npx grunt compile minify
