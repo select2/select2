@@ -35,6 +35,6 @@ repos:
     hooks:
       - id: biome-format
         args: [--use-editorconfig=true]
-        exclude: (dist|vendor)/|(banner|wrapper).(start|end).js
+        exclude: (dist|vendor)/|(banner|wrapper).(start|end).js|\.md$
 ci:
   autoupdate_schedule: weekly
