@@ -1,5 +1,15 @@
 # Change Log
 
+## 4.2.0
+
+### New features / improvements
+
+- Allow `templateSelection` to return trusted HTML nodes, matching `templateResult` behavior (#6311)
+
+### Bug fixes
+
+- Escape `String` objects consistently in template rendering (#6311)
+
 ## 4.1.1
 
 ### Bug fixes
