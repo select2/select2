@@ -398,3 +398,27 @@ QUnit.test(
     );
   }
 );
+
+QUnit.test('backspace in the search removes one choice', function (assert) {
+  require('jquery.select2');
+  var KEYS = require('select2/keys');
+
+  var $select = $(
+    '<select multiple>' +
+      '<option value="one" selected>One</option>' +
+      '<option value="two" selected>Two</option>' +
+      '</select>'
+  );
+
+  $('#qunit-fixture').append($select);
+
+  $select.select2({ allowClear: true, placeholder: 'Select' });
+
+  var $search = $select.next().find('.select2-search__field');
+
+  $search.trigger($.Event('keydown', { which: KEYS.BACKSPACE }));
+
+  assert.deepEqual($select.val(), ['one'], 'Only the last choice is removed');
+
+  $select.select2('destroy');
+});
