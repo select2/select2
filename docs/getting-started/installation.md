@@ -8,10 +8,10 @@ Select2 is hosted on both the [jsDelivr](https://www.jsdelivr.com/package/npm/se
 
 ```html
 <link
-  href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css"
+  href="https://cdn.jsdelivr.net/npm/select2@4.1.1/dist/css/select2.min.css"
   rel="stylesheet"
 >
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js">
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.1/dist/js/select2.min.js">
 </script>
 ```
 
