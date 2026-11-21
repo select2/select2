@@ -8,6 +8,7 @@
 
 ### Bug fixes
 
+- Disable Select2 when the original select is inside a disabled fieldset (#6482)
 - Escape `String` objects consistently in template rendering (#6311)
 
 ## 4.1.1
