@@ -539,10 +539,8 @@ define(['jquery', './utils'], function ($, Utils) {
 
     if (content == null) {
       container.style.display = 'none';
-    } else if (typeof content === 'string') {
-      container.innerHTML = escapeMarkup(content);
     } else {
-      $(container).append(content);
+      Utils.appendContent(container, content, escapeMarkup);
     }
   };
 

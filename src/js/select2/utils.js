@@ -1,4 +1,4 @@
-define([], function () {
+define(['jquery'], function ($) {
   var Utils = {};
 
   Utils.Extend = function (ChildClass, SuperClass) {
@@ -253,13 +253,21 @@ define([], function () {
     };
 
     // Do not try to escape the markup if it's not a string
-    if (typeof markup !== 'string') {
+    if (typeof markup !== 'string' && !(markup instanceof String)) {
       return markup;
     }
 
     return String(markup).replace(/[&<>"'\/\\]/g, function (match) {
       return replaceMap[match];
     });
+  };
+
+  Utils.appendContent = function (container, content, escapeMarkup) {
+    if (typeof content === 'string' || content instanceof String) {
+      container.innerHTML = escapeMarkup(content);
+    } else {
+      $(container).append(content);
+    }
   };
 
   // Cache objects in Utils.__cache instead of $.data (see #4346)

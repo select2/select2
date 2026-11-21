@@ -499,7 +499,7 @@ S2.define('jquery',[],function () {
   return _$;
 });
 
-S2.define('select2/utils',[], function () {
+S2.define('select2/utils',['jquery'], function ($) {
   var Utils = {};
 
   Utils.Extend = function (ChildClass, SuperClass) {
@@ -754,13 +754,21 @@ S2.define('select2/utils',[], function () {
     };
 
     // Do not try to escape the markup if it's not a string
-    if (typeof markup !== 'string') {
+    if (typeof markup !== 'string' && !(markup instanceof String)) {
       return markup;
     }
 
     return String(markup).replace(/[&<>"'\/\\]/g, function (match) {
       return replaceMap[match];
     });
+  };
+
+  Utils.appendContent = function (container, content, escapeMarkup) {
+    if (typeof content === 'string' || content instanceof String) {
+      container.innerHTML = escapeMarkup(content);
+    } else {
+      $(container).append(content);
+    }
   };
 
   // Cache objects in Utils.__cache instead of $.data (see #4346)
@@ -1403,10 +1411,8 @@ S2.define('select2/results',['jquery', './utils'], function ($, Utils) {
 
     if (content == null) {
       container.style.display = 'none';
-    } else if (typeof content === 'string') {
-      container.innerHTML = escapeMarkup(content);
     } else {
-      $(container).append(content);
+      Utils.appendContent(container, content, escapeMarkup);
     }
   };
 
@@ -1701,9 +1707,8 @@ S2.define('select2/selection/single',['jquery', './base', '../utils', '../keys']
 
   SingleSelection.prototype.display = function (data, container) {
     var template = this.options.get('templateSelection');
-    var escapeMarkup = this.options.get('escapeMarkup');
 
-    return escapeMarkup(template(data, container));
+    return template(data, container);
   };
 
   SingleSelection.prototype.selectionContainer = function () {
@@ -1721,7 +1726,12 @@ S2.define('select2/selection/single',['jquery', './base', '../utils', '../keys']
     var $rendered = this.$selection.find('.select2-selection__rendered');
     var formatted = this.display(selection, $rendered);
 
-    $rendered.empty().append(formatted);
+    $rendered.empty();
+    Utils.appendContent(
+      $rendered[0],
+      formatted,
+      this.options.get('escapeMarkup')
+    );
 
     var title = selection.title || selection.text;
 
@@ -1813,9 +1823,8 @@ S2.define('select2/selection/multiple',['jquery', './base', '../utils'], functio
 
   MultipleSelection.prototype.display = function (data, container) {
     var template = this.options.get('templateSelection');
-    var escapeMarkup = this.options.get('escapeMarkup');
 
-    return escapeMarkup(template(data, container));
+    return template(data, container);
   };
 
   MultipleSelection.prototype.selectionContainer = function () {
@@ -1860,10 +1869,13 @@ S2.define('select2/selection/multiple',['jquery', './base', '../utils'], functio
         selectionId += Utils.generateChars(4);
       }
 
-      $selection
-        .find('.select2-selection__choice__display')
-        .append(formatted)[0]
-        .setAttribute('id', selectionId);
+      var $display = $selection.find('.select2-selection__choice__display');
+      Utils.appendContent(
+        $display[0],
+        formatted,
+        this.options.get('escapeMarkup')
+      );
+      $display[0].setAttribute('id', selectionId);
 
       var title = selection.title || selection.text;
 
