@@ -22,7 +22,7 @@ jobs:
       - name: npm install
         run: npm install
       - name: Run linting, tests, minify
-        run: grunt
+        run: npx grunt
       - name: Deploy (release)
         if: github.event_name == 'release'
         run: npm publish
@@ -51,6 +51,6 @@ jobs:
       - name: npm install
         run: npm install
       - name: Run linting, tests, minify
-        run: grunt
+        run: npx grunt
       - name: Deploy (release)
         run: npm publish --provenance --access public
