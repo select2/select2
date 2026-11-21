@@ -9,21 +9,15 @@ var options = new Options({});
 QUnit.test('current is required', function (assert) {
   var data = new BaseData($('#qunit-fixture select'), options);
 
-  assert.throws(
-    function () {
-      data.current(function () {});
-    },
-    'current has no default implementation'
-  );
+  assert.throws(function () {
+    data.current(function () {});
+  }, 'current has no default implementation');
 });
 
 QUnit.test('query is required', function (assert) {
   var data = new BaseData($('#qunit-fixture select'), options);
 
-  assert.throws(
-    function () {
-      data.query({}, function () {});
-    },
-    'query has no default implementation'
-  );
+  assert.throws(function () {
+    data.query({}, function () {});
+  }, 'query has no default implementation');
 });

@@ -1,8 +1,5 @@
-define([
-  'jquery',
-  './utils'
-], function ($, Utils) {
-  function Dropdown ($element, options) {
+define(['jquery', './utils'], function ($, Utils) {
+  function Dropdown($element, options) {
     this.$element = $element;
     this.options = options;
 
@@ -15,7 +12,7 @@ define([
     var $dropdown = $(
       '<span class="select2-dropdown">' +
         '<span class="select2-results"></span>' +
-      '</span>'
+        '</span>'
     );
 
     $dropdown[0].setAttribute('dir', this.options.get('dir'));

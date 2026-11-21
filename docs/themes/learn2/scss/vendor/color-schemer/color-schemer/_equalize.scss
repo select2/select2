@@ -1,5 +1,0 @@
-// Color equalize credit to Mason Wendell:
-// https://github.com/canarymason/The-Coding-Designers-Survival-Kit/blob/master/sass/partials/lib/variables/_color_schemes.sass
-@function equalize($color) {
-  @return hsl(hue($color), 100%, 50%);
-}

@@ -31,9 +31,11 @@ QUnit.test('clear is not displayed for single placeholder', function (assert) {
 
   var $selection = selection.render();
 
-  selection.update([{
-    id: 'placeholder'
-  }]);
+  selection.update([
+    {
+      id: 'placeholder'
+    }
+  ]);
 
   assert.equal(
     $selection.find('.select2-selection__clear').length,
@@ -42,23 +44,25 @@ QUnit.test('clear is not displayed for single placeholder', function (assert) {
   );
 });
 
-QUnit.test('clear is not displayed for multiple placeholder', function (assert) {
-  var selection = new AllowClearPlaceholder(
-    $('#qunit-fixture .multiple'),
-    allowClearOptions
-  );
+QUnit.test(
+  'clear is not displayed for multiple placeholder',
+  function (assert) {
+    var selection = new AllowClearPlaceholder(
+      $('#qunit-fixture .multiple'),
+      allowClearOptions
+    );
 
-  var $selection = selection.render();
+    var $selection = selection.render();
 
-  selection.update([]);
+    selection.update([]);
 
-  assert.equal(
-    $selection.find('.select2-selection__clear').length,
-    0,
-    'The clear icon should not be displayed'
-  );
-});
-
+    assert.equal(
+      $selection.find('.select2-selection__clear').length,
+      0,
+      'The clear icon should not be displayed'
+    );
+  }
+);
 
 QUnit.test('clear is displayed for placeholder', function (assert) {
   var selection = new AllowClearPlaceholder(
@@ -68,10 +72,12 @@ QUnit.test('clear is displayed for placeholder', function (assert) {
 
   var $selection = selection.render();
 
-  selection.update([{
-    id: 'one',
-    test: 'one'
-  }]);
+  selection.update([
+    {
+      id: 'one',
+      test: 'one'
+    }
+  ]);
 
   assert.equal(
     $selection.find('.select2-selection__clear').length,
@@ -88,10 +94,12 @@ QUnit.test('clear icon should have title displayed', function (assert) {
 
   var $selection = selection.render();
 
-  selection.update([{
-    id: 'one',
-    test: 'one'
-  }]);
+  selection.update([
+    {
+      id: 'one',
+      test: 'one'
+    }
+  ]);
 
   assert.equal(
     $selection.find('.select2-selection__clear').attr('title'),
@@ -103,10 +111,7 @@ QUnit.test('clear icon should have title displayed', function (assert) {
 QUnit.test('clicking clear will set the placeholder value', function (assert) {
   var $element = $('#qunit-fixture .single-with-placeholder');
 
-  var selection = new AllowClearPlaceholder(
-    $element,
-    allowClearOptions
-  );
+  var selection = new AllowClearPlaceholder($element, allowClearOptions);
   var container = new MockContainer();
 
   var $selection = selection.render();
@@ -114,10 +119,12 @@ QUnit.test('clicking clear will set the placeholder value', function (assert) {
   selection.bind(container, $('<div></div>'));
 
   $element.val('One');
-  selection.update([{
-    id: 'One',
-    text: 'One'
-  }]);
+  selection.update([
+    {
+      id: 'One',
+      text: 'One'
+    }
+  ]);
 
   var $remove = $selection.find('.select2-selection__clear');
   $remove.trigger('mousedown');
@@ -134,10 +141,7 @@ QUnit.test('clicking clear will trigger the unselect event', function (assert) {
 
   var $element = $('#qunit-fixture .single-with-placeholder');
 
-  var selection = new AllowClearPlaceholder(
-    $element,
-    allowClearOptions
-  );
+  var selection = new AllowClearPlaceholder($element, allowClearOptions);
   var container = new MockContainer();
 
   var $selection = selection.render();
@@ -145,10 +149,12 @@ QUnit.test('clicking clear will trigger the unselect event', function (assert) {
   selection.bind(container, $('<div></div>'));
 
   $element.val('One');
-  selection.update([{
-    id: 'One',
-    text: 'One'
-  }]);
+  selection.update([
+    {
+      id: 'One',
+      text: 'One'
+    }
+  ]);
 
   selection.on('unselect', function (ev) {
     assert.ok(
@@ -156,16 +162,9 @@ QUnit.test('clicking clear will trigger the unselect event', function (assert) {
       'The event should have been triggered with the data property'
     );
 
-    assert.ok(
-      $.isPlainObject(ev.data),
-      'The data should be an object'
-    );
+    assert.ok($.isPlainObject(ev.data), 'The data should be an object');
 
-    assert.equal(
-      ev.data.id,
-      'One',
-      'The data should be the unselected object'
-    );
+    assert.equal(ev.data.id, 'One', 'The data should be the unselected object');
 
     assert.equal(
       $element.val(),
@@ -178,48 +177,47 @@ QUnit.test('clicking clear will trigger the unselect event', function (assert) {
   $remove.trigger('mousedown');
 });
 
-QUnit.test('preventing the unselect event cancels the clearing', function (assert) {
-  var $element = $('#qunit-fixture .single-with-placeholder');
+QUnit.test(
+  'preventing the unselect event cancels the clearing',
+  function (assert) {
+    var $element = $('#qunit-fixture .single-with-placeholder');
 
-  var selection = new AllowClearPlaceholder(
-    $element,
-    allowClearOptions
-  );
-  var container = new MockContainer();
+    var selection = new AllowClearPlaceholder($element, allowClearOptions);
+    var container = new MockContainer();
 
-  var $selection = selection.render();
+    var $selection = selection.render();
 
-  selection.bind(container, $('<div></div>'));
+    selection.bind(container, $('<div></div>'));
 
-  $element.val('One');
-  selection.update([{
-    id: 'One',
-    text: 'One'
-  }]);
+    $element.val('One');
+    selection.update([
+      {
+        id: 'One',
+        text: 'One'
+      }
+    ]);
 
-  selection.on('unselect', function (ev) {
-    ev.prevented = true;
-  });
+    selection.on('unselect', function (ev) {
+      ev.prevented = true;
+    });
 
-  var $remove = $selection.find('.select2-selection__clear');
-  $remove.trigger('mousedown');
+    var $remove = $selection.find('.select2-selection__clear');
+    $remove.trigger('mousedown');
 
-  assert.equal(
-    $element.val(),
-    'One',
-    'The placeholder should not have been set'
-  );
-});
+    assert.equal(
+      $element.val(),
+      'One',
+      'The placeholder should not have been set'
+    );
+  }
+);
 
 QUnit.test('clicking clear will trigger the clear event', function (assert) {
   assert.expect(5);
 
   var $element = $('#qunit-fixture .single-with-placeholder');
 
-  var selection = new AllowClearPlaceholder(
-    $element,
-    allowClearOptions
-  );
+  var selection = new AllowClearPlaceholder($element, allowClearOptions);
   var container = new MockContainer();
 
   var $selection = selection.render();
@@ -227,10 +225,12 @@ QUnit.test('clicking clear will trigger the clear event', function (assert) {
   selection.bind(container, $('<div></div>'));
 
   $element.val('One');
-  selection.update([{
-    id: 'One',
-    text: 'One'
-  }]);
+  selection.update([
+    {
+      id: 'One',
+      text: 'One'
+    }
+  ]);
 
   selection.on('clear', function (ev) {
     assert.ok(
@@ -238,10 +238,7 @@ QUnit.test('clicking clear will trigger the clear event', function (assert) {
       'The event should have been triggered with the data property'
     );
 
-    assert.ok(
-      Array.isArray(ev.data),
-      'The data should be an array'
-    );
+    assert.ok(Array.isArray(ev.data), 'The data should be an array');
 
     assert.equal(
       ev.data.length,
@@ -266,56 +263,57 @@ QUnit.test('clicking clear will trigger the clear event', function (assert) {
   $remove.trigger('mousedown');
 });
 
-QUnit.test('preventing the clear event cancels the clearing', function (assert) {
-  var $element = $('#qunit-fixture .single-with-placeholder');
+QUnit.test(
+  'preventing the clear event cancels the clearing',
+  function (assert) {
+    var $element = $('#qunit-fixture .single-with-placeholder');
 
-  var selection = new AllowClearPlaceholder(
-    $element,
-    allowClearOptions
-  );
-  var container = new MockContainer();
+    var selection = new AllowClearPlaceholder($element, allowClearOptions);
+    var container = new MockContainer();
 
-  var $selection = selection.render();
+    var $selection = selection.render();
 
-  selection.bind(container, $('<div></div>'));
+    selection.bind(container, $('<div></div>'));
 
-  $element.val('One');
-  selection.update([{
-    id: 'One',
-    text: 'One'
-  }]);
+    $element.val('One');
+    selection.update([
+      {
+        id: 'One',
+        text: 'One'
+      }
+    ]);
 
-  selection.on('clear', function (ev) {
-    ev.prevented = true;
-  });
+    selection.on('clear', function (ev) {
+      ev.prevented = true;
+    });
 
-  var $remove = $selection.find('.select2-selection__clear');
-  $remove.trigger('mousedown');
+    var $remove = $selection.find('.select2-selection__clear');
+    $remove.trigger('mousedown');
 
-  assert.equal(
-    $element.val(),
-    'One',
-    'The placeholder should not have been set'
-  );
-});
+    assert.equal(
+      $element.val(),
+      'One',
+      'The placeholder should not have been set'
+    );
+  }
+);
 
 QUnit.test('clear does not work when disabled', function (assert) {
   var $element = $('#qunit-fixture .single-with-placeholder');
 
-  var selection = new AllowClearPlaceholder(
-    $element,
-    allowClearOptions
-  );
+  var selection = new AllowClearPlaceholder($element, allowClearOptions);
   var container = new MockContainer();
 
   var $selection = selection.render();
 
   selection.bind(container, $('<div></div>'));
 
-  selection.update([{
-    id: 'One',
-    text: 'One'
-  }]);
+  selection.update([
+    {
+      id: 'One',
+      text: 'One'
+    }
+  ]);
 
   $element.val('One');
   selection.options.set('disabled', true);
@@ -330,71 +328,73 @@ QUnit.test('clear does not work when disabled', function (assert) {
   );
 });
 
-QUnit.test('clear button doesnt visually break selected options', function (assert) {
-  var $element = $('<select></select>');
+QUnit.test(
+  'clear button doesnt visually break selected options',
+  function (assert) {
+    var $element = $('<select></select>');
 
-  var Selection = Utils.Decorate(
-    Utils.Decorate(MultipleSelection, Placeholder),
-    AllowClear
-  );
+    var Selection = Utils.Decorate(
+      Utils.Decorate(MultipleSelection, Placeholder),
+      AllowClear
+    );
 
-  var selection = new Selection(
-    $element,
-    allowClearOptions
-  );
-  var container = new MockContainer();
+    var selection = new Selection($element, allowClearOptions);
+    var container = new MockContainer();
 
-  var $container = $(
-    '<span class="select2-container select2-container--default"></span>'
-  );
-  $('#qunit-fixture').append($container);
+    var $container = $(
+      '<span class="select2-container select2-container--default"></span>'
+    );
+    $('#qunit-fixture').append($container);
 
-  var $selection = selection.render();
-  $container.append($selection);
-  $container.css('width', '100px');
+    var $selection = selection.render();
+    $container.append($selection);
+    $container.css('width', '100px');
 
-  selection.bind(container, $container);
+    selection.bind(container, $container);
 
-  selection.update([{
-    id: '1',
-    text: '1'
-  }]);
+    selection.update([
+      {
+        id: '1',
+        text: '1'
+      }
+    ]);
 
-  var singleHeight = $container.height();
+    var singleHeight = $container.height();
 
-  selection.update([
-    {
-      id: '10',
-      text: '10'
-    },
-    {
-      id: '20',
-      text: '20'
-    }
-  ]);
+    selection.update([
+      {
+        id: '10',
+        text: '10'
+      },
+      {
+        id: '20',
+        text: '20'
+      }
+    ]);
 
-  var doubleHeight = $container.height();
+    var doubleHeight = $container.height();
 
-  selection.update([
-    {
-      id: '1',
-      text: '1'
-    },
-    {
-      id: '2',
-      text: '2'
-    }
-  ]);
+    selection.update([
+      {
+        id: '1',
+        text: '1'
+      },
+      {
+        id: '2',
+        text: '2'
+      }
+    ]);
 
-  assert.notEqual(
-    singleHeight,
-    doubleHeight,
-    'The height of the two different rows should be different'
-  );
+    assert.notEqual(
+      singleHeight,
+      doubleHeight,
+      'The height of the two different rows should be different'
+    );
 
-  assert.equal(
-    $container.height(),
-    doubleHeight,
-    'There should be two full lines of selections'
-  );
-});
+    assert.equal(
+      $container.height(),
+      doubleHeight,
+      'There should be two full lines of selections'
+    );
+  }
+);

@@ -27,27 +27,36 @@ QUnit.test('0 never displays the notice', function (assert) {
     assert.ok(false, 'The message should not be displayed');
   });
 
-  data.query({
-    term: ''
-  }, function () {
-    assert.ok(true, 'The results should be queried');
-  });
+  data.query(
+    {
+      term: ''
+    },
+    function () {
+      assert.ok(true, 'The results should be queried');
+    }
+  );
 
   $select.val(['One']);
 
-  data.query({
-    term: ''
-  }, function () {
-    assert.ok(true, 'The results should be queried');
-  });
+  data.query(
+    {
+      term: ''
+    },
+    function () {
+      assert.ok(true, 'The results should be queried');
+    }
+  );
 
   $select.val(['One', 'Two']);
 
-  data.query({
-    term: ''
-  }, function () {
-    assert.ok(true, 'The results should be queried');
-  });
+  data.query(
+    {
+      term: ''
+    },
+    function () {
+      assert.ok(true, 'The results should be queried');
+    }
+  );
 });
 
 QUnit.test('< 0 never displays the notice', function (assert) {
@@ -68,30 +77,39 @@ QUnit.test('< 0 never displays the notice', function (assert) {
     assert.ok(false, 'The message should not be displayed');
   });
 
-  data.query({
-    term: ''
-  }, function () {
-    assert.ok(true, 'The results should be queried');
-  });
+  data.query(
+    {
+      term: ''
+    },
+    function () {
+      assert.ok(true, 'The results should be queried');
+    }
+  );
 
   $select.val(['One']);
 
-  data.query({
-    term: ''
-  }, function () {
-    assert.ok(true, 'The results should be queried');
-  });
+  data.query(
+    {
+      term: ''
+    },
+    function () {
+      assert.ok(true, 'The results should be queried');
+    }
+  );
 
   $select.val(['One', 'Two']);
 
-  data.query({
-    term: ''
-  }, function () {
-    assert.ok(true, 'The results should be queried');
-  });
+  data.query(
+    {
+      term: ''
+    },
+    function () {
+      assert.ok(true, 'The results should be queried');
+    }
+  );
 });
 
-QUnit.test('triggers when >= 1 selection' , function (assert) {
+QUnit.test('triggers when >= 1 selection', function (assert) {
   assert.expect(2);
 
   var $select = $('#qunit-fixture .multiple');
@@ -111,22 +129,28 @@ QUnit.test('triggers when >= 1 selection' , function (assert) {
 
   $select.val(['One']);
 
-  data.query({
-    term: ''
-  }, function () {
-    assert.ok(false, 'The results should not be queried');
-  });
+  data.query(
+    {
+      term: ''
+    },
+    function () {
+      assert.ok(false, 'The results should not be queried');
+    }
+  );
 
   $select.val(['One', 'Two']);
 
-  data.query({
-    term: ''
-  }, function () {
-    assert.ok(false, 'The results should not be queried');
-  });
+  data.query(
+    {
+      term: ''
+    },
+    function () {
+      assert.ok(false, 'The results should not be queried');
+    }
+  );
 });
 
-QUnit.test('triggers after selection' , function (assert) {
+QUnit.test('triggers after selection', function (assert) {
   assert.expect(1);
 
   var $select = $('#qunit-fixture .multiple');

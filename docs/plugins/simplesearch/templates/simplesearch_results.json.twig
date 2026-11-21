@@ -1,5 +1,0 @@
-{"results":[
-{%- for search_result in search_results -%}
-{{- search_result.route|json_encode -}}{{ not loop.last ? ',' }}
-{%- endfor -%}
-]}

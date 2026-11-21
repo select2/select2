@@ -32,7 +32,7 @@ define(function () {
     removeItem: function () {
       return 'Hapus item';
     },
-    search: function() {
+    search: function () {
       return 'Cari';
     }
   };

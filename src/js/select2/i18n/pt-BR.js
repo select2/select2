@@ -48,7 +48,7 @@ define(function () {
     removeItem: function () {
       return 'Remover item';
     },
-    search: function() {
+    search: function () {
       return 'Buscar';
     }
   };

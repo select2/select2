@@ -1,20 +1,27 @@
-define([
-  'jquery'
-], function ($) {
-  function EventRelay () { }
+define(['jquery'], function ($) {
+  function EventRelay() {}
 
   EventRelay.prototype.bind = function (decorated, container, $container) {
     var self = this;
     var relayEvents = [
-      'open', 'opening',
-      'close', 'closing',
-      'select', 'selecting',
-      'unselect', 'unselecting',
-      'clear', 'clearing'
+      'open',
+      'opening',
+      'close',
+      'closing',
+      'select',
+      'selecting',
+      'unselect',
+      'unselecting',
+      'clear',
+      'clearing'
     ];
 
     var preventableEvents = [
-      'opening', 'closing', 'selecting', 'unselecting', 'clearing'
+      'opening',
+      'closing',
+      'selecting',
+      'unselecting',
+      'clearing'
     ];
 
     decorated.call(this, container, $container);

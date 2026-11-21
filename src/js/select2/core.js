@@ -1,9 +1,9 @@
-define([
-  'jquery',
-  './options',
-  './utils',
-  './keys'
-], function ($, Options, Utils, KEYS) {
+define(['jquery', './options', './utils', './keys'], function (
+  $,
+  Options,
+  Utils,
+  KEYS
+) {
   var Select2 = function ($element, options) {
     if (Utils.GetData($element[0], 'select2') != null) {
       Utils.GetData($element[0], 'select2').destroy();
@@ -145,7 +145,7 @@ define([
     if (method == 'style') {
       var style = $element[0].getAttribute('style');
 
-      if (typeof(style) !== 'string') {
+      if (typeof style !== 'string') {
         return null;
       }
 
@@ -311,7 +311,7 @@ define([
           self.trigger('results:select', {});
 
           evt.preventDefault();
-        } else if ((key === KEYS.SPACE && evt.ctrlKey)) {
+        } else if (key === KEYS.SPACE && evt.ctrlKey) {
           self.trigger('results:toggle', {});
 
           evt.preventDefault();
@@ -325,8 +325,11 @@ define([
           evt.preventDefault();
         }
       } else {
-        if (key === KEYS.ENTER || key === KEYS.SPACE ||
-            (key === KEYS.DOWN && evt.altKey)) {
+        if (
+          key === KEYS.ENTER ||
+          key === KEYS.SPACE ||
+          (key === KEYS.DOWN && evt.altKey)
+        ) {
           self.open();
 
           evt.preventDefault();
@@ -392,11 +395,11 @@ define([
   Select2.prototype.trigger = function (name, args) {
     var actualTrigger = Select2.__super__.trigger;
     var preTriggerMap = {
-      'open': 'opening',
-      'close': 'closing',
-      'select': 'selecting',
-      'unselect': 'unselecting',
-      'clear': 'clearing'
+      open: 'opening',
+      close: 'closing',
+      select: 'selecting',
+      unselect: 'unselecting',
+      clear: 'clearing'
     };
 
     if (args === undefined) {
@@ -452,7 +455,7 @@ define([
       return;
     }
 
-    this.trigger('close', { originalEvent : evt });
+    this.trigger('close', { originalEvent: evt });
   };
 
   /**
@@ -498,8 +501,8 @@ define([
     if (this.options.get('debug') && window.console && console.warn) {
       console.warn(
         'Select2: The `select2("enable")` method has been deprecated and will' +
-        ' be removed in later Select2 versions. Use $element[0].disabled' +
-        ' instead.'
+          ' be removed in later Select2 versions. Use $element[0].disabled' +
+          ' instead.'
       );
     }
 
@@ -513,11 +516,15 @@ define([
   };
 
   Select2.prototype.data = function () {
-    if (this.options.get('debug') &&
-        arguments.length > 0 && window.console && console.warn) {
+    if (
+      this.options.get('debug') &&
+      arguments.length > 0 &&
+      window.console &&
+      console.warn
+    ) {
       console.warn(
         'Select2: Data can no longer be set using `select2("data")`. You ' +
-        'should consider setting the value instead using `$element.val()`.'
+          'should consider setting the value instead using `$element.val()`.'
       );
     }
 
@@ -534,7 +541,7 @@ define([
     if (this.options.get('debug') && window.console && console.warn) {
       console.warn(
         'Select2: The `select2("val")` method has been deprecated and will be' +
-        ' removed in later Select2 versions. Use $element.val() instead.'
+          ' removed in later Select2 versions. Use $element.val() instead.'
       );
     }
 
@@ -564,8 +571,10 @@ define([
     this._syncS = null;
 
     this.$element.off('.select2');
-    this.$element[0].setAttribute('tabindex',
-    Utils.GetData(this.$element[0], 'old-tabindex'));
+    this.$element[0].setAttribute(
+      'tabindex',
+      Utils.GetData(this.$element[0], 'old-tabindex')
+    );
 
     this.$element[0].classList.remove('select2-hidden-accessible');
     this.$element[0].setAttribute('aria-hidden', 'false');
@@ -588,15 +597,16 @@ define([
       '<span class="select2 select2-container">' +
         '<span class="selection"></span>' +
         '<span class="dropdown-wrapper" aria-hidden="true"></span>' +
-      '</span>'
+        '</span>'
     );
 
     $container[0].setAttribute('dir', this.options.get('dir'));
 
     this.$container = $container;
 
-    this.$container[0].classList
-      .add('select2-container--' + this.options.get('theme'));
+    this.$container[0].classList.add(
+      'select2-container--' + this.options.get('theme')
+    );
 
     Utils.StoreData($container[0], 'element', this.$element);
 

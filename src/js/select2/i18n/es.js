@@ -54,7 +54,7 @@ define(function () {
     removeItem: function () {
       return 'Eliminar elemento';
     },
-    search: function() {
+    search: function () {
       return 'Buscar';
     }
   };

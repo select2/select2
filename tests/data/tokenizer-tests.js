@@ -35,11 +35,14 @@ QUnit.test('triggers the select event', function (assert) {
     assert.ok(true, 'The select event should be triggered');
   });
 
-  data.query({
-    term: 'first,second'
-  }, function () {
-    assert.ok(true, 'The callback should have succeeded');
-  });
+  data.query(
+    {
+      term: 'first,second'
+    },
+    function () {
+      assert.ok(true, 'The callback should have succeeded');
+    }
+  );
 });
 
 QUnit.test('createTag can return null', function (assert) {
@@ -84,11 +87,14 @@ QUnit.test('createTag can return null', function (assert) {
     }
   });
 
-  data.query({
-    term: 'first,second'
-  }, function () {
-    assert.ok(true, 'The callback should have succeeded');
-  });
+  data.query(
+    {
+      term: 'first,second'
+    },
+    function () {
+      assert.ok(true, 'The callback should have succeeded');
+    }
+  );
 });
 
 QUnit.test('createTag returning null does not cut the term', function (assert) {
@@ -163,11 +169,14 @@ QUnit.test('createTag returning null does not cut the term', function (assert) {
     );
   });
 
-  data.query({
-    term: '"first, second",abc'
-  }, function () {
-    assert.ok(true, 'The callback should have succeeded');
-  });
+  data.query(
+    {
+      term: '"first, second",abc'
+    },
+    function () {
+      assert.ok(true, 'The callback should have succeeded');
+    }
+  );
 });
 
 QUnit.test('works with multiple tokens given', function (assert) {
@@ -205,11 +214,14 @@ QUnit.test('works with multiple tokens given', function (assert) {
     assert.ok(true, 'The select event should be triggered');
   });
 
-  data.query({
-    term: 'first,second,third'
-  }, function () {
-    assert.ok(true, 'The callback should have succeeded');
-  });
+  data.query(
+    {
+      term: 'first,second,third'
+    },
+    function () {
+      assert.ok(true, 'The callback should have succeeded');
+    }
+  );
 
   assert.equal(
     $select.children('option').length,

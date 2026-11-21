@@ -1,11 +1,10 @@
-define([
-], function () {
+define([], function () {
   var Utils = {};
 
   Utils.Extend = function (ChildClass, SuperClass) {
     var __hasProp = {}.hasOwnProperty;
 
-    function BaseConstructor () {
+    function BaseConstructor() {
       this.constructor = ChildClass;
     }
 
@@ -22,7 +21,7 @@ define([
     return ChildClass;
   };
 
-  function getMethods (theClass) {
+  function getMethods(theClass) {
     var proto = theClass.prototype;
 
     var methods = [];
@@ -48,7 +47,7 @@ define([
     var decoratedMethods = getMethods(DecoratorClass);
     var superMethods = getMethods(SuperClass);
 
-    function DecoratedClass () {
+    function DecoratedClass() {
       var unshift = Array.prototype.unshift;
 
       var argCount = DecoratorClass.prototype.constructor.length;
@@ -66,7 +65,7 @@ define([
 
     DecoratorClass.displayName = SuperClass.displayName;
 
-    function ctr () {
+    function ctr() {
       this.constructor = DecoratedClass;
     }
 
@@ -75,8 +74,7 @@ define([
     for (var m = 0; m < superMethods.length; m++) {
       var superMethod = superMethods[m];
 
-      DecoratedClass.prototype[superMethod] =
-        SuperClass.prototype[superMethod];
+      DecoratedClass.prototype[superMethod] = SuperClass.prototype[superMethod];
     }
 
     var calledMethod = function (methodName) {
@@ -168,6 +166,11 @@ define([
     return chars;
   };
 
+  // Event namespaces can't contain regex characters
+  Utils.toEventNamespace = function (id) {
+    return String(id).replace(/[^\w-]/g, '');
+  };
+
   Utils.bind = function (func, context) {
     return function () {
       func.apply(context, arguments);
@@ -219,8 +222,10 @@ define([
     var overflowY = el.style.overflowY;
 
     //Check both x and y declarations
-    if (overflowX === overflowY &&
-        (overflowY === 'hidden' || overflowY === 'visible')) {
+    if (
+      overflowX === overflowY &&
+      (overflowY === 'hidden' || overflowY === 'visible')
+    ) {
       return false;
     }
 
@@ -230,8 +235,10 @@ define([
 
     var computedEl = window.getComputedStyle(el);
 
-    return (parseFloat(computedEl.height) < el.scrollHeight ||
-      parseFloat(computedEl.width) < el.scrollWidth);
+    return (
+      parseFloat(computedEl.height) < el.scrollHeight ||
+      parseFloat(computedEl.width) < el.scrollWidth
+    );
   };
 
   Utils.escapeMarkup = function (markup) {
@@ -241,7 +248,7 @@ define([
       '<': '&lt;',
       '>': '&gt;',
       '"': '&quot;',
-      '\'': '&#39;',
+      "'": '&#39;', // jshint ignore:line
       '/': '&#47;'
     };
 
@@ -275,8 +282,8 @@ define([
     if (element.id) {
       select2Id = 'select2-data-' + element.id;
     } else {
-      select2Id = 'select2-data-' + (++id).toString() +
-        '-' + Utils.generateChars(4);
+      select2Id =
+        'select2-data-' + (++id).toString() + '-' + Utils.generateChars(4);
     }
 
     element.setAttribute('data-select2-id', select2Id);

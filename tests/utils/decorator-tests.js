@@ -3,13 +3,13 @@ QUnit.module('Decorators');
 var Utils = require('select2/utils');
 
 QUnit.test('overridden - method', function (assert) {
-  function BaseClass () {}
+  function BaseClass() {}
 
   BaseClass.prototype.hello = function () {
     return 'A';
   };
 
-  function DecoratorClass () {}
+  function DecoratorClass() {}
 
   DecoratorClass.prototype.hello = function () {
     return 'B';
@@ -23,7 +23,7 @@ QUnit.test('overridden - method', function (assert) {
 });
 
 QUnit.test('overridden - constructor', function (assert) {
-  function BaseClass () {
+  function BaseClass() {
     this.inherited = true;
   }
 
@@ -31,7 +31,7 @@ QUnit.test('overridden - constructor', function (assert) {
     return 'A';
   };
 
-  function DecoratorClass (decorated) {
+  function DecoratorClass(decorated) {
     this.called = true;
   }
 
@@ -48,13 +48,13 @@ QUnit.test('overridden - constructor', function (assert) {
 });
 
 QUnit.test('not overridden - method', function (assert) {
-  function BaseClass () {}
+  function BaseClass() {}
 
   BaseClass.prototype.hello = function () {
     return 'A';
   };
 
-  function DecoratorClass () {}
+  function DecoratorClass() {}
 
   DecoratorClass.prototype.other = function () {
     return 'B';
@@ -68,7 +68,7 @@ QUnit.test('not overridden - method', function (assert) {
 });
 
 QUnit.test('not overridden - constructor', function (assert) {
-  function BaseClass () {
+  function BaseClass() {
     this.called = true;
   }
 
@@ -76,7 +76,7 @@ QUnit.test('not overridden - constructor', function (assert) {
     return 'A';
   };
 
-  function DecoratorClass () {}
+  function DecoratorClass() {}
 
   DecoratorClass.prototype.other = function () {
     return 'B';
@@ -90,13 +90,13 @@ QUnit.test('not overridden - constructor', function (assert) {
 });
 
 QUnit.test('inherited - method', function (assert) {
-  function BaseClass () {}
+  function BaseClass() {}
 
   BaseClass.prototype.hello = function () {
     return 'A';
   };
 
-  function DecoratorClass (decorated) {}
+  function DecoratorClass(decorated) {}
 
   DecoratorClass.prototype.hello = function (decorated) {
     return 'B' + decorated.call(this) + 'C';
@@ -110,7 +110,7 @@ QUnit.test('inherited - method', function (assert) {
 });
 
 QUnit.test('inherited - constructor', function (assert) {
-  function BaseClass () {
+  function BaseClass() {
     this.inherited = true;
   }
 
@@ -118,7 +118,7 @@ QUnit.test('inherited - constructor', function (assert) {
     return 'A';
   };
 
-  function DecoratorClass (decorated) {
+  function DecoratorClass(decorated) {
     this.called = true;
 
     decorated.call(this);
@@ -137,7 +137,7 @@ QUnit.test('inherited - constructor', function (assert) {
 });
 
 QUnit.test('inherited - three levels', function (assert) {
-  function BaseClass (testArgument) {
+  function BaseClass(testArgument) {
     this.baseCalled = true;
     this.baseTestArgument = testArgument;
   }
@@ -146,7 +146,7 @@ QUnit.test('inherited - three levels', function (assert) {
     return a + 'c';
   };
 
-  function MiddleClass (decorated, testArgument) {
+  function MiddleClass(decorated, testArgument) {
     this.middleCalled = true;
     this.middleTestArgument = testArgument;
 
@@ -157,7 +157,7 @@ QUnit.test('inherited - three levels', function (assert) {
     return decorated.call(this, a + 'b');
   };
 
-  function DecoratorClass (decorated, testArgument) {
+  function DecoratorClass(decorated, testArgument) {
     this.decoratorCalled = true;
     this.decoratorTestArgument = testArgument;
 

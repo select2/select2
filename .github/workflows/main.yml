@@ -1,30 +1,44 @@
 name: CI
-
 on: [push, pull_request]
-
 jobs:
+  docs:
+    name: Documentation
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@v7
+      - run: uv run mkdocs build --strict
+        env:
+          MKDOCS_GIT_COMMITTERS_APIKEY: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: site
   linting:
     name: Linting
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Use Node.js 24
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 24
       - name: npm install
         run: npm install
       - name: Run linting
-        run: grunt compile lint
+        run: npx grunt compile lint
   tests:
     name: Tests
     runs-on: ubuntu-latest
     steps:
       - run: sudo apt update
       - run: sudo apt install -y chromium-browser
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Use Node.js 24
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 24
       - name: npm install
@@ -33,17 +47,17 @@ jobs:
         env:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: "1"
           PUPPETEER_EXECUTABLE_PATH: "/usr/bin/chromium-browser"
-        run: grunt compile test
+        run: npx grunt compile test
   minification:
     name: Minification
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Use Node.js 24
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 24
       - name: npm install
         run: npm install
       - name: Run minification
-        run: grunt compile minify
+        run: npx grunt compile minify

@@ -32,17 +32,20 @@ QUnit.test('normalizing placeholder ignores objects', function (assert) {
   assert.equal(original, normalized);
 });
 
-QUnit.test('normalizing placeholder gives object for string', function (assert) {
-  var selection = new SinglePlaceholder(
-    $('#qunit-fixture .single'),
-    placeholderOptions
-  );
+QUnit.test(
+  'normalizing placeholder gives object for string',
+  function (assert) {
+    var selection = new SinglePlaceholder(
+      $('#qunit-fixture .single'),
+      placeholderOptions
+    );
 
-  var normalized = selection.normalizePlaceholder('placeholder');
+    var normalized = selection.normalizePlaceholder('placeholder');
 
-  assert.equal(normalized.id, '');
-  assert.equal(normalized.text, 'placeholder');
-});
+    assert.equal(normalized.id, '');
+    assert.equal(normalized.text, 'placeholder');
+  }
+);
 
 QUnit.test('text is shown for placeholder option on single', function (assert) {
   var selection = new SinglePlaceholder(
@@ -52,9 +55,11 @@ QUnit.test('text is shown for placeholder option on single', function (assert) {
 
   var $selection = selection.render();
 
-  selection.update([{
-    id: 'placeholder'
-  }]);
+  selection.update([
+    {
+      id: 'placeholder'
+    }
+  ]);
 
   assert.equal($selection.text(), 'This is the placeholder');
 });
@@ -67,9 +72,11 @@ QUnit.test('title is set for placeholder option on single', function (assert) {
 
   var $selection = selection.render();
 
-  selection.update([{
-    id: 'placeholder'
-  }]);
+  selection.update([
+    {
+      id: 'placeholder'
+    }
+  ]);
 
   assert.equal(
     $selection.find('.select2-selection__rendered').attr('title'),
@@ -93,9 +100,11 @@ QUnit.test('title is used for placeholder option on single', function (assert) {
 
   var $selection = selection.render();
 
-  selection.update([{
-    id: 'placeholder'
-  }]);
+  selection.update([
+    {
+      id: 'placeholder'
+    }
+  ]);
 
   assert.equal(
     $selection.find('.select2-selection__rendered').attr('title'),
@@ -103,15 +112,18 @@ QUnit.test('title is used for placeholder option on single', function (assert) {
   );
 });
 
-QUnit.test('placeholder is shown when no options are selected', function (assert) {
-  var selection = new SinglePlaceholder(
-    $('#qunit-fixture .multiple'),
-    placeholderOptions
-  );
+QUnit.test(
+  'placeholder is shown when no options are selected',
+  function (assert) {
+    var selection = new SinglePlaceholder(
+      $('#qunit-fixture .multiple'),
+      placeholderOptions
+    );
 
-  var $selection = selection.render();
+    var $selection = selection.render();
 
-  selection.update([]);
+    selection.update([]);
 
-  assert.equal($selection.text(), 'This is the placeholder');
-});
+    assert.equal($selection.text(), 'This is the placeholder');
+  }
+);

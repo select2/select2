@@ -1,7 +1,5 @@
-define([
-
-], function () {
-  function countResults (data) {
+define([], function () {
+  function countResults(data) {
     var count = 0;
 
     for (var d = 0; d < data.length; d++) {
@@ -17,7 +15,7 @@ define([
     return count;
   }
 
-  function MinimumResultsForSearch (decorated, $element, options, dataAdapter) {
+  function MinimumResultsForSearch(decorated, $element, options, dataAdapter) {
     this.minimumResultsForSearch = options.get('minimumResultsForSearch');
 
     if (this.minimumResultsForSearch < 0) {

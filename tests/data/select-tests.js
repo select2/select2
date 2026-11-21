@@ -11,11 +11,7 @@ QUnit.test('current gets default for single', function (assert) {
   var data = new SelectData($select, selectOptions);
 
   data.current(function (data) {
-    assert.equal(
-      data.length,
-      1,
-      'There should only be one selected option'
-    );
+    assert.equal(data.length, 1, 'There should only be one selected option');
 
     var option = data[0];
 
@@ -39,11 +35,7 @@ QUnit.test('current gets default for multiple', function (assert) {
   var data = new SelectData($select, selectOptions);
 
   data.current(function (data) {
-    assert.equal(
-      data.length,
-      0,
-      'Multiple selects have no default selection.'
-    );
+    assert.equal(data.length, 0, 'Multiple selects have no default selection.');
   });
 });
 
@@ -58,19 +50,11 @@ QUnit.test('current gets options with explicit value', function (assert) {
   $select.val('1');
 
   data.current(function (data) {
-    assert.equal(
-      data.length,
-      1,
-      'There should be one selected option'
-    );
+    assert.equal(data.length, 1, 'There should be one selected option');
 
     var option = data[0];
 
-    assert.equal(
-      option.id,
-      '1',
-      'The option value should be the selected id'
-    );
+    assert.equal(option.id, '1', 'The option value should be the selected id');
 
     assert.equal(
       option.text,
@@ -88,11 +72,7 @@ QUnit.test('current gets options with implicit value', function (assert) {
   $select.val('One');
 
   data.current(function (val) {
-    assert.equal(
-      val.length,
-      1,
-      'There should only be one selected value'
-    );
+    assert.equal(val.length, 1, 'There should only be one selected value');
 
     var option = val[0];
 
@@ -160,185 +140,181 @@ QUnit.test('multiple adds to the old value', function (assert) {
   assert.deepEqual($select.val(), ['One', 'Two']);
 });
 
-QUnit.test('duplicates - single - same id on select triggers change',
+QUnit.test(
+  'duplicates - single - same id on select triggers change',
   function (assert) {
-  var $select = $('#qunit-fixture .duplicates');
+    var $select = $('#qunit-fixture .duplicates');
 
-  var data = new SelectData($select, data);
-  var second = $('#qunit-fixture .duplicates option')[2];
+    var data = new SelectData($select, data);
+    var second = $('#qunit-fixture .duplicates option')[2];
 
-  var changeTriggered = false, inputTriggered = false;
+    var changeTriggered = false,
+      inputTriggered = false;
 
-  assert.equal($select.val(), 'one');
+    assert.equal($select.val(), 'one');
 
-  $select.on('change', function () {
-    changeTriggered = inputTriggered;
-  }).on('input', function() {
-    inputTriggered = true;
-  });
+    $select
+      .on('change', function () {
+        changeTriggered = inputTriggered;
+      })
+      .on('input', function () {
+        inputTriggered = true;
+      });
 
-  data.select({
-    id: 'one',
-    text: 'Uno',
-    element: second
-  });
+    data.select({
+      id: 'one',
+      text: 'Uno',
+      element: second
+    });
 
-  assert.equal(
-    $select.val(),
-    'one',
-    'The value never changed'
-  );
+    assert.equal($select.val(), 'one', 'The value never changed');
 
-  assert.ok(
-    inputTriggered,
-    'The input event should be triggered'
-  );
+    assert.ok(inputTriggered, 'The input event should be triggered');
 
-  assert.ok(
-    changeTriggered,
-    'The change event should be triggered after the input event'
-  );
+    assert.ok(
+      changeTriggered,
+      'The change event should be triggered after the input event'
+    );
 
-  assert.ok(
-    second.selected,
-    'The second duplicate is selected, not the first'
-  );
-});
+    assert.ok(
+      second.selected,
+      'The second duplicate is selected, not the first'
+    );
+  }
+);
 
-QUnit.test('duplicates - single - different id on select triggers change',
+QUnit.test(
+  'duplicates - single - different id on select triggers change',
   function (assert) {
-  var $select = $('#qunit-fixture .duplicates');
+    var $select = $('#qunit-fixture .duplicates');
 
-  var data = new SelectData($select, data);
-  var second = $('#qunit-fixture .duplicates option')[2];
+    var data = new SelectData($select, data);
+    var second = $('#qunit-fixture .duplicates option')[2];
 
-  var changeTriggered = false, inputTriggered = false;
+    var changeTriggered = false,
+      inputTriggered = false;
 
-  $select.val('two');
+    $select.val('two');
 
-  $select.on('change', function () {
-    changeTriggered = inputTriggered;
-  }).on('input', function() {
-    inputTriggered = true;
-  });
+    $select
+      .on('change', function () {
+        changeTriggered = inputTriggered;
+      })
+      .on('input', function () {
+        inputTriggered = true;
+      });
 
-  data.select({
-    id: 'one',
-    text: 'Uno',
-    element: second
-  });
+    data.select({
+      id: 'one',
+      text: 'Uno',
+      element: second
+    });
 
-  assert.equal(
-    $select.val(),
-    'one',
-    'The value changed to the duplicate id'
-  );
+    assert.equal($select.val(), 'one', 'The value changed to the duplicate id');
 
-  assert.ok(
-    inputTriggered,
-    'The input event should be triggered'
-  );
+    assert.ok(inputTriggered, 'The input event should be triggered');
 
-  assert.ok(
-    changeTriggered,
-    'The change event should be triggered after the input event'
-  );
+    assert.ok(
+      changeTriggered,
+      'The change event should be triggered after the input event'
+    );
 
-  assert.ok(
-    second.selected,
-    'The second duplicate is selected, not the first'
-  );
-});
+    assert.ok(
+      second.selected,
+      'The second duplicate is selected, not the first'
+    );
+  }
+);
 
-QUnit.test('duplicates - multiple - same id on select triggers change',
-function (assert) {
-  var $select = $('#qunit-fixture .duplicates-multi');
+QUnit.test(
+  'duplicates - multiple - same id on select triggers change',
+  function (assert) {
+    var $select = $('#qunit-fixture .duplicates-multi');
 
-  var data = new SelectData($select, data);
-  var second = $('#qunit-fixture .duplicates-multi option')[2];
+    var data = new SelectData($select, data);
+    var second = $('#qunit-fixture .duplicates-multi option')[2];
 
-  var changeTriggered = false, inputTriggered = false;
+    var changeTriggered = false,
+      inputTriggered = false;
 
-  $select.val(['one']);
+    $select.val(['one']);
 
-  $select.on('change', function () {
-    changeTriggered = inputTriggered;
-  }).on('input', function() {
-    inputTriggered = true;
-  });
+    $select
+      .on('change', function () {
+        changeTriggered = inputTriggered;
+      })
+      .on('input', function () {
+        inputTriggered = true;
+      });
 
-  data.select({
-    id: 'one',
-    text: 'Uno',
-    element: second
-  });
+    data.select({
+      id: 'one',
+      text: 'Uno',
+      element: second
+    });
 
-  assert.deepEqual(
-    $select.val(),
-    ['one', 'one'],
-    'The value now has duplicates'
-  );
+    assert.deepEqual(
+      $select.val(),
+      ['one', 'one'],
+      'The value now has duplicates'
+    );
 
-  assert.ok(
-    inputTriggered,
-    'The input event should be triggered'
-  );
+    assert.ok(inputTriggered, 'The input event should be triggered');
 
-  assert.ok(
-    changeTriggered,
-    'The change event should be triggered after the input event'
-  );
+    assert.ok(
+      changeTriggered,
+      'The change event should be triggered after the input event'
+    );
 
-  assert.ok(
-    second.selected,
-    'The second duplicate is selected, not the first'
-  );
-});
+    assert.ok(
+      second.selected,
+      'The second duplicate is selected, not the first'
+    );
+  }
+);
 
-QUnit.test('duplicates - multiple - different id on select triggers change',
-function (assert) {
-  var $select = $('#qunit-fixture .duplicates-multi');
+QUnit.test(
+  'duplicates - multiple - different id on select triggers change',
+  function (assert) {
+    var $select = $('#qunit-fixture .duplicates-multi');
 
-  var data = new SelectData($select, data);
-  var second = $('#qunit-fixture .duplicates-multi option')[2];
+    var data = new SelectData($select, data);
+    var second = $('#qunit-fixture .duplicates-multi option')[2];
 
-  var changeTriggered = false, inputTriggered = false;
+    var changeTriggered = false,
+      inputTriggered = false;
 
-  $select.val(['two']);
+    $select.val(['two']);
 
-  $select.on('change', function () {
-    changeTriggered = inputTriggered;
-  }).on('input', function() {
-    inputTriggered = true;
-  });
+    $select
+      .on('change', function () {
+        changeTriggered = inputTriggered;
+      })
+      .on('input', function () {
+        inputTriggered = true;
+      });
 
-  data.select({
-    id: 'one',
-    text: 'Uno',
-    element: second
-  });
+    data.select({
+      id: 'one',
+      text: 'Uno',
+      element: second
+    });
 
-  assert.deepEqual(
-    $select.val(),
-    ['two', 'one'],
-    'The value has the new id'
-  );
+    assert.deepEqual($select.val(), ['two', 'one'], 'The value has the new id');
 
-  assert.ok(
-    inputTriggered,
-    'The input event should be triggered'
-  );
+    assert.ok(inputTriggered, 'The input event should be triggered');
 
-  assert.ok(
-    changeTriggered,
-    'The change event should be triggered after the input event'
-  );
+    assert.ok(
+      changeTriggered,
+      'The change event should be triggered after the input event'
+    );
 
-  assert.ok(
-    second.selected,
-    'The second duplicate is selected, not the first'
-  );
-});
+    assert.ok(
+      second.selected,
+      'The second duplicate is selected, not the first'
+    );
+  }
+);
 
 QUnit.module('Data adapter - Select - query');
 
@@ -361,15 +337,18 @@ QUnit.test('the matcher checks the text', function (assert) {
 
   var data = new SelectData($select, selectOptions);
 
-  data.query({
-    term: 'One'
-  }, function (data) {
-    assert.equal(
-      data.results.length,
-      1,
-      'Only the "One" option should be found'
-    );
-  });
+  data.query(
+    {
+      term: 'One'
+    },
+    function (data) {
+      assert.equal(
+        data.results.length,
+        1,
+        'Only the "One" option should be found'
+      );
+    }
+  );
 });
 
 QUnit.test('the matcher ignores case', function (assert) {
@@ -377,15 +356,18 @@ QUnit.test('the matcher ignores case', function (assert) {
 
   var data = new SelectData($select, selectOptions);
 
-  data.query({
-    term: 'one'
-  }, function (data) {
-    assert.equal(
-      data.results.length,
-      1,
-      'The "One" option should still be found'
-    );
-  });
+  data.query(
+    {
+      term: 'one'
+    },
+    function (data) {
+      assert.equal(
+        data.results.length,
+        1,
+        'The "One" option should still be found'
+      );
+    }
+  );
 });
 
 QUnit.test('no options may be returned with no matches', function (assert) {
@@ -393,15 +375,18 @@ QUnit.test('no options may be returned with no matches', function (assert) {
 
   var data = new SelectData($select, selectOptions);
 
-  data.query({
-    term: 'qwerty'
-  }, function (data) {
-    assert.equal(
-      data.results.length,
-      0,
-      'Only matching items should be returned'
-    );
-  });
+  data.query(
+    {
+      term: 'qwerty'
+    },
+    function (data) {
+      assert.equal(
+        data.results.length,
+        0,
+        'Only matching items should be returned'
+      );
+    }
+  );
 });
 
 QUnit.test('optgroup tags are marked with children', function (assert) {
@@ -445,34 +430,37 @@ QUnit.test('empty optgroups are still shown when queried', function (assert) {
   });
 });
 
-QUnit.test('multiple options with the same value are returned', function (assert) {
-  var $select = $('#qunit-fixture .duplicates');
+QUnit.test(
+  'multiple options with the same value are returned',
+  function (assert) {
+    var $select = $('#qunit-fixture .duplicates');
 
-  var data = new SelectData($select, selectOptions);
+    var data = new SelectData($select, selectOptions);
 
-  data.query({}, function (data) {
-    assert.equal(
-      data.results.length,
-      3,
-      'The duplicate option should still be returned when queried'
-    );
+    data.query({}, function (data) {
+      assert.equal(
+        data.results.length,
+        3,
+        'The duplicate option should still be returned when queried'
+      );
 
-    var first = data.results[0];
-    var duplicate = data.results[2];
+      var first = data.results[0];
+      var duplicate = data.results[2];
 
-    assert.equal(
-      first.id,
-      duplicate.id,
-      'The duplicates should have the same id'
-    );
+      assert.equal(
+        first.id,
+        duplicate.id,
+        'The duplicates should have the same id'
+      );
 
-    assert.notEqual(
-      first.text,
-      duplicate.text,
-      'The duplicates do not have the same text'
-    );
-  });
-});
+      assert.notEqual(
+        first.text,
+        duplicate.text,
+        'The duplicates do not have the same text'
+      );
+    });
+  }
+);
 
 QUnit.test('data objects use the text of the option', function (assert) {
   var $select = $('#qunit-fixture .duplicates');
@@ -487,55 +475,59 @@ QUnit.test('data objects use the text of the option', function (assert) {
   assert.equal(item.text, '&');
 });
 
-QUnit.test('select option construction accepts id=0 (zero) value', function (assert) {
-  var $select = $('#qunit-fixture .single');
-
-  var selectOptions = [{ id: 0, text: 'Zero Value'}];
-  var data = new SelectData($select, selectOptions);
-
-  var optionElem = data.option(selectOptions[0]);
-
-  // If was "Zero Value"", then it ignored id property
-  assert.equal(
-    optionElem[0].value,
-    '0',
-    'Built option value should be "0" (zero as a string).'
-  );
-});
-
-QUnit.test('select option construction accepts id="" (empty string) value',
+QUnit.test(
+  'select option construction accepts id=0 (zero) value',
   function (assert) {
-  var $select = $('#qunit-fixture .single');
+    var $select = $('#qunit-fixture .single');
 
-  var selectOptions = [{ id: '', text: 'Empty String'}];
-  var data = new SelectData($select, selectOptions);
+    var selectOptions = [{ id: 0, text: 'Zero Value' }];
+    var data = new SelectData($select, selectOptions);
 
-  var optionElem = data.option(selectOptions[0]);
+    var optionElem = data.option(selectOptions[0]);
 
-  assert.equal(
-    optionElem[0].value,
-    '',
-    'Built option value should be an empty string.'
-  );
-});
+    // If was "Zero Value"", then it ignored id property
+    assert.equal(
+      optionElem[0].value,
+      '0',
+      'Built option value should be "0" (zero as a string).'
+    );
+  }
+);
+
+QUnit.test(
+  'select option construction accepts id="" (empty string) value',
+  function (assert) {
+    var $select = $('#qunit-fixture .single');
+
+    var selectOptions = [{ id: '', text: 'Empty String' }];
+    var data = new SelectData($select, selectOptions);
+
+    var optionElem = data.option(selectOptions[0]);
+
+    assert.equal(
+      optionElem[0].value,
+      '',
+      'Built option value should be an empty string.'
+    );
+  }
+);
 
 QUnit.test('user-defined types are normalized properly', function (assert) {
   var $select = $('#qunit-fixture .user-defined'),
+    UserDefinedType = function (id, text) {
+      var self = this;
 
-  UserDefinedType = function (id, text) {
-    var self = this;
+      self.id = id;
+      self.text = text;
 
-    self.id = id;
-    self.text = text;
-
-    return self;
-  };
+      return self;
+    };
 
   var testData = [
     'Test',
     {
-        id: 4,
-        text: 'item'
+      id: 4,
+      text: 'item'
     },
     new UserDefinedType(1, 'aaaaaa')
   ];
@@ -581,5 +573,4 @@ QUnit.test('user-defined types are normalized properly', function (assert) {
     normalizedItem3.text,
     'text property should be equal after normalize'
   );
-
 });

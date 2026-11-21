@@ -1,8 +1,5 @@
-define([
-  'jquery',
-  './utils'
-], function ($, Utils) {
-  function Results ($element, options, dataAdapter) {
+define(['jquery', './utils'], function ($, Utils) {
+  function Results($element, options, dataAdapter) {
     this.$element = $element;
     this.data = dataAdapter;
     this.options = options;
@@ -38,16 +35,12 @@ define([
 
     var $message = $(
       '<li role="alert" aria-live="assertive"' +
-      ' class="select2-results__option"></li>'
+        ' class="select2-results__option"></li>'
     );
 
     var message = this.options.get('translations').get(params.message);
 
-    $message.append(
-      escapeMarkup(
-        message(params.args)
-      )
-    );
+    $message.append(escapeMarkup(message(params.args)));
 
     $message[0].className += ' select2-results__message';
 
@@ -98,8 +91,7 @@ define([
   };
 
   Results.prototype.highlightFirstItem = function () {
-    var $options = this.$results
-      .find('.select2-results__option--selectable');
+    var $options = this.$results.find('.select2-results__option--selectable');
 
     var $selected = $options.filter('.select2-results__option--selected');
 
@@ -124,8 +116,7 @@ define([
         return s.id.toString();
       });
 
-      var $options = self.$results
-        .find('.select2-results__option--selectable');
+      var $options = self.$results.find('.select2-results__option--selectable');
 
       $options.each(function () {
         var $option = $(this);
@@ -135,8 +126,10 @@ define([
         // id needs to be converted to a string when comparing
         var id = '' + item.id;
 
-        if ((item.element != null && item.element.selected) ||
-            (item.element == null && selectedIds.indexOf(id) > -1)) {
+        if (
+          (item.element != null && item.element.selected) ||
+          (item.element == null && selectedIds.indexOf(id) > -1)
+        ) {
           this.classList.add('select2-results__option--selected');
           $option[0].setAttribute('aria-selected', 'true');
         } else {
@@ -144,7 +137,6 @@ define([
           $option[0].setAttribute('aria-selected', 'false');
         }
       });
-
     });
   };
 
@@ -174,15 +166,18 @@ define([
     option.classList.add('select2-results__option--selectable');
 
     var attrs = {
-      'role': 'option'
+      role: 'option'
     };
 
-    var matches = window.Element.prototype.matches ||
+    var matches =
+      window.Element.prototype.matches ||
       window.Element.prototype.msMatchesSelector ||
       window.Element.prototype.webkitMatchesSelector;
 
-    if ((data.element != null && matches.call(data.element, ':disabled')) ||
-        (data.element == null && data.disabled)) {
+    if (
+      (data.element != null && matches.call(data.element, ':disabled')) ||
+      (data.element == null && data.disabled)
+    ) {
       attrs['aria-disabled'] = 'true';
 
       option.classList.remove('select2-results__option--selectable');
@@ -234,8 +229,8 @@ define([
       }
 
       var $childrenContainer = $('<ul></ul>', {
-        'class': 'select2-results__options select2-results__options--nested',
-        'role': 'none'
+        class: 'select2-results__options select2-results__options--nested', // jshint ignore:line
+        role: 'none'
       });
 
       $childrenContainer.append($children);
@@ -402,8 +397,8 @@ define([
 
       $next.trigger('mouseenter');
 
-      var currentOffset = self.$results.offset().top +
-        self.$results.outerHeight(false);
+      var currentOffset =
+        self.$results.offset().top + self.$results.outerHeight(false);
       var nextBottom = $next.offset().top + $next.outerHeight(false);
       var nextOffset = self.$results.scrollTop() + nextBottom - currentOffset;
 
@@ -448,54 +443,61 @@ define([
       });
     }
 
-    this.$results.on('mouseup', '.select2-results__option--selectable',
+    this.$results.on(
+      'mouseup',
+      '.select2-results__option--selectable',
       function (evt) {
-      var $this = $(this);
+        var $this = $(this);
 
-      var data = Utils.GetData(this, 'data');
+        var data = Utils.GetData(this, 'data');
 
-      if ($this.hasClass('select2-results__option--selected')) {
-        if (self.options.get('multiple')) {
-          self.trigger('unselect', {
-            originalEvent: evt,
-            data: data
-          });
-        } else {
-          self.trigger('close', {
-            originalEvent: evt,
-            data: data
-          });
+        if ($this.hasClass('select2-results__option--selected')) {
+          if (self.options.get('multiple')) {
+            self.trigger('unselect', {
+              originalEvent: evt,
+              data: data
+            });
+          } else {
+            self.trigger('close', {
+              originalEvent: evt,
+              data: data
+            });
+          }
+
+          return;
         }
 
-        return;
+        self.trigger('select', {
+          originalEvent: evt,
+          data: data
+        });
       }
+    );
 
-      self.trigger('select', {
-        originalEvent: evt,
-        data: data
-      });
-    });
-
-    this.$results.on('mouseenter', '.select2-results__option--selectable',
+    this.$results.on(
+      'mouseenter',
+      '.select2-results__option--selectable',
       function (evt) {
-      var data = Utils.GetData(this, 'data');
+        var data = Utils.GetData(this, 'data');
 
-      var $highlighted = self.getHighlightedResults();
-      $highlighted.removeClass('select2-results__option--highlighted');
-      $highlighted.each(function () {
-        this.setAttribute('aria-selected', 'false');
-      });
+        var $highlighted = self.getHighlightedResults();
+        $highlighted.removeClass('select2-results__option--highlighted');
+        $highlighted.each(function () {
+          this.setAttribute('aria-selected', 'false');
+        });
 
-      self.trigger('results:focus', {
-        data: data,
-        element: $(this)
-      });
-    });
+        self.trigger('results:focus', {
+          data: data,
+          element: $(this)
+        });
+      }
+    );
   };
 
   Results.prototype.getHighlightedResults = function () {
-    var $highlighted = this.$results
-    .find('.select2-results__option--highlighted');
+    var $highlighted = this.$results.find(
+      '.select2-results__option--highlighted'
+    );
 
     return $highlighted;
   };

@@ -1,7 +1,5 @@
-define([
-  '../utils'
-], function (Utils) {
-  function SelectOnClose () { }
+define(['../utils'], function (Utils) {
+  function SelectOnClose() {}
 
   SelectOnClose.prototype.bind = function (decorated, container, $container) {
     var self = this;
@@ -42,7 +40,7 @@ define([
     }
 
     this.trigger('select', {
-        data: data
+      data: data
     });
   };
 

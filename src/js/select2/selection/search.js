@@ -1,9 +1,5 @@
-define([
-  'jquery',
-  '../utils',
-  '../keys'
-], function ($, Utils, KEYS) {
-  function Search (decorated, $element, options) {
+define(['jquery', '../utils', '../keys'], function ($, Utils, KEYS) {
+  function Search(decorated, $element, options) {
     decorated.call(this, $element, options);
   }
 
@@ -11,12 +7,12 @@ define([
     var searchLabel = this.options.get('translations').get('search');
     var $search = $(
       '<span class="select2-search select2-search--inline">' +
-        '<textarea class="select2-search__field"'+
+        '<textarea class="select2-search__field"' +
         ' type="search" tabindex="-1"' +
         ' autocorrect="off" autocapitalize="none"' +
         ' spellcheck="false" role="searchbox" aria-autocomplete="list" >' +
         '</textarea>' +
-      '</span>'
+        '</span>'
     );
 
     this.$searchContainer = $search;
@@ -33,6 +29,7 @@ define([
     return $rendered;
   };
 
+  //   Bind search events and identify the inline search field.
   Search.prototype.bind = function (decorated, container, $container) {
     var self = this;
 
@@ -41,6 +38,8 @@ define([
 
     decorated.call(this, container, $container);
 
+    // Identify the search field without including it in submitted form data.
+    self.$search[0].setAttribute('id', container.id + '-search');
     self.$search[0].setAttribute('aria-describedby', selectionId);
 
     container.on('open', function () {
@@ -72,8 +71,10 @@ define([
 
     container.on('results:focus', function (params) {
       if (params.data._resultId) {
-        self.$search[0]
-          .setAttribute('aria-activedescendant', params.data._resultId);
+        self.$search[0].setAttribute(
+          'aria-activedescendant',
+          params.data._resultId
+        );
       } else {
         self.$search[0].removeAttribute('aria-activedescendant');
       }
@@ -98,7 +99,8 @@ define([
 
       if (key === KEYS.BACKSPACE && self.$search.val() === '') {
         var $previousChoice = self.$selection
-          .find('.select2-selection__choice').last();
+          .find('.select2-selection__choice')
+          .last();
 
         if ($previousChoice.length > 0) {
           var item = Utils.GetData($previousChoice[0], 'data');
@@ -181,8 +183,10 @@ define([
    * @private
    */
   Search.prototype._transferTabIndex = function (decorated) {
-    this.$search[0]
-      .setAttribute('tabindex', this.$selection[0].getAttribute('tabindex'));
+    this.$search[0].setAttribute(
+      'tabindex',
+      this.$selection[0].getAttribute('tabindex')
+    );
     this.$selection[0].setAttribute('tabindex', '-1');
   };
 
@@ -234,7 +238,7 @@ define([
     if (this.$search[0].getAttribute('placeholder') === '') {
       var minimumWidth = this.$search.val().length + 1;
 
-      width = (minimumWidth * 0.75) + 'em';
+      width = minimumWidth * 0.75 + 'em';
     }
 
     this.$search.css('width', width);

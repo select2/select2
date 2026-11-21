@@ -40,7 +40,7 @@ define(function () {
     removeItem: function () {
       return 'Element entfernen';
     },
-    search: function() {
+    search: function () {
       return 'Suchen';
     }
   };

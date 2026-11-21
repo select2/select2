@@ -10,18 +10,17 @@ var options = new Options({});
 QUnit.test('close sets the focus to the selection', function (assert) {
   var $container = $('#qunit-fixture .event-container');
   var container = new MockContainer();
-  var selection = new SingleSelection(
-    $('#qunit-fixture .single'),
-    options
-  );
+  var selection = new SingleSelection($('#qunit-fixture .single'), options);
 
   var $selection = selection.render();
   selection.bind(container, $container);
 
-  selection.update([{
-    id: 'test',
-    text: 'test'
-  }]);
+  selection.update([
+    {
+      id: 'test',
+      text: 'test'
+    }
+  ]);
 
   $container.append($selection);
 

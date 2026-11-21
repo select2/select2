@@ -1,9 +1,5 @@
-define([
-  'jquery',
-  './base',
-  '../utils'
-], function ($, BaseSelection, Utils) {
-  function MultipleSelection ($element, options) {
+define(['jquery', './base', '../utils'], function ($, BaseSelection, Utils) {
+  function MultipleSelection($element, options) {
     MultipleSelection.__super__.constructor.apply(this, arguments);
   }
 
@@ -14,9 +10,7 @@ define([
 
     $selection[0].classList.add('select2-selection--multiple');
 
-    $selection.html(
-      '<ul class="select2-selection__rendered"></ul>'
-    );
+    $selection.html('<ul class="select2-selection__rendered"></ul>');
 
     return $selection;
   };
@@ -29,7 +23,7 @@ define([
     var id = container.id + '-container';
 
     var rendered = this.$selection.find('.select2-selection__rendered')[0];
-    if(rendered != null) {
+    if (rendered != null) {
       rendered.setAttribute('id', id);
     }
 
@@ -92,10 +86,10 @@ define([
       '<li class="select2-selection__choice">' +
         '<button type="button" class="select2-selection__choice__remove" ' +
         'tabindex="-1">' +
-          '<span aria-hidden="true">&times;</span>' +
+        '<span aria-hidden="true">&times;</span>' +
         '</button>' +
         '<span class="select2-selection__choice__display"></span>' +
-      '</li>'
+        '</li>'
     );
 
     return $container;
@@ -110,9 +104,10 @@ define([
 
     var $selections = [];
 
-    var selectionIdPrefix = this.$selection
-      .find('.select2-selection__rendered')[0]
-      .getAttribute('id') + '-choice-';
+    var selectionIdPrefix =
+      this.$selection
+        .find('.select2-selection__rendered')[0]
+        .getAttribute('id') + '-choice-';
 
     for (var d = 0; d < data.length; d++) {
       var selection = data[d];
@@ -128,7 +123,8 @@ define([
         selectionId += Utils.generateChars(4);
       }
 
-      $selection.find('.select2-selection__choice__display')
+      $selection
+        .find('.select2-selection__choice__display')
         .append(formatted)[0]
         .setAttribute('id', selectionId);
 

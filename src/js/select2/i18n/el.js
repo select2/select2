@@ -21,7 +21,9 @@ define(function () {
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
-      var message = 'Παρακαλώ συμπληρώστε ' + remainingChars +
+      var message =
+        'Παρακαλώ συμπληρώστε ' +
+        remainingChars +
         ' ή περισσότερους χαρακτήρες';
 
       return message;

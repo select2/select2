@@ -1,7 +1,5 @@
-define([
-
-], function () {
-  function MaximumInputLength (decorated, $e, options) {
+define([], function () {
+  function MaximumInputLength(decorated, $e, options) {
     this.maximumInputLength = options.get('maximumInputLength');
 
     decorated.call(this, $e, options);
@@ -10,8 +8,10 @@ define([
   MaximumInputLength.prototype.query = function (decorated, params, callback) {
     params.term = params.term || '';
 
-    if (this.maximumInputLength > 0 &&
-        params.term.length > this.maximumInputLength) {
+    if (
+      this.maximumInputLength > 0 &&
+      params.term.length > this.maximumInputLength
+    ) {
       this.trigger('results:message', {
         message: 'inputTooLong',
         args: {

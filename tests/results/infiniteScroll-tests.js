@@ -1,53 +1,56 @@
 QUnit.module('Results - Infinite scrolling');
 
-QUnit.test('loadingMore is triggered even without a scrollbar', function (assert) {
-  assert.expect(1);
+QUnit.test(
+  'loadingMore is triggered even without a scrollbar',
+  function (assert) {
+    assert.expect(1);
 
-  var $ = require('jquery');
+    var $ = require('jquery');
 
-  var $select = $('<select></select>');
+    var $select = $('<select></select>');
 
-  var $container = $('<span></span>');
-  var container = new MockContainer();
+    var $container = $('<span></span>');
+    var container = new MockContainer();
 
-  var Utils = require('select2/utils');
-  var Options = require('select2/options');
+    var Utils = require('select2/utils');
+    var Options = require('select2/options');
 
-  var Results = require('select2/results');
-  var InfiniteScroll = require('select2/dropdown/infiniteScroll');
+    var Results = require('select2/results');
+    var InfiniteScroll = require('select2/dropdown/infiniteScroll');
 
-  var InfiniteScrollResults = Utils.Decorate(Results, InfiniteScroll);
+    var InfiniteScrollResults = Utils.Decorate(Results, InfiniteScroll);
 
-  var results = new InfiniteScrollResults($select, new Options({}));
+    var results = new InfiniteScrollResults($select, new Options({}));
 
-  // Fake the data adapter for the `setClasses` method
-  results.data = {};
-  results.data.current = function (callback) {
-    callback([{ id: 'test' }]);
-  };
+    // Fake the data adapter for the `setClasses` method
+    results.data = {};
+    results.data.current = function (callback) {
+      callback([{ id: 'test' }]);
+    };
 
-  $('#qunit-fixture').append(results.render());
+    $('#qunit-fixture').append(results.render());
 
-  results.bind(container, $container);
+    results.bind(container, $container);
 
-  results.on('query:append', function () {
-    assert.ok(true, 'It tried to load more immediately');
-  });
+    results.on('query:append', function () {
+      assert.ok(true, 'It tried to load more immediately');
+    });
 
-  container.trigger('results:all', {
-    data: {
-      results: [
-        {
-          id: 'test',
-          text: 'Test'
+    container.trigger('results:all', {
+      data: {
+        results: [
+          {
+            id: 'test',
+            text: 'Test'
+          }
+        ],
+        pagination: {
+          more: true
         }
-      ],
-      pagination: {
-        more: true
       }
-    }
-  });
-});
+    });
+  }
+);
 
 QUnit.test('loadingMore is not triggered without scrolling', function (assert) {
   assert.expect(0);

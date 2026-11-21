@@ -1,0 +1,40 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: (dist|vendor)/
+      - id: check-merge-conflict
+      - id: check-json
+      - id: check-yaml
+        exclude: mkdocs.yml
+      - id: debug-statements
+      - id: destroyed-symlinks
+      - id: check-executables-have-shebangs
+      - id: end-of-file-fixer
+        exclude: (dist|vendor)/
+      - id: detect-private-key
+  - repo: https://github.com/hukkin/mdformat
+    rev: 1.0.0
+    hooks:
+      - id: mdformat
+        additional_dependencies:
+          - mdformat-footnote
+          - mdformat-gfm
+          - mdformat-gfm-alerts
+          - mdformat-web
+          - mdformat-mkdocs
+          - mdformat-front-matters
+          - mdformat-config
+  - repo: https://github.com/google/yamlfmt
+    rev: v0.21.0
+    hooks:
+      - id: yamlfmt
+  - repo: https://github.com/biomejs/pre-commit
+    rev: v2.6.4
+    hooks:
+      - id: biome-format
+        args: [--use-editorconfig=true]
+        exclude: (dist|vendor)/|(banner|wrapper).(start|end).js|\.md$
+ci:
+  autoupdate_schedule: weekly

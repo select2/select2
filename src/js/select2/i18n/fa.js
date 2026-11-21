@@ -16,7 +16,8 @@ define(function () {
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
-      var message = 'لطفاً تعداد ' + remainingChars + ' کاراکتر یا بیشتر وارد نمایید';
+      var message =
+        'لطفاً تعداد ' + remainingChars + ' کاراکتر یا بیشتر وارد نمایید';
 
       return message;
     },
@@ -24,7 +25,8 @@ define(function () {
       return 'در حال بارگذاری نتایج بیشتر...';
     },
     maximumSelected: function (args) {
-      var message = 'شما تنها می‌توانید ' + args.maximum + ' آیتم را انتخاب نمایید';
+      var message =
+        'شما تنها می‌توانید ' + args.maximum + ' آیتم را انتخاب نمایید';
 
       return message;
     },
@@ -40,7 +42,7 @@ define(function () {
     removeItem: function () {
       return 'حذف آیتم';
     },
-    search: function() {
+    search: function () {
       return 'جستجو';
     }
   };

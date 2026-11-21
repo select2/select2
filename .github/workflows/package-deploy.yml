@@ -1,30 +1,28 @@
 name: Package Deployment
-
 on:
   push:
     branches:
       - develop
       - master
   release: ~
-
 jobs:
   deploy_github:
     name: GitHub Package Registry
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Use Node.js 24
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 24
           registry-url: https://npm.pkg.github.com/
-          scope: '@select2'
+          scope: "@select2"
       - name: Rename package to include private scope
-        run: "sed -i -e 's#\"name\": \"select2\"#\"name\": \"@select2/select2\"#' package.json"
+        run: 'sed -i -e ''s#"name": "select2"#"name": "@select2/select2"#'' package.json'
       - name: npm install
         run: npm install
       - name: Run linting, tests, minify
-        run: grunt
+        run: npx grunt
       - name: Deploy (release)
         if: github.event_name == 'release'
         run: npm publish
@@ -44,15 +42,15 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Use Node.js 24
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 24
-          registry-url: 'https://registry.npmjs.org'
+          registry-url: "https://registry.npmjs.org"
       - name: npm install
         run: npm install
       - name: Run linting, tests, minify
-        run: grunt
+        run: npx grunt
       - name: Deploy (release)
         run: npm publish --provenance --access public

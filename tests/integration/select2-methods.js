@@ -10,7 +10,7 @@ QUnit.test('single default selection returned', function (assert) {
       '<option>One</option>' +
       '<option>Two</option>' +
       '<option value="3" selected>Three</option>' +
-    '</select>'
+      '</select>'
   );
   var options = new Options({});
 
@@ -18,25 +18,13 @@ QUnit.test('single default selection returned', function (assert) {
 
   var items = select.data();
 
-  assert.equal(
-    items.length,
-    1,
-    'The one selected item should be returned'
-  );
+  assert.equal(items.length, 1, 'The one selected item should be returned');
 
   var first = items[0];
 
-  assert.equal(
-    first.id,
-    '3',
-    'The first option was correct'
-  );
+  assert.equal(first.id, '3', 'The first option was correct');
 
-  assert.equal(
-    first.text,
-    'Three',
-    'The first option was correct'
-  );
+  assert.equal(first.text, 'Three', 'The first option was correct');
 });
 
 QUnit.test('multiple default selections returned', function (assert) {
@@ -45,7 +33,7 @@ QUnit.test('multiple default selections returned', function (assert) {
       '<option selected>One</option>' +
       '<option>Two</option>' +
       '<option value="3" selected>Three</option>' +
-    '</select>'
+      '</select>'
   );
   var options = new Options({});
 
@@ -53,27 +41,15 @@ QUnit.test('multiple default selections returned', function (assert) {
 
   var items = select.data();
 
-  assert.equal(
-    items.length,
-    2,
-    'The two selected items should be returned'
-  );
+  assert.equal(items.length, 2, 'The two selected items should be returned');
 
   var first = items[0];
 
-  assert.equal(
-    first.id,
-    'One',
-    'The first option was correct'
-  );
+  assert.equal(first.id, 'One', 'The first option was correct');
 
   var second = items[1];
 
-  assert.equal(
-    second.id,
-    '3',
-    'The option value should be pulled correctly'
-  );
+  assert.equal(second.id, '3', 'The option value should be pulled correctly');
 });
 
 QUnit.module('select2(val)');
@@ -84,7 +60,7 @@ QUnit.test('single value matches jquery value', function (assert) {
       '<option>One</option>' +
       '<option>Two</option>' +
       '<option value="3" selected>Three</option>' +
-    '</select>'
+      '</select>'
   );
   var options = new Options({});
 
@@ -92,17 +68,9 @@ QUnit.test('single value matches jquery value', function (assert) {
 
   var value = select.val();
 
-  assert.equal(
-    value,
-    '3',
-    'The value should match the option tag attribute'
-  );
+  assert.equal(value, '3', 'The value should match the option tag attribute');
 
-  assert.equal(
-    value,
-    $select.val(),
-    'The value should match the jquery value'
-  );
+  assert.equal(value, $select.val(), 'The value should match the jquery value');
 });
 
 QUnit.test('multiple value matches the jquery value', function (assert) {
@@ -111,7 +79,7 @@ QUnit.test('multiple value matches the jquery value', function (assert) {
       '<option selected>One</option>' +
       '<option>Two</option>' +
       '<option value="3" selected>Three</option>' +
-    '</select>'
+      '</select>'
   );
   var options = new Options({});
 
@@ -119,11 +87,7 @@ QUnit.test('multiple value matches the jquery value', function (assert) {
 
   var value = select.val();
 
-  assert.equal(
-    value.length,
-    2,
-    'Two options should be selected'
-  );
+  assert.equal(value.length, 2, 'Two options should be selected');
 
   assert.deepEqual(
     value,
@@ -138,121 +102,132 @@ QUnit.test('multiple value matches the jquery value', function (assert) {
   );
 });
 
-QUnit.test('selection and clearing of data from ajax source', function (assert) {
-  var asyncDone = assert.async();
+QUnit.test(
+  'selection and clearing of data from ajax source',
+  function (assert) {
+    var asyncDone = assert.async();
 
-  var dataURL = 'http://127.0.0.1/test';
-  $.mockjax({
-    url: dataURL,
-    responseText: {results: [{id: 6128, text: '6128'}]},
-    logging: 1
-  });
+    var dataURL = 'http://127.0.0.1/test';
+    $.mockjax({
+      url: dataURL,
+      responseText: { results: [{ id: 6128, text: '6128' }] },
+      logging: 1
+    });
 
-  var $container = $('#qunit-fixture');
-  var $select = $('<select></select>');
-  $container.append($select);
+    var $container = $('#qunit-fixture');
+    var $select = $('<select></select>');
+    $container.append($select);
 
-  var select = new Select2($select, {ajax: {url: dataURL}, multiple: true});
+    var select = new Select2($select, {
+      ajax: { url: dataURL },
+      multiple: true
+    });
 
-  assert.equal(
-    $select.find(':selected').length,
-    0,
-    'No items should be selected'
-  );
+    assert.equal(
+      $select.find(':selected').length,
+      0,
+      'No items should be selected'
+    );
 
-  // Open the dropdown menu, to perform an AJAX request
-  select.selection.trigger('query', {term: '6128'});
+    // Open the dropdown menu, to perform an AJAX request
+    select.selection.trigger('query', { term: '6128' });
 
-  var selectionStatus = null;
-  select.on('results:all', function() {
+    var selectionStatus = null;
+    select.on('results:all', function () {
+      // First call: select a result from the dropdown menu
+      if (selectionStatus === null) {
+        $('.select2-results__option').trigger('mouseup');
+        assert.equal(
+          $select.find(':selected').length,
+          1,
+          'One item should be selected'
+        );
 
-    // First call: select a result from the dropdown menu
-    if (selectionStatus === null) {
+        // Trigger a second call
+        selectionStatus = true;
+        select.selection.trigger('query', { term: '6128' });
 
-      $('.select2-results__option').trigger('mouseup');
-      assert.equal(
-        $select.find(':selected').length,
-        1,
-        'One item should be selected'
-      );
+        // Second call: unselect the previously-selected item
+      } else if (selectionStatus == true) {
+        $('.select2-results__option[aria-selected=true]').trigger('mouseup');
+        assert.equal(
+          $select.find(':selected').length,
+          0,
+          'The previously-selected item should have been unselected'
+        );
 
-      // Trigger a second call
-      selectionStatus = true;
-      select.selection.trigger('query', {term: '6128'});
+        selectionStatus = false;
+        asyncDone();
+      }
+    });
+  }
+);
 
-    // Second call: unselect the previously-selected item
-    } else if (selectionStatus == true) {
+QUnit.test(
+  'multiple selection and clearing of grouped options',
+  function (assert) {
+    var $container = $('#qunit-fixture');
+    var $select = $('<select></select>');
+    $container.append($select);
 
-      $('.select2-results__option[aria-selected=true]').trigger('mouseup');
-      assert.equal(
-        $select.find(':selected').length,
-        0,
-        'The previously-selected item should have been unselected'
-      );
+    var data = [
+      {
+        text: 'Group 1',
+        children: [
+          {
+            id: 1,
+            text: 'Option 1.1'
+          },
+          {
+            id: 2,
+            text: 'Option 1.2'
+          }
+        ]
+      },
+      {
+        text: 'Group 2',
+        children: [
+          {
+            id: 3,
+            text: 'Option 2.1'
+          },
+          {
+            id: 4,
+            text: 'Option 2.2'
+          }
+        ]
+      }
+    ];
 
-      selectionStatus = false;
-      asyncDone();
-    }
-  });
-});
+    var select = new Select2($select, {
+      multiple: true,
+      data: data
+    });
 
-QUnit.test('multiple selection and clearing of grouped options', function (assert) {
-  var $container = $('#qunit-fixture');
-  var $select = $('<select></select>');
-  $container.append($select);
+    $select.val(['3', '1']);
+    $select.trigger('change');
 
-  var data = [{
-    text: 'Group 1',
-    children: [{
-      id: 1,
-      text: 'Option 1.1'
-    }, {
-      id: 2,
-      text: 'Option 1.2'
-    }]
-  }, {
-    text: 'Group 2',
-    children: [{
-      id: 3,
-      text: 'Option 2.1'
-    }, {
-      id: 4,
-      text: 'Option 2.2'
-    }]
-  }];
+    assert.equal(
+      $select.find(':selected').length,
+      2,
+      'Two items should be selected'
+    );
 
-  var select = new Select2($select, {
-    multiple: true,
-    data: data
-  });
+    // Remove the first item
+    $container.find('.select2-selection__choice__remove').trigger('click');
 
-  $select.val(['3', '1']);
-  $select.trigger('change');
+    var $selections = $('.select2-selection__choice');
+    assert.equal($selections.length, 1, 'One item should remain selected');
 
-  assert.equal(
-    $select.find(':selected').length,
-    2,
-    'Two items should be selected'
-  );
+    // Open the dropdown menu
+    select.selection.trigger('query', { term: 'Option' });
 
-  // Remove the first item
-  $container.find('.select2-selection__choice__remove').trigger('click');
+    // Remove the second selection by clicking on the item in the dropdown
+    $('.select2-results__option[aria-selected=true]').trigger('mouseup');
 
-  var $selections = $('.select2-selection__choice');
-  assert.equal(
-    $selections.length,
-    1,
-    'One item should remain selected'
-  );
-
-  // Open the dropdown menu
-  select.selection.trigger('query', {term: 'Option'});
-
-  // Remove the second selection by clicking on the item in the dropdown
-  $('.select2-results__option[aria-selected=true]').trigger('mouseup');
-
-  assert.notOk(
-    $select.find(':selected').length,
-    'No items should be selected'
-  );
-});
+    assert.notOk(
+      $select.find(':selected').length,
+      'No items should be selected'
+    );
+  }
+);

@@ -14,7 +14,8 @@ define(function () {
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
-      var message = '너무 짧습니다. ' + remainingChars + ' 글자 더 입력해주세요.';
+      var message =
+        '너무 짧습니다. ' + remainingChars + ' 글자 더 입력해주세요.';
 
       return message;
     },

@@ -29,7 +29,7 @@ define(function () {
     removeItem: function () {
       return 'قم بإزالة العنصر';
     },
-     removeAllItems: function () {
+    removeAllItems: function () {
       return 'قم بإزالة كل العناصر';
     }
   };

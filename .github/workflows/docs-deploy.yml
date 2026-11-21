@@ -1,24 +1,34 @@
 name: Documentation Deployment
-
-on: release
-
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+permissions:
+  contents: write
 jobs:
-  grav:
-    name: Deploy Grav
+  gh-page-build:
+    runs-on: ubuntu-latest
+    if: github.event_name != 'release' || github.event.release.prerelease == false
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@v7
+      - run: uv run mkdocs build
+        env:
+          MKDOCS_GIT_COMMITTERS_APIKEY: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: site
+  gh-page-deploy:
+    needs: gh-page-build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - uses: maddox/actions/sleep@master
-        with:
-          args: "180"
-      - uses: actions/checkout@v1
-      - name: Copy to documentation server
-        uses: maxheld83/rsync@v0.1.0
-        env:
-          USERNAME: ${{ secrets.DOCUMENTATION_SSH_USERNAME }}
-          SSH_PRIVATE_KEY: ${{ secrets.DOCUMENTATION_SSH_KEY }}
-          HOST_NAME: ${{ secrets.DOCUMENTATION_SSH_HOST }}
-          SSH_PUBLIC_KEY: not-needed
-          HOST_IP: not-needed
-          HOST_FINGERPRINT: not-needed
-        with:
-          args: "docs/ $USERNAME@$HOST_NAME:/var/www/select2-docs/user/"
+      - id: deployment
+        uses: actions/deploy-pages@v5

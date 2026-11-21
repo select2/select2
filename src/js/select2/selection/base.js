@@ -1,9 +1,5 @@
-define([
-  'jquery',
-  '../utils',
-  '../keys'
-], function ($, Utils, KEYS) {
-  function BaseSelection ($element, options) {
+define(['jquery', '../utils', '../keys'], function ($, Utils, KEYS) {
+  function BaseSelection($element, options) {
     this.$element = $element;
     this.options = options;
 
@@ -15,8 +11,8 @@ define([
   BaseSelection.prototype.render = function () {
     var $selection = $(
       '<span class="select2-selection" role="combobox" ' +
-      ' aria-haspopup="true" aria-expanded="false">' +
-      '</span>'
+        ' aria-haspopup="true" aria-expanded="false">' +
+        '</span>'
     );
 
     this._tabindex = 0;
@@ -27,9 +23,12 @@ define([
       this._tabindex = this.$element[0].getAttribute('tabindex');
     }
 
-    if(this.$element[0].getAttribute('title')) {
-      $selection[0]
-        .setAttribute('title', this.$element[0].getAttribute('title'));
+    var preserveAttrs = ['title', 'aria-label', 'aria-labelledby'];
+    for (var i = 0; i < preserveAttrs.length; i++) {
+      var attr = preserveAttrs[i];
+      if (this.$element[0].getAttribute(attr)) {
+        $selection[0].setAttribute(attr, this.$element[0].getAttribute(attr));
+      }
     }
     $selection[0].setAttribute('tabindex', this._tabindex);
     $selection[0].setAttribute('aria-disabled', 'false');
@@ -63,8 +62,10 @@ define([
     });
 
     container.on('results:focus', function (params) {
-      self.$selection[0]
-        .setAttribute('aria-activedescendant', params.data._resultId);
+      self.$selection[0].setAttribute(
+        'aria-activedescendant',
+        params.data._resultId
+      );
     });
 
     container.on('selection:update', function (params) {
@@ -109,8 +110,8 @@ define([
     window.setTimeout(function () {
       // Don't trigger `blur` if the focus is still in the selection
       if (
-        (document.activeElement == self.$selection[0]) ||
-        ($.contains(self.$selection[0], document.activeElement))
+        document.activeElement == self.$selection[0] ||
+        $.contains(self.$selection[0], document.activeElement)
       ) {
         return;
       }
@@ -120,8 +121,9 @@ define([
   };
 
   BaseSelection.prototype._attachCloseHandler = function (container) {
+    var namespace = Utils.toEventNamespace(container.id);
 
-    $(document.body).on('mousedown.select2.' + container.id, function (e) {
+    $(document.body).on('mousedown.select2.' + namespace, function (e) {
       var $target = $(e.target);
 
       var $select = $target.closest('.select2');
@@ -141,7 +143,9 @@ define([
   };
 
   BaseSelection.prototype._detachCloseHandler = function (container) {
-    $(document.body).off('mousedown.select2.' + container.id);
+    $(document.body).off(
+      'mousedown.select2.' + Utils.toEventNamespace(container.id)
+    );
   };
 
   BaseSelection.prototype.position = function ($selection, $container) {

@@ -22,7 +22,7 @@ QUnit.test('quotes are killed as well', function (assert) {
   var escaped = Utils.escapeMarkup(text);
 
   assert.notEqual(text, escaped);
-  assert.equal(escaped.indexOf('\''), -1);
+  assert.equal(escaped.indexOf("'"), -1); // jshint ignore:line
   assert.equal(escaped.indexOf('"'), -1);
 });
 

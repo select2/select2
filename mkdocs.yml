@@ -1,0 +1,124 @@
+site_name: Select2
+site_description: The jQuery replacement for select boxes
+site_url: https://select2.org
+repo_url: https://github.com/select2/select2
+repo_name: select2/select2
+watch:
+  - docs
+docs_dir: docs
+theme:
+  name: material
+  custom_dir: docs/overrides
+  logo: images/logo.png
+  favicon: images/favicon.ico
+  palette:
+    - media: "(prefers-color-scheme)"
+      primary: blue-grey
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      primary: blue-grey
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      primary: blue-grey
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+  features:
+    - content.code.select
+    - content.code.copy
+    - search.suggest
+    - search.share
+extra_css:
+  - overrides/custom.css
+extra_javascript: # jQuery and Select2 via CDNJS
+  - https://cdn.jsdelivr.net/npm/jquery@4.0.0/dist/jquery.min.js
+  - https://cdn.jsdelivr.net/npm/select2@4.1.1/dist/js/select2.full.min.js
+extra:
+  analytics:
+    provider: google
+    property: G-RR7B0FYMWM
+plugins:
+  - search
+  - git-revision-date-localized:
+      enabled: !ENV [CI, false]
+  - git-committers:
+      enabled: !ENV [CI, false]
+      repository: select2/select2
+      branch: develop
+      exclude_committers:
+        - dependabot[bot]
+        - pre-commit-ci[bot]
+        - web-flow
+        - Copilot
+  - redirects:
+      redirect_maps:
+        "troubleshooting/README.md": "troubleshooting/getting-help.md"
+        "configuration/README.md": "configuration/options-api.md"
+        "data-sources/README.md": "data-sources/formats.md"
+        "programmatic-control/README.md": "programmatic-control/add-select-clear-items.md"
+        "advanced/README.md": "advanced/adapters-and-decorators.md"
+        "advanced/default-adapters/README.md": "advanced/default-adapters/selection.md"
+        "upgrading/README.md": "upgrading/new-in-40.md"
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - github-callouts
+  - pymdownx.highlight:
+      use_pygments: true
+  - pymdownx.superfences
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+nav:
+  - Home: README.md
+  - Getting started:
+      - Installation: getting-started/installation.md
+      - Basic usage: getting-started/basic-usage.md
+      - Builds and modules: getting-started/builds-and-modules.md
+  - Troubleshooting:
+      - Getting help: troubleshooting/getting-help.md
+      - Common problems: troubleshooting/common-problems.md
+  - Configuration:
+      - Options API: configuration/options-api.md
+      - Global defaults: configuration/defaults.md
+      - data-* attributes: configuration/data-attributes.md
+  - Appearance: appearance.md
+  - Options: options.md
+  - Data sources:
+      - The Select2 data format: data-sources/formats.md
+      - Ajax (remote data): data-sources/ajax.md
+      - Arrays: data-sources/arrays.md
+  - Dropdown: dropdown.md
+  - Selections: selections.md
+  - Dynamic option creation: tagging.md
+  - Placeholders: placeholders.md
+  - Search: searching.md
+  - Programmatic control:
+      - Add, select, or clear items: programmatic-control/add-select-clear-items.md
+      - Retrieving selections: programmatic-control/retrieving-selections.md
+      - Methods: programmatic-control/methods.md
+      - Events: programmatic-control/events.md
+  - Internationalization: i18n.md
+  - Advanced:
+      - Adapters and decorators: advanced/adapters-and-decorators.md
+      - Built-in adapters:
+          - Selection: advanced/default-adapters/selection.md
+          - Array: advanced/default-adapters/array.md
+          - Ajax: advanced/default-adapters/ajax.md
+          - SelectAdapter: advanced/default-adapters/data.md
+          - Results: advanced/default-adapters/results.md
+          - Dropdown: advanced/default-adapters/dropdown.md
+  - Upgrading:
+      - What's new in 4.0: upgrading/new-in-40.md
+      - Migrating from Select2 3.5: upgrading/migrating-from-35.md

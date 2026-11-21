@@ -5,8 +5,10 @@ define(function () {
     if (count % 10 === 1 && (count % 100 < 11 || count % 100 > 19)) {
       return one;
     } else if (
-      (count % 10 >= 2 && count % 10 <= 9) &&
-      (count % 100 < 11 || count % 100 > 19)) {
+      count % 10 >= 2 &&
+      count % 10 <= 9 &&
+      (count % 100 < 11 || count % 100 > 19)
+    ) {
       return few;
     } else {
       return other;

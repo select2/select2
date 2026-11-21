@@ -58,7 +58,7 @@ define(function () {
     removeItem: function () {
       return 'Eemalda valik';
     },
-    search: function() {
+    search: function () {
       return 'Otsi';
     }
   };
