@@ -85,10 +85,12 @@ define(['./array', '../utils', 'jquery'], function (ArrayAdapter, Utils, $) {
 
           callback(results);
         },
-        function () {
+        function (jqXHR, textStatus) {
           // Attempt to detect if a request was aborted
           // Only works if the transport exposes a status property
+          // Timed out requests also have a status of 0 but should show an error
           if (
+            textStatus !== 'timeout' &&
             $request &&
             'status' in $request &&
             ($request.status === 0 || $request.status === '0')
