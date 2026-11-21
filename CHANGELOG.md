@@ -1,5 +1,28 @@
 # Change Log
 
+## 4.1.1
+
+### Bug fixes
+
+- Fix unbound `_normalizeItem` crash for AJAX data in strict-mode builds (#6439)
+- Retain `aria-label` and `aria-labelledby` attributes from the origin `<select>` element (#6457)
+- Assign IDs to generated search fields (#6473)
+- Remove regex characters from event namespaces (#6484)
+
+### Documentation
+
+- Migrate documentation from Grav to MkDocs (#6413, #6419)
+- Address static docs regression (#6419)
+- Rewrite the docs workflow using newer GitHub Actions (#6408)
+- Add Google Analytics back to MkDocs (#6421)
+
+### Miscellaneous
+
+- Remove the Node engines constraint (#6446)
+- Add GitHub Sponsors to the README (#6426)
+- Add pre-commit hooks for JavaScript, JSON, CSS, and Markdown files (#6409, #6410, #6411, #6412)
+- Fix pre-commit.ci by dropping an empty skip key (#6418)
+
 ## 4.1.0
 
 ### Breaking changes
