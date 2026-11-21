@@ -231,14 +231,18 @@ QUnit.test('templateSelection can return HTML', function (assert) {
 
   var $display = $selection.find('.select2-selection__choice__display');
 
-  assert.equal($display.find('strong').length, 1, 'The HTML should be rendered');
+  assert.equal(
+    $display.find('strong').length,
+    1,
+    'The HTML should be rendered'
+  );
   assert.equal($display.text(), 'test', 'The text should be preserved');
 });
 
 QUnit.test('templateSelection escapes String objects', function (assert) {
   var templateOptions = new Options({
     templateSelection: function (data) {
-      return new String('<strong>' + data.text + '</strong>');
+      return new String('<strong>' + data.text + '</strong>'); // jshint ignore:line
     }
   });
 
@@ -257,11 +261,7 @@ QUnit.test('templateSelection escapes String objects', function (assert) {
 
   var $display = $selection.find('.select2-selection__choice__display');
 
-  assert.equal(
-    $display.find('strong').length,
-    0,
-    'The HTML should be escaped'
-  );
+  assert.equal($display.find('strong').length, 0, 'The HTML should be escaped');
   assert.equal(
     $display.text(),
     '<strong>test</strong>',

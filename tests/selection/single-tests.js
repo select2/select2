@@ -240,14 +240,18 @@ QUnit.test('templateSelection can return HTML', function (assert) {
     }
   ]);
 
-  assert.equal($rendered.find('strong').length, 1, 'The HTML should be rendered');
+  assert.equal(
+    $rendered.find('strong').length,
+    1,
+    'The HTML should be rendered'
+  );
   assert.equal($rendered.text(), 'test', 'The text should be preserved');
 });
 
 QUnit.test('templateSelection escapes String objects', function (assert) {
   var templateOptions = new Options({
     templateSelection: function (data) {
-      return new String('<strong>' + data.text + '</strong>');
+      return new String('<strong>' + data.text + '</strong>'); // jshint ignore:line
     }
   });
 

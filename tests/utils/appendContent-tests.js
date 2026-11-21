@@ -13,7 +13,7 @@ QUnit.test('appends HTML string as escaped text', function (assert) {
 
 QUnit.test('appends String object as escaped text', function (assert) {
   var $container = $('<div></div>');
-  var content = new String('<strong>test</strong>');
+  var content = new String('<strong>test</strong>'); // jshint ignore:line
   Utils.appendContent($container[0], content, Utils.escapeMarkup);
 
   assert.equal($container.find('strong').length, 0);

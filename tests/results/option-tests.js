@@ -133,28 +133,34 @@ QUnit.test('non-group options are given the option role', function (assert) {
 });
 
 QUnit.test('templateResult can return HTML', function (assert) {
-  var results = new Results($('<select></select>'), new Options({
-    templateResult: function (result) {
-      return $('<strong>' + result.text + '</strong>');
-    }
-  }));
+  var results = new Results(
+    $('<select></select>'),
+    new Options({
+      templateResult: function (result) {
+        return $('<strong>' + result.text + '</strong>');
+      }
+    })
+  );
 
   var container = document.createElement('li');
-  results.template({text: 'test'}, container);
+  results.template({ text: 'test' }, container);
 
   assert.equal($(container).find('strong').length, 1);
   assert.equal(container.textContent, 'test');
 });
 
 QUnit.test('templateResult escapes String objects', function (assert) {
-  var results = new Results($('<select></select>'), new Options({
-    templateResult: function (result) {
-      return new String('<strong>' + result.text + '</strong>');
-    }
-  }));
+  var results = new Results(
+    $('<select></select>'),
+    new Options({
+      templateResult: function (result) {
+        return new String('<strong>' + result.text + '</strong>'); // jshint ignore:line
+      }
+    })
+  );
 
   var container = document.createElement('li');
-  results.template({text: 'test'}, container);
+  results.template({ text: 'test' }, container);
 
   assert.equal($(container).find('strong').length, 0);
   assert.equal(container.textContent, '<strong>test</strong>');
