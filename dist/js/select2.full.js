@@ -1,5 +1,5 @@
 /*!
- * Select2 4.1.0
+ * Select2 4.1.1
  * https://select2.github.io
  *
  * Released under the MIT license
@@ -665,6 +665,11 @@ S2.define('select2/utils',[], function () {
     }
 
     return chars;
+  };
+
+  // Event namespaces can't contain regex characters
+  Utils.toEventNamespace = function (id) {
+    return String(id).replace(/[^\w-]/g, '');
   };
 
   Utils.bind = function (func, context) {
@@ -1457,11 +1462,12 @@ S2.define('select2/selection/base',['jquery', '../utils', '../keys'], function (
       this._tabindex = this.$element[0].getAttribute('tabindex');
     }
 
-    if (this.$element[0].getAttribute('title')) {
-      $selection[0].setAttribute(
-        'title',
-        this.$element[0].getAttribute('title')
-      );
+    var preserveAttrs = ['title', 'aria-label', 'aria-labelledby'];
+    for (var i = 0; i < preserveAttrs.length; i++) {
+      var attr = preserveAttrs[i];
+      if (this.$element[0].getAttribute(attr)) {
+        $selection[0].setAttribute(attr, this.$element[0].getAttribute(attr));
+      }
     }
     $selection[0].setAttribute('tabindex', this._tabindex);
     $selection[0].setAttribute('aria-disabled', 'false');
@@ -1554,7 +1560,9 @@ S2.define('select2/selection/base',['jquery', '../utils', '../keys'], function (
   };
 
   BaseSelection.prototype._attachCloseHandler = function (container) {
-    $(document.body).on('mousedown.select2.' + container.id, function (e) {
+    var namespace = Utils.toEventNamespace(container.id);
+
+    $(document.body).on('mousedown.select2.' + namespace, function (e) {
       var $target = $(e.target);
 
       var $select = $target.closest('.select2');
@@ -1574,7 +1582,9 @@ S2.define('select2/selection/base',['jquery', '../utils', '../keys'], function (
   };
 
   BaseSelection.prototype._detachCloseHandler = function (container) {
-    $(document.body).off('mousedown.select2.' + container.id);
+    $(document.body).off(
+      'mousedown.select2.' + Utils.toEventNamespace(container.id)
+    );
   };
 
   BaseSelection.prototype.position = function ($selection, $container) {
@@ -2095,6 +2105,7 @@ S2.define('select2/selection/search',['jquery', '../utils', '../keys'], function
     return $rendered;
   };
 
+  //   Bind search events and identify the inline search field.
   Search.prototype.bind = function (decorated, container, $container) {
     var self = this;
 
@@ -2103,6 +2114,8 @@ S2.define('select2/selection/search',['jquery', '../utils', '../keys'], function
 
     decorated.call(this, container, $container);
 
+    // Identify the search field without including it in submitted form data.
+    self.$search[0].setAttribute('id', container.id + '-search');
     self.$search[0].setAttribute('aria-describedby', selectionId);
 
     container.on('open', function () {
@@ -3599,7 +3612,9 @@ S2.define('select2/data/select',['./base', '../utils', 'jquery'], function (Base
     }
 
     if (item.children) {
-      item.children = item.children.map(SelectAdapter.prototype._normalizeItem);
+      item.children = item.children.map(
+        SelectAdapter.prototype._normalizeItem.bind(this)
+      );
     }
 
     return $.extend({}, defaults, item);
@@ -3769,7 +3784,7 @@ S2.define('select2/data/ajax',['./array', '../utils', 'jquery'], function (Array
 
           if (results && results.results && Array.isArray(results.results)) {
             results.results = results.results.map(
-              AjaxAdapter.prototype._normalizeItem
+              AjaxAdapter.prototype._normalizeItem.bind(self)
             );
           } else {
             if (self.options.get('debug') && window.console && console.error) {
@@ -4257,12 +4272,16 @@ S2.define('select2/dropdown/search',['jquery'], function ($) {
     return $rendered;
   };
 
+  //   Bind search events and identify the dropdown search field.
   Search.prototype.bind = function (decorated, container, $container) {
     var self = this;
 
     var resultsId = container.id + '-results';
 
     decorated.call(this, container, $container);
+
+    // Keep this ID distinct from an inline search in the same control.
+    this.$search[0].setAttribute('id', container.id + '-dropdown-search');
 
     this.$search.on('keydown', function (evt) {
       self.trigger('keypress', evt);
@@ -4594,9 +4613,10 @@ S2.define('select2/dropdown/attachBody',['jquery', '../utils'], function ($, Uti
   ) {
     var self = this;
 
-    var scrollEvent = 'scroll.select2.' + container.id;
-    var resizeEvent = 'resize.select2.' + container.id;
-    var orientationEvent = 'orientationchange.select2.' + container.id;
+    var namespace = Utils.toEventNamespace(container.id);
+    var scrollEvent = 'scroll.select2.' + namespace;
+    var resizeEvent = 'resize.select2.' + namespace;
+    var orientationEvent = 'orientationchange.select2.' + namespace;
 
     var $watchers = this.$container.parents().filter(Utils.hasScroll);
     $watchers.each(function () {
@@ -4624,9 +4644,10 @@ S2.define('select2/dropdown/attachBody',['jquery', '../utils'], function ($, Uti
     decorated,
     container
   ) {
-    var scrollEvent = 'scroll.select2.' + container.id;
-    var resizeEvent = 'resize.select2.' + container.id;
-    var orientationEvent = 'orientationchange.select2.' + container.id;
+    var namespace = Utils.toEventNamespace(container.id);
+    var scrollEvent = 'scroll.select2.' + namespace;
+    var resizeEvent = 'resize.select2.' + namespace;
+    var orientationEvent = 'orientationchange.select2.' + namespace;
 
     var $watchers = this.$container.parents().filter(Utils.hasScroll);
     $watchers.off(scrollEvent);
