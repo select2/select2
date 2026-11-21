@@ -5,12 +5,18 @@ This issue occurs because Bootstrap modals tend to steal focus from other elemen
 To avoid this problem, you may attach the dropdown to the modal itself with the [`dropdownParent`](../dropdown.md#dropdown-placement) setting:
 
 ```html
-<div aria-hidden="true" class="modal fade" id="myModal" role="dialog" tabindex="-1">
- ...
- <select id="mySelect2">
+<div
+  aria-hidden="true"
+  class="modal fade"
+  id="myModal"
+  role="dialog"
+  tabindex="-1"
+>
   ...
- </select>
- ...
+  <select id="mySelect2">
+    ...
+  </select>
+  ...
 </div>
 ...
 <script>
@@ -26,10 +32,10 @@ This will cause the dropdown to be attached to the modal, rather than the `<body
 
 ```javascript
 // Do this before you initialize any of your modals (Bootstrap 4+)
-$.fn.modal.Constructor.prototype._enforceFocus = function() {};
+$.fn.modal.Constructor.prototype._enforceFocus = function () {};
 
 // Do this before you initialize any of your modals (Bootstrap 3)
-$.fn.modal.Constructor.prototype.enforceFocus = function() {};
+$.fn.modal.Constructor.prototype.enforceFocus = function () {};
 ```
 
 See [this answer](https://stackoverflow.com/questions/18487056/select2-doesnt-work-when-embedded-in-a-bootstrap-modal/19574076#19574076) for more information.

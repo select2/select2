@@ -19,8 +19,8 @@ All adapters must implement the `Adapter` interface, which Select2 uses to rende
 //
 // @returns A jQuery or DOM element that contains any elements that must be
 //   rendered by Select2.
-Adapter.render = function() {
-    return $jq;
+Adapter.render = function () {
+  return $jq;
 };
 
 // Bind to any Select2 or DOM events.
@@ -30,7 +30,7 @@ Adapter.render = function() {
 //   `trigger` method.
 // @param $container The jQuery DOM node that all default adapters will be
 //   rendered within.
-Adapter.bind = function(container, $container) {};
+Adapter.bind = function (container, $container) {};
 
 // Position the DOM element within the Select2 DOM container, or in another
 // place. This allows adapters to be located outside of the Select2 DOM,
@@ -45,11 +45,11 @@ Adapter.bind = function(container, $container) {};
 // @param $defaultContainer The default container that Select2 will typically
 //   place the rendered DOM element within. For most adapters, this is the
 //   Select2 DOM element.
-Adapter.position = function($rendered, $defaultContainer) {};
+Adapter.position = function ($rendered, $defaultContainer) {};
 
 // Destroy any events or DOM elements that have been created.
 // This is called when `select2("destroy")` is called on an element.
-Adapter.destroy = function() {};
+Adapter.destroy = function () {};
 ```
 
 ### `SelectionAdapter`
@@ -66,7 +66,7 @@ Adapters that will be used to override the default `selectionAdapter` must imple
 //
 // Note: An array will always be passed into this method, even if Select2 is
 // attached to a source which only accepts a single selection.
-SelectionAdapter.update = function(data) {};
+SelectionAdapter.update = function (data) {};
 ```
 
 ### `DataAdapter`
@@ -83,9 +83,9 @@ Adapters that will be used to override the default `dataAdapter` must implement 
 // @param callback A function that should be called when the current selection
 //   has been retrieved. The first parameter to the function should be an array
 //   of data objects.
-DataAdapter.current = function(callback) {
-    callback(currentData);
-}
+DataAdapter.current = function (callback) {
+  callback(currentData);
+};
 
 // Get a set of options that are filtered based on the parameters that have
 // been passed on in.
@@ -98,9 +98,9 @@ DataAdapter.current = function(callback) {
 //   provided when working with remote data sets, which rely on pagination to
 //   determine what objects should be displayed.
 // @param callback The function that should be called with the queried results.
-DataAdapter.query = function(params, callback) {
-    callback(queryiedData);
-}
+DataAdapter.query = function (params, callback) {
+  callback(queryiedData);
+};
 ```
 
 ## Decorators
@@ -111,10 +111,14 @@ You can apply a decorator to an adapter using the `Utils.Decorate` method provid
 
 ```javascript
 $.fn.select2.amd.require(
-    ["select2/utils", "select2/selection/single", "select2/selection/placeholder"],
-    function(Utils, SingleSelection, Placeholder) {
-        var CustomSelectionAdapter = Utils.Decorate(SingleSelection, Placeholder);
-    }
+  [
+    'select2/utils',
+    'select2/selection/single',
+    'select2/selection/placeholder'
+  ],
+  function (Utils, SingleSelection, Placeholder) {
+    var CustomSelectionAdapter = Utils.Decorate(SingleSelection, Placeholder);
+  }
 );
 ```
 

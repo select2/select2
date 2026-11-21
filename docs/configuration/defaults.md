@@ -5,7 +5,7 @@ When setting options globally, any past defaults that have been set will be over
 You can set default options by calling `$.fn.select2.defaults.set("key", "value")`. For example:
 
 ```javascript
-$.fn.select2.defaults.set("theme", "classic");
+$.fn.select2.defaults.set('theme', 'classic');
 ```
 
 ## Nested options
@@ -13,7 +13,7 @@ $.fn.select2.defaults.set("theme", "classic");
 To set a default values for cache, use the same notation used for [HTML `data-*` attributes](data-attributes.md). Two dashes (`--`) will be replaced by a level of nesting, and a single dash (`-`) will convert the key to a camelCase string:
 
 ```javascript
-$.fn.select2.defaults.set("ajax--cache", false);
+$.fn.select2.defaults.set('ajax--cache', false);
 ```
 
 ## Resetting default options

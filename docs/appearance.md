@@ -9,26 +9,24 @@ Select2 will respond to the `disabled` attribute on `<select>` elements. You can
 <select class="js-example-disabled-multi js-states" multiple="multiple" disabled="disabled"></select>
 
 <div role="group" aria-label="Programmatic enabling and disabling">
-  <button type="button" class="js-programmatic-enable md-button">
-    Enable
-  </button>
+  <button type="button" class="js-programmatic-enable md-button">Enable</button>
   <button type="button" class="js-programmatic-disable md-button">
     Disable
   </button>
 </div>
 
 ```javascript
-$(".js-example-disabled").select2();
-$(".js-example-disabled-multi").select2();
+$('.js-example-disabled').select2();
+$('.js-example-disabled-multi').select2();
 
-$(".js-programmatic-enable").on("click", function() {
-    $(".js-example-disabled").prop("disabled", false);
-    $(".js-example-disabled-multi").prop("disabled", false);
+$('.js-programmatic-enable').on('click', function () {
+  $('.js-example-disabled').prop('disabled', false);
+  $('.js-example-disabled-multi').prop('disabled', false);
 });
 
-$(".js-programmatic-disable").on("click", function() {
-    $(".js-example-disabled").prop("disabled", true);
-    $(".js-example-disabled-multi").prop("disabled", true);
+$('.js-programmatic-disable').on('click', function () {
+  $('.js-example-disabled').prop('disabled', true);
+  $('.js-example-disabled-multi').prop('disabled', true);
 });
 ```
 
@@ -53,24 +51,36 @@ You can, and should, use a `<label>` with Select2, just like any other `<select>
 
 <label for="id_label_single">
   Click this to focus the single select element
-  <select class="js-example-basic-single js-states" id="id_label_single"></select>
+  <select
+    class="js-example-basic-single js-states"
+    id="id_label_single"
+  ></select>
 </label>
 
 <label for="id_label_multiple">
   Click this to focus the multiple select element
-  <select class="js-example-basic-multiple js-states" id="id_label_multiple" multiple="multiple"></select>
+  <select
+    class="js-example-basic-multiple js-states"
+    id="id_label_multiple"
+    multiple="multiple"
+  ></select>
 </label>
 
 ```html
 <label for="id_label_single">
- Click this to highlight the single select element
- <select class="js-example-basic-single js-states" id="id_label_single">
- </select>
+  Click this to highlight the single select element
+  <select
+    class="js-example-basic-single js-states"
+    id="id_label_single"
+  ></select>
 </label>
 <label for="id_label_multiple">
- Click this to highlight the multiple select element
- <select class="js-example-basic-multiple js-states" id="id_label_multiple" multiple="multiple">
- </select>
+  Click this to highlight the multiple select element
+  <select
+    class="js-example-basic-multiple js-states"
+    id="id_label_multiple"
+    multiple="multiple"
+  ></select>
 </label>
 ```
 
@@ -124,15 +134,17 @@ The two Select2 boxes below are styled to `50%` and `75%` width respectively to 
 <select class="js-example-responsive js-states" multiple="multiple" style="width: 75%"></select>
 
 ```html
-<select class="js-example-responsive" style="width: 50%">
-</select>
-<select class="js-example-responsive" multiple="multiple" style="width: 75%">
-</select>
+<select class="js-example-responsive" style="width: 50%"></select>
+<select
+  class="js-example-responsive"
+  multiple="multiple"
+  style="width: 75%"
+></select>
 ```
 
 ```javascript
-$(".js-example-responsive").select2({
-    width: 'resolve' // need to override the changed default
+$('.js-example-responsive').select2({
+  width: 'resolve' // need to override the changed default
 });
 ```
 
@@ -156,12 +168,12 @@ These examples use the `classic` theme, which matches the old look of Select2.
 <select class="js-example-theme-multiple js-states" multiple="multiple"></select>
 
 ```javascript
-$(".js-example-theme-single").select2({
-    theme: "classic"
+$('.js-example-theme-single').select2({
+  theme: 'classic'
 });
 
-$(".js-example-theme-multiple").select2({
-    theme: "classic"
+$('.js-example-theme-multiple').select2({
+  theme: 'classic'
 });
 ```
 

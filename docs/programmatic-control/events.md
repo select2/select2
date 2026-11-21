@@ -20,8 +20,8 @@ Select2 will trigger a few different events when different actions are taken usi
 All public events are relayed using the jQuery event system, and they are triggered on the `<select>` element that Select2 is attached to. You can attach to them using the [`.on` method](https://api.jquery.com/on/) provided by jQuery:
 
 ```javascript
-$('#mySelect2').on('select2:select', function(e) {
-    // Do something
+$('#mySelect2').on('select2:select', function (e) {
+  // Do something
 });
 ```
 
@@ -30,9 +30,9 @@ $('#mySelect2').on('select2:select', function(e) {
 When `select2:select` is triggered, data from the selection can be accessed via the `params.data` property:
 
 ```javascript
-$('#mySelect2').on('select2:select', function(e) {
-    var data = e.params.data;
-    console.log(data);
+$('#mySelect2').on('select2:select', function (e) {
+  var data = e.params.data;
+  console.log(data);
 });
 ```
 
@@ -53,17 +53,17 @@ You can manually trigger events on a Select2 control using the jQuery [`trigger`
 
 ```javascript
 var data = {
-    "id": 1,
-    "text": "Tyto alba",
-    "genus": "Tyto",
-    "species": "alba"
+  id: 1,
+  text: 'Tyto alba',
+  genus: 'Tyto',
+  species: 'alba'
 };
 
 $('#mySelect2').trigger({
-    type: 'select2:select',
-    params: {
-        data: data
-    }
+  type: 'select2:select',
+  params: {
+    data: data
+  }
 });
 ```
 
@@ -85,49 +85,59 @@ $('#mySelect2').trigger('change.select2'); // Notify only Select2 of changes
 <ul class="js-event-log"></ul>
 
 ```javascript
-var $eventLog = $(".js-event-log");
-var $eventSelect = $(".js-example-events");
+var $eventLog = $('.js-event-log');
+var $eventSelect = $('.js-example-events');
 
 $eventSelect.select2();
 
-$eventSelect.on("select2:open", function(e) {
-    log("select2:open", e);
+$eventSelect.on('select2:open', function (e) {
+  log('select2:open', e);
 });
-$eventSelect.on("select2:close", function(e) {
-    log("select2:close", e);
+$eventSelect.on('select2:close', function (e) {
+  log('select2:close', e);
 });
-$eventSelect.on("select2:select", function(e) {
-    log("select2:select", e);
+$eventSelect.on('select2:select', function (e) {
+  log('select2:select', e);
 });
-$eventSelect.on("select2:unselect", function(e) {
-    log("select2:unselect", e);
+$eventSelect.on('select2:unselect', function (e) {
+  log('select2:unselect', e);
 });
 
-$eventSelect.on("change", function(e) {
-    log("change");
+$eventSelect.on('change', function (e) {
+  log('change');
 });
 
 function log(name, evt) {
-    if (!evt) {
-        var args = "{}";
-    } else {
-        var args = JSON.stringify(evt.params, function(key, value) {
-            if (value && value.nodeName) return "[DOM node]";
-            if (value instanceof $.Event) return "[$.Event]";
-            return value;
-        });
-    }
-    var $e = $("<li>" + name + " -> " + args + "</li>");
-    $eventLog.append($e);
-    $e.animate({
-        opacity: 1
-    }, 10000, 'linear', function() {
-        $e.animate({
-            opacity: 0
-        }, 2000, 'linear', function() {
-            $e.remove();
-        });
+  if (!evt) {
+    var args = '{}';
+  } else {
+    var args = JSON.stringify(evt.params, function (key, value) {
+      if (value && value.nodeName) return '[DOM node]';
+      if (value instanceof $.Event) return '[$.Event]';
+      return value;
     });
+  }
+  var $e = $('<li>' + name + ' -> ' + args + '</li>');
+  $eventLog.append($e);
+  $e.animate(
+    {
+      opacity: 1
+    },
+    10000,
+    'linear',
+    function () {
+      $e.animate(
+        {
+          opacity: 0
+        },
+        2000,
+        'linear',
+        function () {
+          $e.remove();
+        }
+      );
+    }
+  );
 }
 ```
 
