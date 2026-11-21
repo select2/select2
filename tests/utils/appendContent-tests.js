@@ -5,7 +5,11 @@ var Utils = require('select2/utils');
 
 QUnit.test('appends HTML string as escaped text', function (assert) {
   var $container = $('<div></div>');
-  Utils.appendContent($container[0], '<strong>test</strong>', Utils.escapeMarkup);
+  Utils.appendContent(
+    $container[0],
+    '<strong>test</strong>',
+    Utils.escapeMarkup
+  );
 
   assert.equal($container.find('strong').length, 0);
   assert.equal($container.text(), '<strong>test</strong>');
@@ -22,7 +26,11 @@ QUnit.test('appends String object as escaped text', function (assert) {
 
 QUnit.test('appends DOM/jQuery content as trusted HTML', function (assert) {
   var $container = $('<div></div>');
-  Utils.appendContent($container[0], $('<strong>test</strong>'), Utils.escapeMarkup);
+  Utils.appendContent(
+    $container[0],
+    $('<strong>test</strong>'),
+    Utils.escapeMarkup
+  );
 
   assert.equal($container.find('strong').length, 1);
   assert.equal($container.text(), 'test');
