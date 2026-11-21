@@ -12,14 +12,15 @@ The most common situation is to use a string of text as your placeholder value.
 
 ```html
 <select class="js-example-placeholder-single js-states">
-  <option></option>
+ <option>
+ </option>
 </select>
 ```
 
 ```javascript
 $('.js-example-placeholder-single').select2({
-  placeholder: 'Select a state',
-  allowClear: true
+    placeholder: 'Select a state',
+    allowClear: true
 });
 ```
 
@@ -40,15 +41,13 @@ For multi-selects, you must **not** have an empty `<option>` element:
 <select class="js-example-placeholder-multiple js-states" multiple="multiple"></select>
 
 ```html
-<select
-  class="js-example-placeholder-multiple js-states"
-  multiple="multiple"
-></select>
+<select class="js-example-placeholder-multiple js-states" multiple="multiple">
+</select>
 ```
 
 ```javascript
 $('.js-example-placeholder-multiple').select2({
-  placeholder: 'Select a state'
+    placeholder: 'Select a state'
 });
 ```
 
@@ -67,10 +66,10 @@ Alternatively, the value of the `placeholder` option can be a data object repres
 
 ```javascript
 $('select').select2({
-  placeholder: {
-    id: '-1', // the value of the option
-    text: 'Select an option'
-  }
+    placeholder: {
+        id: '-1', // the value of the option
+        text: 'Select an option'
+    }
 });
 ```
 
@@ -86,14 +85,14 @@ When using Select2 **in single-selection mode**, the placeholder option will be 
 
 ```javascript
 $('select').select2({
-  templateSelection: function (data) {
-    if (data.id === '') {
-      // adjust for custom placeholder values
-      return 'Custom styled placeholder text';
-    }
+    templateSelection: function(data) {
+        if (data.id === '') {
+            // adjust for custom placeholder values
+            return 'Custom styled placeholder text';
+        }
 
-    return data.text;
-  }
+        return data.text;
+    }
 });
 ```
 

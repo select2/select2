@@ -27,9 +27,11 @@ In HTML, `<option>` elements can be grouped by wrapping them with in an `<optgro
 
 ```html
 <select>
-  <optgroup label="Group Name">
-    <option>Nested option</option>
-  </optgroup>
+ <optgroup label="Group Name">
+  <option>
+   Nested option
+  </option>
+ </optgroup>
 </select>
 ```
 
@@ -60,9 +62,15 @@ $disabledResults.select2();
 
 ```html
 <select class="js-example-disabled-results">
-  <option value="one">First</option>
-  <option disabled="disabled" value="two">Second (disabled)</option>
-  <option value="three">Third</option>
+ <option value="one">
+  First
+ </option>
+ <option disabled="disabled" value="two">
+  Second (disabled)
+ </option>
+ <option value="three">
+  Third
+ </option>
 </select>
 ```
 
