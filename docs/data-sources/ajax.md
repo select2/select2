@@ -187,11 +187,15 @@ $('#mySelect2').select2({
         transport: function(params, success, failure) {
             var request = new AjaxRequest(params.url, params);
             request.on('success', success);
-            request.on('failure', failure);
+            request.on('failure', function (textStatus) {
+                failure(textStatus);
+            });
         }
     }
 });
 ```
+
+The `failure` callback should be called with a text status string. The accepted values are `'error'`, `'abort'`, `'timeout'`, and `'parseerror'`. Only an `'abort'` status will be treated as a silent failure; all other values will display an error message to the user.
 
 ## jQuery `$.ajax` options
 
@@ -253,14 +257,21 @@ ajax: {
     // @param success A callback function that takes `data`, the results from the
     //   request.
     // @param failure A callback function that indicates that the request could
-    //   not be completed.
+    //   not be completed. It is called with a text status string: 'error',
+    //   'abort', 'timeout', or 'parseerror'. Only an 'abort' status will be
+    //   treated as a silent failure; all other values will show an error
+    //   message to the user.
     // @returns An object that has an `abort` function that can be called to abort
     //   the request if needed.
     transport: function(params, success, failure) {
         var $request = $.ajax(params);
 
         $request.then(success);
-        $request.fail(failure);
+        $request.fail(function (jqXHR, textStatus) {
+          // Normalize jQuery's failure arguments so `failure` is always
+          // called with just the text status string.
+          failure(textStatus);
+        });
 
         return $request;
     }
