@@ -91,11 +91,15 @@ define(['jquery', '../utils', '../keys'], function ($, Utils, KEYS) {
     this.$selection.on('keydown', '.select2-search--inline', function (evt) {
       evt.stopPropagation();
 
-      self.trigger('keypress', evt);
+      var key = evt.which;
+
+      // The inline search owns Backspace: it either edits the query or removes
+      // the last choice, so it must not reach allowClear's keyboard clear.
+      if (key !== KEYS.BACKSPACE) {
+        self.trigger('keypress', evt);
+      }
 
       self._keyUpPrevented = evt.isDefaultPrevented();
-
-      var key = evt.which;
 
       if (key === KEYS.BACKSPACE && self.$search.val() === '') {
         var $previousChoice = self.$selection
