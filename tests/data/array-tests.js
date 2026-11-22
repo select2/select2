@@ -338,6 +338,117 @@ QUnit.test('optgroup tags have the right properties', function (assert) {
 });
 
 QUnit.test(
+  'optgroup child data uses generated option state',
+  function (assert) {
+    var $select = $('#qunit-fixture .single-empty');
+    var options = new Options({
+      data: [
+        {
+          text: 'Group',
+          children: [
+            {
+              id: 'child',
+              text: 'Child'
+            }
+          ]
+        }
+      ]
+    });
+
+    var data = new ArrayData($select, options);
+
+    var container = new MockContainer();
+    data.bind(container, $('<div></div>'));
+
+    var $group = $select.find('optgroup');
+    var child = $group.find('option')[0];
+    child.disabled = true;
+
+    var groupData = data.item($group);
+
+    assert.equal(
+      groupData.children[0].element,
+      child,
+      'The child data should reference the generated <option>'
+    );
+
+    assert.ok(child.disabled, 'The generated <option> should be disabled');
+  }
+);
+
+QUnit.test(
+  'optgroup child data respects disabled from input data',
+  function (assert) {
+    var $select = $('#qunit-fixture .single-empty');
+    var data = new ArrayData($select, new Options({}));
+
+    var $options = data.convertToOptions([
+      {
+        text: 'Group',
+        children: [
+          {
+            id: 'child',
+            text: 'Child',
+            disabled: true
+          }
+        ]
+      }
+    ]);
+
+    var $group = $($options[0]);
+    var child = $group.find('option')[0];
+    var groupData = data.item($group);
+
+    assert.ok(
+      groupData.children[0].disabled,
+      'The child data should be disabled'
+    );
+    assert.ok(child.disabled, 'The generated <option> should be disabled');
+  }
+);
+
+QUnit.test(
+  'optgroup child data uses generated option state after merge',
+  function (assert) {
+    var $select = $('#qunit-fixture .single-empty');
+
+    $select.append(
+      '<optgroup label="Group">' +
+        '<option value="child">Child</option>' +
+        '</optgroup>'
+    );
+
+    var data = new ArrayData($select, new Options({}));
+
+    data.convertToOptions([
+      {
+        text: 'Group',
+        children: [
+          {
+            id: 'child',
+            text: 'Child'
+          }
+        ]
+      }
+    ]);
+
+    var $group = $select.find('optgroup');
+    var child = $group.find('option')[0];
+    child.disabled = true;
+
+    var groupData = data.item($group);
+
+    assert.equal(
+      groupData.children[0].element,
+      child,
+      'The child data should reference the generated <option>'
+    );
+
+    assert.ok(child.disabled, 'The generated <option> should be disabled');
+  }
+);
+
+QUnit.test(
   'existing selections are respected on initialization',
   function (assert) {
     var $select = $(
