@@ -349,16 +349,51 @@ define([
     var elementClosest = $element.closest('[lang]');
     var parentLanguage = elementClosest[0] ? elementClosest[0].lang : null;
 
-    // An explicit `language` option is the most intentional signal, so it
-    // takes precedence over the element's own `lang` attribute. See #5995.
-    var languages = Array.prototype.concat.call(
-      this._resolveLanguage(optionLanguage),
-      this._resolveLanguage(elementLanguage),
-      this._resolveLanguage(defaultLanguage),
-      this._resolveLanguage(parentLanguage)
-    );
+    // Split language sources into object overrides (custom messages defined
+    // inline) and string language codes (files to load). Object overrides
+    // take precedence over all string language codes, regardless of source,
+    // since they define messages directly rather than loading a translation
+    // file. Within each group, the existing develop precedence order is
+    // preserved: element [lang] > option > defaults > inherited [lang].
+    var objectLanguages = [];
+    var stringLanguages = [];
 
-    options.language = languages;
+    var collectObjects = function (language) {
+      var resolved = this._resolveLanguage(language);
+
+      for (var i = 0; i < resolved.length; i++) {
+        var item = resolved[i];
+
+        if (typeof item === 'object' && item !== null) {
+          objectLanguages.push(item);
+        }
+      }
+    };
+
+    var collectStrings = function (language) {
+      var resolved = this._resolveLanguage(language);
+
+      for (var i = 0; i < resolved.length; i++) {
+        var item = resolved[i];
+
+        if (!(typeof item === 'object' && item !== null)) {
+          stringLanguages.push(item);
+        }
+      }
+    };
+
+    // Object overrides take precedence over all string language codes.
+    collectObjects.call(this, optionLanguage);
+    collectObjects.call(this, defaultLanguage);
+
+    // String language codes, in existing develop precedence order:
+    // element [lang] > option > defaults > inherited [lang].
+    collectStrings.call(this, elementLanguage);
+    collectStrings.call(this, optionLanguage);
+    collectStrings.call(this, defaultLanguage);
+    collectStrings.call(this, parentLanguage);
+
+    options.language = objectLanguages.concat(stringLanguages);
 
     return options;
   };
@@ -372,7 +407,11 @@ define([
       return [];
     }
 
-    if ($.isPlainObject(language)) {
+    if (
+      typeof language === 'object' &&
+      language !== null &&
+      !Array.isArray(language)
+    ) {
       return [language];
     }
 
@@ -432,7 +471,7 @@ define([
             }
           }
         }
-      } else if ($.isPlainObject(language)) {
+      } else if (typeof language === 'object' && language !== null) {
         languageData = new Translation(language);
       } else {
         languageData = language;
