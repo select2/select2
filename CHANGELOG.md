@@ -15,6 +15,7 @@
 - Remove only the last choice when pressing Backspace in a multiple select with `allowClear` enabled (#3335, #6485)
 - Do not select a result when `selectOnClose` closes a disabled dropdown (#6486)
 - Show an error message when an AJAX request times out instead of staying on "Searching..." (#6476)
+- Object `language` values now take precedence over string language codes when resolving translations (#6451)
 
 ## 4.1.1
 
