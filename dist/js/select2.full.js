@@ -3761,7 +3761,14 @@ S2.define('select2/data/ajax',['./array', '../utils', 'jquery'], function (Array
         var $request = $.ajax(params);
 
         $request.then(success);
-        $request.fail(failure);
+        $request.fail(function (jqXHR, textStatus) {
+          // Normalize jQuery's failure arguments so `failure` is always
+          // called with just the text status string. Per jQuery, the only
+          // accepted values for `status` are: 'error', 'abort', 'timeout',
+          // 'parseerror'. This keeps the contract independent of jqXHR
+          // internals so it survives the eventual removal of jQuery.
+          failure(textStatus);
+        });
 
         return $request;
       }
@@ -3772,6 +3779,21 @@ S2.define('select2/data/ajax',['./array', '../utils', 'jquery'], function (Array
 
   AjaxAdapter.prototype.processResults = function (results) {
     return results;
+  };
+
+  AjaxAdapter.prototype._requestStatusToTextStatus = function ($request) {
+    // Map jqXHR status to the equivalent textStatus string for backwards
+    // compatibility with older transports that don't report a reason string.
+    // Old behaviour treated any status-0 request as a silent abort.
+    if (
+      $request &&
+      'status' in $request &&
+      ($request.status === 0 || $request.status === '0')
+    ) {
+      return 'abort';
+    }
+
+    return null;
   };
 
   AjaxAdapter.prototype.query = function (params, callback) {
@@ -3824,14 +3846,19 @@ S2.define('select2/data/ajax',['./array', '../utils', 'jquery'], function (Array
 
           callback(results);
         },
-        function () {
-          // Attempt to detect if a request was aborted
-          // Only works if the transport exposes a status property
-          if (
-            $request &&
-            'status' in $request &&
-            ($request.status === 0 || $request.status === '0')
-          ) {
+        function (textStatus) {
+          // The transport reports the failure reason as `textStatus`. Per
+          // jQuery, the only accepted values for `status` are: 'error',
+          // 'abort', 'timeout', 'parseerror'. Checking the type keeps the
+          // core logic independent of jqXHR internals so it survives the
+          // eventual removal of jQuery.
+          if (typeof textStatus !== 'string') {
+            textStatus = self._requestStatusToTextStatus($request);
+          }
+
+          // Only an aborted request stays silent; every other failure
+          // (including timeouts) should show the error message.
+          if (textStatus === 'abort') {
             return;
           }
 
