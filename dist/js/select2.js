@@ -1133,6 +1133,8 @@ S2.define('select2/results',['jquery', './utils'], function ($, Utils) {
         self.setClasses();
         self.highlightFirstItem();
       }
+
+      self._queryInProgress = false;
     });
 
     container.on('results:append', function (params) {
@@ -1146,6 +1148,8 @@ S2.define('select2/results',['jquery', './utils'], function ($, Utils) {
     container.on('query', function (params) {
       self.hideMessages();
       self.showLoading(params);
+
+      self._queryInProgress = true;
     });
 
     container.on('select', function () {
@@ -1202,6 +1206,11 @@ S2.define('select2/results',['jquery', './utils'], function ($, Utils) {
       var $highlighted = self.getHighlightedResults();
 
       if ($highlighted.length === 0) {
+        return;
+      }
+
+      // Don't select stale results while an AJAX request is in flight.
+      if (self._queryInProgress) {
         return;
       }
 
