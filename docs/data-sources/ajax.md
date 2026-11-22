@@ -187,7 +187,7 @@ $('#mySelect2').select2({
         transport: function(params, success, failure) {
             var request = new AjaxRequest(params.url, params);
             request.on('success', success);
-            request.on('failure', function (textStatus) {
+            request.on('failure', function(textStatus) {
                 failure(textStatus);
             });
         }
@@ -267,10 +267,10 @@ ajax: {
         var $request = $.ajax(params);
 
         $request.then(success);
-        $request.fail(function (jqXHR, textStatus) {
-          // Normalize jQuery's failure arguments so `failure` is always
-          // called with just the text status string.
-          failure(textStatus);
+        $request.fail(function(jqXHR, textStatus) {
+            // Normalize jQuery's failure arguments so `failure` is always
+            // called with just the text status string.
+            failure(textStatus);
         });
 
         return $request;
