@@ -477,9 +477,7 @@ QUnit.test(
 
     // Simulate results from a previous search being present
     results.append({
-      results: [
-        { id: 'test', text: 'Test' }
-      ]
+      results: [{ id: 'test', text: 'Test' }]
     });
 
     var $options = results.$results.find(
@@ -500,17 +498,13 @@ QUnit.test(
     // The AJAX response arrives
     container.trigger('results:all', {
       data: {
-        results: [
-          { id: 'test', text: 'Test' }
-        ]
+        results: [{ id: 'test', text: 'Test' }]
       }
     });
 
     selectTriggered = false;
 
-    $options = results.$results.find(
-      '.select2-results__option--selectable'
-    );
+    $options = results.$results.find('.select2-results__option--selectable');
     $options.eq(0).trigger('mouseenter');
 
     container.trigger('results:select', {});
