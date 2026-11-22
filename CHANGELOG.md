@@ -12,6 +12,7 @@
 - Fix disabled state of optgroup children when using data arrays (#6422)
 - Escape `String` objects consistently in template rendering (#6311)
 - Remove only the last choice when pressing Backspace in a multiple select with `allowClear` enabled (#3335, #6485)
+- Do not select a result when `selectOnClose` closes a disabled dropdown (#6486)
 
 ## 4.1.1
 
