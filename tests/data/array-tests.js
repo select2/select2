@@ -372,10 +372,7 @@ QUnit.test(
       'The child data should reference the generated <option>'
     );
 
-    assert.ok(
-      child.disabled,
-      'The generated <option> should be disabled'
-    );
+    assert.ok(child.disabled, 'The generated <option> should be disabled');
   }
 );
 
@@ -402,7 +399,10 @@ QUnit.test(
     var child = $group.find('option')[0];
     var groupData = data.item($group);
 
-    assert.ok(groupData.children[0].disabled, 'The child data should be disabled');
+    assert.ok(
+      groupData.children[0].disabled,
+      'The child data should be disabled'
+    );
     assert.ok(child.disabled, 'The generated <option> should be disabled');
   }
 );
@@ -444,10 +444,7 @@ QUnit.test(
       'The child data should reference the generated <option>'
     );
 
-    assert.ok(
-      child.disabled,
-      'The generated <option> should be disabled'
-    );
+    assert.ok(child.disabled, 'The generated <option> should be disabled');
   }
 );
 
