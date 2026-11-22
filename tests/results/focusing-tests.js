@@ -469,6 +469,13 @@ QUnit.test(
 
     results.bind(container, $container);
 
+    // Mirror the results:focus handler from production (it lives on
+    // `container` in bind(), but the event is triggered on `results`)
+    results.on('results:focus', function (params) {
+      params.element[0].classList.add('select2-results__option--highlighted');
+      params.element[0].setAttribute('aria-selected', 'true');
+    });
+
     var selectTriggered = false;
 
     results.on('select', function () {
