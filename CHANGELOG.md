@@ -5,6 +5,7 @@
 ### New features / improvements
 
 - Allow `templateSelection` to return trusted HTML nodes, matching `templateResult` behavior (#6311)
+- Allow transports to report AJAX failure reasons as a text status string (e.g. `'timeout'`, `'abort'`, `'error'`, `'parseerror'`), decoupling the failure contract from jqXHR internals (#6476)
 
 ### Bug fixes
 
@@ -13,6 +14,7 @@
 - Escape `String` objects consistently in template rendering (#6311)
 - Remove only the last choice when pressing Backspace in a multiple select with `allowClear` enabled (#3335, #6485)
 - Do not select a result when `selectOnClose` closes a disabled dropdown (#6486)
+- Show an error message when an AJAX request times out instead of staying on "Searching..." (#6476)
 
 ## 4.1.1
 

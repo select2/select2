@@ -102,3 +102,135 @@ QUnit.test(
     });
   }
 );
+
+QUnit.test(
+  'query displays an error message when the request times out',
+  function (assert) {
+    var done = assert.async();
+
+    var AjaxData = require('select2/data/ajax');
+    var Options = require('select2/options');
+    var $ = require('jquery');
+
+    var $select = $('#qunit-fixture .single-empty');
+
+    var messages = [];
+
+    var options = new Options({
+      ajax: {
+        transport: function (params, success, failure) {
+          window.setTimeout(function () {
+            failure('timeout');
+
+            assert.deepEqual(
+              messages,
+              ['errorLoading'],
+              'A timed out request should display the error message'
+            );
+
+            done();
+          }, 0);
+
+          return {};
+        }
+      }
+    });
+
+    var data = new AjaxData($select, options);
+
+    data.on('results:message', function (params) {
+      messages.push(params.message);
+    });
+
+    data.query({}, function () {});
+  }
+);
+
+QUnit.test(
+  'query does not display an error message when the request is aborted',
+  function (assert) {
+    var AjaxData = require('select2/data/ajax');
+    var Options = require('select2/options');
+    var $ = require('jquery');
+
+    var $select = $('#qunit-fixture .single-empty');
+
+    var messages = [];
+
+    var options = new Options({
+      ajax: {
+        transport: function (params, success, failure) {
+          var $request = {
+            abort: function () {
+              $request.status = 0;
+              failure();
+            }
+          };
+
+          return $request;
+        }
+      }
+    });
+
+    var data = new AjaxData($select, options);
+
+    data.on('results:message', function (params) {
+      messages.push(params.message);
+    });
+
+    data.query({ term: 'a' }, function () {});
+
+    // The second query aborts the pending first request
+    data.query({ term: 'ab' }, function () {});
+
+    assert.deepEqual(
+      messages,
+      [],
+      'An aborted request should not display the error message'
+    );
+  }
+);
+
+QUnit.test(
+  'query does not display an error message when the request is aborted via textStatus',
+  function (assert) {
+    var AjaxData = require('select2/data/ajax');
+    var Options = require('select2/options');
+    var $ = require('jquery');
+
+    var $select = $('#qunit-fixture .single-empty');
+
+    var messages = [];
+
+    var options = new Options({
+      ajax: {
+        transport: function (params, success, failure) {
+          var $request = {
+            abort: function () {
+              failure('abort');
+            }
+          };
+
+          return $request;
+        }
+      }
+    });
+
+    var data = new AjaxData($select, options);
+
+    data.on('results:message', function (params) {
+      messages.push(params.message);
+    });
+
+    data.query({ term: 'a' }, function () {});
+
+    // The second query aborts the pending first request
+    data.query({ term: 'ab' }, function () {});
+
+    assert.deepEqual(
+      messages,
+      [],
+      'An aborted request should not display the error message'
+    );
+  }
+);
