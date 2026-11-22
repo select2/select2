@@ -4851,6 +4851,10 @@ S2.define('select2/dropdown/selectOnClose',['../utils'], function (Utils) {
   };
 
   SelectOnClose.prototype._handleSelectOnClose = function (_, params) {
+    if (this.options.get('disabled')) {
+      return;
+    }
+
     if (params && params.originalSelect2Event != null) {
       var event = params.originalSelect2Event;
 
