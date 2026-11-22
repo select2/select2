@@ -11,6 +11,7 @@
 - Disable Select2 when the original select is inside a disabled fieldset (#6482)
 - Fix disabled state of optgroup children when using data arrays (#6422)
 - Escape `String` objects consistently in template rendering (#6311)
+- Remove only the last choice when pressing Backspace in a multiple select with `allowClear` enabled (#3335, #6485)
 
 ## 4.1.1
 
