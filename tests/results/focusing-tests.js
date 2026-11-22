@@ -436,3 +436,88 @@ QUnit.test(
     });
   }
 );
+
+QUnit.test(
+  'results:select is blocked while an AJAX query is in progress',
+  function (assert) {
+    assert.expect(2);
+
+    var $ = require('jquery');
+
+    var $select = $('<select></select>');
+    var $parent = $('<div></div>');
+
+    var $container = $('<span></span>');
+    var container = new MockContainer();
+
+    $parent.appendTo($('#qunit-fixture'));
+    $select.appendTo($parent);
+
+    var Utils = require('select2/utils');
+    var Options = require('select2/options');
+
+    var Results = require('select2/results');
+
+    var results = new Results($select, new Options({}));
+
+    results.data = {};
+    results.data.current = function (callback) {
+      callback([]);
+    };
+
+    results.render();
+
+    results.bind(container, $container);
+
+    var selectTriggered = false;
+
+    results.on('select', function () {
+      selectTriggered = true;
+    });
+
+    // Simulate results from a previous search being present
+    results.append({
+      results: [
+        { id: 'test', text: 'Test' }
+      ]
+    });
+
+    var $options = results.$results.find(
+      '.select2-results__option--selectable'
+    );
+    $options.eq(0).trigger('mouseenter');
+
+    // A new AJAX query has started but not yet completed
+    container.trigger('query', {});
+
+    container.trigger('results:select', {});
+
+    assert.notOk(
+      selectTriggered,
+      'Selection should be blocked while a query is in progress'
+    );
+
+    // The AJAX response arrives
+    container.trigger('results:all', {
+      data: {
+        results: [
+          { id: 'test', text: 'Test' }
+        ]
+      }
+    });
+
+    selectTriggered = false;
+
+    $options = results.$results.find(
+      '.select2-results__option--selectable'
+    );
+    $options.eq(0).trigger('mouseenter');
+
+    container.trigger('results:select', {});
+
+    assert.ok(
+      selectTriggered,
+      'Selection should work once the query has completed'
+    );
+  }
+);
