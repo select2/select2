@@ -422,3 +422,91 @@ QUnit.test('backspace in the search removes one choice', function (assert) {
 
   $select.select2('destroy');
 });
+
+QUnit.test(
+  'backspace in the search does not clear choices when searching',
+  function (assert) {
+    require('jquery.select2');
+    var KEYS = require('select2/keys');
+
+    var $select = $(
+      '<select multiple>' +
+        '<option value="one" selected>One</option>' +
+        '<option value="two" selected>Two</option>' +
+        '</select>'
+    );
+
+    $('#qunit-fixture').append($select);
+
+    $select.select2({ allowClear: true, placeholder: 'Select' });
+
+    var $search = $select.next().find('.select2-search__field');
+    $search.val('o');
+    $search.trigger($.Event('keydown', { which: KEYS.BACKSPACE }));
+
+    assert.deepEqual(
+      $select.val(),
+      ['one', 'two'],
+      'Backspacing text does not clear the selected choices'
+    );
+
+    $select.select2('destroy');
+  }
+);
+
+QUnit.test(
+  'backspace outside the search still clears all choices',
+  function (assert) {
+    require('jquery.select2');
+    var KEYS = require('select2/keys');
+
+    var $select = $(
+      '<select multiple>' +
+        '<option value="one" selected>One</option>' +
+        '<option value="two" selected>Two</option>' +
+        '</select>'
+    );
+
+    $('#qunit-fixture').append($select);
+
+    $select.select2({ allowClear: true, placeholder: 'Select' });
+
+    var $selection = $select.next().find('.select2-selection');
+    $selection.trigger($.Event('keydown', { which: KEYS.BACKSPACE }));
+
+    assert.equal(
+      ($select.val() || []).length,
+      0,
+      'Backspace outside the search clears all choices'
+    );
+
+    $select.select2('destroy');
+  }
+);
+
+QUnit.test('delete in the search clears all choices', function (assert) {
+  require('jquery.select2');
+  var KEYS = require('select2/keys');
+
+  var $select = $(
+    '<select multiple>' +
+      '<option value="one" selected>One</option>' +
+      '<option value="two" selected>Two</option>' +
+      '</select>'
+  );
+
+  $('#qunit-fixture').append($select);
+
+  $select.select2({ allowClear: true, placeholder: 'Select' });
+
+  var $search = $select.next().find('.select2-search__field');
+  $search.trigger($.Event('keydown', { which: KEYS.DELETE }));
+
+  assert.equal(
+    ($select.val() || []).length,
+    0,
+    'Delete still clears all choices from the search'
+  );
+
+  $select.select2('destroy');
+});
