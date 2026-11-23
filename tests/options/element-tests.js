@@ -147,16 +147,19 @@ QUnit.test('copies dir attribute when set on the element', function (assert) {
   assert.equal(options.get('dir'), 'rtl');
 });
 
-QUnit.test('inherits dir from a closest ancestor when unset', function (assert) {
-  var $parent = $('<div dir="rtl"></div>');
-  var $test = $('<select></select>');
+QUnit.test(
+  'inherits dir from a closest ancestor when unset',
+  function (assert) {
+    var $parent = $('<div dir="rtl"></div>');
+    var $test = $('<select></select>');
 
-  $parent.append($test);
+    $parent.append($test);
 
-  var options = new Options({}, $test);
+    var options = new Options({}, $test);
 
-  assert.equal(options.get('dir'), 'rtl');
-});
+    assert.equal(options.get('dir'), 'rtl');
+  }
+);
 
 QUnit.test('defaults dir to ltr when no ancestor has dir', function (assert) {
   var $test = $('<select></select>');
@@ -166,12 +169,18 @@ QUnit.test('defaults dir to ltr when no ancestor has dir', function (assert) {
   assert.equal(options.get('dir'), 'ltr');
 });
 
-QUnit.test('does not crash when dir option is null and no ancestor has dir', function (assert) {
-  var $test = $('<select></select>');
+QUnit.test(
+  'does not crash when dir option is null and no ancestor has dir',
+  function (assert) {
+    var $test = $('<select></select>');
 
-  var options = new Options({
-    dir: null
-  }, $test);
+    var options = new Options(
+      {
+        dir: null
+      },
+      $test
+    );
 
-  assert.equal(options.get('dir'), 'ltr');
-});
+    assert.equal(options.get('dir'), 'ltr');
+  }
+);
