@@ -19,6 +19,7 @@
 - Object `language` values now take precedence over string language codes when resolving translations (#6451)
 - Prevent selecting stale results from a previous search while an AJAX query is in flight (#4854, #6499)
 - Guard `closest` dir lookup when no ancestor has a `dir` attribute (#6441)
+- Fix duplicate search queries when Korean IME input events fire on arrow keys or Enter (#6295)
 
 ## 4.1.1
 
