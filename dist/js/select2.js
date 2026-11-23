@@ -1540,7 +1540,12 @@ S2.define('select2/selection/base',['jquery', '../utils', '../keys'], function (
       self.$selection[0].removeAttribute('aria-activedescendant');
       self.$selection[0].removeAttribute('aria-owns');
 
-      self.$selection.trigger('focus');
+      // Don't scroll the page back to the selection
+      self.$selection[0].focus({ preventScroll: true });
+
+      // Restore focus state (container--focus class + focus event)
+      // without scrolling
+      self.trigger('focus', {});
 
       self._detachCloseHandler(container);
     });
@@ -2149,7 +2154,9 @@ S2.define('select2/selection/search',['jquery', '../utils', '../keys'], function
       self.resizeSearch();
       self.$search[0].removeAttribute('aria-controls');
       self.$search[0].removeAttribute('aria-activedescendant');
-      self.$search.trigger('focus');
+
+      // Don't scroll the page back to the search
+      self.$search[0].focus({ preventScroll: true });
     });
 
     container.on('enable', function () {
