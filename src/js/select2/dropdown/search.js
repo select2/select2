@@ -68,7 +68,7 @@ define(['jquery'], function ($) {
         self.handleSearch(evt);
       }
     });
-    
+
     container.on('open', function () {
       self.$search[0].setAttribute('tabindex', 0);
       self.$search[0].setAttribute('aria-controls', resultsId);
