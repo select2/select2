@@ -155,6 +155,10 @@ gh release edit X.Y.Z --draft=false
 
 - All Grunt invocations in CI and release workflows should use `npx grunt`
     so Grunt resolves correctly on newer runners.
+- After rebasing the release branch onto an updated `develop`, verify that
+    all `dist/` files (especially minified `.min.js` and `.min.css`)
+    contain the new version. During conflict resolution, `git checkout   --ours` refers to the base branch, not the release branch, so it may
+    restore stale versions of the minified bundles.
 - The Markdown files in `docs/` and the changelog are formatted with
     `mdformat`; JavaScript/JSON/CSS files are formatted with Biome. The
     Biome hook excludes Markdown files to avoid conflicting with `mdformat`.
