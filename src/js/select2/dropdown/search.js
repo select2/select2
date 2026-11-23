@@ -30,6 +30,11 @@ define(['jquery'], function ($) {
 
     var resultsId = container.id + '-results';
 
+    // Track the last searched value to avoid duplicate queries when the input
+    // event fires without the value changing (e.g. Korean IME input on arrow
+    // keys or enter).
+    var preTargetValue;
+
     decorated.call(this, container, $container);
 
     // Keep this ID distinct from an inline search in the same control.
@@ -51,15 +56,15 @@ define(['jquery'], function ($) {
 
     this.$search.on('keyup input', function (evt) {
       // Set the current input value to an empty string if the previous value is undefined.
-      self.preTargetValue = self.preTargetValue === undefined ? "" : self.preTargetValue;
+      if (preTargetValue === undefined) {
+        preTargetValue = '';
+      }
 
       // In the case of Korean characters, the 'input' event can occur even when
-      // arrow keys or enter keys are pressed. Therefore, prevent additional actions
-      // and avoid duplicate searches if the value has not changed.
-      if (self.preTargetValue === evt.target.value) {
-        evt.preventDefault();
-      } else {
-        self.preTargetValue = evt.target.value;
+      // arrow keys or enter keys are pressed. Only search if the value has changed
+      // to avoid duplicate searches.
+      if (preTargetValue !== evt.target.value) {
+        preTargetValue = evt.target.value;
         self.handleSearch(evt);
       }
     });
