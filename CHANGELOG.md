@@ -18,6 +18,7 @@
 - Show an error message when an AJAX request times out instead of staying on "Searching..." (#6476)
 - Object `language` values now take precedence over string language codes when resolving translations (#6451)
 - Prevent selecting stale results from a previous search while an AJAX query is in flight (#4854, #6499)
+- Guard `closest` dir lookup when no ancestor has a `dir` attribute (#6441)
 
 ## 4.1.1
 
