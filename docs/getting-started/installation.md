@@ -7,8 +7,8 @@ A CDN (content delivery network) is the fastest way to get up and running with S
 Select2 is hosted on both the [jsDelivr](https://www.jsdelivr.com/package/npm/select2) and [cdnjs](https://cdnjs.com/libraries/select2) CDNs. Simply include the following lines of code in the `<head>` section of your page:
 
 ```html
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.1/dist/css/select2.min.css" rel="stylesheet"/>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.1/dist/js/select2.min.js">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.2.0/dist/css/select2.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.2.0/dist/js/select2.min.js">
 </script>
 ```
 
