@@ -21,6 +21,10 @@
 - Guard `closest` dir lookup when no ancestor has a `dir` attribute (#6441)
 - Fix duplicate search queries when Korean IME input events fire on arrow keys or Enter (#6295)
 
+### Translations
+
+- Add Norwegian Nynorsk translation (`nn`) (#6501)
+
 ## 4.1.1
 
 ### Bug fixes
