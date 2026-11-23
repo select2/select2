@@ -76,9 +76,8 @@ define(['jquery', './base', '../utils'], function ($, BaseSelection, Utils) {
 
   MultipleSelection.prototype.display = function (data, container) {
     var template = this.options.get('templateSelection');
-    var escapeMarkup = this.options.get('escapeMarkup');
 
-    return escapeMarkup(template(data, container));
+    return template(data, container);
   };
 
   MultipleSelection.prototype.selectionContainer = function () {
@@ -123,10 +122,13 @@ define(['jquery', './base', '../utils'], function ($, BaseSelection, Utils) {
         selectionId += Utils.generateChars(4);
       }
 
-      $selection
-        .find('.select2-selection__choice__display')
-        .append(formatted)[0]
-        .setAttribute('id', selectionId);
+      var $display = $selection.find('.select2-selection__choice__display');
+      Utils.appendContent(
+        $display[0],
+        formatted,
+        this.options.get('escapeMarkup')
+      );
+      $display[0].setAttribute('id', selectionId);
 
       var title = selection.title || selection.text;
 

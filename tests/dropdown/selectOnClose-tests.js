@@ -142,3 +142,30 @@ QUnit.test('will trigger if there is a highlighted result', function (assert) {
 
   container.trigger('close');
 });
+
+QUnit.test('does not select when disabled', function (assert) {
+  var selected = 0;
+  var select = new ModifiedResults(
+    $('<select></select>'),
+    options,
+    new SelectData($('<select></select>'))
+  );
+  var $dropdown = select.render();
+  var container = new MockContainer();
+  select.bind(container, $('<div></div>'));
+
+  select.on('select', function () {
+    selected++;
+  });
+
+  select.options.set('disabled', true);
+
+  select.append({
+    results: [{ id: '1', text: 'Test' }]
+  });
+  $dropdown.find('li').addClass('select2-results__option--highlighted');
+
+  container.trigger('close');
+
+  assert.strictEqual(selected, 0, 'No selection when disabled');
+});

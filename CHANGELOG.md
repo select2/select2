@@ -1,5 +1,30 @@
 # Change Log
 
+## 4.2.0
+
+### New features / improvements
+
+- Allow `templateSelection` to return trusted HTML nodes, matching `templateResult` behavior (#6311)
+- Allow transports to report AJAX failure reasons as a text status string (e.g. `'timeout'`, `'abort'`, `'error'`, `'parseerror'`), decoupling the failure contract from jqXHR internals (#6476)
+
+### Bug fixes
+
+- Disable Select2 when the original select is inside a disabled fieldset (#6482)
+- Fix disabled state of optgroup children when using data arrays (#6422)
+- Escape `String` objects consistently in template rendering (#6311)
+- Remove only the last choice when pressing Backspace in a multiple select with `allowClear` enabled (#3335, #6485)
+- Do not select a result when `selectOnClose` closes a disabled dropdown (#6486)
+- Closing the container no longer forces the page to scroll (#6483)
+- Show an error message when an AJAX request times out instead of staying on "Searching..." (#6476)
+- Object `language` values now take precedence over string language codes when resolving translations (#6451)
+- Prevent selecting stale results from a previous search while an AJAX query is in flight (#4854, #6499)
+- Guard `closest` dir lookup when no ancestor has a `dir` attribute (#6441)
+- Fix duplicate search queries when Korean IME input events fire on arrow keys or Enter (#6295)
+
+### Translations
+
+- Add Norwegian Nynorsk translation (`nn`) (#6501)
+
 ## 4.1.1
 
 ### Bug fixes

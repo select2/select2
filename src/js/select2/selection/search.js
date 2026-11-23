@@ -52,7 +52,9 @@ define(['jquery', '../utils', '../keys'], function ($, Utils, KEYS) {
       self.resizeSearch();
       self.$search[0].removeAttribute('aria-controls');
       self.$search[0].removeAttribute('aria-activedescendant');
-      self.$search.trigger('focus');
+
+      // Don't scroll the page back to the search
+      self.$search[0].focus({ preventScroll: true });
     });
 
     container.on('enable', function () {
@@ -91,11 +93,15 @@ define(['jquery', '../utils', '../keys'], function ($, Utils, KEYS) {
     this.$selection.on('keydown', '.select2-search--inline', function (evt) {
       evt.stopPropagation();
 
-      self.trigger('keypress', evt);
+      var key = evt.which;
+
+      // The inline search owns Backspace: it either edits the query or removes
+      // the last choice, so it must not reach allowClear's keyboard clear.
+      if (key !== KEYS.BACKSPACE) {
+        self.trigger('keypress', evt);
+      }
 
       self._keyUpPrevented = evt.isDefaultPrevented();
-
-      var key = evt.which;
 
       if (key === KEYS.BACKSPACE && self.$search.val() === '') {
         var $previousChoice = self.$selection

@@ -218,3 +218,65 @@ QUnit.test('escapeMarkup is being used', function (assert) {
     'The text should be escaped by default to prevent injection'
   );
 });
+
+QUnit.test('templateSelection can return HTML', function (assert) {
+  var templateOptions = new Options({
+    templateSelection: function (data) {
+      return $('<strong>' + data.text + '</strong>');
+    }
+  });
+
+  var selection = new SingleSelection(
+    $('#qunit-fixture .single'),
+    templateOptions
+  );
+
+  var $selection = selection.render();
+  var $rendered = $selection.find('.select2-selection__rendered');
+
+  selection.update([
+    {
+      text: 'test'
+    }
+  ]);
+
+  assert.equal(
+    $rendered.find('strong').length,
+    1,
+    'The HTML should be rendered'
+  );
+  assert.equal($rendered.text(), 'test', 'The text should be preserved');
+});
+
+QUnit.test('templateSelection escapes String objects', function (assert) {
+  var templateOptions = new Options({
+    templateSelection: function (data) {
+      return new String('<strong>' + data.text + '</strong>'); // jshint ignore:line
+    }
+  });
+
+  var selection = new SingleSelection(
+    $('#qunit-fixture .single'),
+    templateOptions
+  );
+
+  var $selection = selection.render();
+  var $rendered = $selection.find('.select2-selection__rendered');
+
+  selection.update([
+    {
+      text: 'test'
+    }
+  ]);
+
+  assert.equal(
+    $rendered.find('strong').length,
+    0,
+    'The HTML should be escaped'
+  );
+  assert.equal(
+    $rendered.text(),
+    '<strong>test</strong>',
+    'The text should be preserved'
+  );
+});

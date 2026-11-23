@@ -209,6 +209,66 @@ QUnit.test('escapeMarkup is being used', function (assert) {
   );
 });
 
+QUnit.test('templateSelection can return HTML', function (assert) {
+  var templateOptions = new Options({
+    templateSelection: function (data) {
+      return $('<strong>' + data.text + '</strong>');
+    }
+  });
+
+  var selection = new MultipleSelection(
+    $('#qunit-fixture .multiple'),
+    templateOptions
+  );
+
+  var $selection = selection.render();
+
+  selection.update([
+    {
+      text: 'test'
+    }
+  ]);
+
+  var $display = $selection.find('.select2-selection__choice__display');
+
+  assert.equal(
+    $display.find('strong').length,
+    1,
+    'The HTML should be rendered'
+  );
+  assert.equal($display.text(), 'test', 'The text should be preserved');
+});
+
+QUnit.test('templateSelection escapes String objects', function (assert) {
+  var templateOptions = new Options({
+    templateSelection: function (data) {
+      return new String('<strong>' + data.text + '</strong>'); // jshint ignore:line
+    }
+  });
+
+  var selection = new MultipleSelection(
+    $('#qunit-fixture .multiple'),
+    templateOptions
+  );
+
+  var $selection = selection.render();
+
+  selection.update([
+    {
+      text: 'test'
+    }
+  ]);
+
+  var $display = $selection.find('.select2-selection__choice__display');
+
+  assert.equal($display.find('strong').length, 0, 'The HTML should be escaped');
+  assert.equal(
+    $display.text(),
+    '<strong>test</strong>',
+    'The text should be preserved'
+  );
+});
+
 QUnit.test('clear button respects the disabled state', function (assert) {
   var options = new Options({
     disabled: true

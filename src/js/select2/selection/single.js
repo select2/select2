@@ -75,9 +75,8 @@ define(['jquery', './base', '../utils', '../keys'], function (
 
   SingleSelection.prototype.display = function (data, container) {
     var template = this.options.get('templateSelection');
-    var escapeMarkup = this.options.get('escapeMarkup');
 
-    return escapeMarkup(template(data, container));
+    return template(data, container);
   };
 
   SingleSelection.prototype.selectionContainer = function () {
@@ -95,7 +94,12 @@ define(['jquery', './base', '../utils', '../keys'], function (
     var $rendered = this.$selection.find('.select2-selection__rendered');
     var formatted = this.display(selection, $rendered);
 
-    $rendered.empty().append(formatted);
+    $rendered.empty();
+    Utils.appendContent(
+      $rendered[0],
+      formatted,
+      this.options.get('escapeMarkup')
+    );
 
     var title = selection.title || selection.text;
 

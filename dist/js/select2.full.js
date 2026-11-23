@@ -1,5 +1,5 @@
 /*!
- * Select2 4.1.1
+ * Select2 4.2.0
  * https://select2.org
  *
  * Released under the MIT license
@@ -499,7 +499,7 @@ S2.define('jquery',[],function () {
   return _$;
 });
 
-S2.define('select2/utils',[], function () {
+S2.define('select2/utils',['jquery'], function ($) {
   var Utils = {};
 
   Utils.Extend = function (ChildClass, SuperClass) {
@@ -754,13 +754,21 @@ S2.define('select2/utils',[], function () {
     };
 
     // Do not try to escape the markup if it's not a string
-    if (typeof markup !== 'string') {
+    if (typeof markup !== 'string' && !(markup instanceof String)) {
       return markup;
     }
 
     return String(markup).replace(/[&<>"'\/\\]/g, function (match) {
       return replaceMap[match];
     });
+  };
+
+  Utils.appendContent = function (container, content, escapeMarkup) {
+    if (typeof content === 'string' || content instanceof String) {
+      container.innerHTML = escapeMarkup(content);
+    } else {
+      $(container).append(content);
+    }
   };
 
   // Cache objects in Utils.__cache instead of $.data (see #4346)
@@ -1125,6 +1133,8 @@ S2.define('select2/results',['jquery', './utils'], function ($, Utils) {
         self.setClasses();
         self.highlightFirstItem();
       }
+
+      self._queryInProgress = false;
     });
 
     container.on('results:append', function (params) {
@@ -1138,6 +1148,8 @@ S2.define('select2/results',['jquery', './utils'], function ($, Utils) {
     container.on('query', function (params) {
       self.hideMessages();
       self.showLoading(params);
+
+      self._queryInProgress = true;
     });
 
     container.on('select', function () {
@@ -1194,6 +1206,11 @@ S2.define('select2/results',['jquery', './utils'], function ($, Utils) {
       var $highlighted = self.getHighlightedResults();
 
       if ($highlighted.length === 0) {
+        return;
+      }
+
+      // Don't select stale results while an AJAX request is in flight.
+      if (self._queryInProgress) {
         return;
       }
 
@@ -1403,10 +1420,8 @@ S2.define('select2/results',['jquery', './utils'], function ($, Utils) {
 
     if (content == null) {
       container.style.display = 'none';
-    } else if (typeof content === 'string') {
-      container.innerHTML = escapeMarkup(content);
     } else {
-      $(container).append(content);
+      Utils.appendContent(container, content, escapeMarkup);
     }
   };
 
@@ -1525,7 +1540,12 @@ S2.define('select2/selection/base',['jquery', '../utils', '../keys'], function (
       self.$selection[0].removeAttribute('aria-activedescendant');
       self.$selection[0].removeAttribute('aria-owns');
 
-      self.$selection.trigger('focus');
+      // Don't scroll the page back to the selection
+      self.$selection[0].focus({ preventScroll: true });
+
+      // Restore focus state (container--focus class + focus event)
+      // without scrolling
+      self.trigger('focus', {});
 
       self._detachCloseHandler(container);
     });
@@ -1701,9 +1721,8 @@ S2.define('select2/selection/single',['jquery', './base', '../utils', '../keys']
 
   SingleSelection.prototype.display = function (data, container) {
     var template = this.options.get('templateSelection');
-    var escapeMarkup = this.options.get('escapeMarkup');
 
-    return escapeMarkup(template(data, container));
+    return template(data, container);
   };
 
   SingleSelection.prototype.selectionContainer = function () {
@@ -1721,7 +1740,12 @@ S2.define('select2/selection/single',['jquery', './base', '../utils', '../keys']
     var $rendered = this.$selection.find('.select2-selection__rendered');
     var formatted = this.display(selection, $rendered);
 
-    $rendered.empty().append(formatted);
+    $rendered.empty();
+    Utils.appendContent(
+      $rendered[0],
+      formatted,
+      this.options.get('escapeMarkup')
+    );
 
     var title = selection.title || selection.text;
 
@@ -1813,9 +1837,8 @@ S2.define('select2/selection/multiple',['jquery', './base', '../utils'], functio
 
   MultipleSelection.prototype.display = function (data, container) {
     var template = this.options.get('templateSelection');
-    var escapeMarkup = this.options.get('escapeMarkup');
 
-    return escapeMarkup(template(data, container));
+    return template(data, container);
   };
 
   MultipleSelection.prototype.selectionContainer = function () {
@@ -1860,10 +1883,13 @@ S2.define('select2/selection/multiple',['jquery', './base', '../utils'], functio
         selectionId += Utils.generateChars(4);
       }
 
-      $selection
-        .find('.select2-selection__choice__display')
-        .append(formatted)[0]
-        .setAttribute('id', selectionId);
+      var $display = $selection.find('.select2-selection__choice__display');
+      Utils.appendContent(
+        $display[0],
+        formatted,
+        this.options.get('escapeMarkup')
+      );
+      $display[0].setAttribute('id', selectionId);
 
       var title = selection.title || selection.text;
 
@@ -2128,7 +2154,9 @@ S2.define('select2/selection/search',['jquery', '../utils', '../keys'], function
       self.resizeSearch();
       self.$search[0].removeAttribute('aria-controls');
       self.$search[0].removeAttribute('aria-activedescendant');
-      self.$search.trigger('focus');
+
+      // Don't scroll the page back to the search
+      self.$search[0].focus({ preventScroll: true });
     });
 
     container.on('enable', function () {
@@ -2167,11 +2195,15 @@ S2.define('select2/selection/search',['jquery', '../utils', '../keys'], function
     this.$selection.on('keydown', '.select2-search--inline', function (evt) {
       evt.stopPropagation();
 
-      self.trigger('keypress', evt);
+      var key = evt.which;
+
+      // The inline search owns Backspace: it either edits the query or removes
+      // the last choice, so it must not reach allowClear's keyboard clear.
+      if (key !== KEYS.BACKSPACE) {
+        self.trigger('keypress', evt);
+      }
 
       self._keyUpPrevented = evt.isDefaultPrevented();
-
-      var key = evt.which;
 
       if (key === KEYS.BACKSPACE && self.$search.val() === '') {
         var $previousChoice = self.$selection
@@ -3677,6 +3709,10 @@ S2.define('select2/data/array',['./select', '../utils', 'jquery'], function (Sel
       };
     }
 
+    function itemFromOption($option) {
+      return self.item($option);
+    }
+
     for (var d = 0; d < data.length; d++) {
       var item = this._normalizeItem(data[d]);
 
@@ -3700,6 +3736,12 @@ S2.define('select2/data/array',['./select', '../utils', 'jquery'], function (Sel
         var $children = this.convertToOptions(item.children);
 
         $option.append($children);
+
+        var optionData = this.item($option);
+
+        optionData.children = $children.map(itemFromOption);
+
+        Utils.StoreData($option[0], 'data', optionData);
       }
 
       $options.push($option);
@@ -3735,7 +3777,14 @@ S2.define('select2/data/ajax',['./array', '../utils', 'jquery'], function (Array
         var $request = $.ajax(params);
 
         $request.then(success);
-        $request.fail(failure);
+        $request.fail(function (jqXHR, textStatus) {
+          // Normalize jQuery's failure arguments so `failure` is always
+          // called with just the text status string. Per jQuery, the only
+          // accepted values for `status` are: 'error', 'abort', 'timeout',
+          // 'parseerror'. This keeps the contract independent of jqXHR
+          // internals so it survives the eventual removal of jQuery.
+          failure(textStatus);
+        });
 
         return $request;
       }
@@ -3746,6 +3795,21 @@ S2.define('select2/data/ajax',['./array', '../utils', 'jquery'], function (Array
 
   AjaxAdapter.prototype.processResults = function (results) {
     return results;
+  };
+
+  AjaxAdapter.prototype._requestStatusToTextStatus = function ($request) {
+    // Map jqXHR status to the equivalent textStatus string for backwards
+    // compatibility with older transports that don't report a reason string.
+    // Old behaviour treated any status-0 request as a silent abort.
+    if (
+      $request &&
+      'status' in $request &&
+      ($request.status === 0 || $request.status === '0')
+    ) {
+      return 'abort';
+    }
+
+    return null;
   };
 
   AjaxAdapter.prototype.query = function (params, callback) {
@@ -3798,14 +3862,19 @@ S2.define('select2/data/ajax',['./array', '../utils', 'jquery'], function (Array
 
           callback(results);
         },
-        function () {
-          // Attempt to detect if a request was aborted
-          // Only works if the transport exposes a status property
-          if (
-            $request &&
-            'status' in $request &&
-            ($request.status === 0 || $request.status === '0')
-          ) {
+        function (textStatus) {
+          // The transport reports the failure reason as `textStatus`. Per
+          // jQuery, the only accepted values for `status` are: 'error',
+          // 'abort', 'timeout', 'parseerror'. Checking the type keeps the
+          // core logic independent of jqXHR internals so it survives the
+          // eventual removal of jQuery.
+          if (typeof textStatus !== 'string') {
+            textStatus = self._requestStatusToTextStatus($request);
+          }
+
+          // Only an aborted request stays silent; every other failure
+          // (including timeouts) should show the error message.
+          if (textStatus === 'abort') {
             return;
           }
 
@@ -4278,6 +4347,11 @@ S2.define('select2/dropdown/search',['jquery'], function ($) {
 
     var resultsId = container.id + '-results';
 
+    // Track the last searched value to avoid duplicate queries when the input
+    // event fires without the value changing (e.g. Korean IME input on arrow
+    // keys or enter).
+    var preTargetValue;
+
     decorated.call(this, container, $container);
 
     // Keep this ID distinct from an inline search in the same control.
@@ -4298,7 +4372,18 @@ S2.define('select2/dropdown/search',['jquery'], function ($) {
     });
 
     this.$search.on('keyup input', function (evt) {
-      self.handleSearch(evt);
+      // Set the current input value to an empty string if the previous value is undefined.
+      if (preTargetValue === undefined) {
+        preTargetValue = '';
+      }
+
+      // In the case of Korean characters, the 'input' event can occur even when
+      // arrow keys or enter keys are pressed. Only search if the value has changed
+      // to avoid duplicate searches.
+      if (preTargetValue !== evt.target.value) {
+        preTargetValue = evt.target.value;
+        self.handleSearch(evt);
+      }
     });
 
     container.on('open', function () {
@@ -4825,6 +4910,10 @@ S2.define('select2/dropdown/selectOnClose',['../utils'], function (Utils) {
   };
 
   SelectOnClose.prototype._handleSelectOnClose = function (_, params) {
+    if (this.options.get('disabled')) {
+      return;
+    }
+
     if (params && params.originalSelect2Event != null) {
       var event = params.originalSelect2Event;
 
@@ -5357,14 +5446,51 @@ S2.define('select2/defaults',[
     var elementClosest = $element.closest('[lang]');
     var parentLanguage = elementClosest[0] ? elementClosest[0].lang : null;
 
-    var languages = Array.prototype.concat.call(
-      this._resolveLanguage(elementLanguage),
-      this._resolveLanguage(optionLanguage),
-      this._resolveLanguage(defaultLanguage),
-      this._resolveLanguage(parentLanguage)
-    );
+    // Split language sources into object overrides (custom messages defined
+    // inline) and string language codes (files to load). Object overrides
+    // take precedence over all string language codes, regardless of source,
+    // since they define messages directly rather than loading a translation
+    // file. Within each group, the existing develop precedence order is
+    // preserved: element [lang] > option > defaults > inherited [lang].
+    var objectLanguages = [];
+    var stringLanguages = [];
 
-    options.language = languages;
+    var collectObjects = function (language) {
+      var resolved = this._resolveLanguage(language);
+
+      for (var i = 0; i < resolved.length; i++) {
+        var item = resolved[i];
+
+        if (typeof item === 'object' && item !== null) {
+          objectLanguages.push(item);
+        }
+      }
+    };
+
+    var collectStrings = function (language) {
+      var resolved = this._resolveLanguage(language);
+
+      for (var i = 0; i < resolved.length; i++) {
+        var item = resolved[i];
+
+        if (!(typeof item === 'object' && item !== null)) {
+          stringLanguages.push(item);
+        }
+      }
+    };
+
+    // Object overrides take precedence over all string language codes.
+    collectObjects.call(this, optionLanguage);
+    collectObjects.call(this, defaultLanguage);
+
+    // String language codes, in existing develop precedence order:
+    // element [lang] > option > defaults > inherited [lang].
+    collectStrings.call(this, elementLanguage);
+    collectStrings.call(this, optionLanguage);
+    collectStrings.call(this, defaultLanguage);
+    collectStrings.call(this, parentLanguage);
+
+    options.language = objectLanguages.concat(stringLanguages);
 
     return options;
   };
@@ -5378,7 +5504,11 @@ S2.define('select2/defaults',[
       return [];
     }
 
-    if ($.isPlainObject(language)) {
+    if (
+      typeof language === 'object' &&
+      language !== null &&
+      !Array.isArray(language)
+    ) {
       return [language];
     }
 
@@ -5438,7 +5568,7 @@ S2.define('select2/defaults',[
             }
           }
         }
-      } else if ($.isPlainObject(language)) {
+      } else if (typeof language === 'object' && language !== null) {
         languageData = new Translation(language);
       } else {
         languageData = language;
@@ -5499,13 +5629,19 @@ S2.define('select2/options',['jquery', './defaults', './utils'], function ($, De
       this.options.autocomplete = $e[0].autocomplete;
     }
 
-    if (this.options.dir === null) {
+    if (this.options.dir == null) {
       var dirValue = $e[0].getAttribute('dir');
 
       if (dirValue) {
         this.options.dir = dirValue;
       } else {
-        var closestDirValue = $e.closest('[dir]').getAttribute('dir');
+        var $closestDir = $e.closest('[dir]');
+        var closestDirValue;
+        if ($closestDir[0]) {
+          closestDirValue = $closestDir[0].getAttribute('dir');
+        } else {
+          closestDirValue = null;
+        }
 
         if (closestDirValue) {
           this.options.dir = closestDirValue;
@@ -5949,7 +6085,7 @@ S2.define('select2/core',['jquery', './options', './utils', './keys'], function 
   };
 
   Select2.prototype._syncAttributes = function () {
-    this.options.set('disabled', this.$element[0].disabled);
+    this.options.set('disabled', this._isElementDisabled());
 
     if (this.isDisabled()) {
       if (this.isOpen()) {
@@ -5960,6 +6096,19 @@ S2.define('select2/core',['jquery', './options', './utils', './keys'], function 
     } else {
       this.trigger('enable', {});
     }
+  };
+
+  // A disabled fieldset doesn't set the disabled property of its fields
+  Select2.prototype._isElementDisabled = function () {
+    var element = this.$element[0];
+
+    if (element.disabled) {
+      return true;
+    }
+
+    var matches = element.matches || element.msMatchesSelector;
+
+    return matches != null && matches.call(element, ':disabled');
   };
 
   Select2.prototype._isChangeMutation = function (mutations) {

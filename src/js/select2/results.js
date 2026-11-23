@@ -261,6 +261,8 @@ define(['jquery', './utils'], function ($, Utils) {
         self.setClasses();
         self.highlightFirstItem();
       }
+
+      self._queryInProgress = false;
     });
 
     container.on('results:append', function (params) {
@@ -274,6 +276,8 @@ define(['jquery', './utils'], function ($, Utils) {
     container.on('query', function (params) {
       self.hideMessages();
       self.showLoading(params);
+
+      self._queryInProgress = true;
     });
 
     container.on('select', function () {
@@ -330,6 +334,11 @@ define(['jquery', './utils'], function ($, Utils) {
       var $highlighted = self.getHighlightedResults();
 
       if ($highlighted.length === 0) {
+        return;
+      }
+
+      // Don't select stale results while an AJAX request is in flight.
+      if (self._queryInProgress) {
         return;
       }
 
@@ -539,10 +548,8 @@ define(['jquery', './utils'], function ($, Utils) {
 
     if (content == null) {
       container.style.display = 'none';
-    } else if (typeof content === 'string') {
-      container.innerHTML = escapeMarkup(content);
     } else {
-      $(container).append(content);
+      Utils.appendContent(container, content, escapeMarkup);
     }
   };
 
