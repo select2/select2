@@ -2,29 +2,39 @@ QUnit.module('Utils - extend');
 
 var Utils = require('select2/utils');
 
-QUnit.test('Utils.extend merges multiple sources into the target', function (assert) {
-  var target = { a: 1 };
+QUnit.test(
+  'Utils.extend merges multiple sources into the target',
+  function (assert) {
+    var target = { a: 1 };
 
-  var result = Utils.extend(target, { b: 2 }, { c: 3 });
+    var result = Utils.extend(target, { b: 2 }, { c: 3 });
 
-  assert.strictEqual(result, target, 'The target object is returned');
-  assert.deepEqual(target, { a: 1, b: 2, c: 3 }, 'All sources are merged');
-});
+    assert.strictEqual(result, target, 'The target object is returned');
+    assert.deepEqual(target, { a: 1, b: 2, c: 3 }, 'All sources are merged');
+  }
+);
 
-QUnit.test('Utils.extend lets later sources override earlier ones', function (assert) {
-  var target = {};
+QUnit.test(
+  'Utils.extend lets later sources override earlier ones',
+  function (assert) {
+    var target = {};
 
-  Utils.extend(target, { a: 1, b: 1 }, { b: 2, c: 2 }, { c: 3 });
+    Utils.extend(target, { a: 1, b: 1 }, { b: 2, c: 2 }, { c: 3 });
 
-  assert.deepEqual(target, { a: 1, b: 2, c: 3 }, 'Later sources win');
-});
+    assert.deepEqual(target, { a: 1, b: 2, c: 3 }, 'Later sources win');
+  }
+);
 
 QUnit.test('Utils.extend skips null and undefined sources', function (assert) {
   var target = { a: 1 };
 
   Utils.extend(target, null, { b: 2 }, undefined);
 
-  assert.deepEqual(target, { a: 1, b: 2 }, 'Null/undefined sources are skipped');
+  assert.deepEqual(
+    target,
+    { a: 1, b: 2 },
+    'Null/undefined sources are skipped'
+  );
 });
 
 QUnit.test('Utils.extend copies functions by reference', function (assert) {
@@ -52,36 +62,43 @@ QUnit.test(
 
 QUnit.module('Utils - deepExtend');
 
-QUnit.test('Utils.deepExtend merges multiple sources into the target', function (
-  assert
-) {
-  var target = { a: 1 };
+QUnit.test(
+  'Utils.deepExtend merges multiple sources into the target',
+  function (assert) {
+    var target = { a: 1 };
 
-  var result = Utils.deepExtend(target, { b: 2 }, { c: 3 });
+    var result = Utils.deepExtend(target, { b: 2 }, { c: 3 });
 
-  assert.strictEqual(result, target, 'The target object is returned');
-  assert.deepEqual(target, { a: 1, b: 2, c: 3 }, 'All sources are merged');
-});
+    assert.strictEqual(result, target, 'The target object is returned');
+    assert.deepEqual(target, { a: 1, b: 2, c: 3 }, 'All sources are merged');
+  }
+);
 
-QUnit.test('Utils.deepExtend lets later sources override earlier ones', function (
-  assert
-) {
-  var target = {};
+QUnit.test(
+  'Utils.deepExtend lets later sources override earlier ones',
+  function (assert) {
+    var target = {};
 
-  Utils.deepExtend(target, { a: 1, b: 1 }, { b: 2, c: 2 }, { c: 3 });
+    Utils.deepExtend(target, { a: 1, b: 1 }, { b: 2, c: 2 }, { c: 3 });
 
-  assert.deepEqual(target, { a: 1, b: 2, c: 3 }, 'Later sources win');
-});
+    assert.deepEqual(target, { a: 1, b: 2, c: 3 }, 'Later sources win');
+  }
+);
 
-QUnit.test('Utils.deepExtend skips null and undefined sources', function (
-  assert
-) {
-  var target = { a: 1 };
+QUnit.test(
+  'Utils.deepExtend skips null and undefined sources',
+  function (assert) {
+    var target = { a: 1 };
 
-  Utils.deepExtend(target, null, { b: 2 }, undefined);
+    Utils.deepExtend(target, null, { b: 2 }, undefined);
 
-  assert.deepEqual(target, { a: 1, b: 2 }, 'Null/undefined sources are skipped');
-});
+    assert.deepEqual(
+      target,
+      { a: 1, b: 2 },
+      'Null/undefined sources are skipped'
+    );
+  }
+);
 
 QUnit.test(
   'Utils.deepExtend clones nested plain objects instead of sharing references',
@@ -116,11 +133,7 @@ QUnit.test(
 
     Utils.deepExtend(target, source);
 
-    assert.notStrictEqual(
-      target.items,
-      source.items,
-      'Arrays are cloned'
-    );
+    assert.notStrictEqual(target.items, source.items, 'Arrays are cloned');
     assert.deepEqual(target.items, [1, 2, 3], 'Clone has same contents');
 
     target.items.push(4);
