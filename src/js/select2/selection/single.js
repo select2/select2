@@ -12,9 +12,10 @@ define(['jquery', './base', '../utils', '../keys'], function (
       return false;
     }
 
-    var root = element.getRootNode
-      ? element.getRootNode()
-      : element.ownerDocument;
+    var root = element.ownerDocument;
+    if (element.getRootNode) {
+      root = element.getRootNode();
+    }
     // A detached subtree can acquire its referenced label when inserted.
     return (
       !root.getElementById ||
@@ -111,7 +112,8 @@ define(['jquery', './base', '../utils', '../keys'], function (
     var root = label.getRootNode ? label.getRootNode() : label.ownerDocument;
     var id;
     do {
-      id = 'select2-label-' + ++nextLabelId;
+      nextLabelId++;
+      id = 'select2-label-' + nextLabelId;
     } while (root.querySelector('#' + id));
 
     label.id = id;
