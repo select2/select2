@@ -6,6 +6,7 @@
 
 - Replace jQuery `$.isEmptyObject` / `$.isPlainObject` calls with native JS equivalents (#6505)
 - Replace jQuery `$.contains` calls with native `Node.contains` equivalents (#6506)
+- Replace jQuery `$.extend` calls with native JS equivalents via `Utils.extend` (IE11-compatible deep/shallow merge) (#6507)
 
 ## 4.2.0
 

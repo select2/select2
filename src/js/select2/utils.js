@@ -105,6 +105,79 @@ define(['jquery'], function ($) {
     return DecoratedClass;
   };
 
+  function isPlainObject(obj) {
+    return Object.prototype.toString.call(obj) === '[object Object]';
+  }
+
+  // Shallow-merge the enumerable own properties of one or more source objects
+  // into `target`. Returns `target`. An IE11-compatible replacement for
+  // jQuery's `$.extend()` without the deep flag. Functions and other
+  // non-plain values are copied by reference, not cloned.
+  Utils.extend = function (target) {
+    var args = arguments;
+    var i;
+
+    for (i = 1; i < args.length; i++) {
+      var source = args[i];
+
+      if (source == null) {
+        continue;
+      }
+
+      for (var key in source) {
+        if (!Object.prototype.hasOwnProperty.call(source, key)) {
+          continue;
+        }
+
+        target[key] = source[key];
+      }
+    }
+
+    return target;
+  };
+
+  // Deep-merge the enumerable own properties of one or more source objects
+  // into `target`, cloning nested plain objects and arrays instead of sharing
+  // references. Returns `target`. An IE11-compatible replacement for
+  // jQuery's `$.extend(true, ...)`.
+  Utils.deepExtend = function (target) {
+    var args = arguments;
+    var i;
+
+    for (i = 1; i < args.length; i++) {
+      var source = args[i];
+
+      if (source == null) {
+        continue;
+      }
+
+      for (var key in source) {
+        if (!Object.prototype.hasOwnProperty.call(source, key)) {
+          continue;
+        }
+
+        var src = target[key];
+        var copy = source[key];
+
+        if (copy != null && (isPlainObject(copy) || Array.isArray(copy))) {
+          var clone;
+
+          if (Array.isArray(copy)) {
+            clone = Array.isArray(src) ? src : [];
+          } else {
+            clone = isPlainObject(src) ? src : {};
+          }
+
+          target[key] = Utils.deepExtend(clone, copy);
+        } else if (copy !== undefined) {
+          target[key] = copy;
+        }
+      }
+    }
+
+    return target;
+  };
+
   var Observable = function () {
     this.listeners = {};
   };

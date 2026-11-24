@@ -1,4 +1,4 @@
-define(['jquery'], function ($) {
+define(['jquery', '../utils'], function ($, Utils) {
   function Tokenizer(decorated, $element, options) {
     var tokenizer = options.get('tokenizer');
 
@@ -91,7 +91,7 @@ define(['jquery'], function ($) {
       }
 
       var part = term.substr(0, i);
-      var partParams = $.extend({}, params, {
+      var partParams = Utils.extend({}, params, {
         term: part
       });
 
