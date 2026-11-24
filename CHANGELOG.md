@@ -5,6 +5,7 @@
 ### Miscellaneous
 
 - Replace jQuery `$.isEmptyObject` / `$.isPlainObject` calls with native JS equivalents (#6505)
+- Replace jQuery `$.contains` calls with native `Node.contains` equivalents (#6506)
 
 ## 4.2.0
 

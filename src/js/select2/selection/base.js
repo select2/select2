@@ -116,7 +116,7 @@ define(['jquery', '../utils', '../keys'], function ($, Utils, KEYS) {
       // Don't trigger `blur` if the focus is still in the selection
       if (
         document.activeElement == self.$selection[0] ||
-        $.contains(self.$selection[0], document.activeElement)
+        self.$selection[0].contains(document.activeElement)
       ) {
         return;
       }
