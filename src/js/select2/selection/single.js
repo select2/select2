@@ -12,11 +12,16 @@ define(['jquery', './base', '../utils', '../keys'], function (
       return false;
     }
 
-    var root = element.getRootNode ? element.getRootNode() : element.ownerDocument;
+    var root = element.getRootNode
+      ? element.getRootNode()
+      : element.ownerDocument;
     // A detached subtree can acquire its referenced label when inserted.
-    return !root.getElementById || ids.some(function (id) {
-      return root.getElementById(id) != null;
-    });
+    return (
+      !root.getElementById ||
+      ids.some(function (id) {
+        return root.getElementById(id) != null;
+      })
+    );
   }
 
   function SingleSelection() {
@@ -57,8 +62,10 @@ define(['jquery', './base', '../utils', '../keys'], function (
     var selection = this.$selection[0];
     var element = this.$element[0];
     var ariaLabel = selection.getAttribute('aria-label') || '';
-    if (!ariaLabel.trim() &&
-        !hasLabelReference(element, selection.getAttribute('aria-labelledby'))) {
+    if (
+      !ariaLabel.trim() &&
+      !hasLabelReference(element, selection.getAttribute('aria-labelledby'))
+    ) {
       var labels = element.labels || [];
       var ids = [];
 
@@ -104,7 +111,7 @@ define(['jquery', './base', '../utils', '../keys'], function (
     var root = label.getRootNode ? label.getRootNode() : label.ownerDocument;
     var id;
     do {
-      id = 'select2-label-' + (++nextLabelId);
+      id = 'select2-label-' + ++nextLabelId;
     } while (root.querySelector('#' + id));
 
     label.id = id;

@@ -215,7 +215,9 @@ QUnit.test('selection changes retain the live label', function (assert) {
   var $label = $('<label for="country">Country</label>').appendTo($fixture);
   var $select = $(
     '<select id="country"><option>Canada</option><option>Japan</option></select>'
-  ).appendTo($fixture).select2();
+  )
+    .appendTo($fixture)
+    .select2();
   var $selection = $select.next().find('[role="combobox"]');
   var $rendered = $selection.find('.select2-selection__rendered');
 
@@ -237,10 +239,12 @@ QUnit.test('selection changes retain the live label', function (assert) {
 
 QUnit.test('wrapping and external labels follow DOM order', function (assert) {
   var $fixture = $('#qunit-fixture');
-  var $wrapper = $('<label>Country <select id="country"></select></label>')
-    .appendTo($fixture);
-  var $extra = $('<label id="scope" for="country">of residence</label>')
-    .appendTo($fixture);
+  var $wrapper = $(
+    '<label>Country <select id="country"></select></label>'
+  ).appendTo($fixture);
+  var $extra = $(
+    '<label id="scope" for="country">of residence</label>'
+  ).appendTo($fixture);
   var $select = $wrapper.find('select').select2();
   var $selection = $select.next().find('[role="combobox"]');
 
@@ -256,12 +260,15 @@ QUnit.test('wrapping and external labels follow DOM order', function (assert) {
 QUnit.test('explicit ARIA names take precedence', function (assert) {
   var $fixture = $('#qunit-fixture');
   $('<label for="country">Country</label>').appendTo($fixture);
-  $('<span id="shipping">Shipping</span><span id="address">address</span>')
-    .appendTo($fixture);
+  $(
+    '<span id="shipping">Shipping</span><span id="address">address</span>'
+  ).appendTo($fixture);
   var $select = $(
     '<select id="country" aria-label="Destination" ' +
       'aria-labelledby="shipping address"></select>'
-  ).appendTo($fixture).select2();
+  )
+    .appendTo($fixture)
+    .select2();
   var $selection = $select.next().find('[role="combobox"]');
 
   assert.strictEqual($selection.attr('aria-labelledby'), 'shipping address');
@@ -288,11 +295,15 @@ QUnit.test('unusable ARIA names fall back to the label', function (assert) {
       '<div><label for="country" id="native-label">Country</label>' +
         '<select id="country"><option>Canada</option></select></div>'
     ).appendTo($fixture);
-    var $select = $group.find('select').attr(testCase[0], testCase[1]).select2();
+    var $select = $group
+      .find('select')
+      .attr(testCase[0], testCase[1])
+      .select2();
     var $selection = $select.next().find('[role="combobox"]');
 
     assert.strictEqual(
-      $selection.attr('aria-labelledby'), testCase[2],
+      $selection.attr('aria-labelledby'),
+      testCase[2],
       testCase[0] + '="' + testCase[1] + '"'
     );
     $select.select2('destroy');
@@ -303,7 +314,9 @@ QUnit.test('unusable ARIA names fall back to the label', function (assert) {
 QUnit.test('label IDs are safe across reinitialization', function (assert) {
   var $fixture = $('#qunit-fixture');
   var $label = $('<label for="country">Country</label>').appendTo($fixture);
-  var $select = $('<select id="country"></select>').appendTo($fixture).select2();
+  var $select = $('<select id="country"></select>')
+    .appendTo($fixture)
+    .select2();
   var firstId = $label[0].id;
   $select.select2('destroy');
   assert.notOk($label[0].id, 'Destroy restores the original label');
