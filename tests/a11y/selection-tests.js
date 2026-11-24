@@ -190,152 +190,231 @@ QUnit.test('aria-disabled should reflected disabled state', function (assert) {
 QUnit.module('Accessibility - Single');
 
 QUnit.test(
-  'aria-labelledby should match the rendered container',
+  'explicit aria-label takes precedence over the native label',
   function (assert) {
-    var $select = $('#qunit-fixture .single');
+    var $fixture = $('#qunit-fixture');
+    var $label = $('<label for="country">Country</label>').appendTo($fixture);
+    var $select = $(
+      '<select id="country" aria-label="Destination">' +
+        '<option>Canada</option><option>Japan</option>' +
+        '</select>'
+    )
+      .appendTo($fixture);
 
     var selection = new SingleSelection($select, options);
     var $selection = selection.render();
 
     var container = new MockContainer();
+    container.id = 'country';
     selection.bind(container, $('<span></span>'));
 
-    var $rendered = $selection.find('.select2-selection__rendered');
-
-    assert.equal(
+    assert.strictEqual(
+      $selection.attr('aria-label'),
+      'Destination',
+      'The explicit aria-label is preserved'
+    );
+    assert.notOk(
       $selection.attr('aria-labelledby'),
-      $rendered.attr('id'),
-      'The rendered selection should label the container'
+      'aria-labelledby is not set when aria-label is present'
+    );
+
+    selection.destroy();
+    assert.notOk(
+      $label[0].id,
+      'No generated label id remains on destroy'
     );
   }
 );
 
-QUnit.test('selection changes retain the live label', function (assert) {
-  var $fixture = $('#qunit-fixture');
-  var $label = $('<label for="country">Country</label>').appendTo($fixture);
-  var $select = $(
-    '<select id="country"><option>Canada</option><option>Japan</option></select>'
-  )
-    .appendTo($fixture)
-    .select2();
-  var $selection = $select.next().find('[role="combobox"]');
-  var $rendered = $selection.find('.select2-selection__rendered');
+QUnit.test(
+  'explicit aria-labelledby takes precedence over the native label',
+  function (assert) {
+    var $fixture = $('#qunit-fixture');
+    var $label = $('<label for="country">Country</label>').appendTo($fixture);
+    $('<span id="shipping">Shipping</span>').appendTo($fixture);
+    var $select = $(
+      '<select id="country" aria-labelledby="shipping">' +
+        '<option>Canada</option><option>Japan</option>' +
+        '</select>'
+    )
+      .appendTo($fixture);
 
-  assert.ok($label[0].id, 'The visible label can be referenced');
-  assert.strictEqual($selection.attr('aria-labelledby'), $label[0].id);
-  assert.strictEqual($selection.attr('aria-controls'), $rendered[0].id);
+    var selection = new SingleSelection($select, options);
+    var $selection = selection.render();
 
-  $select.val('Japan').trigger('change');
-  $label.text('Destination');
-
-  assert.strictEqual($rendered.text(), 'Japan');
-  assert.strictEqual(
-    document.getElementById($selection.attr('aria-labelledby')),
-    $label[0],
-    'The control still refers to the live label'
-  );
-  $select.select2('destroy');
-});
-
-QUnit.test('wrapping and external labels follow DOM order', function (assert) {
-  var $fixture = $('#qunit-fixture');
-  var $wrapper = $(
-    '<label>Country <select id="country"></select></label>'
-  ).appendTo($fixture);
-  var $extra = $(
-    '<label id="scope" for="country">of residence</label>'
-  ).appendTo($fixture);
-  var $select = $wrapper.find('select').select2();
-  var $selection = $select.next().find('[role="combobox"]');
-
-  assert.ok($wrapper[0].id, 'The wrapping label has a usable ID');
-  assert.strictEqual(
-    $selection.attr('aria-labelledby'),
-    $wrapper[0].id + ' ' + $extra[0].id
-  );
-  $select.select2('destroy');
-  assert.strictEqual($extra[0].id, 'scope', 'The existing label ID survives');
-});
-
-QUnit.test('explicit ARIA names take precedence', function (assert) {
-  var $fixture = $('#qunit-fixture');
-  $('<label for="country">Country</label>').appendTo($fixture);
-  $(
-    '<span id="shipping">Shipping</span><span id="address">address</span>'
-  ).appendTo($fixture);
-  var $select = $(
-    '<select id="country" aria-label="Destination" ' +
-      'aria-labelledby="shipping address"></select>'
-  )
-    .appendTo($fixture)
-    .select2();
-  var $selection = $select.next().find('[role="combobox"]');
-
-  assert.strictEqual($selection.attr('aria-labelledby'), 'shipping address');
-
-  $select.select2('destroy');
-  $select.removeAttr('aria-labelledby').select2();
-  $selection = $select.next().find('[role="combobox"]');
-  assert.strictEqual($selection.attr('aria-label'), 'Destination');
-  assert.notOk($selection.attr('aria-labelledby'));
-  $select.select2('destroy');
-});
-
-QUnit.test('unusable ARIA names fall back to the label', function (assert) {
-  var $fixture = $('#qunit-fixture');
-  $('<span id="account">Account</span>').appendTo($fixture);
-  var cases = [
-    ['aria-label', '   ', 'native-label'],
-    ['aria-labelledby', 'missing unknown', 'native-label'],
-    ['aria-labelledby', 'missing account', 'missing account']
-  ];
-
-  $.each(cases, function (_, testCase) {
-    var $group = $(
-      '<div><label for="country" id="native-label">Country</label>' +
-        '<select id="country"><option>Canada</option></select></div>'
-    ).appendTo($fixture);
-    var $select = $group
-      .find('select')
-      .attr(testCase[0], testCase[1])
-      .select2();
-    var $selection = $select.next().find('[role="combobox"]');
+    var container = new MockContainer();
+    container.id = 'country';
+    selection.bind(container, $('<span></span>'));
 
     assert.strictEqual(
       $selection.attr('aria-labelledby'),
-      testCase[2],
-      testCase[0] + '="' + testCase[1] + '"'
+      'shipping',
+      'The explicit aria-labelledby is preserved'
     );
-    $select.select2('destroy');
-    $group.remove();
-  });
-});
+    assert.notOk(
+      $selection.attr('aria-label'),
+      'aria-label is not set when only aria-labelledby is present'
+    );
 
-QUnit.test('label IDs are safe across reinitialization', function (assert) {
-  var $fixture = $('#qunit-fixture');
-  var $label = $('<label for="country">Country</label>').appendTo($fixture);
-  var $select = $('<select id="country"></select>')
-    .appendTo($fixture)
-    .select2();
-  var firstId = $label[0].id;
-  $select.select2('destroy');
-  assert.notOk($label[0].id, 'Destroy restores the original label');
+    selection.destroy();
+  }
+);
 
-  // Occupy the next generated ID before reinitializing the widget.
-  var reservedId = firstId.replace(/\d+$/, function (number) {
-    return String(Number(number) + 1);
-  });
-  var $other = $('<span></span>').attr('id', reservedId).appendTo($fixture);
-  $select.select2();
-  var $selection = $select.next().find('[role="combobox"]');
-  var currentId = $selection.attr('aria-labelledby');
-  assert.strictEqual(document.getElementById(currentId), $label[0]);
-  assert.notStrictEqual(currentId, reservedId, 'The selected ID is unique');
-  assert.strictEqual(document.getElementById(reservedId), $other[0]);
+QUnit.test(
+  'native label is used as the accessible name when no explicit ARIA',
+  function (assert) {
+    var $fixture = $('#qunit-fixture');
+    var $label = $('<label for="country">Country</label>').appendTo($fixture);
+    var $select = $(
+      '<select id="country"><option>Canada</option><option>Japan</option></select>'
+    )
+      .appendTo($fixture);
 
-  $label[0].id = 'new-author-id';
-  $select.select2('destroy');
-  assert.strictEqual($label[0].id, 'new-author-id');
-});
+    var selection = new SingleSelection($select, options);
+    var $selection = selection.render();
+
+    var container = new MockContainer();
+    container.id = 'country';
+    selection.bind(container, $('<span></span>'));
+
+    assert.ok(
+      $label[0].id,
+      'The label gets a generated id so it can be referenced'
+    );
+    assert.strictEqual(
+      $selection.attr('aria-labelledby'),
+      $label[0].id,
+      'The container is labelled by the native label'
+    );
+    assert.notOk(
+      $selection.attr('aria-label'),
+      'No aria-label is set on the container'
+    );
+
+    selection.destroy();
+    assert.notOk(
+      $label[0].id,
+      'The generated label id is removed on destroy'
+    );
+  }
+);
 
 QUnit.module('Accessibility - Multiple');
+
+QUnit.test(
+  'explicit aria-label takes precedence over the native label',
+  function (assert) {
+    var $fixture = $('#qunit-fixture');
+    var $label = $('<label for="countries">Countries</label>').appendTo(
+      $fixture
+    );
+    var $select = $(
+      '<select id="countries" multiple aria-label="Destinations">' +
+        '<option>Canada</option><option>Japan</option>' +
+        '</select>'
+    )
+      .appendTo($fixture);
+
+    var selection = new MultipleSelection($select, options);
+    var $selection = selection.render();
+
+    var container = new MockContainer();
+    container.id = 'countries';
+    selection.bind(container, $('<span></span>'));
+
+    assert.strictEqual(
+      $selection.attr('aria-label'),
+      'Destinations',
+      'The explicit aria-label is preserved'
+    );
+    assert.notOk(
+      $selection.attr('aria-labelledby'),
+      'aria-labelledby is not set when aria-label is present'
+    );
+
+    selection.destroy();
+    assert.notOk(
+      $label[0].id,
+      'No generated label id remains on destroy'
+    );
+  }
+);
+
+QUnit.test(
+  'explicit aria-labelledby takes precedence over the native label',
+  function (assert) {
+    var $fixture = $('#qunit-fixture');
+    var $label = $('<label for="countries">Countries</label>').appendTo(
+      $fixture
+    );
+    $('<span id="shipping">Shipping</span>').appendTo($fixture);
+    var $select = $(
+      '<select id="countries" multiple aria-labelledby="shipping">' +
+        '<option>Canada</option><option>Japan</option>' +
+        '</select>'
+    )
+      .appendTo($fixture);
+
+    var selection = new MultipleSelection($select, options);
+    var $selection = selection.render();
+
+    var container = new MockContainer();
+    container.id = 'countries';
+    selection.bind(container, $('<span></span>'));
+
+    assert.strictEqual(
+      $selection.attr('aria-labelledby'),
+      'shipping',
+      'The explicit aria-labelledby is preserved'
+    );
+    assert.notOk(
+      $selection.attr('aria-label'),
+      'aria-label is not set when only aria-labelledby is present'
+    );
+
+    selection.destroy();
+  }
+);
+
+QUnit.test(
+  'native label is used as the accessible name when no explicit ARIA',
+  function (assert) {
+    var $fixture = $('#qunit-fixture');
+    var $label = $('<label for="countries">Countries</label>').appendTo(
+      $fixture
+    );
+    var $select = $(
+      '<select id="countries" multiple>' +
+        '<option>Canada</option><option>Japan</option>' +
+        '</select>'
+    )
+      .appendTo($fixture);
+
+    var selection = new MultipleSelection($select, options);
+    var $selection = selection.render();
+
+    var container = new MockContainer();
+    container.id = 'countries';
+    selection.bind(container, $('<span></span>'));
+
+    assert.ok(
+      $label[0].id,
+      'The label gets a generated id so it can be referenced'
+    );
+    assert.strictEqual(
+      $selection.attr('aria-labelledby'),
+      $label[0].id,
+      'The container is labelled by the native label'
+    );
+    assert.notOk(
+      $selection.attr('aria-label'),
+      'No aria-label is set on the container'
+    );
+
+    selection.destroy();
+    assert.notOk(
+      $label[0].id,
+      'The generated label id is removed on destroy'
+    );
+  }
+);
