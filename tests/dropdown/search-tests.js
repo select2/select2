@@ -127,3 +127,43 @@ QUnit.test(
     );
   }
 );
+
+QUnit.test(
+  'search fires query for the same value after the dropdown is reopened',
+  function (assert) {
+    var $select = $('#qunit-fixture .single');
+
+    var dropdown = new DropdownSearch($select, options);
+    var $dropdown = dropdown.render();
+
+    var container = new MockContainer();
+    dropdown.bind(container, $('<span></span>'));
+
+    var $search = $dropdown.find('input');
+    var queryCount = 0;
+
+    dropdown.on('query', function () {
+      queryCount++;
+    });
+
+    container.trigger('open');
+
+    $search.val('test');
+    $search.trigger('input');
+
+    assert.equal(queryCount, 1, 'The first search triggers a query');
+
+    // Closing the dropdown empties the search box
+    container.trigger('close');
+    container.trigger('open');
+
+    $search.val('test');
+    $search.trigger('input');
+
+    assert.equal(
+      queryCount,
+      2,
+      'Typing the same value again after reopening triggers a query'
+    );
+  }
+);
