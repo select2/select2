@@ -403,7 +403,7 @@ define([
       return [];
     }
 
-    if ($.isEmptyObject(language)) {
+    if (Object.keys(language).length === 0) {
       return [];
     }
 
