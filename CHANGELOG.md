@@ -1,5 +1,11 @@
 # Change Log
 
+## 4.2.1
+
+### Miscellaneous
+
+- Replace jQuery `$.isEmptyObject` / `$.isPlainObject` calls with native JS equivalents (#6505)
+
 ## 4.2.0
 
 ### New features / improvements
