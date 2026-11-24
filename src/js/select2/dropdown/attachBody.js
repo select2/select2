@@ -206,7 +206,7 @@ define(['jquery', '../utils'], function ($, Utils) {
     };
 
     if (
-      $.contains(document.body, $offsetParent[0]) ||
+      document.body.contains($offsetParent[0]) ||
       $offsetParent[0].isConnected
     ) {
       parentOffset = $offsetParent.offset();

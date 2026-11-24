@@ -39,8 +39,7 @@ define(['jquery'], function ($) {
   };
 
   InfiniteScroll.prototype.loadMoreIfNeeded = function () {
-    var isLoadMoreVisible = $.contains(
-      document.documentElement,
+    var isLoadMoreVisible = document.documentElement.contains(
       this.$loadingMore[0]
     );
 
