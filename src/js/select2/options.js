@@ -122,7 +122,9 @@ define(['jquery', './defaults', './utils'], function ($, Defaults, Utils) {
         continue;
       }
 
-      if ($.isPlainObject(this.options[key])) {
+      if (
+        Object.prototype.toString.call(this.options[key]) === '[object Object]'
+      ) {
         $.extend(this.options[key], data[key]);
       } else {
         this.options[key] = data[key];
