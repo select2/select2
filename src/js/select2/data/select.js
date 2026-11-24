@@ -254,7 +254,7 @@ define(['./base', '../utils', 'jquery'], function (BaseAdapter, Utils, $) {
       };
     }
 
-    item = $.extend(
+    item = Utils.extend(
       {},
       {
         text: ''
@@ -285,7 +285,7 @@ define(['./base', '../utils', 'jquery'], function (BaseAdapter, Utils, $) {
       );
     }
 
-    return $.extend({}, defaults, item);
+    return Utils.extend({}, defaults, item);
   };
 
   SelectAdapter.prototype.matches = function (params, data) {

@@ -58,7 +58,7 @@ define(['./select', '../utils', 'jquery'], function (SelectAdapter, Utils, $) {
         var $existingOption = $existing.filter(onlyItem(item));
 
         var existingData = this.item($existingOption);
-        var newData = $.extend(true, {}, item, existingData);
+        var newData = Utils.deepExtend({}, item, existingData);
 
         var $newOption = this.option(newData);
 

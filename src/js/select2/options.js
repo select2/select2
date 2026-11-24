@@ -109,11 +109,11 @@ define(['jquery', './defaults', './utils'], function ($, Defaults, Utils) {
     // Prefer the element's `dataset` attribute if it exists
     // jQuery 1.x does not correctly handle data attributes with multiple dashes
     if ($.fn.jquery && $.fn.jquery.substr(0, 2) == '1.' && $e[0].dataset) {
-      dataset = $.extend(true, {}, $e[0].dataset, dataset);
+      dataset = Utils.deepExtend({}, $e[0].dataset, dataset);
     }
 
     // Prefer our internal data cache if it exists
-    var data = $.extend(true, {}, Utils.GetData($e[0]), dataset);
+    var data = Utils.deepExtend({}, Utils.GetData($e[0]), dataset);
 
     data = Utils._convertData(data);
 
@@ -125,7 +125,7 @@ define(['jquery', './defaults', './utils'], function ($, Defaults, Utils) {
       if (
         Object.prototype.toString.call(this.options[key]) === '[object Object]'
       ) {
-        $.extend(this.options[key], data[key]);
+        Utils.extend(this.options[key], data[key]);
       } else {
         this.options[key] = data[key];
       }

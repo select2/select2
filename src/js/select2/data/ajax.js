@@ -14,7 +14,7 @@ define(['./array', '../utils', 'jquery'], function (ArrayAdapter, Utils, $) {
   AjaxAdapter.prototype._applyDefaults = function (options) {
     var defaults = {
       data: function (params) {
-        return $.extend({}, params, {
+        return Utils.extend({}, params, {
           q: params.term
         });
       },
@@ -35,7 +35,7 @@ define(['./array', '../utils', 'jquery'], function (ArrayAdapter, Utils, $) {
       }
     };
 
-    return $.extend({}, defaults, options, true);
+    return Utils.extend({}, defaults, options, true);
   };
 
   AjaxAdapter.prototype.processResults = function (results) {
@@ -70,7 +70,7 @@ define(['./array', '../utils', 'jquery'], function (ArrayAdapter, Utils, $) {
       this._request = null;
     }
 
-    var options = $.extend(
+    var options = Utils.extend(
       {
         type: 'GET'
       },
