@@ -86,6 +86,8 @@ define(['jquery'], function ($) {
       self.$search[0].removeAttribute('aria-activedescendant');
 
       self.$search.val('');
+      // The search box is empty again, so the next value typed is a new search
+      preTargetValue = '';
       self.$search.trigger('blur');
     });
 
