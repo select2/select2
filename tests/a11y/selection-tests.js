@@ -198,8 +198,7 @@ QUnit.test(
       '<select id="country" aria-label="Destination">' +
         '<option>Canada</option><option>Japan</option>' +
         '</select>'
-    )
-      .appendTo($fixture);
+    ).appendTo($fixture);
 
     var selection = new SingleSelection($select, options);
     var $selection = selection.render();
@@ -219,10 +218,7 @@ QUnit.test(
     );
 
     selection.destroy();
-    assert.notOk(
-      $label[0].id,
-      'No generated label id remains on destroy'
-    );
+    assert.notOk($label[0].id, 'No generated label id remains on destroy');
   }
 );
 
@@ -236,8 +232,7 @@ QUnit.test(
       '<select id="country" aria-labelledby="shipping">' +
         '<option>Canada</option><option>Japan</option>' +
         '</select>'
-    )
-      .appendTo($fixture);
+    ).appendTo($fixture);
 
     var selection = new SingleSelection($select, options);
     var $selection = selection.render();
@@ -267,8 +262,7 @@ QUnit.test(
     var $label = $('<label for="country">Country</label>').appendTo($fixture);
     var $select = $(
       '<select id="country"><option>Canada</option><option>Japan</option></select>'
-    )
-      .appendTo($fixture);
+    ).appendTo($fixture);
 
     var selection = new SingleSelection($select, options);
     var $selection = selection.render();
@@ -292,10 +286,7 @@ QUnit.test(
     );
 
     selection.destroy();
-    assert.notOk(
-      $label[0].id,
-      'The generated label id is removed on destroy'
-    );
+    assert.notOk($label[0].id, 'The generated label id is removed on destroy');
   }
 );
 
@@ -312,8 +303,7 @@ QUnit.test(
       '<select id="countries" multiple aria-label="Destinations">' +
         '<option>Canada</option><option>Japan</option>' +
         '</select>'
-    )
-      .appendTo($fixture);
+    ).appendTo($fixture);
 
     var selection = new MultipleSelection($select, options);
     var $selection = selection.render();
@@ -333,10 +323,7 @@ QUnit.test(
     );
 
     selection.destroy();
-    assert.notOk(
-      $label[0].id,
-      'No generated label id remains on destroy'
-    );
+    assert.notOk($label[0].id, 'No generated label id remains on destroy');
   }
 );
 
@@ -352,8 +339,7 @@ QUnit.test(
       '<select id="countries" multiple aria-labelledby="shipping">' +
         '<option>Canada</option><option>Japan</option>' +
         '</select>'
-    )
-      .appendTo($fixture);
+    ).appendTo($fixture);
 
     var selection = new MultipleSelection($select, options);
     var $selection = selection.render();
@@ -387,8 +373,7 @@ QUnit.test(
       '<select id="countries" multiple>' +
         '<option>Canada</option><option>Japan</option>' +
         '</select>'
-    )
-      .appendTo($fixture);
+    ).appendTo($fixture);
 
     var selection = new MultipleSelection($select, options);
     var $selection = selection.render();
@@ -412,9 +397,6 @@ QUnit.test(
     );
 
     selection.destroy();
-    assert.notOk(
-      $label[0].id,
-      'The generated label id is removed on destroy'
-    );
+    assert.notOk($label[0].id, 'The generated label id is removed on destroy');
   }
 );
