@@ -181,9 +181,9 @@ define(['jquery', '../utils', '../keys'], function ($, Utils, KEYS) {
       var path = event.composedPath ? event.composedPath() : null;
       var $container = self.$selection.closest('.select2');
       var containerElement = $container[0];
-      var isInside = path ?
-        path.indexOf(containerElement) > -1 :
-        $(e.target).closest('.select2')[0] == containerElement;
+      var isInside = path
+        ? path.indexOf(containerElement) > -1
+        : $(e.target).closest('.select2')[0] == containerElement;
 
       if (!isInside) {
         self.trigger('close', {
