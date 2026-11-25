@@ -27,6 +27,11 @@ define(['jquery', './base', '../utils'], function ($, BaseSelection, Utils) {
       rendered.setAttribute('id', id);
     }
 
+    // Use an explicit aria-label / aria-labelledby on the <select> when one is
+    // present; otherwise label the combobox from its associated <label>
+    // element(s), falling back to the rendered container id.
+    this._resolveLabelledBy(id);
+
     this.$selection.on('click', function (evt) {
       self.trigger('toggle', {
         originalEvent: evt

@@ -2,6 +2,7 @@ define(['jquery', '../utils', '../keys'], function ($, Utils, KEYS) {
   function BaseSelection($element, options) {
     this.$element = $element;
     this.options = options;
+    this._generatedLabelIds = [];
 
     BaseSelection.__super__.constructor.call(this);
   }
@@ -36,6 +37,52 @@ define(['jquery', '../utils', '../keys'], function ($, Utils, KEYS) {
     this.$selection = $selection;
 
     return $selection;
+  };
+
+  BaseSelection.prototype._getLabelId = function (label, labelPrefix) {
+    if (label.id) {
+      return label.id;
+    }
+
+    // Generate an id scoped to the select2 container id so it stays tied to
+    // the owning instance; track it so it can be removed on destroy.
+    var id = labelPrefix + '-label-' + Utils.generateChars(4);
+
+    label.id = id;
+    this._generatedLabelIds.push({ label: label, id: id });
+    return id;
+  };
+
+  BaseSelection.prototype._resolveLabelledBy = function (id) {
+    var selection = this.$selection[0];
+    var element = this.$element[0];
+    var ariaLabel = selection.getAttribute('aria-label') || '';
+    var ariaLabelledBy = selection.getAttribute('aria-labelledby') || '';
+
+    // Respect explicit ARIA attributes on the <select>. These are copied to
+    // the selection container during render().
+    if (ariaLabel.trim() || ariaLabelledBy.trim()) {
+      return;
+    }
+
+    var labels = element.labels || [];
+    var labelIds = [];
+
+    for (var i = 0; i < labels.length; i++) {
+      labelIds.push(this._getLabelId(labels[i], id));
+    }
+
+    // Fall back to the rendered container id when there are no labels.
+    selection.setAttribute('aria-labelledby', labelIds.join(' ') || id);
+  };
+
+  BaseSelection.prototype._clearGeneratedLabelIds = function () {
+    for (var i = 0; i < this._generatedLabelIds.length; i++) {
+      var entry = this._generatedLabelIds[i];
+      if (entry.label.id === entry.id) {
+        entry.label.removeAttribute('id');
+      }
+    }
   };
 
   BaseSelection.prototype.bind = function (container, $container) {
@@ -159,6 +206,7 @@ define(['jquery', '../utils', '../keys'], function ($, Utils, KEYS) {
   };
 
   BaseSelection.prototype.destroy = function () {
+    this._clearGeneratedLabelIds();
     this._detachCloseHandler(this.container);
   };
 

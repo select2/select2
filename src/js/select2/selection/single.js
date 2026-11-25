@@ -38,8 +38,9 @@ define(['jquery', './base', '../utils', '../keys'], function (
       rendered.setAttribute('role', 'textbox');
       rendered.setAttribute('aria-readonly', 'true');
     }
-    this.$selection[0].setAttribute('aria-labelledby', id);
     this.$selection[0].setAttribute('aria-controls', id);
+
+    this._resolveLabelledBy(id);
 
     this.$selection.on('mousedown', function (evt) {
       // Only respond to left clicks
