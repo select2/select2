@@ -173,24 +173,23 @@ define(['jquery', '../utils', '../keys'], function ($, Utils, KEYS) {
   };
 
   BaseSelection.prototype._attachCloseHandler = function (container) {
+    var self = this;
     var namespace = Utils.toEventNamespace(container.id);
 
     $(document.body).on('mousedown.select2.' + namespace, function (e) {
-      var $target = $(e.target);
+      var event = e.originalEvent || e;
+      var path = event.composedPath ? event.composedPath() : null;
+      var $container = self.$selection.closest('.select2');
+      var containerElement = $container[0];
+      var isInside = path ?
+        path.indexOf(containerElement) > -1 :
+        $(e.target).closest('.select2')[0] == containerElement;
 
-      var $select = $target.closest('.select2');
-
-      var $all = $('.select2.select2-container--open');
-
-      $all.each(function () {
-        if (this == $select[0]) {
-          return;
-        }
-
-        var $element = Utils.GetData(this, 'element');
-
-        $element.select2('close');
-      });
+      if (!isInside) {
+        self.trigger('close', {
+          originalEvent: e
+        });
+      }
     });
   };
 
