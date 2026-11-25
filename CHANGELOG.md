@@ -9,7 +9,7 @@
 
 ### Translations
 
-- Add Tajik translation (`tg`)
+- Add Tajik translation (`tg`) (#6514)
 
 ### Miscellaneous
 
