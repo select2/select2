@@ -8,6 +8,49 @@ var Utils = require('select2/utils');
 
 var options = new Options({});
 
+QUnit.test(
+  'clicking outside a Shadow DOM selection closes it',
+  function (assert) {
+    if (typeof document.body.attachShadow !== 'function') {
+      assert.ok(true, 'Shadow DOM is not supported in this browser');
+      return;
+    }
+
+    var host = document.createElement('div');
+    var shadowRoot = host.attachShadow({ mode: 'open' });
+    var select = document.createElement('select');
+    var option = document.createElement('option');
+    var outsideButton = document.createElement('button');
+
+    option.textContent = 'One';
+    select.appendChild(option);
+    outsideButton.textContent = 'Outside';
+    shadowRoot.appendChild(select);
+    shadowRoot.appendChild(outsideButton);
+    document.getElementById('qunit-fixture').appendChild(host);
+
+    var $select = $(select);
+    $select.select2();
+    $select.select2('open');
+
+    assert.ok($select.data('select2').isOpen(), 'The dropdown should be open');
+
+    outsideButton.dispatchEvent(
+      new window.MouseEvent('mousedown', {
+        bubbles: true,
+        composed: true
+      })
+    );
+
+    assert.notOk(
+      $select.data('select2').isOpen(),
+      'The dropdown should close after an outside click'
+    );
+
+    $select.select2('destroy');
+  }
+);
+
 QUnit.test('display uses templateSelection', function (assert) {
   var called = false;
 
