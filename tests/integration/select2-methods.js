@@ -232,6 +232,49 @@ QUnit.test(
   }
 );
 
+QUnit.test(
+  'changing the value updates the options of an open dropdown',
+  function (assert) {
+    var $select = $(
+      '<select multiple>' +
+        '<option selected>One</option>' +
+        '<option>Two</option>' +
+        '<option>Three</option>' +
+        '</select>'
+    );
+    $('#qunit-fixture').append($select);
+
+    var select = new Select2($select);
+
+    var selectedOptions = function () {
+      return select.$results
+        .find('.select2-results__option--selected')
+        .map(function () {
+          return $(this).text();
+        })
+        .get();
+    };
+
+    select.open();
+
+    assert.deepEqual(
+      selectedOptions(),
+      ['One'],
+      'The default selection is marked when the dropdown opens'
+    );
+
+    $select.val(['Two', 'Three']).trigger('change');
+
+    assert.deepEqual(
+      selectedOptions(),
+      ['Two', 'Three'],
+      'The options follow the new value while the dropdown stays open'
+    );
+
+    select.destroy();
+  }
+);
+
 QUnit.module('select2 disabled state');
 
 QUnit.test(

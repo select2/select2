@@ -304,6 +304,14 @@ define(['jquery', './utils'], function ($, Utils) {
       }
     });
 
+    container.on('selection:update', function () {
+      if (!container.isOpen()) {
+        return;
+      }
+
+      self.setClasses();
+    });
+
     container.on('open', function () {
       // When the dropdown is open, aria-expended="true"
       self.$results[0].setAttribute('aria-expanded', 'true');

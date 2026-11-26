@@ -7,6 +7,10 @@
 - Label single-select comboboxes from the field's `<label>` element instead of referencing their own rendered value as the accessible name (#6510)
 - Label multiple-select comboboxes from the field's `<label>` element when no explicit `aria-label` / `aria-labelledby` is set, to aid screen readers (#6510)
 
+### Bug fixes
+
+- Update the selected options of an open dropdown when the value is changed programmatically (#6255, #6515)
+
 ### Translations
 
 - Add Tajik translation (`tg`) (#6514)
